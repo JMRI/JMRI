@@ -453,15 +453,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
                     log.debug("Matches ProgBitReply");
                     r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_REGEX;
-                } else if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_V2_REGEX)) {
+                } else if (s.matches(DCCppConstants.PROGRAM_BIT_REPLY_V4_REGEX)) {
                     log.debug("Matches ProgBitReplyV2");
-                    r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_V2_REGEX;
+                    r.myRegex = DCCppConstants.PROGRAM_BIT_REPLY_V4_REGEX;
                 } else if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
                     log.debug("Matches ProgReply");
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
-                } else if (s.matches(DCCppConstants.PROGRAM_REPLY_V2_REGEX)) {
+                } else if (s.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) {
                     log.debug("Matches ProgReplyV2");
-                    r.myRegex = DCCppConstants.PROGRAM_REPLY_V2_REGEX;
+                    r.myRegex = DCCppConstants.PROGRAM_REPLY_V4_REGEX;
                 } else {
                     log.debug("Does not match ProgReply Regex");
                 }
@@ -1509,7 +1509,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean isProgramReplyV2() {
-        return (this.matches(DCCppConstants.PROGRAM_REPLY_V2_REGEX));
+        return (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX));
     }
 
     public boolean isVerifyReply() {
@@ -1521,7 +1521,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean isProgramBitReplyV2() {
-        return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_V2_REGEX));
+        return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_V4_REGEX));
     }
 
     public boolean isPowerReply() {
@@ -1622,7 +1622,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((this.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
-                (this.matches(DCCppConstants.PROGRAM_REPLY_V2_REGEX)) ||
+                (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)) ||
                 (this.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)) ||

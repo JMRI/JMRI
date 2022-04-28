@@ -125,47 +125,47 @@ public class DCCppCommandStationTest {
     }
 
     @Test
-    public void testIsFunctionV2Supported() {
+    public void testIsFunctionV4Supported() {
         DCCppCommandStation c = new DCCppCommandStation();
         DCCppReply r = DCCppReply.parseDCCppReply(
                 "iDCC-EX V-4.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         c.setCommandStationInfo(r);
         log.debug("Version: {}", c.getVersion());
-        Assert.assertTrue("v4+ supports new function msg", c.isFunctionV2Supported());
+        Assert.assertTrue("v4+ supports new function msg", c.isFunctionV4Supported());
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         c.setCommandStationInfo(r);
         log.debug("Version: {}", c.getVersion());
-        Assert.assertFalse("unknown version does not support new function msg", c.isFunctionV2Supported());
+        Assert.assertFalse("unknown version does not support new function msg", c.isFunctionV4Supported());
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC-EX V-3.1.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         c.setCommandStationInfo(r);
         log.debug("Version: {}", c.getVersion());
-        Assert.assertFalse("< v4 does not support new function msg", c.isFunctionV2Supported());
+        Assert.assertFalse("< v4 does not support new function msg", c.isFunctionV4Supported());
     }
 
 
     @Test
-    public void testIsProgramV2Supported() {
+    public void testIsProgramV4Supported() {
         DCCppCommandStation c = new DCCppCommandStation();
-        Assert.assertFalse("when no version, do not support new program msgs", c.isProgramV2Supported());
+        Assert.assertFalse("when no version, do not support new program msgs", c.isProgramV4Supported());
 
         DCCppReply r = DCCppReply.parseDCCppReply(
                 "iDCC-EX V-4.0.2 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         c.setCommandStationInfo(r);
-        Assert.assertTrue("v4.0.2+ supports new program msgs", c.isProgramV2Supported());
+        Assert.assertTrue("v4.0.2+ supports new program msgs", c.isProgramV4Supported());
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         c.setCommandStationInfo(r);
-        Assert.assertFalse("unknown version does not support new program msgs", c.isProgramV2Supported());
+        Assert.assertFalse("unknown version does not support new program msgs", c.isProgramV4Supported());
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC-EX V-3.1.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         c.setCommandStationInfo(r);
-        Assert.assertFalse("< v4.0.2 does not support new program msgs", c.isProgramV2Supported());
+        Assert.assertFalse("< v4.0.2 does not support new program msgs", c.isProgramV4Supported());
     }
 
     @Test
