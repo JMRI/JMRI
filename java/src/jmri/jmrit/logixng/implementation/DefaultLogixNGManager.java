@@ -269,6 +269,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                             .getList();
 
             for (LogixNG logixNG : initLogixNGs) {
+                logixNG.activate();
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
                     logixNG.execute(false);
@@ -283,6 +284,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     .sorted()
                     .filter((logixNG) -> !(activeLogixNGs.contains(logixNG)))
                     .forEachOrdered((logixNG) -> {
+
+                logixNG.activate();
 
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
