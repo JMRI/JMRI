@@ -232,7 +232,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 if ((match(toString(), DCCppConstants.PROG_WRITE_BIT_V4_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.PROG_WRITE_BIT_V4_REGEX;
                 } else {
-                myRegex = DCCppConstants.PROG_WRITE_BIT_REGEX;
+                    myRegex = DCCppConstants.PROG_WRITE_BIT_REGEX;
                 }
                 break;
             case DCCppConstants.PROG_READ_CV:
@@ -450,25 +450,29 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.PROG_WRITE_CV_BYTE:
                 text = "Prog Write Byte Cmd: ";
-                text += "CV : " + getCVString();
+                text += "CV: " + getCVString();
                 text += ", Value: " + getProgValueString();
-                text += ", Callback Num: " + getCallbackNumString();
-                text += ", Callback Sub: " + getCallbackSubString();
+                if (!isProgWriteByteMessageV4()) {
+                    text += ", Callback Num: " + getCallbackNumString();
+                    text += ", Sub: " + getCallbackSubString();
+                }
                 break;
 
             case DCCppConstants.PROG_WRITE_CV_BIT:
                 text = "Prog Write Bit Cmd: ";
-                text += "CV : " + getCVString();
-                text += ", Bit : " + getBitString();
+                text += "CV: " + getCVString();
+                text += ", Bit: " + getBitString();
                 text += ", Value: " + getProgValueString();
-                text += ", Callback Num: " + getCallbackNumString();
-                text += ", Callback Sub: " + getCallbackSubString();
+                if (!isProgWriteBitMessageV4()) {
+                    text += ", Callback Num: " + getCallbackNumString();
+                    text += ", Sub: " + getCallbackSubString();
+                }
                 break;
             case DCCppConstants.PROG_READ_CV:
                 text = "Prog Read Cmd: ";
                 text += "CV: " + getCVString();
                 text += ", Callback Num: " + getCallbackNumString();
-                text += ", Callback Sub: " + getCallbackSubString();
+                text += ", Sub: " + getCallbackSubString();
                 break;
             case DCCppConstants.PROG_VERIFY_CV:
                 text = "Prog Verify Cmd:  ";
@@ -1949,7 +1953,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m.myMessage.append(" ").append(cv);
         m.myMessage.append(" ").append(bit);
         m.myMessage.append(" ").append(val == 0 ? "0" : "1");
-        m.myRegex = DCCppConstants.PROG_WRITE_BIT_REGEX;
+        m.myRegex = DCCppConstants.PROG_WRITE_BIT_V4_REGEX;
 
         m._nDataChars = m.toString().length();
         m.setTimeout(DCCppProgrammingTimeout);

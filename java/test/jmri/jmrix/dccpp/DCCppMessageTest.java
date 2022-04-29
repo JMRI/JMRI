@@ -424,7 +424,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringWriteDirectCVMsg() {
         msg = DCCppMessage.makeWriteDirectCVMsg(29, 12, 1, 2);
-        Assert.assertEquals("Monitor string", "Prog Write Byte Cmd: CV : 29, Value: 12, Callback Num: 1, Callback Sub: 2", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Write Byte Cmd: CV: 29, Value: 12, Callback Num: 1, Sub: 2", msg.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringWriteDirectCVMsgV4() {
+        msg = DCCppMessage.makeWriteDirectCVMsgV4(29, 12);
+        Assert.assertEquals("Monitor string", "Prog Write Byte Cmd: CV: 29, Value: 12", msg.toMonitorString());
     }
 
     @Test
@@ -449,13 +455,13 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringBitWriteDirectCVMsg() {
         msg = DCCppMessage.makeBitWriteDirectCVMsg(17, 4, 1, 3, 4);
-        Assert.assertEquals("Monitor string", "Prog Write Bit Cmd: CV : 17, Bit : 4, Value: 1, Callback Num: 3, Callback Sub: 4", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Write Bit Cmd: CV: 17, Bit: 4, Value: 1, Callback Num: 3, Sub: 4", msg.toMonitorString());
     }
 
     @Test
     public void testMonitorStringBitWriteDirectCVMsgV4() {
         msg = DCCppMessage.makeBitWriteDirectCVMsgV4(17, 4, 1);
-        Assert.assertEquals("Monitor string", "Prog Write Bit Cmd: CV : 17, Bit : 4, Value: 1", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Write Bit Cmd: CV: 17, Bit: 4, Value: 1", msg.toMonitorString());
     }
 
     @Test
@@ -476,7 +482,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringReadDirectCVMsg() {
         msg = DCCppMessage.makeReadDirectCVMsg(17, 4, 3);
-        Assert.assertEquals("Monitor string", "Prog Read Cmd: CV: 17, Callback Num: 4, Callback Sub: 3", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Prog Read Cmd: CV: 17, Callback Num: 4, Sub: 3", msg.toMonitorString());
     }
 
     @Test

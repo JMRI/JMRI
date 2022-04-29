@@ -15,7 +15,9 @@ import jmri.configurexml.AbstractXmlAdapter;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015
- * @author Harald Barth Copyright (C) 2019 Based on XNetReply
+ * @author Harald Barth Copyright (C) 2019
+ * 
+ * Based on XNetReply
  */
 
 /*
@@ -105,8 +107,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += "ID:" + getTOIDString() + ", ";
                     text += "Address:" + getTOAddressString() + ", ";
                     text += "Index:" + getTOAddressIndexString() + ", ";
-                    // if we are able to parse the address and index we can
-                    // convert it
+                    // if we are able to parse the address and index we can convert it
                     // to a standard DCC address for display.
                     if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
                         int boardAddr = getTOAddressInt();
@@ -120,8 +121,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += "ID:" + getTOIDString() + ", ";
                     text += "Address:" + getTOAddressString() + ", ";
                     text += "Index:" + getTOAddressIndexString() + ", ";
-                    // if we are able to parse the address and index we can
-                    // convert it
+                    // if we are able to parse the address and index we can convert it
                     // to a standard DCC address for display.
                     if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
                         int boardAddr = getTOAddressInt();
@@ -239,10 +239,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                         getMeterUnit(), getMeterMinValue(), getMeterMaxValue(),
                         getMeterResolution(), getMeterWarnValue());
                 break;
-            // case DCCppConstants.LISTPACKET_REPLY:
-            // // TODO: Implement this fully
-            // text = "List Packet Reply...\n";
-            // break;
             case DCCppConstants.WRITE_EEPROM_REPLY:
                 text = "Write EEPROM Reply... ";
                 // TODO: Don't use getProgValueString()
@@ -320,8 +316,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     properties.put(DCCppConstants.PROP_ID, getTOIDInt());
                     properties.put(DCCppConstants.PROP_ADDRESS, getTOAddressInt());
                     properties.put(DCCppConstants.PROP_INDEX, getTOAddressIndexInt());
-                    // if we are able to parse the address and index we can
-                    // convert it
+                    // if we are able to parse the address and index we can convert it
                     // to a standard DCC address for display.
                     if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
                         int boardAddr = getTOAddressInt();
@@ -420,10 +415,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return (r);
             case DCCppConstants.TURNOUT_REPLY:
                 // the order of checking the reply here is critical as both the
-                // TURNOUT_DEF_REPLY
-                // and TURNOUT_REPLY regex strings start with the same strings
-                // but have different
-                // meanings.
+                // TURNOUT_DEF_REPLY and TURNOUT_REPLY regex strings start with 
+                // the same strings but have different meanings.
                 if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_DEF_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) {
@@ -539,10 +532,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * Not really used inside of DCC++. Just here to play nicely with the
-     * inheritance. TODO: If this is unused, can we just not override it and
-     * (not) "use" the superclass version? ANSWER: No, we can't because the
-     * superclass looks in the _datachars element, which we don't use, and which
-     * will contain garbage data. Better to return something meaningful.
+     * inheritance. 
+     * TODO: If this is unused, can we just not override it and (not) "use" 
+     * the superclass version? 
+     * ANSWER: No, we can't because the superclass looks in the _datachars
+     * element, which we don't use, and which will contain garbage data.
+     * Better to return something meaningful.
      * 
      * @return first char of myReply as integer
      */
@@ -566,7 +561,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         } else {
             return (0);
         }
-        // return ((char)(getElement(0) & 0x00FF));
     }
 
     @Override
@@ -670,17 +664,32 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     /*
      * Some notes on DCC++ messages and responses...
      *
-     * Messages that have responses expected: t : <T REGISTER SPEED DIRECTION> f
-     * : (none) a : (none) T : <H ID THROW> w : (none) b : (none) W : <r
-     * CALLBACKNUM|CALLBACKSUB|CV CV_Value> B : <r CALLBACKNUM
-     * CALLBACKSUB|CV|Bit CV_Bit_Value> R : <r CALLBACKNUM|CALLBACKSUB|CV
-     * CV_Value> 1 : <p1> 0 : <p0> c : <a CURRENT> s : Series of status
-     * messages... <p[0,1]> Power state <T ...>Throttle responses from all
-     * registers <iDCC++ ... > Base station version and build date <H ID ADDR
-     * INDEX THROW> All turnout states.
+     * Messages that have responses expected: 
+     * t : <T REGISTER SPEED DIRECTION>
+     * f : (none)
+     * a : (none)
+     * T : <H ID THROW>
+     * w : (none)
+     * b : (none)
+     * W : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
+     * B : <r CALLBACKNUM CALLBACKSUB|CV|Bit CV_Bit_Value>
+     * R : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
+     * 1 : <p1>
+     * 0 : <p0>
+     * c : <a CURRENT>
+     * s : Series of status messages... 
+     *     <p[0,1]> Power state
+     *     <T ...>Throttle responses from all registers
+     *     <iDCC++ ... > Base station version and build date
+     *     <H ID ADDR INDEX THROW> All turnout states.
      *
-     * Unsolicited Replies | <Q snum [0,1]> Sensor reply. Debug messages: M :
-     * (none) P : (none) f : <f MEM> L : <M ... data ... >
+     * Unsolicited Replies:
+     *     <Q snum [0,1]> Sensor reply.
+     * Debug messages:
+     * M : (none)
+     * P : (none)
+     * f : <f MEM>
+     * L : <M ... data ... >
      */
 
     // -------------------------------------------------------------------
