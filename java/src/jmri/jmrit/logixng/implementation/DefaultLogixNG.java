@@ -127,11 +127,14 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {
+        log.warn("LogixNG: {}. setEnable(). Enabled: {}, manager.isActive: {}", this.getSystemName(), _enabled, _manager.isActive());
         _enabled = enable;
         if (isActive()) {
+            log.warn("LogixNG: {}. Register listeners and execute", this.getSystemName());
             registerListeners();
             execute(true);
         } else {
+            log.warn("LogixNG: {}. Unregister listeners. Don't execute", this.getSystemName());
             unregisterListeners();
         }
     }
@@ -259,12 +262,14 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
+        log.warn("LogixNG: {}. isActive(). Enabled: {}, manager.isActive: {}", this.getSystemName(), _enabled, _manager.isActive());
         return _enabled && _manager.isActive();
     }
 
     /** {@inheritDoc} */
     @Override
     public void execute() {
+        log.warn("LogixNG.execute: {}", this.getSystemName());
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             entry._conditionalNG.execute();
         }

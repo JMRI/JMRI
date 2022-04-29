@@ -241,11 +241,17 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public void activateAllLogixNGs(boolean runDelayed, boolean runOnSeparateThread) {
 
+        log.warn("activateAllLogixNGs - start");
+
         _isActive = true;
 
         // This may take a long time so it must not be done on the GUI thread.
         // Therefore we create a new thread for this task.
         Runnable runnable = () -> {
+
+            log.warn("activateAllLogixNGs - initialize");
+
+            log.warn("activateAllLogixNGs - initialize global variables");
 
             // Activate and execute the initialization LogixNGs first.
             Set<GlobalVariable> globalVariables =
@@ -260,6 +266,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     log.warn("Variable {} could not be initialized", gv.getUserName(), e);
                 }
             }
+
+            log.warn("activateAllLogixNGs - run init LogixNGs");
 
             Set<LogixNG> activeLogixNGs = new HashSet<>();
 
@@ -278,6 +286,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                 }
             }
 
+            log.warn("activateAllLogixNGs - activate and execute the other LogixNGs");
+
             // Activate and execute all the rest of the LogixNGs.
             _tsys.values().stream()
                     .sorted()
@@ -291,10 +301,16 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.unregisterListeners();
                 }
             });
+
+            log.warn("activateAllLogixNGs - done");
         };
+
+        log.warn("activateAllLogixNGs - start thread");
 
         if (runOnSeparateThread) new Thread(runnable).start();
         else runnable.run();
+
+        log.warn("activateAllLogixNGs - start thread done");
     }
 
     /** {@inheritDoc} */
