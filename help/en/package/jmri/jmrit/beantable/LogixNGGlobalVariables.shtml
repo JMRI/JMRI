@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LogixNG Global Variables Table</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI logixng tables csv table">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: LogixNG Global Variables Table</h1>
+
+      <p>The LogixNG Global Variables table contains a list of the defined global variables.
+      See <a href="../../../../html/tools/logixng/reference/chapter12.shtml">LogixNG Reference -
+      Chapter 12</a> for details.
+      </p>
+
+      <ul>
+        <li>
+          <a href="#tableContent">Table Content</a>
+        </li>
+
+        <li>
+          <a href="#selectActions">Select Actions</a>
+        </li>
+
+        <li>
+          <a href="#menuItems">Menu Items</a>
+        </li>
+
+        <li>
+          <a href="#addLogixNG">Add a LogixNG Global Variable</a>
+        </li>
+      </ul>
+
+      <h2 id="tableContent">Table Content</h2>
+
+      <p>The LogixNG Global Variable table lists all of the currently defined LogixNG global
+      variables. Each row has a standard set of columns.</p>
+
+      <dl>
+        <dt>System Name</dt>
+
+        <dd>
+          The system name for the LogixNG Global Variable. LogixNG table system names have an
+          <strong>IQGV</strong> prefix normally followed by numbers. For details about the LogixNG
+          Global Variable system name, see <a href="#addLogixNG">Add a LogixNG Global Variable</a>.
+          The system name cannot be changed.
+        </dd>
+
+        <dt>User Name</dt>
+
+        <dd>The user name for the LogixNG Table. A user name is required and it will be used when
+        referring to the global variable.  The name must begin with a letter and can contain letters,
+        digits, and underscore.  It cannot have spaces or other special characters.</dd>
+
+        <dt>Comment</dt>
+
+        <dd>A free form comment field for the LogixNG</dd>
+
+        <dt>Menu</dt>
+
+        <dd>
+          The <strong>Select</strong> combo box is used to select actions for the selected LogixNG.
+          See <a href="#selectActions">Select Actions</a>
+        </dd>
+
+        <dt>Type</dt>
+
+        <dd>Global Variables use the same types as Local Variables.  The default type is <strong>None</strong>.
+          <div style="margin-left: 2em">
+            <a href="../logixng/images/SelectGlobalVariableType.png"><img src=
+            "../logixng/images/SelectGlobalVariableType.png" alt="Select Select Global Variable Type"></a>
+          </div>
+        </dd>
+
+        <dt>Initial Value</dt>
+
+        <dd>This will be the initial value for the global variable.  If no value is supplied, the
+        default value will be <strong>null</strong>.  The initial value is applied during data file
+        loading.  A new global variable will be assigned a null value.
+        </dd>
+
+        <dt>Set to initial value</dt>
+
+        <dd>Changes to the variable type or initial value do not take effect until the data file has
+        been stored and subsequently loaded in a new PanelPro session.  The <strong>Set to initial
+        value</strong> button is used to apply the change immediately.</dd>
+
+      </dl>
+
+
+      <h2 id="selectActions">Select Actions</h2>
+
+      <p>The dropdown combo box has 2 actions that can be applied to the current LogixNG global
+      variable row.</p>
+
+      <div style="margin-left: 2em">
+        <a href="../logixng/images/SelectActionsNoEdit.png"><img src=
+        "../logixng/images/SelectActionsNoEdit.png" alt="Select Actions No Copy"></a>
+      </div>
+
+      <dl>
+        <dt>Browse</dt>
+
+        <dd>
+          The <strong>Browse</strong> option opens a text window with a representation of the
+          global variable. See <a href=
+          "../logixng/LogixNGBrowser.shtml">LogixNG Browser</a> for details about the browser.
+        </dd>
+
+        <dt>Delete</dt>
+
+        <dd>
+          The <strong>Delete</strong> action deletes the current LogixNG global variable. A
+          confirmation dialog will be displayed.
+          <div style="margin-left: 2em">
+            <a href="../logixng/images/DeleteGlobalVariable.png"><img src=
+            "../logixng/images/DeleteGlobalVariable.png" alt="Delete Global Variable Confirmation"></a>
+          </div>
+        </dd>
+      </dl>
+
+      <h2 id="menuItems">Menu Items</h2>
+
+      <dl>
+        <dt>Tools</dt>
+
+        <dd>The tools menu has two items: <strong>Open clipboard</strong> and <strong>Open PickList
+        Tables</strong>.  See <a href="../../../../html/tools/logixng/reference/chapter2.shtml">
+        LogixNG Reference - Chapter 2</a> for details on the using the clipboard. The PickList was
+        designed for dragging names, such as sensor names, to a text field. Most LogixNG name fields
+        use drop down combo boxes, but this could be used when building Formulas.</dd>
+      </dl>
+
+      <h2 id="addLogixNG">Add a LogixNG Global Variable</h2>
+
+      <p>To create a new LogixNG Global Variable, click on the <strong>Add...</strong> button. The
+      <strong>Add LogixNG Global Variable</strong> window will be displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="../logixng/images/AddGlobalVariable.png">
+        <img src="../logixng/images/AddGlobalVariable.png" alt="Add Global Variable"></a>
+      </div>
+
+      <p>The system name is required. The system name for a LogixNG Global Variable always begins
+      with the letters <strong>IQGV</strong>. If the entered name does not start with <strong>IQGV
+      </strong>, it will be automatically added. The typical suffix is a number. If <strong>
+      Automatically generate System Name</strong> is checked, the system name format will be
+      <strong>IQGV:AUTO:nnnn</strong>. Any other format requires adding a <strong>$</strong>
+      (dollar) character between <strong>IQGV</strong> and the suffix.</p>
+
+      <p>The user name is required. The name must begin with a letter and can contain letters,
+      digits, and underscore.  It cannot have spaces or other special characters.</p>
+
+      <p>After clicking <strong>Create</strong>, the LogixNG Global Variable will be created.  It
+      will have the <strong>None</strong> variable type and the initial value will be
+      <strong>null</strong>.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
