@@ -13,10 +13,8 @@
 # Configure this script
 #
 # tableName is the name of the table
-# columnName is the name of the column you want to use for the values
 
 tableName = "MyTable"
-columnName = "Turnouts"
 
 
 
@@ -28,8 +26,6 @@ myTable = logixngTables.getNamedTable(tableName)
 myMap = java.util.concurrent.ConcurrentHashMap()
 
 print "Table: " + myTable.getSystemName()
-
-column = myTable.getColumnNumber(columnName)
 
 for row in range(1, myTable.numRows()+1):
     rowKey = myTable.getCell(row, 0)

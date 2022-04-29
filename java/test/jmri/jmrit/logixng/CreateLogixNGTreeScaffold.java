@@ -4089,6 +4089,7 @@ public class CreateLogixNGTreeScaffold {
         "index * 2",    // Formula
         "sensors.provide(\"mySensor)\"",    // Script expression
         "scripts:InitLogixNGVariable",      // Script file
+        "MyTable",      // LogixNG Table
     };
 
 

@@ -141,7 +141,8 @@ public interface SymbolTable {
         Reference(Bundle.getMessage("InitialValueType_Reference"), true),
         Formula(Bundle.getMessage("InitialValueType_Formula"), true),
         ScriptExpression(Bundle.getMessage("InitialValueType_ScriptExpression"), true),
-        ScriptFile(Bundle.getMessage("InitialValueType_ScriptFile"), true);
+        ScriptFile(Bundle.getMessage("InitialValueType_ScriptFile"), true),
+        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true);
 
         private final String _descr;
         private final boolean _isValidAsParameter;
@@ -311,6 +312,29 @@ public interface SymbolTable {
         return variable.get();
     }
 
+    private static Object copyLogixNG_Table(String initialData) {
+
+        NamedTable myTable = InstanceManager.getDefault(NamedTableManager.class)
+                .getNamedTable(initialData);
+
+        var myMap = new java.util.concurrent.ConcurrentHashMap();
+
+        for (int row=1; row <= myTable.numRows(); row++) {
+            Object rowKey = myTable.getCell(row, 0);
+            var rowMap = new java.util.concurrent.ConcurrentHashMap();
+
+            for (int col=1; col <= myTable.numColumns(); col++) {
+                var columnKey = myTable.getCell(0, col);
+                var cellValue = myTable.getCell(row, col);
+                rowMap.put(columnKey, cellValue);
+            }
+
+            myMap.put(rowKey, rowMap);
+        }
+
+        return myMap;
+    }
+
     public static Object getInitialValue(
             InitialValueType initialType,
             String initialData,
@@ -403,6 +427,9 @@ public interface SymbolTable {
 
             case ScriptFile:
                 return runScriptFile(initialData);
+
+            case LogixNG_Table:
+                return copyLogixNG_Table(initialData);
 
             default:
                 log.error("definition._initialValueType has invalid value: {}", initialType.name());

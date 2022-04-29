@@ -1,6 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
-import jmri.JmriException;
+import java.io.IOException;
+import java.util.Map;
+
+import jmri.*;
+import jmri.jmrit.logixng.NamedTable;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.util.JUnitUtil;
 
@@ -31,7 +36,7 @@ public class DefaultGlobalVariableTest {
     }
 
     @Test
-    public void testInitialValue() throws JmriException {
+    public void testInitialValue() throws JmriException, NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         Assert.assertEquals("java.util.concurrent.CopyOnWriteArrayList",
                 getVariableValue(InitialValueType.Array, "").getClass().getName());
         Assert.assertEquals("java.util.concurrent.ConcurrentHashMap",
@@ -40,6 +45,23 @@ public class DefaultGlobalVariableTest {
         Assert.assertEquals(352, (long)getVariableValue(InitialValueType.Integer, "352"));
         Assert.assertNull(getVariableValue(InitialValueType.None, ""));
         Assert.assertEquals("Hello", getVariableValue(InitialValueType.String, "Hello"));
+
+        // Assign a copy of a table to a global variable
+        NamedTable csvTable = InstanceManager.getDefault(NamedTableManager.class)
+                        .loadTableFromCSV("IQT1", null, "scripts:LogixNG/LogixNG_ExampleTable.csv");
+        Assert.assertNotNull(csvTable);
+        Object value = getVariableValue(InitialValueType.LogixNG_Table, csvTable.getSystemName());
+        Assert.assertNotNull(value);
+        Assert.assertEquals("java.util.concurrent.ConcurrentHashMap", value.getClass().getName());
+        Map<String,Map<String,String>> map = (Map)value;
+        Assert.assertEquals("Left turnout", map.get("Left").get("Turnouts"));
+        Assert.assertEquals("Right turnout", map.get("Right").get("Turnouts"));
+        Assert.assertEquals("IT15", map.get("First siding").get("Turnouts"));
+        Assert.assertEquals("IT22", map.get("Second siding").get("Turnouts"));
+        Assert.assertEquals("Left sensor", map.get("Left").get("Sensors"));
+        Assert.assertEquals("Right sensor", map.get("Right").get("Sensors"));
+        Assert.assertEquals("IS15", map.get("First siding").get("Sensors"));
+        Assert.assertEquals("IS22", map.get("Second siding").get("Sensors"));
     }
 
     // The minimal setup for log4J
