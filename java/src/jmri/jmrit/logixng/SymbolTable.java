@@ -317,11 +317,11 @@ public interface SymbolTable {
         NamedTable myTable = InstanceManager.getDefault(NamedTableManager.class)
                 .getNamedTable(initialData);
 
-        var myMap = new java.util.concurrent.ConcurrentHashMap();
+        var myMap = new java.util.concurrent.ConcurrentHashMap<Object, Map<Object, Object>>();
 
         for (int row=1; row <= myTable.numRows(); row++) {
             Object rowKey = myTable.getCell(row, 0);
-            var rowMap = new java.util.concurrent.ConcurrentHashMap();
+            var rowMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
 
             for (int col=1; col <= myTable.numColumns(); col++) {
                 var columnKey = myTable.getCell(0, col);
