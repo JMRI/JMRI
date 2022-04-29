@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Tools Menu</h1>
+      <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
@@ -174,7 +174,7 @@
 
       <p>A convenient way to do the setup is creating a Panel with the JMRI Layout Editor. A Layout
       Editor guidance can be found <a href=
-      "https://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.</p>
+      "../../package/jmri/jmrit/display/LayoutEditor.shtml">here</a>.</p>
 
       <p>Your Panel should have all the Blocks and attached Sensors you need. Test and store the
       Panel.<br>

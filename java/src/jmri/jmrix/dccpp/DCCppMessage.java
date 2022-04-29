@@ -339,7 +339,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "CAB: " + getFuncV2CabString();
                     text += ", FUNC: " + getFuncV2FuncString();
                     text += ", State: " + getFuncV2StateString();
-                    text += ", (No Reply Expected)";
                 } else {
                     text += "Invalid syntax: '" + toString() + "'";
                 }
@@ -1541,6 +1540,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_MAXNUMSLOTS:
             case DCCppConstants.OUTPUT_CMD:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
+            case DCCppConstants.FUNCTION_V2_CMD:
                 retv = true;
                 break;
             default:
@@ -2145,15 +2145,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public static DCCppMessage makeCSMaxNumSlotsMsg() {
         return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
     }
+    
     /**
      * Generate a function message using the V2 'F' syntax supported by DCC-EX
      * <p>
      * @param cab cab address to send function to
      * @param func function number to set
      * @param state new state of function 0/1
-     * @return function V2 message
+     * @return function functionV2message
      */
-    public static DCCppMessage makeFunctionV2Message(int cab, int func, int state) {
+    public static DCCppMessage makeFunctionV2Message(int cab, int func, boolean state) {
         // Sanity check inputs
         if (cab < 0 || cab > DCCppConstants.MAX_LOCO_ADDRESS) {
             return (null);
@@ -2161,13 +2162,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (func < 0 || func > DCCppConstants.MAX_FUNCTION_NUMBER) {
             return (null);
         }
-        if (state < 0 || state > 1) {
-            return (null);
-        }
         DCCppMessage m = new DCCppMessage(DCCppConstants.FUNCTION_V2_CMD);
         m.myMessage.append(" ").append(cab);
         m.myMessage.append(" ").append(func);
-        m.myMessage.append(" ").append(state);
+        m.myMessage.append(" ").append(state?1:0); //1 or 0 for true or false
         m.myRegex = DCCppConstants.FUNCTION_V2_CMD_REGEX;
         m._nDataChars = m.toString().length();
         return (m);
@@ -2219,6 +2217,29 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
+     * Generate an emergency stop for the specified address.
+     * <p>
+     * Note: This just sends a THROTTLE command with speed = -1
+     *
+     * @param address is the locomotive address.
+     * @return message to send e stop to the specified address.
+     */
+    public static DCCppMessage makeAddressedEmergencyStop(int address) {
+        // Sanity check inputs
+        if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
+            return (null);
+        }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
+        m.myMessage.append(" ").append(address);
+        m.myMessage.append(" -1 1");
+        m.myRegex = DCCppConstants.THROTTLE_V3_CMD_REGEX;
+
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    /**
      * Generate an emergency stop for all locos in reminder table.
      * @return message to send e stop for all locos
      */
@@ -2245,14 +2266,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * sets the throttle for a given register/cab combination
      *
      * REGISTER: an internal register number, from 1 through MAX_MAIN_REGISTERS
-     * (inclusive), to store the DCC packet used to control this throttle
-     * setting CAB: the short (1-127) or long (128-10293) address of the engine
-     * decoder SPEED: throttle speed from 0-126, or -1 for emergency stop
-     * (resets SPEED to 0) DIRECTION: 1=forward, 0=reverse. Setting direction
-     * when speed=0 or speed=-1 only effects directionality of cab lighting for
-     * a stopped train
+     *   (inclusive), to store the DCC packet used to control this throttle
+     *   setting 
+     * CAB: the short (1-127) or long (128-10293) address of the engine decoder 
+     * SPEED: throttle speed from 0-126, or -1 for emergency stop (resets SPEED to 0) 
+     * DIRECTION: 1=forward, 0=reverse. Setting direction
+     *   when speed=0 or speed=-1 only effects directionality of cab lighting for
+     *   a stopped train
      *
-     * @return {@code <T REGISTER SPEED DIRECTION>}
+     * @return {@code <T REGISTER CAB SPEED DIRECTION>}
      *
      */
     public static DCCppMessage makeSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
@@ -2274,6 +2296,51 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m.myMessage.append(" ").append(isForward ? "1" : "0");
 
         m.myRegex = DCCppConstants.THROTTLE_CMD_REGEX;
+
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    /**
+     * Generate a Speed and Direction Request message
+     *
+     * @param address   is the locomotive address
+     * @param speed     a normalized speed value (a floating point number
+     *                  between 0 and 1). A negative value indicates emergency
+     *                  stop.
+     * @param isForward true for forward, false for reverse.
+     *
+     * Format: {@code <t CAB SPEED DIRECTION>}
+     *
+     * sets the throttle for a given register/cab combination
+     *
+     * CAB: the short (1-127) or long (128-10293) address of the engine decoder 
+     * SPEED: throttle speed from 0-126, or -1 for emergency stop (resets SPEED to 0) 
+     * DIRECTION: 1=forward, 0=reverse. Setting direction
+     *   when speed=0 or speed=-1 only effects directionality of cab lighting for
+     *   a stopped train
+     *
+     * @return {@code <T CAB SPEED DIRECTION>}
+     *
+     */
+    public static DCCppMessage makeSpeedAndDirectionMsg(int address, float speed, boolean isForward) {
+        // Sanity check inputs
+        if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) {
+            return (null);
+        }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
+        m.myMessage.append(" ").append(address);
+        if (speed < 0.0) {
+            m.myMessage.append(" -1");
+        } else {
+            int speedVal = java.lang.Math.round(speed * 126);
+            speedVal = Math.min(speedVal, DCCppConstants.MAX_SPEED);
+            m.myMessage.append(" ").append(speedVal);
+        }
+        m.myMessage.append(" ").append(isForward ? "1" : "0");
+
+        m.myRegex = DCCppConstants.THROTTLE_V3_CMD_REGEX;
 
         m._nDataChars = m.toString().length();
         return (m);

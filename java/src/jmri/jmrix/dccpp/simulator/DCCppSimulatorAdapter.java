@@ -540,8 +540,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
-            case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FUNCTION_V2_CMD:
+                log.debug("FunctionV2Detected");
+                reply = DCCppReply.parseDCCppReply("O"); //TODO: return the locoState message
+                break;
+
+            case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
             case DCCppConstants.OPS_WRITE_CV_BYTE:
@@ -563,7 +567,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.1.7 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.0 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }

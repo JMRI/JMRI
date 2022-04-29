@@ -416,7 +416,7 @@ public class CbusNodeEventManager {
         // check other nodes in learn mode
         if ( _node.getTableModel().getAnyNodeInLearnMode() > -1 ) {
             String err = "Cancelling teach event.  Node " + _node.getTableModel().getAnyNodeInLearnMode() + " is already in Learn Mode";
-            log.warn(err);
+            log.warn("Unable to teach: {}",err);
             _node.notifyPropertyChangeListener("ADDEVCOMPLETE", null, err);
             return;
         }
@@ -447,7 +447,7 @@ public class CbusNodeEventManager {
         // check other nodes in learn mode
         if ( _node.getTableModel().getAnyNodeInLearnMode() > -1 ) {
             String err = "Cancelling delete event.  Node " + _node.getTableModel().getAnyNodeInLearnMode() + " is already in Learn Mode";
-            log.warn(err);
+            log.warn("Unable to teach: {}",err);
             _node.notifyPropertyChangeListener("DELETEEVCOMPLETE", null, err);
             return;
         }
