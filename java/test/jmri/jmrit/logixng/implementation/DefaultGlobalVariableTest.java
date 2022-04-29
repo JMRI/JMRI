@@ -36,6 +36,7 @@ public class DefaultGlobalVariableTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testInitialValue() throws JmriException, NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         Assert.assertEquals("java.util.concurrent.CopyOnWriteArrayList",
                 getVariableValue(InitialValueType.Array, "").getClass().getName());
