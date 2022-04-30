@@ -727,7 +727,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     }
 
     protected int getRampTimeForDistance(float availDist, float changeDist, float bufDist) {
-        return _ramp. getRampTimeForDistance(availDist, changeDist, bufDist);
+        if (_ramp == null) {
+            return 0;
+        }
+        return _ramp. getRampTimeForDistance(availDist, bufDist);
     }
 
     protected int getRunState() {
@@ -1176,7 +1179,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             return limit;
         }
 
-        int getRampTimeForDistance(float availDist, float changeDist, float bufDist) {
+        int getRampTimeForDistance(float availDist, float bufDist) {
             float accumTime = 0;    // accumulated time of commands up to ramp start
             float accumDist = 0;
             int timeIncrement = rampData.getRampTimeIncrement();
@@ -1190,7 +1193,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 } else {
                     speed = iter.next().floatValue();   // skip repeat of current speed                
                 }
-                changeDist = _speedUtil.getRampLengthForEntry(speedSetting, speed) + bufDist;
+                float changeDist = _speedUtil.getRampLengthForEntry(speedSetting, speed) + bufDist;
                 trackSpeed = _speedUtil.getTrackSpeed(speed);
                 accumDist += trackSpeed * timeIncrement;
                 accumTime += timeIncrement;
