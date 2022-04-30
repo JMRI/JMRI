@@ -18,6 +18,11 @@ public enum NamedBeanAddressing {
     Reference(Bundle.getMessage("NamedBeanAddressing_Reference")),
 
     /**
+     * Addresssing by memory, by entering a memory that points to the named bean.
+     */
+    Memory(Bundle.getMessage("NamedBeanAddressing_Memory")),
+
+    /**
      * Addresssing by local variable, by entering a local variable that points to the named bean.
      */
     LocalVariable(Bundle.getMessage("NamedBeanAddressing_LocalVariable")),

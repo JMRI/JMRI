@@ -7,15 +7,20 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logixng.GlobalVariable;
+import jmri.jmrit.logixng.GlobalVariableManager;
 
 /**
  * Defines types of NamedBeans, for example Turnout and Light.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public enum NamedBeanType {
     Block(Bundle.getMessage("BeanNameBlock"), Block.class, null, () -> {
         return InstanceManager.getDefault(BlockManager.class);
+    }),
+    GlobalVariable(Bundle.getMessage("BeanNameGlobalVariable"), GlobalVariable.class, "value", () -> {
+        return InstanceManager.getDefault(GlobalVariableManager.class);
     }),
     EntryExit(Bundle.getMessage("BeanNameEntryExit"), DestinationPoints.class, "active", () -> {
         return InstanceManager.getDefault(EntryExitPairs.class);
@@ -47,7 +52,7 @@ public enum NamedBeanType {
     Warrant(Bundle.getMessage("BeanNameWarrant"), Warrant.class, "KnownState", () -> {
         return InstanceManager.getDefault(WarrantManager.class);
     });
-    
+
     private final String _name;
     private final Class<? extends NamedBean> _clazz;
     private final String _propertyName;
@@ -92,5 +97,5 @@ public enum NamedBeanType {
 
         Manager<? extends NamedBean> getManager();
     }
-    
+
 }

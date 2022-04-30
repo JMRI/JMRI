@@ -87,6 +87,21 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         throw new UnsupportedOperationException("Not supported");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean remove(Object key, Object value) {
+        // NetBeans complains about suspicious call to Map.get(), but
+        // JMRI Static analysis doesn't allow casting to (K)key
+        List<V> l = _internalMap.get(key);
+        if (l != null) {
+            if (l.remove(value)) {
+                if (l.isEmpty()) _internalMap.remove(key);
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Remove a value.
      * @param key the key

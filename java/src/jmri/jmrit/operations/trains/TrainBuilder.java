@@ -1679,11 +1679,19 @@ public class TrainBuilder extends TrainBuilderBase {
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
             track.setScheduleItemId(id); // restore id
-            addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
-                            new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
-                                    track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
-                                    Setup.getLengthUnit().toLowerCase(), track.getReservationFactor() }));
+            if (car.getTrack().isStaging()) {
+                addLine(_buildReport, SEVEN,
+                        MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
+                                new Object[]{car.toString(), track.getLocation().getName(), track.getName(),
+                                        track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+                                        Setup.getLengthUnit().toLowerCase(), track.getReservationFactor()}));
+            } else {
+                addLine(_buildReport, SEVEN,
+                        MessageFormat.format(Bundle.getMessage("buildNoDestSpace"),
+                                new Object[]{car.toString(), track.getTrackTypeName(), track.getLocation().getName(),
+                                        track.getName(), track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+                                        Setup.getLengthUnit().toLowerCase()}));
+            }
             return false;
         }
         // try to send car to this spur

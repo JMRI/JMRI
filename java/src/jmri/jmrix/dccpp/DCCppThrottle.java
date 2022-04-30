@@ -4,6 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
+import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,12 +84,29 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setFunction(int functionNum, boolean newState) {
+        if (tc.getCommandStation().isFunctionV2Supported()) {
+            //send the newer <F CAB FUNC STATE> message
+            DCCppMessage msg = DCCppMessage.makeFunctionV2Message(this.getDccAddress(), functionNum, newState);
+            queueMessage(msg, THROTTLEIDLE);
+            updateFunction(functionNum, newState); //update throttle and broadcast change
+        } else {
+            //or send the older <f ADDR BYTE1 (BYTE2)> message
+            super.setFunction(functionNum, newState);
+        }
+    }
+
+   
+    /**
      * Send the DCC++  message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
      */
     @Override
     protected void sendFunctionGroup1() {
-        log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4{}",
+        log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4 {}",
             getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));
         DCCppMessage msg = DCCppMessage.makeFunctionGroup1OpsMsg(this.getDccAddress(),
             getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));
@@ -173,23 +191,38 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 speed = (float) 1.0;
             }
             /* we're sending a speed to the locomotive */
-            DCCppMessage msg = DCCppMessage.makeSpeedAndDirectionMsg(
-            getRegisterNum(),
-            getDccAddress(),
-            speed,
-            this.isForward);
+            DCCppMessage msg;
+            //older version includes register
+            if (tc.getCommandStation().isThrottleRegisterRequired()) {
+                msg = DCCppMessage.makeSpeedAndDirectionMsg(
+                getRegisterNum(),
+                getDccAddress(),
+                speed,
+                this.isForward);
+            } else {
+                //newer version does not need register passed
+                msg = DCCppMessage.makeSpeedAndDirectionMsg(
+                getDccAddress(),
+                speed,
+                this.isForward);               
+            }
             // now, queue the message for sending to the command station
             //queueMessage(msg, THROTTLESPEEDSENT);
             queueMessage(msg, THROTTLEIDLE);
         }
     }
 
-    /* Since DCC++ has a seperate Opcode for emergency stop,
-     * We're setting this up as a seperate protected function
+    /* Since DCC++ has a separate Opcode for emergency stop,
+     * We're setting this up as a separate protected function
      */
     protected void sendEmergencyStop() {
         /* Emergency stop sent */
-        DCCppMessage msg = DCCppMessage.makeAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
+        DCCppMessage msg;
+        if (tc.getCommandStation().isThrottleRegisterRequired()) {
+            msg = DCCppMessage.makeAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
+        } else {
+            msg = DCCppMessage.makeAddressedEmergencyStop(this.getDccAddress());            
+        }
         // now, queue the message for sending to the command station
         //queueMessage(msg, THROTTLESPEEDSENT);
         queueMessage(msg, THROTTLEIDLE);

@@ -20,18 +20,18 @@ public class LayoutTrackTest {
     protected LayoutEditor le = null;
 
     // from here down is testing infrastructure
-    @BeforeEach
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         JUnitUtil.setUp();
-        
+
         // eventually we'll be using
-        // LayoutModels instead of the full LayoutEditor 
+        // LayoutModels instead of the full LayoutEditor
         // for context, in which case this will be OK headless
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         le = new LayoutEditor();
     }
-    
-    @AfterEach
+
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         le = null;
         JUnitUtil.tearDown();

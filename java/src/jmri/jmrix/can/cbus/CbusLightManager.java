@@ -54,8 +54,8 @@ public class CbusLightManager extends AbstractLightManager {
             validateSystemNameFormat(systemName);
             addr = systemName.substring(getSystemNamePrefix().length());
         } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
-            throw new IllegalArgumentException (e.getMessage());
+            log.error("Unable to create CbusLight, {}", e.getMessage());
+            throw e;
         }
         // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);

@@ -1698,8 +1698,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Dispose of this by stopped it's ongoing actions
      */
+    @Override
     public void dispose() {
-        if (staleSlotCheckTimer != null) staleSlotCheckTimer.stop();
+        if (staleSlotCheckTimer != null) {
+            staleSlotCheckTimer.stop();
+        }
     }
 
     // initialize logging
