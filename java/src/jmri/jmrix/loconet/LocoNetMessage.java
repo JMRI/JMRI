@@ -604,10 +604,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         if (o == null) {
             return false;   // basic contract
         }
-        if (!(o instanceof LocoNetMessage)) {
-            return false;
-        }
-        LocoNetMessage m = (LocoNetMessage) o;
+        LocoNetMessage m = new LocoNetMessage(o);
         if (m._nDataChars != this._nDataChars) {
             return false;
         }
