@@ -594,13 +594,15 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     /**
      * Two messages are the same if their masked data content is the same.
      * <br>
-     * We
-     * ignore the error-check byte to ease comparisons before a message is
+     * We ignore the error-check byte to ease comparisons before a message is
      * transmitted.
      *
+     * @param o the LocoNet message to be compared against this object's message
+     * @param masks an array of bytes to use to mask the corresponding bytes of 
+     * the messages.
      * @return true if objects contain the same message contents
      */
-    public boolean equals(LocoNetMessage o, int masks[]) {
+    public boolean equals(LocoNetMessage o, int[] masks) {
         if (o == null) {
             return false;   // basic contract
         }

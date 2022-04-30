@@ -4323,7 +4323,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Create a string representation of the loco address in
-     * addressLow & addressHigh in a form appropriate for the type of address (2
+     * addressLow and addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
      * <p>
      * "Mixed mode" is used by DT100 and DT200 throttles to display loco
