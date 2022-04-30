@@ -44,7 +44,6 @@ public class BlockOrder {
         _pathName = path;
         _entryName = entry;
         _exitName = exit;
-//         log.debug("ctor1: {}",this);
     }
 
     // for use by WarrantTableFrame 
@@ -54,7 +53,6 @@ public class BlockOrder {
         _pathName = bo._pathName;
         _entryName = bo._entryName;
         _exitName = bo._exitName;
-//        log.debug("ctor2: {}",this);
     }
 
     public void setIndex(int idx) {
@@ -207,16 +205,9 @@ public class BlockOrder {
         }
         OPath path2 = bo2._block.getPath();
         if (path2 == null) {
-//            if (log.isDebugEnabled()) {
-//                log.debug("No path found at non-enterable block \"{}\"", bo2._block.getDisplayName());
-//            }
             return null;
         }
         if (exit.equals(path2.getToPortal()) || exit.equals(path2.getFromPortal())) {
-//            if (log.isDebugEnabled()) {
-//                log.debug("Path \"{}\" and \"{}\" in block \"{}\" connect at portal \"{}\"",
-//                        path1.getName(), path2.getName(), bo2._block.getDisplayName(), exit.getName());
-//            }
             return null;
         }
         for (BeanSetting bs1 : path1.getSettings()) {
@@ -241,10 +232,6 @@ public class BlockOrder {
                 }
             }
         }
-//        if (log.isDebugEnabled()) {
-//            log.debug("Path \"{}\" and \"{}\" in block \"{}\" of block \"{}\" do not share a turnout or portal",
-//                    path1.getName(), path2.getName(), bo2._block.getDisplayName());
-//        }
         return null;
     }
 
