@@ -65,35 +65,35 @@ public class Alm {
     }
 
     public static boolean isDevBAW(LocoNetMessage l) {
-        return (getAlmMsgType(l) == AlmMsgType.ALM_BAW);
+        return (getAlmMsgType(l) == AlmMsgTypes.ALM_BAW);
     }
     
     public static boolean isDs7xRQ(LocoNetMessage l) {
-        return getAlmMsgType(l) == AlmMsgType.ALM_RDQ;
+        return getAlmMsgType(l) == AlmMsgTypes.ALM_RDQ;
     }
 
-    static AlmMsgType getAlmMsgType(LocoNetMessage m) {
+    static AlmMsgTypes getAlmMsgType(LocoNetMessage m) {
         // Verify message basics
         if (((m.getOpCode() != LnConstants.OPC_IMM_PACKET_2)
                 && (m.getOpCode() != LnConstants.OPC_ALM_READ))
                 || (m.getElement(1) != 0x10) || (m.getNumDataElements()!=16)) {
-            return AlmMsgType.NOT_ALM_MSG;
+            return AlmMsgTypes.NOT_ALM_MSG;
         }
 
         // check routes capabilities query
         if (m.equals(almcapq)) {
-            return AlmMsgType.ALM_ROUTCAPQ;
+            return AlmMsgTypes.ALM_ROUTCAPQ;
         }
         if (m.equals(almcapq, capqmask)) {
-            return AlmMsgType.ALM_ROUTCAPREP;
+            return AlmMsgTypes.ALM_ROUTCAPREP;
         }
         if (m.equals(almchga, almchgam)) {
-            return AlmMsgType.ALM_BAW;
+            return AlmMsgTypes.ALM_BAW;
         }
         if (m.equals(almgetr, almgetrm)) {
-            return AlmMsgType.ALM_RDQ;
+            return AlmMsgTypes.ALM_RDQ;
         }
-        return AlmMsgType.NOT_ALM_MSG;
+        return AlmMsgTypes.NOT_ALM_MSG;
     }
 //    private final static Logger log = LoggerFactory.getLogger(Alm.class);
 
