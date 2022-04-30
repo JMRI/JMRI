@@ -168,7 +168,7 @@ public class Almir {
         boolean enb = getEnb(l);
         enable = (enb ? Bundle.getMessage("LN_MSG_HELPER_DISABLED")
                 : Bundle.getMessage("LN_MSG_HELPER_ENABLED"));
-        devMode mod = getMode(l);
+        DevMode mod = getMode(l);
         String mode;
         String dev;
         int rts;
@@ -178,13 +178,13 @@ public class Almir {
                 dev = "DS74"; //NOI18N
                 rts = 8;
                 ents = 8;
-                be = ((mod == devMode.DS74_LIGHT)?(bs + 7):(bs + 3));
+                be = ((mod == DevMode.DS74_LIGHT)?(bs + 7):(bs + 3));
                 break;
             case 0x7c:
                 dev = "DS78V"; //NOI18N
                 rts = 16;
                 ents = 8;
-                be = ((mod == devMode.DS78V_3_POS)?(bs + 15):(bs + 7));
+                be = ((mod == DevMode.DS78V_3_POS)?(bs + 15):(bs + 7));
                 break;
             default:
                 dev = Bundle.getMessage("LN_MSG_ALM_HELPER_DEVICE_UNKNOWN");
@@ -267,29 +267,29 @@ public class Almir {
     private static boolean getEnb(LocoNetMessage l) {
         return (l.getElement(10)& 0x40) == 0x40;
     }
-    private static devMode getMode(LocoNetMessage l) {
+    private static DevMode getMode(LocoNetMessage l) {
         if (l.getElement(9) == 0x74) {
             switch (l.getElement(10) & 0x1E) {
                 case 0:
-                    return devMode.DS74_SOLE;
+                    return DevMode.DS74_SOLE;
                 case 2:
-                    return devMode.DS74_STALL;
+                    return DevMode.DS74_STALL;
                 case 0xA:
-                    return devMode.DS74_LIGHT;
+                    return DevMode.DS74_LIGHT;
                 default:
                     break;
             }
         } else if (l.getElement(9) == 0x7c) {
             switch (l.getElement(10) & 0xF) {
                 case 4:
-                    return devMode.DS78V_2_POS;
+                    return DevMode.DS78V_2_POS;
                 case 0xC:
-                    return devMode.DS78V_3_POS;
+                    return DevMode.DS78V_3_POS;
                 default:
                     break;
             }
         }
-        return devMode.UNKN;
+        return DevMode.UNKN;
     }
 
     private static final String EMPTY = "";
@@ -320,7 +320,7 @@ public class Almir {
     private static final int[] ardqm = new int[] {255, 255, 255, 255, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0};
 
-    private enum devMode {
+    private enum DevMode {
         DS74_SOLE,
         DS74_STALL,
         DS74_LIGHT,

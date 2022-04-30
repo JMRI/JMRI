@@ -5,7 +5,7 @@ package jmri.jmrix.loconet.alm;
  *
  * @author Bob Milhaupt  Copyright (C) 2022
  */
-public enum almMsgType {
+public enum AlmMsgType {
     NOT_ALM_MSG, ALM_ROUTCAPQ, ALM_ROUTCAPREP, 
     ALM_RDQ, ALM_ROUTDATW, ALM_ROUTDATREP, 
     ALM_BAW, ALM_UNKNOWN
