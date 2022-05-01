@@ -247,12 +247,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         // Therefore we create a new thread for this task.
         Runnable runnable = () -> {
 
-            // Activate and execute the initialization LogixNGs first.
+            // Initialize the values of the global variables
             Set<GlobalVariable> globalVariables =
                     InstanceManager.getDefault(GlobalVariableManager.class)
                             .getNamedBeanSet();
 
-            // Initialize the value of the global variable
             for (GlobalVariable gv : globalVariables) {
                 try {
                     gv.initialize();
