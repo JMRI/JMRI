@@ -40,13 +40,8 @@ public class TimeoutSwing extends AbstractDigitalActionSwing {
         JPanel _tabbedPaneDelay;
         JPanel _tabbedPaneTimerUnit;
 
-        if (action != null) {
-            _tabbedPaneDelay = _selectDelaySwing.createPanel(action.getSelectDelay());
-            _tabbedPaneTimerUnit = _selectTimerUnitSwing.createPanel(action.getSelectTimerUnit(), TimerUnit.values());
-        } else {
-            _tabbedPaneDelay = _selectDelaySwing.createPanel(null);
-            _tabbedPaneTimerUnit = _selectTimerUnitSwing.createPanel(null, TimerUnit.values());
-        }
+        _tabbedPaneDelay = _selectDelaySwing.createPanel(action.getSelectDelay());
+        _tabbedPaneTimerUnit = _selectTimerUnitSwing.createPanel(action.getSelectTimerUnit(), TimerUnit.values());
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneDelay,
