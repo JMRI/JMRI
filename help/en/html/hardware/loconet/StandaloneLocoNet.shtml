@@ -230,7 +230,7 @@
 
               <li>DCS240</li>
 
-              <li>DCS210</li>
+              <li>DCS210/DCS210+</li>
             </ul>
           </td>
           <td>Provides</td>
@@ -249,7 +249,7 @@
 
               <li>DCS240</li>
 
-              <li>DCS210</li>
+              <li>DCS210/DCS210+</li>
 
               <li>DCS50/DCS51/DCS52</li>
 
@@ -274,7 +274,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Uhlenbrock Daisy System (Daisy throttle plus Power2 booster)</td>
+          <td>Uhlenbrock Daisy System (Daisy<br>throttle plus Power2 booster)</td>
           <td>Provides</td>
           <td>Can provide a DCC signal *</td>
           <td>Provides</td>
@@ -323,7 +323,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits LocoBuffer-USB Rev N, LocoBuffer-USB Rev O</td>
+          <td>RR-CirKits LocoBuffer-USB Rev N,<BR>LocoBuffer-USB Rev O</td>
           <td>Optional</td>
           <td>Required for power **</td>
           <td>Required, <em>cannot provide</em></td>
@@ -363,7 +363,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax DT100x/DT200x/DT300x/DT400x/DT402x/DT500x throttle</td>
+          <td>Digitrax DT100x/DT200x/DT300x/<br>DT400x/DT402x/DT500x/DT602x/UTx throttle</td>
           <td>Required</td>
           <td>Optional, for power</td>
           <td>Required</td>
@@ -393,7 +393,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax DS54/DS64</td>
+          <td>Digitrax DS54/DS64/DS74/DS78V</td>
           <td>
           </td>
           <td>
@@ -519,7 +519,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits Motorman, MotorMan-II, SignalMan, TowerMan, Watchman</td>
+          <td>RR-CirKits Motorman, MotorMan-II,<br>SignalMan, TowerMan, Watchman</td>
           <td>
           </td>
           <td>
@@ -611,7 +611,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>M&ouml;llehem G&aring;rdsproduktion (MGP) LocoNet Termination card</td>
+          <td>M&ouml;llehem G&aring;rdsproduktion (MGP)<br>LocoNet Termination card</td>
           <td>
           </td>
           <td>Can provide DC power</td>

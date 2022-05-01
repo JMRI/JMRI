@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax Command Station Configuration</title>
   <meta name="keywords" content=
-  "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS50 DCS51 DCS52 DB150 JMRI">
+  "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS210+ DCS50 DCS51 DCS52 DB150 JMRI">
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -106,6 +106,7 @@
             <li>DCS100, DCS200 (Chief&trade;, Chief II&trade;, Super Chief&trade;, Super Chief Xtra&trade;)</li>
 
             <li>DCS210 (Evolution&trade;)</li>
+            <li>DCS210+ (Evolution Express&trade;)</li>
 
             <li>DCS240 (Advanced&trade;)</li>
           </ul>
