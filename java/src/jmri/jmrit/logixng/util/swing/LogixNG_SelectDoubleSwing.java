@@ -46,15 +46,10 @@ public class LogixNG_SelectDoubleSwing {
         _selectTableSwing = new LogixNG_SelectTableSwing(_dialog, swi);
     }
 
-    public JPanel createPanel(@CheckForNull LogixNG_SelectDouble selectDouble) {
+    public JPanel createPanel(@Nonnull LogixNG_SelectDouble selectDouble) {
 
-        LogixNG_SelectDouble.FormatterParserValidator _formatterParserValidator;
-        if (selectDouble != null) {
-            _formatterParserValidator = selectDouble.getFormatterParserValidator();
-        } else {
-            _formatterParserValidator = new LogixNG_SelectDouble(new NullBase(), 0, (evt)->{})
-                    .getFormatterParserValidator();
-        }
+        LogixNG_SelectDouble.FormatterParserValidator _formatterParserValidator
+                = selectDouble.getFormatterParserValidator();
 
         JPanel panel = new JPanel();
 
@@ -64,11 +59,7 @@ public class LogixNG_SelectDoubleSwing {
         _panelMemory = new JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
-        if (selectDouble != null) {
-            _panelTable = _selectTableSwing.createPanel(selectDouble.getSelectTable());
-        } else {
-            _panelTable = _selectTableSwing.createPanel(null);
-        }
+        _panelTable = _selectTableSwing.createPanel(selectDouble.getSelectTable());
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
@@ -102,26 +93,21 @@ public class LogixNG_SelectDoubleSwing {
         _panelFormula.add(_formulaTextField);
 
 
-        if (selectDouble != null) {
-            switch (selectDouble.getAddressing()) {
-                case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
-                case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
-                case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
-                case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
-                case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
-                case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + selectDouble.getAddressing().name());
-            }
-            _valueTextField.setText(_formatterParserValidator.format(selectDouble.getValue()));
-            _referenceTextField.setText(selectDouble.getReference());
-            _memoryPanel.setDefaultNamedBean(selectDouble.getMemory());
-            _listenToMemoryCheckBox.setSelected(selectDouble.getListenToMemory());
-            _localVariableTextField.setText(selectDouble.getLocalVariable());
-            _formulaTextField.setText(selectDouble.getFormula());
-        } else {
-            _valueTextField.setText(_formatterParserValidator.format(
-                    _formatterParserValidator.getInitialValue()));
+        switch (selectDouble.getAddressing()) {
+            case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
+            case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
+            case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
+            case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
+            case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
+            case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
+            default: throw new IllegalArgumentException("invalid _addressing state: " + selectDouble.getAddressing().name());
         }
+        _valueTextField.setText(_formatterParserValidator.format(selectDouble.getValue()));
+        _referenceTextField.setText(selectDouble.getReference());
+        _memoryPanel.setDefaultNamedBean(selectDouble.getMemory());
+        _listenToMemoryCheckBox.setSelected(selectDouble.getListenToMemory());
+        _localVariableTextField.setText(selectDouble.getLocalVariable());
+        _formulaTextField.setText(selectDouble.getFormula());
 
         panel.add(_tabbedPane);
         return panel;
