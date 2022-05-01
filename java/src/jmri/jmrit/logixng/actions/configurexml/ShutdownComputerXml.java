@@ -39,7 +39,7 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
         storeCommon(p, element);
 
         var selectEnumXml = new LogixNG_SelectEnumXml<ShutdownComputer.Operation>();
-        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "shutdownOperation"));
 
         return element;
     }
@@ -55,7 +55,7 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
 
         var selectEnumXml = new LogixNG_SelectEnumXml<ShutdownComputer.Operation>();
 
-        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.load(shared.getChild("shutdownOperation"), h.getSelectEnum());
         selectEnumXml.loadLegacy(
                 shared, h.getSelectEnum(),
                 null,

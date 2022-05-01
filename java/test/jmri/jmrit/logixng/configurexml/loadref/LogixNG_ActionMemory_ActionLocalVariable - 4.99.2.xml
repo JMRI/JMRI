@@ -4,8 +4,8 @@
   <jmriversion>
     <major>4</major>
     <minor>99</minor>
-    <test>4</test>
-    <modifier>plus</modifier>
+    <test>7</test>
+    <modifier>dev</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -70,6 +70,10 @@
       <systemName>IQDE:AUTO:0001</systemName>
       <variable>MyVar</variable>
       <otherVariable />
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -78,23 +82,12 @@
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -106,7 +99,15 @@
     </ExpressionLocalVariable>
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0003</systemName>
-      <memory>MyMemory</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>MyMemory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
@@ -116,23 +117,12 @@
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -190,23 +180,14 @@
         <tableName>
           <addressing>Direct</addressing>
           <name>IQT:AUTO:0001</name>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
           <name>Row 4</name>
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
           <name>Column C</name>
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -221,15 +202,11 @@
       <namedBean>
         <addressing>Direct</addressing>
         <name>MyMemory</name>
-        <reference />
-        <localVariable />
-        <formula />
+        <listenToMemory>no</listenToMemory>
       </namedBean>
       <otherMemoryNamedBean>
         <addressing>Direct</addressing>
-        <reference />
-        <localVariable />
-        <formula />
+        <listenToMemory>no</listenToMemory>
       </otherMemoryNamedBean>
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant />
@@ -239,23 +216,14 @@
         <tableName>
           <addressing>Direct</addressing>
           <name>IQT:AUTO:0001</name>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
           <name>Row 1</name>
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
           <name>Column D</name>
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -411,14 +379,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Apr 09 15:52:39 CEST 2022</date>
+      <date>Sun May 01 02:42:30 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Apr 09 15:52:39 CEST 2022</date>
+      <date>Sun May 01 02:42:30 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.4plus+daniel+2022-04-09T13:52:11Z+R616f14e on Sat Apr 09 15:52:39 CEST 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T00:41:46Z+R3178e63 on Sun May 01 02:42:30 CEST 2022-->
 </layout-config>

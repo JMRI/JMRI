@@ -34,14 +34,20 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         if (table != null) {
             namedBeanElement.addContent(new Element("name").addContent(table.getName()));
         }
-        namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
+        if (selectNamedBean.getReference() != null && !selectNamedBean.getReference().isEmpty()) {
+            namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
+        }
         var memory = selectNamedBean.getMemory();
         if (memory != null) {
             namedBeanElement.addContent(new Element("memory").addContent(memory.getName()));
         }
         namedBeanElement.addContent(new Element("listenToMemory").addContent(selectNamedBean.getListenToMemory() ? "yes" : "no"));
-        namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
-        namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
+        if (selectNamedBean.getLocalVariable() != null && !selectNamedBean.getLocalVariable().isEmpty()) {
+            namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
+        }
+        if (selectNamedBean.getFormula() != null && !selectNamedBean.getFormula().isEmpty()) {
+            namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
+        }
 
         if (selectNamedBean.getAddressing() == NamedBeanAddressing.Table) {
             namedBeanElement.addContent(selectTableXml.store(selectNamedBean.getSelectTable(), "table"));

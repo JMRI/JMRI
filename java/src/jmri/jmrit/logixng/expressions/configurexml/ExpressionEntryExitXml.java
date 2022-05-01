@@ -63,6 +63,11 @@ public class ExpressionEntryExitXml extends jmri.managers.configurexml.AbstractN
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "destinationPoints");
 
+        Element is_IsNot = shared.getChild("is_isNot");
+        if (is_IsNot != null) {
+            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
+
         try {
             Element elem = shared.getChild("stateAddressing");
             if (elem != null) {

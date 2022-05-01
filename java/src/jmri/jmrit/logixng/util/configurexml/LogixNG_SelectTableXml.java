@@ -34,13 +34,19 @@ public class LogixNG_SelectTableXml {
         if (table != null) {
             tableNameElement.addContent(new Element("name").addContent(table.getName()));
         }
-        tableNameElement.addContent(new Element("reference").addContent(selectTable.getTableNameReference()));
+        if (selectTable.getTableNameReference() != null && !selectTable.getTableNameReference().isEmpty()) {
+            tableNameElement.addContent(new Element("reference").addContent(selectTable.getTableNameReference()));
+        }
         var memory = selectTable.getTableNameMemory();
         if (memory != null) {
             tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        tableNameElement.addContent(new Element("localVariable").addContent(selectTable.getTableNameLocalVariable()));
-        tableNameElement.addContent(new Element("formula").addContent(selectTable.getTableNameFormula()));
+        if (selectTable.getTableNameLocalVariable() != null && !selectTable.getTableNameLocalVariable().isEmpty()) {
+            tableNameElement.addContent(new Element("localVariable").addContent(selectTable.getTableNameLocalVariable()));
+        }
+        if (selectTable.getTableNameFormula() != null && !selectTable.getTableNameFormula().isEmpty()) {
+            tableNameElement.addContent(new Element("formula").addContent(selectTable.getTableNameFormula()));
+        }
         if (selectTable.getTableNameAddressing() == NamedBeanAddressing.Table) {
             tableNameElement.addContent(selectTableXml.store(selectTable.getSelectTableName(), "table"));
         }
@@ -48,14 +54,22 @@ public class LogixNG_SelectTableXml {
 
         Element tableRowElement = new Element("row");
         tableRowElement.addContent(new Element("addressing").addContent(selectTable.getTableRowAddressing().name()));
-        tableRowElement.addContent(new Element("name").addContent(selectTable.getTableRowName()));
-        tableRowElement.addContent(new Element("reference").addContent(selectTable.getTableRowReference()));
+        if (selectTable.getTableRowName() != null && !selectTable.getTableRowName().isEmpty()) {
+            tableRowElement.addContent(new Element("name").addContent(selectTable.getTableRowName()));
+        }
+        if (selectTable.getTableRowReference() != null && !selectTable.getTableRowReference().isEmpty()) {
+            tableRowElement.addContent(new Element("reference").addContent(selectTable.getTableRowReference()));
+        }
         memory = selectTable.getTableRowMemory();
         if (memory != null) {
             tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        tableRowElement.addContent(new Element("localVariable").addContent(selectTable.getTableRowLocalVariable()));
-        tableRowElement.addContent(new Element("formula").addContent(selectTable.getTableRowFormula()));
+        if (selectTable.getTableRowLocalVariable() != null && !selectTable.getTableRowLocalVariable().isEmpty()) {
+            tableRowElement.addContent(new Element("localVariable").addContent(selectTable.getTableRowLocalVariable()));
+        }
+        if (selectTable.getTableRowFormula() != null && !selectTable.getTableRowFormula().isEmpty()) {
+            tableRowElement.addContent(new Element("formula").addContent(selectTable.getTableRowFormula()));
+        }
         if (selectTable.getTableRowAddressing() == NamedBeanAddressing.Table) {
             tableRowElement.addContent(selectTableXml.store(selectTable.getSelectTableRow(), "table"));
         }
@@ -63,14 +77,22 @@ public class LogixNG_SelectTableXml {
 
         Element tableColumnElement = new Element("column");
         tableColumnElement.addContent(new Element("addressing").addContent(selectTable.getTableColumnAddressing().name()));
-        tableColumnElement.addContent(new Element("name").addContent(selectTable.getTableColumnName()));
-        tableColumnElement.addContent(new Element("reference").addContent(selectTable.getTableColumnReference()));
+        if (selectTable.getTableColumnName() != null && !selectTable.getTableColumnName().isEmpty()) {
+            tableColumnElement.addContent(new Element("name").addContent(selectTable.getTableColumnName()));
+        }
+        if (selectTable.getTableColumnReference() != null && !selectTable.getTableColumnReference().isEmpty()) {
+            tableColumnElement.addContent(new Element("reference").addContent(selectTable.getTableColumnReference()));
+        }
         memory = selectTable.getTableColumnMemory();
         if (memory != null) {
             tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        tableColumnElement.addContent(new Element("localVariable").addContent(selectTable.getTableColumnLocalVariable()));
-        tableColumnElement.addContent(new Element("formula").addContent(selectTable.getTableColumnFormula()));
+        if (selectTable.getTableColumnLocalVariable() != null && !selectTable.getTableColumnLocalVariable().isEmpty()) {
+            tableColumnElement.addContent(new Element("localVariable").addContent(selectTable.getTableColumnLocalVariable()));
+        }
+        if (selectTable.getTableColumnFormula() != null && !selectTable.getTableColumnFormula().isEmpty()) {
+            tableColumnElement.addContent(new Element("formula").addContent(selectTable.getTableColumnFormula()));
+        }
         if (selectTable.getTableColumnAddressing() == NamedBeanAddressing.Table) {
             tableColumnElement.addContent(selectTableXml.store(selectTable.getSelectTableColumn(), "table"));
         }

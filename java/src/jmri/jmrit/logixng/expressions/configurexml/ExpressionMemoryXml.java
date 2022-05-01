@@ -42,7 +42,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
-        element.addContent(selectOtherMemoryNamedBeanXml.store(p.getSelectOtherMemoryNamedBean(), "namedBean"));
+        element.addContent(selectOtherMemoryNamedBeanXml.store(p.getSelectOtherMemoryNamedBean(), "otherMemoryNamedBean"));
 
         String variableName = p.getLocalVariable();
         if (variableName != null) {
@@ -76,8 +76,8 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "memory", null, null, null, null);
 
         var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
-        selectOtherMemoryNamedBeanXml.load(shared.getChild("otherMemoryNamedBean"), h.getSelectNamedBean());
-        selectOtherMemoryNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "otherMemory", null, null, null, null);
+        selectOtherMemoryNamedBeanXml.load(shared.getChild("otherMemoryNamedBean"), h.getSelectOtherMemoryNamedBean());
+        selectOtherMemoryNamedBeanXml.loadLegacy(shared, h.getSelectOtherMemoryNamedBean(), "otherMemory", null, null, null, null);
 
         Element variableName = shared.getChild("variable");
         if (variableName != null) {

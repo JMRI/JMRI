@@ -85,7 +85,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="12:49 PM">
+    <memory value="1:48 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -155,7 +155,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Apr 27 12:49:27 CEST 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun May 01 01:48:42 CEST 2022" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -856,6 +856,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </Or>
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0009</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
@@ -865,23 +873,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -943,6 +940,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionMemory>
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0010</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
@@ -952,23 +957,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -2157,10 +2151,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </CallDigitalExpressionModule>
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0021</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <blockState>Occupied</blockState>
@@ -2232,11 +2226,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0022</systemName>
       <comment>Direct / Direct / Direct :: ValueMatches</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <blockState>ValueMatches</blockState>
@@ -2308,11 +2302,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0023</systemName>
       <comment>Direct / Direct :: Occupied</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <blockState>Occupied</blockState>
@@ -2384,11 +2378,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0024</systemName>
       <comment>Direct / LocalVariable</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <blockState>Occupied</blockState>
@@ -2460,10 +2454,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0025</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <blockState>Occupied</blockState>
@@ -2535,10 +2530,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0026</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <blockState>Occupied</blockState>
@@ -2610,10 +2606,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionBlockXml">
       <systemName>IQDE:AUTO:0027</systemName>
       <comment>Reference / Direct :: Allocated</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <blockState>Allocated</blockState>
@@ -2811,10 +2808,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionClock>
     <ExpressionConditional class="jmri.jmrit.logixng.expressions.configurexml.ExpressionConditionalXml">
       <systemName>IQDE:AUTO:0030</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <conditionalState>False</conditionalState>
@@ -2881,11 +2878,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionConditional class="jmri.jmrit.logixng.expressions.configurexml.ExpressionConditionalXml">
       <systemName>IQDE:AUTO:0031</systemName>
       <comment>A comment</comment>
-      <conditional>First conditional</conditional>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>First conditional</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <conditionalState>False</conditionalState>
@@ -2952,11 +2952,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionConditional class="jmri.jmrit.logixng.expressions.configurexml.ExpressionConditionalXml">
       <systemName>IQDE:AUTO:0032</systemName>
       <comment>A comment</comment>
-      <conditional>First conditional</conditional>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>First conditional</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <conditionalState>True</conditionalState>
@@ -3023,11 +3026,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionConditional class="jmri.jmrit.logixng.expressions.configurexml.ExpressionConditionalXml">
       <systemName>IQDE:AUTO:0033</systemName>
       <comment>A comment</comment>
-      <conditional>First conditional</conditional>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>First conditional</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <conditionalState>Other</conditionalState>
@@ -3094,11 +3100,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionConditional class="jmri.jmrit.logixng.expressions.configurexml.ExpressionConditionalXml">
       <systemName>IQDE:AUTO:0034</systemName>
       <comment>A comment</comment>
-      <conditional>First conditional</conditional>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>First conditional</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <conditionalState>False</conditionalState>
@@ -3164,10 +3173,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionConditional>
     <ExpressionEntryExit class="jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml">
       <systemName>IQDE:AUTO:0035</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <entryExitState>Active</entryExitState>
@@ -3234,10 +3243,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionEntryExit class="jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml">
       <systemName>IQDE:AUTO:0036</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <entryExitState>Inactive</entryExitState>
@@ -3304,10 +3316,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionEntryExit class="jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml">
       <systemName>IQDE:AUTO:0037</systemName>
       <comment>A comment</comment>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <entryExitState>Inactive</entryExitState>
@@ -3374,10 +3389,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionEntryExit class="jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml">
       <systemName>IQDE:AUTO:0038</systemName>
       <comment>A comment</comment>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <entryExitState>Inactive</entryExitState>
@@ -3444,10 +3462,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionEntryExit class="jmri.jmrit.logixng.expressions.configurexml.ExpressionEntryExitXml">
       <systemName>IQDE:AUTO:0039</systemName>
       <comment>A comment</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <entryExitState>Inactive</entryExitState>
@@ -3513,10 +3534,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionEntryExit>
     <ExpressionLight class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:0040</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <lightState>On</lightState>
@@ -3583,11 +3604,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionLight class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:0041</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <lightState>Off</lightState>
@@ -3654,11 +3678,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionLight class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:0042</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <lightState>On</lightState>
@@ -3725,11 +3752,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionLight class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:0043</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <lightState>Other</lightState>
@@ -3796,11 +3826,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionLight class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:0044</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <lightState>Off</lightState>
@@ -3867,6 +3900,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionLocalVariable class="jmri.jmrit.logixng.expressions.configurexml.ExpressionLocalVariableXml">
       <systemName>IQDE:AUTO:0045</systemName>
       <otherVariable />
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -3875,23 +3912,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -3955,6 +3981,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0046</systemName>
       <comment>A comment</comment>
       <otherVariable />
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>GreaterThan</variableOperation>
       <caseInsensitive>yes</caseInsensitive>
@@ -3963,23 +3993,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -4044,7 +4063,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable />
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Memory</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4135,7 +4158,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable>MyOtherVar</otherVariable>
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>LocalVariable</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4226,7 +4253,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable>MyOtherVar</otherVariable>
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4317,7 +4348,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable>MyOtherVar</otherVariable>
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4408,7 +4443,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable>MyOtherVar</otherVariable>
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4499,7 +4538,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable>MyOtherVar</otherVariable>
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4590,7 +4633,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <variable>MyVar</variable>
       <otherVariable />
-      <memory>Some memory</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>RegEx</compareTo>
       <variableOperation>LessThan</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -4678,6 +4725,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionLocalVariable>
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0054</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
@@ -4687,23 +4742,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -4766,7 +4810,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0055</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>LessThan</memoryOperation>
@@ -4776,23 +4828,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -4855,8 +4896,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0056</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
@@ -4946,8 +4995,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0057</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Table</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
@@ -5037,8 +5094,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0058</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable>MyVar</variable>
       <compareTo>LocalVariable</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
@@ -5128,8 +5193,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0059</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>RegEx</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
@@ -5218,10 +5291,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionMemory>
     <ExpressionOBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionOBlockXml">
       <systemName>IQDE:AUTO:0060</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <oblockStatus>Unoccupied</oblockStatus>
@@ -5288,11 +5361,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionOBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionOBlockXml">
       <systemName>IQDE:AUTO:0061</systemName>
       <comment>A comment</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <oblockStatus>Dark</oblockStatus>
@@ -5359,11 +5435,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionOBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionOBlockXml">
       <systemName>IQDE:AUTO:0062</systemName>
       <comment>A comment</comment>
-      <oblock>OB99</oblock>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>OB99</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <oblockStatus>Allocated</oblockStatus>
@@ -5430,11 +5509,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionOBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionOBlockXml">
       <systemName>IQDE:AUTO:0063</systemName>
       <comment>A comment</comment>
-      <oblock>OB99</oblock>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>OB99</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <oblockStatus>Occupied</oblockStatus>
@@ -5501,11 +5583,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionOBlock class="jmri.jmrit.logixng.expressions.configurexml.ExpressionOBlockXml">
       <systemName>IQDE:AUTO:0064</systemName>
       <comment>A comment</comment>
-      <oblock>OB99</oblock>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>OB99</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <oblockStatus>OutOfService</oblockStatus>
@@ -6086,10 +6171,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionScript>
     <ExpressionSensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0073</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <sensorState>Active</sensorState>
@@ -6156,11 +6241,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionSensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0074</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <sensorState>Inactive</sensorState>
@@ -6227,11 +6315,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionSensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0075</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <sensorState>Inactive</sensorState>
@@ -6298,11 +6389,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionSensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0076</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <sensorState>Inactive</sensorState>
@@ -6369,11 +6463,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionSensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0077</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <sensorState>Inactive</sensorState>
@@ -7187,10 +7284,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionSignalMast>
     <ExpressionTurnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:0088</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <turnoutState>Thrown</turnoutState>
@@ -7257,11 +7354,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionTurnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:0089</systemName>
       <comment>A comment</comment>
-      <turnout>IT1</turnout>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IT1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <turnoutState>Closed</turnoutState>
@@ -7328,11 +7428,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionTurnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:0090</systemName>
       <comment>A comment</comment>
-      <turnout>IT1</turnout>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IT1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <turnoutState>Thrown</turnoutState>
@@ -7399,11 +7502,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionTurnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:0091</systemName>
       <comment>A comment</comment>
-      <turnout>IT1</turnout>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IT1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <turnoutState>Other</turnoutState>
@@ -7470,11 +7576,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionTurnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:0092</systemName>
       <comment>A comment</comment>
-      <turnout>IT1</turnout>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IT1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <turnoutState>Closed</turnoutState>
@@ -7540,10 +7649,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ExpressionTurnout>
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0093</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <warrantState>RouteAllocated</warrantState>
@@ -7610,11 +7719,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0094</systemName>
       <comment>A comment</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>LocalVariable</stateAddressing>
       <warrantState>RouteAllocated</warrantState>
@@ -7681,11 +7793,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0095</systemName>
       <comment>A comment</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>Test Warrant</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Formula</stateAddressing>
       <warrantState>RouteFree</warrantState>
@@ -7752,11 +7867,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0096</systemName>
       <comment>A comment</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>Test Warrant</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>IsNot</is_isNot>
       <stateAddressing>Reference</stateAddressing>
       <warrantState>RouteOccupied</warrantState>
@@ -7823,11 +7941,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ExpressionWarrant class="jmri.jmrit.logixng.expressions.configurexml.ExpressionWarrantXml">
       <systemName>IQDE:AUTO:0097</systemName>
       <comment>A comment</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>Test Warrant</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <is_isNot>Is</is_isNot>
       <stateAddressing>Direct</stateAddressing>
       <warrantState>RouteSet</warrantState>
@@ -10246,15 +10367,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </DigitalMany>
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0002</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <audioState>Play</audioState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Play</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10315,15 +10436,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0003</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>LocalVariable</stateAddressing>
-      <audioState>Play</audioState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>LocalVariable</addressing>
+        <enum>Play</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10384,15 +10511,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0004</systemName>
       <comment>A comment</comment>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Formula</stateAddressing>
-      <audioState>PlayToggle</audioState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Formula</addressing>
+        <enum>PlayToggle</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10453,15 +10586,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0005</systemName>
       <comment>A comment</comment>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Reference</stateAddressing>
-      <audioState>Pause</audioState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Reference</addressing>
+        <enum>Pause</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10522,15 +10661,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionAudio class="jmri.jmrit.logixng.actions.configurexml.ActionAudioXml">
       <systemName>IQDA:AUTO:0006</systemName>
       <comment>A comment</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Direct</stateAddressing>
-      <audioState>PauseToggle</audioState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>PauseToggle</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -10590,15 +10735,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionAudio>
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0012</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetOccupied</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -10663,15 +10808,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionBlock>
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0013</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetOccupied</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -10736,15 +10881,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionBlock>
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0014</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetOccupied</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -10810,16 +10955,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0015</systemName>
       <comment>Direct / Direct / Direct :: SetValue</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetValue</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetValue</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -10885,16 +11030,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0016</systemName>
       <comment>Direct / Direct :: SetOccupied</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetOccupied</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -10960,16 +11105,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0017</systemName>
       <comment>Direct / LocalVariable</comment>
-      <block>IB1</block>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>LocalVariable</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference />
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>LocalVariable</addressing>
+        <enum>SetOccupied</enum>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -11035,15 +11181,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0018</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
-      <operationAddressing>Formula</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+      </namedBean>
+      <operation>
+        <addressing>Formula</addressing>
+        <enum>SetOccupied</enum>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index2</formula>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -11109,15 +11257,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0019</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
-      <operationAddressing>Reference</operationAddressing>
-      <operationDirect>SetOccupied</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Formula</addressing>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Reference</addressing>
+        <enum>SetOccupied</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -11183,15 +11333,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionBlock class="jmri.jmrit.logixng.actions.configurexml.ActionBlockXml">
       <systemName>IQDA:AUTO:0020</systemName>
       <comment>Reference / Direct :: SetAltColorOn</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetNullValue</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetNullValue</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -11259,18 +11410,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>SetClock</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <time>
         <addressing>Direct</addressing>
         <value>0</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11335,18 +11480,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>StartClock</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <time>
         <addressing>Direct</addressing>
         <value>0</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11411,18 +11550,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>StopClock</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <time>
         <addressing>Direct</addressing>
         <value>0</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11487,18 +11620,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>SetClock</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <time>
         <addressing>Direct</addressing>
         <value>720</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11563,20 +11690,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Memory</addressing>
         <enum>SetClock</enum>
-        <reference />
         <memory>Some memory</memory>
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <time>
         <addressing>Memory</addressing>
         <value>0</value>
-        <reference />
         <memory>IM1</memory>
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </time>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11640,18 +11761,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>SetClockRate</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <rate>
         <addressing>Direct</addressing>
         <value>0.000</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </rate>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11716,18 +11831,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>SetClockRate</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <rate>
         <addressing>Direct</addressing>
         <value>4.234</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </rate>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11792,20 +11901,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Memory</addressing>
         <enum>SetClockRate</enum>
-        <reference />
         <memory>Some memory</memory>
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <rate>
         <addressing>Memory</addressing>
         <value>0.000</value>
-        <reference />
         <memory>IM1</memory>
         <listenToMemory>yes</listenToMemory>
-        <localVariable />
-        <formula />
       </rate>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11870,18 +11973,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>IncreaseClockRate</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <rate>
         <addressing>Direct</addressing>
         <value>0.500</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </rate>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -11946,18 +12043,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Direct</addressing>
         <enum>DecreaseClockRate</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <rate>
         <addressing>Direct</addressing>
         <value>1.220</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </rate>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -12018,15 +12109,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionClockRate>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0031</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>On</lightState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>On</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12090,15 +12181,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0032</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>On</lightState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>On</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12163,16 +12254,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0033</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>LocalVariable</stateAddressing>
-      <lightState>Off</lightState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>LocalVariable</addressing>
+        <enum>Off</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12237,16 +12334,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0034</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Formula</stateAddressing>
-      <lightState>On</lightState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Formula</addressing>
+        <enum>On</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12311,16 +12414,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0035</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Reference</stateAddressing>
-      <lightState>Toggle</lightState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Reference</addressing>
+        <enum>Toggle</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12385,16 +12494,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0036</systemName>
       <comment>A comment</comment>
-      <light>IL1</light>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>Intensity</lightState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IL1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Intensity</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12458,16 +12573,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0037</systemName>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>Interval</lightState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Interval</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12531,16 +12646,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0038</systemName>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>Unknown</lightState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Unknown</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12604,16 +12719,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0039</systemName>
-      <light>IL1</light>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>Inconsistent</lightState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IL1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Inconsistent</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12677,15 +12792,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLight>
     <ActionLight class="jmri.jmrit.logixng.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:0040</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <lightState>On</lightState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>On</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -12749,10 +12864,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLight>
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0041</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <IntensitySocket>
         <socketName>qgknx3y54l</socketName>
       </IntensitySocket>
@@ -12815,10 +12930,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLightIntensity>
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0042</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <IntensitySocket>
         <socketName>rsqu1tmpdh</socketName>
       </IntensitySocket>
@@ -12882,11 +12997,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0043</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>fpi5hehznd</socketName>
       </IntensitySocket>
@@ -12950,11 +13068,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0044</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>vfix82hzhs</socketName>
       </IntensitySocket>
@@ -13018,11 +13139,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0045</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>ucgr5wy2k1</socketName>
       </IntensitySocket>
@@ -13086,11 +13210,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionLightIntensity class="jmri.jmrit.logixng.actions.configurexml.ActionLightIntensityXml">
       <systemName>IQDA:AUTO:0046</systemName>
       <comment>A comment</comment>
-      <variableLight>ILVariable</variableLight>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>ILVariable</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
       <IntensitySocket>
         <socketName>f194tpq2sf</socketName>
       </IntensitySocket>
@@ -15075,23 +15202,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -15163,23 +15279,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -15253,23 +15358,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -15343,23 +15437,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -15433,23 +15516,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -15869,10 +15941,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionLocalVariable>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0084</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>SetToString</memoryOperation>
       <otherConstant />
       <otherVariable />
@@ -15880,23 +15956,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -15959,12 +16024,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0085</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>CalculateFormula</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -15972,23 +16044,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -16051,12 +16112,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0086</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>CopyMemoryToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -16064,23 +16132,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -16143,12 +16200,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0087</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>CopyVariableToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -16236,12 +16300,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0088</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -16329,12 +16400,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0089</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>SetToNull</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -16422,12 +16500,19 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0090</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <otherMemory>IM3</otherMemory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>SetToString</memoryOperation>
       <otherConstant>Some string</otherConstant>
       <otherVariable>Somevar</otherVariable>
@@ -16514,15 +16599,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionMemory>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0091</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>Deallocate</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Deallocate</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -16587,15 +16672,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0092</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>Deallocate</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Deallocate</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -16660,15 +16745,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionOBlock>
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0093</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>Deallocate</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Deallocate</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -16734,16 +16819,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0094</systemName>
       <comment>Direct / Direct / Direct :: SetValue</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetValue</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetValue</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -16809,16 +16894,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0095</systemName>
       <comment>Direct / Direct :: ClearError</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>ClearError</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>ClearError</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -16884,16 +16969,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0096</systemName>
       <comment>Direct / LocalVariable</comment>
-      <oblock>OB99</oblock>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>LocalVariable</operationAddressing>
-      <operationDirect>Deallocate</operationDirect>
-      <operationReference />
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>OB99</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>LocalVariable</addressing>
+        <enum>Deallocate</enum>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -16959,15 +17045,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0097</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
-      <operationAddressing>Formula</operationAddressing>
-      <operationDirect>Deallocate</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+      </namedBean>
+      <operation>
+        <addressing>Formula</addressing>
+        <enum>Deallocate</enum>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index2</formula>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -17033,15 +17121,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0098</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
-      <operationAddressing>Reference</operationAddressing>
-      <operationDirect>Deallocate</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Formula</addressing>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Reference</addressing>
+        <enum>Deallocate</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -17107,15 +17197,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionOBlock class="jmri.jmrit.logixng.actions.configurexml.ActionOBlockXml">
       <systemName>IQDA:AUTO:0099</systemName>
       <comment>Reference / Direct :: SetOutOfService</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetOutOfService</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetOutOfService</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -17180,7 +17271,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionOBlock>
     <ActionPower class="jmri.jmrit.logixng.actions.configurexml.ActionPowerXml">
       <systemName>IQDA:AUTO:0100</systemName>
-      <powerState>On</powerState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>On</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17241,7 +17336,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionPower class="jmri.jmrit.logixng.actions.configurexml.ActionPowerXml">
       <systemName>IQDA:AUTO:0101</systemName>
       <comment>A comment</comment>
-      <powerState>Off</powerState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Off</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17302,7 +17401,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionPower class="jmri.jmrit.logixng.actions.configurexml.ActionPowerXml">
       <systemName>IQDA:AUTO:0102</systemName>
       <comment>A comment</comment>
-      <powerState>On</powerState>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>On</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17714,15 +17817,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionScript>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0108</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Active</sensorState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17783,16 +17886,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0109</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>LocalVariable</stateAddressing>
-      <sensorState>Inactive</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>LocalVariable</addressing>
+        <enum>Inactive</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17853,16 +17962,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0110</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Formula</stateAddressing>
-      <sensorState>Active</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Formula</addressing>
+        <enum>Active</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17923,16 +18038,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0111</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Reference</stateAddressing>
-      <sensorState>Toggle</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Reference</addressing>
+        <enum>Toggle</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -17993,16 +18114,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0112</systemName>
       <comment>A comment</comment>
-      <sensor>IS1</sensor>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Unknown</sensorState>
-      <stateReference>{IM2}</stateReference>
-      <stateLocalVariable>index2</stateLocalVariable>
-      <stateFormula>"IT"+index2</stateFormula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IS1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Unknown</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18062,16 +18189,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionSensor>
     <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0113</systemName>
-      <sensor>IS1</sensor>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <stateAddressing>Direct</stateAddressing>
-      <sensorState>Inconsistent</sensorState>
-      <stateReference />
-      <stateLocalVariable />
-      <stateFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IS1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Inconsistent</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -18879,11 +19006,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionSignalMast>
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
       <systemName>IQDA:AUTO:0124</systemName>
-      <operationAddressing>Direct</operationAddressing>
-      <operationType>Play</operationType>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Play</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <soundAddressing>Direct</soundAddressing>
       <sound />
       <soundReference />
@@ -18949,11 +19076,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
       <systemName>IQDA:AUTO:0125</systemName>
       <comment>A comment</comment>
-      <operationAddressing>Direct</operationAddressing>
-      <operationType>Play</operationType>
-      <operationReference>{M1}</operationReference>
-      <operationLocalVariable>myVar</operationLocalVariable>
-      <operationFormula>a+b</operationFormula>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Play</enum>
+        <reference>{M1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>myVar</localVariable>
+        <formula>a+b</formula>
+      </operation>
       <soundAddressing>Formula</soundAddressing>
       <sound>bell.wav
 </sound>
@@ -19020,11 +19150,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
       <systemName>IQDA:AUTO:0126</systemName>
       <comment>A comment</comment>
-      <operationAddressing>Formula</operationAddressing>
-      <operationType>Play</operationType>
-      <operationReference>{M1}</operationReference>
-      <operationLocalVariable>myVar</operationLocalVariable>
-      <operationFormula>a+b</operationFormula>
+      <operation>
+        <addressing>Formula</addressing>
+        <enum>Play</enum>
+        <reference>{M1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>myVar</localVariable>
+        <formula>a+b</formula>
+      </operation>
       <soundAddressing>LocalVariable</soundAddressing>
       <sound>bell.wav
 </sound>
@@ -19091,11 +19224,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
       <systemName>IQDA:AUTO:0127</systemName>
       <comment>A comment</comment>
-      <operationAddressing>LocalVariable</operationAddressing>
-      <operationType>Play</operationType>
-      <operationReference>{M1}</operationReference>
-      <operationLocalVariable>myVar</operationLocalVariable>
-      <operationFormula>a+b</operationFormula>
+      <operation>
+        <addressing>LocalVariable</addressing>
+        <enum>Play</enum>
+        <reference>{M1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>myVar</localVariable>
+        <formula>a+b</formula>
+      </operation>
       <soundAddressing>Reference</soundAddressing>
       <sound>bell.wav
 </sound>
@@ -19162,11 +19298,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionSound class="jmri.jmrit.logixng.actions.configurexml.ActionSoundXml">
       <systemName>IQDA:AUTO:0128</systemName>
       <comment>A comment</comment>
-      <operationAddressing>Reference</operationAddressing>
-      <operationType>Play</operationType>
-      <operationReference>{M1}</operationReference>
-      <operationLocalVariable>myVar</operationLocalVariable>
-      <operationFormula>a+b</operationFormula>
+      <operation>
+        <addressing>Reference</addressing>
+        <enum>Play</enum>
+        <reference>{M1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>myVar</localVariable>
+        <formula>a+b</formula>
+      </operation>
       <soundAddressing>Direct</soundAddressing>
       <sound>bell.wav
 </sound>
@@ -19745,18 +19884,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0136</systemName>
       <namedBean>
         <addressing>Direct</addressing>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </namedBean>
       <state>
         <addressing>Direct</addressing>
         <enum>Thrown</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -20202,18 +20335,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <namedBean>
         <addressing>Direct</addressing>
         <name>IT1</name>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </namedBean>
       <state>
         <addressing>Direct</addressing>
         <enum>Inconsistent</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </state>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -20689,23 +20816,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
             <table>
               <tableName>
                 <addressing>Direct</addressing>
-                <reference />
-                <localVariable />
-                <formula />
               </tableName>
               <row>
                 <addressing>Direct</addressing>
-                <name />
-                <reference />
-                <localVariable />
-                <formula />
               </row>
               <column>
                 <addressing>Direct</addressing>
-                <name />
-                <reference />
-                <localVariable />
-                <formula />
               </column>
             </table>
           </tableName>
@@ -20787,10 +20903,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <namedBean>
         <addressing>Table</addressing>
         <name>IT1</name>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
         <table>
           <tableName>
             <addressing>Table</addressing>
@@ -20801,23 +20914,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
             <table>
               <tableName>
                 <addressing>Direct</addressing>
-                <reference />
-                <localVariable />
-                <formula />
               </tableName>
               <row>
                 <addressing>Direct</addressing>
-                <name />
-                <reference />
-                <localVariable />
-                <formula />
               </row>
               <column>
                 <addressing>Direct</addressing>
-                <name />
-                <reference />
-                <localVariable />
-                <formula />
               </column>
             </table>
           </tableName>
@@ -20840,10 +20942,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <state>
         <addressing>Table</addressing>
         <enum>Inconsistent</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
         <table>
           <tableName>
             <addressing>Direct</addressing>
@@ -20927,15 +21026,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionTurnout>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0148</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21001,15 +21100,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0149</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21075,15 +21174,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ActionWarrant>
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0150</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21150,16 +21249,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0151</systemName>
       <comment>Direct / Direct / Direct :: SetTrainName</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetTrainName</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetTrainName</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21226,16 +21325,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0152</systemName>
       <comment>Direct / Direct / Direct :: ControlAutoTrain - Resume</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>ControlAutoTrain</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>ControlAutoTrain</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21302,16 +21401,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0153</systemName>
       <comment>Direct / Direct :: AllocateWarrantRoute</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21378,16 +21477,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0154</systemName>
       <comment>Direct / LocalVariable</comment>
-      <warrant>Test Warrant</warrant>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>LocalVariable</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Test Warrant</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>LocalVariable</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21454,15 +21554,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0155</systemName>
       <comment>LocalVariable / Formula</comment>
-      <addressing>LocalVariable</addressing>
-      <reference />
-      <localVariable>index</localVariable>
-      <formula />
-      <operationAddressing>Formula</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+      </namedBean>
+      <operation>
+        <addressing>Formula</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index2</formula>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21529,15 +21631,17 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0156</systemName>
       <comment>Formula / Reference</comment>
-      <addressing>Formula</addressing>
-      <reference />
-      <localVariable />
-      <formula>"IT"+index</formula>
-      <operationAddressing>Reference</operationAddressing>
-      <operationDirect>AllocateWarrantRoute</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Formula</addressing>
+        <listenToMemory>no</listenToMemory>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Reference</addressing>
+        <enum>AllocateWarrantRoute</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -21604,15 +21708,16 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionWarrant class="jmri.jmrit.logixng.actions.configurexml.ActionWarrantXml">
       <systemName>IQDA:AUTO:0157</systemName>
       <comment>Reference / Direct :: DeallocateWarrant</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>DeallocateWarrant</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>DeallocateWarrant</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <dataAddressing>Direct</dataAddressing>
       <dataReference />
       <dataLocalVariable />
@@ -22250,15 +22355,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </DoStringAction>
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0166</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>Disable</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Disable</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22319,16 +22424,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0167</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>LocalVariable</operationAddressing>
-      <operationDirect>Enable</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>LocalVariable</addressing>
+        <enum>Enable</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22389,16 +22500,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0168</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>Formula</operationAddressing>
-      <operationDirect>Disable</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Formula</addressing>
+        <enum>Disable</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22459,16 +22576,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0169</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>Reference</operationAddressing>
-      <operationDirect>Enable</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Reference</addressing>
+        <enum>Enable</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22529,16 +22652,22 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <EnableLogix class="jmri.jmrit.logixng.actions.configurexml.EnableLogixXml">
       <systemName>IQDA:AUTO:0170</systemName>
       <comment>A comment</comment>
-      <logix>IX1</logix>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>Enable</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <name>IX1</name>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>Enable</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22598,15 +22727,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </EnableLogix>
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0171</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetNXPairEnabled</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetNXPairEnabled</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22667,15 +22796,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0172</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>LocalVariable</operationAddressing>
-      <operationDirect>SetNXPairDisabled</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>LocalVariable</addressing>
+        <enum>SetNXPairDisabled</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22736,15 +22871,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0173</systemName>
       <comment>A comment</comment>
-      <addressing>LocalVariable</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>Formula</operationAddressing>
-      <operationDirect>SetNXPairEnabled</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Formula</addressing>
+        <enum>SetNXPairEnabled</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22805,15 +22946,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0174</systemName>
       <comment>A comment</comment>
-      <addressing>Formula</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>Reference</operationAddressing>
-      <operationDirect>SetNXPairSegment</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>Formula</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Reference</addressing>
+        <enum>SetNXPairSegment</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22874,15 +23021,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ActionEntryExit class="jmri.jmrit.logixng.actions.configurexml.ActionEntryExitXml">
       <systemName>IQDA:AUTO:0175</systemName>
       <comment>A comment</comment>
-      <addressing>Reference</addressing>
-      <reference>{IM1}</reference>
-      <localVariable>index</localVariable>
-      <formula>"IT"+index</formula>
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>SetNXPairDisabled</operationDirect>
-      <operationReference>{IM2}</operationReference>
-      <operationLocalVariable>index2</operationLocalVariable>
-      <operationFormula>"IT"+index2</operationFormula>
+      <namedBean>
+        <addressing>Reference</addressing>
+        <reference>{IM1}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index</localVariable>
+        <formula>"IT"+index</formula>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>SetNXPairDisabled</enum>
+        <reference>{IM2}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>index2</localVariable>
+        <formula>"IT"+index2</formula>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25223,7 +25376,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </ShowDialog>
     <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:0208</systemName>
-      <operation>ShutdownJMRI</operation>
+      <shutdownOperation>
+        <addressing>Direct</addressing>
+        <enum>ShutdownJMRI</enum>
+        <listenToMemory>no</listenToMemory>
+      </shutdownOperation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25284,7 +25441,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:0209</systemName>
       <comment>A comment</comment>
-      <operation>ShutdownComputer</operation>
+      <shutdownOperation>
+        <addressing>Direct</addressing>
+        <enum>ShutdownComputer</enum>
+        <listenToMemory>no</listenToMemory>
+      </shutdownOperation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25345,7 +25506,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:0210</systemName>
       <comment>A comment</comment>
-      <operation>RebootComputer</operation>
+      <shutdownOperation>
+        <addressing>Direct</addressing>
+        <enum>RebootComputer</enum>
+        <listenToMemory>no</listenToMemory>
+      </shutdownOperation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25406,7 +25571,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:0211</systemName>
       <comment>A comment</comment>
-      <operation>ShutdownJMRI</operation>
+      <shutdownOperation>
+        <addressing>Direct</addressing>
+        <enum>ShutdownJMRI</enum>
+        <listenToMemory>no</listenToMemory>
+      </shutdownOperation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25467,7 +25636,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ShutdownComputer class="jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:0212</systemName>
       <comment>A comment</comment>
-      <operation>RebootJMRI</operation>
+      <shutdownOperation>
+        <addressing>Direct</addressing>
+        <enum>RebootJMRI</enum>
+        <listenToMemory>no</listenToMemory>
+      </shutdownOperation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25528,10 +25701,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <TableForEach class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
       <systemName>IQDA:AUTO:0213</systemName>
       <localVariable />
-      <tableAddressing>Direct</tableAddressing>
-      <tableReference />
-      <tableLocalVariable />
-      <tableFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName />
       <rowOrColumnReference />
@@ -25602,11 +25775,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0214</systemName>
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
-      <table>IQT1</table>
-      <tableAddressing>Direct</tableAddressing>
-      <tableReference />
-      <tableLocalVariable />
-      <tableFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IQT1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName>North yard</rowOrColumnName>
       <rowOrColumnReference />
@@ -25742,11 +25915,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0216</systemName>
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
-      <table>IQT1</table>
-      <tableAddressing>Direct</tableAddressing>
-      <tableReference>{MyTableRef}</tableReference>
-      <tableLocalVariable>MyTableVar</tableLocalVariable>
-      <tableFormula>MyTableFormula</tableFormula>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IQT1</name>
+        <reference>{MyTableRef}</reference>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>MyTableVar</localVariable>
+        <formula>MyTableFormula</formula>
+      </namedBean>
       <rowOrColumnAddressing>Direct</rowOrColumnAddressing>
       <rowOrColumnName>Second turnout</rowOrColumnName>
       <rowOrColumnReference>{MyRowOrColumnRef}</rowOrColumnReference>
@@ -25969,18 +26145,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <timeToDelay>
         <addressing>Direct</addressing>
         <value>0</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timeToDelay>
       <timerUnit>
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26051,18 +26221,12 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <timeToDelay>
         <addressing>Direct</addressing>
         <value>100</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timeToDelay>
       <timerUnit>
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26133,19 +26297,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <timeToDelay>
         <addressing>Memory</addressing>
         <value>0</value>
-        <reference />
         <memory>IM3</memory>
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timeToDelay>
       <timerUnit>
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26216,18 +26374,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <timeToDelay>
         <addressing>LocalVariable</addressing>
         <value>0</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
         <localVariable>MyVar</localVariable>
-        <formula />
       </timeToDelay>
       <timerUnit>
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26300,16 +26453,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>0</value>
         <reference>{MyMemory}</reference>
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timeToDelay>
       <timerUnit>
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26380,18 +26528,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <timeToDelay>
         <addressing>Formula</addressing>
         <value>0</value>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
         <formula>MyVar + 10</formula>
       </timeToDelay>
       <timerUnit>
         <addressing>Direct</addressing>
         <enum>MilliSeconds</enum>
-        <reference />
         <listenToMemory>no</listenToMemory>
-        <localVariable />
-        <formula />
       </timerUnit>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
@@ -26452,15 +26595,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </Timeout>
     <TriggerRoute class="jmri.jmrit.logixng.actions.configurexml.TriggerRouteXml">
       <systemName>IQDA:AUTO:0225</systemName>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>TriggerRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>TriggerRoute</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -26521,15 +26664,15 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <TriggerRoute class="jmri.jmrit.logixng.actions.configurexml.TriggerRouteXml">
       <systemName>IQDA:AUTO:0226</systemName>
       <comment>A comment</comment>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
-      <operationAddressing>Direct</operationAddressing>
-      <operationDirect>TriggerRoute</operationDirect>
-      <operationReference />
-      <operationLocalVariable />
-      <operationFormula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <operation>
+        <addressing>Direct</addressing>
+        <enum>TriggerRoute</enum>
+        <listenToMemory>no</listenToMemory>
+      </operation>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -27861,6 +28004,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <LogixNGAnalogExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXml">
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0001</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
@@ -27920,6 +28067,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </AnalogExpressionMemory>
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0002</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
@@ -27979,6 +28130,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </AnalogExpressionMemory>
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0003</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
@@ -28159,6 +28314,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </AnalogExpressionConstant>
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0006</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
@@ -28219,7 +28378,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <AnalogExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0007</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
@@ -28533,6 +28696,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <LogixNGAnalogActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXml">
     <AnalogActionMemory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
       <systemName>IQAA:AUTO:0001</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
@@ -28593,7 +28760,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <AnalogActionMemory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
       <systemName>IQAA:AUTO:0002</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
@@ -28905,6 +29076,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </StringExpressionConstant>
     <StringExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml">
       <systemName>IQSE:AUTO:0003</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
@@ -28965,7 +29140,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <StringExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml">
       <systemName>IQSE:AUTO:0004</systemName>
       <comment>A comment</comment>
-      <memory>IM1</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>IM1</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
@@ -29158,6 +29337,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <LogixNGStringActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultStringActionManagerXml">
     <StringActionMemory class="jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml">
       <systemName>IQSA:AUTO:0001</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
@@ -29218,7 +29401,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <StringActionMemory class="jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml">
       <systemName>IQSA:AUTO:0002</systemName>
       <comment>A comment</comment>
-      <memory>Some memory</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>Some memory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
@@ -29409,9 +29596,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Wed Apr 27 12:49:30 CEST 2022</date>
+      <date>Sun May 01 01:48:46 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-04-27T10:49:09Z+Ra53008f on Wed Apr 27 12:49:30 CEST 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-04-30T23:45:53Z+R3178e63 on Sun May 01 01:48:46 CEST 2022-->
 </layout-config>

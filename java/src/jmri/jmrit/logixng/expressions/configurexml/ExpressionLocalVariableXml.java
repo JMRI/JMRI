@@ -48,7 +48,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         }
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectMemoryNamedBean(), "namedBean"));
+        element.addContent(selectNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
 
         element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));
@@ -83,7 +83,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         }
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
-        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectMemoryNamedBean());
+        selectNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectMemoryNamedBean(), "memory", null, null, null, null);
 
         Element constant = shared.getChild("constant");

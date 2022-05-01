@@ -32,14 +32,20 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
 
         enumElement.addContent(new Element("addressing").addContent(selectEnum.getAddressing().name()));
         enumElement.addContent(new Element("enum").addContent(selectEnum.getEnum().name()));
-        enumElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
+        if (selectEnum.getReference() != null && !selectEnum.getReference().isEmpty()) {
+            enumElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
+        }
         var memory = selectEnum.getMemory();
         if (memory != null) {
             enumElement.addContent(new Element("memory").addContent(memory.getName()));
         }
         enumElement.addContent(new Element("listenToMemory").addContent(selectEnum.getListenToMemory() ? "yes" : "no"));
-        enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
-        enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+        if (selectEnum.getLocalVariable() != null && !selectEnum.getLocalVariable().isEmpty()) {
+            enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
+        }
+        if (selectEnum.getFormula() != null && !selectEnum.getFormula().isEmpty()) {
+            enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+        }
 
         if (selectEnum.getAddressing() == NamedBeanAddressing.Table) {
             enumElement.addContent(selectTableXml.store(selectEnum.getSelectTable(), "table"));
