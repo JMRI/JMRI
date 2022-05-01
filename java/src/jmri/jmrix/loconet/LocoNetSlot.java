@@ -1109,7 +1109,7 @@ public class LocoNetSlot {
                         return;
                     } else if ((l.getElement(3) & 0b01110000) == 0b01010000) {
                         // unconsisting returns slot contents so do nothing to this slot
-                        return;     
+                        return;
                     } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
                         //consisting do something?
                         //Set From slot as slave to slot as master
@@ -1118,7 +1118,7 @@ public class LocoNetSlot {
                         return;
                     } else if (src == 0 && dest == 0) {
                         stat = stat & ~LnConstants.LOCO_IN_USE;
-                        log.info("set idle");
+                        log.debug("set idle");
                         notifySlotListeners();
                         return;
                     }
@@ -1230,7 +1230,7 @@ public class LocoNetSlot {
     public int getThrottleIdentity() {
         return id;
     }
-    
+
     public int getLeadSlot() {
         return leadSlot;
     }
