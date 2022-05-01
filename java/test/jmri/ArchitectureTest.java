@@ -7,6 +7,8 @@ import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
+import jmri.util.swing.BeanSelectPanel;
+
 /**
  * Check the architecture of the JMRI library
  * <p>
@@ -265,4 +267,26 @@ public class ArchitectureTest {
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
+    /*.*
+     * No classes in jmri.jmrit.logixng.actions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     *./
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsNotUsingBeanSelectPanel = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions..")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
+
+    /*.*
+     * No classes in jmri.jmrit.logixng.expressions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     *./
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsNotUsingBeanSelectPanel = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions..")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
+*/
 }
