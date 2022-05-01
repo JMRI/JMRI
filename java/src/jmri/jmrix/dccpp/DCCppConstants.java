@@ -52,7 +52,7 @@ public final class DCCppConstants {
     // DCC++ Command OpCodes
     public static final char THROTTLE_CMD           = 't'; // Throttle command <t reg cab speed dir>
     public static final char FUNCTION_CMD           = 'f'; // F0-F28 <f cab byte1 [byte2]>
-    public static final char FUNCTION_V2_CMD        = 'F'; // F0-F68 <F CAB FUNC 1|0>
+    public static final char FUNCTION_V4_CMD        = 'F'; // F0-F68 <F CAB FUNC 1|0>
     public static final char FORGET_CAB_CMD         = '-'; // Forgets one or all locos. <- [CAB]>
     public static final char ACCESSORY_CMD          = 'a'; // Stationary accessory decoder <a addr subaddr activate>
     public static final char TURNOUT_CMD            = 'T'; // Turnout command <T id throw> -- NEW versions V1.1
@@ -106,7 +106,7 @@ public final class DCCppConstants {
     public static final String THROTTLE_CMD_REGEX    = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
     public static final String THROTTLE_V3_CMD_REGEX = "t\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t CAB SPEED DIR>
     public static final String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // <f ADDR BYTE1 (BYTE2)>
-    public static final String FUNCTION_V2_CMD_REGEX="F\\s*([0-9]{1,4})\\s*([0-9]){1,2}\\s*([1,0])\\s*"; // <F CAB FUNC STATE>
+    public static final String FUNCTION_V4_CMD_REGEX="F\\s*([0-9]{1,4})\\s*([0-9]){1,2}\\s*([1,0])\\s*"; // <F CAB FUNC STATE>
     public static final String FORGET_CAB_CMD_REGEX ="-\\s*([0-9]{0,4})\\s*"; // <- [CAB]>
     public static final String ACCESSORY_CMD_REGEX = "a\\s(\\d+)\\s(\\d+)\\s([1,0])"; // <a ADDR SUBADDR ACTIVATE>
     public static final String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])"; // <T ID THROW>
@@ -132,9 +132,12 @@ public final class DCCppConstants {
     public static final String OPS_WRITE_BYTE_REGEX = "\\s*w\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // TODO
     public static final String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
 
-    public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
-    public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
-    public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
+    public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)"; // <W cv value callbacknum callbacksub>
+    public static final String PROG_WRITE_BYTE_V4_REGEX =  "W\\s*(\\d+)\\s(\\d+)"; // <W cv value>
+    public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)"; // <B cv bit value callbacknum callbacksub>
+    public static final String PROG_WRITE_BIT_V4_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([1,0])"; // <B cv bit value> 
+    public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)"; // <R cv callbacknum callbacksub> not sent after v3.1.0 
+//    public static final String PROG_READ_V4_REGEX =        "R\\s*(\\d+)"; // <R cv> not needed 
     public static final String PROG_VERIFY_REGEX = "V\\s*(\\d+)\\s+(\\d+)\\s*";
     public static final String TRACK_POWER_REGEX = "\\s*[0,1]\\s*"; // <1> or <0>
     public static final String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*"; // <c>
@@ -157,8 +160,10 @@ public final class DCCppConstants {
     public static final String TURNOUT_DEF_VPIN_REPLY_REGEX ="\\s*H\\s(\\d+)\\sVPIN\\s(\\d+)\\s+([0|1]).*";                            // <H id VPIN pin thrown>
     public static final String TURNOUT_DEF_LCN_REPLY_REGEX = "\\s*H\\s(\\d+)\\sLCN\\s+([0|1]).*";                                      // <H id LCN thrown>
     public static final String PROGRAM_REPLY_REGEX =       "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+([-]*\\d+)\\s*";
+    public static final String PROGRAM_REPLY_V4_REGEX =    "\\s*r\\s*(\\d+)\\s+([-]*\\d+)\\s*";
     public static final String PROGRAM_VERIFY_REGEX =      "\\s*v\\s*(\\d+)\\s*([-]*\\d+)\\s*";
     public static final String PROGRAM_BIT_REPLY_REGEX =   "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
+    public static final String PROGRAM_BIT_REPLY_V4_REGEX ="\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public static final String MAXNUMSLOTS_REPLY_REGEX =   "\\s*#\\s*(\\d+).*";
     public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";

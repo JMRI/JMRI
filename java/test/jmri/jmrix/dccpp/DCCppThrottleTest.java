@@ -148,11 +148,11 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(lm.toString(), "F 3 28 1");
         instance.setFunction(28, false);
 
-        instance.setFunction(61, true);
+        instance.setFunction(16, true);
         Assert.assertFalse(instance.getFunction(61));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "F 3 61 1");
-        instance.setFunction(61, false);
+        Assert.assertEquals(lm.toString(), "F 3 16 1");
+        instance.setFunction(16, false);
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");

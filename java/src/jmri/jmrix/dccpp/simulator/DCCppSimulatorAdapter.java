@@ -540,7 +540,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
-            case DCCppConstants.FUNCTION_V2_CMD:
+            case DCCppConstants.FUNCTION_V4_CMD:
                 log.debug("FunctionV2Detected");
                 reply = DCCppReply.parseDCCppReply("O"); //TODO: return the locoState message
                 break;
