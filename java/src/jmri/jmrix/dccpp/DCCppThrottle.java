@@ -88,9 +88,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      */
     @Override
     public void setFunction(int functionNum, boolean newState) {
-        if (tc.getCommandStation().isFunctionV2Supported()) {
+        if (tc.getCommandStation().isFunctionV4Supported()) {
             //send the newer <F CAB FUNC STATE> message
-            DCCppMessage msg = DCCppMessage.makeFunctionV2Message(this.getDccAddress(), functionNum, newState);
+            DCCppMessage msg = DCCppMessage.makeFunctionV4Message(this.getDccAddress(), functionNum, newState);
             queueMessage(msg, THROTTLEIDLE);
             updateFunction(functionNum, newState); //update throttle and broadcast change
         } else {

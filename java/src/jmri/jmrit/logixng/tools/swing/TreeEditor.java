@@ -942,7 +942,6 @@ public class TreeEditor extends TreeViewer {
             Container contentPanel = _editLocalVariablesDialog.getContentPane();
             contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-            JPanel tablePanel = new JPanel();
             JTable table = new JTable();
             _localVariableTableModel = new LocalVariableTableModel(maleSocket);
             table.setModel(_localVariableTableModel);
@@ -957,8 +956,7 @@ public class TreeEditor extends TreeViewer {
             _localVariableTableModel.setColumnForMenu(table);
             JScrollPane scrollpane = new JScrollPane(table);
             scrollpane.setPreferredSize(new Dimension(400, 200));
-            tablePanel.add(scrollpane, BorderLayout.CENTER);
-            contentPanel.add(tablePanel);
+            contentPanel.add(scrollpane);
 
             // set up create and cancel buttons
             JPanel buttonPanel = new JPanel();
