@@ -13735,6 +13735,21 @@
     </ActionListenOnBeansTable>
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
       <systemName>IQDA:AUTO:0056</systemName>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
       <constant />
       <otherVariable />
@@ -13811,7 +13826,22 @@
       <systemName>IQDA:AUTO:0057</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CalculateFormula</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -13888,9 +13918,24 @@
       <systemName>IQDA:AUTO:0058</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
-      <block listen="no">IB1</block>
-      <reporter listen="no">IR1</reporter>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <name>IR1</name>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CopyMemoryToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -13967,9 +14012,24 @@
       <systemName>IQDA:AUTO:0059</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
-      <block listen="no">IB1</block>
-      <reporter listen="no">IR1</reporter>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <name>IR1</name>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CopyBlockToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -14046,9 +14106,24 @@
       <systemName>IQDA:AUTO:0060</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
-      <block listen="no">IB1</block>
-      <reporter listen="no">IR1</reporter>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <name>IR1</name>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CopyReporterToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -14125,7 +14200,22 @@
       <systemName>IQDA:AUTO:0061</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CopyVariableToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -14214,9 +14304,24 @@
       <systemName>IQDA:AUTO:0062</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
-      <block listen="no">IB1</block>
-      <reporter listen="no">IR1</reporter>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <name>IB1</name>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <name>IR1</name>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -14305,7 +14410,22 @@
       <systemName>IQDA:AUTO:0063</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>SetToNull</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -14394,7 +14514,22 @@
       <systemName>IQDA:AUTO:0064</systemName>
       <comment>A comment</comment>
       <variable>result</variable>
-      <memory listen="no">IM3</memory>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <name>IM3</name>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
@@ -27919,14 +28054,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sun May 01 02:42:25 CEST 2022</date>
+      <date>Mon May 02 00:13:00 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.5.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun May 01 02:42:25 CEST 2022</date>
+      <date>Mon May 02 00:13:00 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T00:41:46Z+R3178e63 on Sun May 01 02:42:25 CEST 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T22:12:31Z+R618806c on Mon May 02 00:13:00 CEST 2022-->
 </layout-config>

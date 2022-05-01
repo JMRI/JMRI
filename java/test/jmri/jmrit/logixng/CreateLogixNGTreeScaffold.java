@@ -846,7 +846,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
         actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -857,9 +857,9 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyMemoryToVariable);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
-        actionLocalVariable.setBlock(block1);
-        actionLocalVariable.setReporter(reporter1);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
+        actionLocalVariable.getSelectBlockNamedBean().setNamedBean(block1);
+        actionLocalVariable.getSelectReporterNamedBean().setNamedBean(reporter1);
         actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -870,9 +870,9 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyBlockToVariable);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
-        actionLocalVariable.setBlock(block1);
-        actionLocalVariable.setReporter(reporter1);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
+        actionLocalVariable.getSelectBlockNamedBean().setNamedBean(block1);
+        actionLocalVariable.getSelectReporterNamedBean().setNamedBean(reporter1);
         actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -883,9 +883,9 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyReporterToVariable);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
-        actionLocalVariable.setBlock(block1);
-        actionLocalVariable.setReporter(reporter1);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
+        actionLocalVariable.getSelectBlockNamedBean().setNamedBean(block1);
+        actionLocalVariable.getSelectReporterNamedBean().setNamedBean(reporter1);
         actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -896,7 +896,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyVariableToVariable);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
         actionLocalVariable.setFormula("a+b");
         set_LogixNG_SelectTable_Data(csvTable, actionLocalVariable.getSelectTable(), NamedBeanAddressing.Reference);
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
@@ -908,9 +908,9 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyTableCellToVariable);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
-        actionLocalVariable.setBlock(block1);
-        actionLocalVariable.setReporter(reporter1);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
+        actionLocalVariable.getSelectBlockNamedBean().setNamedBean(block1);
+        actionLocalVariable.getSelectReporterNamedBean().setNamedBean(reporter1);
         actionLocalVariable.setFormula("a+b");
         set_LogixNG_SelectTable_Data(csvTable, actionLocalVariable.getSelectTable(), NamedBeanAddressing.Direct);
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
@@ -922,7 +922,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.SetToNull);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
         actionLocalVariable.setFormula("a+b");
         set_LogixNG_SelectTable_Data(csvTable, actionLocalVariable.getSelectTable(), NamedBeanAddressing.Formula);
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
@@ -934,7 +934,7 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.SetToString);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
-        actionLocalVariable.setMemory(memory3);
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
         actionLocalVariable.setFormula("a+b");
         set_LogixNG_SelectTable_Data(csvTable, actionLocalVariable.getSelectTable(), NamedBeanAddressing.LocalVariable);
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
