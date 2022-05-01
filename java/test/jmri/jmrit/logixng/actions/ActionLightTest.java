@@ -440,11 +440,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testVetoableChange() throws PropertyVetoException {
-        // Get the action and set the light
-//        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
-//        ActionLight action = new ActionLight();
-//        action.getSelectNamedBean().setNamedBean(light);
 
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
@@ -541,6 +537,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = socket;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

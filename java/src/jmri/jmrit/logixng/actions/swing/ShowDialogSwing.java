@@ -81,7 +81,6 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         panel.add(formatPanel);
 
 
-        JPanel tablePanel = new JPanel();
         _showDialogTable = new JTable();
 
         if (showDialog != null) {
@@ -120,8 +119,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
 
         JScrollPane scrollpane = new JScrollPane(_showDialogTable);
         scrollpane.setPreferredSize(new Dimension(400, 200));
-        tablePanel.add(scrollpane, BorderLayout.CENTER);
-        panel.add(tablePanel);
+        panel.add(scrollpane);
 
         // Add parameter
         JButton add = new JButton(Bundle.getMessage("ShowDialog_TableAdd"));

@@ -265,6 +265,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         _baseMaleSocket = socketExpression;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

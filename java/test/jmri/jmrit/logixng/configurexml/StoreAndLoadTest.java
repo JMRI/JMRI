@@ -10,7 +10,6 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
-import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 

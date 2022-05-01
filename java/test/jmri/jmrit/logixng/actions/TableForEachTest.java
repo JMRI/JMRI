@@ -287,6 +287,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 .registerAction(new MyAction("IQDA999", null)));
 
         if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        _logixNG.activate();
         _logixNG.setEnabled(false);
     }
 

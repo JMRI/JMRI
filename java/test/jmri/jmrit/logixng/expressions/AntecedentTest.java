@@ -703,6 +703,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

@@ -9,10 +9,6 @@ import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 
 /**
  * The default implementation of a NamedTable
@@ -138,17 +134,6 @@ public class DefaultSymbolTable implements SymbolTable {
         stream.format("printSymbolTable done%n");
     }
 
-    private RecursiveDescentParser createParser() throws ParserException {
-        Map<String, Variable> variables = new HashMap<>();
-
-        for (SymbolTable.Symbol symbol : getSymbols().values()) {
-            variables.put(symbol.getName(),
-                    new LocalVariableExpressionVariable(symbol.getName()));
-        }
-
-        return new RecursiveDescentParser(variables);
-    }
-
     /** {@inheritDoc} */
     @Override
     public void createSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException {
@@ -163,103 +148,16 @@ public class DefaultSymbolTable implements SymbolTable {
 
         for (SymbolTable.VariableData variable : symbolDefinitions) {
             Symbol symbol = new DefaultSymbol(variable.getName(), _stack.getCount() - _firstSymbolIndex);
-            Object initialValue = null;
 
             if (_symbols.containsKey(symbol.getName())) {
                 throw new IllegalArgumentException("Symbol table already contains the variable " + symbol.getName());
             }
 
-            switch (variable.getInitialValueType()) {
-                case None:
-                    break;
-
-                case Integer:
-                    initialValue = Long.parseLong(variable.getInitialValueData());
-                    break;
-
-                case FloatingNumber:
-                    initialValue = Double.parseDouble(variable.getInitialValueData());
-                    break;
-
-                case String:
-                    initialValue = variable.getInitialValueData();
-                    break;
-
-                case Array:
-                    List<Object> array = new java.util.ArrayList<>();
-                    initialValue = array;
-                    String initialValueData = variable.getInitialValueData();
-                    if (!initialValueData.isEmpty()) {
-                        Object data = "";
-                        String[] parts = initialValueData.split(":", 2);
-                        if (parts.length > 1) {
-                            initialValueData = parts[0];
-                            if (Character.isDigit(parts[1].charAt(0))) {
-                                try {
-                                    data = Long.parseLong(parts[1]);
-                                } catch (NumberFormatException e) {
-                                    try {
-                                        data = Double.parseDouble(parts[1]);
-                                    } catch (NumberFormatException e2) {
-                                        throw new IllegalArgumentException("Data is not a number", e2);
-                                    }
-                                }
-                            } else if ((parts[1].charAt(0) == '"') && (parts[1].charAt(parts[1].length()-1) == '"')) {
-                                data = parts[1].substring(1,parts[1].length()-1);
-                            } else {
-                                // Assume initial value is a local variable
-                                data = symbolTable.getValue(parts[1]).toString();
-                            }
-                        }
-                        try {
-                            int count;
-                            if (Character.isDigit(initialValueData.charAt(0))) {
-                                count = Integer.parseInt(initialValueData);
-                            } else {
-                                // Assume size is a local variable
-                                count = Integer.parseInt(symbolTable.getValue(initialValueData).toString());
-                            }
-                            for (int i=0; i < count; i++) array.add(data);
-                        } catch (NumberFormatException e) {
-                            throw new IllegalArgumentException("Initial capacity is not an integer", e);
-                        }
-                    }
-                    break;
-
-                case Map:
-                    initialValue = new java.util.HashMap<>();
-                    break;
-
-                case LocalVariable:
-                    initialValue = symbolTable.getValue(variable.getInitialValueData());
-//                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
-                    break;
-
-                case Memory:
-                    Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(variable.getInitialValueData());
-                    if (m != null) initialValue = m.getValue();
-                    break;
-
-                case Reference:
-                    if (ReferenceUtil.isReference(variable.getInitialValueData())) {
-                        initialValue = ReferenceUtil.getReference(
-                                symbolTable, variable.getInitialValueData());
-                    } else {
-                        log.error("\"{}\" is not a reference", variable.getInitialValueData());
-                    }
-                    break;
-
-                case Formula:
-                    RecursiveDescentParser parser = createParser();
-                    ExpressionNode expressionNode = parser.parseExpression(
-                            variable.getInitialValueData());
-                    initialValue = expressionNode.calculate(symbolTable);
-                    break;
-
-                default:
-                    log.error("definition._initialValueType has invalid value: {}", variable.getInitialValueType().name());
-                    throw new IllegalArgumentException("definition._initialValueType has invalid value: " + variable.getInitialValueType().name());
-            }
+            Object initialValue = SymbolTable.getInitialValue(
+                    variable.getInitialValueType(),
+                    variable.getInitialValueData(),
+                    symbolTable,
+                    _symbols);
 
 //            System.out.format("Add symbol: %s = %s%n", symbol.getName(), initialValue);
 
@@ -359,6 +257,6 @@ public class DefaultSymbolTable implements SymbolTable {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSymbolTable.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSymbolTable.class);
 
 }

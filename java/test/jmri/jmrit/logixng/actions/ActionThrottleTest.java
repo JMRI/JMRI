@@ -747,6 +747,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = maleSocket;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

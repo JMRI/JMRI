@@ -376,6 +376,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         maleSocketDoStringAction.getChild(1).connect(socketAction);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

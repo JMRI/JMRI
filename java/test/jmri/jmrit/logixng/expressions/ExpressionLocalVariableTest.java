@@ -485,6 +485,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         expressionLocalVariable.setLocalVariable("myVar");
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

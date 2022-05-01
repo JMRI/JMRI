@@ -540,6 +540,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = socket;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

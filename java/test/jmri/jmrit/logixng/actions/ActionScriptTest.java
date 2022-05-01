@@ -342,6 +342,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = socketActionSimpleScript;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 
