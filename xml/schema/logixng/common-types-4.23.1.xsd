@@ -44,6 +44,9 @@
         <xs:enumeration value="Memory"/>
         <xs:enumeration value="Reference"/>
         <xs:enumeration value="Formula"/>
+        <xs:enumeration value="ScriptExpression"/>
+        <xs:enumeration value="ScriptFile"/>
+        <xs:enumeration value="LogixNG_Table"/>
       </xs:restriction>
     </xs:simpleType>
 

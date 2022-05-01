@@ -515,13 +515,17 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringCVWriteByteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 123");
-        Assert.assertEquals("Monitor string", "Program Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, Value: 123", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Reply: CallbackNum:1234, Sub:4321, CV:5, Value:123", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 5 123"); // <r cv value>
+        Assert.assertEquals("Monitor string", "Program Reply: CV:5, Value:123", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringBitWriteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 3 1");
-        Assert.assertEquals("Monitor string", "Program Bit Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, CV Bit: 3, Value: 1", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Bit Reply: CallbackNum:1234, Sub:4321, CV:5, Bit:3, Value:1", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 5 3 1"); // <r cv bit value>
+        Assert.assertEquals("Monitor string", "Program Bit Reply: CV:5, Bit:3, Value:1", l.toMonitorString());
     }
 
     @Test

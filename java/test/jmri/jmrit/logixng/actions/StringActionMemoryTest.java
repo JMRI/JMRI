@@ -23,7 +23,7 @@ import org.junit.Test;
 
 /**
  * Test StringActionMemory
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class StringActionMemoryTest extends AbstractStringActionTestBase {
@@ -31,27 +31,27 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     LogixNG logixNG;
     ConditionalNG conditionalNG;
     protected Memory _memory;
-    
+
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;
     }
-    
+
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
     }
-    
+
     @Override
     public MaleSocket getConnectableChild() {
         return null;
     }
-    
+
     @Override
     public String getExpectedPrintedTree() {
         return String.format("Set memory IM1 ::: Use default%n");
     }
-    
+
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
@@ -64,47 +64,47 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
                 "            !s A%n" +
                 "               Set memory IM1 ::: Use default%n");
     }
-    
+
     @Override
     public NamedBean createNewBean(String systemName) {
         return new StringMany(systemName, null);
     }
-    
+
     @Override
     public boolean addNewSocket() {
         return false;
     }
-    
+
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);
-        
+
         StringActionMemory action2;
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
-        
+
         action2 = new StringActionMemory("IQSA11", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
         Assert.assertEquals("String matches", "Set memory none", action2.getLongDescription());
-        
+
         action2 = new StringActionMemory("IQSA11", "My memory");
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
         Assert.assertEquals("String matches", "Set memory none", action2.getLongDescription());
-        
+
         action2 = new StringActionMemory("IQSA11", null);
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
         Assert.assertEquals("String matches", "Set memory IM1", action2.getLongDescription());
-        
+
         action2 = new StringActionMemory("IQSA11", "My memory");
         action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
         Assert.assertEquals("String matches", "Set memory IM1", action2.getLongDescription());
-        
+
         boolean thrown = false;
         try {
             // Illegal system name
@@ -113,7 +113,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
+
         thrown = false;
         try {
             // Illegal system name
@@ -123,7 +123,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
     }
-    
+
     @Test
     public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         StringActionMemory action = (StringActionMemory)_base;
@@ -135,7 +135,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         action.setValue("Other test");
         Assert.assertEquals("Memory has correct value", "Test", _memory.getValue());
     }
-    
+
     @Test
     public void testMemory() {
         StringActionMemory action = (StringActionMemory)_base;
@@ -143,7 +143,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertNull("Memory is null", action.getMemory());
         ((StringActionMemory)_base).setMemory(_memory);
         Assert.assertTrue("Memory matches", _memory == action.getMemory().getBean());
-        
+
         action.removeMemory();
         Assert.assertNull("Memory is null", action.getMemory());
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
@@ -153,46 +153,46 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         ((StringActionMemory)_base).setMemory(memoryHandle);
         Assert.assertTrue("Memory matches", memoryHandle == action.getMemory());
         Assert.assertTrue("Memory matches", otherMemory == action.getMemory().getBean());
-        
+
         action.removeMemory();
         Assert.assertNull("Memory is null", action.getMemory());
         action.setMemory(memoryHandle.getName());
         Assert.assertTrue("Memory matches", memoryHandle == action.getMemory());
-        
+
         // Test setMemory with a memory name that doesn't exists
         action.setMemory("Non existent memory");
         Assert.assertNull("Memory is null", action.getMemory());
         JUnitAppender.assertErrorMessage("memory \"Non existent memory\" is not found");
     }
-    
+
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get some other memory for later use
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("Memory is not null", otherMemory);
         Assert.assertNotEquals("Memory is not equal", _memory, otherMemory);
-        
+
         // Get the expression and set the memory
         StringActionMemory action = (StringActionMemory)_base;
         action.setMemory(_memory);
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
-        
+
         // Test vetoableChange() for some other propery
         action.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
-        
+
         // Test vetoableChange() for a string
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
-        
+
         // Test vetoableChange() for another memory
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherMemory, null));
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherMemory, null));
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
-        
+
         // Test vetoableChange() for its own memory
         boolean thrown = false;
         try {
@@ -201,27 +201,27 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
+
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", _memory, null));
         Assert.assertNull("Memory is null", action.getMemory());
     }
-    
+
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
     }
-    
+
     @Test
     public void testShortDescription() {
         Assert.assertEquals("String matches", "Memory", _base.getShortDescription());
     }
-    
+
     @Test
     public void testLongDescription() {
         Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getLongDescription()));
     }
-    
+
     @Test
     public void testChild() {
         Assert.assertTrue("Num children is zero", 0 == _base.getChildCount());
@@ -234,7 +234,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -246,7 +246,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
-        
+
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
@@ -265,8 +265,9 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         stringActionMemory.setMemory(_memory);
         _base = stringActionMemory;
         _baseMaleSocket = maleSocketStringActionMemory;
-        
+
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 
@@ -276,5 +277,5 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

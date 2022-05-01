@@ -79,6 +79,8 @@
                 <li>The DCS240 command station type was defaulting to the standalone programmer mode.
                 If a user was not paying attention, they would have issues trying to use all of the
                 command station capability.</li>
+                <li>Some message interpretation features provided by "LocoNet Monitor" have been 
+                    'refactored' and slightly improved.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -407,8 +409,12 @@
           <li><i>Global Variables</i> has been added. A Global Variable
           is similar to a Local Variable, except that it is shared among
           the ConditionalNGs.</li>
+          <li>Global variables and Local variables can now be initialized
+          with a script expression or a script file.</li>
           <li>The action <i>Listen on beans</i> now protects against
           removal of the beans it's listening to.</li>
+          <li>The <i>Edit local variables</i> dialog can now be resized
+          so that the table grows and shrinks when it's resized.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
