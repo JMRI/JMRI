@@ -35,7 +35,7 @@ import org.junit.Test;
 
 /**
  * Test ExpressionSensor
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
@@ -46,28 +46,28 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
     private Sensor sensor;
-    
-    
+
+
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;
     }
-    
+
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
     }
-    
+
     @Override
     public MaleSocket getConnectableChild() {
         return null;
     }
-    
+
     @Override
     public String getExpectedPrintedTree() {
         return String.format("Sensor IS1 is Active ::: Use default%n");
     }
-    
+
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
@@ -82,40 +82,40 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
-    
+
     @Override
     public NamedBean createNewBean(String systemName) {
         return new ExpressionSensor(systemName, null);
     }
-    
+
     @Override
     public boolean addNewSocket() {
         return false;
     }
-    
+
     @Test
     public void testCtor() throws JmriException {
         ExpressionSensor expression2;
         Assert.assertNotNull("sensor is not null", sensor);
         sensor.setState(Sensor.ON);
-        
+
         expression2 = new ExpressionSensor("IQDE321", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Sensor '' is Active", expression2.getLongDescription());
-        
+
         expression2 = new ExpressionSensor("IQDE321", "My sensor");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My sensor", expression2.getUserName());
         Assert.assertEquals("String matches", "Sensor '' is Active", expression2.getLongDescription());
-        
+
         expression2 = new ExpressionSensor("IQDE321", null);
         expression2.setSensor(sensor);
         Assert.assertTrue("sensor is correct", sensor == expression2.getSensor().getBean());
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Sensor IS1 is Active", expression2.getLongDescription());
-        
+
         Sensor s = InstanceManager.getDefault(SensorManager.class).provide("IS2");
         expression2 = new ExpressionSensor("IQDE321", "My sensor");
         expression2.setSensor(s);
@@ -123,7 +123,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My sensor", expression2.getUserName());
         Assert.assertEquals("String matches", "Sensor IS2 is Active", expression2.getLongDescription());
-        
+
         boolean thrown = false;
         try {
             // Illegal system name
@@ -132,7 +132,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
+
         thrown = false;
         try {
             // Illegal system name
@@ -142,11 +142,11 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
     }
-    
+
     @Test
     public void testGetChild() {
         Assert.assertTrue("getChildCount() returns 0", 0 == expressionSensor.getChildCount());
-        
+
         boolean hasThrown = false;
         try {
             expressionSensor.getChild(0);
@@ -156,34 +156,34 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+
     @Test
     public void testSensorState() {
         Assert.assertEquals("String matches", "Inactive", ExpressionSensor.SensorState.Inactive.toString());
         Assert.assertEquals("String matches", "Active", ExpressionSensor.SensorState.Active.toString());
         Assert.assertEquals("String matches", "Other", ExpressionSensor.SensorState.Other.toString());
-        
+
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Inactive == ExpressionSensor.SensorState.get(Sensor.INACTIVE));
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Active == ExpressionSensor.SensorState.get(Sensor.ACTIVE));
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Other == ExpressionSensor.SensorState.get(Sensor.UNKNOWN));
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Other == ExpressionSensor.SensorState.get(Sensor.INCONSISTENT));
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Other == ExpressionSensor.SensorState.get(-1));
-        
+
         Assert.assertEquals("ID matches", Sensor.INACTIVE, ExpressionSensor.SensorState.Inactive.getID());
         Assert.assertEquals("ID matches", Sensor.ACTIVE, ExpressionSensor.SensorState.Active.getID());
         Assert.assertEquals("ID matches", -1, ExpressionSensor.SensorState.Other.getID());
     }
-    
+
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
     }
-    
+
     @Test
     public void testDescription() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        
+
         expressionSensor.removeSensor();
         Assert.assertEquals("Sensor", expressionSensor.getShortDescription());
         Assert.assertEquals("Sensor '' is Active", expressionSensor.getLongDescription());
@@ -196,7 +196,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Other);
         Assert.assertTrue("Sensor IS1 is not Other".equals(expressionSensor.getLongDescription()));
     }
-    
+
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
         // Clear flag
@@ -205,11 +205,11 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         sensor.setCommandedState(Sensor.INACTIVE);
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        
+
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionSensor.setBeanState(ExpressionSensor.SensorState.Active);
-        
+
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Activate the sensor. This should not execute the conditional.
@@ -233,7 +233,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         sensor.setCommandedState(Sensor.INACTIVE);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        
+
         // Test IS_NOT
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Activate the sensor. This should not execute the conditional.
@@ -245,16 +245,16 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
     }
-    
+
     @Test
     public void testSetSensor() {
         expressionSensor.unregisterListeners();
-        
+
         Sensor otherSensor = InstanceManager.getDefault(SensorManager.class).provide("IM99");
         Assert.assertNotEquals("Sensors are different", otherSensor, expressionSensor.getSensor().getBean());
         expressionSensor.setSensor(otherSensor);
         Assert.assertEquals("Sensors are equal", otherSensor, expressionSensor.getSensor().getBean());
-        
+
         NamedBeanHandle<Sensor> otherSensorHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherSensor.getDisplayName(), otherSensor);
@@ -264,44 +264,44 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("Sensors are equal", otherSensor, expressionSensor.getSensor().getBean());
         Assert.assertEquals("SensorHandles are equal", otherSensorHandle, expressionSensor.getSensor());
     }
-    
+
     @Test
     public void testSetSensor2() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        
+
         Sensor sensor11 = InstanceManager.getDefault(SensorManager.class).provide("IL11");
         Sensor sensor12 = InstanceManager.getDefault(SensorManager.class).provide("IL12");
         NamedBeanHandle<Sensor> sensorHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor12.getDisplayName(), sensor12);
         Sensor sensor13 = InstanceManager.getDefault(SensorManager.class).provide("IL13");
         Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IL14");
         sensor14.setUserName("Some user name");
-        
+
         expressionSensor.removeSensor();
         Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
-        
+
         expressionSensor.setSensor(sensor11);
         Assert.assertTrue("sensor is correct", sensor11 == expressionSensor.getSensor().getBean());
-        
+
         expressionSensor.removeSensor();
         Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
-        
+
         expressionSensor.setSensor(sensorHandle12);
         Assert.assertTrue("sensor handle is correct", sensorHandle12 == expressionSensor.getSensor());
-        
+
         expressionSensor.setSensor("A non existent sensor");
         Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
         JUnitAppender.assertErrorMessage("sensor \"A non existent sensor\" is not found");
-        
+
         expressionSensor.setSensor(sensor13.getSystemName());
         Assert.assertTrue("sensor is correct", sensor13 == expressionSensor.getSensor().getBean());
-        
+
         String userName = sensor14.getUserName();
         Assert.assertNotNull("sensor is not null", userName);
         expressionSensor.setSensor(userName);
         Assert.assertTrue("sensor is correct", sensor14 == expressionSensor.getSensor().getBean());
     }
-    
+
     @Test
     public void testSetSensorException() {
         Assert.assertNotNull("Sensor is not null", sensor);
@@ -315,7 +315,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setSensor must not be called when listeners are registered");
-        
+
         thrown = false;
         try {
             Sensor sensor99 = InstanceManager.getDefault(SensorManager.class).provide("IS99");
@@ -327,7 +327,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setSensor must not be called when listeners are registered");
-        
+
         thrown = false;
         try {
             expressionSensor.removeSensor();
@@ -337,7 +337,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setSensor must not be called when listeners are registered");
     }
-    
+
     @Test
     public void testRegisterListeners() {
         // Test registerListeners() when the ExpressionSensor has no sensor
@@ -345,37 +345,37 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         expressionSensor.removeSensor();
         conditionalNG.setEnabled(true);
     }
-    
+
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        
+
         // Get the expressionSensor and set the sensor
         Assert.assertNotNull("Sensor is not null", sensor);
         expressionSensor.setSensor(sensor);
-        
+
         // Get some other sensor for later use
         Sensor otherSensor = InstanceManager.getDefault(SensorManager.class).provide("IM99");
         Assert.assertNotNull("Sensor is not null", otherSensor);
         Assert.assertNotEquals("Sensor is not equal", sensor, otherSensor);
-        
+
         // Test vetoableChange() for some other propery
         expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
-        
+
         // Test vetoableChange() for a string
         expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
         expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
-        
+
         // Test vetoableChange() for another sensor
         expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherSensor, null));
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
         expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherSensor, null));
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
-        
+
         // Test vetoableChange() for its own sensor
         boolean thrown = false;
         try {
@@ -384,12 +384,12 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
+
         Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
         expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
         Assert.assertNull("Sensor is null", expressionSensor.getSensor());
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -399,41 +399,42 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _category = Category.ITEM;
         _isExternal = true;
-        
+
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         InstanceManager.getDefault(ConditionalNG_Manager.class).register(conditionalNG);
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
-        
+
         logixNG.addConditionalNG(conditionalNG);
-        
+
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
-        
+
         expressionSensor = new ExpressionSensor("IQDE321", null);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         ifThenElse.getChild(0).connect(maleSocket2);
-        
+
         _base = expressionSensor;
         _baseMaleSocket = maleSocket2;
-        
+
         atomicBoolean = new AtomicBoolean(false);
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
-        
+
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         expressionSensor.setSensor(sensor);
         sensor.setCommandedState(Sensor.ACTIVE);
-        
+
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 
@@ -442,5 +443,5 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

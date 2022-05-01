@@ -33,6 +33,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _enabled = false;
+    private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
 
 
@@ -134,6 +135,12 @@ public class DefaultLogixNG extends AbstractNamedBean
         } else {
             unregisterListeners();
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void activate() {
+        _isActive = true;
     }
 
     /** {@inheritDoc} */
@@ -259,7 +266,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
-        return _enabled && _manager.isActive();
+        return _enabled && _isActive && _manager.isActive();
     }
 
     /** {@inheritDoc} */

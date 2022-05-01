@@ -256,16 +256,8 @@ public class ActionScript extends AbstractDigitalAction {
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
 
         Bindings bindings = new SimpleBindings();
-//        ScriptParams params = new ScriptParams(this);
 
-        // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
-        bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
-        bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
-        bindings.put("digitalActions", InstanceManager.getNullableDefault(DigitalActionManager.class));
-        bindings.put("digitalBooleanActions", InstanceManager.getNullableDefault(DigitalBooleanActionManager.class));
-        bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
-        bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
-        bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
+        LogixNG_ScriptBindings.addScriptBindings(bindings);
 
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         bindings.put("symbolTable", symbolTable);    // Give the script access to the local variable 'symbolTable'
