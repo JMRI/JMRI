@@ -39,7 +39,7 @@ public class ActionClockRateSwing extends AbstractDigitalActionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionClockRate action = (ActionClockRate) object;
         if (action == null) {
-            // Create a temporary action to test formula
+            // Create a temporary action
             action = new ActionClockRate("IQDA1", null);
         }
 

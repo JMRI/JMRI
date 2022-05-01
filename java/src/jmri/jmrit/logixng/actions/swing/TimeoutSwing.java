@@ -26,11 +26,11 @@ public class TimeoutSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && !(object instanceof Timeout)) {
-            throw new IllegalArgumentException("object must be an Timeout but is a: "+object.getClass().getName());
-        }
-
         Timeout action = (Timeout)object;
+        if (action == null) {
+            // Create a temporary action
+            action = new Timeout("IQDA1", null);
+        }
 
         _selectDelaySwing = new LogixNG_SelectIntegerSwing(getJDialog(), this);
         _selectTimerUnitSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);

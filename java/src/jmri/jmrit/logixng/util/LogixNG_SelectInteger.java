@@ -44,11 +44,8 @@ public class LogixNG_SelectInteger implements VetoableChangeListener {
     public LogixNG_SelectInteger(
             @Nonnull AbstractBase base,
             @Nonnull PropertyChangeListener listener) {
-        _base = base;
-        _inUse = () -> true;
-        _selectTable = new LogixNG_SelectTable(_base, _inUse);
-        _listener = listener;
-        _formatterParserValidator = new DefaultFormatterParserValidator();
+
+        this(base, listener, new DefaultFormatterParserValidator());
     }
 
     public LogixNG_SelectInteger(
@@ -60,6 +57,7 @@ public class LogixNG_SelectInteger implements VetoableChangeListener {
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
         _listener = listener;
         _formatterParserValidator = formatterParserValidator;
+        _value = _formatterParserValidator.getInitialValue();
     }
 
     public void copy(LogixNG_SelectInteger copy) throws ParserException {
