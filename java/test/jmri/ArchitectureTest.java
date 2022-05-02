@@ -253,7 +253,9 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGActionsNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.actions")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeans")                            // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeans$NamedBeanReference")         // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable")                       // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable$NamedBeanReference")    // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
