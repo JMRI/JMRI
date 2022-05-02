@@ -252,7 +252,20 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule checkLogixNGActionsNotUsingNamedBeanHandle = noClasses()
             .that()
-            .resideInAPackage("jmri.jmrit.logixng.actions..")
+            .resideInAPackage("jmri.jmrit.logixng.actions")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeans$NamedBeanReference")         // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable$NamedBeanReference")    // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsXmlNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions.configurexml")
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
@@ -263,7 +276,18 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule checkLogixNGExpressionsNotUsingNamedBeanHandle = noClasses()
             .that()
-            .resideInAPackage("jmri.jmrit.logixng.expressions..")
+            .resideInAPackage("jmri.jmrit.logixng.expressions")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /**
+     * No classes in jmri.jmrit.logixng.expressions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsXmlNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions.configurexml")
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
