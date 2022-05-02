@@ -371,11 +371,11 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 SignalHead signalHead = null;
                 if (_selectNamedBean.getAddressing() == NamedBeanAddressing.Direct) {
                     if (_selectNamedBean.getNamedBean() != null) {
-                        signalHead = _selectNamedBean.getNamedBean().getBean();
+                        signalHead = _selectNamedBean.getNamedBeanIfDirectAddressing();
                     }
                 } else {
                     if (_selectExampleNamedBean.getNamedBean() != null) {
-                        signalHead = _selectExampleNamedBean.getNamedBean().getBean();
+                        signalHead = _selectExampleNamedBean.getNamedBeanIfDirectAddressing();
                     }
                 }
                 String a = "";

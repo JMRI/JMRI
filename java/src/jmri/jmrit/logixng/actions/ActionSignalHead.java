@@ -362,12 +362,12 @@ public class ActionSignalHead extends AbstractDigitalAction
             case Direct:
                 SignalHead signalHead = null;
                 if (_selectNamedBean.getAddressing() == NamedBeanAddressing.Direct) {
-                    if (_selectNamedBean.getNamedBean() != null) {
-                        signalHead = _selectNamedBean.getNamedBean().getBean();
+                    if (_selectNamedBean.getNamedBeanIfDirectAddressing() != null) {
+                        signalHead = _selectNamedBean.getNamedBeanIfDirectAddressing();
                     }
                 } else {
                     if (_selectExampleNamedBean.getNamedBean() != null) {
-                        signalHead = _selectExampleNamedBean.getNamedBean().getBean();
+                        signalHead = _selectExampleNamedBean.getNamedBeanIfDirectAddressing();
                     }
                 }
                 String a = "";
