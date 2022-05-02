@@ -347,7 +347,8 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
             if (_inUse.isInUse() && (_class.isAssignableFrom(evt.getOldValue().getClass()))) {
                 if (evt.getOldValue().equals(getNamedBean().getBean())) {
-                    throw new PropertyVetoException(_base.getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("InUseVeto", _base.getDisplayName(), _base.getShortDescription()), e);
                 }
             }
             if (evt.getOldValue() instanceof Memory) {

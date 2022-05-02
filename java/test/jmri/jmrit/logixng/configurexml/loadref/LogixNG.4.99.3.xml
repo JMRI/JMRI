@@ -7988,6 +7988,10 @@
     </Hold>
     <LastResultOfDigitalExpression class="jmri.jmrit.logixng.expressions.configurexml.LastResultOfDigitalExpressionXml">
       <systemName>IQDE:AUTO:0101</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -8048,7 +8052,11 @@
     <LastResultOfDigitalExpression class="jmri.jmrit.logixng.expressions.configurexml.LastResultOfDigitalExpressionXml">
       <systemName>IQDE:AUTO:0102</systemName>
       <comment>A comment</comment>
-      <expression>A hold expression</expression>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>A hold expression</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -26968,14 +26976,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Mon May 02 00:12:57 CEST 2022</date>
+      <date>Mon May 02 01:43:14 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon May 02 00:12:58 CEST 2022</date>
+      <date>Mon May 02 01:43:14 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T22:12:31Z+R618806c on Mon May 02 00:12:58 CEST 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T23:42:50Z+R003832a on Mon May 02 01:43:14 CEST 2022-->
 </layout-config>

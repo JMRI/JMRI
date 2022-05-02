@@ -3652,7 +3652,7 @@ public class CreateLogixNGTreeScaffold {
 
         lastResultOfDigitalExpression = new LastResultOfDigitalExpression(digitalExpressionManager.getAutoSystemName(), null);
         lastResultOfDigitalExpression.setComment("A comment");
-        lastResultOfDigitalExpression.setDigitalExpression("A hold expression");
+        lastResultOfDigitalExpression.getSelectNamedBean().setNamedBean("A hold expression");
         maleSocket = digitalExpressionManager.registerExpression(lastResultOfDigitalExpression);
         and.getChild(indexExpr++).connect(maleSocket);
 

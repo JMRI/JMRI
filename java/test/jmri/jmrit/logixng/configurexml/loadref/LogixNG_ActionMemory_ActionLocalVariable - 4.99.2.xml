@@ -394,14 +394,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Mon May 02 00:13:03 CEST 2022</date>
+      <date>Mon May 02 01:43:20 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon May 02 00:13:03 CEST 2022</date>
+      <date>Mon May 02 01:43:20 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T22:12:31Z+R618806c on Mon May 02 00:13:03 CEST 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T23:42:50Z+R003832a on Mon May 02 01:43:20 CEST 2022-->
 </layout-config>
