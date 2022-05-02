@@ -235,8 +235,8 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             if (action.getSignalMast() != null) {
                 _signalMastBeanPanel.setDefaultNamedBean(action.getSignalMast().getBean());
             }
-            if (action.getExampleSignalMast() != null) {
-                _exampleSignalMastBeanPanel.setDefaultNamedBean(action.getExampleSignalMast().getBean());
+            if (action.getSelectExampleNamedBean().getNamedBean() != null) {
+                _exampleSignalMastBeanPanel.setDefaultNamedBean(action.getSelectExampleNamedBean().getNamedBean().getBean());
             }
             _signalMastReferenceTextField.setText(action.getReference());
             _signalMastLocalVariableTextField.setText(action.getLocalVariable());
@@ -425,10 +425,10 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<SignalMast> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                action.setExampleSignalMast(handle);
+                action.getSelectExampleNamedBean().setNamedBean(handle);
             }
         } else {
-            action.removeExampleSignalMast();
+            action.getSelectExampleNamedBean().removeNamedBean();
         }
 
         try {

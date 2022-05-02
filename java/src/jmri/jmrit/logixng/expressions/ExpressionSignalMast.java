@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -45,7 +46,9 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     private String _aspectFormula = "";
     private ExpressionNode _aspectExpressionNode;
 
-    private NamedBeanHandle<SignalMast> _exampleSignalMastHandle;
+    private final LogixNG_SelectNamedBean<SignalMast> _selectExampleNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
 
 
     public ExpressionSignalMast(String sys, String user)
@@ -76,8 +79,16 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         copy.setAspectFormula(_aspectFormula);
         copy.setAspectLocalVariable(_aspectLocalVariable);
         copy.setAspectReference(_aspectReference);
-        copy.setExampleSignalMast(_exampleSignalMastHandle);
+        _selectExampleNamedBean.copy(copy._selectExampleNamedBean);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+
+//    public LogixNG_SelectNamedBean<SignalMast> getSelectNamedBean() {
+//        return _selectNamedBean;
+//    }
+
+    public LogixNG_SelectNamedBean<SignalMast> getSelectExampleNamedBean() {
+        return _selectExampleNamedBean;
     }
 
     public void setSignalMast(@Nonnull String signalMastName) {
@@ -113,41 +124,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
 
     public NamedBeanHandle<SignalMast> getSignalMast() {
         return _signalMastHandle;
-    }
-
-    public void setExampleSignalMast(@Nonnull String signalMastName) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName);
-        if (signalMast != null) {
-            setExampleSignalMast(signalMast);
-        } else {
-            removeExampleSignalMast();
-            log.error("signalMast \"{}\" is not found", signalMastName);
-        }
-    }
-
-    public void setExampleSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        _exampleSignalMastHandle = handle;
-        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setExampleSignalMast(@Nonnull SignalMast signalMast) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        setExampleSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast));
-    }
-
-    public void removeExampleSignalMast() {
-        assertListenersAreNotRegistered(log, "removeExampleSignalMast");
-        if (_exampleSignalMastHandle != null) {
-            InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
-            _exampleSignalMastHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalMast> getExampleSignalMast() {
-        return _exampleSignalMastHandle;
     }
 
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -320,21 +296,12 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastExpressionVeto", getDisplayName()), e); // NOI18N
                 }
-                if ((_exampleSignalMastHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastExpressionVeto", getDisplayName()), e); // NOI18N
-                }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalMast) {
                 if ((_signalMastHandle != null)
                         && (evt.getOldValue().equals(_signalMastHandle.getBean()))) {
                     removeSignalMast();
-                }
-                if ((_exampleSignalMastHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
-                    removeExampleSignalMast();
                 }
             }
         }
@@ -710,9 +677,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         if (getSignalMast() != null && bean.equals(getSignalMast().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
         }
-        if (getExampleSignalMast() != null && bean.equals(getExampleSignalMast().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectExampleNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalMast.class);

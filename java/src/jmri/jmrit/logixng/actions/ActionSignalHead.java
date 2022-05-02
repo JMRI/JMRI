@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -10,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -22,7 +21,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalHead extends AbstractDigitalAction
-        implements VetoableChangeListener {
+        implements PropertyChangeListener, VetoableChangeListener {
+
+//    private final LogixNG_SelectNamedBean<SignalHead> _selectNamedBean =
+//            new LogixNG_SelectNamedBean<>(
+//                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<SignalHead> _signalHeadHandle;
@@ -45,7 +48,9 @@ public class ActionSignalHead extends AbstractDigitalAction
     private String _appearanceFormula = "";
     private ExpressionNode _appearanceExpressionNode;
 
-    private NamedBeanHandle<SignalHead> _exampleSignalHeadHandle;
+    private final LogixNG_SelectNamedBean<SignalHead> _selectExampleNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
 
 
     public ActionSignalHead(String sys, String user)
@@ -76,8 +81,16 @@ public class ActionSignalHead extends AbstractDigitalAction
         copy.setAppearanceFormula(_appearanceFormula);
         copy.setAppearanceLocalVariable(_appearanceLocalVariable);
         copy.setAppearanceReference(_appearanceReference);
-        copy.setExampleSignalHead(_exampleSignalHeadHandle);
+        _selectExampleNamedBean.copy(copy._selectExampleNamedBean);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+
+//    public LogixNG_SelectNamedBean<SignalHead> getSelectNamedBean() {
+//        return _selectNamedBean;
+//    }
+
+    public LogixNG_SelectNamedBean<SignalHead> getSelectExampleNamedBean() {
+        return _selectExampleNamedBean;
     }
 
     public void setSignalHead(@Nonnull String signalHeadName) {
@@ -113,41 +126,6 @@ public class ActionSignalHead extends AbstractDigitalAction
 
     public NamedBeanHandle<SignalHead> getSignalHead() {
         return _signalHeadHandle;
-    }
-
-    public void setExampleSignalHead(@Nonnull String signalHeadName) {
-        assertListenersAreNotRegistered(log, "setExampleSignalHead");
-        SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
-        if (signalHead != null) {
-            setExampleSignalHead(signalHead);
-        } else {
-            removeExampleSignalHead();
-            log.warn("signalHead \"{}\" is not found", signalHeadName);
-        }
-    }
-
-    public void setExampleSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
-        assertListenersAreNotRegistered(log, "setExampleSignalHead");
-        _exampleSignalHeadHandle = handle;
-        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setExampleSignalHead(@Nonnull SignalHead signalHead) {
-        assertListenersAreNotRegistered(log, "setExampleSignalHead");
-        setExampleSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
-    }
-
-    public void removeExampleSignalHead() {
-        assertListenersAreNotRegistered(log, "removeExampleSignalHead");
-        if (_exampleSignalHeadHandle != null) {
-            InstanceManager.getDefault(SignalHeadManager.class).removeVetoableChangeListener(this);
-            _exampleSignalHeadHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalHead> getExampleSignalHead() {
-        return _exampleSignalHeadHandle;
     }
 
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -319,21 +297,12 @@ public class ActionSignalHead extends AbstractDigitalAction
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("SignalHead_SignalHeadInUseSignalHeadActionVeto", getDisplayName()), e); // NOI18N
                 }
-                if ((_exampleSignalHeadHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalHeadHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalHead_SignalHeadInUseSignalHeadActionVeto", getDisplayName()), e); // NOI18N
-                }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalHead) {
                 if ((_signalHeadHandle != null)
                         && (evt.getOldValue().equals(_signalHeadHandle.getBean()))) {
                     removeSignalHead();
-                }
-                if ((_exampleSignalHeadHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalHeadHandle.getBean()))) {
-                    removeExampleSignalHead();
                 }
             }
         }
@@ -492,12 +461,6 @@ public class ActionSignalHead extends AbstractDigitalAction
                     case NotHeld:
                         signalHead.setHeld(false);
                         break;
-        //            case PermissiveSmlDisabled:
-        //                signalHead.setPermissiveSmlDisabled(true);
-        //                break;
-        //            case PermissiveSmlNotDisabled:
-        //                signalHead.setPermissiveSmlDisabled(false);
-        //                break;
                     default:
                         throw new JmriException("Unknown enum: "+_operationType.name());
                 }
@@ -631,6 +594,12 @@ public class ActionSignalHead extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void disposeMe() {
     }
 
@@ -663,9 +632,7 @@ public class ActionSignalHead extends AbstractDigitalAction
         if (getSignalHead() != null && bean.equals(getSignalHead().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
-        if (getExampleSignalHead() != null && bean.equals(getExampleSignalHead().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectExampleNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalHead.class);

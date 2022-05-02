@@ -1318,7 +1318,7 @@ public class CreateLogixNGTreeScaffold {
         actionSignalHead.setAppearanceFormula("\"IT\"+index3");
         actionSignalHead.setAppearanceLocalVariable("index3");
         actionSignalHead.setAppearanceReference("{IM3}");
-        actionSignalHead.setExampleSignalHead("IH2");
+        actionSignalHead.getSelectExampleNamedBean().setNamedBean("IH2");
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1401,7 +1401,7 @@ public class CreateLogixNGTreeScaffold {
         actionSignalMast.setAspectFormula("\"IT\"+index3");
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
-        actionSignalMast.setExampleSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.getSelectExampleNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -3323,7 +3323,7 @@ public class CreateLogixNGTreeScaffold {
         expressionSignalHead.setAppearanceFormula("\"IT\"+index3");
         expressionSignalHead.setAppearanceLocalVariable("index3");
         expressionSignalHead.setAppearanceReference("{IM3}");
-        expressionSignalHead.setExampleSignalHead("IH2");
+        expressionSignalHead.getSelectExampleNamedBean().setNamedBean("IH2");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(indexExpr++).connect(maleSocket);
 
@@ -3406,7 +3406,7 @@ public class CreateLogixNGTreeScaffold {
         expressionSignalMast.setAspectFormula("\"IT\"+index3");
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
-        expressionSignalMast.setExampleSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectExampleNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(indexExpr++).connect(maleSocket);
 

@@ -236,8 +236,8 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
             if (action.getSignalHead() != null) {
                 _signalHeadBeanPanel.setDefaultNamedBean(action.getSignalHead().getBean());
             }
-            if (action.getExampleSignalHead() != null) {
-                _exampleSignalHeadBeanPanel.setDefaultNamedBean(action.getExampleSignalHead().getBean());
+            if (action.getSelectExampleNamedBean().getNamedBean() != null) {
+                _exampleSignalHeadBeanPanel.setDefaultNamedBean(action.getSelectExampleNamedBean().getNamedBean().getBean());
             }
             _signalHeadReferenceTextField.setText(action.getReference());
             _signalHeadLocalVariableTextField.setText(action.getLocalVariable());
@@ -431,10 +431,10 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<SignalHead> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                action.setExampleSignalHead(handle);
+                action.getSelectExampleNamedBean().setNamedBean(handle);
             }
         } else {
-            action.removeExampleSignalHead();
+            action.getSelectExampleNamedBean().removeNamedBean();
         }
 
         try {

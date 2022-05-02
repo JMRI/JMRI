@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -10,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
@@ -20,7 +19,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalMast extends AbstractDigitalAction
-        implements VetoableChangeListener {
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<SignalMast> _signalMastHandle;
@@ -43,7 +42,9 @@ public class ActionSignalMast extends AbstractDigitalAction
     private String _aspectFormula = "";
     private ExpressionNode _aspectExpressionNode;
 
-    private NamedBeanHandle<SignalMast> _exampleSignalMastHandle;
+    private final LogixNG_SelectNamedBean<SignalMast> _selectExampleNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
 
 
     public ActionSignalMast(String sys, String user)
@@ -74,8 +75,16 @@ public class ActionSignalMast extends AbstractDigitalAction
         copy.setAspectFormula(_aspectFormula);
         copy.setAspectLocalVariable(_aspectLocalVariable);
         copy.setAspectReference(_aspectReference);
-        copy.setExampleSignalMast(_exampleSignalMastHandle);
+        _selectExampleNamedBean.copy(copy._selectExampleNamedBean);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+
+//    public LogixNG_SelectNamedBean<SignalMast> getSelectNamedBean() {
+//        return _selectNamedBean;
+//    }
+
+    public LogixNG_SelectNamedBean<SignalMast> getSelectExampleNamedBean() {
+        return _selectExampleNamedBean;
     }
 
     public void setSignalMast(@Nonnull String signalMastName) {
@@ -111,41 +120,6 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     public NamedBeanHandle<SignalMast> getSignalMast() {
         return _signalMastHandle;
-    }
-
-    public void setExampleSignalMast(@Nonnull String signalMastName) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName);
-        if (signalMast != null) {
-            setExampleSignalMast(signalMast);
-        } else {
-            removeExampleSignalMast();
-            log.warn("signalMast \"{}\" is not found", signalMastName);
-        }
-    }
-
-    public void setExampleSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        _exampleSignalMastHandle = handle;
-        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setExampleSignalMast(@Nonnull SignalMast signalMast) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        setExampleSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast));
-    }
-
-    public void removeExampleSignalMast() {
-        assertListenersAreNotRegistered(log, "removeExampleSignalMast");
-        if (_exampleSignalMastHandle != null) {
-            InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
-            _exampleSignalMastHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalMast> getExampleSignalMast() {
-        return _exampleSignalMastHandle;
     }
 
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -318,21 +292,12 @@ public class ActionSignalMast extends AbstractDigitalAction
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastActionVeto", getDisplayName()), e); // NOI18N
                 }
-                if ((_exampleSignalMastHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastActionVeto", getDisplayName()), e); // NOI18N
-                }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalMast) {
                 if ((_signalMastHandle != null)
                         && (evt.getOldValue().equals(_signalMastHandle.getBean()))) {
                     removeSignalMast();
-                }
-                if ((_exampleSignalMastHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
-                    removeExampleSignalMast();
                 }
             }
         }
@@ -614,6 +579,12 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void disposeMe() {
     }
 
@@ -648,9 +619,7 @@ public class ActionSignalMast extends AbstractDigitalAction
         if (getSignalMast() != null && bean.equals(getSignalMast().getBean())) {
             report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
         }
-        if (getExampleSignalMast() != null && bean.equals(getExampleSignalMast().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectExampleNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalMast.class);

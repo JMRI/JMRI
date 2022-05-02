@@ -235,8 +235,8 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
             if (expression.getSignalMast() != null) {
                 _signalMastBeanPanel.setDefaultNamedBean(expression.getSignalMast().getBean());
             }
-            if (expression.getExampleSignalMast() != null) {
-                _exampleSignalMastBeanPanel.setDefaultNamedBean(expression.getExampleSignalMast().getBean());
+            if (expression.getSelectExampleNamedBean().getNamedBean() != null) {
+                _exampleSignalMastBeanPanel.setDefaultNamedBean(expression.getSelectExampleNamedBean().getNamedBean().getBean());
             }
             _signalMastReferenceTextField.setText(expression.getReference());
             _signalMastLocalVariableTextField.setText(expression.getLocalVariable());
@@ -427,10 +427,10 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<SignalMast> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                expression.setExampleSignalMast(handle);
+                expression.getSelectExampleNamedBean().setNamedBean(handle);
             }
         } else {
-            expression.removeExampleSignalMast();
+            expression.getSelectExampleNamedBean().removeNamedBean();
         }
 
         try {

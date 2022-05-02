@@ -236,8 +236,8 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
             if (expression.getSignalHead() != null) {
                 _signalHeadBeanPanel.setDefaultNamedBean(expression.getSignalHead().getBean());
             }
-            if (expression.getExampleSignalHead() != null) {
-                _exampleSignalHeadBeanPanel.setDefaultNamedBean(expression.getExampleSignalHead().getBean());
+            if (expression.getSelectExampleNamedBean().getNamedBean() != null) {
+                _exampleSignalHeadBeanPanel.setDefaultNamedBean(expression.getSelectExampleNamedBean().getNamedBean().getBean());
             }
             _signalHeadReferenceTextField.setText(expression.getReference());
             _signalHeadLocalVariableTextField.setText(expression.getLocalVariable());
@@ -431,10 +431,10 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<SignalHead> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                expression.setExampleSignalHead(handle);
+                expression.getSelectExampleNamedBean().setNamedBean(handle);
             }
         } else {
-            expression.removeExampleSignalHead();
+            expression.getSelectExampleNamedBean().removeNamedBean();
         }
 
         try {

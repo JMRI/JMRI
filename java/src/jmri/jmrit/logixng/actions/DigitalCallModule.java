@@ -176,7 +176,7 @@ public class DigitalCallModule extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // A module never listen on beans
+        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
