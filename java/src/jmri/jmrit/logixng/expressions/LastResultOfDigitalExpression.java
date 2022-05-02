@@ -59,11 +59,6 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
             while (! (m instanceof MaleDigitalExpressionSocket)) {
                 m = (MaleSocket) m.getObject();
             }
-            if (m == null) {
-                throw new RuntimeException("The digital expression "
-                        + expression.getDisplayName()
-                        + " is not contained in a DigitalExpressionSocket");
-            }
             return ((MaleDigitalExpressionSocket)m).getLastResult();
         }
         return false;
@@ -127,6 +122,6 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LastResultOfDigitalExpression.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LastResultOfDigitalExpression.class);
 
 }
