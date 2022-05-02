@@ -196,9 +196,9 @@ public abstract class ImportExpressionComplexTestBase {
 //            if (e.name().equals("ConstantEquals")) continue;
 //            if (e.name().equals("ConstantCompareLessThan")) continue;
             setupTest();
-//            System.out.format("Test enum: %s%n", e.name());
+            System.out.format("Test enum: %s%n", e.name());
             testEnum(e);
-//            System.out.format("Test enum: %s done%n", e.name());
+            System.out.format("Test enum: %s done%n", e.name());
             teardownTest();
         }
     }

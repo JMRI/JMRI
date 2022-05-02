@@ -124,6 +124,13 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _handle;
     }
 
+    public E getNamedBeanIfDirectAddressing() {
+        if ((_handle != null) && (this._addressing == NamedBeanAddressing.Direct)) {
+            return _handle.getBean();
+        }
+        return null;
+    }
+
     public void setReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");

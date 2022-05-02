@@ -37,15 +37,8 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
 
         storeCommon(p, element);
 
-        NamedBeanHandle<SignalMast> signalMast = p.getSignalMast();
-        if (signalMast != null) {
-            element.addContent(new Element("signalMast").addContent(signalMast.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalMast>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("queryAddressing").addContent(p.getQueryAddressing().name()));
         element.addContent(new Element("queryType").addContent(p.getQueryType().name()));
@@ -59,8 +52,8 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
         element.addContent(new Element("aspectLocalVariable").addContent(p.getAspectLocalVariable()));
         element.addContent(new Element("aspectFormula").addContent(p.getAspectFormula()));
 
-        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalMast>();
-        element.addContent(selectNamedBeanXml.store(p.getSelectExampleNamedBean(), "exampleNamedBean"));
+        var selectExampleNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalMast>();
+        element.addContent(selectExampleNamedBeanXml.store(p.getSelectExampleNamedBean(), "exampleNamedBean"));
 
         return element;
     }
@@ -73,30 +66,12 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
 
         loadCommon(h, shared);
 
-        Element signalMastName = shared.getChild("signalMast");
-        if (signalMastName != null) {
-            SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName.getTextTrim());
-            if (signalMast != null) h.setSignalMast(signalMast);
-            else h.removeSignalMast();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalMast>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "signalMast");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("queryAddressing");
+            Element elem = shared.getChild("queryAddressing");
             if (elem != null) {
                 h.setQueryAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
@@ -143,9 +118,9 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
             throw new JmriConfigureXmlException(e);
         }
 
-        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalMast>();
-        selectNamedBeanXml.load(shared.getChild("exampleNamedBean"), h.getSelectExampleNamedBean());
-        selectNamedBeanXml.loadLegacy(shared, h.getSelectExampleNamedBean(), "exampleSignalMast", null, null, null, null);
+        var selectExampleNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalMast>();
+        selectExampleNamedBeanXml.load(shared.getChild("exampleNamedBean"), h.getSelectExampleNamedBean());
+        selectExampleNamedBeanXml.loadLegacy(shared, h.getSelectExampleNamedBean(), "exampleSignalMast", null, null, null, null);
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

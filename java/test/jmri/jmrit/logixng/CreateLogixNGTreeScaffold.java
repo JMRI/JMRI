@@ -1304,11 +1304,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
-        actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAddressing(NamedBeanAddressing.Direct);
-        actionSignalHead.setFormula("\"IT\"+index");
-        actionSignalHead.setLocalVariable("index");
-        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        actionSignalHead.getSelectNamedBean().setReference("{IM1}");
         actionSignalHead.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
@@ -1324,11 +1324,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
-        actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionSignalHead.setFormula("\"IT\"+index");
-        actionSignalHead.setLocalVariable("index");
-        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        actionSignalHead.getSelectNamedBean().setReference("{IM1}");
         actionSignalHead.setOperationAddressing(NamedBeanAddressing.Formula);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
@@ -1343,11 +1343,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
-        actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAddressing(NamedBeanAddressing.Formula);
-        actionSignalHead.setFormula("\"IT\"+index");
-        actionSignalHead.setLocalVariable("index");
-        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        actionSignalHead.getSelectNamedBean().setReference("{IM1}");
         actionSignalHead.setOperationAddressing(NamedBeanAddressing.Reference);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
@@ -1362,11 +1362,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         actionSignalHead.setComment("A comment");
-        actionSignalHead.setSignalHead("IH1");
-        actionSignalHead.setAddressing(NamedBeanAddressing.Reference);
-        actionSignalHead.setFormula("\"IT\"+index");
-        actionSignalHead.setLocalVariable("index");
-        actionSignalHead.setReference("{IM1}");
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        actionSignalHead.getSelectNamedBean().setReference("{IM1}");
         actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
         actionSignalHead.setOperationFormula("\"IT\"+index2");
         actionSignalHead.setOperationLocalVariable("index2");
@@ -1387,11 +1387,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
-        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        actionSignalMast.setAddressing(NamedBeanAddressing.Direct);
-        actionSignalMast.setFormula("\"IT\"+index");
-        actionSignalMast.setLocalVariable("index");
-        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        actionSignalMast.getSelectNamedBean().setReference("{IM1}");
         actionSignalMast.setOperationAddressing(NamedBeanAddressing.LocalVariable);
         actionSignalMast.setOperationFormula("\"IT\"+index2");
         actionSignalMast.setOperationLocalVariable("index2");
@@ -1407,11 +1407,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
-        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        actionSignalMast.setAddressing(NamedBeanAddressing.LocalVariable);
-        actionSignalMast.setFormula("\"IT\"+index");
-        actionSignalMast.setLocalVariable("index");
-        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        actionSignalMast.getSelectNamedBean().setReference("{IM1}");
         actionSignalMast.setOperationAddressing(NamedBeanAddressing.Formula);
         actionSignalMast.setOperationFormula("\"IT\"+index2");
         actionSignalMast.setOperationLocalVariable("index2");
@@ -1426,11 +1426,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
-        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        actionSignalMast.setAddressing(NamedBeanAddressing.Formula);
-        actionSignalMast.setFormula("\"IT\"+index");
-        actionSignalMast.setLocalVariable("index");
-        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        actionSignalMast.getSelectNamedBean().setReference("{IM1}");
         actionSignalMast.setOperationAddressing(NamedBeanAddressing.Reference);
         actionSignalMast.setOperationFormula("\"IT\"+index2");
         actionSignalMast.setOperationLocalVariable("index2");
@@ -1445,11 +1445,11 @@ public class CreateLogixNGTreeScaffold {
 
         actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         actionSignalMast.setComment("A comment");
-        actionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        actionSignalMast.setAddressing(NamedBeanAddressing.Reference);
-        actionSignalMast.setFormula("\"IT\"+index");
-        actionSignalMast.setLocalVariable("index");
-        actionSignalMast.setReference("{IM1}");
+        actionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        actionSignalMast.getSelectNamedBean().setReference("{IM1}");
         actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
         actionSignalMast.setOperationFormula("\"IT\"+index2");
         actionSignalMast.setOperationLocalVariable("index2");
@@ -3309,11 +3309,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
-        expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setAddressing(NamedBeanAddressing.Direct);
-        expressionSignalHead.setFormula("\"IT\"+index");
-        expressionSignalHead.setLocalVariable("index");
-        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalHead.getSelectNamedBean().setReference("{IM1}");
         expressionSignalHead.setQueryAddressing(NamedBeanAddressing.LocalVariable);
         expressionSignalHead.setQueryFormula("\"IT\"+index2");
         expressionSignalHead.setQueryLocalVariable("index2");
@@ -3329,11 +3329,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
-        expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionSignalHead.setFormula("\"IT\"+index");
-        expressionSignalHead.setLocalVariable("index");
-        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalHead.getSelectNamedBean().setReference("{IM1}");
         expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Formula);
         expressionSignalHead.setQueryFormula("\"IT\"+index2");
         expressionSignalHead.setQueryLocalVariable("index2");
@@ -3348,11 +3348,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
-        expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setAddressing(NamedBeanAddressing.Formula);
-        expressionSignalHead.setFormula("\"IT\"+index");
-        expressionSignalHead.setLocalVariable("index");
-        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalHead.getSelectNamedBean().setReference("{IM1}");
         expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Reference);
         expressionSignalHead.setQueryFormula("\"IT\"+index2");
         expressionSignalHead.setQueryLocalVariable("index2");
@@ -3367,11 +3367,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
-        expressionSignalHead.setSignalHead("IH1");
-        expressionSignalHead.setAddressing(NamedBeanAddressing.Reference);
-        expressionSignalHead.setFormula("\"IT\"+index");
-        expressionSignalHead.setLocalVariable("index");
-        expressionSignalHead.setReference("{IM1}");
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSignalHead.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalHead.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalHead.getSelectNamedBean().setReference("{IM1}");
         expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
         expressionSignalHead.setQueryFormula("\"IT\"+index2");
         expressionSignalHead.setQueryLocalVariable("index2");
@@ -3392,11 +3392,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
-        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setAddressing(NamedBeanAddressing.Direct);
-        expressionSignalMast.setFormula("\"IT\"+index");
-        expressionSignalMast.setLocalVariable("index");
-        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalMast.getSelectNamedBean().setReference("{IM1}");
         expressionSignalMast.setQueryAddressing(NamedBeanAddressing.LocalVariable);
         expressionSignalMast.setQueryFormula("\"IT\"+index2");
         expressionSignalMast.setQueryLocalVariable("index2");
@@ -3412,11 +3412,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
-        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionSignalMast.setFormula("\"IT\"+index");
-        expressionSignalMast.setLocalVariable("index");
-        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        expressionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalMast.getSelectNamedBean().setReference("{IM1}");
         expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Formula);
         expressionSignalMast.setQueryFormula("\"IT\"+index2");
         expressionSignalMast.setQueryLocalVariable("index2");
@@ -3431,11 +3431,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
-        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setAddressing(NamedBeanAddressing.Formula);
-        expressionSignalMast.setFormula("\"IT\"+index");
-        expressionSignalMast.setLocalVariable("index");
-        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        expressionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalMast.getSelectNamedBean().setReference("{IM1}");
         expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Reference);
         expressionSignalMast.setQueryFormula("\"IT\"+index2");
         expressionSignalMast.setQueryLocalVariable("index2");
@@ -3450,11 +3450,11 @@ public class CreateLogixNGTreeScaffold {
 
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
-        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        expressionSignalMast.setAddressing(NamedBeanAddressing.Reference);
-        expressionSignalMast.setFormula("\"IT\"+index");
-        expressionSignalMast.setLocalVariable("index");
-        expressionSignalMast.setReference("{IM1}");
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        expressionSignalMast.getSelectNamedBean().setFormula("\"IT\"+index");
+        expressionSignalMast.getSelectNamedBean().setLocalVariable("index");
+        expressionSignalMast.getSelectNamedBean().setReference("{IM1}");
         expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
         expressionSignalMast.setQueryFormula("\"IT\"+index2");
         expressionSignalMast.setQueryLocalVariable("index2");

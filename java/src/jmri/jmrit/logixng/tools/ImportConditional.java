@@ -537,7 +537,7 @@ public class ImportConditional {
                 new ExpressionSignalHead(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setSignalHead(s);
+        expression.getSelectNamedBean().setNamedBean(s);
 
         ExpressionSignalHead.QueryType appearence =
                 isNegated.get() ? ExpressionSignalHead.QueryType.NotAppearance
@@ -607,7 +607,7 @@ public class ImportConditional {
                 new ExpressionSignalMast(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setSignalMast(sm);
+        expression.getSelectNamedBean().setNamedBean(sm);
 
         ExpressionSignalMast.QueryType aspect =
                 isNegated.get() ? ExpressionSignalMast.QueryType.NotAspect
@@ -1113,16 +1113,16 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setSignalHead(sh);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(sh);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
         action.setAppearanceAddressing(NamedBeanAddressing.Direct);
 
-        action.setSignalHead(sh);
+        action.getSelectNamedBean().setNamedBean(sh);
 
         switch (ca.getType()) {
             case SET_SIGNAL_APPEARANCE:
@@ -1161,11 +1161,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setSignalMast(sm);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(sm);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
         action.setAspectAddressing(NamedBeanAddressing.Direct);
