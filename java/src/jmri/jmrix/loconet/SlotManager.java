@@ -909,7 +909,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             }
             boolean isConsisting = ((m.getElement(3) & 0b01110000) == 0b01000000);
             if (isConsisting) {
-                // read 2nd slot 
+                // read 2nd slot
                 int slotTwo = ((m.getElement(3) & 0b00000011) * 128 )+ m.getElement(4);
                 sendReadSlotDelayed(slotTwo,100);
             }

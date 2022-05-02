@@ -190,7 +190,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             3, 3, 3, 3, 3, 3, 3, /** 14 -20 */
             4, 4, 4, 4, 4, 4, 4, 4 /** 11 - 28 */
     };
-   
+
     /**
      * Send whole (DCC) Function Group for a particular function number.
      * @param functionNum Function Number
