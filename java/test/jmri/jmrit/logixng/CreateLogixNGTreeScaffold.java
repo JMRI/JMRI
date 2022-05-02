@@ -1916,7 +1916,7 @@ public class CreateLogixNGTreeScaffold {
 
         callModule = new jmri.jmrit.logixng.actions.DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         callModule.setComment("A comment");
-        callModule.setModule("IQM1");
+        callModule.getSelectNamedBean().setNamedBean("IQM1");
         callModule.addParameter("Abc", InitialValueType.FloatingNumber, "12.32", Module.ReturnValueType.LocalVariable, "SomeVar");
         callModule.addParameter("Def", InitialValueType.Formula, "12 + 32", Module.ReturnValueType.Memory, "M1");
         callModule.addParameter("Ghi", InitialValueType.Integer, "21", Module.ReturnValueType.None, null);
@@ -2615,7 +2615,7 @@ public class CreateLogixNGTreeScaffold {
 
         expressionCallModule = new jmri.jmrit.logixng.expressions.DigitalCallModule(digitalExpressionManager.getAutoSystemName(), null);
         expressionCallModule.setComment("A comment");
-        expressionCallModule.setModule("IQM1");
+        expressionCallModule.getSelectNamedBean().setNamedBean("IQM1");
         expressionCallModule.addParameter("Abc", InitialValueType.FloatingNumber, "12.32", Module.ReturnValueType.LocalVariable, "SomeVar");
         expressionCallModule.addParameter("Def", InitialValueType.Formula, "12 + 32", Module.ReturnValueType.Memory, "M1");
         expressionCallModule.addParameter("Ghi", InitialValueType.Integer, "21", Module.ReturnValueType.None, null);
