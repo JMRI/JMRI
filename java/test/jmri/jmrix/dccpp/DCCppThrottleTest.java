@@ -74,21 +74,21 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
         Assert.assertTrue(instance.getIsForward());
         DCCppMessage lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "t 3 63 1");
+        Assert.assertEquals( "t 3 63 1", lm.toString());
 
         instance.setSpeedSetting(0.0f);
         instance.setIsForward(false);
         Assert.assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
         Assert.assertFalse(instance.getIsForward());
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "t 3 0 0");
+        Assert.assertEquals( "t 3 0 0", lm.toString());
 
         instance.setSpeedSetting(1.0f);
         instance.setIsForward(false);
         Assert.assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
         Assert.assertFalse(instance.getIsForward());
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "t 3 126 0");
+        Assert.assertEquals( "t 3 126 0", lm.toString());
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
@@ -99,21 +99,21 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(instance.getSpeedSetting(), 0.5f, 0.0001);
         Assert.assertTrue(instance.getIsForward());
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "t -1 3 63 1");
+        Assert.assertEquals( "t -1 3 63 1", lm.toString());
 
         instance.setSpeedSetting(0.0f);
         instance.setIsForward(false);
         Assert.assertEquals(instance.getSpeedSetting(), 0.0f, 0.0001);
         Assert.assertFalse(instance.getIsForward());
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "t -1 3 0 0");
+        Assert.assertEquals( "t -1 3 0 0", lm.toString());
 
         instance.setSpeedSetting(1.0f);
         instance.setIsForward(false);
         Assert.assertEquals(instance.getSpeedSetting(), 1.0f, 0.0001);
         Assert.assertFalse(instance.getIsForward());
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "t -1 3 126 0");
+        Assert.assertEquals( "t -1 3 126 0", lm.toString());
 
     }
 
@@ -134,25 +134,26 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance.setFunction(0, true);
         Assert.assertTrue(instance.getFunction(0));
         DCCppMessage lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "F 3 0 1");
+        Assert.assertEquals( "F 3 0 1", lm.toString());
         instance.setFunction(0, false);
 
         instance.setFunction(22, false);
         Assert.assertFalse(instance.getFunction(22));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "F 3 22 0");
+        Assert.assertEquals( "F 3 22 0", lm.toString());
 
         instance.setFunction(28, true);
         Assert.assertTrue(instance.getFunction(28));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "F 3 28 1");
+        Assert.assertEquals( "F 3 28 1", lm.toString());
         instance.setFunction(28, false);
 
         instance.setFunction(16, true);
-        Assert.assertFalse(instance.getFunction(61));
+        Assert.assertTrue(instance.getFunction(16));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "F 3 16 1");
+        Assert.assertEquals( "F 3 16 1", lm.toString());
         instance.setFunction(16, false);
+        Assert.assertFalse(instance.getFunction(16));
 
         r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
@@ -161,24 +162,24 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance.setFunction(0, true);
         Assert.assertTrue(instance.getFunction(0));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "f 3 144");
+        Assert.assertEquals( "f 3 144", lm.toString());
         instance.setFunction(0, false);
 
         instance.setFunction(21, false);
         Assert.assertFalse(instance.getFunction(21));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "f 3 223 0");
+        Assert.assertEquals( "f 3 223 0", lm.toString());
 
         instance.setFunction(4, true);
         Assert.assertTrue(instance.getFunction(4));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "f 3 136");
+        Assert.assertEquals( "f 3 136", lm.toString());
         instance.setFunction(4, false);
 
         instance.setFunction(28, true);
         Assert.assertTrue(instance.getFunction(28));
         lm = tc.outbound.get(tc.outbound.size()-1);
-        Assert.assertEquals(lm.toString(), "f 3 223 128");
+        Assert.assertEquals( "f 3 223 128", lm.toString());
         instance.setFunction(28, false);
 
     }
