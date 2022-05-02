@@ -263,7 +263,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 _normalSpeed = cmdVal.getFloat();
                 float speedMod = _speedUtil.modifySpeed(_normalSpeed, _speedType);
                 if (_normalSpeed > speedMod) {
-                    _timeRatio = _normalSpeed / speedMod;
+                    float trackSpeed = _speedUtil.getTrackSpeed(speedMod);
+                    _timeRatio = _speedUtil.getTrackSpeed(_normalSpeed) / trackSpeed;
+//                    _timeRatio = _normalSpeed / speedMod;
                     setSpeed(speedMod);
                 } else {
                     _timeRatio = 1.0f;
@@ -352,20 +354,24 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     protected void clearWaitForSync(OBlock block) {
         // block went active. if waiting on sync, clear it
         if (_synchBlock != null) {
-           if (block.equals(_synchBlock)) {
-               synchronized (_synchLockObject) {
-                   _synchLockObject.notifyAll();
-               }
-               if (log.isDebugEnabled()) {
-                   log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() called.  isRamping()={}",
-                           _warrant.getDisplayName(), block.getDisplayName(), isRamping());
-               }
-           } else {
-               log.warn("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
-                           _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
-           }
+            synchronized (_synchLockObject) {
+                if (block.equals(_synchBlock)) {
+                    _synchLockObject.notifyAll();
+                    if (log.isDebugEnabled()) {
+                        log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() called.  isRamping()={}",
+                                _warrant.getDisplayName(), block.getDisplayName(), isRamping());
+                    }
+                } else {
+                    log.warn("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
+                                _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
+                }
+            }
+        } else {
+            if (log.isDebugEnabled()) {
+                log.debug("{}: clearWaitForSync from block \"{}\". _synchBlock= null SpeedState={} _atClear={} _atHalt={}",
+                        _warrant.getDisplayName(), block.getDisplayName(), getSpeedState(), _atClear, _atHalt);
+            }
         }
-
     }
 
     private static void setFrameStatusText(String m, Color c, boolean save) {
@@ -686,9 +692,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      */
     private synchronized void setStop(boolean eStop) {
         float speed = _throttle.getSpeedSetting();
-        if (speed > 0.0f) {
-            cancelRamp(false);
+        if (speed <= 0.0f && (_waitForClear || _halt)) {
+            return;
         }
+        cancelRamp(false);
         if (eStop) {
             setHalt(true);
             setSpeed(-0.1f);
@@ -698,7 +705,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             setWaitforClear(true);
         }
         if (log.isDebugEnabled())
-            log.debug("{}: ({}) from speed={} scriptSpeed={}", _warrant.getDisplayName(), eStop, speed, _normalSpeed);
+            log.debug("{}: setStop({}) from speed={} scriptSpeed={}", _warrant.getDisplayName(), eStop, speed, _normalSpeed);
     }
 
     protected int getRampEndBlockIdx() {
@@ -717,6 +724,13 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
         }
         return Warrant.SpeedState.STEADY_SPEED;
+    }
+
+    protected int getRampTimeForDistance(float availDist, float changeDist, float bufDist) {
+        if (_ramp == null) {
+            return 0;
+        }
+        return _ramp. getRampTimeForDistance(availDist, bufDist);
     }
 
     protected int getRunState() {
@@ -1089,6 +1103,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
          private boolean stop = false;      // aborts ramping
          private boolean _rampDown = true;
          private boolean _die = false;      // kills ramp for good
+         RampData rampData;
 
          ThrottleRamp() {
             setName("Ramp(" + _warrant.getTrainName() +")");
@@ -1162,6 +1177,37 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             log.debug("getCommandIndexLimit: in end block {}, limitIdx = {} in block {}",
                     curBlkName, limit+1, _warrant.getBlockAt(blockIdx).getDisplayName());
             return limit;
+        }
+
+        int getRampTimeForDistance(float availDist, float bufDist) {
+            float accumTime = 0;    // accumulated time of commands up to ramp start
+            float accumDist = 0;
+            int timeIncrement = rampData.getRampTimeIncrement();
+            ListIterator<Float> iter = rampData.speedIterator(true);
+            float speedSetting = getSpeedSetting();
+            float speed;
+            float trackSpeed;
+            while (iter.hasNext()) {
+                if (_rampDown) {
+                    speed = iter.previous().floatValue();   // skip repeat of current throttle setting
+                } else {
+                    speed = iter.next().floatValue();   // skip repeat of current speed                
+                }
+                float changeDist = _speedUtil.getRampLengthForEntry(speedSetting, speed) + bufDist;
+                trackSpeed = _speedUtil.getTrackSpeed(speed);
+                accumDist += trackSpeed * timeIncrement;
+                accumTime += timeIncrement;
+                if (changeDist + accumDist >= availDist) {
+                    float remDist = changeDist + accumDist - availDist;
+                    if (trackSpeed > 0) {
+                        accumTime -= remDist / trackSpeed;
+                    } else {
+                        accumTime -= timeIncrement;
+                    }
+                    break;
+                }
+            }
+            return Math.round(accumTime);
         }
 
         @Override
@@ -1260,7 +1306,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         // up distance is traveled.  We must compare 'endSpeed' to 'scriptSpeed' at each
                         // step and skip scriptSpeeds to insure that endSpeed matches scriptSpeed when
                         // the ramp ends.
-                        RampData rampData = _speedUtil.getRampForSpeedChange(speed, 1.0f);
+                        rampData = _speedUtil.getRampForSpeedChange(speed, 1.0f);
                         int timeIncrement = rampData.getRampTimeIncrement();
                         ListIterator<Float> iter = rampData.speedIterator(true);
                         speed = iter.next().floatValue();   // skip repeat of current speed
@@ -1325,8 +1371,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         // a block i.e. the block of BlockOrder indexed by _endBlockIdx.
                         // Therefore script should resume at the exit to this block.
                         // During ramp down the script may have other Non speed commands that should be executed.
+                        _warrant.downRampBegun(_endBlockIdx);
 
-                        RampData rampData = _speedUtil.getRampForSpeedChange(speed, endSpeed);
+                        rampData = _speedUtil.getRampForSpeedChange(speed, endSpeed);
                         int timeIncrement = rampData.getRampTimeIncrement();
                         ListIterator<Float> iter = rampData.speedIterator(false);
                         speed = iter.previous().floatValue();   // skip repeat of current throttle setting

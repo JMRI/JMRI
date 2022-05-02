@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
-import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -664,11 +663,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     @Override
     public void setLength(float len) {
-        float oldLen = getLengthMm();
-        if (oldLen > 0.0f) {   // if new oblock, paths also have length 0
-            float ratio = getLengthMm() / oldLen;
-            getPaths().forEach(path -> path.setLength(path.getLength() * ratio));
-        }
+        // Only shorten paths longer than 'len'
+        getPaths().stream().forEach(p -> {
+            if (p.getLength() > len) {
+                p.setLength(len); // set to default
+            }
+        });
         super.setLength(len);
     }
 
