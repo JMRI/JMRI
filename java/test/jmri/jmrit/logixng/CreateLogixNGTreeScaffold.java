@@ -794,13 +794,13 @@ public class CreateLogixNGTreeScaffold {
 
         actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeansTable.setComment("A comment");
-        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.getSelectNamedBean().setNamedBean(csvTable);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeansTable.setComment("A comment");
-        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.getSelectNamedBean().setNamedBean(csvTable);
         actionListenOnBeansTable.setRowOrColumnName("Signal before");
         actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Row);
         actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
@@ -810,7 +810,7 @@ public class CreateLogixNGTreeScaffold {
 
         actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeansTable.setComment("A comment");
-        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.getSelectNamedBean().setNamedBean(csvTable);
         actionListenOnBeansTable.setRowOrColumnName("2");
         actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Column);
         actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
@@ -820,7 +820,7 @@ public class CreateLogixNGTreeScaffold {
 
         actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeansTable.setComment("A comment");
-        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.getSelectNamedBean().setNamedBean(csvTable);
         actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
         actionListenOnBeansTable.setListenOnAllProperties(false);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
@@ -828,7 +828,7 @@ public class CreateLogixNGTreeScaffold {
 
         actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         actionListenOnBeansTable.setComment("A comment");
-        actionListenOnBeansTable.setTable(csvTable);
+        actionListenOnBeansTable.getSelectNamedBean().setNamedBean(csvTable);
         actionListenOnBeansTable.setIncludeCellsWithoutHeader(true);
         actionListenOnBeansTable.setListenOnAllProperties(true);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
