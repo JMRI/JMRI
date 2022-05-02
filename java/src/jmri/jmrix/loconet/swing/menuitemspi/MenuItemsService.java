@@ -64,7 +64,7 @@ public final class MenuItemsService {
             java.util.Iterator<MenuItemsInterface> miIterator = loader.iterator();
             while (miIterator.hasNext()) {
                 MenuItemsInterface mii = miIterator.next();
-                log.warn("adding menu items for extension {}", mii.getClass());
+                log.debug("adding menu items for extension {}", mii.getClass());
                 ArrayList <JMenu> me = mii.getMenuItems(isLocoNetInterface, wi, memo);
                 menus.addAll(me);
             }
