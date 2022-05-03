@@ -1,21 +1,22 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Float trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
- * 
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
@@ -39,7 +40,7 @@ class FloatTrigger extends Trigger {
     }
 
     public Float getMatchValue() {
-        return (match_value);
+        return match_value;
     }
 
     public void setCompareType(CompareType ct) {
@@ -47,7 +48,7 @@ class FloatTrigger extends Trigger {
     }
 
     public CompareType getCompareType() {
-        return (compare_type);
+        return compare_type;
     }
 
     @Override
@@ -61,19 +62,19 @@ class FloatTrigger extends Trigger {
         // then just return quickly.
         // Careful: Takes advantage of "lazy OR" behavior
         if (target == null) {
-            log.debug("Quit.  No target.");
+            //log.debug("Quit.  No target.");
             return;
         }
-        if (event.getPropertyName().equals(this.getEventName()) != true) {
-            log.debug("Quit. Event name mismatch event = {} this = {}", event.getPropertyName(), this.getEventName());
+        if (!event.getPropertyName().equals(this.getEventName())) {
+            //log.debug("Quit. Event name mismatch event: {}, this: {}", event.getPropertyName(), this.getEventName());
             return;
         }
         if (this.getTriggerType() == TriggerType.NONE) {
-            log.debug("Quit.  TriggerType = NONE");
+            //log.debug("Quit.  TriggerType = NONE");
             return;
         }
         if (this.getTargetAction() == TargetAction.NOTHING) {
-            log.debug("Quit.  TargetAction = NOTHING");
+            //log.debug("Quit.  TargetAction = NOTHING");
             return;
         }
 
@@ -99,7 +100,7 @@ class FloatTrigger extends Trigger {
                 break;
         }
 
-        log.debug("compareTrigger match_value = {} next = {} compare_val = {} compare = {}", match_value, next, compare_val, compare);
+        log.debug("compareTrigger match_value: {}, next: {}, compare_val: {}, compare: {}", match_value, next, compare_val, compare);
 
         if (compare) {
             log.debug("compareTrigger taking action");
@@ -113,7 +114,7 @@ class FloatTrigger extends Trigger {
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "FLOAT");
         log.warn("CompareTrigger.getXml() not implemented");
-        return (me);
+        return me;
     }
 
     @Override
