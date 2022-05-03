@@ -734,7 +734,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleReverseAtEndBoxClick(ActionEvent e) {
-        if (reverseAtEndBox.isSelected() || resetWhenDoneBox.isSelected()) {
+        if (resetWhenDoneBox.isSelected()) {
             terminateWhenDoneBox.setSelected(false);
             terminateWhenDoneBox.setEnabled(false);
         } else {
