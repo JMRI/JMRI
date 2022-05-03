@@ -1010,9 +1010,6 @@ public class WarrantFrame extends WarrantRoute {
             msg = routeIsValid();
         }
         if (msg == null) {
-            msg = _warrant.setPath(0);
-        }
-        if (msg == null) {
             msg = _warrant.checkforTrackers();
         }
         if (msg == null) {
