@@ -4542,6 +4542,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNRP");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT4");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UT6:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT6");
             case LnConstants.RE_IPL_DIGITRAX_HOST_WTL12:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_WTL12");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
@@ -4620,7 +4622,7 @@ public class LocoNetMessageInterpret {
                 return ret;
             }
         }
-        
+
         if (l.getElement(1) == 0x15) {
             int slot = ( (l.getElement(2) & 0x07 ) *128) + l.getElement(3); // slot number for this request
 
