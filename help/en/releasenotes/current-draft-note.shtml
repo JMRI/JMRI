@@ -593,6 +593,10 @@
                 The "Set" column of the Warrant List Table is removed. The "Allocate" column indicates the route.
                 The path is set if the block is not in a restricted state.
             </li>
+            <li>
+                When a warrant is running under a speed change restriction, The timing between throttle commands
+                has be improved.
+            </li>
         </ul>
 
    <h3>Web Access</h3>
