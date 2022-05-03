@@ -54,13 +54,8 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
         MaleDigitalExpressionSocket expression =
                 _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        if (expression != null) {
-            MaleSocket m = expression;
-            while (! (m instanceof MaleDigitalExpressionSocket)) {
-                m = (MaleSocket) m.getObject();
-            }
-            return ((MaleDigitalExpressionSocket)m).getLastResult();
-        }
+        if (expression != null) return expression.getLastResult();
+
         return false;
     }
 
@@ -90,7 +85,7 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
+        _selectNamedBean.setup();
     }
 
     /** {@inheritDoc} */

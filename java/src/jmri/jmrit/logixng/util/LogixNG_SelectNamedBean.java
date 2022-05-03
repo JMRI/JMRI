@@ -40,6 +40,8 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
+    private String _delayedNamedBean;
+
 
     public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
         _base = base;
@@ -87,6 +89,14 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public NamedBeanAddressing getAddressing() {
         return _addressing;
+    }
+
+    public void setDelayedNamedBean(@Nonnull String name) {
+        _delayedNamedBean = name;
+    }
+
+    public void setup() {
+        if (_delayedNamedBean != null) setNamedBean(_delayedNamedBean);
     }
 
     public void setNamedBean(@Nonnull String name) {

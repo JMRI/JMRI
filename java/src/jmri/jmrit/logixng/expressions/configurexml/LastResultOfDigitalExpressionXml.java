@@ -50,7 +50,7 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
         loadCommon(h, shared);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<MaleDigitalExpressionSocket>();
-        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean(), true);
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "expression", null, null, null, null);
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

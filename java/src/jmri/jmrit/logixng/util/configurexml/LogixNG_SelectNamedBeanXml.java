@@ -57,6 +57,10 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
     }
 
     public void load(Element namedBeanElement, LogixNG_SelectNamedBean<E> selectNamedBean) throws JmriConfigureXmlException {
+        load(namedBeanElement, selectNamedBean, false);
+    }
+
+    public void load(Element namedBeanElement, LogixNG_SelectNamedBean<E> selectNamedBean, boolean delayedLookup) throws JmriConfigureXmlException {
 
         if (namedBeanElement != null) {
 
@@ -70,9 +74,13 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
                 elem = namedBeanElement.getChild("name");
                 if (elem != null) {
-                    E t = selectNamedBean.getManager().getNamedBean(elem.getTextTrim());
-                    if (t != null) selectNamedBean.setNamedBean(t);
-                    else selectNamedBean.removeNamedBean();
+                    if (delayedLookup) {
+                        selectNamedBean.setDelayedNamedBean(elem.getTextTrim());
+                    } else {
+                        E t = selectNamedBean.getManager().getNamedBean(elem.getTextTrim());
+                        if (t != null) selectNamedBean.setNamedBean(t);
+                        else selectNamedBean.removeNamedBean();
+                    }
                 }
 
                 elem = namedBeanElement.getChild("reference");
