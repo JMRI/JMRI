@@ -750,80 +750,90 @@
       <variable item="S72 Output Active" CV="262"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
 
       <variable item="S01 Address" CV="276,275" default="126"><splitVal highCV="275"/></variable>
-      <variable item="S02 Address" CV="278,277" default="126"><splitVal highCV="277"/></variable>
-      <variable item="S03 Address" CV="280,279" default="126"><splitVal highCV="279"/></variable>
-      <variable item="S04 Address" CV="282,281" default="126"><splitVal highCV="281"/></variable>
-      <variable item="S05 Address" CV="284,283" default="126"><splitVal highCV="283"/></variable>
-      <variable item="S06 Address" CV="286,285" default="126"><splitVal highCV="285"/></variable>
-      <variable item="S07 Address" CV="288,287" default="126"><splitVal highCV="287"/></variable>
-      <variable item="S08 Address" CV="290,289" default="126"><splitVal highCV="289"/></variable>
-      <variable item="S09 Address" CV="292,291" default="126"><splitVal highCV="291"/></variable>
-      <variable item="S10 Address" CV="294,293" default="126"><splitVal highCV="293"/></variable>
-      <variable item="S11 Address" CV="296,295" default="126"><splitVal highCV="295"/></variable>
-      <variable item="S12 Address" CV="298,297" default="126"><splitVal highCV="297"/></variable>
-      <variable item="S13 Address" CV="300,299" default="126"><splitVal highCV="299"/></variable>
-      <variable item="S14 Address" CV="302,301" default="126"><splitVal highCV="301"/></variable>
-      <variable item="S15 Address" CV="304,303" default="126"><splitVal highCV="303"/></variable>
-      <variable item="S16 Address" CV="306,305" default="126"><splitVal highCV="305"/></variable>
-      <variable item="S17 Address" CV="308,307" default="126"><splitVal highCV="307"/></variable>
-      <variable item="S18 Address" CV="310,309" default="126"><splitVal highCV="309"/></variable>
-      <variable item="S19 Address" CV="312,311" default="126"><splitVal highCV="311"/></variable>
-      <variable item="S20 Address" CV="314,313" default="126"><splitVal highCV="313"/></variable>
-      <variable item="S21 Address" CV="316,315" default="126"><splitVal highCV="315"/></variable>
-      <variable item="S22 Address" CV="318,317" default="126"><splitVal highCV="317"/></variable>
-      <variable item="S23 Address" CV="320,319" default="126"><splitVal highCV="319"/></variable>
-      <variable item="S24 Address" CV="322,321" default="126"><splitVal highCV="321"/></variable>
-      <variable item="S25 Address" CV="324,323" default="126"><splitVal highCV="323"/></variable>
-      <variable item="S26 Address" CV="326,325" default="126"><splitVal highCV="325"/></variable>
-      <variable item="S27 Address" CV="328,327" default="126"><splitVal highCV="327"/></variable>
-      <variable item="S28 Address" CV="330,329" default="126"><splitVal highCV="329"/></variable>
-      <variable item="S29 Address" CV="332,331" default="126"><splitVal highCV="331"/></variable>
-      <variable item="S30 Address" CV="334,333" default="126"><splitVal highCV="333"/></variable>
-      <variable item="S31 Address" CV="336,335" default="126"><splitVal highCV="335"/></variable>
-      <variable item="S32 Address" CV="338,337" default="126"><splitVal highCV="337"/></variable>
-      <variable item="S33 Address" CV="340,339" default="126"><splitVal highCV="339"/></variable>
-      <variable item="S34 Address" CV="342,341" default="126"><splitVal highCV="341"/></variable>
-      <variable item="S35 Address" CV="344,343" default="126"><splitVal highCV="343"/></variable>
-      <variable item="S36 Address" CV="346,345" default="126"><splitVal highCV="345"/></variable>
-      <variable item="S37 Address" CV="348,347" default="126"><splitVal highCV="347"/></variable>
-      <variable item="S38 Address" CV="350,349" default="126"><splitVal highCV="349"/></variable>
-      <variable item="S39 Address" CV="352,351" default="126"><splitVal highCV="351"/></variable>
-      <variable item="S40 Address" CV="354,353" default="126"><splitVal highCV="353"/></variable>
-      <variable item="S41 Address" CV="356,355" default="126"><splitVal highCV="355"/></variable>
-      <variable item="S42 Address" CV="358,357" default="126"><splitVal highCV="357"/></variable>
-      <variable item="S43 Address" CV="360,359" default="126"><splitVal highCV="359"/></variable>
-      <variable item="S44 Address" CV="362,361" default="126"><splitVal highCV="361"/></variable>
-      <variable item="S45 Address" CV="364,363" default="126"><splitVal highCV="363"/></variable>
-      <variable item="S46 Address" CV="366,365" default="126"><splitVal highCV="365"/></variable>
-      <variable item="S47 Address" CV="368,367" default="126"><splitVal highCV="367"/></variable>
-      <variable item="S48 Address" CV="370,369" default="126"><splitVal highCV="369"/></variable>
-      <variable item="S49 Address" CV="372,371" default="126"><splitVal highCV="371"/></variable>
-      <variable item="S50 Address" CV="374,373" default="126"><splitVal highCV="373"/></variable>
-      <variable item="S51 Address" CV="376,375" default="126"><splitVal highCV="375"/></variable>
-      <variable item="S52 Address" CV="378,377" default="126"><splitVal highCV="377"/></variable>
-      <variable item="S53 Address" CV="380,379" default="126"><splitVal highCV="379"/></variable>
-      <variable item="S54 Address" CV="382,381" default="126"><splitVal highCV="381"/></variable>
-      <variable item="S55 Address" CV="384,383" default="126"><splitVal highCV="383"/></variable>
-      <variable item="S56 Address" CV="386,385" default="126"><splitVal highCV="385"/></variable>
-      <variable item="S57 Address" CV="388,387" default="126"><splitVal highCV="387"/></variable>
-      <variable item="S58 Address" CV="390,389" default="126"><splitVal highCV="389"/></variable>
-      <variable item="S59 Address" CV="392,391" default="126"><splitVal highCV="391"/></variable>
-      <variable item="S60 Address" CV="394,393" default="126"><splitVal highCV="393"/></variable>
-      <variable item="S61 Address" CV="396,395" default="126"><splitVal highCV="395"/></variable>
-      <variable item="S62 Address" CV="398,397" default="126"><splitVal highCV="397"/></variable>
-      <variable item="S63 Address" CV="400,399" default="126"><splitVal highCV="399"/></variable>
-      <variable item="S64 Address" CV="402,401" default="126"><splitVal highCV="401"/></variable>
-      <variable item="S65 Address" CV="404,403" default="126"><splitVal highCV="403"/></variable>
-      <variable item="S66 Address" CV="406,405" default="126"><splitVal highCV="405"/></variable>
-      <variable item="S67 Address" CV="408,407" default="126"><splitVal highCV="407"/></variable>
-      <variable item="S68 Address" CV="410,409" default="126"><splitVal highCV="409"/></variable>
-      <variable item="S69 Address" CV="412,411" default="126"><splitVal highCV="411"/></variable>
-      <variable item="S70 Address" CV="414,413" default="126"><splitVal highCV="413"/></variable>
-      <variable item="S71 Address" CV="416,415" default="126"><splitVal highCV="415"/></variable>
-      <variable item="S72 Address" CV="418,417" default="126"><splitVal highCV="417"/></variable>
+      <variable item="S02 Address" CV="278,277" default="127"><splitVal highCV="277"/></variable>
+      <variable item="S03 Address" CV="280,279" default="128"><splitVal highCV="279"/></variable>
+      <variable item="S04 Address" CV="282,281" default="129"><splitVal highCV="281"/></variable>
+      <variable item="S05 Address" CV="284,283" default="130"><splitVal highCV="283"/></variable>
+      <variable item="S06 Address" CV="286,285" default="131"><splitVal highCV="285"/></variable>
+      <variable item="S07 Address" CV="288,287" default="132"><splitVal highCV="287"/></variable>
+      <variable item="S08 Address" CV="290,289" default="133"><splitVal highCV="289"/></variable>
+      <variable item="S09 Address" CV="292,291" default="134"><splitVal highCV="291"/></variable>
+      <variable item="S10 Address" CV="294,293" default="135"><splitVal highCV="293"/></variable>
+      <variable item="S11 Address" CV="296,295" default="136"><splitVal highCV="295"/></variable>
+      <variable item="S12 Address" CV="298,297" default="137"><splitVal highCV="297"/></variable>
+      <variable item="S13 Address" CV="300,299" default="138"><splitVal highCV="299"/></variable>
+      <variable item="S14 Address" CV="302,301" default="139"><splitVal highCV="301"/></variable>
+      <variable item="S15 Address" CV="304,303" default="140"><splitVal highCV="303"/></variable>
+      <variable item="S16 Address" CV="306,305" default="141"><splitVal highCV="305"/></variable>
+      <variable item="S17 Address" CV="308,307" default="142"><splitVal highCV="307"/></variable>
+      <variable item="S18 Address" CV="310,309" default="143"><splitVal highCV="309"/></variable>
+      <variable item="S19 Address" CV="312,311" default="144"><splitVal highCV="311"/></variable>
+      <variable item="S20 Address" CV="314,313" default="145"><splitVal highCV="313"/></variable>
+      <variable item="S21 Address" CV="316,315" default="146"><splitVal highCV="315"/></variable>
+      <variable item="S22 Address" CV="318,317" default="147"><splitVal highCV="317"/></variable>
+      <variable item="S23 Address" CV="320,319" default="148"><splitVal highCV="319"/></variable>
+      <variable item="S24 Address" CV="322,321" default="149"><splitVal highCV="321"/></variable>
+      <variable item="S25 Address" CV="324,323" default="150"><splitVal highCV="323"/></variable>
+      <variable item="S26 Address" CV="326,325" default="151"><splitVal highCV="325"/></variable>
+      <variable item="S27 Address" CV="328,327" default="152"><splitVal highCV="327"/></variable>
+      <variable item="S28 Address" CV="330,329" default="153"><splitVal highCV="329"/></variable>
+      <variable item="S29 Address" CV="332,331" default="154"><splitVal highCV="331"/></variable>
+      <variable item="S30 Address" CV="334,333" default="155"><splitVal highCV="333"/></variable>
+      <variable item="S31 Address" CV="336,335" default="156"><splitVal highCV="335"/></variable>
+      <variable item="S32 Address" CV="338,337" default="157"><splitVal highCV="337"/></variable>
+      <variable item="S33 Address" CV="340,339" default="158"><splitVal highCV="339"/></variable>
+      <variable item="S34 Address" CV="342,341" default="159"><splitVal highCV="341"/></variable>
+      <variable item="S35 Address" CV="344,343" default="160"><splitVal highCV="343"/></variable>
+      <variable item="S36 Address" CV="346,345" default="161"><splitVal highCV="345"/></variable>
+      <variable item="S37 Address" CV="348,347" default="162"><splitVal highCV="347"/></variable>
+      <variable item="S38 Address" CV="350,349" default="163"><splitVal highCV="349"/></variable>
+      <variable item="S39 Address" CV="352,351" default="164"><splitVal highCV="351"/></variable>
+      <variable item="S40 Address" CV="354,353" default="165"><splitVal highCV="353"/></variable>
+      <variable item="S41 Address" CV="356,355" default="166"><splitVal highCV="355"/></variable>
+      <variable item="S42 Address" CV="358,357" default="167"><splitVal highCV="357"/></variable>
+      <variable item="S43 Address" CV="360,359" default="168"><splitVal highCV="359"/></variable>
+      <variable item="S44 Address" CV="362,361" default="169"><splitVal highCV="361"/></variable>
+      <variable item="S45 Address" CV="364,363" default="170"><splitVal highCV="363"/></variable>
+      <variable item="S46 Address" CV="366,365" default="171"><splitVal highCV="365"/></variable>
+      <variable item="S47 Address" CV="368,367" default="172"><splitVal highCV="367"/></variable>
+      <variable item="S48 Address" CV="370,369" default="173"><splitVal highCV="369"/></variable>
+      <variable item="S49 Address" CV="372,371" default="174"><splitVal highCV="371"/></variable>
+      <variable item="S50 Address" CV="374,373" default="175"><splitVal highCV="373"/></variable>
+      <variable item="S51 Address" CV="376,375" default="176"><splitVal highCV="375"/></variable>
+      <variable item="S52 Address" CV="378,377" default="177"><splitVal highCV="377"/></variable>
+      <variable item="S53 Address" CV="380,379" default="178"><splitVal highCV="379"/></variable>
+      <variable item="S54 Address" CV="382,381" default="179"><splitVal highCV="381"/></variable>
+      <variable item="S55 Address" CV="384,383" default="180"><splitVal highCV="383"/></variable>
+      <variable item="S56 Address" CV="386,385" default="181"><splitVal highCV="385"/></variable>
+      <variable item="S57 Address" CV="388,387" default="182"><splitVal highCV="387"/></variable>
+      <variable item="S58 Address" CV="390,389" default="183"><splitVal highCV="389"/></variable>
+      <variable item="S59 Address" CV="392,391" default="184"><splitVal highCV="391"/></variable>
+      <variable item="S60 Address" CV="394,393" default="185"><splitVal highCV="393"/></variable>
+      <variable item="S61 Address" CV="396,395" default="186"><splitVal highCV="395"/></variable>
+      <variable item="S62 Address" CV="398,397" default="187"><splitVal highCV="397"/></variable>
+      <variable item="S63 Address" CV="400,399" default="188"><splitVal highCV="399"/></variable>
+      <variable item="S64 Address" CV="402,401" default="189"><splitVal highCV="401"/></variable>
+      <variable item="S65 Address" CV="404,403" default="190"><splitVal highCV="403"/></variable>
+      <variable item="S66 Address" CV="406,405" default="191"><splitVal highCV="405"/></variable>
+      <variable item="S67 Address" CV="408,407" default="192"><splitVal highCV="407"/></variable>
+      <variable item="S68 Address" CV="410,409" default="193"><splitVal highCV="409"/></variable>
+      <variable item="S69 Address" CV="412,411" default="194"><splitVal highCV="411"/></variable>
+      <variable item="S70 Address" CV="414,413" default="195"><splitVal highCV="413"/></variable>
+      <variable item="S71 Address" CV="416,415" default="196"><splitVal highCV="415"/></variable>
+      <variable item="S72 Address" CV="418,417" default="197"><splitVal highCV="417"/></variable>
 
 
     </variables>
+
+    <resets>
+        <factReset label="Basic settings (CV 1,11-13,17-19,29-119) CV8=>11" CV="8" default="11"/>
+        <factReset label="Programming lock (CV 15/16) CV8=>16"              CV="8" default="16"/>
+        <factReset label="Function and Switch outputs (CV 120-169) CV8=>33" CV="8" default="33"/>
+        <factReset label="Servo and turntable address (CV170-190) CV8=>66"  CV="8" default="66"/>
+        <factReset label="Array and steps (CV 191 – 268) CV8=>77"           CV="8" default="77"/>
+        <factReset label="Direct addresses CV8=>88"                         CV="8" default="88"/>
+    </resets>
+
   </decoder>
 
   <pane>
@@ -871,8 +881,8 @@
   </pane>
 
   <pane>
-    <row>
-      <column>
+    <grid>
+      <griditem gridx="0" gridy="0"><column>
         <display item="A1 Function"/>
         <display item="A1 Dimming Value"/>
         <display item="A1 Dimming"/>
@@ -881,9 +891,10 @@
         <display item="A1 Special Function Inverse"/>
         <display item="A1 Time For Special Function"/>
         <display item="A1 Address"/>
-
         <separator/>
+      </column></griditem>
 
+      <griditem  gridx="1" gridy="0"><separator/><column>
         <display item="A2 Function"/>
         <display item="A2 Dimming Value"/>
         <display item="A2 Dimming"/>
@@ -892,9 +903,10 @@
         <display item="A2 Special Function Inverse"/>
         <display item="A2 Time For Special Function"/>
         <display item="A2 Address"/>
-      </column>
-      <separator/>
-      <column>
+        <separator/>
+      </column></griditem>
+
+      <griditem gridx="2" gridy="0"><separator/><column>
         <display item="A3 Function"/>
         <display item="A3 Dimming Value"/>
         <display item="A3 Dimming"/>
@@ -903,9 +915,10 @@
         <display item="A3 Special Function Inverse"/>
         <display item="A3 Time For Special Function"/>
         <display item="A3 Address"/>
-
         <separator/>
+      </column></griditem>
 
+      <griditem gridx="0" gridy="1"><column>
         <display item="A4 Function"/>
         <display item="A4 Dimming Value"/>
         <display item="A4 Dimming"/>
@@ -914,9 +927,9 @@
         <display item="A4 Special Function Inverse"/>
         <display item="A4 Time For Special Function"/>
         <display item="A4 Address"/>
-      </column>
-      <separator/>
-      <column>
+      </column></griditem>
+
+      <griditem gridx="1" gridy="1"><separator/><column>
         <display item="A5 Function"/>
         <display item="A5 Dimming Value"/>
         <display item="A5 Dimming"/>
@@ -925,8 +938,8 @@
         <display item="A5 Special Function Inverse"/>
         <display item="A5 Time For Special Function"/>
         <display item="A5 Address"/>
-     </column>
-    </row>
+      </column><separator/></griditem>
+    </grid>
     <name>HDD Functions</name>
   </pane>
 
