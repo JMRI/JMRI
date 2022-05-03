@@ -79,7 +79,7 @@
                 <li>The DCS240 command station type was defaulting to the standalone programmer mode.
                 If a user was not paying attention, they would have issues trying to use all of the
                 command station capability.</li>
-                <li>Some message interpretation features provided by "LocoNet Monitor" have been 
+                <li>Some message interpretation features provided by "LocoNet Monitor" have been
                     'refactored' and slightly improved.</li>
             </ul>
 
@@ -415,6 +415,8 @@
           removal of the beans it's listening to.</li>
           <li>The <i>Edit local variables</i> dialog can now be resized
           so that the table grows and shrinks when it's resized.</li>
+          <li>Update the Sequence action to reset itself when done if the continuous option is not
+          selected.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
