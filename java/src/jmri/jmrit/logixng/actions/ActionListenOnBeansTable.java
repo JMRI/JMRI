@@ -255,6 +255,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
                 log.warn("The named bean \"{}\" cannot be found in the manager for {}", item, _namedBeanType.toString());
             }
         }
+        _selectNamedBean.registerListeners();
         _listenersAreRegistered = true;
     }
 
@@ -272,6 +273,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
             }
             namedBeanEntry.getKey().removePropertyChangeListener(namedBeanEntry.getValue(), this);
         }
+        _selectNamedBean.unregisterListeners();
         _listenersAreRegistered = false;
     }
 

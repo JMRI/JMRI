@@ -93,6 +93,7 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(PROPERTY_LAST_RESULT_CHANGED, this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -102,6 +103,7 @@ public class LastResultOfDigitalExpression extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(PROPERTY_LAST_RESULT_CHANGED, this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

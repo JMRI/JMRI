@@ -457,6 +457,7 @@ public class ExpressionReporter extends AbstractDigitalExpression
             if (_listenToMemory) {
                 _selectMemoryNamedBean.addPropertyChangeListener("value", this);
             }
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -470,6 +471,7 @@ public class ExpressionReporter extends AbstractDigitalExpression
             if (_listenToMemory) {
                 _selectMemoryNamedBean.removePropertyChangeListener("value", this);
             }
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

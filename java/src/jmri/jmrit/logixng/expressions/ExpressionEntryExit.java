@@ -234,6 +234,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("active", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -243,6 +244,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("active", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

@@ -254,6 +254,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -263,6 +264,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

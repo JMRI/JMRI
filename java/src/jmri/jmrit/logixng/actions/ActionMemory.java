@@ -260,8 +260,11 @@ public class ActionMemory extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && _listenToMemory) {
-            _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
+        if (!_listenersAreRegistered) {
+            if (_listenToMemory) {
+                _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
+            }
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -272,6 +275,7 @@ public class ActionMemory extends AbstractDigitalAction
         if (_listenersAreRegistered && _listenToMemory) {
             _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
         }
+        _selectNamedBean.unregisterListeners();
         _listenersAreRegistered = false;
     }
 

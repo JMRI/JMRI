@@ -98,12 +98,14 @@ public class AnalogActionLightIntensity extends AbstractAnalogAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
         _listenersAreRegistered = true;
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
         _listenersAreRegistered = false;
     }
 

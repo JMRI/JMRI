@@ -431,6 +431,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             if (_listenToOtherMemory) {
                 _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             }
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -443,6 +444,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             if (_listenToOtherMemory) {
                 _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
             }
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

@@ -164,13 +164,13 @@ public class DigitalCallModule extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        // A module never listen on beans
+        _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        // A module never listen on beans
+        _selectNamedBean.unregisterListeners();
     }
 
     /** {@inheritDoc} */

@@ -430,6 +430,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && _listenToMemory) {
             _selectMemoryNamedBean.addPropertyChangeListener("value", this);
+            _selectMemoryNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -439,6 +440,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered && _listenToMemory) {
             _selectMemoryNamedBean.removePropertyChangeListener("value", this);
+            _selectMemoryNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

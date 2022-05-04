@@ -344,6 +344,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
                 _selectReporterNamedBean.addPropertyChangeListener("currentReport", this);
             }
+            _selectMemoryNamedBean.registerListeners();
+            _selectBlockNamedBean.registerListeners();
+            _selectReporterNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -364,6 +367,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
                 _selectReporterNamedBean.removePropertyChangeListener("currentReport", this);
             }
+            _selectMemoryNamedBean.unregisterListeners();
+            _selectBlockNamedBean.unregisterListeners();
+            _selectReporterNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

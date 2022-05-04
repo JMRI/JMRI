@@ -234,6 +234,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("state", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -243,6 +244,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("state", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
