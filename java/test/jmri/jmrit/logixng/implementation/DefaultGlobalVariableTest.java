@@ -49,7 +49,7 @@ public class DefaultGlobalVariableTest {
 
         // Assign a copy of a table to a global variable
         NamedTable csvTable = InstanceManager.getDefault(NamedTableManager.class)
-                        .loadTableFromCSV("IQT1", null, "scripts:LogixNG/LogixNG_ExampleTable.csv");
+                        .loadTableFromCSV("IQT1", null, jmri.util.FileUtil.getProgramPath()+ "jython/LogixNG/LogixNG_ExampleTable.csv");
         Assert.assertNotNull(csvTable);
         Object value = getVariableValue(InitialValueType.LogixNG_Table, csvTable.getSystemName());
         Assert.assertNotNull(value);
