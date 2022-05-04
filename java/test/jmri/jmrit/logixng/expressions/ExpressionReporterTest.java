@@ -110,16 +110,16 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("String matches", "Reporter '' Current Report is equal to \"\"", expression2.getLongDescription());
 
         expression2 = new ExpressionReporter("IQDE321", null);
-        expression2.setReporter(reporter);
-        Assert.assertTrue("reporter is correct", reporter == expression2.getReporter().getBean());
+        expression2.getSelectNamedBean().setNamedBean(reporter);
+        Assert.assertTrue("reporter is correct", reporter == expression2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Reporter IR1 Current Report is equal to \"\"", expression2.getLongDescription());
 
         Reporter l = InstanceManager.getDefault(ReporterManager.class).provide("IR2");
         expression2 = new ExpressionReporter("IQDE321", "My reporter");
-        expression2.setReporter(l);
-        Assert.assertTrue("reporter is correct", l == expression2.getReporter().getBean());
+        expression2.getSelectNamedBean().setNamedBean(l);
+        Assert.assertTrue("reporter is correct", l == expression2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My reporter", expression2.getUserName());
         Assert.assertEquals("String matches", "Reporter IR2 Current Report is equal to \"\"", expression2.getLongDescription());
@@ -192,10 +192,10 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
 
-        expressionReporter.removeReporter();
+        expressionReporter.getSelectNamedBean().removeNamedBean();
         Assert.assertEquals("Reporter", expressionReporter.getShortDescription());
         Assert.assertEquals("Reporter '' Current Report is equal to \"\"", expressionReporter.getLongDescription());
-        expressionReporter.setReporter(reporter);
+        expressionReporter.getSelectNamedBean().setNamedBean(reporter);
         expressionReporter.setConstantValue("A value");
         Assert.assertEquals("Reporter IR1 Current Report is equal to \"A value\"", expressionReporter.getLongDescription());
         expressionReporter.setConstantValue("Another value");
@@ -524,18 +524,18 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         expressionReporter.unregisterListeners();
 
         Reporter otherReporter = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
-        Assert.assertNotEquals("Reporters are different", otherReporter, expressionReporter.getReporter().getBean());
-        expressionReporter.setReporter(otherReporter);
-        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getReporter().getBean());
+        Assert.assertNotEquals("Reporters are different", otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        expressionReporter.getSelectNamedBean().setNamedBean(otherReporter);
+        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
 
         NamedBeanHandle<Reporter> otherReporterHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherReporter.getDisplayName(), otherReporter);
-        expressionReporter.removeReporter();
-        Assert.assertNull("Reporter is null", expressionReporter.getReporter());
-        expressionReporter.setReporter(otherReporterHandle);
-        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getReporter().getBean());
-        Assert.assertEquals("ReporterHandles are equal", otherReporterHandle, expressionReporter.getReporter());
+        expressionReporter.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("Reporter is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        expressionReporter.getSelectNamedBean().setNamedBean(otherReporterHandle);
+        Assert.assertEquals("Reporters are equal", otherReporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        Assert.assertEquals("ReporterHandles are equal", otherReporterHandle, expressionReporter.getSelectNamedBean().getNamedBean());
     }
 
     @Test
@@ -550,66 +550,66 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         Reporter reporter14 = InstanceManager.getDefault(ReporterManager.class).provide("IR14");
         reporter14.setUserName("Some user name");
 
-        expressionReporter.removeReporter();
-        Assert.assertNull("reporter handle is null", expressionReporter.getReporter());
+        expressionReporter.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
 
-        expressionReporter.setReporter(reporter11);
-        Assert.assertTrue("reporter is correct", reporter11 == expressionReporter.getReporter().getBean());
+        expressionReporter.getSelectNamedBean().setNamedBean(reporter11);
+        Assert.assertTrue("reporter is correct", reporter11 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
 
-        expressionReporter.removeReporter();
-        Assert.assertNull("reporter handle is null", expressionReporter.getReporter());
+        expressionReporter.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
 
-        expressionReporter.setReporter(memoryHandle12);
-        Assert.assertTrue("reporter handle is correct", memoryHandle12 == expressionReporter.getReporter());
+        expressionReporter.getSelectNamedBean().setNamedBean(memoryHandle12);
+        Assert.assertTrue("reporter handle is correct", memoryHandle12 == expressionReporter.getSelectNamedBean().getNamedBean());
 
-        expressionReporter.setReporter("A non existent reporter");
-        Assert.assertNull("reporter handle is null", expressionReporter.getReporter());
-        JUnitAppender.assertWarnMessage("reporter \"A non existent reporter\" is not found");
+        expressionReporter.getSelectNamedBean().setNamedBean("A non existent reporter");
+        Assert.assertNull("reporter handle is null", expressionReporter.getSelectNamedBean().getNamedBean());
+        JUnitAppender.assertWarnMessage("Reporter \"A non existent reporter\" is not found");
 
-        expressionReporter.setReporter(reporter13.getSystemName());
-        Assert.assertTrue("reporter is correct", reporter13 == expressionReporter.getReporter().getBean());
+        expressionReporter.getSelectNamedBean().setNamedBean(reporter13.getSystemName());
+        Assert.assertTrue("reporter is correct", reporter13 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
 
         String userName = reporter14.getUserName();
         Assert.assertNotNull("reporter is not null", userName);
-        expressionReporter.setReporter(userName);
-        Assert.assertTrue("reporter is correct", reporter14 == expressionReporter.getReporter().getBean());
+        expressionReporter.getSelectNamedBean().setNamedBean(userName);
+        Assert.assertTrue("reporter is correct", reporter14 == expressionReporter.getSelectNamedBean().getNamedBean().getBean());
     }
 
     @Test
     public void testSetReporterException() {
         // Test setReporter() when listeners are registered
         Assert.assertNotNull("Reporter is not null", reporter);
-        Assert.assertNotNull("Reporter is not null", expressionReporter.getReporter());
+        Assert.assertNotNull("Reporter is not null", expressionReporter.getSelectNamedBean().getNamedBean());
         expressionReporter.registerListeners();
         boolean thrown = false;
         try {
-            expressionReporter.setReporter("A memory");
+            expressionReporter.getSelectNamedBean().setNamedBean("A memory");
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
             Reporter reporter99 = InstanceManager.getDefault(ReporterManager.class).provide("IR99");
             NamedBeanHandle<Reporter> reporterHandle99 =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(reporter99.getDisplayName(), reporter99);
-            expressionReporter.setReporter(reporterHandle99);
+            expressionReporter.getSelectNamedBean().setNamedBean(reporterHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
-            expressionReporter.setReporter((Reporter)null);
+            expressionReporter.getSelectNamedBean().setNamedBean((Reporter)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setReporter must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
@@ -627,32 +627,32 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
 
         // Test vetoableChange() for some other propery
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getReporter().getBean());
+        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for a string
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getReporter().getBean());
+        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getReporter().getBean());
+        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for another memory
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherReporter, null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getReporter().getBean());
+        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
         expressionReporter.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherReporter, null));
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getReporter().getBean());
+        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for its own memory
         boolean thrown = false;
         try {
-            expressionReporter.vetoableChange(new PropertyChangeEvent(this, "CanDelete", reporter, null));
+            expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", reporter, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
-        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getReporter().getBean());
-        expressionReporter.vetoableChange(new PropertyChangeEvent(this, "DoDelete", reporter, null));
-        Assert.assertNull("Reporter is null", expressionReporter.getReporter());
+        Assert.assertEquals("Reporter matches", reporter, expressionReporter.getSelectNamedBean().getNamedBean().getBean());
+        expressionReporter.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", reporter, null));
+        Assert.assertNull("Reporter is null", expressionReporter.getSelectNamedBean().getNamedBean());
     }
 
     // The minimal setup for log4J
@@ -698,7 +698,7 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
 
         expressionReporter.setReporterValue(ExpressionReporter.ReporterValue.CurrentReport);
         reporter = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
-        expressionReporter.setReporter(reporter);
+        expressionReporter.getSelectNamedBean().setNamedBean(reporter);
         reporter.setReport("");
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();

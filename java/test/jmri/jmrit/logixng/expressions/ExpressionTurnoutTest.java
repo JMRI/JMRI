@@ -110,16 +110,16 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("String matches", "Turnout '' is Thrown", expression2.getLongDescription());
 
         expression2 = new ExpressionTurnout("IQDE321", null);
-        expression2.setTurnout(turnout);
-        Assert.assertTrue("turnout is correct", turnout == expression2.getTurnout().getBean());
+        expression2.getSelectNamedBean().setNamedBean(turnout);
+        Assert.assertTrue("turnout is correct", turnout == expression2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Turnout IT1 is Thrown", expression2.getLongDescription());
 
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
         expression2 = new ExpressionTurnout("IQDE321", "My turnout");
-        expression2.setTurnout(t);
-        Assert.assertTrue("turnout is correct", t == expression2.getTurnout().getBean());
+        expression2.getSelectNamedBean().setNamedBean(t);
+        Assert.assertTrue("turnout is correct", t == expression2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My turnout", expression2.getUserName());
         Assert.assertEquals("String matches", "Turnout IT2 is Thrown", expression2.getLongDescription());
@@ -184,10 +184,10 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
 
-        expressionTurnout.removeTurnout();
+        expressionTurnout.getSelectNamedBean().removeNamedBean();
         Assert.assertTrue("Turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
-        expressionTurnout.setTurnout(turnout);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Closed);
         Assert.assertTrue("Turnout IT1 is Closed".equals(expressionTurnout.getLongDescription()));
@@ -206,7 +206,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
 
-        expressionTurnout.setTurnout(turnout);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionTurnout.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
 
@@ -251,18 +251,18 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         expressionTurnout.unregisterListeners();
 
         Turnout otherTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IM99");
-        Assert.assertNotEquals("Turnouts are different", otherTurnout, expressionTurnout.getTurnout().getBean());
-        expressionTurnout.setTurnout(otherTurnout);
-        Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertNotEquals("Turnouts are different", otherTurnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
+        expressionTurnout.getSelectNamedBean().setNamedBean(otherTurnout);
+        Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
 
         NamedBeanHandle<Turnout> otherTurnoutHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherTurnout.getDisplayName(), otherTurnout);
-        expressionTurnout.removeTurnout();
-        Assert.assertNull("Turnout is null", expressionTurnout.getTurnout());
-        expressionTurnout.setTurnout(otherTurnoutHandle);
-        Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getTurnout().getBean());
-        Assert.assertEquals("TurnoutHandles are equal", otherTurnoutHandle, expressionTurnout.getTurnout());
+        expressionTurnout.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("Turnout is null", expressionTurnout.getSelectNamedBean().getNamedBean());
+        expressionTurnout.getSelectNamedBean().setNamedBean(otherTurnoutHandle);
+        Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
+        Assert.assertEquals("TurnoutHandles are equal", otherTurnoutHandle, expressionTurnout.getSelectNamedBean().getNamedBean());
     }
 
     @Test
@@ -277,72 +277,72 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IT14");
         turnout14.setUserName("Some user name");
 
-        expressionTurnout.removeTurnout();
-        Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
+        expressionTurnout.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("turnout handle is null", expressionTurnout.getSelectNamedBean().getNamedBean());
 
-        expressionTurnout.setTurnout(turnout11);
-        Assert.assertTrue("turnout is correct", turnout11 == expressionTurnout.getTurnout().getBean());
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout11);
+        Assert.assertTrue("turnout is correct", turnout11 == expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
 
-        expressionTurnout.removeTurnout();
-        Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
+        expressionTurnout.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("turnout handle is null", expressionTurnout.getSelectNamedBean().getNamedBean());
 
-        expressionTurnout.setTurnout(turnoutHandle12);
-        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == expressionTurnout.getTurnout());
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnoutHandle12);
+        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == expressionTurnout.getSelectNamedBean().getNamedBean());
 
-        expressionTurnout.setTurnout("A non existent turnout");
-        Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
-        JUnitAppender.assertErrorMessage("turnout \"A non existent turnout\" is not found");
+        expressionTurnout.getSelectNamedBean().setNamedBean("A non existent turnout");
+        Assert.assertNull("turnout handle is null", expressionTurnout.getSelectNamedBean().getNamedBean());
+        JUnitAppender.assertErrorMessage("Turnout \"A non existent turnout\" is not found");
 
-        expressionTurnout.setTurnout(turnout13.getSystemName());
-        Assert.assertTrue("turnout is correct", turnout13 == expressionTurnout.getTurnout().getBean());
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout13.getSystemName());
+        Assert.assertTrue("turnout is correct", turnout13 == expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
 
         String userName = turnout14.getUserName();
         Assert.assertNotNull("turnout is not null", userName);
-        expressionTurnout.setTurnout(userName);
-        Assert.assertTrue("turnout is correct", turnout14 == expressionTurnout.getTurnout().getBean());
+        expressionTurnout.getSelectNamedBean().setNamedBean(userName);
+        Assert.assertTrue("turnout is correct", turnout14 == expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
     }
 
     @Test
     public void testSetTurnoutException() {
         Assert.assertNotNull("Turnout is not null", turnout);
-        Assert.assertNotNull("Turnout is not null", expressionTurnout.getTurnout());
+        Assert.assertNotNull("Turnout is not null", expressionTurnout.getSelectNamedBean().getNamedBean());
         expressionTurnout.registerListeners();
         boolean thrown = false;
         try {
-            expressionTurnout.setTurnout("A turnout");
+            expressionTurnout.getSelectNamedBean().setNamedBean("A turnout");
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
             Turnout turnout99 = InstanceManager.getDefault(TurnoutManager.class).provide("IT99");
             NamedBeanHandle<Turnout> turnoutHandle99 =
                     InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout99.getDisplayName(), turnout99);
-            expressionTurnout.setTurnout(turnoutHandle99);
+            expressionTurnout.getSelectNamedBean().setNamedBean(turnoutHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
 
         thrown = false;
         try {
-            expressionTurnout.removeTurnout();
+            expressionTurnout.getSelectNamedBean().removeNamedBean();
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
     public void testRegisterListeners() {
         // Test registerListeners() when the ExpressionTurnout has no turnout
         conditionalNG.setEnabled(false);
-        expressionTurnout.removeTurnout();
+        expressionTurnout.getSelectNamedBean().removeNamedBean();
         conditionalNG.setEnabled(true);
     }
 
@@ -353,7 +353,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
 
         // Get the expressionTurnout and set the turnout
         Assert.assertNotNull("Turnout is not null", turnout);
-        expressionTurnout.setTurnout(turnout);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout);
 
         // Get some other turnout for later use
         Turnout otherTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IM99");
@@ -362,32 +362,32 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
 
         // Test vetoableChange() for some other propery
         expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for a string
         expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
         expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for another turnout
         expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
         expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for its own turnout
         boolean thrown = false;
         try {
-            expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
+            expressionTurnout.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
-        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getTurnout().getBean());
-        expressionTurnout.vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
-        Assert.assertNull("Turnout is null", expressionTurnout.getTurnout());
+        Assert.assertEquals("Turnout matches", turnout, expressionTurnout.getSelectNamedBean().getNamedBean().getBean());
+        expressionTurnout.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
+        Assert.assertNull("Turnout is null", expressionTurnout.getSelectNamedBean().getNamedBean());
     }
 
     // The minimal setup for log4J
@@ -430,7 +430,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        expressionTurnout.setTurnout(turnout);
+        expressionTurnout.getSelectNamedBean().setNamedBean(turnout);
         turnout.setCommandedState(Turnout.THROWN);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();

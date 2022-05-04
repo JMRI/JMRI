@@ -1,15 +1,13 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
  * Sets a StringIO.
@@ -17,84 +15,38 @@ import jmri.jmrit.logixng.*;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class StringActionStringIO extends AbstractStringAction
-        implements VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanHandle<StringIO> _stringIOHandle;
+    private final LogixNG_SelectNamedBean<StringIO> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, StringIO.class, InstanceManager.getDefault(StringIOManager.class), this);
 
     public StringActionStringIO(String sys, String user) {
         super(sys, user);
     }
 
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         StringActionManager manager = InstanceManager.getDefault(StringActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringActionStringIO copy = new StringActionStringIO(sysName, userName);
         copy.setComment(getComment());
-        if (_stringIOHandle != null) copy.setStringIO(_stringIOHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         return manager.registerAction(copy);
     }
 
-    public void setStringIO(@Nonnull String stringIOName) {
-        assertListenersAreNotRegistered(log, "setStringIO");
-        StringIO stringIO = InstanceManager.getDefault(StringIOManager.class).getNamedBean(stringIOName);
-        if (stringIO != null) {
-            setStringIO(stringIO);
-        } else {
-            removeStringIO();
-            log.error("stringIO \"{}\" is not found", stringIOName);
-        }
-    }
-
-    public void setStringIO(@Nonnull NamedBeanHandle<StringIO> handle) {
-        assertListenersAreNotRegistered(log, "setStringIO");
-        _stringIOHandle = handle;
-        InstanceManager.getDefault(StringIOManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setStringIO(@Nonnull StringIO stringIO) {
-        assertListenersAreNotRegistered(log, "setStringIO");
-        setStringIO(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(stringIO.getDisplayName(), stringIO));
-    }
-
-    public void removeStringIO() {
-        assertListenersAreNotRegistered(log, "setStringIO");
-        if (_stringIOHandle != null) {
-            InstanceManager.getDefault(StringIOManager.class).removeVetoableChangeListener(this);
-            _stringIOHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<StringIO> getStringIO() {
-        return _stringIOHandle;
+    public LogixNG_SelectNamedBean<StringIO> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setValue(String value) throws JmriException {
-        if (_stringIOHandle != null) {
-            _stringIOHandle.getBean().setCommandedStringValue(value);
-        }
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof StringIO) {
-                if (evt.getOldValue().equals(getStringIO().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("StringStringIO_StringIOInUseStringIOExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof StringIO) {
-                if (evt.getOldValue().equals(getStringIO().getBean())) {
-                    removeStringIO();
-                }
-            }
+        StringIO stringIO = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        if (stringIO != null) {
+            stringIO.setCommandedStringValue(value);
         }
     }
 
@@ -125,11 +77,7 @@ public class StringActionStringIO extends AbstractStringAction
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        if (_stringIOHandle != null) {
-            return Bundle.getMessage(locale, "StringActionStringIO_Long", _stringIOHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "StringActionStringIO_Long", "none");
-        }
+        return Bundle.getMessage(locale, "StringActionStringIO_Long", _selectNamedBean.getDescription(locale));
     }
 
     /** {@inheritDoc} */
@@ -141,11 +89,13 @@ public class StringActionStringIO extends AbstractStringAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -156,12 +106,15 @@ public class StringActionStringIO extends AbstractStringAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: StringActionStringIO: bean = {}, report = {}", cdl, report);
-        if (getStringIO() != null && bean.equals(getStringIO().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIO.class);
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIO.class);
 
 }

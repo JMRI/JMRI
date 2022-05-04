@@ -46,12 +46,8 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
             @Nonnull AbstractBase base,
             int numDecimals,
             @Nonnull PropertyChangeListener listener) {
-        _base = base;
-        _inUse = () -> true;
-        _selectTable = new LogixNG_SelectTable(_base, _inUse);
-        _numDecimals = numDecimals;
-        _listener = listener;
-        _formatterParserValidator = new DefaultFormatterParserValidator();
+
+        this(base, numDecimals, listener, new DefaultFormatterParserValidator());
     }
 
     public LogixNG_SelectDouble(
@@ -65,6 +61,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
         _numDecimals = numDecimals;
         _listener = listener;
         _formatterParserValidator = formatterParserValidator;
+        _value = _formatterParserValidator.getInitialValue();
     }
 
     public void copy(LogixNG_SelectDouble copy) throws ParserException {

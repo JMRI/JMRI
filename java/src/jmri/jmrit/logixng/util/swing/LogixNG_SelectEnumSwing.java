@@ -192,6 +192,22 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         _selectTableSwing.updateObject(selectEnum.getSelectTable());
     }
 
+    public boolean isEnumSelected(E e) {
+        if (_tabbedPane.getSelectedComponent() == _panelDirect) {
+            return _enumComboBox.getItemAt(_enumComboBox.getSelectedIndex()) == e;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isEnumSelectedOrIndirectAddressing(E e) {
+        if (_tabbedPane.getSelectedComponent() == _panelDirect) {
+            return _enumComboBox.getItemAt(_enumComboBox.getSelectedIndex()) == e;
+        } else {
+            return true;
+        }
+    }
+
     public NamedBeanAddressing getAddressing() {
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
             return NamedBeanAddressing.Direct;

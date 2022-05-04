@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -10,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
@@ -20,14 +19,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionSignalMast extends AbstractDigitalAction
-        implements VetoableChangeListener {
+        implements PropertyChangeListener, VetoableChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<SignalMast> _signalMastHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<SignalMast> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
     private OperationType _operationType = OperationType.Aspect;
@@ -43,7 +39,9 @@ public class ActionSignalMast extends AbstractDigitalAction
     private String _aspectFormula = "";
     private ExpressionNode _aspectExpressionNode;
 
-    private NamedBeanHandle<SignalMast> _exampleSignalMastHandle;
+    private final LogixNG_SelectNamedBean<SignalMast> _selectExampleNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalMast.class, InstanceManager.getDefault(SignalMastManager.class), this);
 
 
     public ActionSignalMast(String sys, String user)
@@ -59,12 +57,8 @@ public class ActionSignalMast extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionSignalMast copy = new ActionSignalMast(sysName, userName);
         copy.setComment(getComment());
-        if (_signalMastHandle != null) copy.setSignalMast(_signalMastHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         copy.setAspect(_signalMastAspect);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
         copy.setOperationAddressing(_operationAddressing);
         copy.setOperationType(_operationType);
         copy.setOperationFormula(_operationFormula);
@@ -74,126 +68,16 @@ public class ActionSignalMast extends AbstractDigitalAction
         copy.setAspectFormula(_aspectFormula);
         copy.setAspectLocalVariable(_aspectLocalVariable);
         copy.setAspectReference(_aspectReference);
-        copy.setExampleSignalMast(_exampleSignalMastHandle);
+        _selectExampleNamedBean.copy(copy._selectExampleNamedBean);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    public void setSignalMast(@Nonnull String signalMastName) {
-        assertListenersAreNotRegistered(log, "setSignalMast");
-        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName);
-        if (signalMast != null) {
-            setSignalMast(signalMast);
-        } else {
-            removeSignalMast();
-            log.warn("signalMast \"{}\" is not found", signalMastName);
-        }
+    public LogixNG_SelectNamedBean<SignalMast> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
-        assertListenersAreNotRegistered(log, "setSignalMast");
-        _signalMastHandle = handle;
-        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setSignalMast(@Nonnull SignalMast signalMast) {
-        assertListenersAreNotRegistered(log, "setSignalMast");
-        setSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast));
-    }
-
-    public void removeSignalMast() {
-        assertListenersAreNotRegistered(log, "setSignalMast");
-        if (_signalMastHandle != null) {
-            InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
-            _signalMastHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalMast> getSignalMast() {
-        return _signalMastHandle;
-    }
-
-    public void setExampleSignalMast(@Nonnull String signalMastName) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName);
-        if (signalMast != null) {
-            setExampleSignalMast(signalMast);
-        } else {
-            removeExampleSignalMast();
-            log.warn("signalMast \"{}\" is not found", signalMastName);
-        }
-    }
-
-    public void setExampleSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        _exampleSignalMastHandle = handle;
-        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setExampleSignalMast(@Nonnull SignalMast signalMast) {
-        assertListenersAreNotRegistered(log, "setExampleSignalMast");
-        setExampleSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast));
-    }
-
-    public void removeExampleSignalMast() {
-        assertListenersAreNotRegistered(log, "removeExampleSignalMast");
-        if (_exampleSignalMastHandle != null) {
-            InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
-            _exampleSignalMastHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalMast> getExampleSignalMast() {
-        return _exampleSignalMastHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
+    public LogixNG_SelectNamedBean<SignalMast> getSelectExampleNamedBean() {
+        return _selectExampleNamedBean;
     }
 
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -309,35 +193,6 @@ public class ActionSignalMast extends AbstractDigitalAction
         }
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof SignalMast) {
-                if ((_signalMastHandle != null)
-                        && (evt.getOldValue().equals(_signalMastHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastActionVeto", getDisplayName()), e); // NOI18N
-                }
-                if ((_exampleSignalMastHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof SignalMast) {
-                if ((_signalMastHandle != null)
-                        && (evt.getOldValue().equals(_signalMastHandle.getBean()))) {
-                    removeSignalMast();
-                }
-                if ((_exampleSignalMastHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalMastHandle.getBean()))) {
-                    removeExampleSignalMast();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -371,7 +226,7 @@ public class ActionSignalMast extends AbstractDigitalAction
         }
     }
 
-    private OperationType getOperation() throws JmriException {
+    private OperationType getOperation(ConditionalNG conditionalNG) throws JmriException {
 
         String oper = "";
         try {
@@ -381,11 +236,11 @@ public class ActionSignalMast extends AbstractDigitalAction
 
                 case Reference:
                     oper = ReferenceUtil.getReference(
-                            getConditionalNG().getSymbolTable(), _operationReference);
+                            conditionalNG.getSymbolTable(), _operationReference);
                     return OperationType.valueOf(oper);
 
                 case LocalVariable:
-                    SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                    SymbolTable symbolTable = conditionalNG.getSymbolTable();
                     oper = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_operationLocalVariable), false);
                     return OperationType.valueOf(oper);
@@ -394,7 +249,7 @@ public class ActionSignalMast extends AbstractDigitalAction
                     if (_aspectExpressionNode != null) {
                         oper = TypeConversionUtil.convertToString(
                                 _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false);
+                                        conditionalNG.getSymbolTable()), false);
                         return OperationType.valueOf(oper);
                     } else {
                         return null;
@@ -410,52 +265,13 @@ public class ActionSignalMast extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        SignalMast signalMast;
-
-//        System.out.format("ActionSignalMast.execute: %s%n", getLongDescription());
-
-        switch (_addressing) {
-            case Direct:
-                signalMast = _signalMastHandle != null ? _signalMastHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                signalMast = InstanceManager.getDefault(SignalMastManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                signalMast = InstanceManager.getDefault(SignalMastManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                signalMast = _expressionNode != null ?
-                        InstanceManager.getDefault(SignalMastManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-//        System.out.format("ActionSignalMast.execute: sensor: %s%n", sensor);
-
-        if (signalMast == null) {
-//            log.warn("signalMast is null");
-            return;
-        }
-
-        OperationType operation = getOperation();
-
         final ConditionalNG conditionalNG = getConditionalNG();
+
+        SignalMast signalMast = _selectNamedBean.evaluateNamedBean(conditionalNG);
+
+        if (signalMast == null) return;
+
+        OperationType operation = getOperation(conditionalNG);
 
         AtomicReference<JmriException> ref = new AtomicReference<>();
         jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
@@ -512,36 +328,9 @@ public class ActionSignalMast extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String operation;
         String aspect;
-
-        switch (_addressing) {
-            case Direct:
-                String sensorName;
-                if (_signalMastHandle != null) {
-                    sensorName = _signalMastHandle.getBean().getDisplayName();
-                } else {
-                    sensorName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", sensorName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_operationAddressing) {
             case Direct:
@@ -605,11 +394,19 @@ public class ActionSignalMast extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
@@ -645,12 +442,8 @@ public class ActionSignalMast extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionSignalMast: bean = {}, report = {}", cdl, report);
-        if (getSignalMast() != null && bean.equals(getSignalMast().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-        if (getExampleSignalMast() != null && bean.equals(getExampleSignalMast().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectExampleNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSignalMast.class);

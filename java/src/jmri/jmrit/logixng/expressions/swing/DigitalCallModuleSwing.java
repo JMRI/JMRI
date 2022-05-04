@@ -49,8 +49,8 @@ public class DigitalCallModuleSwing extends AbstractDigitalExpressionSwing {
                 ModuleItem mi = new ModuleItem(m);
                 _moduleComboBox.addItem(mi);
                 if ((callModule != null)
-                        && (callModule.getModule() != null)
-                        && (callModule.getModule().getBean() == m)) {
+                        && (callModule.getSelectNamedBean().getNamedBean() != null)
+                        && (callModule.getSelectNamedBean().getNamedBean().getBean() == m)) {
                     _moduleComboBox.setSelectedItem(mi);
                 }
             }
@@ -62,8 +62,8 @@ public class DigitalCallModuleSwing extends AbstractDigitalExpressionSwing {
         Module module = null;
         List<ParameterData> parameterData;
         if (callModule != null) {
-            if (callModule.getModule() != null) {
-                module = callModule.getModule().getBean();
+            if (callModule.getSelectNamedBean().getNamedBean() != null) {
+                module = callModule.getSelectNamedBean().getNamedBean().getBean();
             }
             parameterData = callModule.getParameterData();
         } else {
@@ -110,15 +110,12 @@ public class DigitalCallModuleSwing extends AbstractDigitalExpressionSwing {
 
         ModuleItem mi = _moduleComboBox.getItemAt(_moduleComboBox.getSelectedIndex());
         if (mi._module != null) {
-            callModule.setModule(mi._module);
+            callModule.getSelectNamedBean().setNamedBean(mi._module);
             callModule.getParameterData().clear();
             callModule.getParameterData().addAll(_moduleParametersTableModel.getParameters());
-//            for (ParameterData pd : _moduleParametersTableModel.getParameters()) {
-//                callModule.addParameter(pd);
-//            }
         }
         else {
-            callModule.removeModule();
+            callModule.getSelectNamedBean().removeNamedBean();
         }
     }
 

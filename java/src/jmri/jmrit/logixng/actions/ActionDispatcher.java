@@ -1,8 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -10,12 +9,10 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -24,7 +21,8 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionDispatcher extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionDispatcher extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private String _trainInfoFileName = "";
@@ -33,12 +31,8 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private DirectOperation _operationDirect = DirectOperation.None;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.None, this);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
@@ -51,6 +45,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
     private int _trainPriority = 5;
 
     private final DispatcherActiveTrainManager _atManager;
+
 
     public ActionDispatcher(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -73,11 +68,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
         copy.setLocalVariable(_localVariable);
         copy.setFormula(_formula);
 
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationDirect(_operationDirect);
-        copy.setOperationReference(_operationReference);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationFormula(_operationFormula);
+        _selectEnum.copy(copy._selectEnum);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
@@ -149,60 +140,8 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
     }
 
 
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseOperFormula();
-    }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperationDirect(DirectOperation state) {
-        _operationDirect = state;
-    }
-
-    public DirectOperation getOperationDirect() {
-        return _operationDirect;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseOperFormula();
-    }
-
-    public String getOperFormula() {
-        return _operationFormula;
-    }
-
-    private void parseOperFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
+    public LogixNG_SelectEnum<DirectOperation> getSelectEnum() {
+        return _selectEnum;
     }
 
 
@@ -279,46 +218,16 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
         return _terminateOption;
     }
 
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
     }
 
-
-    private String getNewOper() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
-    private String getNewData() throws JmriException {
+    private String getNewData(DirectOperation oper) throws JmriException {
         switch (_dataAddressing) {
             case Direct:
-                switch(_operationDirect) {
+                switch(oper) {
                     case TrainPriority:
                         return String.valueOf(getTrainPriority());
 
@@ -342,14 +251,14 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
                         .convertToString(symbolTable.getValue(_dataLocalVariable), false);
 
             case Formula:
-                return _operationExpressionNode != null
+                return _dataExpressionNode != null
                         ? TypeConversionUtil.convertToString(
                                 _dataExpressionNode.calculate(
                                         getConditionalNG().getSymbolTable()), false)
                         : "";
 
             default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _dataAddressing.name());
+                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
         }
     }
 
@@ -392,17 +301,9 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
 
         ActiveTrain activeTrain = _atManager.getActiveTrain(trainInfoFileName);
 
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewOper() : null;
+        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
-        DirectOperation oper;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;
-        } else {
-            oper = DirectOperation.valueOf(name);
-        }
-
-        String newData = getNewData();
+        String newData = getNewData(oper);
 
         switch (oper) {
             case LoadTrainFromFile:
@@ -432,7 +333,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
             case ResetWhenDoneOption:
                 if (activeTrain != null) {
                     if (newData.equals("true") || newData.equals("false")) {
-                        boolean reset = newData.equals("true") ? true : false;
+                        boolean reset = newData.equals("true");
                         activeTrain.setResetWhenDone(reset);
                     }
                 }
@@ -441,7 +342,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
             case TerminateWhenDoneOption:
                 if (activeTrain != null) {
                     if (newData.equals("true") || newData.equals("false")) {
-                        boolean term = newData.equals("true") ? true : false;
+                        boolean term = newData.equals("true");
                         activeTrain.setTerminateWhenDone(term);
                     }
                 }
@@ -477,7 +378,7 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
 // {[Enable|Disable]} "terminate when done" for train using {}}
 
         String fileName;
-        String state = "";
+        String state = _selectEnum.getDescription(locale);
 
         switch (_addressing) {
             case Direct:
@@ -500,45 +401,29 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-        switch (_operationAddressing) {
-            case Direct:
-                switch (_operationDirect) {
-                    case LoadTrainFromFile:
-                        return Bundle.getMessage("ActionDispatcher_Long_LoadTrain", fileName);
+        if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
+            switch (_selectEnum.getEnum()) {
+                case LoadTrainFromFile:
+                    return Bundle.getMessage("ActionDispatcher_Long_LoadTrain", fileName);
 
-                    case TerminateTrain:
-                        return Bundle.getMessage("ActionDispatcher_Long_Terminate", fileName);
+                case TerminateTrain:
+                    return Bundle.getMessage("ActionDispatcher_Long_Terminate", fileName);
 
-                    case TrainPriority:
-                        return getLongDataDescription(locale, "ActionDispatcher_Long_Priority",
-                                fileName, String.valueOf(getTrainPriority()));
-                    case ResetWhenDoneOption:
-                        return getLongDataDescription(locale, "ActionDispatcher_Long_ResetOption",
-                                fileName, getResetOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
-                                Bundle.getMessage("ActionDispatcher_Long_Disable"));
-                    case TerminateWhenDoneOption:
-                        return getLongDataDescription(locale, "ActionDispatcher_Long_TerminateOption",
-                                fileName, getResetOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
-                                Bundle.getMessage("ActionDispatcher_Long_Disable"));
-                    default:
-                        throw new IllegalArgumentException("invalid oper state: " + _operationDirect.name());
+                case TrainPriority:
+                    return getLongDataDescription(locale, "ActionDispatcher_Long_Priority",
+                            fileName, String.valueOf(getTrainPriority()));
+                case ResetWhenDoneOption:
+                    return getLongDataDescription(locale, "ActionDispatcher_Long_ResetOption",
+                            fileName, getResetOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
+                            Bundle.getMessage("ActionDispatcher_Long_Disable"));
+                case TerminateWhenDoneOption:
+                    return getLongDataDescription(locale, "ActionDispatcher_Long_TerminateOption",
+                            fileName, getResetOption() ? Bundle.getMessage("ActionDispatcher_Long_Enable") :
+                            Bundle.getMessage("ActionDispatcher_Long_Disable"));
+                default:
+                    throw new IllegalArgumentException("invalid enum: " + _selectEnum.getEnum().name());
 
-                }
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
+            }
         }
 
         return Bundle.getMessage(locale, "ActionDispatcher_Long", fileName, state);
@@ -568,11 +453,13 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -604,6 +491,12 @@ public class ActionDispatcher extends AbstractDigitalAction implements VetoableC
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionDispatcher.class);

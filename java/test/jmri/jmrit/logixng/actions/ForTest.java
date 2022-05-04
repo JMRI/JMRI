@@ -2,24 +2,17 @@ package jmri.jmrit.logixng.actions;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.DigitalFormula;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -335,7 +328,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         m1.getChild(3).connect(digitalActionManager.registerAction(lv));
 
         ActionMemory lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
-        lm.setMemory("IM_RESULT");
+        lm.getSelectNamedBean().setNamedBean("IM_RESULT");
         lm.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
         lm.setOtherLocalVariable("result");
         m1.getChild(4).connect(digitalActionManager.registerAction(lm));
@@ -428,6 +421,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
     public void tearDown() {
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
         _category = null;
         _logixNG = null;

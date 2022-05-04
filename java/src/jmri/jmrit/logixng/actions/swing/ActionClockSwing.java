@@ -39,6 +39,10 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionClock action = (ActionClock) object;
+        if (action == null) {
+            // Create a temporary action
+            action = new ActionClock("IQDA1", null);
+        }
 
         _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
         _selectTimeSwing = new LogixNG_SelectIntegerSwing(getJDialog(), this);
@@ -47,13 +51,8 @@ public class ActionClockSwing extends AbstractDigitalActionSwing {
         JPanel tabbedPaneClockState;
         JPanel tabbedPaneTime;
 
-        if (action != null) {
-            tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
-            tabbedPaneTime = _selectTimeSwing.createPanel(action.getSelectTime());
-        } else {
-            tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
-            tabbedPaneTime = _selectTimeSwing.createPanel(null);
-        }
+        tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
+        tabbedPaneTime = _selectTimeSwing.createPanel(action.getSelectTime());
 
         _selectEnumSwing.addAddressingListener((evt) -> { setSelectTimeEnabled(); });
         _selectEnumSwing.addEnumListener((evt) -> { setSelectTimeEnabled(); });

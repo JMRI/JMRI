@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -38,10 +39,12 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ActionSensorSwing().getConfigPanel(new JPanel()));
+            null != new ActionSensorSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ActionSensorSwing().getConfigPanel(new ActionSensor("IQDA1", null), new JPanel()));
+            null != new ActionSensorSwing(dialog).getConfigPanel(new ActionSensor("IQDA1", null), new JPanel()));
     }
 
     @org.junit.Ignore("Fails in Java 11 testing")
@@ -66,10 +69,10 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return action.getSensor() != null;});
+        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
 
-        Assert.assertEquals("IS1", action.getSensor().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getBeanState());
+        Assert.assertEquals("IS1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
+        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getSelectEnum().getEnum());
     }
 
     // The minimal setup for log4J

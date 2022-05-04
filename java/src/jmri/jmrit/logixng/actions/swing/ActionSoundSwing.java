@@ -11,10 +11,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSound;
+import jmri.jmrit.logixng.actions.ActionSound.Operation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.util.FileUtil;
-import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionSound object with a Swing JPanel.
@@ -25,16 +26,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
 
-    private JTabbedPane _tabbedPaneOperationType;
-    private JPanel _panelOperationTypeDirect;
-    private JPanel _panelOperationTypeReference;
-    private JPanel _panelOperationTypeLocalVariable;
-    private JPanel _panelOperationTypeFormula;
-
-    private JComboBox<ActionSound.Operation> _operationComboBox;
-    private JTextField _soundOperationReferenceTextField;
-    private JTextField _soundOperationLocalVariableTextField;
-    private JTextField _soundOperationFormulaTextField;
+    private LogixNG_SelectEnumSwing<Operation> _selectOperationSwing;
 
     private JTabbedPane _tabbedPaneSoundType;
     private JPanel _panelSoundTypeDirect;
@@ -49,9 +41,18 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
     private JTextField _soundFormulaTextField;
 
 
+    public ActionSoundSwing() {
+    }
+
+    public ActionSoundSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionSound action = (ActionSound)object;
+
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -60,43 +61,12 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
 
 
         // Set up the tabbed pane for selecting the operation
-        _tabbedPaneOperationType = new JTabbedPane();
-        _panelOperationTypeDirect = new javax.swing.JPanel();
-        _panelOperationTypeDirect.setLayout(new BoxLayout(_panelOperationTypeDirect, BoxLayout.Y_AXIS));
-        _panelOperationTypeReference = new javax.swing.JPanel();
-        _panelOperationTypeReference.setLayout(new BoxLayout(_panelOperationTypeReference, BoxLayout.Y_AXIS));
-        _panelOperationTypeLocalVariable = new javax.swing.JPanel();
-        _panelOperationTypeLocalVariable.setLayout(new BoxLayout(_panelOperationTypeLocalVariable, BoxLayout.Y_AXIS));
-        _panelOperationTypeFormula = new javax.swing.JPanel();
-        _panelOperationTypeFormula.setLayout(new BoxLayout(_panelOperationTypeFormula, BoxLayout.Y_AXIS));
-
-        _tabbedPaneOperationType.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationTypeDirect);
-        _tabbedPaneOperationType.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationTypeReference);
-        _tabbedPaneOperationType.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationTypeLocalVariable);
-        _tabbedPaneOperationType.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationTypeFormula);
-
-        _operationComboBox = new JComboBox<>();
-        for (ActionSound.Operation e : ActionSound.Operation.values()) {
-            _operationComboBox.addItem(e);
+        JPanel _tabbedPaneOperation;
+        if (action != null) {
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), Operation.values());
+        } else {
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values());
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
-        _panelOperationTypeDirect.add(new JLabel(Bundle.getMessage("ActionSound_Operation")));
-        _panelOperationTypeDirect.add(_operationComboBox);
-
-        _soundOperationReferenceTextField = new JTextField();
-        _soundOperationReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeReference.add(new JLabel(Bundle.getMessage("ActionSound_Operation")));
-        _panelOperationTypeReference.add(_soundOperationReferenceTextField);
-
-        _soundOperationLocalVariableTextField = new JTextField();
-        _soundOperationLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeLocalVariable.add(new JLabel(Bundle.getMessage("ActionSound_Operation")));
-        _panelOperationTypeLocalVariable.add(_soundOperationLocalVariableTextField);
-
-        _soundOperationFormulaTextField = new JTextField();
-        _soundOperationFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelOperationTypeFormula.add(new JLabel(Bundle.getMessage("ActionSound_Operation")));
-        _panelOperationTypeFormula.add(_soundOperationFormulaTextField);
 
 
         // Set up the tabbed pane for selecting the appearance
@@ -161,18 +131,6 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
 
 
         if (action != null) {
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeDirect); break;
-                case Reference: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeReference); break;
-                case LocalVariable: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeLocalVariable); break;
-                case Formula: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getOperationAddressing().name());
-            }
-            _operationComboBox.setSelectedItem(action.getOperation());
-            _soundOperationReferenceTextField.setText(action.getOperationReference());
-            _soundOperationLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _soundOperationFormulaTextField.setText(action.getOperationFormula());
-
             switch (action.getSoundAddressing()) {
                 case Direct: _tabbedPaneSoundType.setSelectedComponent(_panelSoundTypeDirect); break;
                 case Reference: _tabbedPaneSoundType.setSelectedComponent(_panelSoundTypeReference); break;
@@ -187,7 +145,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneOperationType,
+            _tabbedPaneOperation,
             _tabbedPaneSoundType
         };
 
@@ -204,14 +162,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionSound action = new ActionSound("IQDA1", null);
 
-        try {
-            if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
-                action.setOperationReference(_soundOperationReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
 
         try {
             action.setSoundFormula(_soundFormulaTextField.getText());
@@ -248,23 +199,9 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         }
         ActionSound action = (ActionSound)object;
 
-        try {
-            if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperation((ActionSound.Operation)_operationComboBox.getSelectedItem());
-            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_soundOperationReferenceTextField.getText());
-            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_soundOperationLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_soundOperationFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneOperationType has unknown selection");
-            }
+        _selectOperationSwing.updateObject(action.getSelectEnum());
 
+        try {
             if (_tabbedPaneSoundType.getSelectedComponent() == _panelSoundTypeDirect) {
                 action.setSoundAddressing(NamedBeanAddressing.Direct);
                 action.setSound(_soundTextField.getText());
@@ -293,6 +230,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
+        _selectOperationSwing.dispose();
     }
 
 

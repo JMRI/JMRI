@@ -134,7 +134,7 @@ public class ActionsAndExpressionsTest {
 //            Assert.assertNotNull(String.format("Class %s has xml class%n", file), configureXml);
 
             // Check that all actions and expressions has a swing class
-            SwingConfiguratorInterface configureSwing = null;
+            SwingConfiguratorInterface configureSwing;
             fullConfigName = packageName + ".swing." + file + "Swing";
             log.debug("getAdapter looks for {}", fullConfigName);
 
@@ -238,12 +238,12 @@ public class ActionsAndExpressionsTest {
     }
 
     public void addClasses(Map<Category, List<Class<? extends Base>>> classes, Map<Category, List<Class<? extends Base>>> newClasses) {
-            newClasses.entrySet().forEach((entry) -> {
-//                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
-                entry.getValue().forEach((clazz) -> {
-                    classes.get(entry.getKey()).add(clazz);
-                });
+        newClasses.entrySet().forEach((entry) -> {
+//            System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
+            entry.getValue().forEach((clazz) -> {
+                classes.get(entry.getKey()).add(clazz);
             });
+        });
     }
 
     @Test

@@ -256,7 +256,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         _memoryOut.setValue(0.0);
         actionMemory = new StringActionMemory("IQSA1", null);
-        actionMemory.setMemory(_memoryOut);
+        actionMemory.getSelectNamedBean().setNamedBean(_memoryOut);
         MaleSocket socketAction =
                 InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
         socketDoString.getChild(1).connect(socketAction);

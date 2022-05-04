@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -39,7 +40,9 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        ExpressionSensorSwing t = new ExpressionSensorSwing();
+        JDialog dialog = new JDialog();
+
+        ExpressionSensorSwing t = new ExpressionSensorSwing(dialog);
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
@@ -48,10 +51,12 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ExpressionSensorSwing().getConfigPanel(new JPanel()));
+            null != new ExpressionSensorSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ExpressionSensorSwing().getConfigPanel(new ExpressionSensor("IQDE1", null), new JPanel()));
+            null != new ExpressionSensorSwing(dialog).getConfigPanel(new ExpressionSensor("IQDE1", null), new JPanel()));
     }
 
     @org.junit.Ignore("Fails in Java 11 testing")
@@ -81,9 +86,9 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return expression.getSensor() != null;});
+        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;});
 
-        Assert.assertEquals("IS1", expression.getSensor().getBean().getSystemName());
+        Assert.assertEquals("IS1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
         Assert.assertEquals(ExpressionSensor.SensorState.Inactive, expression.getBeanState());
     }
 

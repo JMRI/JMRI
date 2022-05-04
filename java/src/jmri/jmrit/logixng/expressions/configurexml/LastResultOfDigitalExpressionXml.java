@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -34,10 +35,8 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
 
         storeCommon(p, element);
 
-        var handle = p.getDigitalExpression();
-        if (handle != null) {
-            element.addContent(new Element("expression").addContent(handle.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<MaleDigitalExpressionSocket>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         return element;
     }
@@ -50,14 +49,9 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
 
         loadCommon(h, shared);
 
-        Element lightName = shared.getChild("expression");
-        if (lightName != null) {
-            DigitalExpressionBean t = InstanceManager
-                    .getDefault(DigitalExpressionManager.class)
-                    .getNamedBean(lightName.getTextTrim());
-            if (t != null) h.setDigitalExpression(t);
-            else h.removeDigitalExpression();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<MaleDigitalExpressionSocket>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean(), true);
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "expression", null, null, null, null);
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

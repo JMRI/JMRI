@@ -152,10 +152,7 @@ public class ActionTurnout extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionTurnout: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<Turnout> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     /** {@inheritDoc} */
