@@ -178,7 +178,13 @@ public class Sequence extends AbstractDigitalAction
 
             FemaleDigitalActionSocket actionSocket =
                     _actionEntries.get(_currentStep)._socket;
-            if (exprSocket.isConnected()) actionSocket.execute();
+            if (actionSocket.isConnected()) actionSocket.execute();
+
+            if (!_runContinuously && _currentStep == _actionEntries.size() - 1) {
+                // Sequence is done, stop and reset the sequence so that it can be started again later
+                _isRunning = false;
+                _currentStep = -1;
+            }
         }
     }
 
