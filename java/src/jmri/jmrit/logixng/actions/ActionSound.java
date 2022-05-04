@@ -238,6 +238,7 @@ public class ActionSound extends AbstractDigitalAction
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
         }
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
@@ -246,6 +247,7 @@ public class ActionSound extends AbstractDigitalAction
         if (_listenersAreRegistered) {
             _listenersAreRegistered = false;
         }
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */

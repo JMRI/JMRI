@@ -110,11 +110,13 @@ public class ShutdownComputer extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */

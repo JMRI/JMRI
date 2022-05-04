@@ -255,12 +255,14 @@ public class ActionOBlock extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */
