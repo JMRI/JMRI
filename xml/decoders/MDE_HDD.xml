@@ -30,7 +30,7 @@
     </revision>
   </revhistory>
   <decoder>
-    <family name="Mixion" mfg="MD Electronics">
+    <family name="mXion" mfg="MD Electronics">
       <model model="HDD" lowVersionID="10" highVersionID="10"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">

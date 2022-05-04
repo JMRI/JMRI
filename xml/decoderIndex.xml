@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.99.7dev+jake+20220502T0932Z+R73db1c1812 on Mon May 02 05:32:24 EDT 2022-->
-  <decoderIndex version="9">
+  <!--Written by JMRI version 4.99.7dev+jake+20220504T1752Z+Re763eff749 on Wed May 04 10:52:50 MST 2022-->
+  <decoderIndex version="11">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -14450,8 +14450,8 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
-      <family name="Mixion" mfg="MD Electronics" file="MDE_HDD.xml">
-        <model model="HDD" />
+      <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
+        <model model="HDD" lowVersionID="10" highVersionID="10" />
       </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3">
