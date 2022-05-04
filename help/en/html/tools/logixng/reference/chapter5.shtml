@@ -505,7 +505,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Script</h4>
+      <h4 id="script">Script</h4>
 
       <ul>
         <li><strong>Run script:</strong> Starts the specified script. Specify the script to start
