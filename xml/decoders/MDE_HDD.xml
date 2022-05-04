@@ -871,10 +871,8 @@
         <display item="Reverse Loop Current Detection Value"/>
         <display item="Reverse Loop Wait Time"/>
         <display item="Reverse Loop Current Sampling Gate"/>
+       <label><text> </text></label>
         <display item="Max Output Segments"/>
-        <display item=""/>
-        <display item=""/>
-        <display item=""/>
      </column>
     </row>
     <name>Basic</name>
@@ -991,91 +989,100 @@
   </pane>
 
   <pane>
-    <row>
-      <column>
-        <row><display item="S01 Output Active" format="checkbox" label="    Segment  1"/><display item="S01 Address" label="Address:"/></row>
-        <row><display item="S02 Output Active" format="checkbox" label="    Segment  2"/><display item="S02 Address" label="Address:"/></row>
-        <row><display item="S03 Output Active" format="checkbox" label="    Segment  3"/><display item="S03 Address" label="Address:"/></row>
-        <row><display item="S04 Output Active" format="checkbox" label="    Segment  4"/><display item="S04 Address" label="Address:"/></row>
-        <row><display item="S05 Output Active" format="checkbox" label="    Segment  5"/><display item="S05 Address" label="Address:"/></row>
-        <row><display item="S06 Output Active" format="checkbox" label="    Segment  6"/><display item="S06 Address" label="Address:"/></row>
-        <row><display item="S07 Output Active" format="checkbox" label="    Segment  7"/><display item="S07 Address" label="Address:"/></row>
-        <row><display item="S08 Output Active" format="checkbox" label="    Segment  8"/><display item="S08 Address" label="Address:"/></row>
-        <row><display item="S09 Output Active" format="checkbox" label="    Segment  9"/><display item="S09 Address" label="Address:"/></row>
-        <row><display item="S10 Output Active" format="checkbox" label="    Segment 10"/><display item="S10 Address" label="Address:"/></row>
-        <row><display item="S11 Output Active" format="checkbox" label="    Segment 11"/><display item="S11 Address" label="Address:"/></row>
-        <row><display item="S12 Output Active" format="checkbox" label="    Segment 12"/><display item="S12 Address" label="Address:"/></row>
-        <row><display item="S13 Output Active" format="checkbox" label="    Segment 13"/><display item="S13 Address" label="Address:"/></row>
-        <row><display item="S14 Output Active" format="checkbox" label="    Segment 14"/><display item="S14 Address" label="Address:"/></row>
-        <row><display item="S15 Output Active" format="checkbox" label="    Segment 15"/><display item="S15 Address" label="Address:"/></row>
-        <row><display item="S16 Output Active" format="checkbox" label="    Segment 16"/><display item="S16 Address" label="Address:"/></row>
-        <row><display item="S17 Output Active" format="checkbox" label="    Segment 17"/><display item="S17 Address" label="Address:"/></row>
-        <row><display item="S18 Output Active" format="checkbox" label="    Segment 18"/><display item="S18 Address" label="Address:"/></row>
-      </column>
+    <column>
+      <display item="Max Output Segments"/>
       <separator/>
-      <column>
-        <row><display item="S19 Output Active" format="checkbox" label="    Segment 19"/><display item="S19 Address" label="Address:"/></row>
-        <row><display item="S20 Output Active" format="checkbox" label="    Segment 20"/><display item="S20 Address" label="Address:"/></row>
-        <row><display item="S21 Output Active" format="checkbox" label="    Segment 21"/><display item="S21 Address" label="Address:"/></row>
-        <row><display item="S22 Output Active" format="checkbox" label="    Segment 22"/><display item="S22 Address" label="Address:"/></row>
-        <row><display item="S23 Output Active" format="checkbox" label="    Segment 23"/><display item="S23 Address" label="Address:"/></row>
-        <row><display item="S24 Output Active" format="checkbox" label="    Segment 24"/><display item="S24 Address" label="Address:"/></row>
-        <row><display item="S25 Output Active" format="checkbox" label="    Segment 25"/><display item="S25 Address" label="Address:"/></row>
-        <row><display item="S26 Output Active" format="checkbox" label="    Segment 26"/><display item="S26 Address" label="Address:"/></row>
-        <row><display item="S27 Output Active" format="checkbox" label="    Segment 27"/><display item="S27 Address" label="Address:"/></row>
-        <row><display item="S28 Output Active" format="checkbox" label="    Segment 28"/><display item="S28 Address" label="Address:"/></row>
-        <row><display item="S29 Output Active" format="checkbox" label="    Segment 29"/><display item="S29 Address" label="Address:"/></row>
-        <row><display item="S30 Output Active" format="checkbox" label="    Segment 30"/><display item="S30 Address" label="Address:"/></row>
-        <row><display item="S31 Output Active" format="checkbox" label="    Segment 31"/><display item="S31 Address" label="Address:"/></row>
-        <row><display item="S32 Output Active" format="checkbox" label="    Segment 32"/><display item="S32 Address" label="Address:"/></row>
-        <row><display item="S33 Output Active" format="checkbox" label="    Segment 33"/><display item="S33 Address" label="Address:"/></row>
-        <row><display item="S34 Output Active" format="checkbox" label="    Segment 34"/><display item="S34 Address" label="Address:"/></row>
-        <row><display item="S35 Output Active" format="checkbox" label="    Segment 35"/><display item="S35 Address" label="Address:"/></row>
-        <row><display item="S36 Output Active" format="checkbox" label="    Segment 36"/><display item="S36 Address" label="Address:"/></row>
+      <label><text>  </text></label>
+      <label><text>
+        Check the boxes for the exit tracks that you’ll be using; all unchecked ones will be inactive.
+      </text></label>
+      <label><text>  </text></label>
+        <row>
+          <column>
+            <row><display item="S01 Output Active" format="checkbox" label="    Segment  1"/><display item="S01 Address" label="Address:"/></row>
+            <row><display item="S02 Output Active" format="checkbox" label="    Segment  2"/><display item="S02 Address" label="Address:"/></row>
+            <row><display item="S03 Output Active" format="checkbox" label="    Segment  3"/><display item="S03 Address" label="Address:"/></row>
+            <row><display item="S04 Output Active" format="checkbox" label="    Segment  4"/><display item="S04 Address" label="Address:"/></row>
+            <row><display item="S05 Output Active" format="checkbox" label="    Segment  5"/><display item="S05 Address" label="Address:"/></row>
+            <row><display item="S06 Output Active" format="checkbox" label="    Segment  6"/><display item="S06 Address" label="Address:"/></row>
+            <row><display item="S07 Output Active" format="checkbox" label="    Segment  7"/><display item="S07 Address" label="Address:"/></row>
+            <row><display item="S08 Output Active" format="checkbox" label="    Segment  8"/><display item="S08 Address" label="Address:"/></row>
+            <row><display item="S09 Output Active" format="checkbox" label="    Segment  9"/><display item="S09 Address" label="Address:"/></row>
+            <row><display item="S10 Output Active" format="checkbox" label="    Segment 10"/><display item="S10 Address" label="Address:"/></row>
+            <row><display item="S11 Output Active" format="checkbox" label="    Segment 11"/><display item="S11 Address" label="Address:"/></row>
+            <row><display item="S12 Output Active" format="checkbox" label="    Segment 12"/><display item="S12 Address" label="Address:"/></row>
+            <row><display item="S13 Output Active" format="checkbox" label="    Segment 13"/><display item="S13 Address" label="Address:"/></row>
+            <row><display item="S14 Output Active" format="checkbox" label="    Segment 14"/><display item="S14 Address" label="Address:"/></row>
+            <row><display item="S15 Output Active" format="checkbox" label="    Segment 15"/><display item="S15 Address" label="Address:"/></row>
+            <row><display item="S16 Output Active" format="checkbox" label="    Segment 16"/><display item="S16 Address" label="Address:"/></row>
+            <row><display item="S17 Output Active" format="checkbox" label="    Segment 17"/><display item="S17 Address" label="Address:"/></row>
+            <row><display item="S18 Output Active" format="checkbox" label="    Segment 18"/><display item="S18 Address" label="Address:"/></row>
+          </column>
+          <separator/>
+          <column>
+            <row><display item="S19 Output Active" format="checkbox" label="    Segment 19"/><display item="S19 Address" label="Address:"/></row>
+            <row><display item="S20 Output Active" format="checkbox" label="    Segment 20"/><display item="S20 Address" label="Address:"/></row>
+            <row><display item="S21 Output Active" format="checkbox" label="    Segment 21"/><display item="S21 Address" label="Address:"/></row>
+            <row><display item="S22 Output Active" format="checkbox" label="    Segment 22"/><display item="S22 Address" label="Address:"/></row>
+            <row><display item="S23 Output Active" format="checkbox" label="    Segment 23"/><display item="S23 Address" label="Address:"/></row>
+            <row><display item="S24 Output Active" format="checkbox" label="    Segment 24"/><display item="S24 Address" label="Address:"/></row>
+            <row><display item="S25 Output Active" format="checkbox" label="    Segment 25"/><display item="S25 Address" label="Address:"/></row>
+            <row><display item="S26 Output Active" format="checkbox" label="    Segment 26"/><display item="S26 Address" label="Address:"/></row>
+            <row><display item="S27 Output Active" format="checkbox" label="    Segment 27"/><display item="S27 Address" label="Address:"/></row>
+            <row><display item="S28 Output Active" format="checkbox" label="    Segment 28"/><display item="S28 Address" label="Address:"/></row>
+            <row><display item="S29 Output Active" format="checkbox" label="    Segment 29"/><display item="S29 Address" label="Address:"/></row>
+            <row><display item="S30 Output Active" format="checkbox" label="    Segment 30"/><display item="S30 Address" label="Address:"/></row>
+            <row><display item="S31 Output Active" format="checkbox" label="    Segment 31"/><display item="S31 Address" label="Address:"/></row>
+            <row><display item="S32 Output Active" format="checkbox" label="    Segment 32"/><display item="S32 Address" label="Address:"/></row>
+            <row><display item="S33 Output Active" format="checkbox" label="    Segment 33"/><display item="S33 Address" label="Address:"/></row>
+            <row><display item="S34 Output Active" format="checkbox" label="    Segment 34"/><display item="S34 Address" label="Address:"/></row>
+            <row><display item="S35 Output Active" format="checkbox" label="    Segment 35"/><display item="S35 Address" label="Address:"/></row>
+            <row><display item="S36 Output Active" format="checkbox" label="    Segment 36"/><display item="S36 Address" label="Address:"/></row>
+          </column>
+          <separator/>
+          <column>
+            <row><display item="S37 Output Active" format="checkbox" label="    Segment 37"/><display item="S37 Address" label="Address:"/></row>
+            <row><display item="S38 Output Active" format="checkbox" label="    Segment 38"/><display item="S38 Address" label="Address:"/></row>
+            <row><display item="S39 Output Active" format="checkbox" label="    Segment 39"/><display item="S39 Address" label="Address:"/></row>
+            <row><display item="S40 Output Active" format="checkbox" label="    Segment 40"/><display item="S40 Address" label="Address:"/></row>
+            <row><display item="S41 Output Active" format="checkbox" label="    Segment 41"/><display item="S41 Address" label="Address:"/></row>
+            <row><display item="S42 Output Active" format="checkbox" label="    Segment 42"/><display item="S42 Address" label="Address:"/></row>
+            <row><display item="S43 Output Active" format="checkbox" label="    Segment 43"/><display item="S43 Address" label="Address:"/></row>
+            <row><display item="S44 Output Active" format="checkbox" label="    Segment 44"/><display item="S44 Address" label="Address:"/></row>
+            <row><display item="S45 Output Active" format="checkbox" label="    Segment 45"/><display item="S45 Address" label="Address:"/></row>
+            <row><display item="S46 Output Active" format="checkbox" label="    Segment 46"/><display item="S46 Address" label="Address:"/></row>
+            <row><display item="S47 Output Active" format="checkbox" label="    Segment 47"/><display item="S47 Address" label="Address:"/></row>
+            <row><display item="S48 Output Active" format="checkbox" label="    Segment 48"/><display item="S48 Address" label="Address:"/></row>
+            <row><display item="S49 Output Active" format="checkbox" label="    Segment 49"/><display item="S49 Address" label="Address:"/></row>
+            <row><display item="S50 Output Active" format="checkbox" label="    Segment 50"/><display item="S50 Address" label="Address:"/></row>
+            <row><display item="S51 Output Active" format="checkbox" label="    Segment 51"/><display item="S51 Address" label="Address:"/></row>
+            <row><display item="S52 Output Active" format="checkbox" label="    Segment 52"/><display item="S52 Address" label="Address:"/></row>
+            <row><display item="S53 Output Active" format="checkbox" label="    Segment 53"/><display item="S53 Address" label="Address:"/></row>
+            <row><display item="S54 Output Active" format="checkbox" label="    Segment 54"/><display item="S54 Address" label="Address:"/></row>
+          </column>
+          <separator/>
+          <column>
+            <row><display item="S55 Output Active" format="checkbox" label="    Segment 55"/><display item="S55 Address" label="Address:"/></row>
+            <row><display item="S56 Output Active" format="checkbox" label="    Segment 56"/><display item="S56 Address" label="Address:"/></row>
+            <row><display item="S57 Output Active" format="checkbox" label="    Segment 57"/><display item="S57 Address" label="Address:"/></row>
+            <row><display item="S58 Output Active" format="checkbox" label="    Segment 58"/><display item="S58 Address" label="Address:"/></row>
+            <row><display item="S59 Output Active" format="checkbox" label="    Segment 59"/><display item="S59 Address" label="Address:"/></row>
+            <row><display item="S60 Output Active" format="checkbox" label="    Segment 60"/><display item="S60 Address" label="Address:"/></row>
+            <row><display item="S61 Output Active" format="checkbox" label="    Segment 61"/><display item="S61 Address" label="Address:"/></row>
+            <row><display item="S62 Output Active" format="checkbox" label="    Segment 62"/><display item="S62 Address" label="Address:"/></row>
+            <row><display item="S63 Output Active" format="checkbox" label="    Segment 63"/><display item="S63 Address" label="Address:"/></row>
+            <row><display item="S64 Output Active" format="checkbox" label="    Segment 64"/><display item="S64 Address" label="Address:"/></row>
+            <row><display item="S65 Output Active" format="checkbox" label="    Segment 65"/><display item="S65 Address" label="Address:"/></row>
+            <row><display item="S66 Output Active" format="checkbox" label="    Segment 66"/><display item="S66 Address" label="Address:"/></row>
+            <row><display item="S67 Output Active" format="checkbox" label="    Segment 67"/><display item="S67 Address" label="Address:"/></row>
+            <row><display item="S68 Output Active" format="checkbox" label="    Segment 68"/><display item="S68 Address" label="Address:"/></row>
+            <row><display item="S69 Output Active" format="checkbox" label="    Segment 69"/><display item="S69 Address" label="Address:"/></row>
+            <row><display item="S70 Output Active" format="checkbox" label="    Segment 70"/><display item="S70 Address" label="Address:"/></row>
+            <row><display item="S71 Output Active" format="checkbox" label="    Segment 71"/><display item="S71 Address" label="Address:"/></row>
+            <row><display item="S72 Output Active" format="checkbox" label="    Segment 72"/><display item="S72 Address" label="Address:"/></row>
+          </column>
+        </row>
       </column>
-      <separator/>
-      <column>
-        <row><display item="S37 Output Active" format="checkbox" label="    Segment 37"/><display item="S37 Address" label="Address:"/></row>
-        <row><display item="S38 Output Active" format="checkbox" label="    Segment 38"/><display item="S38 Address" label="Address:"/></row>
-        <row><display item="S39 Output Active" format="checkbox" label="    Segment 39"/><display item="S39 Address" label="Address:"/></row>
-        <row><display item="S40 Output Active" format="checkbox" label="    Segment 40"/><display item="S40 Address" label="Address:"/></row>
-        <row><display item="S41 Output Active" format="checkbox" label="    Segment 41"/><display item="S41 Address" label="Address:"/></row>
-        <row><display item="S42 Output Active" format="checkbox" label="    Segment 42"/><display item="S42 Address" label="Address:"/></row>
-        <row><display item="S43 Output Active" format="checkbox" label="    Segment 43"/><display item="S43 Address" label="Address:"/></row>
-        <row><display item="S44 Output Active" format="checkbox" label="    Segment 44"/><display item="S44 Address" label="Address:"/></row>
-        <row><display item="S45 Output Active" format="checkbox" label="    Segment 45"/><display item="S45 Address" label="Address:"/></row>
-        <row><display item="S46 Output Active" format="checkbox" label="    Segment 46"/><display item="S46 Address" label="Address:"/></row>
-        <row><display item="S47 Output Active" format="checkbox" label="    Segment 47"/><display item="S47 Address" label="Address:"/></row>
-        <row><display item="S48 Output Active" format="checkbox" label="    Segment 48"/><display item="S48 Address" label="Address:"/></row>
-        <row><display item="S49 Output Active" format="checkbox" label="    Segment 49"/><display item="S49 Address" label="Address:"/></row>
-        <row><display item="S50 Output Active" format="checkbox" label="    Segment 50"/><display item="S50 Address" label="Address:"/></row>
-        <row><display item="S51 Output Active" format="checkbox" label="    Segment 51"/><display item="S51 Address" label="Address:"/></row>
-        <row><display item="S52 Output Active" format="checkbox" label="    Segment 52"/><display item="S52 Address" label="Address:"/></row>
-        <row><display item="S53 Output Active" format="checkbox" label="    Segment 53"/><display item="S53 Address" label="Address:"/></row>
-        <row><display item="S54 Output Active" format="checkbox" label="    Segment 54"/><display item="S54 Address" label="Address:"/></row>
-      </column>
-      <separator/>
-      <column>
-        <row><display item="S55 Output Active" format="checkbox" label="    Segment 55"/><display item="S55 Address" label="Address:"/></row>
-        <row><display item="S56 Output Active" format="checkbox" label="    Segment 56"/><display item="S56 Address" label="Address:"/></row>
-        <row><display item="S57 Output Active" format="checkbox" label="    Segment 57"/><display item="S57 Address" label="Address:"/></row>
-        <row><display item="S58 Output Active" format="checkbox" label="    Segment 58"/><display item="S58 Address" label="Address:"/></row>
-        <row><display item="S59 Output Active" format="checkbox" label="    Segment 59"/><display item="S59 Address" label="Address:"/></row>
-        <row><display item="S60 Output Active" format="checkbox" label="    Segment 60"/><display item="S60 Address" label="Address:"/></row>
-        <row><display item="S61 Output Active" format="checkbox" label="    Segment 61"/><display item="S61 Address" label="Address:"/></row>
-        <row><display item="S62 Output Active" format="checkbox" label="    Segment 62"/><display item="S62 Address" label="Address:"/></row>
-        <row><display item="S63 Output Active" format="checkbox" label="    Segment 63"/><display item="S63 Address" label="Address:"/></row>
-        <row><display item="S64 Output Active" format="checkbox" label="    Segment 64"/><display item="S64 Address" label="Address:"/></row>
-        <row><display item="S65 Output Active" format="checkbox" label="    Segment 65"/><display item="S65 Address" label="Address:"/></row>
-        <row><display item="S66 Output Active" format="checkbox" label="    Segment 66"/><display item="S66 Address" label="Address:"/></row>
-        <row><display item="S67 Output Active" format="checkbox" label="    Segment 67"/><display item="S67 Address" label="Address:"/></row>
-        <row><display item="S68 Output Active" format="checkbox" label="    Segment 68"/><display item="S68 Address" label="Address:"/></row>
-        <row><display item="S69 Output Active" format="checkbox" label="    Segment 69"/><display item="S69 Address" label="Address:"/></row>
-        <row><display item="S70 Output Active" format="checkbox" label="    Segment 70"/><display item="S70 Address" label="Address:"/></row>
-        <row><display item="S71 Output Active" format="checkbox" label="    Segment 71"/><display item="S71 Address" label="Address:"/></row>
-        <row><display item="S72 Output Active" format="checkbox" label="    Segment 72"/><display item="S72 Address" label="Address:"/></row>
-      </column>
-    </row>
     <name>HDD Segments</name>
   </pane>
 
