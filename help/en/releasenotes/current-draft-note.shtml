@@ -357,6 +357,7 @@
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li>Improved handling of improper input in variables.</li>
+            <li>Improved accessibility of programming mode selections.</li>
         </ul>
 
     <h3>CTC Tool</h3>
