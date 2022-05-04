@@ -30,14 +30,20 @@ public class LogixNG_SelectDoubleXml {
 
         doubleElement.addContent(new Element("addressing").addContent(selectDouble.getAddressing().name()));
         doubleElement.addContent(new Element("value").addContent(selectDouble.formatValue(selectDouble.getValue())));
-        doubleElement.addContent(new Element("reference").addContent(selectDouble.getReference()));
+        if (selectDouble.getReference() != null && !selectDouble.getReference().isEmpty()) {
+            doubleElement.addContent(new Element("reference").addContent(selectDouble.getReference()));
+        }
         var memory = selectDouble.getMemory();
         if (memory != null) {
             doubleElement.addContent(new Element("memory").addContent(memory.getName()));
         }
         doubleElement.addContent(new Element("listenToMemory").addContent(selectDouble.getListenToMemory() ? "yes" : "no"));
-        doubleElement.addContent(new Element("localVariable").addContent(selectDouble.getLocalVariable()));
-        doubleElement.addContent(new Element("formula").addContent(selectDouble.getFormula()));
+        if (selectDouble.getLocalVariable() != null && !selectDouble.getLocalVariable().isEmpty()) {
+            doubleElement.addContent(new Element("localVariable").addContent(selectDouble.getLocalVariable()));
+        }
+        if (selectDouble.getFormula() != null && !selectDouble.getFormula().isEmpty()) {
+            doubleElement.addContent(new Element("formula").addContent(selectDouble.getFormula()));
+        }
 
         if (selectDouble.getAddressing() == NamedBeanAddressing.Table) {
             doubleElement.addContent(selectTableXml.store(selectDouble.getSelectTable(), "table"));

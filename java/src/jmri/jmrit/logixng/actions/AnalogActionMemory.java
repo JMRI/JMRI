@@ -1,15 +1,13 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
  * Sets a Memory.
@@ -17,86 +15,40 @@ import jmri.jmrit.logixng.*;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class AnalogActionMemory extends AbstractAnalogAction
-        implements VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanHandle<Memory> _memoryHandle;
+    private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     public AnalogActionMemory(String sys, String user) {
         super(sys, user);
     }
 
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         AnalogActionManager manager = InstanceManager.getDefault(AnalogActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogActionMemory copy = new AnalogActionMemory(sysName, userName);
         copy.setComment(getComment());
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         return manager.registerAction(copy);
     }
 
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
-        } else {
-            removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
-        }
-    }
-
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-    }
-
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "setMemory");
-        if (_memoryHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _memoryHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
+    public LogixNG_SelectNamedBean<Memory> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setValue(double value) throws JmriException {
-        if (_memoryHandle != null) {
+        Memory memory = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        if (memory != null) {
             jmri.util.ThreadingUtil.runOnLayoutWithJmriException(() -> {
-                _memoryHandle.getBean().setValue(value);
+                memory.setValue(value);
             });
-        }
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("AnalogMemory_MemoryInUseMemoryActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    removeMemory();
-                }
-            }
         }
     }
 
@@ -128,11 +80,7 @@ public class AnalogActionMemory extends AbstractAnalogAction
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "AnalogActionMemory_Long", _memoryHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "AnalogActionMemory_Long", "none");
-        }
+        return Bundle.getMessage(locale, "AnalogActionMemory_Long", _selectNamedBean.getDescription(locale));
     }
 
     /** {@inheritDoc} */
@@ -144,11 +92,13 @@ public class AnalogActionMemory extends AbstractAnalogAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -159,12 +109,15 @@ public class AnalogActionMemory extends AbstractAnalogAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: AnalogActionMemory: bean = {}, report = {}", cdl, report);
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
 
 }

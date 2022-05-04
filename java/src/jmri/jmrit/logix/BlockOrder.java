@@ -25,7 +25,7 @@ public class BlockOrder {
     private String _pathName;  // path the train is to take in the block
     private String _entryName; // Name of entry Portal
     private String _exitName;  // Name of exit Portal
-    private float _tempPathLen; // hold user's input for this session
+    private float _pathLength; // path length in millimeters
 
     public BlockOrder(OBlock block) {
         _block = block;
@@ -44,7 +44,6 @@ public class BlockOrder {
         _pathName = path;
         _entryName = entry;
         _exitName = exit;
-//         log.debug("ctor1: {}",this);
     }
 
     // for use by WarrantTableFrame 
@@ -54,7 +53,6 @@ public class BlockOrder {
         _pathName = bo._pathName;
         _entryName = bo._entryName;
         _exitName = bo._exitName;
-//        log.debug("ctor2: {}",this);
     }
 
     public void setIndex(int idx) {
@@ -88,7 +86,6 @@ public class BlockOrder {
      */
     protected void setPathName(String path) {
         _pathName = path;
-        _tempPathLen =0.0f;
     }
 
     public String getPathName() {
@@ -111,45 +108,44 @@ public class BlockOrder {
     }
     
     @Nonnull
-    protected TrainOrder setPath(Warrant warrant, boolean show) {
+    protected TrainOrder allocatePaths(Warrant warrant, boolean allocate) {
         if (_pathName == null) {
-            log.error("setPath({}) - {}", warrant.getDisplayName(), Bundle.getMessage("NoPaths", _block.getDisplayName()));
+            log.error("setPaths({}) - {}", warrant.getDisplayName(), Bundle.getMessage("NoPaths", _block.getDisplayName()));
             return new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, 
                     Bundle.getMessage("NoPaths", _block.getDisplayName()));
         }
-        TrainOrder to = null;
-        if (show) { // display route, NOT run warrant
-            to = findStopCondition(this, warrant);
-            if (to != null) {
-                if (!to._cause.equals(Cause.OCCUPY) && !to._cause.equals(Cause.WARRANT)) {
-                    _block.allocate(warrant);
-                    _block.setPath(_pathName, warrant);
-                }
-                return to;
-            }
-        }
         if (log.isDebugEnabled()) { 
-            log.debug("{}: calls setPath() in block \"{}\" for path \"{}\". _index={}",
+            log.debug("{}: calls allocatePaths() in block \"{}\" for path \"{}\". _index={}",
                     warrant.getDisplayName(), _block.getDisplayName(), _pathName, _index); 
         }
-        String msg = _block.allocate(warrant);
-        if (msg != null) {
-            return new TrainOrder(Warrant.Stop, Cause.WARRANT, _index, _index, msg);
+        TrainOrder to = findStopCondition(this, warrant);
+        if (to != null && Warrant.Stop.equals(to._speedType)) {
+            return to;
         }
-//        if (log.isDebugEnabled()) { 
-//            log.debug("{}:  block \"{}\" allocated.",
-//                    warrant.getDisplayName(), _block.getDisplayName()); 
-//        }
+        String msg = _block.allocate(warrant);
+        if (msg != null) {  // unnecessary, findStopCondition() already has checked
+            return new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, msg);
+        }
 
         // Check if next block can be allocated
         BlockOrder bo1 = warrant.getBlockOrderAt(_index + 1);
         if (bo1 != null) {
             OBlock nextBlock = bo1.getBlock();
-            to = findStopCondition(bo1, warrant);
-            if (to == null) { // Train may enter block of bo1
-                nextBlock.allocate(warrant);
-                nextBlock.showAllocated(warrant, bo1._pathName);
-                to = checkForSharedTO(nextBlock, bo1,  warrant);
+            TrainOrder to1 = findStopCondition(bo1, warrant);
+            if (to1 == null || !Warrant.Stop.equals(to1._speedType)) { // Train may enter block of bo1
+                if (allocate) {
+                    nextBlock.allocate(warrant);
+                    nextBlock.showAllocated(warrant, bo1._pathName);
+                }
+            } else {
+                // See if path to exit can be set without messing up block of bo1
+                OPath path1 = getPath();
+                Portal exit = getExitPortal();
+                msg =  pathsConnect(path1, exit, bo1, to1._cause);
+                if (msg != null) {
+                    // cannot set path
+                    return new TrainOrder(Warrant.Stop, to1._cause, bo1._index, _index, msg);
+                }
             }
             // Crossovers typically have both switches controlled by one TO, 
             // yet each switch is in a different block. Setting the path may change
@@ -160,75 +156,16 @@ public class BlockOrder {
             // the next block. The warrant must hold the train in this block.
             // However, the path in this block may be set
         }
-        Portal p = getEntryPortal();
-        if (p == null) {
-            if (_index > 0) {
-                log.error("setPath({}) - block \"{}\" has no Entry Portal!", warrant.getDisplayName(), _block.getDisplayName());
-                return new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, "No Entry Portal into block "+_block.getDisplayName());
+        if (allocate) {
+            msg = setPath(warrant);
+            if (msg != null) {  // unnecessary, already been checked
+                return new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, msg);
             }
-        } else {
-            p.setEntryState(_block);
         }
-        msg = _block.setPath(_pathName, warrant);
-        if (msg != null) {      // should not happen. Block is allocated.
-            to = new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, msg);
-//       } else if (log.isDebugEnabled()) { 
-//            log.debug("{}: set path \"{}\" in block \"{}\"",
-//                    warrant.getDisplayName(), _pathName, _block.getDisplayName(), _pathName); 
-        }
-
         if (to != null) {
             return to;
         }
         return new TrainOrder(null, Cause.NONE, _index, _index, null);
-    }
-
-    /*
-     * @param block = block connecting to exit portal of the block of
-     * this BlockOrder. "block" is the block of the next BlockOrder,
-     * i.e. block of BlockOrder _index + 1
-     */
-    private TrainOrder checkForSharedTO (OBlock block, BlockOrder bo1, Warrant warrant) {
-        Portal exit = bo1.getExitPortal();
-        if (exit == null) {
-            return null;
-        }
-        // Check what bo1 connects to at bo2
-        BlockOrder bo2 = warrant.getBlockOrderAt(_index + 2);
-        if (bo2 != null) {
-            Cause cause = enterable(bo2, warrant);
-            if (!Cause.NONE.equals(cause)) {
-                // block of bo2 cannot be entered, 
-                OPath path1 = bo1.getPath();
-                if (path1 == null) {
-                    log.warn("NULL PATH on block \"{}\" of BlockOrder at index = {}",
-                            bo1.getBlock().getDisplayName(), _index + 1); 
-                    return new TrainOrder(Warrant.Stop, Cause.ERROR, bo1._index, bo1._index, 
-                            Bundle.getMessage("NoPaths", bo1.getBlock().getDisplayName()));
-                }
-                // See if exit can be set without messing up block of bo2
-                String msg =  pathsConnect(path1, exit, bo2, cause);
-                if (msg != null) {
-                    return new TrainOrder(Warrant.Stop, cause, bo2._index, bo1._index, msg);
-                }
-           }
-        }
-        return null;
-    }
-
-    protected static Cause enterable(BlockOrder bo, Warrant warrant) {
-        OBlock block = bo.getBlock();
-        Warrant w = block.getWarrant();
-        if (w != null && !warrant.equals(w)) {
-            return Cause.WARRANT;
-        }
-        if (block.isOccupied()) {
-            return Cause.OCCUPY;
-        }
-        if (Warrant.Stop.equals(getPermissibleSpeedAt(bo))) {
-            return Cause.SIGNAL;
-        }
-        return Cause.NONE;
     }
 
     private TrainOrder findStopCondition(BlockOrder bo, Warrant warrant) {
@@ -244,33 +181,33 @@ public class BlockOrder {
             if (rogue == null) {
                 rogue = Bundle.getMessage("unknownTrain");
             }
-            String train = warrant.getTrainName();
-            if (!rogue.equals(train)) {
+            if (!rogue.equals(warrant.getTrainName())) {
                 return new TrainOrder(Warrant.Stop, Cause.OCCUPY, bo._index, bo._index,
-                        Bundle.getMessage("blockInUse", train, block.getDisplayName()));
+                        Bundle.getMessage("blockInUse", rogue, block.getDisplayName()));
             }
         }
         String speedType = getPermissibleSpeedAt(bo);
-        if (Warrant.Stop.equals(speedType)) {
-            return new TrainOrder(speedType, Cause.SIGNAL, bo._index, bo._index,
-                    Bundle.getMessage("BlockStopAspect", block.getDisplayName()));
+        if (speedType != null) {
+            String msg;
+            if (Warrant.Stop.equals(speedType)) {
+                msg = Bundle.getMessage("BlockStopAspect", block.getDisplayName(), speedType);
+            } else {
+                msg = Bundle.getMessage("BlockSpeedAspect", block.getDisplayName(), speedType);
+            }
+            return new TrainOrder(speedType, Cause.SIGNAL, bo._index, bo._index, msg);
         }
         return null;
     }
 
     private String pathsConnect(OPath path1, Portal exit, BlockOrder bo2, Cause cause) {
+        if (exit == null) {
+            return null;
+        }
         OPath path2 = bo2._block.getPath();
         if (path2 == null) {
-//            if (log.isDebugEnabled()) {
-//                log.debug("No path found at non-enterable block \"{}\"", bo2._block.getDisplayName());
-//            }
             return null;
         }
         if (exit.equals(path2.getToPortal()) || exit.equals(path2.getFromPortal())) {
-//            if (log.isDebugEnabled()) {
-//                log.debug("Path \"{}\" and \"{}\" in block \"{}\" connect at portal \"{}\"",
-//                        path1.getName(), path2.getName(), bo2._block.getDisplayName(), exit.getName());
-//            }
             return null;
         }
         for (BeanSetting bs1 : path1.getSettings()) {
@@ -295,17 +232,13 @@ public class BlockOrder {
                 }
             }
         }
-//        if (log.isDebugEnabled()) {
-//            log.debug("Path \"{}\" and \"{}\" in block \"{}\" of block \"{}\" do not share a turnout or portal",
-//                    path1.getName(), path2.getName(), bo2._block.getDisplayName());
-//        }
         return null;
     }
 
     static protected String getPermissibleSpeedAt(BlockOrder bo) {
         String speedType = bo.getPermissibleEntranceSpeed();
-        if (log.isDebugEnabled()) {
-            if (speedType != null) {
+        if (speedType != null) {
+            if  (log.isDebugEnabled()){
                 log.debug("getPermissibleSpeedAt(): \"{}\" Signal speed= {}",
                         bo._block.getDisplayName(), speedType);
             }
@@ -324,12 +257,20 @@ public class BlockOrder {
         return speedType;
     }
 
-    protected void setTempPathLen(float len) {
-        _tempPathLen = len;
+    protected void setPathLength(float len) {
+        _pathLength = len;
     }
 
-    protected float getTempPathLen() {
-        return _tempPathLen;
+    protected float getPathLength() {
+        if (_pathLength <= 0) {
+            OPath p  = getPath();
+            if (p != null) {
+                _pathLength = p.getLengthMm();
+            } else {
+                _pathLength = 0;
+            }
+        }
+        return _pathLength;
     }
 
     protected void setBlock(OBlock block) {

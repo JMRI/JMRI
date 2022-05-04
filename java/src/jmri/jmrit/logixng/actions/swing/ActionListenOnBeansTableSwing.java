@@ -15,7 +15,7 @@ import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionListenOnBeansTable object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
@@ -26,24 +26,24 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
     private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
     private JCheckBox _listenOnAllPropertiesCheckBox;
-    
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && !(object instanceof ActionListenOnBeansTable)) {
             throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
-        
+
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        
+
         JPanel tableBeanPanelPanel = new JPanel();
         tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_Table")));
         tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
         tableBeanPanelPanel.add(tableBeanPanel);
         panel.add(tableBeanPanelPanel);
-        
+
         _tableRowOrColumnComboBox = new JComboBox<>();
         for (TableRowOrColumn item : TableRowOrColumn.values()) {
             _tableRowOrColumnComboBox.addItem(item);
@@ -75,25 +75,25 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
                 }
             }
         });
-        
+
         JPanel tableRowOrColumnPanel = new JPanel();
         tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumn")));
         tableRowOrColumnPanel.add(_tableRowOrColumnComboBox);
         panel.add(tableRowOrColumnPanel);
-        
+
         JPanel rowOrColumnNamePanel = new JPanel();
         rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumnName")));
         _rowOrColumnNameComboBox = new JComboBox<>();
         rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
         panel.add(rowOrColumnNamePanel);
         JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
-        
+
         JPanel includeCellsWithoutHeaderPanel = new JPanel();
         includeCellsWithoutHeaderPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_IncludeCellsWithoutHeader")));
         _includeCellsWithoutHeaderCheckBox = new JCheckBox();
         includeCellsWithoutHeaderPanel.add(_includeCellsWithoutHeaderCheckBox);
         panel.add(includeCellsWithoutHeaderPanel);
-        
+
         JPanel namedBeanTypePanel = new JPanel();
         namedBeanTypePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_NamedBeanType")));
         _namedBeanTypeComboBox = new JComboBox<>();
@@ -102,16 +102,16 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         }
         namedBeanTypePanel.add(_namedBeanTypeComboBox);
         panel.add(namedBeanTypePanel);
-        
+
         JPanel listenOnAllPropertiesPanel = new JPanel();
         listenOnAllPropertiesPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_ListenOnAllPropertiesCheckBox")));
         _listenOnAllPropertiesCheckBox = new JCheckBox();
         listenOnAllPropertiesPanel.add(_listenOnAllPropertiesCheckBox);
         panel.add(listenOnAllPropertiesPanel);
-        
+
         if (action != null) {
-            if (action.getTable() != null) {
-                tableBeanPanel.setDefaultNamedBean(action.getTable().getBean());
+            if (action.getSelectNamedBean().getNamedBean() != null) {
+                tableBeanPanel.setDefaultNamedBean(action.getSelectNamedBean().getNamedBean().getBean());
             }
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
             _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
@@ -119,13 +119,13 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
             _listenOnAllPropertiesCheckBox.setSelected(action.getListenOnAllProperties());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -133,23 +133,23 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
         if (!(object instanceof ActionListenOnBeansTable)) {
             throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
-        
+
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
         NamedTable table = tableBeanPanel.getNamedBean();
         if (table != null) {
             NamedBeanHandle<NamedTable> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
                             .getNamedBeanHandle(table.getDisplayName(), table);
-            action.setTable(handle);
+            action.getSelectNamedBean().setNamedBean(handle);
         } else {
-            action.removeTable();
+            action.getSelectNamedBean().removeNamedBean();
         }
         action.setTableRowOrColumn(_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()));
         if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
@@ -163,18 +163,18 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         action.setIncludeCellsWithoutHeader(_includeCellsWithoutHeaderCheckBox.isSelected());
         action.setListenOnAllProperties(_listenOnAllPropertiesCheckBox.isSelected());
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("ActionListenOnBeansTable_Short");
     }
-    
+
     @Override
     public void dispose() {
     }
-    
-    
+
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTableSwing.class);
-    
+
 }

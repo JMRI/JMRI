@@ -42,6 +42,16 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="blockNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="listenToBlock" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="reporterNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="listenToReporter" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
               <xs:element name="memory" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:simpleContent>
@@ -51,7 +61,6 @@
                   </xs:simpleContent>
                 </xs:complexType>
               </xs:element>
-
               <xs:element name="block" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:simpleContent>
@@ -61,7 +70,6 @@
                   </xs:simpleContent>
                 </xs:complexType>
               </xs:element>
-
               <xs:element name="reporter" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                   <xs:simpleContent>
@@ -71,6 +79,7 @@
                   </xs:simpleContent>
                 </xs:complexType>
               </xs:element>
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
 
               <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
@@ -98,7 +107,7 @@
 
             </xs:sequence>
 
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>
 

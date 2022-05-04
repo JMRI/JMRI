@@ -73,7 +73,7 @@
                   <xs:enumeration value="ExecuteOnChange"/>
                   <xs:enumeration value="AlwaysExecute"/>
 
-				  <!--
+                  <!--
                   To not cause problems during testing, these are accepted
                   for now. But they should be removed before the production
                   version. These where changed to CamelCase after people

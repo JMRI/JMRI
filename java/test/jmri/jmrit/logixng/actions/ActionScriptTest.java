@@ -328,7 +328,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
 
         ExpressionSensor expressionSensor = new ExpressionSensor("IQDE321", null);
-        expressionSensor.setSensor(sensor);
+        expressionSensor.getSelectNamedBean().setNamedBean(sensor);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         ifThenElse.getChild(0).connect(maleSocket2);
@@ -342,6 +342,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = socketActionSimpleScript;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

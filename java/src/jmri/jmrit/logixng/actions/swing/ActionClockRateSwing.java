@@ -38,6 +38,10 @@ public class ActionClockRateSwing extends AbstractDigitalActionSwing {
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionClockRate action = (ActionClockRate) object;
+        if (action == null) {
+            // Create a temporary action
+            action = new ActionClockRate("IQDA1", null);
+        }
 
         _selectEnumSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
         _selectSpeedSwing = new LogixNG_SelectDoubleSwing(getJDialog(), this);
@@ -46,14 +50,8 @@ public class ActionClockRateSwing extends AbstractDigitalActionSwing {
         JPanel tabbedPaneClockState;
         JPanel tabbedPaneSpeed;
 
-        if (action != null) {
-            tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
-            tabbedPaneSpeed = _selectSpeedSwing.createPanel(action.getSelectSpeed());
-        } else {
-            tabbedPaneClockState = _selectEnumSwing.createPanel(null, ClockState.values());
-            tabbedPaneSpeed = _selectSpeedSwing.createPanel(null);
-        }
-
+        tabbedPaneClockState = _selectEnumSwing.createPanel(action.getSelectEnum(), ClockState.values());
+        tabbedPaneSpeed = _selectSpeedSwing.createPanel(action.getSelectSpeed());
 
         JComponent[] components = new JComponent[]{
             tabbedPaneClockState,

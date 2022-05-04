@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions.configurexml;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
 import javax.swing.JOptionPane;
 
 import jmri.*;
@@ -11,6 +12,9 @@ import jmri.BlockManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionBlock;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -45,21 +49,11 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        var block = p.getBlock();
-        if (block != null) {
-            element.addContent(new Element("block").addContent(block.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Block>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionBlock.DirectOperation>();
 
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
-
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getOperationFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
         element.addContent(new Element("dataReference").addContent(p.getDataReference()));
@@ -79,55 +73,23 @@ public class ActionBlockXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element blockName = shared.getChild("block");
-        if (blockName != null) {
-            Block t = InstanceManager.getDefault(BlockManager.class).getNamedBean(blockName.getTextTrim());
-            if (t != null) h.setBlock(t);
-            else h.removeBlock();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Block>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionBlock.DirectOperation>();
+
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "block");
+
+        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "operationAddressing",
+                "operationDirect",
+                "operationReference",
+                "operationLocalVariable",
+                "operationFormula");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationDirect");
-            if (elem != null) {
-                String oper = elem.getTextTrim();
-                // deprecated 4.23.5 remove 4.25.1
-                if (oper.equals("SetToConstant") || oper.equals("CopyFromMemory") || oper.equals("CopyToMemory")) {
-                    oper = "SetValue";
-                }
-                h.setOperationDirect(ActionBlock.DirectOperation.valueOf(oper));
-            }
-
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("dataAddressing");
+            Element elem = shared.getChild("dataAddressing");
             if (elem != null) {
                 h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

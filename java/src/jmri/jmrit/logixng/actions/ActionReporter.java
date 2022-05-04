@@ -1,19 +1,18 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -22,14 +21,16 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionReporter extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionReporter extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Reporter> _reporterHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private ReporterValue _reporterValue = ReporterValue.CopyCurrentReport;
 
@@ -39,7 +40,7 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     private String _dataFormula = "";
     private ExpressionNode _dataExpressionNode;
 
-    private NamedBeanHandle<Memory> _memoryHandle;
+//    private NamedBeanHandle<Memory> _memoryHandle;
 
     public ActionReporter(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -54,11 +55,8 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionReporter copy = new ActionReporter(sysName, userName);
         copy.setComment(getComment());
-        copy.setAddressing(_addressing);
-        if (_reporterHandle != null) copy.setReporter(_reporterHandle);
-        copy.setReference(_reference);
-        copy.setLocalVariable(_localVariable);
-        copy.setFormula(_formula);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
 
         copy.setReporterValue(_reporterValue);
 
@@ -66,95 +64,18 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
         copy.setDataReference(_dataReference);
         copy.setDataLocalVariable(_dataLocalVariable);
         copy.setDataFormula(_dataFormula);
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+//        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
 
         return manager.registerAction(copy);
     }
 
-    public void setReporter(@Nonnull String reporterName) {
-        assertListenersAreNotRegistered(log, "setReporter");
-        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBean(reporterName);
-        if (reporter != null) {
-            ActionReporter.this.setReporter(reporter);
-        } else {
-            removeReporter();
-            log.error("Reporter \"{}\" is not found", reporterName);
-        }
+    public LogixNG_SelectNamedBean<Reporter> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setReporter(@Nonnull Reporter reporter) {
-        assertListenersAreNotRegistered(log, "setReporter");
-        ActionReporter.this.setReporter(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(reporter.getDisplayName(), reporter));
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
-
-    public void setReporter(@Nonnull NamedBeanHandle<Reporter> handle) {
-        assertListenersAreNotRegistered(log, "setReporter");
-        _reporterHandle = handle;
-        InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
-    }
-
-    public void removeReporter() {
-        assertListenersAreNotRegistered(log, "removeReporter");
-        if (_reporterHandle != null) {
-            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
-            _reporterHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Reporter> getReporter() {
-        return _reporterHandle;
-    }
-
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
 
     public void setReporterValue(ReporterValue value) {
         _reporterValue = value;
@@ -163,43 +84,6 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     public ReporterValue getReporterValue() {
         return _reporterValue;
     }
-
-
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        Memory memory = InstanceManager.getDefault(jmri.MemoryManager.class).getNamedBean(memoryName);
-        if (memory != null) {
-            ActionReporter.this.setMemory(memory);
-        } else {
-            removeMemory();
-            log.error("Memory \"{}\" is not found", memoryName);
-        }
-    }
-
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        ActionReporter.this.setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-    }
-
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "removeMemory");
-        if (_memoryHandle != null) {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-            _memoryHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
-    }
-
 
     public void setDataAddressing(NamedBeanAddressing addressing) throws ParserException {
         _dataAddressing = addressing;
@@ -250,65 +134,10 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     }
 
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Reporter) {
-                if (evt.getOldValue().equals(getReporter().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionReporter_ReporterInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionReporter_MemoryInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
-    }
-
-
-    Reporter getSourceReporter() throws JmriException {
-        Reporter reporter = null;
-        switch (_addressing) {
-            case Direct:
-                reporter = _reporterHandle != null ? _reporterHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                reporter = InstanceManager.getDefault(jmri.ReporterManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                reporter = InstanceManager.getDefault(ReporterManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                reporter = _expressionNode != null ?
-                        InstanceManager.getDefault(ReporterManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-        return reporter;
     }
 
     Object getReporterData(Reporter reporter) throws JmriException {
@@ -335,8 +164,9 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     void updateDestination(Object data) throws JmriException {
         switch (_dataAddressing) {
             case Direct:
-                if (_memoryHandle != null) {
-                    _memoryHandle.getBean().setValue(data);
+                Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                if (memory != null) {
+                    memory.setValue(data);
                 }
                 break;
 
@@ -382,7 +212,7 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     @Override
     public void execute() throws JmriException {
         // Get the reporter bean
-        Reporter reporter = getSourceReporter();
+        Reporter reporter = _selectNamedBean.evaluateNamedBean(getConditionalNG());
         if (reporter == null) return;
         log.debug("reporter = {}", reporter.getDisplayName());
 
@@ -411,44 +241,12 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
 
     @Override
     public String getLongDescription(Locale locale) {
-        String bean = "";
+        String bean = _selectNamedBean.getDescription(locale);
         String dest = "";
-
-        switch (_addressing) {
-            case Direct:
-                String reporterName;
-                if (_reporterHandle != null) {
-                    reporterName = _reporterHandle.getBean().getDisplayName();
-                } else {
-                    reporterName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                bean = Bundle.getMessage(locale, "AddressByDirect", reporterName);
-                break;
-
-            case Reference:
-                bean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                bean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                bean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_dataAddressing) {
             case Direct:
-                String memoryName;
-                if (_memoryHandle != null) {
-                    memoryName = _memoryHandle.getBean().getDisplayName();
-                } else {
-                    memoryName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
+                String memoryName = _selectMemoryNamedBean.getDescription(locale);
                 dest = Bundle.getMessage(locale, "AddressByDirect", memoryName);
                 break;
 
@@ -482,11 +280,13 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -515,13 +315,14 @@ public class ActionReporter extends AbstractDigitalAction implements VetoableCha
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionReporter: bean = {}, report = {}", cdl, report);
-        if (getReporter() != null && bean.equals(getReporter().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporter.class);

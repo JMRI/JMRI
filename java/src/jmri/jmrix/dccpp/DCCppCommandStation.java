@@ -213,10 +213,10 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Can this command station handle the newer (V2) function message format?
+     * Can this command station handle the newer (V4) function message format?
      * @return true if yes or false if no
      */
-    public boolean isFunctionV2Supported() {
+    public boolean isFunctionV4Supported() {
         boolean ret = false;
         try {
             ret = (jmri.Version.compareCanonicalVersions(version, "4.0.0") >= 0);
@@ -226,13 +226,13 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Can this command station handle the newer (V2) program message formats?
+     * Can this command station handle the newer (V4) program message formats?
      * @return true if yes or false if no
      */
-    public boolean isProgramV2Supported() {
+    public boolean isProgramV4Supported() {
         boolean ret = false;
         try {
-            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.2") >= 0);
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.1") >= 0);
         } catch (IllegalArgumentException ignore) {
         }
         return ret;  

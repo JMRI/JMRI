@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.expressions.swing;
 
-import java.awt.event.*;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -12,10 +11,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.MemoryOperation;
-import jmri.jmrit.logixng.swing.LogixNG_DataDialog;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
-import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -122,11 +119,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
 
         if (expression != null) {
-            if (expression.getMemory() != null) {
-                _memoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
+            if (expression.getSelectNamedBean().getNamedBean() != null) {
+                _memoryBeanPanel.setDefaultNamedBean(expression.getSelectNamedBean().getNamedBean().getBean());
             }
-            if (expression.getOtherMemory() != null) {
-                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getOtherMemory().getBean());
+            if (expression.getSelectOtherMemoryNamedBean().getNamedBean() != null) {
+                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getSelectOtherMemoryNamedBean().getNamedBean().getBean());
             }
             switch (expression.getCompareTo()) {
                 case RegEx:
@@ -186,9 +183,9 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             NamedBeanHandle<Memory> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
                             .getNamedBeanHandle(memory.getDisplayName(), memory);
-            expression.setMemory(handle);
+            expression.getSelectNamedBean().setNamedBean(handle);
         } else {
-            expression.removeMemory();
+            expression.getSelectNamedBean().removeNamedBean();
         }
         expression.setMemoryOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
         expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
@@ -202,12 +199,12 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-                expression.setOtherMemory(handle);
+                expression.getSelectOtherMemoryNamedBean().setNamedBean(handle);
             } else {
-                expression.removeOtherMemory();
+                expression.getSelectOtherMemoryNamedBean().removeNamedBean();
             }
         } else {
-            expression.removeOtherMemory();
+            expression.getSelectOtherMemoryNamedBean().removeNamedBean();
         }
 
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {

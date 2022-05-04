@@ -181,7 +181,9 @@ public class WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
 
         warrant.getSpeedUtil().setAddress("999(L)");
+        warrant.setBlockOrders(orders);
         String msg = warrant.allocateRoute(false, orders);
+        Assert.assertNull("allocateRoute - " + msg, msg);
 
         warrant.setTrainName("TestTrain");
         PropertyChangeListener listener = new WarrantListener(warrant);
