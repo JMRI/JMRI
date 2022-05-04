@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.99.6plus+jake+20220414T1300Z+R37654d546f on Thu Apr 14 09:01:04 EDT 2022-->
-  <decoderIndex version="7">
+  <!--Written by JMRI version 4.99.7dev+jake+20220504T1752Z+Re763eff749 on Wed May 04 10:52:50 MST 2022-->
+  <decoderIndex version="11">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -196,6 +196,24 @@
           </output>
         </outputs>
         <model model="NMRA standard CV definitions" />
+      </family>
+      <family name="SUSI Output Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Output_Mapping_Range1.xml">
+        <model model="SUSI Output Mapping definition Range 1" />
+      </family>
+      <family name="SUSI Output Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Output_Mapping_Range2.xml">
+        <model model="SUSI Output Mapping definition Range 2" />
+      </family>
+      <family name="SUSI Output Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Output_Mapping_Range3.xml">
+        <model model="SUSI Output Mapping definition Range 3" />
+      </family>
+      <family name="SUSI Sound Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Sound_Mapping_Range1.xml">
+        <model model="SUSI Sound Mapping definitions Range 1" />
+      </family>
+      <family name="SUSI Sound Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Sound_Mapping_Range2.xml">
+        <model model="SUSI Sound Mapping definitions Range 2" />
+      </family>
+      <family name="SUSI Sound Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Sound_Mapping_Range3.xml">
+        <model model="SUSI Sound Mapping definitions Range 3" />
       </family>
       <family name="NMRA accessory decoders" mfg="NMRA" file="0NMRA_accessory.xml">
         <model model="NMRA accessory decoders" />
@@ -2885,6 +2903,15 @@
           <output name="2" label="Yellow" connection="plug" />
           <size length="1.074" width="0.672" height="0.259" units="inches" />
         </model>
+      </family>
+      <family name="Kato" mfg="Digitrax" lowVersionID="51" highVersionID="51" file="Digitrax_Kato_EM13.xml">
+        <model model="EM13" numOuts="0" numFns="10" formFactor="N" connector="DropIn" productID="EM13" comment="Kato Motor Decoder EM13 made by Digitrax">
+          <size length="27" width="14" height="4" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="6" lockable="true">Switching Speed</functionlabel>
+        </functionlabels>
       </family>
       <family name="PM4x" mfg="Digitrax" file="Digitrax_PM4.xml">
         <model model="PM4" />
@@ -7805,6 +7832,24 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
+        <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+          <output name="1" label="Front|Light" maxcurrent="20mA" />
+          <output name="2" label="Rear|Light" maxcurrent="20mA" />
+          <output name="3" label="Onboard|LED" maxcurrent="20mA" />
+          <output name="4" label="|" />
+          <!-- not available for this decoder -->
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <size length="16" width="9.3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
         <model model="DH10C (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
@@ -7904,7 +7949,7 @@
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
-            <label xml:lang="ca">AUX 12</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
@@ -7944,7 +7989,7 @@
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
-            <label xml:lang="ca">AUX 12</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
@@ -8167,6 +8212,36 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
+        <model model="PD10MU (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Poserior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangier-|gang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="11.7" width="8.5" height="1.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
         <model model="PD12A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
@@ -8182,7 +8257,7 @@
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
-            <label xml:lang="ca">AUX 1</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
@@ -8195,24 +8270,6 @@
           <size length="24.2" width="11.0" height="2.4" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
-          </protocols>
-        </model>
-        <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
-          <output name="1" label="Front|Light" maxcurrent="20mA" />
-          <output name="2" label="Rear|Light" maxcurrent="20mA" />
-          <output name="3" label="Onboard|LED" maxcurrent="20mA" />
-          <output name="4" label="|" />
-          <!-- not available for this decoder -->
-          <output name="5" label="|" />
-          <!-- not available for this decoder -->
-          <output name="6" label="|" />
-          <!-- not available for this decoder -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <size length="16" width="9.3" units="mm" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
           </protocols>
         </model>
       </family>
@@ -13525,6 +13582,9 @@
           <size length="25" width="11" height="2" units="mm" />
         </model>
       </family>
+      <family name="LS Models Function Mapping definitions" mfg="LS Models Sprl" file="LSM_SUSI_Function_Mapping.xml">
+        <model model="LS Models SUSI Outputs Function Mapping" />
+      </family>
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06" file="LaisDcc.xml">
         <!--           old models not showing anymore  -->
         <model show="no" model="860010/LaisDcc-Z2" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
@@ -14389,6 +14449,9 @@
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
+      </family>
+      <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
+        <model model="HDD" lowVersionID="10" highVersionID="10" />
       </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3">
@@ -44399,6 +44462,20 @@
           </output>
         </model>
       </family>
+      <family name="Zimo Unified software (version 37+)" mfg="Zimo" file="Zimo_Unified_software_v37_MX605N.xml">
+        <model model="MX605N version 37+" replacementModel="MX605N version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186" comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+          <output name="1" label="Front Light|(MX605SL)">
+            <label xml:lang="de">Lvor|(MX605SL)</label>
+          </output>
+          <output name="2" label="Rear Light|(MX605SL)">
+            <label xml:lang="de">Lrück|(MX605SL)</label>
+          </output>
+          <output name="3" label="Interior Light|(MX605FL)">
+            <label xml:lang="de">FA1|(MX605FL)</label>
+          </output>
+          <size length="27" width="14" height="4" units="mm" />
+        </model>
+      </family>
       <family name="Zimo Unified software (version 37+)" mfg="Zimo" file="Zimo_Unified_software_v37_MX616.xml">
         <model model="MX616 version 37+" replacementModel="MX616 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
           <output name="1" label="Front Light">
@@ -46314,6 +46391,18 @@
             <label xml:lang="cs">FV 2</label>
           </output>
           <size length="25" width="11" height="2" units="mm" />
+        </model>
+        <model model="MX605N version 39+" replacementModel="MX605N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186" comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+          <output name="1" label="Front Light|(MX605SL)">
+            <label xml:lang="de">Lvor|(MX605SL)</label>
+          </output>
+          <output name="2" label="Rear Light|(MX605SL)">
+            <label xml:lang="de">Lrück|(MX605SL)</label>
+          </output>
+          <output name="3" label="Interior Light|(MX605FL)">
+            <label xml:lang="de">FA1|(MX605FL)</label>
+          </output>
+          <size length="27" width="14" height="4" units="mm" />
         </model>
         <model model="MX615 version 39+" replacementModel="MX615 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
           <output name="1" label="Front Light">
@@ -48569,6 +48658,18 @@
             <label xml:lang="cs">FV 2</label>
           </output>
           <size length="25" width="11" height="2" units="mm" />
+        </model>
+        <model model="MX605N version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186" comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+          <output name="1" label="Front Light|(MX605SL)">
+            <label xml:lang="de">Lvor|(MX605SL)</label>
+          </output>
+          <output name="2" label="Rear Light|(MX605SL)">
+            <label xml:lang="de">Lrück|(MX605SL)</label>
+          </output>
+          <output name="3" label="Interior Light|(MX605FL)">
+            <label xml:lang="de">FA1|(MX605FL)</label>
+          </output>
+          <size length="27" width="14" height="4" units="mm" />
         </model>
         <model model="MX615 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
           <output name="1" label="Front Light">
