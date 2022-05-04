@@ -49,6 +49,12 @@ abstract public class VSDSound {
         gain = default_gain;
     }
 
+    /**
+     * Get the audio playing state.
+     * @return the playing state
+     * @deprecated As of 4.99.6, use {Audio.STATE_PLAYING} instead
+     */
+    @Deprecated(since="4.99.6")
     public boolean isPlaying() {
         return is_playing;
     }
