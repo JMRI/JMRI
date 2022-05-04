@@ -43,7 +43,7 @@
 
               <xs:element name="operationAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
 
-			  <xs:element name="operation" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operation" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
 
               <!-- These are for backwards compability up until JMRI 4.99.4 -->
               <xs:element name="operationType" minOccurs="0" maxOccurs="1">
@@ -68,7 +68,7 @@
 
             </xs:sequence>
             
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

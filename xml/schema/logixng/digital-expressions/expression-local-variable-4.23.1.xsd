@@ -43,7 +43,7 @@
               <xs:element name="variable" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-			  <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
 
               <!-- These are for backwards compability up until JMRI 4.99.5 -->
               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
