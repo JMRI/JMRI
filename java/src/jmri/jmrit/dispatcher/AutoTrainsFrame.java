@@ -19,6 +19,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
+
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JToolBar;
@@ -307,7 +309,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         private void updateThrottleStatus() {
             StringBuilder sb = new StringBuilder();
             if (throttle != null && throttleStatus.isVisible()) {
-                if (rosterEntry != null && rosterEntry.getSpeedProfile() != null) {
+                if (rosterEntry != null && autoActiveTrain.useSpeedProfile   && rosterEntry.getSpeedProfile() != null) {
                     sb.append("" +
                             rosterEntry.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(
                                     lastReportedSpeed,
@@ -523,13 +525,10 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         private void setStatusLabelWidth() {
             if (rosterEntry!=null && autoActiveTrain.getUseSpeedProfile()) {
                 throttleStatus.setPreferredSize(
-                        new Dimension(getGraphics().getFontMetrics().stringWidth(rosterEntry.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(
-                                1.0f, true)),
-                                getGraphics().getFontMetrics().getHeight()));
+                        new JTextField(20).getPreferredSize());
             } else {
                 throttleStatus.setPreferredSize(
-                        new Dimension(getGraphics().getFontMetrics().stringWidth("100.0% FWD"),
-                                getGraphics().getFontMetrics().getHeight()));
+                        new JTextField(10).getPreferredSize());
             }
         }
         public void stopResume() {
