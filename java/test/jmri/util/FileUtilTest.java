@@ -73,6 +73,7 @@ public class FileUtilTest {
     // preference: prefix with relative path, convert to absolute in system-specific form
     @Test
     public void testGEFPrefRel() {
+        JUnitUtil.resetProfileManager();
         String name = FileUtil.getExternalFilename("preference:non-existant-file-foo");
         Assert.assertEquals(FileUtil.getUserFilesPath() + "non-existant-file-foo", name);
     }
@@ -110,6 +111,7 @@ public class FileUtilTest {
 
     @Test
     public void testGetpfPreferenceS() {
+        JUnitUtil.resetProfileManager();
         String name = FileUtil.getPortableFilename("preference:non-existant-file-foo");
         Assert.assertEquals("preference:non-existant-file-foo", name);
     }
