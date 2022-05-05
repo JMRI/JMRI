@@ -107,25 +107,25 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
-    public void testExecute() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void testExecute() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, JmriException {
         ShutdownComputer action = new ShutdownComputer("IQDA321", null);
 
-        action.setOperation(ShutdownComputer.Operation.ShutdownComputer);
+        action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
         JUnitAppender.assertErrorMessage("Shutdown failed");
 
-        action.setOperation(ShutdownComputer.Operation.RebootComputer);
+        action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootComputer);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.RESTART_OS, mockShutDownManager.result);
         JUnitAppender.assertErrorMessage("Shutdown failed");
 
-        action.setOperation(ShutdownComputer.Operation.ShutdownJMRI);
+        action.getSelectEnum().setEnum(ShutdownComputer.Operation.ShutdownJMRI);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_JMRI, mockShutDownManager.result);
         JUnitAppender.assertErrorMessage("Shutdown failed");
 
-        action.setOperation(ShutdownComputer.Operation.RebootJMRI);
+        action.getSelectEnum().setEnum(ShutdownComputer.Operation.RebootJMRI);
         action.execute();
         Assert.assertEquals(MockShutDownManager.Result.RESTART_JMRI, mockShutDownManager.result);
         JUnitAppender.assertErrorMessage("Shutdown failed");

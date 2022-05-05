@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionLightIntensity;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
@@ -19,68 +20,27 @@ import jmri.util.swing.BeanSelectPanel;
  */
 public class ActionLightIntensitySwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneLight;
-    private BeanSelectPanel<VariableLight> lightBeanPanel;
-    private JPanel _panelLightDirect;
-    private JPanel _panelLightReference;
-    private JPanel _panelLightLocalVariable;
-    private JPanel _panelLightFormula;
-    private JTextField _lightReferenceTextField;
-    private JTextField _lightLocalVariableTextField;
-    private JTextField _lightFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<VariableLight> _selectNamedBeanSwing;
 
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionLightIntensity action = (ActionLightIntensity)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(VariableLightManager.class), getJDialog(), this);
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        _tabbedPaneLight = new JTabbedPane();
-        _panelLightDirect = new javax.swing.JPanel();
-        _panelLightReference = new javax.swing.JPanel();
-        _panelLightLocalVariable = new javax.swing.JPanel();
-        _panelLightFormula = new javax.swing.JPanel();
-
-        _tabbedPaneLight.addTab(NamedBeanAddressing.Direct.toString(), _panelLightDirect);
-        _tabbedPaneLight.addTab(NamedBeanAddressing.Reference.toString(), _panelLightReference);
-        _tabbedPaneLight.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLightLocalVariable);
-        _tabbedPaneLight.addTab(NamedBeanAddressing.Formula.toString(), _panelLightFormula);
-
-        lightBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(VariableLightManager.class), null);
-        _panelLightDirect.add(lightBeanPanel);
-
-        _lightReferenceTextField = new JTextField();
-        _lightReferenceTextField.setColumns(30);
-        _panelLightReference.add(_lightReferenceTextField);
-
-        _lightLocalVariableTextField = new JTextField();
-        _lightLocalVariableTextField.setColumns(30);
-        _panelLightLocalVariable.add(_lightLocalVariableTextField);
-
-        _lightFormulaTextField = new JTextField();
-        _lightFormulaTextField.setColumns(30);
-        _panelLightFormula.add(_lightFormulaTextField);
-
-
+        JPanel _tabbedPaneNamedBean;
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneLight.setSelectedComponent(_panelLightDirect); break;
-                case Reference: _tabbedPaneLight.setSelectedComponent(_panelLightReference); break;
-                case LocalVariable: _tabbedPaneLight.setSelectedComponent(_panelLightLocalVariable); break;
-                case Formula: _tabbedPaneLight.setSelectedComponent(_panelLightFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getLight() != null) {
-                lightBeanPanel.setDefaultNamedBean(action.getLight().getBean());
-            }
-            _lightReferenceTextField.setText(action.getReference());
-            _lightLocalVariableTextField.setText(action.getLocalVariable());
-            _lightFormulaTextField.setText(action.getFormula());
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
         }
 
-        panel.add(_tabbedPaneLight);
+        panel.add(_tabbedPaneNamedBean);
 
         panel.add(javax.swing.Box.createVerticalStrut(10));
 
@@ -95,33 +55,8 @@ public class ActionLightIntensitySwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionLightIntensity action = new ActionLightIntensity("IQDA1", null);
 
-        try {
-            if (_tabbedPaneLight.getSelectedComponent() == _panelLightReference) {
-                action.setReference(_lightReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
-
-        try {
-            action.setFormula(_lightFormulaTextField.getText());
-            if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneLight.getSelectedComponent() == _panelLightReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneLight.getSelectedComponent() == _panelLightLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneLight.getSelectedComponent() == _panelLightFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-            return false;
-        }
-        return true;
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -139,37 +74,7 @@ public class ActionLightIntensitySwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionLightIntensity but is a: "+object.getClass().getName());
         }
         ActionLightIntensity action = (ActionLightIntensity)object;
-        if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
-            VariableLight light = lightBeanPanel.getNamedBean();
-            if (light != null) {
-                NamedBeanHandle<VariableLight> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(light.getDisplayName(), light);
-                action.setLight(handle);
-            } else {
-                action.removeLight();
-            }
-        } else {
-            action.removeLight();
-        }
-        try {
-            if (_tabbedPaneLight.getSelectedComponent() == _panelLightDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneLight.getSelectedComponent() == _panelLightReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_lightReferenceTextField.getText());
-            } else if (_tabbedPaneLight.getSelectedComponent() == _panelLightLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_lightLocalVariableTextField.getText());
-            } else if (_tabbedPaneLight.getSelectedComponent() == _panelLightFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_lightFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneLight has unknown selection");
-            }
-        } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
     }
 
     /** {@inheritDoc} */

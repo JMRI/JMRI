@@ -122,8 +122,8 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
             if (expression.getLocalVariable() != null) {
                 _localVariableTextField.setText(expression.getLocalVariable());
             }
-            if (expression.getMemory() != null) {
-                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
+            if (expression.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getSelectMemoryNamedBean().getNamedBean().getBean());
             }
             switch (expression.getCompareTo()) {
                 case RegEx:
@@ -192,12 +192,12 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-                expression.setMemory(handle);
+                expression.getSelectMemoryNamedBean().setNamedBean(handle);
             } else {
-                expression.removeMemory();
+                expression.getSelectMemoryNamedBean().removeNamedBean();
             }
         } else {
-            expression.removeMemory();
+            expression.getSelectMemoryNamedBean().removeNamedBean();
         }
 
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {

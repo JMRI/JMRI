@@ -153,12 +153,14 @@ public class ActionClockRate extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectEnum.registerListeners();
         _selectSpeed.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectEnum.unregisterListeners();
         _selectSpeed.unregisterListeners();
     }
 

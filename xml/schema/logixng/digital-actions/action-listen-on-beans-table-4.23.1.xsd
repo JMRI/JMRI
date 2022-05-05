@@ -41,8 +41,12 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-<!--              <xs:element name="localVariable" type="xs:string" /> -->
+              <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 4.99.7 -->
               <xs:element name="table" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <!-- These are for backwards compability up until JMRI 4.99.7 -->
+
               <xs:element name="rowOrColumnName" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="tableRowOrColumn" minOccurs="1" maxOccurs="1">
@@ -63,7 +67,7 @@
             <xs:attribute name="includeCellsWithoutHeader" type="yesNoType" use="required"/>
             <xs:attribute name="listenOnAllProperties" type="yesNoType"/>
 
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

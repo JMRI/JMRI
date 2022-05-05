@@ -241,7 +241,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         _memoryOut.setValue(0.0);
         actionMemory = new AnalogActionMemory("IQAA1", null);
-        actionMemory.setMemory(_memoryOut);
+        actionMemory.getSelectNamedBean().setNamedBean(_memoryOut);
         MaleSocket socketAction =
                 InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
         socketDoAnalog.getChild(1).connect(socketAction);

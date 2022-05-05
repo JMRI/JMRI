@@ -4,7 +4,10 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.EnableLogix;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,21 +39,11 @@ public class EnableLogixXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        var logix = p.getLogix();
-        if (logix != null) {
-            element.addContent(new Element("logix").addContent(logix.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Logix>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<EnableLogix.Operation>();
 
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
-
-        element.addContent(new Element("operationAddressing").addContent(p.getOperationAddressing().name()));
-        element.addContent(new Element("operationDirect").addContent(p.getOperationDirect().name()));
-        element.addContent(new Element("operationReference").addContent(p.getOperationReference()));
-        element.addContent(new Element("operationLocalVariable").addContent(p.getOperationLocalVariable()));
-        element.addContent(new Element("operationFormula").addContent(p.getLockFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         return element;
     }
@@ -63,51 +56,20 @@ public class EnableLogixXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element logixName = shared.getChild("logix");
-        if (logixName != null) {
-            Logix t = InstanceManager.getDefault(LogixManager.class).getLogix(logixName.getTextTrim());
-            if (t != null) h.setLogix(t);
-            else h.removeLogix();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Logix>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<EnableLogix.Operation>();
 
-        try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "logix");
 
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("operationAddressing");
-            if (elem != null) {
-                h.setOperationAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element logixLock = shared.getChild("operationDirect");
-            if (logixLock != null) {
-                h.setOperationDirect(EnableLogix.Operation.valueOf(logixLock.getTextTrim()));
-            }
-
-            elem = shared.getChild("operationReference");
-            if (elem != null) h.setOperationReference(elem.getTextTrim());
-
-            elem = shared.getChild("operationLocalVariable");
-            if (elem != null) h.setOperationLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("operationFormula");
-            if (elem != null) h.setOperationFormula(elem.getTextTrim());
-
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "operationAddressing",
+                "operationDirect",
+                "operationReference",
+                "operationLocalVariable",
+                "operationFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

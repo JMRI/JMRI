@@ -3,12 +3,9 @@ package jmri.jmrit.logixng.expressions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.NamedBeanAddressing;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
-import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -41,14 +38,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
         storeCommon(p, element);
 
-        var memory = p.getMemory();
-        if (memory != null) {
-            element.addContent(new Element("memory").addContent(memory.getName()));
-        }
-        var otherMemory = p.getOtherMemory();
-        if (otherMemory != null) {
-            element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
+        var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectOtherMemoryNamedBeanXml.store(p.getSelectOtherMemoryNamedBean(), "otherMemoryNamedBean"));
 
         String variableName = p.getLocalVariable();
         if (variableName != null) {
@@ -77,19 +71,13 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
         loadCommon(h, shared);
 
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (m != null) h.setMemory(m);
-            else h.removeMemory();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "memory", null, null, null, null);
 
-        Element otherMemoryName = shared.getChild("otherMemory");
-        if (otherMemoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
-            if (m != null) h.setOtherMemory(m);
-            else h.removeOtherMemory();
-        }
+        var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectOtherMemoryNamedBeanXml.load(shared.getChild("otherMemoryNamedBean"), h.getSelectOtherMemoryNamedBean());
+        selectOtherMemoryNamedBeanXml.loadLegacy(shared, h.getSelectOtherMemoryNamedBean(), "otherMemory", null, null, null, null);
 
         Element variableName = shared.getChild("variable");
         if (variableName != null) {

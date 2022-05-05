@@ -81,7 +81,7 @@
 
               <!-- Sub classes to AbstractMaleSocket may add things here - Start -->
 
-			  <xs:attribute name="DefaultMaleDigitalExpressionSocketListen" type="yesNoType" />
+              <xs:attribute name="DefaultMaleDigitalExpressionSocketListen" type="yesNoType" />
 
               <!-- Sub classes to AbstractMaleSocket may add things here - End -->
 

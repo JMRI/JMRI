@@ -247,6 +247,17 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
     }
 
     @Override
+    public void setDefaultValues() {
+        boolean hasEnabledButton = false;
+        for (ButtonCheckBox buttonCheckBox : _buttonCheckBoxes) {
+            hasEnabledButton |= buttonCheckBox._checkBox.isSelected();
+        }
+        if (!hasEnabledButton) {
+            _buttonCheckBoxes.get(0)._checkBox.setSelected(true);
+        }
+    }
+
+    @Override
     public void dispose() {
     }
 

@@ -106,7 +106,8 @@ public class StoreAndLoadTest {
                         treeIndent,
                         new MutableInt(0));
 
-                if (!originalTree.equals(stringWriter.toString())) {
+                String newTree = stringWriter.toString();
+                if (!originalTree.equals(newTree)) {
                     log.error("--------------------------------------------");
                     log.error("Old tree:");
                     log.error("XXX"+originalTree+"XXX");
@@ -125,7 +126,17 @@ public class StoreAndLoadTest {
 
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
-                    Assert.fail("tree has changed");
+                    String[] originalTreeLines = originalTree.split(System.lineSeparator());
+                    String[] newTreeLines = newTree.split(System.lineSeparator());
+                    int line=0;
+                    for (; line < Math.min(originalTreeLines.length, newTreeLines.length); line++) {
+                        if (!originalTreeLines[line].equals(newTreeLines[line])) {
+                            System.out.format("Tree differs on line %d:%nOrig: %s%n New: %s%n", line+1, originalTreeLines[line], newTreeLines[line]);
+                            break;
+                        }
+                    }
+                    System.out.println("The tree has changed. The tree differs on line "+Integer.toString(line+1));
+                    Assert.fail("The tree has changed. The tree differs on line "+Integer.toString(line+1));
 //                    throw new RuntimeException("tree has changed");
                 }
             } else {

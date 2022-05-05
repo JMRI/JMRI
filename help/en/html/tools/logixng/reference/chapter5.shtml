@@ -831,25 +831,43 @@
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
       action will be performed and then the expression will wait until it becomes true. When it is
-      true, the next action/expression pair will be started. The sequence will repeat forever or
-      until stopped.</p>
+      true, the next action/expression pair will be started.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/action_sequence_options.png"><img src=
+        "images/chapter5/action_sequence_options.png" alt="Chapter 5 sequence options"></a>
+      </div>
+
+      <p>Options:</p>
+
+      <ul>
+        <li><strong>Start sequence immediately on load</strong> &mdash; Run the sequence when the
+        data file loading is done.</li>
+
+        <li><strong>Run sequence continuously</strong> &mdash; The sequence will repeat forever or
+        until stopped.  If this option is not selected, the sequence will run one time and the
+        sequence can be started again later.</li>
+      </ul>
+
+      <p>When a sequence action is added, it has connections for <strong>Start</strong>, <strong>
+      Stop</strong> and <strong>Reset</strong> expressions.
+
+      <ul>
+        <li><strong>Start:</strong> When the <strong>Start</strong> expression is true, the sequence
+        will start with the first action/expression pair or resume if a stop occurred during the
+        sequence.</li>
+
+        <li><strong>Stop:</strong> When the <strong>Stop</strong> expression is true, the sequence
+        will stop running.</li>
+
+        <li><strong>Reset:</strong> When the <strong>Reset</strong> expression is true, the sequence
+        will be interrupted if running, and return to the first action/expresson pair.</li>
+      </ul>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence.png"><img src=
-        "images/chapter5/action_sequence.png" alt="Chapter 5 display action" width="614" height=
-        "447"></a>
+        "images/chapter5/action_sequence.png" alt="Chapter 5 sequence action"></a>
       </div>
-
-      <ul>
-        <li><strong>Start:</strong> When the start expression is true, the sequence will start with
-        the first action/expression pair.</li>
-
-        <li><strong>Stop:</strong> When the stop expression is true, the sequence will stop
-        running.</li>
-
-        <li><strong>Reset:</strong> When the reset expression is true, the sequence will be
-        interrupted and return to the first action/expresson pair.</li>
-      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

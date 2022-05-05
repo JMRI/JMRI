@@ -40,11 +40,11 @@ class ThrottleTrigger extends Trigger {
         // then just return quickly.
         // Careful: Takes advantage of "lazy OR" behavior
         if (target == null) {
-            log.debug("Quit.  No target.");
+            //log.debug("Quit.  No target.");
             return;
         }
-        if (event.getPropertyName().equals(this.getEventName()) != true) {
-            //log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+        if (!event.getPropertyName().equals(this.getEventName())) {
+            //log.debug("Quit. Event name mismatch event: {}, this: {}", event.getPropertyName(), this.getEventName());
             return;
         }
         if (this.getTriggerType() == TriggerType.NONE) {

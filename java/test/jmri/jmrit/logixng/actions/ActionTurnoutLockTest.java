@@ -89,16 +89,16 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("String matches", "Set lock for turnout '' to Unlock", action2.getLongDescription());
 
         action2 = new ActionTurnoutLock("IQDA321", null);
-        action2.setTurnout(turnout);
-        Assert.assertTrue("turnout is correct", turnout == action2.getTurnout().getBean());
+        action2.getSelectNamedBean().setNamedBean(turnout);
+        Assert.assertTrue("turnout is correct", turnout == action2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set lock for turnout IT1 to Unlock", action2.getLongDescription());
 
         Turnout l = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         action2 = new ActionTurnoutLock("IQDA321", "My turnout");
-        action2.setTurnout(l);
-        Assert.assertTrue("turnout is correct", l == action2.getTurnout().getBean());
+        action2.getSelectNamedBean().setNamedBean(l);
+        Assert.assertTrue("turnout is correct", l == action2.getSelectNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
         Assert.assertEquals("String matches", "Set lock for turnout IT1 to Unlock", action2.getLongDescription());
@@ -155,27 +155,27 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IL14");
         turnout14.setUserName("Some user name");
 
-        actionTurnoutLock.removeTurnout();
-        Assert.assertNull("turnout handle is null", actionTurnoutLock.getTurnout());
+        actionTurnoutLock.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("turnout handle is null", actionTurnoutLock.getSelectNamedBean().getNamedBean());
 
-        actionTurnoutLock.setTurnout(turnout11);
-        Assert.assertTrue("turnout is correct", turnout11 == actionTurnoutLock.getTurnout().getBean());
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(turnout11);
+        Assert.assertTrue("turnout is correct", turnout11 == actionTurnoutLock.getSelectNamedBean().getNamedBean().getBean());
 
-        actionTurnoutLock.removeTurnout();
-        Assert.assertNull("turnout handle is null", actionTurnoutLock.getTurnout());
+        actionTurnoutLock.getSelectNamedBean().removeNamedBean();
+        Assert.assertNull("turnout handle is null", actionTurnoutLock.getSelectNamedBean().getNamedBean());
 
-        actionTurnoutLock.setTurnout(turnoutHandle12);
-        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == actionTurnoutLock.getTurnout());
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(turnoutHandle12);
+        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == actionTurnoutLock.getSelectNamedBean().getNamedBean());
 
-        actionTurnoutLock.setTurnout("A non existent turnout");
-        Assert.assertNull("turnout handle is null", actionTurnoutLock.getTurnout());
-        JUnitAppender.assertErrorMessage("turnout \"A non existent turnout\" is not found");
+        actionTurnoutLock.getSelectNamedBean().setNamedBean("A non existent turnout");
+        Assert.assertNull("turnout handle is null", actionTurnoutLock.getSelectNamedBean().getNamedBean());
+        JUnitAppender.assertErrorMessage("Turnout \"A non existent turnout\" is not found");
 
-        actionTurnoutLock.setTurnout(turnout13.getSystemName());
-        Assert.assertTrue("turnout is correct", turnout13 == actionTurnoutLock.getTurnout().getBean());
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(turnout13.getSystemName());
+        Assert.assertTrue("turnout is correct", turnout13 == actionTurnoutLock.getSelectNamedBean().getNamedBean().getBean());
 
-        actionTurnoutLock.setTurnout(turnout14.getUserName());
-        Assert.assertTrue("turnout is correct", turnout14 == actionTurnoutLock.getTurnout().getBean());
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(turnout14.getUserName());
+        Assert.assertTrue("turnout is correct", turnout14 == actionTurnoutLock.getSelectNamedBean().getNamedBean().getBean());
     }
 
     @Test
@@ -190,21 +190,21 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test to set turnout to closed
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Unlock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Unlock);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue(!turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test to set turnout to toggle
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Toggle);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test to set turnout to toggle
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Toggle);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
@@ -224,17 +224,17 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Turnout t4 = new MyTurnout("IT104"); InstanceManager.getDefault(TurnoutManager.class).register(t4);
         Turnout t5 = new MyTurnout("IT105"); InstanceManager.getDefault(TurnoutManager.class).register(t5);
 
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
-        actionTurnoutLock.setTurnout(t1.getSystemName());
-        actionTurnoutLock.setReference("{IM1}");    // Points to "IT102"
-        actionTurnoutLock.setLocalVariable("myTurnout");
-        actionTurnoutLock.setFormula("\"IT10\" + str(index)");
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(t1.getSystemName());
+        actionTurnoutLock.getSelectNamedBean().setReference("{IM1}");    // Points to "IT102"
+        actionTurnoutLock.getSelectNamedBean().setLocalVariable("myTurnout");
+        actionTurnoutLock.getSelectNamedBean().setFormula("\"IT10\" + str(index)");
         _baseMaleSocket.addLocalVariable("refTurnout", SymbolTable.InitialValueType.String, "IT103");
         _baseMaleSocket.addLocalVariable("myTurnout", SymbolTable.InitialValueType.String, "IT104");
         _baseMaleSocket.addLocalVariable("index", SymbolTable.InitialValueType.Integer, "5");
 
         // Test direct addressing
-        actionTurnoutLock.setAddressing(NamedBeanAddressing.Direct);
+        actionTurnoutLock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         t1.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t2.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t3.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
@@ -250,7 +250,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue(!t5.getLocked(Turnout.CABLOCKOUT));
 
         // Test reference by memory addressing
-        actionTurnoutLock.setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         t1.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t2.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t3.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
@@ -266,8 +266,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue(!t5.getLocked(Turnout.CABLOCKOUT));
 
         // Test reference by local variable addressing
-        actionTurnoutLock.setReference("{refTurnout}");    // Points to "IT103"
-        actionTurnoutLock.setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectNamedBean().setReference("{refTurnout}");    // Points to "IT103"
+        actionTurnoutLock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         t1.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t2.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t3.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
@@ -283,7 +283,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue(!t5.getLocked(Turnout.CABLOCKOUT));
 
         // Test local variable addressing
-        actionTurnoutLock.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionTurnoutLock.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         t1.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t2.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t3.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
@@ -299,7 +299,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue(!t5.getLocked(Turnout.CABLOCKOUT));
 
         // Test formula addressing
-        actionTurnoutLock.setAddressing(NamedBeanAddressing.Formula);
+        actionTurnoutLock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
         t1.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t2.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
         t3.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
@@ -325,25 +325,25 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test direct addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Direct);
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         // Test Unlock
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Unlock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Unlock);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertFalse(turnout.getLocked(Turnout.CABLOCKOUT));
         // Test Lock
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the correct turnout should be thrown
         Assert.assertTrue(turnout.getLocked(Turnout.CABLOCKOUT));
 
         // Test reference by memory addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);
-        actionTurnoutLock.setLockReference("{IM1}");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectEnum().setReference("{IM1}");
         // Test Unlock
         m1.setValue("Unlock");
         turnout.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
@@ -361,8 +361,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test reference by local variable addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);
-        actionTurnoutLock.setLockReference("{refVariable}");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectEnum().setReference("{refVariable}");
         // Test Unlock
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Unlock");
@@ -382,8 +382,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test local variable addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Reference);
-        actionTurnoutLock.setLockLocalVariable("myVariable");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        actionTurnoutLock.getSelectEnum().setLocalVariable("myVariable");
         // Test Unlock
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Unlock");
@@ -403,8 +403,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
 
         // Test formula addressing
-        actionTurnoutLock.setLockAddressing(NamedBeanAddressing.Formula);
-        actionTurnoutLock.setLockFormula("refVariable + myVariable");
+        actionTurnoutLock.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        actionTurnoutLock.getSelectEnum().setFormula("refVariable + myVariable");
         // Test Unlock
         _baseMaleSocket.clearLocalVariables();
         _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Unlo");
@@ -431,7 +431,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
         ActionTurnoutLock action = new ActionTurnoutLock(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        action.setTurnout(turnout);
+        action.getSelectNamedBean().setNamedBean(turnout);
 
         // Get some other turnout for later use
         Turnout otherTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IM99");
@@ -440,32 +440,32 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
         // Test vetoableChange() for some other propery
         action.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for a string
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for another turnout
         action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
 
         // Test vetoableChange() for its own turnout
         boolean thrown = false;
         try {
-            action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
+            action.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
 
-        Assert.assertEquals("Turnout matches", turnout, action.getTurnout().getBean());
-        action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
-        Assert.assertNull("Turnout is null", action.getTurnout());
+        Assert.assertEquals("Turnout matches", turnout, action.getSelectNamedBean().getNamedBean().getBean());
+        action.getSelectNamedBean().vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
+        Assert.assertNull("Turnout is null", action.getSelectNamedBean().getNamedBean());
     }
 
     @Test
@@ -521,8 +521,8 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunDelayed(false);
         conditionalNG.setEnabled(true);
         actionTurnoutLock = new ActionTurnoutLock(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        actionTurnoutLock.setTurnout(turnout);
-        actionTurnoutLock.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(turnout);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnoutLock);
         conditionalNG.getChild(0).connect(socket);
 
