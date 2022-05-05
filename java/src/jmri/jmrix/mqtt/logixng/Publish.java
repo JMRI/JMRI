@@ -23,7 +23,7 @@ public class Publish extends AbstractDigitalAction
 
     private final LogixNG_SelectString _selectTopic =
             new LogixNG_SelectString(this, this);
-    private final LogixNG_SelectString _selectData =
+    private final LogixNG_SelectString _selectMessage =
             new LogixNG_SelectString(this, this);
 
     private MqttSystemConnectionMemo _memo;
@@ -44,7 +44,7 @@ public class Publish extends AbstractDigitalAction
         Publish copy = new Publish(sysName, userName, _memo);
         copy.setComment(getComment());
         _selectTopic.copy(copy._selectTopic);
-        _selectData.copy(copy._selectData);
+        _selectMessage.copy(copy._selectMessage);
         return manager.registerAction(copy);
     }
 
@@ -61,8 +61,8 @@ public class Publish extends AbstractDigitalAction
         return _selectTopic;
     }
 
-    public LogixNG_SelectString getSelectData() {
-        return _selectData;
+    public LogixNG_SelectString getSelectMessage() {
+        return _selectMessage;
     }
 
     /** {@inheritDoc} */
@@ -76,7 +76,7 @@ public class Publish extends AbstractDigitalAction
     public void execute() throws JmriException {
 
         String topic = _selectTopic.evaluateValue(getConditionalNG());
-        String data = _selectData.evaluateValue(getConditionalNG());
+        String data = _selectMessage.evaluateValue(getConditionalNG());
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             _memo.getMqttAdapter().publish(topic, data);
@@ -102,7 +102,7 @@ public class Publish extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Publish_Long",
                 _selectTopic.getDescription(locale),
-                _selectData.getDescription(locale));
+                _selectMessage.getDescription(locale));
     }
 
     /** {@inheritDoc} */
@@ -115,14 +115,14 @@ public class Publish extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         _selectTopic.registerListeners();
-        _selectData.registerListeners();
+        _selectMessage.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         _selectTopic.unregisterListeners();
-        _selectData.unregisterListeners();
+        _selectMessage.unregisterListeners();
     }
 
     /** {@inheritDoc} */

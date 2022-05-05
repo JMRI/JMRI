@@ -6,36 +6,32 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
-import jmri.jmrix.mqtt.logixng.Publish;
-import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
+import jmri.jmrix.mqtt.logixng.Subscribe;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for Publish objects.
+ * Handle XML configuration for Subscribe objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2022
  */
-public class PublishXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class SubscribeXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public PublishXml() {
+    public SubscribeXml() {
     }
 
     /**
-     * Default implementation for storing the contents of a publish action.
+     * Default implementation for storing the contents of a subscribe action.
      *
      * @param o Object to store, of type Publish
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
-        Publish p = (Publish) o;
+        Subscribe p = (Subscribe) o;
 
-        var selectTopicXml = new LogixNG_SelectStringXml();
-        var selectDataXml = new LogixNG_SelectStringXml();
-
-        Element element = new Element("MQTTPublish");
+        Element element = new Element("MQTTSubscribe");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
@@ -46,8 +42,20 @@ public class PublishXml extends jmri.managers.configurexml.AbstractNamedBeanMana
                     .addContent(p.getMemo().getSystemPrefix()));
         }
 
-        element.addContent(selectTopicXml.store(p.getSelectTopic(), "topic"));
-        element.addContent(selectDataXml.store(p.getSelectMessage(), "message"));
+        if (p.getSubscribeToTopic() != null) {
+            element.addContent(new Element("subscribeToTopic")
+                    .addContent(p.getSubscribeToTopic()));
+        }
+
+        if (p.getLastTopicLocalVariable() != null) {
+            element.addContent(new Element("lastTopicLocalVariable")
+                    .addContent(p.getLastTopicLocalVariable()));
+        }
+
+        if (p.getLastMessageLocalVariable() != null) {
+            element.addContent(new Element("lastMessageLocalVariable")
+                    .addContent(p.getLastMessageLocalVariable()));
+        }
 
         return element;
     }
@@ -73,15 +81,19 @@ public class PublishXml extends jmri.managers.configurexml.AbstractNamedBeanMana
             }
         }
 
-        Publish h = new Publish(sys, uname, memo);
-
-        var selectTopicXml = new LogixNG_SelectStringXml();
-        var selectDataXml = new LogixNG_SelectStringXml();
+        Subscribe h = new Subscribe(sys, uname, memo);
 
         loadCommon(h, shared);
 
-        selectTopicXml.load(shared.getChild("topic"), h.getSelectTopic());
-        selectDataXml.load(shared.getChild("message"), h.getSelectMessage());
+        if (shared.getChild("subscribeToTopic") != null) {
+            h.setSubscribeToTopic(shared.getChild("subscribeToTopic").getTextTrim());
+        }
+        if (shared.getChild("lastTopicLocalVariable") != null) {
+            h.setLastTopicLocalVariable(shared.getChild("lastTopicLocalVariable").getTextTrim());
+        }
+        if (shared.getChild("lastMessageLocalVariable") != null) {
+            h.setLastMessageLocalVariable(shared.getChild("lastMessageLocalVariable").getTextTrim());
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

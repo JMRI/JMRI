@@ -14,7 +14,7 @@ public class PublishTest {
 
     @Test
     public void testCtor() {
-        Publish e = new Publish("IQDE1", null, null);
+        Publish e = new Publish("IQDA1", null, null);
         Assert.assertNotNull(e);
     }
 

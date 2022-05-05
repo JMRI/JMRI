@@ -9,10 +9,12 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.jmrit.logixng.expressions.And;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.jmrix.mqtt.logixng.Publish;
+import jmri.jmrix.mqtt.logixng.Subscribe;
 import jmri.util.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -32,7 +34,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 public class StoreAndLoadTest {
 
     private MqttSystemConnectionMemo memo1;
-    private MqttSystemConnectionMemo memo2;
+//    private MqttSystemConnectionMemo memo2;
 
     @DisabledIfSystemProperty(named ="java.awt.headless", matches = "true")
     @Test
@@ -61,19 +63,37 @@ public class StoreAndLoadTest {
         maleSocket = digitalExpressionManager.registerExpression(and);
         ifThenElse.getChild(0).connect(maleSocket);
 
-        Publish publish = new Publish(digitalActionManager.getAutoSystemName(), null, null);
-        publish.setComment("A comment");
-        maleSocket = digitalActionManager.registerAction(publish);
+        DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        many.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(many);
         ifThenElse.getChild(1).connect(maleSocket);
 
-        publish = new Publish(digitalActionManager.getAutoSystemName(), null, null);
+        Publish publish = new Publish(digitalActionManager.getAutoSystemName(), null, memo1);
+        publish.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(publish);
+        many.getChild(0).connect(maleSocket);
+
+        publish = new Publish(digitalActionManager.getAutoSystemName(), null, memo1);
         publish.setComment("A comment");
         publish.getSelectTopic().setAddressing(NamedBeanAddressing.Direct);
         publish.getSelectTopic().setValue("TheTopic");
-        publish.getSelectData().setAddressing(NamedBeanAddressing.Direct);
-        publish.getSelectData().setValue("TheTopic");
+        publish.getSelectMessage().setAddressing(NamedBeanAddressing.Direct);
+        publish.getSelectMessage().setValue("TheMessage");
         maleSocket = digitalActionManager.registerAction(publish);
-        ifThenElse.getChild(2).connect(maleSocket);
+        many.getChild(1).connect(maleSocket);
+
+        Subscribe subscribe = new Subscribe(digitalActionManager.getAutoSystemName(), null, memo1);
+        subscribe.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(subscribe);
+        many.getChild(2).connect(maleSocket);
+
+        subscribe = new Subscribe(digitalActionManager.getAutoSystemName(), null, memo1);
+        subscribe.setComment("A comment");
+        subscribe.setSubscribeToTopic("TheTopic");
+        subscribe.setLastTopicLocalVariable("TopicVariable");
+        subscribe.setLastMessageLocalVariable("MessageVariable");
+        maleSocket = digitalActionManager.registerAction(subscribe);
+        many.getChild(3).connect(maleSocket);
 
 /*
         if (1==1) {
@@ -280,13 +300,13 @@ public class StoreAndLoadTest {
         JUnitUtil.initOBlockManager();
         JUnitUtil.initWarrantManager();
 
-        // The class under test uses LocoNet connections that it pulls from the InstanceManager.
+        // The class under test uses MQTT connections that it pulls from the InstanceManager.
         memo1 = new MqttSystemConnectionMemo();
-        jmri.InstanceManager.store(memo1, jmri.jmrix.mqtt.MqttSystemConnectionMemo.class);
+//        jmri.InstanceManager.store(memo1, jmri.jmrix.mqtt.MqttSystemConnectionMemo.class);
 
-        // The class under test uses LocoNet connections that it pulls from the InstanceManager.
-        memo2 = new MqttSystemConnectionMemo();
-        jmri.InstanceManager.store(memo2, MqttSystemConnectionMemo.class);
+        // The class under test uses MQTT connections that it pulls from the InstanceManager.
+//        memo2 = new MqttSystemConnectionMemo();
+//        jmri.InstanceManager.store(memo2, MqttSystemConnectionMemo.class);
     }
 
     @AfterEach

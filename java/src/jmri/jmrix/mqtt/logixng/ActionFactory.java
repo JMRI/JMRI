@@ -29,6 +29,7 @@ public class ActionFactory implements DigitalActionFactory {
         // We don't want to add these classes if we don't have a MQTT connection
         if (CategoryMqtt.hasMQTT()) {
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryMqtt.MQTT, Publish.class));
+            actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryMqtt.MQTT, Subscribe.class));
         }
 
         return actionClasses;

@@ -25,7 +25,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
     private JComboBox<MqttConnection> _mqttConnection;
 
     private LogixNG_SelectStringSwing _selectTopicSwing;
-    private LogixNG_SelectStringSwing _selectDataSwing;
+    private LogixNG_SelectStringSwing _selectMessageSwing;
 
 
     public PublishSwing() {
@@ -44,7 +44,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         }
 
         _selectTopicSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
-        _selectDataSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
+        _selectMessageSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -53,7 +53,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         JPanel tabbedPaneData;
 
         tabbedPaneTopic = _selectTopicSwing.createPanel(action.getSelectTopic());
-        tabbedPaneData = _selectDataSwing.createPanel(action.getSelectData());
+        tabbedPaneData = _selectMessageSwing.createPanel(action.getSelectMessage());
 
 
         JPanel internalPanel = new JPanel();
@@ -93,7 +93,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         Publish action = new Publish("IQDA1", null, null);
 
         _selectTopicSwing.validate(action.getSelectTopic(), errorMessages);
-        _selectDataSwing.validate(action.getSelectData(), errorMessages);
+        _selectMessageSwing.validate(action.getSelectMessage(), errorMessages);
 
         return errorMessages.isEmpty();
     }
@@ -124,7 +124,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         Publish action = (Publish) object;
 
         _selectTopicSwing.updateObject(action.getSelectTopic());
-        _selectDataSwing.updateObject(action.getSelectData());
+        _selectMessageSwing.updateObject(action.getSelectMessage());
 
         action.setMemo(_mqttConnection.getItemAt(_mqttConnection.getSelectedIndex())._memo);
     }
@@ -138,7 +138,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
     @Override
     public void dispose() {
         _selectTopicSwing.dispose();
-        _selectDataSwing.dispose();
+        _selectMessageSwing.dispose();
     }
 
 
