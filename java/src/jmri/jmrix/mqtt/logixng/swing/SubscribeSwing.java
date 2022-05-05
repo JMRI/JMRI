@@ -103,7 +103,7 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
         c.gridheight = 1;
         c.gridx = 0;
         c.gridy = 3;
-        c.anchor = GridBagConstraints.EAST;
+        c.anchor = GridBagConstraints.CENTER;
         panel.add(mqttPanel, c);
     }
 
