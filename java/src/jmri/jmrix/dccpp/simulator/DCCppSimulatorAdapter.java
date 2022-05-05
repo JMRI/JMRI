@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -380,18 +381,32 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.PROG_WRITE_CV_BYTE:
                 log.debug("PROG_WRITE_CV_BYTE detected");
                 s = msg.toString();
+                r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
-                    m = p.matcher(s);
-                    if (!m.matches()) {
-                        log.error("Malformed ProgWriteCVByte Command: {}", s);
-                        return (null);
-                    }
-                    // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
-                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-                    r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
-                            " " + m.group(2);
-                    CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    if (s.matches(DCCppConstants.PROG_WRITE_BYTE_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed ProgWriteCVByte Command: {}", s);
+                            return (null);
+                        }
+                        // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
+                        // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                        r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
+                                " " + m.group(2);
+                        CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    } else if (s.matches(DCCppConstants.PROG_WRITE_BYTE_V4_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_V4_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed ProgWriteCVByte Command: {}", s);
+                            return (null);
+                        }
+                        // CMD: <W CV Value>
+                        // Response: <r CV Value>
+                        r = "r " + m.group(1) + " " + m.group(2);
+                        CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    }                    
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -445,24 +460,46 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.PROG_READ_CV:
                 log.debug("PROG_READ_CV detected");
                 s = msg.toString();
+                r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_READ_CV_REGEX);
-                    m = p.matcher(s);
-                    if (!m.matches()) {
+                    if (s.matches(DCCppConstants.PROG_READ_CV_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_CV_REGEX);
+                        m = p.matcher(s);
+                        int cv = Integer.parseInt(m.group(1));
+                        int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                        if (cv < CVs.length) {
+                            cvVal = CVs[Integer.parseInt(m.group(1))];
+                        }
+                        // CMD: <R CV CALLBACKNUM CALLBACKSUB>
+                        // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                        r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
+                                + cvVal;
+                    } else if (s.matches(DCCppConstants.PROG_READ_CV_V4_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_CV_V4_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed PROG_READ_CV Command: {}", s);
+                            return (null);
+                        }
+                        int cv = Integer.parseInt(m.group(1));
+                        int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                        if (cv < CVs.length) {
+                            cvVal = CVs[Integer.parseInt(m.group(1))];
+                        }
+                        // CMD: <R CV>
+                        // Response: <r CV Value>
+                        r = "r " + m.group(1) + " " + cvVal;
+                    } else if (s.matches(DCCppConstants.PROG_READ_LOCOID_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_LOCOID_REGEX);
+                        Random rand = new Random();
+                        int locoId = rand.nextInt(9999);
+                        // CMD: <R>
+                        // Response: <r LocoId>
+                        r = "r " + locoId;
+                    } else {
                         log.error("Malformed PROG_READ_CV Command: {}", s);
                         return (null);
                     }
-                    // TODO: Work Magic Here to retrieve stored value.
-                    // Make sure that CV exists
-                    int cv = Integer.parseInt(m.group(1));
-                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
-                    if (cv < CVs.length) {
-                        cvVal = CVs[Integer.parseInt(m.group(1))];
-                    }
-                    // CMD: <R CV CALLBACKNUM CALLBACKSUB>
-                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-                    r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
-                            + cvVal;
 
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
@@ -567,7 +604,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.0 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }

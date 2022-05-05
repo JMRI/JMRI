@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file  -->
+<!-- Choices for HDD Special Function option -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice>
+        <choice>Normal Output</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Flash Symmetric</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Flash Asymmetric Short ON (1:4)</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Flash Asymmetric Short ON (4:1)</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Photographer Flash</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Monoflop (Automatic Switch Off)</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Switch On Delayed</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Firebox</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>TV Flickering</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Petroleum Flickering</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Flourescent Tube</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Defective Flourescent Tube</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Alternating Flash To Paired Output</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>US Strobelight</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>US Double Strobelight</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>US Mars Light</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>US Ditch Light</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Sodium Lamp</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Welding Light</choice>
+    </enumChoice>
+    <enumChoice>
+        <choice>Occupancy Message</choice>
+    </enumChoice>
+</enumVal>

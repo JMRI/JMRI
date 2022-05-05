@@ -410,6 +410,15 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         });
         mSend.add(iEraseEeprom);
 
+        JMenuItem iReadLocoId = new JMenuItem(Bundle.getMessage("ReadLocoId"));       
+        iReadLocoId.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.PROG_READ_CV)), null); 
+            }
+        });
+        mSend.add(iReadLocoId);
+
         this.getJMenuBar().add(mSend);
 
         JMenu dccppMenu = new DCCppMenu(_memo);

@@ -68,7 +68,7 @@ public class CombinedLocoSelListPaneTest {
         combinedlocosellistpane.mDecoderList.setSelectedIndex(4);
         Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
         String stringRet = combinedlocosellistpane.selectedDecoderType();
-        Assert.assertEquals("selected item", "NMRA standard register definitions (NMRA standard register definitions)",
+        Assert.assertEquals("selected item", "SUSI Output Mapping definitions (SUSI Output Mapping definitions)",
                 stringRet);
     }
 
