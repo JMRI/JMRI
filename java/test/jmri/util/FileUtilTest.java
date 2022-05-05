@@ -393,25 +393,28 @@ public class FileUtilTest {
     @Test
     public void testLogixNgExampleTableCsv() {
 
-        File absoluteFile = null;
+        String absPath = "Absolute Path Not Found";
+        String relativePath = "Relative Path Not Found";
+
         try {
-            absoluteFile = FileUtil.getFile(FileUtil.getProgramPath() + "/jython/LogixNG/LogixNG_ExampleTable.csv");
+            File absoluteFile = FileUtil.getFile(FileUtil.getProgramPath() + "/jython/LogixNG/LogixNG_ExampleTable.csv");
+            assertNotNull(absoluteFile);
+            absPath = absoluteFile.getAbsolutePath();
         }
         catch (FileNotFoundException ex) {
             fail("absolute LogixNG_ExampleTable not found, ", ex);
         }
-        assertNotNull(absoluteFile);
 
-        File relativeFile = null;
         try {
-            relativeFile = FileUtil.getFile("scripts:LogixNG/LogixNG_ExampleTable.csv");
+            File relativeFile = FileUtil.getFile("scripts:LogixNG/LogixNG_ExampleTable.csv");
+            assertNotNull(relativeFile);
+            relativePath = relativeFile.getAbsolutePath();
         }
         catch ( FileNotFoundException ex ) {
             fail("relative LogixNG_ExampleTable not found, ", ex);
         }
-        assertNotNull(relativeFile);
 
-        assertEquals( absoluteFile.getAbsolutePath(), relativeFile.getAbsolutePath() );
+        assertEquals( absPath, relativePath);
     }
 
     @Test
