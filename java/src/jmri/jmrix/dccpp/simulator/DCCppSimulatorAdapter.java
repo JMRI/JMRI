@@ -490,9 +490,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         // Response: <r CV Value>
                         r = "r " + m.group(1) + " " + cvVal;
                     } else if (s.matches(DCCppConstants.PROG_READ_LOCOID_REGEX)) {
-                        p = Pattern.compile(DCCppConstants.PROG_READ_LOCOID_REGEX);
-                        Random rand = new Random();
-                        int locoId = rand.nextInt(9999);
+                        int locoId = ThreadLocalRandom.current().nextInt(9999)+1; //get a random locoId between 1 and 9999
                         // CMD: <R>
                         // Response: <r LocoId>
                         r = "r " + locoId;
