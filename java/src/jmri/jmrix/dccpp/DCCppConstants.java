@@ -62,7 +62,7 @@ public final class DCCppConstants {
     public static final char OPS_WRITE_CV_BIT       = 'b'; // Set/Clear a single CV bit on ops track
     public static final char PROG_WRITE_CV_BYTE     = 'W'; // Write CV byte on program track
     public static final char PROG_WRITE_CV_BIT      = 'B'; // Set/Clear a single CV bit on ops track
-    public static final char PROG_READ_CV           = 'R'; // Read CV byte on program track
+    public static final char PROG_READ_CV           = 'R'; // 3 different messages
     public static final char PROG_VERIFY_CV         = 'V'; // Verify CV byte on program track
     public static final char TRACK_POWER_ON         = '1'; // Track power ON
     public static final char TRACK_POWER_OFF        = '0'; // Track power OFF
@@ -136,8 +136,9 @@ public final class DCCppConstants {
     public static final String PROG_WRITE_BYTE_V4_REGEX =  "W\\s*(\\d+)\\s(\\d+)"; // <W cv value>
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)"; // <B cv bit value callbacknum callbacksub>
     public static final String PROG_WRITE_BIT_V4_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([1,0])"; // <B cv bit value> 
-    public static final String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)"; // <R cv callbacknum callbacksub> not sent after v3.1.0 
-//    public static final String PROG_READ_V4_REGEX =        "R\\s*(\\d+)"; // <R cv> not needed 
+    public static final String PROG_READ_CV_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)"; // <R cv callbacknum callbacksub> not sent after v3.1.0 
+    public static final String PROG_READ_CV_V4_REGEX = "R\\s*(\\d+)"; // <R cv>
+    public static final String PROG_READ_LOCOID_REGEX =  "R"; // <R>
     public static final String PROG_VERIFY_REGEX = "V\\s*(\\d+)\\s+(\\d+)\\s*";
     public static final String TRACK_POWER_REGEX = "\\s*[0,1]\\s*"; // <1> or <0>
     public static final String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*"; // <c>

@@ -446,7 +446,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 log.debug("PROG_READ_CV detected");
                 s = msg.toString();
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_READ_REGEX);
+                    p = Pattern.compile(DCCppConstants.PROG_READ_CV_REGEX);
                     m = p.matcher(s);
                     if (!m.matches()) {
                         log.error("Malformed PROG_READ_CV Command: {}", s);
