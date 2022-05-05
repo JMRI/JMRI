@@ -92,7 +92,7 @@ public class Subscribe extends AbstractDigitalAction
         if ((_lastTopicLocalVariable != null) && (!_lastTopicLocalVariable.isBlank())) {
             getConditionalNG().getSymbolTable().setValue(_lastTopicLocalVariable, _lastTopic);
         }
-        if ((_lastTopicLocalVariable != null) && (!_lastMessageLocalVariable.isBlank())) {
+        if ((_lastMessageLocalVariable != null) && (!_lastMessageLocalVariable.isBlank())) {
             getConditionalNG().getSymbolTable().setValue(_lastMessageLocalVariable, _lastMessage);
         }
     }
