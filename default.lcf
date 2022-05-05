@@ -98,7 +98,7 @@ log4j.category.org.jdom2.transform=SEVERE
 # log4j.category.jmri.jmrit.display.IndicatorTurnoutIcon=DEBUG
 # log4j.category.jmri.jmrit.logix.OBlock=DEBUG
 # log4j.category.jmri.jmrit.logix.BlockOrder=DEBUG
- log4j.category.jmri.jmrit.logix.Warrant=DEBUG
+# log4j.category.jmri.jmrit.logix.Warrant=DEBUG
 # log4j.category.jmri.jmrit.logix.WarrantTableModel=DEBUG
 # log4j.category.jmri.jmrit.logix.Engineer=DEBUG
 
