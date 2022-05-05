@@ -35,6 +35,10 @@
             </li>
 
             <li>
+              <a href="#digital_action_mqtt">MQTT <span class="since">since 4.99.7</span></a>
+            </li>
+
+            <li>
               <a href="#digital_action_loconet">LocoNet</a>
             </li>
 
@@ -930,6 +934,40 @@
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_mqtt.png"><img src=
+        "images/chapter5/digital_action_mqtt.png" alt="Chapter 5 digital action mqtt list"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Publish</h4>
+
+      <p>This action publishes a message. Both the topic and the message can be entered directly in
+      the action or indirectly using a local variable or a memory.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/mqtt_publish.png"><img src=
+        "images/chapter5/mqtt_publish.png" alt="Chapter 5 digital action mqtt publish"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Subscribe</h4>
+
+      <p>This action subscribes to a topic. When someone publishes a message, this action triggers
+      the execution of the CondtionalNG. It can also optionally put the topic and the message into
+      local variables. The topic can use wildcard, like loco/# where # is the wildcard.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/mqtt_subscribe.png"><img src=
+        "images/chapter5/mqtt_subscribe.png" alt="Chapter 5 digital action mqtt subscribe"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
