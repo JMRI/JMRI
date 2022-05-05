@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -9,10 +10,9 @@ import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test DefaultGlobalVariable
@@ -66,18 +66,18 @@ public class DefaultGlobalVariableTest {
     }
 
     // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
