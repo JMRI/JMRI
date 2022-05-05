@@ -4,11 +4,12 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.expressions.StringExpressionMemory;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for StringExpressionMemory objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -34,45 +35,14 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
         storeCommon(p, element);
 
-        var memory = p.getMemory();
-        if (memory != null) {
-            element.addContent(new Element("memory").addContent(memory.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         return element;
     }
-/*
-    Element addLightElement(NamedBeanHandle<Light> to, String which) {
-        Element el = new Element("lightname");
-        el.setAttribute("defines", which);
-        el.addContent(to.getName());
-        return el;
-    }
 
-    Element addLightElement(Light to) {
-        String user = to.getUserName();
-        String sys = to.getSystemName();
-
-        Element el = new Element("light");
-        el.setAttribute("systemName", sys);
-        if (user != null) {
-            el.setAttribute("userName", user);
-        }
-
-        return el;
-    }
-*/
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
-//        List<Element> l = shared.getChildren("lightname");
-/*
-        if (l.size() == 0) {
-            l = shared.getChildren("light");  // older form
-        }
-        NamedBeanHandle<Light> low = loadLight(l.get(0));
-        NamedBeanHandle<Light> high = loadLight(l.get(1));
-*/
-        // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         StringExpressionMemory h;
@@ -80,15 +50,9 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
         loadCommon(h, shared);
 
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (m != null) h.setMemory(m);
-            else h.removeMemory();
-        }
-
-        // this.checkedNamedBeanReference()
-        // <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "memory", null, null, null, null);
 
         InstanceManager.getDefault(StringExpressionManager.class).registerExpression(h);
         return true;

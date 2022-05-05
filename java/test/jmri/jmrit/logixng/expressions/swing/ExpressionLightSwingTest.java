@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -39,7 +40,9 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        ExpressionLightSwing t = new ExpressionLightSwing();
+        JDialog dialog = new JDialog();
+
+        ExpressionLightSwing t = new ExpressionLightSwing(dialog);
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
@@ -72,9 +75,9 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
 
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return expression.getLight() != null;});
+        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;});
 
-        Assert.assertEquals("IL1", expression.getLight().getBean().getSystemName());
+        Assert.assertEquals("IL1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
         Assert.assertEquals(ExpressionLight.LightState.Off, expression.getBeanState());
     }
 
@@ -82,10 +85,12 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ExpressionLightSwing().getConfigPanel(new JPanel()));
+            null != new ExpressionLightSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ExpressionLightSwing().getConfigPanel(new ExpressionLight("IQDE1", null), new JPanel()));
+            null != new ExpressionLightSwing(dialog).getConfigPanel(new ExpressionLight("IQDE1", null), new JPanel()));
     }
 
     // The minimal setup for log4J

@@ -1,19 +1,16 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.Logix;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
@@ -27,20 +24,16 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionEntryExit extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionEntryExit extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<DestinationPoints> _destinationPointsHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
-    private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private Operation _operationDirect = Operation.SetNXPairEnabled;
-    private String _operationReference = "";
-    private String _operationLocalVariable = "";
-    private String _operationFormula = "";
-    private ExpressionNode _operationExpressionNode;
+    private final LogixNG_SelectNamedBean<DestinationPoints> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), this);
+
+    private final LogixNG_SelectEnum<Operation> _selectEnum =
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.SetNXPairEnabled, this);
+
 
     public ActionEntryExit(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -55,174 +48,17 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionEntryExit copy = new ActionEntryExit(sysName, userName);
         copy.setComment(getComment());
-        if (_destinationPointsHandle != null) copy.setDestinationPoints(_destinationPointsHandle);
-        copy.setOperationDirect(_operationDirect);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
-        copy.setOperationAddressing(_operationAddressing);
-        copy.setOperationFormula(_operationFormula);
-        copy.setOperationLocalVariable(_operationLocalVariable);
-        copy.setOperationReference(_operationReference);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectEnum.copy(copy._selectEnum);
         return manager.registerAction(copy);
     }
 
-    public void setDestinationPoints(@Nonnull String entryExitName) {
-        assertListenersAreNotRegistered(log, "setDestinationPoints");
-        DestinationPoints entryExit = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(entryExitName);
-        if (entryExit != null) {
-            ActionEntryExit.this.setDestinationPoints(entryExit);
-        } else {
-            removeDestinationPoints();
-            log.error("DestinationPoints \"{}\" is not found", entryExitName);
-        }
+    public LogixNG_SelectNamedBean<DestinationPoints> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setDestinationPoints(@Nonnull NamedBeanHandle<DestinationPoints> handle) {
-        assertListenersAreNotRegistered(log, "setDestinationPoints");
-        _destinationPointsHandle = handle;
-        InstanceManager.getDefault(LogixManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setDestinationPoints(@Nonnull DestinationPoints entryExit) {
-        assertListenersAreNotRegistered(log, "setDestinationPoints");
-        ActionEntryExit.this.setDestinationPoints(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(entryExit.getDisplayName(), entryExit));
-    }
-
-    public void removeDestinationPoints() {
-        assertListenersAreNotRegistered(log, "removeEntryExit");
-        if (_destinationPointsHandle != null) {
-            InstanceManager.getDefault(LogixManager.class).removeVetoableChangeListener(this);
-            _destinationPointsHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<DestinationPoints> getDestinationPoints() {
-        return _destinationPointsHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
-    public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _operationAddressing = addressing;
-        parseLockFormula();
-    }
-
-    public NamedBeanAddressing getOperationAddressing() {
-        return _operationAddressing;
-    }
-
-    public void setOperationDirect(Operation state) {
-        _operationDirect = state;
-    }
-
-    public Operation getOperationDirect() {
-        return _operationDirect;
-    }
-
-    public void setOperationReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _operationReference = reference;
-    }
-
-    public String getOperationReference() {
-        return _operationReference;
-    }
-
-    public void setOperationLocalVariable(@Nonnull String localVariable) {
-        _operationLocalVariable = localVariable;
-    }
-
-    public String getOperationLocalVariable() {
-        return _operationLocalVariable;
-    }
-
-    public void setOperationFormula(@Nonnull String formula) throws ParserException {
-        _operationFormula = formula;
-        parseLockFormula();
-    }
-
-    public String getLockFormula() {
-        return _operationFormula;
-    }
-
-    private void parseLockFormula() throws ParserException {
-        if (_operationAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _operationExpressionNode = parser.parseExpression(_operationFormula);
-        } else {
-            _operationExpressionNode = null;
-        }
-    }
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof DestinationPoints) {
-                if (evt.getOldValue().equals(getDestinationPoints().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ActionEntryExit_DestinationPointsInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof DestinationPoints) {
-                if (evt.getOldValue().equals(getDestinationPoints().getBean())) {
-                    removeDestinationPoints();
-                }
-            }
-        }
+    public LogixNG_SelectEnum<Operation> getSelectEnum() {
+        return _selectEnum;
     }
 
     /** {@inheritDoc} */
@@ -231,85 +67,14 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
         return Category.ITEM;
     }
 
-    private String getNewLock() throws JmriException {
-
-        switch (_operationAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _operationReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_operationLocalVariable), false);
-
-            case Formula:
-                return _operationExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _operationExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _operationAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        DestinationPoints entryExit;
+        DestinationPoints entryExit = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-//        System.out.format("ActionEnableLogix.execute: %s%n", getLongDescription());
+        if (entryExit == null) return;
 
-        switch (_addressing) {
-            case Direct:
-                entryExit = _destinationPointsHandle != null ? _destinationPointsHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                entryExit = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                entryExit = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                entryExit = _expressionNode != null ?
-                        InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-//        System.out.format("ActionEnableLogix.execute: entryExit: %s%n", entryExit);
-
-        if (entryExit == null) {
-//            log.error("entryExit is null");
-            return;
-        }
-
-        String name = (_operationAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
-
-        Operation oper;
-        if ((_operationAddressing == NamedBeanAddressing.Direct)) {
-            oper = _operationDirect;
-        } else {
-            oper = Operation.valueOf(name);
-        }
+        Operation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
         // Variables used in lambda must be effectively final
         Operation theOper = oper;
@@ -349,56 +114,8 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
-        String state;
-
-        switch (_addressing) {
-            case Direct:
-                String entryExitName;
-                if (_destinationPointsHandle != null) {
-                    entryExitName = _destinationPointsHandle.getBean().getDisplayName();
-                } else {
-                    entryExitName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", entryExitName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        switch (_operationAddressing) {
-            case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _operationDirect._text);
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _operationReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _operationLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _operationFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _operationAddressing.name());
-        }
+        String namedBean = _selectNamedBean.getDescription(locale);
+        String state = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "ActionEntryExit_Long", namedBean, state);
     }
@@ -412,11 +129,15 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -446,12 +167,15 @@ public class ActionEntryExit extends AbstractDigitalAction implements VetoableCh
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionEntryExit: bean = {}, report = {}", cdl, report);
-        if (getDestinationPoints() != null && bean.equals(getDestinationPoints().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExit.class);
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExit.class);
 
 }

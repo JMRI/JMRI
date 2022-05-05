@@ -1535,6 +1535,12 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("IPL identity test 102",
                 "IPL Identity report.\n\tHost: Digitrax DB220 host, S/N=0, S/W Version=0.0\n\tSlave: None.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x06, 0x00, 0x00, 0x10, 0x00, 0x01, 0x31, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5D});
+        Assert.assertEquals("IPL test 7",
+                "IPL Identity report.\n\tHost: Digitrax UT6(x) host, S/N=231, S/W Version=2.0\n\tSlave: None.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
     }
 
     @Test
@@ -1552,6 +1558,9 @@ public class LocoNetMessageInterpretTest {
                     break;
                 case 0x04:
                     s = "Digitrax UT4(x) host";
+                    break;
+                case 0x06:
+                    s = "Digitrax UT6(x) host";
                     break;
                 case 0x0C:
                     s = "Walthers (Digitrax) WTL12 host";

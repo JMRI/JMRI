@@ -104,8 +104,8 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         Memory l = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         expression2 = new ExpressionLocalVariable("IQDE321", "My memory");
         expression2.setLocalVariable("someVar");
-        expression2.setMemory(l);
-        Assert.assertTrue("memory is correct", l == expression2.getMemory().getBean());
+        expression2.getSelectMemoryNamedBean().setNamedBean(l);
+        Assert.assertTrue("memory is correct", l == expression2.getSelectMemoryNamedBean().getNamedBean().getBean());
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My memory", expression2.getUserName());
         Assert.assertEquals("String matches", "Local variable someVar is equal to \"\"", expression2.getLongDescription());

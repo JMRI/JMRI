@@ -16,6 +16,7 @@ import jmri.SignalMastManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSignalMast;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
@@ -29,15 +30,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
 
     public static final int NUM_COLUMNS_TEXT_FIELDS = 20;
 
-    private JTabbedPane _tabbedPaneSignalMast;
-    private BeanSelectPanel<SignalMast> _signalMastBeanPanel;
-    private JPanel _panelSignalMastDirect;
-    private JPanel _panelSignalMastReference;
-    private JPanel _panelSignalMastLocalVariable;
-    private JPanel _panelSignalMastFormula;
-    private JTextField _signalMastReferenceTextField;
-    private JTextField _signalMastLocalVariableTextField;
-    private JTextField _signalMastFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<SignalMast> _selectNamedBeanSwing;
 
     private JTabbedPane _tabbedPaneOperationType;
     private JPanel _panelOperationTypeDirect;
@@ -64,12 +57,30 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
     private BeanSelectPanel<SignalMast> _exampleSignalMastBeanPanel;
 
 
+    public ActionSignalMastSwing() {
+    }
+
+    public ActionSignalMastSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionSignalMast action = (ActionSignalMast)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(SignalMastManager.class), getJDialog(), this);
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel _tabbedPaneNamedBean;
+
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+        }
 
         JPanel examplePanel = new JPanel();
         JPanel innerExamplePanel = new JPanel();
@@ -85,40 +96,14 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
         JPanel actionPanel = new JPanel();
 
 
-        // Set up tabbed pane for selecting the signal head
-        _tabbedPaneSignalMast = new JTabbedPane();
-        _panelSignalMastDirect = new javax.swing.JPanel();
-        _panelSignalMastReference = new javax.swing.JPanel();
-        _panelSignalMastLocalVariable = new javax.swing.JPanel();
-        _panelSignalMastFormula = new javax.swing.JPanel();
-
-        _tabbedPaneSignalMast.addTab(NamedBeanAddressing.Direct.toString(), _panelSignalMastDirect);
-        _tabbedPaneSignalMast.addTab(NamedBeanAddressing.Reference.toString(), _panelSignalMastReference);
-        _tabbedPaneSignalMast.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelSignalMastLocalVariable);
-        _tabbedPaneSignalMast.addTab(NamedBeanAddressing.Formula.toString(), _panelSignalMastFormula);
-
-        _tabbedPaneSignalMast.addChangeListener((ChangeEvent e) -> {
+        _selectNamedBeanSwing.addAddressingListener((ChangeEvent e) -> {
             setGuiEnabledStates();
         });
 
-        _signalMastBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(SignalMastManager.class), null);
-        _panelSignalMastDirect.add(_signalMastBeanPanel);
-
-        _signalMastBeanPanel.getBeanCombo().addActionListener((java.awt.event.ActionEvent e) -> {
+        _selectNamedBeanSwing.getBeanSelectPanel().getBeanCombo()
+                .addActionListener((java.awt.event.ActionEvent e) -> {
             setAspectComboBox(null);
         });
-
-        _signalMastReferenceTextField = new JTextField();
-        _signalMastReferenceTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelSignalMastReference.add(_signalMastReferenceTextField);
-
-        _signalMastLocalVariableTextField = new JTextField();
-        _signalMastLocalVariableTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelSignalMastLocalVariable.add(_signalMastLocalVariableTextField);
-
-        _signalMastFormulaTextField = new JTextField();
-        _signalMastFormulaTextField.setColumns(NUM_COLUMNS_TEXT_FIELDS);
-        _panelSignalMastFormula.add(_signalMastFormulaTextField);
 
 
         // Set up the tabbed pane for selecting the operation
@@ -225,23 +210,9 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
 
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneSignalMast.setSelectedComponent(_panelSignalMastDirect); break;
-                case Reference: _tabbedPaneSignalMast.setSelectedComponent(_panelSignalMastReference); break;
-                case LocalVariable: _tabbedPaneSignalMast.setSelectedComponent(_panelSignalMastLocalVariable); break;
-                case Formula: _tabbedPaneSignalMast.setSelectedComponent(_panelSignalMastFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+            if (action.getSelectExampleNamedBean().getNamedBean() != null) {
+                _exampleSignalMastBeanPanel.setDefaultNamedBean(action.getSelectExampleNamedBean().getNamedBean().getBean());
             }
-            if (action.getSignalMast() != null) {
-                _signalMastBeanPanel.setDefaultNamedBean(action.getSignalMast().getBean());
-            }
-            if (action.getExampleSignalMast() != null) {
-                _exampleSignalMastBeanPanel.setDefaultNamedBean(action.getExampleSignalMast().getBean());
-            }
-            _signalMastReferenceTextField.setText(action.getReference());
-            _signalMastLocalVariableTextField.setText(action.getLocalVariable());
-            _signalMastFormulaTextField.setText(action.getFormula());
-
 
             switch (action.getOperationAddressing()) {
                 case Direct: _tabbedPaneOperationType.setSelectedComponent(_panelOperationTypeDirect); break;
@@ -271,7 +242,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneSignalMast,
+            _tabbedPaneNamedBean,
             _tabbedPaneOperationType,
             _tabbedPaneAspectType
         };
@@ -303,7 +274,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
 
         _tabbedPaneAspectType.setEnabled(true);
 
-        if (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect &&
+        if (_selectNamedBeanSwing.getAddressing() != NamedBeanAddressing.Direct &&
                 _tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect) {
             _exampleSignalMastBeanPanel.getBeanCombo().setEnabled(true);
         }
@@ -324,8 +295,8 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
 
     private void setAspectComboBox(ActionSignalMast action) {
         SignalMast sm;
-        if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
-            sm = _signalMastBeanPanel.getBeanCombo().getSelectedItem();
+        if (_selectNamedBeanSwing.getAddressing() == NamedBeanAddressing.Direct) {
+            sm = _selectNamedBeanSwing.getBean();
         } else {
             sm = _exampleSignalMastBeanPanel.getBeanCombo().getSelectedItem();
         }
@@ -349,14 +320,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionSignalMast action = new ActionSignalMast("IQDA1", null);
 
-        try {
-            if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastReference) {
-                action.setReference(_signalMastReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
 
         try {
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeReference) {
@@ -367,24 +331,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             return false;
         }
 
-        try {
-            action.setFormula(_signalMastFormulaTextField.getText());
-            if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-            return false;
-        }
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -402,22 +349,11 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionSignalMast but is a: "+object.getClass().getName());
         }
         ActionSignalMast action = (ActionSignalMast)object;
-        if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
-            SignalMast signalMast = _signalMastBeanPanel.getNamedBean();
-            if (signalMast != null) {
-                NamedBeanHandle<SignalMast> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                action.setSignalMast(handle);
-            } else {
-                action.removeSignalMast();
-            }
-        } else {
-            action.removeSignalMast();
-        }
+
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
 
         if (!_exampleSignalMastBeanPanel.isEmpty()
-                && (_tabbedPaneSignalMast.getSelectedComponent() != _panelSignalMastDirect)
+                && (_selectNamedBeanSwing.getAddressing() != NamedBeanAddressing.Direct)
                 && (_tabbedPaneAspectType.getSelectedComponent() == _panelAspectTypeDirect)) {
 
             SignalMast signalMast = _exampleSignalMastBeanPanel.getNamedBean();
@@ -425,28 +361,13 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<SignalMast> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                action.setExampleSignalMast(handle);
+                action.getSelectExampleNamedBean().setNamedBean(handle);
             }
         } else {
-            action.removeExampleSignalMast();
+            action.getSelectExampleNamedBean().removeNamedBean();
         }
 
         try {
-            if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_signalMastReferenceTextField.getText());
-            } else if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_signalMastLocalVariableTextField.getText());
-            } else if (_tabbedPaneSignalMast.getSelectedComponent() == _panelSignalMastFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_signalMastFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneSignalMast has unknown selection");
-            }
-
             if (_tabbedPaneOperationType.getSelectedComponent() == _panelOperationTypeDirect) {
                 action.setOperationAddressing(NamedBeanAddressing.Direct);
                 action.setOperationType((ActionSignalMast.OperationType)_operationComboBox.getSelectedItem());

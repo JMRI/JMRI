@@ -277,7 +277,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         ifThenElse.getChild(0).connect(socketExpressionScript);
 
         ActionLight actionLight = new ActionLight("IQDA322", null);
-        actionLight.setLight(InstanceManager.getDefault(LightManager.class).provide("IL1"));
+        actionLight.getSelectNamedBean().setNamedBean(InstanceManager.getDefault(LightManager.class).provide("IL1"));
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
         ifThenElse.getChild(1).connect(maleSocket2);

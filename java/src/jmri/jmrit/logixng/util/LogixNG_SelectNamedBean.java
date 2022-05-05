@@ -1,13 +1,9 @@
 package jmri.jmrit.logixng.util;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.beans.*;
+import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -34,6 +30,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     private final PropertyChangeListener _listener;
     private boolean _listenToMemory;
     private boolean _listenersAreRegistered;
+    private boolean _onlyDirectAddressingAllowed;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<E> _handle;
@@ -42,6 +39,8 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
+
+    private String _delayedNamedBean;
 
 
     public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
@@ -62,6 +61,9 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         _listener = listener;
     }
 
+    public void setOnlyDirectAddressingAllowed() {
+        _onlyDirectAddressingAllowed = true;
+    }
 
     public void copy(LogixNG_SelectNamedBean<E> copy) throws ParserException {
         copy.setAddressing(_addressing);
@@ -78,12 +80,23 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
+        if (_onlyDirectAddressingAllowed && (addressing != NamedBeanAddressing.Direct)) {
+            throw new IllegalArgumentException("Addressing must be Direct");
+        }
         this._addressing = addressing;
         parseFormula();
     }
 
     public NamedBeanAddressing getAddressing() {
         return _addressing;
+    }
+
+    public void setDelayedNamedBean(@Nonnull String name) {
+        _delayedNamedBean = name;
+    }
+
+    public void setup() {
+        if (_delayedNamedBean != null) setNamedBean(_delayedNamedBean);
     }
 
     public void setNamedBean(@Nonnull String name) {
@@ -119,6 +132,13 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public NamedBeanHandle<E> getNamedBean() {
         return _handle;
+    }
+
+    public E getNamedBeanIfDirectAddressing() {
+        if ((_handle != null) && (this._addressing == NamedBeanAddressing.Direct)) {
+            return _handle.getBean();
+        }
+        return null;
     }
 
     public void setReference(@Nonnull String reference) {
@@ -344,7 +364,8 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
             if (_inUse.isInUse() && (_class.isAssignableFrom(evt.getOldValue().getClass()))) {
                 if (evt.getOldValue().equals(getNamedBean().getBean())) {
-                    throw new PropertyVetoException(_base.getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("InUseVeto", _base.getDisplayName(), _base.getShortDescription()), e);
                 }
             }
             if (evt.getOldValue() instanceof Memory) {
@@ -364,10 +385,87 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 }
             }
             if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
                     removeMemory();
                 }
             }
+        }
+    }
+
+    /**
+     * Add a {@link java.beans.PropertyChangeListener} for a specific property.
+     *
+     * @param listener The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(
+            @CheckForNull PropertyChangeListener listener) {
+        if ((_addressing == NamedBeanAddressing.Direct) && (_handle != null)) {
+            _handle.getBean().addPropertyChangeListener(listener);
+        }
+    }
+
+    /**
+     * Add a {@link java.beans.PropertyChangeListener} for a specific property.
+     *
+     * @param propertyName The name of the property to listen on.
+     * @param listener     The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(
+            @CheckForNull String propertyName,
+            @CheckForNull PropertyChangeListener listener) {
+        if ((_addressing == NamedBeanAddressing.Direct) && (_handle != null)) {
+            _handle.getBean().addPropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    /**
+     * Remove the specified listener of the specified property from this object.
+     *
+     * @param listener The {@link java.beans.PropertyChangeListener} to
+     *                 remove.
+     */
+    public void removePropertyChangeListener(
+            @CheckForNull PropertyChangeListener listener) {
+        if (_handle != null) {
+            _handle.getBean().removePropertyChangeListener(listener);
+        }
+    }
+
+    /**
+     * Remove the specified listener of the specified property from this object.
+     *
+     * @param propertyName The name of the property to stop listening to.
+     * @param listener     The {@link java.beans.PropertyChangeListener} to
+     *                     remove.
+     */
+    public void removePropertyChangeListener(
+            @CheckForNull String propertyName,
+            @CheckForNull PropertyChangeListener listener) {
+        if (_handle != null) {
+            _handle.getBean().removePropertyChangeListener(propertyName, listener);
+        }
+    }
+
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl, Base base, Type type) {
+        log.debug("getUsageReport :: {}: bean = {}, report = {}", base.getShortDescription(), cdl, report);
+        if (_handle != null && bean.equals(_handle.getBean())) {
+            report.add(new NamedBeanUsageReport(type.toString(), cdl, base.getLongDescription()));
+        }
+    }
+
+    public static enum Type {
+        Action("LogixNGAction"),
+        Expression("LogixNGExpression");
+
+        private final String _descr;
+
+        private Type(String descr) {
+            this._descr = descr;
+        }
+
+        @Override
+        public String toString() {
+            return _descr;
         }
     }
 

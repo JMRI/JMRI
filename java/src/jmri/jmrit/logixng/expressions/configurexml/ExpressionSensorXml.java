@@ -4,12 +4,13 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ExpressionLightXml objects.
+ * Handle XML configuration for ExpressionSensorXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -35,15 +36,8 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
 
         storeCommon(p, element);
 
-        var sensor = p.getSensor();
-        if (sensor != null) {
-            element.addContent(new Element("sensor").addContent(sensor.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
 
@@ -64,36 +58,17 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
 
         loadCommon(h, shared);
 
-        Element sensorName = shared.getChild("sensor");
-        if (sensorName != null) {
-            Sensor t = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName.getTextTrim());
-            if (t != null) h.setSensor(t);
-            else h.removeSensor();
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "sensor");
+
+        Element is_IsNot = shared.getChild("is_isNot");
+        if (is_IsNot != null) {
+            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
         }
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            Element is_IsNot = shared.getChild("is_isNot");
-            if (is_IsNot != null) {
-                h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
-            }
-
-
-            elem = shared.getChild("stateAddressing");
+            Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

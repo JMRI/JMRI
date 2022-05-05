@@ -77,7 +77,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         _femaleSocket.connect(maleSocket);
         if (! _conditionalNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
-        _expression.setTurnout(t);
+        _expression.getSelectNamedBean().setNamedBean(t);
         _expression.setBeanState(ExpressionTurnout.TurnoutState.Thrown);
         t.setState(Turnout.CLOSED);
         Assert.assertFalse("turnout is not thrown", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());

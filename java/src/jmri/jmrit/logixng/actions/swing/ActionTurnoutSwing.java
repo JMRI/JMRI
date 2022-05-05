@@ -45,20 +45,20 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
         panel = new JPanel();
 
-        JPanel _tabbedPaneTurnout;
-        JPanel _tabbedPaneTurnoutState;
+        JPanel tabbedPaneNamedBean;
+        JPanel tabbedPaneState;
 
         if (action != null) {
-            _tabbedPaneTurnout = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
-            _tabbedPaneTurnoutState = _selectEnumSwing.createPanel(action.getSelectEnum(), TurnoutState.values());
+            tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+            tabbedPaneState = _selectEnumSwing.createPanel(action.getSelectEnum(), TurnoutState.values());
         } else {
-            _tabbedPaneTurnout = _selectNamedBeanSwing.createPanel(null);
-            _tabbedPaneTurnoutState = _selectEnumSwing.createPanel(null, TurnoutState.values());
+            tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            tabbedPaneState = _selectEnumSwing.createPanel(null, TurnoutState.values());
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneTurnout,
-            _tabbedPaneTurnoutState};
+            tabbedPaneNamedBean,
+            tabbedPaneState};
 
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ActionTurnout_Components"), components);

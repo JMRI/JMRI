@@ -231,7 +231,8 @@
 
         <li>Joan Carranc&agrave;, who provided the German DB signal set.</li>
 
-        <li>Alain Carasso, who provided decoder definition for Arnold and Mistral Train
+        <li>Alain Carasso, <!-- alain355 -->
+        who provided decoder definition for Arnold and Mistral Train
         decoders</li>
 
         <li>Peter Cesaro provided MRC decoder definitions</li>
@@ -437,6 +438,9 @@
         <li>Mark Gurries, who provided loaner equipment and great ideas. He's currently working on
         decoder definitions for DecoderPro <a id="H"></a>
         </li>
+
+        <li>Peter Hagenaars, who helped with the definition for the MD Electronics
+        HDD decoder.
 
         <li>Victoria K. Hall led the legal action that held Matt Katzer responsible for his
         depredations against JMRI</li>
@@ -684,7 +688,7 @@
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
-        <li>Bob Milhaupt, <-- devel-bobm -->
+        <li>Bob Milhaupt, <!-- devel-bobm -->
         who fixed a problem with transponding messages in the LocoNet monitor,
         provided a lot of usability improvements in the LocoNet monitor, updated several
         LocoNet-related help pages, and provided significant help with the
@@ -739,7 +743,7 @@
         on Mac OS X <a id="P"></a>
         </li>
 
-        <li>P&aring;l <-paoSoft -->
+        <li>P&aring;l <!--paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
 
         <li>Gopal Patnaik helped with Intellibox development.</li>
@@ -786,7 +790,7 @@
         "Q"></a> <a id="R"></a>
         </li>
 
-        <li>Balazs Racz, <-- balazsracz -->
+        <li>Balazs Racz, <!-- balazsracz -->
         who fixed a bug in startup and improved our tech documentation, updated
         the OpenLCB support to their version 0.7, and added support for bean properties to the
         Tables</li>
@@ -1000,7 +1004,7 @@
 
         <li>Jack Walton, who created the Lenz LE080 decoder definition</li>
 
-        <li>Steve Walton, <-- swalton00 -->
+        <li>Steve Walton, <!-- swalton00 -->
         who fixed the tag sorting.
 
         <li>George Warner, who changed all the TextFields to editable comboboxes (with drop-down

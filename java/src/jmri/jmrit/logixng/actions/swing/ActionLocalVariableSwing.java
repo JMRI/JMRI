@@ -111,14 +111,14 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             if (action.getLocalVariable() != null) {
                 _localVariableTextField.setText(action.getLocalVariable());
             }
-            if (action.getMemory() != null) {
-                _copyMemoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
+            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _copyMemoryBeanPanel.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
             }
-            if (action.getBlock() != null) {
-                _copyBlockBeanPanel.setDefaultNamedBean(action.getBlock().getBean());
+            if (action.getSelectBlockNamedBean().getNamedBean() != null) {
+                _copyBlockBeanPanel.setDefaultNamedBean(action.getSelectBlockNamedBean().getNamedBean().getBean());
             }
-            if (action.getReporter() != null) {
-                _copyReporterBeanPanel.setDefaultNamedBean(action.getReporter().getBean());
+            if (action.getSelectReporterNamedBean().getNamedBean() != null) {
+                _copyReporterBeanPanel.setDefaultNamedBean(action.getSelectReporterNamedBean().getNamedBean().getBean());
             }
             switch (action.getVariableOperation()) {
                 case SetToNull: _tabbedPaneVariableOperation.setSelectedComponent(_setToNull); break;
@@ -208,7 +208,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
+                action.getSelectMemoryNamedBean().setNamedBean(handle);
             }
         }
 
@@ -219,7 +219,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Block> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(block.getDisplayName(), block);
-                action.setBlock(handle);
+                action.getSelectBlockNamedBean().setNamedBean(handle);
             }
         }
 
@@ -230,7 +230,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Reporter> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(reporter.getDisplayName(), reporter);
-                action.setReporter(handle);
+                action.getSelectReporterNamedBean().setNamedBean(handle);
             }
         }
 

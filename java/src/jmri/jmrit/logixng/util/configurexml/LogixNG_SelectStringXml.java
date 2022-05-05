@@ -30,14 +30,20 @@ public class LogixNG_SelectStringXml {
 
         enumElement.addContent(new Element("addressing").addContent(selectStr.getAddressing().name()));
         enumElement.addContent(new Element("value").addContent(selectStr.getValue()));
-        enumElement.addContent(new Element("reference").addContent(selectStr.getReference()));
+        if (selectStr.getReference() != null && !selectStr.getReference().isEmpty()) {
+            enumElement.addContent(new Element("reference").addContent(selectStr.getReference()));
+        }
         var memory = selectStr.getMemory();
         if (memory != null) {
             enumElement.addContent(new Element("memory").addContent(memory.getName()));
         }
         enumElement.addContent(new Element("listenToMemory").addContent(selectStr.getListenToMemory() ? "yes" : "no"));
-        enumElement.addContent(new Element("localVariable").addContent(selectStr.getLocalVariable()));
-        enumElement.addContent(new Element("formula").addContent(selectStr.getFormula()));
+        if (selectStr.getLocalVariable() != null && !selectStr.getLocalVariable().isEmpty()) {
+            enumElement.addContent(new Element("localVariable").addContent(selectStr.getLocalVariable()));
+        }
+        if (selectStr.getFormula() != null && !selectStr.getFormula().isEmpty()) {
+            enumElement.addContent(new Element("formula").addContent(selectStr.getFormula()));
+        }
 
         if (selectStr.getAddressing() == NamedBeanAddressing.Table) {
             enumElement.addContent(selectTableXml.store(selectStr.getSelectTable(), "table"));
