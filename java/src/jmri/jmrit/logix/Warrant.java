@@ -1253,6 +1253,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // OK, will do it as it long as you own it, and you are where you think you are there.
         _engineer.setHalt(false);
         clearWaitFlags(false);
+        _overrun = true;    // allows doRestoreRunning to run at an OCCUPY state
         return restoreRunning(_engineer.getSpeedType(false));
     }
 
@@ -1927,8 +1928,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             TrainOrder to = bo.allocatePaths(this, true);
             OBlock block = bo.getBlock();
             if (log.isDebugEnabled()) {
-//                log.debug("{}: {}", getDisplayName(), to.toString());   // spotbugs doesn't like this
-                log.debug(getDisplayName()+": "+to.toString());   // so try I'll this
+                log.debug("{}: {}", getDisplayName(), to);
+//                log.debug(getDisplayName()+": "+to.toString());   // so try I'll this
             }
             switch (to._cause) {    // to._cause - precedence of checks is WARRANT, OCCUPY, SIGNAL
                 case NONE:
