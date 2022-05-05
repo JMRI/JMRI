@@ -1928,8 +1928,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             TrainOrder to = bo.allocatePaths(this, true);
             OBlock block = bo.getBlock();
             if (log.isDebugEnabled()) {
-                log.debug("{}: {}", getDisplayName(), to);
-//                log.debug(getDisplayName()+": "+to.toString());   // so try I'll this
+                log.debug(getDisplayName()+": "+to.toString());   // so try I'll this
             }
             switch (to._cause) {    // to._cause - precedence of checks is WARRANT, OCCUPY, SIGNAL
                 case NONE:
