@@ -2343,17 +2343,17 @@ public class Section extends AbstractNamedBean {
         }
         // set up missing signal head message, if any
         if ((missingSignalsBB + missingSignalsTurnouts + missingSignalsLevelXings) > 0) {
-            String s = "Section - " + getDisplayName(USERSYS);
+            String s = "";
             if (missingSignalsBB > 0) {
-                s = s + ", " + (missingSignalsBB) + " anchor point signal heads missing";
+                s = ", " + (missingSignalsBB) + " anchor point signal heads missing";
             }
             if (missingSignalsTurnouts > 0) {
-                s = s + ", " + (missingSignalsTurnouts) + " turnouts missing signals";
+                s = ", " + (missingSignalsTurnouts) + " turnouts missing signals";
             }
             if (missingSignalsLevelXings > 0) {
-                s = s + ", " + (missingSignalsLevelXings) + " level crossings missing signals";
+                s = ", " + (missingSignalsLevelXings) + " level crossings missing signals";
             }
-            log.warn(s);
+            log.warn("Section - {} {}",getDisplayName(USERSYS),s);
         }
 
         return errorCount;
