@@ -486,6 +486,18 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testMonitorStringReadCVV4Msg() {
+        msg = new DCCppMessage("R 123");
+        Assert.assertEquals("Monitor string", "Prog Read CV: CV:123", msg.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringReadLocoIDMsg() {
+        msg = new DCCppMessage("R");
+        Assert.assertEquals("Monitor string", "Prog Read LocoID Cmd", msg.toMonitorString());
+    }
+
+    @Test
     public void testGetWriteOpsModeCVMsg() {
         msg = DCCppMessage.makeWriteOpsModeCVMsg(17, 4, 3);
         log.debug("write ops cv message = '{}'", msg);
