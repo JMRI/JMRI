@@ -135,11 +135,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         logixNGTable.editPressed("IQ101");  // NOI18N
 
         String title = String.format("Edit LogixNG %s - %s", logixNG.getSystemName(), logixNG.getUserName());
-        JFrame frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
-//        JFrame frame2 = JFrameOperator.waitJFrame(Bundle.getMessage("EditTitle"), true, true);  // NOI18N
+        JFrameOperator jf = new JFrameOperator(title);
+        Assert.assertNotNull(jf);
 
         // Click button "New ConditionalNG" on the EditLogixNG frame
-        JFrameOperator jf = new JFrameOperator(frame);
         JemmyUtil.pressButton(jf,"New ConditionalNG");
 
 
@@ -149,10 +148,11 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         // Close window
         JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG " + logixNG.getConditionalNG(0));
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
-
-        Assert.assertNotNull(frame);
-        JemmyUtil.pressButton(new JFrameOperator(frame),Bundle.getMessage("ButtonDone"));
-        JUnitUtil.dispose(frame);
+        editConditionalNGFrameOperator.waitClosed();
+        
+        JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonDone"));
+        jf.requestClose();
+        jf.waitClosed();
     }
 
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
