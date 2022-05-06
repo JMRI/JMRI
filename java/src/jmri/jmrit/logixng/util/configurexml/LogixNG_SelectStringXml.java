@@ -29,7 +29,9 @@ public class LogixNG_SelectStringXml {
         Element enumElement = new Element(tagName);
 
         enumElement.addContent(new Element("addressing").addContent(selectStr.getAddressing().name()));
-        enumElement.addContent(new Element("value").addContent(selectStr.getValue()));
+        if (selectStr.getValue() != null) {
+            enumElement.addContent(new Element("value").addContent(selectStr.getValue()));
+        }
         if (selectStr.getReference() != null && !selectStr.getReference().isEmpty()) {
             enumElement.addContent(new Element("reference").addContent(selectStr.getReference()));
         }

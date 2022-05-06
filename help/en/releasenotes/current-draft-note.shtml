@@ -100,7 +100,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>LogixNG has now support for MQTT. If a MQTT connection is
+                defined, the category MQTT is visible with the LogixNG actions
+                <i>Publish</i> and <i>Subscribe</i>.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -423,6 +425,9 @@
           so that the table grows and shrinks when it's resized.</li>
           <li>Update the Sequence action to reset itself when done if the continuous option is not
           selected.</li>
+          <li>Support for MQTT has been added. If a MQTT connection is
+          defined, the category MQTT is visible with the actions <i>Publish</i>
+          and <i>Subscribe</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
