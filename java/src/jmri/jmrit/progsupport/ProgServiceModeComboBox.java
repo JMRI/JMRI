@@ -114,6 +114,8 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
         add(progLabel);
         add(progBox = new JComboBox<>(v));
+        progBox.getAccessibleContext().setAccessibleName(Bundle.getMessage("ProgrammerLabel"));
+
         // if only one, don't show is confusing to user, so show combo with just 1 choice)
         progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
         progBox.addActionListener(new ActionListener() {
@@ -124,10 +126,10 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             }
         });
 
-        // install items in GUI
+        // install mode selection items in GUI
         add(new JLabel(Bundle.getMessage("ProgrammingModeLabel")));
-
         add(modeBox);
+        modeBox.getAccessibleContext().setAccessibleName(Bundle.getMessage("ProgrammingModeLabel"));
 
         // and execute the setup for 1st time
         programmerSelected();
