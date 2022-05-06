@@ -275,7 +275,7 @@ public class FirstTimeStartUpWizard {
                     adp.connect();
                     adp.configure();
                 } catch (Exception ex) {
-                    log.error("Exception: {}",ex.getLocalizedMessage(), ex);
+                    log.error("Exception: ", ex);
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
                     JOptionPane.showMessageDialog(null,
