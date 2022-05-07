@@ -179,7 +179,7 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
         }
         if (ae.getSource() == okButton) {
             // save current values in case user cancels
-            if (oldLWUE == INIT) {
+            if (oldLWUE.equals( INIT ) ) {
                 oldLWUE = pl.getLWUEText();
                 oldUWLE = pl.getUWLEText();
                 oldLWLE = pl.getLWLEText();
@@ -203,7 +203,7 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
             }
         }
         if (ae.getSource() == cancelButton) {
-            if (oldLWUE != INIT) {
+            if (!oldLWUE.equals(INIT)) {
                 pl.setUWLEText(oldUWLE);
                 pl.setLWUEText(oldLWUE);
                 pl.setLWLEText(oldLWLE);
