@@ -57,7 +57,7 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {        
         
         String turnoutName = statusString.split(" ")[1];
-        log.debug(statusString);
+        log.debug("status: {}", statusString);
         if (statusString.contains("THROWN")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout THROWN");
