@@ -143,8 +143,6 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
         git commit -m"ArchitectureCheck update" archunit_store archunit_ignore_patterns.txt
 ```
 
-- Run "ant realclean alltest"; make sure they all pass (requires having only one screen on macOS); if problems, consult! (might also take the jvisualvm data mentioned below at this point)
-
 - Run "ant decoderpro"; check for no startup errors, help index present and working OK; if problems, consult!
 
 - This is a good place to check that the decoder XSLT transforms work
@@ -458,15 +456,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
+
 [Release notes](https://jmri.org/releasenotes/jmri4.99.7.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.7+R7578dc0c9b.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.7/JMRI.4.99.7+R7578dc0c9b.dmg) | ebbad81179ee8a7cc1961d0333328b49c93e8bcef37f17a714a47af358bf8995
-[JMRI.4.99.7+R7578dc0c9b.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.7/JMRI.4.99.7+R7578dc0c9b.exe) | e4b490436d61a057c19ec10f9aca8577be29bbdd2eb7036c2a7682f1b19d7323
-[JMRI.4.99.7+R7578dc0c9b.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.7/JMRI.4.99.7+R7578dc0c9b.tgz) | 0cd11c5eb20684e99fe3fc8cd29390bff159875441a3203ace6ba1c0caa79cf1
+[JMRI.4.99.7+Rc450896c88.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.7/JMRI.4.99.7+Rc450896c88.dmg) | c681cf3b58f31ec1bfd404dbf01cfd8c36f5d5b2e6006379d6a94197d3a51845
+[JMRI.4.99.7+Rc450896c88.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.7/JMRI.4.99.7+Rc450896c88.exe) | 1dd9d4661dd555e980395b3f0d867b9508e8f4353a00580ca6a12f5bb4f97b49
+[JMRI.4.99.7+Rc450896c88.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.7/JMRI.4.99.7+Rc450896c88.tgz) | e298bcba2083ee15a9df70b67a1bc37d1747d9c462222d6476d38c363ed3fd55
 
 ```
 
