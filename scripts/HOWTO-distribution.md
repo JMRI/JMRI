@@ -638,12 +638,6 @@ You might want to edit it, i.e. to add
 
 - Take a break!
 
-====================================================================================
-
-## Git Usage During the Development and Release Process
-
-![git usage](Release_Git_Flow.png "Git Usage During the Development and Release Process")
-
 
 ====================================================================================
 ====================================================================================
@@ -652,6 +646,12 @@ You might want to edit it, i.e. to add
 # Additional Information
 
 The rest of the document provides information about specific cases.
+
+====================================================================================
+
+## Git Usage During the Development and Release Process
+
+![git usage](Release_Git_Flow.png "Git Usage During the Development and Release Process")
 
 ====================================================================================
 ## Branches for preparation of Production Releases
