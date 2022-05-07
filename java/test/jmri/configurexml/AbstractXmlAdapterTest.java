@@ -67,7 +67,7 @@ public class AbstractXmlAdapterTest{
         testEl.setAttribute("bar", "bar");
         Assert.assertEquals(21, adapter.getAttributeIntegerValue(testEl, "bar", 21));
         
-        JUnitAppender.assertErrorMessageStartsWith("element: foo System name \"attribute: bar\" User name \"value: bar\" while getAttributeIntegerValue threw exception in adaptor of type jmri.configurexml.AbstractXmlAdapterTest");
+        JUnitAppender.assertErrorMessageStartsWith("Load Error: element: foo System name \"attribute: bar\" User name \"value: bar\" while getAttributeIntegerValue threw exception in adaptor of type jmri.configurexml.AbstractXmlAdapterTest");
     }
         
     @Test
