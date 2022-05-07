@@ -173,7 +173,10 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
     }
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-
+        if ( pl == null ){
+            log.error("No SlipTurnoutIcon defined, call initComponents on this frame.");
+            return;
+        }
         if (ae.getSource() == okButton) {
             // save current values in case user cancels
             if (oldLWUE == INIT) {
@@ -209,4 +212,6 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
             dispose();
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlipTurnoutTextEdit.class);
 }
