@@ -19,7 +19,9 @@ public class AbstractXmlAdapterTest{
     @Test
     public void testGetAttributeBooleanValue() {
         AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            @Override
             public Element store(Object o) {return null;}
+            @Override
             public void load(Element e, Object o) {}
         };
         
@@ -51,7 +53,9 @@ public class AbstractXmlAdapterTest{
     @Test
     public void testGetAttributeIintegerValue() {
         AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            @Override
             public Element store(Object o) {return null;}
+            @Override
             public void load(Element e, Object o) {}
         };
         
@@ -73,7 +77,9 @@ public class AbstractXmlAdapterTest{
     @Test
     public void testGetAttributeDoubleValue() {
         AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            @Override
             public Element store(Object o) {return null;}
+            @Override
             public void load(Element e, Object o) {}
         };
         
@@ -89,7 +95,9 @@ public class AbstractXmlAdapterTest{
     @Test
     public void testGetAttributeFloatValue() {
         AbstractXmlAdapter adapter  = new AbstractXmlAdapter(){
+            @Override
             public Element store(Object o) {return null;}
+            @Override
             public void load(Element e, Object o) {}
         };
         
