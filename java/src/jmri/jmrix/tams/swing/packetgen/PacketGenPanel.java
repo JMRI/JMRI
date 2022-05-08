@@ -4,10 +4,7 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import jmri.jmrix.tams.TamsConstants;
-import jmri.jmrix.tams.TamsListener;
 import jmri.jmrix.tams.TamsMessage;
-import jmri.jmrix.tams.TamsReply;
-import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.util.StringUtil;
 
 /**
@@ -15,7 +12,7 @@ import jmri.util.StringUtil;
  *
  * @author Jan Boen
  */
-public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements TamsListener {
+public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -58,12 +55,7 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
             add(checkBoxBinCmd);
             add(sendButton);
 
-            sendButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            sendButton.addActionListener(this::sendButtonActionPerformed);
         }
     }
 
@@ -75,13 +67,6 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
     @Override
     public String getTitle() {
         return "Send Tams command";
-    }
-
-    @Override
-    public void initComponents(TamsSystemConnectionMemo memo) {
-        super.initComponents(memo);
-
-        memo.getTrafficController().addTamsListener(this);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -137,7 +122,9 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
                 m.setReplyType('S');
             }*/
         }
-        memo.getTrafficController().sendTamsMessage(m, this);
+        if ( memo != null ) {
+            memo.getTrafficController().sendTamsMessage(m, null);
+        }
     }
 
     TamsMessage createPacket(String s) {
@@ -157,13 +144,5 @@ public class PacketGenPanel extends jmri.jmrix.tams.swing.TamsPanel implements T
         }
         return m;
     }
-
-    @Override
-    public void message(TamsMessage m) {
-    }  // ignore replies
-
-    @Override
-    public void reply(TamsReply r) {
-    } // ignore replies
 
 }
