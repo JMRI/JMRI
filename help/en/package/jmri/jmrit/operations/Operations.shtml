@@ -2502,7 +2502,14 @@
       your spurs / industries, you can be selective and only add them to the spurs that you believe
       need them.</p>
 
-      <p>To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in
+   <p>
+    You can also control how cars with custom loads move to your spurs with schedules, see <a
+     href="#SpurOption">Hold cars with custom loads when spurs are full</a> under "Spur Option" for more
+    information. The "Hold" checkbox in the "Edit Location" for spurs shows selected when the option
+    to hold cars is enabled.
+   </p>
+
+   <p>To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in
       the <a href="#Sidings">Edit Spur Track</a> window. Pressing the "Add" button should create
       the "Add Schedule" window.</p>
 
@@ -2550,7 +2557,7 @@
       advances automatically to the next car type when adding a car type. This makes it easy to
       quickly add car types to the table.</p>
 
-      <h4>Schedule Line Items</h4>
+   <h4>Schedule Line Items</h4>
 
       <p>Each car type entered in a schedule has optional line items controlled by the various pull
       down menus. You can leave all of the line items blank if you want to keep things simple and
@@ -2821,7 +2828,9 @@
       can optionally specify which trains or train routes can pick up or set out cars. If you restrict
       which trains or routes can pull cars from a classification/interchange track, you must also
       restrict the track's car types, loads, and roads to the same ones that the train services,
-      otherwise you can have cars stranded on the classification/interchange track.</p>
+      otherwise you can have cars stranded on the classification/interchange track. Once you specify
+      which trains or routes can pull cars, all cars that the train can service are available to the
+      train, even cars that were delivered by the same train or route.</p>
 
    <p>
     You can if you wish control which destinations your C/I track can service. You can access <a
@@ -3670,10 +3679,11 @@
       calculating the train's total weight. If you use the <a href="#ManifestComments">Loads and
       Empties</a> option when printing your Manifest, you will want to use the correct load type so
       that the program prints out the correct number of loads and empties in the train.
+      
       <h4>Priority</h4>
 
-      <p>The default load priority is low and you can change the priority to high for a given car
-      type and load. High priority car loads are normally serviced before low priority. Useful if
+      <p>The default load priority is low and you can change the priority to medium or high for a given car
+      type and load. Higher priority car loads are normally serviced before low priority. Useful if
       you need to get your reefer loaded with fruit to the market ASAP!</p>
 
       <h4>Optional Load Messages</h4>
@@ -4730,7 +4740,7 @@
         <tr>
           <td>X (Train Pick up)</td>
           <td>
-            The train can't <a href="#EditRoute">picked up</a> cars from this <a href=
+            The train can't <a href="#EditRoute">pick up</a> cars from this <a href=
             "#RestrictingTrackToCertainTrains">track</a>
           </td>
         </tr>
@@ -5440,7 +5450,7 @@
       <p>When building a train only rolling stock at locations that are part of the train's route
       are used. With regards to cars, in addition to the number of moves a car has experienced, the
       car's load priority is also considered. The program will try and find destinations for cars
-      with high priority loads before low priority loads.</p>
+      with higher priority loads before low priority loads.</p>
 
       <p>The next step in the build process is to optionally assign a <a href=
       "#CabooseFredHazardous">caboose</a> or car with <a href="#CabooseFredHazardous">FRED</a> to
