@@ -33,6 +33,9 @@ public class CbusCommonSwing {
     public static void setCellBackground( boolean isSelected, JComponent f, JTable table, int row){
         f.setBackground(isSelected ? table.getSelectionBackground() : 
             (( row % 2 == 0 ) ? table.getBackground() : WHITE_GREEN ) );
+
+        f.setForeground(isSelected ? table.getSelectionForeground(): table.getForeground());
+
     }
     
     public static void setCellFocus(boolean hasFocus, JComponent f, JTable table) {
