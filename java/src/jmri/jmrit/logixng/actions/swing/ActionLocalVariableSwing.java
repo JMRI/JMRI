@@ -156,7 +156,14 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     public boolean validate(@Nonnull List<String> errorMessages) {
         ActionLocalVariable action = new ActionLocalVariable("IQDA1", null);
 
-         // If using the Memory tab, validate the memory variable selection.
+        try {
+            action.setVariableOperation(VariableOperation.CalculateFormula);
+            action.setFormula(_calculateFormulaTextField.getText());
+        } catch (ParserException e) {
+            errorMessages.add(e.getMessage());
+        }
+
+        // If using the Memory tab, validate the memory variable selection.
         if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory) {
             if (_copyMemoryBeanPanel.getNamedBean() == null) {
                 errorMessages.add(Bundle.getMessage("ActionLocalVariable_CopyErrorMemory"));
