@@ -6216,6 +6216,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>Direct</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -6298,6 +6299,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>LocalVariable</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -6379,6 +6381,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>Formula</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -6460,6 +6463,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>Reference</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -16652,6 +16656,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>Direct</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -16734,6 +16739,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>LocalVariable</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -16815,6 +16821,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>Formula</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -16896,6 +16903,7 @@
       <comment>A comment</comment>
       <namedBean>
         <addressing>Reference</addressing>
+        <name>IH1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
@@ -27136,14 +27144,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Mon May 02 22:50:30 CEST 2022</date>
+      <date>Sun May 08 19:41:49 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Mon May 02 22:50:31 CEST 2022</date>
+      <date>Sun May 08 19:41:50 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-02T20:50:08Z+R4503dc3 on Mon May 02 22:50:31 CEST 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-08T17:41:26Z+R64b1ff2 on Sun May 08 19:41:50 CEST 2022-->
 </layout-config>
