@@ -299,6 +299,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         return createSystemName(curAddress, prefix, getNamedBeanClass());
     }
 
+    // not used
+    @Deprecated(since="4.99.8", forRemoval=true)
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
         for (Manager<E> m : mgrs) {
             log.debug("NextValidAddress requested for {}", curAddress);
