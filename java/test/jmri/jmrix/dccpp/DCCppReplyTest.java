@@ -523,14 +523,6 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void testMonitorStringVerifyReply() {
-        DCCppReply l = DCCppReply.parseDCCppReply("v "); // <r locoId>
-        Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:456", l.toMonitorString());
-        l = DCCppReply.parseDCCppReply("r -1"); // <r locoId> (-1 for error)
-        Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:-1", l.toMonitorString());
-    }
-
-    @Test
     public void testMonitorStringLocoIdReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 456"); // <r locoId>
         Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:456", l.toMonitorString());
