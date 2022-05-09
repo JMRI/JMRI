@@ -439,12 +439,22 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Script</h5>
+      <h5 id="script">Script</h5>
 
       <p>A script expression calls a Jython script. The Jython context contains a
       <strong>result</strong> boolean object. When the script is done, it does a
       <code>result.setValue(x)</code> where x is, or evaluates to, True or False.</p>
 
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/script_expression.png"><img src=
+        "images/chapter6/script_expression.png" alt="Chapter 6 script expression"></a>
+      </div>
+
+      <p>The Register listener and Unregister listener options are used if the script is to run
+      based on some other JMRI event.  For example, the following register command will
+      cause the script to be run every fast minute.</p>
+
+      <code>memories.getMemory('IMCURRENTTIME').addPropertyChangeListener('value', self)</code>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Sensor</h5>

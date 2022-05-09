@@ -105,6 +105,7 @@ public class LogixNG_SelectStringSwing {
                 _valueTextField.setText(selectStr.getValue());
             }
             _referenceTextField.setText(selectStr.getReference());
+            _memoryPanel.setDefaultNamedBean(selectStr.getMemory());
             _listenToMemoryCheckBox.setSelected(selectStr.getListenToMemory());
             _localVariableTextField.setText(selectStr.getLocalVariable());
             _formulaTextField.setText(selectStr.getFormula());
