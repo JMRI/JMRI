@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Chapter 12</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG reference tables">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 12</h1>
+
+      <h2>LogixNG Global Variables</h2>
+
+      <p>A LogixNG Global Variable is similar to the standard memory variable in that it is
+      accessable from any LogixNG conditional or module.  With the exception of an initial value,
+      its content is not retained between PanelPro sessions even if the data file is stored.</p>
+
+      <p><strong>Global</strong> variables support all of the data types that <strong>local
+      </strong> variables support, including the complex types such as map and array.  It can be
+      used anywhere a local variable can be used.  Either a local variable name or a global variable
+      name is used.  When a name is supplied, a check is made to see if it matches a local variable.
+      If it does, the local variable is used.  If it does not, a check is made to see if it matches
+      a global variable. If it does, the global variable is used.  If a match is not found, the
+      <em>"The symbol ... does not exist in the symbol table"</em> error will be displayed.  Notice
+      the sequences of checks.  If the same name is used for both a local and a global variable, the
+      local variable will be selected.</p>
+
+<pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+LogixNG: Set Scale
+    ConditionalNG: IQC:AUTO:0004
+        ! A
+            Set variable Scale to "HO"
+</pre>
+
+      <p>In the above example, the name <strong><em>Scale</em></strong> could be either a local or
+      global variable.  In this case, it is a global variable since there are no local variables
+      defined in the conditional.</p>
+
+      <p>Global variables are created using <strong>Tools &rArr; Tables &rArr; LogixNG &rArr;
+      LogixNG Global Variables</strong>.  See
+      <a href="../../../../package/jmri/jmrit/beantable/LogixNGGlobalVariables.shtml">
+      LogixNG Global Variables table</a> for details.</p>
+
+      <p>For details on Local Variables see <a href="chapter8.shtml">Chapter 8 - Local Variables</a></p>
+
+      <hr>
+
+      <p><a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>
+      </p>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

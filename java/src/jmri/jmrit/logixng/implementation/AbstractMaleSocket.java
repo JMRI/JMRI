@@ -418,7 +418,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(" ");
                 writer.append(((NamedBean)this).getDisplayName(
                         NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
-            } else if (getUserName() != null) {
+            } else if (!settings._hideUserName && getUserName() != null) {
                 writer.append(" ::: ");
                 writer.append(Bundle.getMessage("LabelUserName"));
                 writer.append(" ");

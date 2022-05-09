@@ -51,7 +51,6 @@ public class VSDecoder implements PropertyChangeListener {
 
     boolean initialized = false; // This decoder has been initialized
     boolean enabled = false; // This decoder is enabled
-    private boolean is_default = false; // This decoder is the default for its file
     private boolean create_xy_series = false; // Create xy coordinates in console
 
     private VSDConfig config;
@@ -80,7 +79,7 @@ public class VSDecoder implements PropertyChangeListener {
     private LayoutTrack returnTrack;
     private LayoutTrack returnLastTrack;
     LayoutTrack nextLayoutTrack;
-    private double directionRAD;        // directionRAD we're headed (in radians)
+    private double directionRAD; // directionRAD we're headed (in radians)
     private LayoutEditor models;
     private VSDNavigation navigation;
 
@@ -634,11 +633,6 @@ public class VSDecoder implements PropertyChangeListener {
 
         me.setAttribute("name", this.config.getProfileName());
 
-        // If this decoder is marked as default, add the default Element.
-        if (is_default) {
-            me.addContent(new Element("default"));
-        }
-
         for (SoundEvent se : event_list.values()) {
             le.add(se.getXml());
         }
@@ -696,15 +690,6 @@ public class VSDecoder implements PropertyChangeListener {
         // Set this decoder's name.
         this.setProfileName(e.getAttributeValue("name"));
         log.debug("Decoder Name: {}", e.getAttributeValue("name"));
-
-        // Read and create all of its components.
-        // Check for default element.
-        if (e.getChild("default") != null) {
-            log.debug("{} is default", getProfileName());
-            is_default = true;
-        } else {
-            is_default = false;
-        }
 
         // Check for a flag element to create xy-position-coordinates.
         n = e.getChildText("create-xy-series");

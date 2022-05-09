@@ -121,7 +121,7 @@
                       <a href="#Options">Options</a>
                       <ul>
                         <li>
-                          <a href="#SaveTrainManifests">Save Train Manifests</a>
+                          <a href="#SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</a>
                         </li>
 
                         <li>
@@ -1352,20 +1352,23 @@
       one major drawback to increasing the number of passes, is that your train build reports will
       be longer since each pass by the program is documented.</p>
 
-      <h3 id="AllowLocalCarMovements">Switcher Service (Local)</h3>
-      The next set of options control local car movements when using a <a href=
-      "#SwitcherService">switcher</a> to service a location. A switcher only services one location.
-      Normally it is better not to allow a car to move from one spur directly to another spur at
-      the same location when using a switcher. This type of move can be very unrealistic, picture
-      moving a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car
-      from one yard track to another can have your crew wondering what kind of busy work is being
-      generated! We recommend that you leave all of the checkboxes deselected, but if you need
-      these types of moves, select the appropriate checkbox.
-      <p>You should note that schedules can override the switcher options. So if you need certain
-      car movements for a switcher, it's best to use a <a href="#Schedules">schedule</a> to define
-      them.</p>
+   <h3 id="AllowLocalCarMovements">Switcher Service (Local)</h3>
+   The next set of options control local car movements when using a
+   <a href="#SwitcherService">switcher</a> to service a location. A switcher only services one
+   location. Normally it is better not to allow a car to move from one spur directly to another spur
+   at the same location when using a switcher. This type of move can be very unrealistic, picture
+   moving a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from
+   one yard track to another can have your crew wondering what kind of busy work is being generated!
+   We recommend that you leave all of the checkboxes deselected, but if you need these types of
+   moves for cars without a final destination or custom load, select the appropriate checkbox.
+   <p>
+    You should note that schedules and custom loads can override the switcher options. So if you
+    need certain car movements for a switcher, it's best to use <a href="#Schedules">schedules</a>
+    to define them. Also see <a href="#TrainLocalMoveOption">Allow local moves when a car has a
+     custom load or FD</a>.
+   </p>
 
-      <h3>Staging</h3>
+   <h3>Staging</h3>
 
       <h4 id="TypeRoadLoadRestrictionsStaging">Enable Type, Road and Load Restrictions into
       Staging</h4>
@@ -1434,27 +1437,30 @@
    <h4>Enable Car Routing</h4>
    When car routing is enabled, the program will use multiple trains to deliver a car to its final
    destination. It is recommended that you leave this option enabled. The
-   <a href="#LocationDivision">railroad division</a> feature uses routing to move cars. With car
-   routing enabled, you can use a
+   <a href="#LocationDivision">railroad division</a> feature and schedules use routing to move cars.
+   With car routing enabled, you can use a
    <a href="#Schedules">Schedule</a> to deliver a car to a specific location using the car's final
    destination fields. The car routing algorithm will search for the most efficient route for the
-   car to travel. The router will attempt to use classification/interchange tracks and then yards to
-   move cars. If you don't want the router to use yards, you can deselect the "Enable Car Routing
-   via Yards" checkbox. The program will try and find a route using a maximum of six trains to
-   complete the car move. Note that the program never gives up trying to route a car. If a car has
-   been assigned a
+   car to travel. The router will attempt to use classification/interchange tracks and then
+   optionally by yards to move cars. If you don't want to use yards when routing, you can
+   deselect the
+   <a href="#EnableRoutingYards">Enable Car Routing via Yards</a> checkbox. The program will try and
+   find a route using a maximum of seven trains to complete the car move. Note that the program
+   never gives up trying to route a car. If a car has been assigned a
    <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the program
    will try and route the car during every train build that has access to the car.
-   
-   <h4>Enable Car Routing via Yards</h4>
+
+   <h4 id="EnableRoutingYards">Enable Car Routing via Yards</h4>
       The program when routing a car will first try to find classification/interchange tracks to
       move the car to its final destination. If you want the program to also consider using yard
       tracks when routing, select this option.
+      
       <h4>Enable Car Routing through Staging</h4>
       Routing through staging is disabled by default. This is considered to be an advanced feature
       and shouldn't be used until you've become very familiar with the program. When enabled the
       program will try to route cars through staging if it couldn't find a route using C/I and yard
       tracks. Enabling this feature can increase train build times.
+      
       <h4>Use all Trains when Routing</h4>
 
       <p>The option "Use all Trains when Routing" when selected instructs the program to use all of
@@ -1861,17 +1867,20 @@
 
       <h3 id="Options">Options</h3>
 
-      <h4 id="SaveTrainManifests">Save Train Manifests</h4>
-      When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current
-      train Manifest before creating a new one. The program will store the old Manifests in a
-      directory called "manifestBackups" located in the "operations" directory. You can review your
-      old Manifest using the <a href="#PrintSavedTrainManifests">Print or Preview Saved Train
-      Manifests</a> under tools in the <a href="#Trains">Trains</a> or <a href="#TrainEdit">Edit
-      Train</a> windows.
-      <p>The program will also store a copy of each train's build report in a directory called
-      "buildStatusBackups" also located in the "operations" directory.</p>
+   <h4 id="SaveTrainManifests">Save Train Manifests, Build Reports, and Switch Lists</h4>
+   When the option "Save Train Manifests, Build Reports, and Switch Lists" is selected,
+   OperationsPro&trade; will save the current train Manifest before creating a new one. The program
+   will store the old Manifests in a directory called "manifestBackups" located in the "operations"
+   directory. You can review your old Manifest using the
+   <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the <a href="#Trains">Trains</a>
+   or <a href="#TrainEdit">Edit Train</a> windows.
+   <p>
+    The program will also store a copy of each train's build report in a directory called
+    "buildStatusBackups" also located in the "operations" directory. You can access old build
+    reports from the <a href="#TrainEdit">Edit Train</a> window under tools.
+   </p>
 
-      <p>This option also makes backup copies of any switch list that you create. They are stored
+   <p>This option also makes backup copies of any switch list that you create. They are stored
       in a directory called "switchListBackups" located in the "operations" directory. A separate
       directory is created for each location's switch list that you create.</p>
 
@@ -2107,11 +2116,13 @@
       the train, and why they are not picked up or set out. Be sure and press "Save" after changing
       the build report selection.</p>
 
-      <p>For most users, the "Very Detailed" setting is the most appropriate when reading a train's
-      build report. For information on the content of the build report please see <a href=
-      "#BuildReports">Build Reports</a>.</p>
+   <p>
+    For most users, the "Very Detailed" setting is the most appropriate when reading a train's build
+    report and "Normal" for the router detail level. For information on the content of the build
+    report please see <a href="#BuildReports">Build Reports</a>.
+   </p>
 
-      <p>You also have the option of using a text editor to view your build report. A text editor
+   <p>You also have the option of using a text editor to view your build report. A text editor
       can make trouble shooting a problem much easier for you. For example, say you have a car that
       isn't moving. Using the editor's find feature, you could search the build report using the
       car's road number and quickly find why the car isn't being picked up by the train. One of the
@@ -2222,8 +2233,11 @@
     return to an industry (<a href="#Sidings">spur</a>) or <a href="#Staging">staging</a> at their
     home division when loaded from an industry or staging outside of their home division. Cars
     loaded at their home division can travel to any industry or staging on the railroad. The program
-    will use <a href="#Interchange">interchange</a> tracks to route the cars to yards, industries or
-    staging that require multiple trains.
+    will use <a href="#Interchange">interchange</a> tracks and <a href="#EnableRoutingYards">optionally</a>
+    intermediate yards to route the cars to yards, industries or staging that require multiple
+    trains. When using the railroad division feature, it isn't necessary to create schedules for
+    your spurs, <a href="#Schedules">schedules</a> are optional unless your cars are using custom
+    loads.
    </p>
 
    <p>When setting up railroad divisions, it is best if there's at least one division yard for
@@ -2260,6 +2274,11 @@
       list</a>. To see the work for all trains visiting a location, press the "Yardmaster" button
       in the <a href="#Locations">locations</a> window. The Yardmaster window also allows you to
       modify a <a href="#ModifyingBuiltTrain">built</a> train.</p>
+      
+      <p>The Yardmaster tools provides another window called "Yardmaster by Track".  This window lists the
+      work for each track at the location. The other two tools are "Print" and "Preview" which provide
+      switch lists for the location but are only available when running in <a href=
+      "#SwitchList">Real Time</a>.
 
       <h3 id="LocationTools">Location Tools</h3>
       From the "Tools" menu found in "Edit Location" window you can access several useful
@@ -2483,7 +2502,14 @@
       your spurs / industries, you can be selective and only add them to the spurs that you believe
       need them.</p>
 
-      <p>To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in
+   <p>
+    You can also control how cars with custom loads move to your spurs with schedules, see <a
+     href="#SpurOption">Hold cars with custom loads when spurs are full</a> under "Spur Option" for more
+    information. The "Hold" checkbox in the "Edit Location" for spurs shows selected when the option
+    to hold cars is enabled.
+   </p>
+
+   <p>To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in
       the <a href="#Sidings">Edit Spur Track</a> window. Pressing the "Add" button should create
       the "Add Schedule" window.</p>
 
@@ -2531,7 +2557,7 @@
       advances automatically to the next car type when adding a car type. This makes it easy to
       quickly add car types to the table.</p>
 
-      <h4>Schedule Line Items</h4>
+   <h4>Schedule Line Items</h4>
 
       <p>Each car type entered in a schedule has optional line items controlled by the various pull
       down menus. You can leave all of the line items blank if you want to keep things simple and
@@ -2802,7 +2828,9 @@
       can optionally specify which trains or train routes can pick up or set out cars. If you restrict
       which trains or routes can pull cars from a classification/interchange track, you must also
       restrict the track's car types, loads, and roads to the same ones that the train services,
-      otherwise you can have cars stranded on the classification/interchange track.</p>
+      otherwise you can have cars stranded on the classification/interchange track. Once you specify
+      which trains or routes can pull cars, all cars that the train can service are available to the
+      train, even cars that were delivered by the same train or route.</p>
 
    <p>
     You can if you wish control which destinations your C/I track can service. You can access <a
@@ -3651,10 +3679,11 @@
       calculating the train's total weight. If you use the <a href="#ManifestComments">Loads and
       Empties</a> option when printing your Manifest, you will want to use the correct load type so
       that the program prints out the correct number of loads and empties in the train.
+      
       <h4>Priority</h4>
 
-      <p>The default load priority is low and you can change the priority to high for a given car
-      type and load. High priority car loads are normally serviced before low priority. Useful if
+      <p>The default load priority is low and you can change the priority to medium or high for a given car
+      type and load. Higher priority car loads are normally serviced before low priority. Useful if
       you need to get your reefer loaded with fruit to the market ASAP!</p>
 
       <h4>Optional Load Messages</h4>
@@ -3757,20 +3786,21 @@
       destination for the car, or you've enabled them by using the "Enable Destination" option
       found under the "Tools" menu.</p>
 
-      <h4 id="FinalDestination">Final Destination and Track</h4>
-      The next field is the "Final Destination and Track" set of pull down boxes. You can select
-      any destination, and optionally a track at that destination. The program will figure out the
-      best <a href="#CarRouting">route</a> to ship the car to this destination. The "route" can consist of several trains,
-      interchanges, and yards. When a car is delivered to a spur with a schedule, and the schedule
-      has a shipping destination that requires more than one train, the program uses this set of
-      fields to ship the car. If the track that the final destination specifies happens to be full,
-      the program will search for a yard to place the car. When the track becomes available, the
-      program will move the car from the yard to the track specified.
-      <p>When selecting a final destination, you don't have to specify a track. And when selecting
-      a destination that is staging, you shouldn't select a destination track, let the program do
-      that for you.</p>
+   <h4 id="FinalDestination">Final Destination and Track</h4>
+   The next field is the "Final Destination and Track" set of pull down boxes. You can select any
+   destination, and optionally a track at that destination. The program will figure out the best
+   <a href="#CarRouting">route</a> to ship the car to this destination. The "route" can consist of
+   several trains, interchanges, and <a href="#EnableRoutingYards">optionally</a>
+   yards. When a car is delivered to a spur with a schedule, and
+   the schedule has a shipping destination that requires more than one train, the program uses this
+   set of fields to ship the car. If the track that the final destination specifies happens to be
+   full, the program will search for a yard to place the car. When the track becomes available, the
+   program will move the car from the yard to the track specified.
+   <p>When selecting a final destination, you don't have to specify a track. And when selecting
+    a destination that is staging, you shouldn't select a destination track, let the program do that
+    for you.</p>
 
-      <h4>Train</h4>
+   <h4>Train</h4>
 
       <p>The last field is the train assignment. You can manually decide which train to use before
       or after build your trains.</p>
@@ -4118,12 +4148,16 @@
       greater than 50% to reduce the move count by one, and 100% if you wanted the move count to be
       reduced by 2.</p>
 
-      <p>If you want to delay the departure of the train from a location or increase the train's
-      travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
-      specify the train's departure time from a location by selecting the "Departure Time" radio
-      button in the lower right hand corner of the <a href="#EditRoute">Edit Route</a> window.</p>
+   <p>
+    The "Switch Time" and "Travel Time" found on the <a href="#Settings">Settings</a> page
+    determines the time it takes for your train to service a location and travel to the next. If you
+    want to delay the departure of the train from a location or increase the train's travel time,
+    enter the number of minutes desired in the "Wait" cell. Another choice is to specify the train's
+    departure time from a location by selecting the "Departure Time" radio button in the lower right
+    hand corner of the <a href="#AddRoute">Edit Route</a> window.
+   </p>
 
-      <p>You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using
+   <p>You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using
       <a href="#UnitOfLength">(feet or meters)</a> that can depart each location. For example, if
       you limited the train's departure length to 500 feet, then approximately 10 cars would depart
       in the train from that location. When first starting out, it is recommended that you leave
@@ -4461,7 +4495,7 @@
       recommendation is to leave this option disabled unless you need your train to carry cars from
       and to the same staging track.</p>
 
-      <h4>Allow local moves when a car has a custom load</h4>
+      <h4 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h4>
       The program when generating car movement normally doesn't create local moves. A local move is
       a pick up and then a set out of a car at the same location. When you use custom loads, the
       program can create local moves based on the car's custom load. So if you had a car sitting on
@@ -4493,16 +4527,18 @@
       "SendCustomToStaging"></a>
       <h4>Send cars with custom loads to staging</h4>
 
-      <p>When the "Send cars with custom loads to staging" is selected, the program will attempt to
-      send a car with a custom load, but without a final destination, to staging when the program
-      finds all of the spurs with schedules full. The program will also send a car to staging if it
-      finds the <a href="#CarRouting">routes</a> servicing the spurs with schedules have interim yard or C/I tracks that are
-      also full. This option tends to increase car movement to staging by ignoring the <a href=
-      "#SpurOption">Hold cars with custom loads when spurs are full</a> feature for a spur where
-      the program would normally hold a car at its current location when all spurs with schedules
-      are full.</p>
+   <p>
+    When the "Send cars with custom loads to staging" is selected, the program will attempt to send
+    a car with a custom load, but without a final destination, to staging when the program finds all
+    of the spurs with schedules full. The program will also send a car to staging if it finds the <a
+     href="#CarRouting">routes</a> servicing the spurs with schedules have <a
+     href="#EnableRoutingYards">interim</a> yard or C/I tracks that are also full. This option tends
+    to increase car movement to staging by ignoring the <a href="#SpurOption">Hold cars with
+     custom loads when spurs are full</a> feature for a spur where the program would normally hold a car
+    at its current location when all spurs with schedules are full.
+   </p>
 
-      <h4 id="BuildlocoConsist">Build loco consist from single locos</h4>
+   <h4 id="BuildlocoConsist">Build loco consist from single locos</h4>
       This option when selected will dynamically build a locomotive consist for you using locos
       that aren't in a consist. For example, say you request a consist of three locomotives in the
       edit train window's <a href="#TrainRequires">Optional train requirements</a>. The program
@@ -4704,7 +4740,7 @@
         <tr>
           <td>X (Train Pick up)</td>
           <td>
-            The train can't <a href="#EditRoute">picked up</a> cars from this <a href=
+            The train can't <a href="#EditRoute">pick up</a> cars from this <a href=
             "#RestrictingTrackToCertainTrains">track</a>
           </td>
         </tr>
@@ -5390,17 +5426,19 @@
       <p>The routing method also uses the car's move count to determine which cars to look at
       first. A car needs to be <a href="#CarRouting">routed</a> when it has a <a href="#FinalDestination">final
       destination</a> (think ship to address). The program will try and route the car to its final
-      destination using up to six trains. If the car has a custom load and no final destination,
+      destination using up to seven trains. If the car has a custom load and no final destination,
       the program will search for a spur with a schedule that is demanding that car's load, and
       then will then give the car a final destination that is the spur, and then route the car to
       that spur.</p>
 
-      <p>Cars that are routed move with a purpose, they will travel from location to location using
-      the most efficient route the program can find. Most of the time cars are routed though
-      classification or interchange (C/I) tracks, but the program will use yard tracks if needed,
-      and <a href="#CarRouting">allowed</a>.</p>
+   <p>
+    Cars that are routed move with a purpose, they will travel from location to location using the
+    most efficient route the program can find. Most of the time cars are routed though
+    classification or interchange (C/I) tracks, but the program can <a href="#EnableRoutingYards">optionally</a>
+    use yard tracks if needed.
+   </p>
 
-      <h4>More details</h4>
+   <h4>More details</h4>
 
       <p>At the beginning of the train build process, if the train requires a locomotive or several
       locomotives, the program will look for locomotives at the start of the route and then
@@ -5412,7 +5450,7 @@
       <p>When building a train only rolling stock at locations that are part of the train's route
       are used. With regards to cars, in addition to the number of moves a car has experienced, the
       car's load priority is also considered. The program will try and find destinations for cars
-      with high priority loads before low priority loads.</p>
+      with higher priority loads before low priority loads.</p>
 
       <p>The next step in the build process is to optionally assign a <a href=
       "#CabooseFredHazardous">caboose</a> or car with <a href="#CabooseFredHazardous">FRED</a> to
@@ -5468,7 +5506,7 @@
 
       <p>If a car has a <a href="#EditCarLoads">custom load</a> without a destination, the program
       will search for a spur with a schedule demanding that car type and load, the program will
-      then <a href="#CarRouting">route</a> the car to that destination. The program will use up to six trains to route a
+      then <a href="#CarRouting">route</a> the car to that destination. The program will use up to seven trains to route a
       car to a destination. The program when determining how many cars an industry can serve
       considers the length of the spur serving the industry, and the length of the alternate track
       if one is specified. If the car is departing staging with a custom load, the "Percentage of

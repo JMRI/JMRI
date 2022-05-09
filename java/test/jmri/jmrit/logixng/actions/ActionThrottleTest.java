@@ -487,17 +487,17 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
         locoAddressMemory.setValue(locoAddress);
         AnalogExpressionMemory locoAddressExpression = new AnalogExpressionMemory("IQAE111", null);
-        locoAddressExpression.setMemory(locoAddressMemory);
+        locoAddressExpression.getSelectNamedBean().setNamedBean(locoAddressMemory);
 
         Memory locoSpeedMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco speed memory");
         locoSpeedMemory.setValue(0);
         AnalogExpressionMemory locoSpeedExpression = new AnalogExpressionMemory("IQAE112", null);
-        locoSpeedExpression.setMemory(locoSpeedMemory);
+        locoSpeedExpression.getSelectNamedBean().setNamedBean(locoSpeedMemory);
 
         Sensor locoDirectionSensor = InstanceManager.getDefault(SensorManager.class).provide("Loco direction sensor");
         locoDirectionSensor.setState(Sensor.ACTIVE);
         ExpressionSensor locoDirectionExpression = new ExpressionSensor("IQDE113", null);
-        locoDirectionExpression.setSensor(locoDirectionSensor);
+        locoDirectionExpression.getSelectNamedBean().setNamedBean(locoDirectionSensor);
 
         // Set loco address of actionThrottle2
         conditionalNG_2.unregisterListeners();
@@ -622,17 +622,17 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         Memory locoAddressMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco address memory");
         locoAddressMemory.setValue(locoAddress);
         AnalogExpressionMemory locoAddressExpression = new AnalogExpressionMemory("IQAE111", null);
-        locoAddressExpression.setMemory(locoAddressMemory);
+        locoAddressExpression.getSelectNamedBean().setNamedBean(locoAddressMemory);
 
         Memory locoSpeedMemory = InstanceManager.getDefault(MemoryManager.class).provide("Loco speed memory");
         locoSpeedMemory.setValue(0);
         AnalogExpressionMemory locoSpeedExpression = new AnalogExpressionMemory("IQAE112", null);
-        locoSpeedExpression.setMemory(locoSpeedMemory);
+        locoSpeedExpression.getSelectNamedBean().setNamedBean(locoSpeedMemory);
 
         Sensor locoDirectionSensor = InstanceManager.getDefault(SensorManager.class).provide("Loco direction sensor");
         locoDirectionSensor.setState(Sensor.ACTIVE);
         ExpressionSensor locoDirectionExpression = new ExpressionSensor("IQDE113", null);
-        locoDirectionExpression.setSensor(locoDirectionSensor);
+        locoDirectionExpression.getSelectNamedBean().setNamedBean(locoDirectionSensor);
 
         // Set loco address of actionThrottle2
         MaleSocket locoAddressSocket =
@@ -747,6 +747,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = maleSocket;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

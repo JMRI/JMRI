@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  * Test ActionTurnoutXml
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 public class DigitalActionsXmlTest {
@@ -21,17 +21,17 @@ public class DigitalActionsXmlTest {
     @Test
     public void testLoad() throws JmriConfigureXmlException {
         AbstractNamedBeanManagerConfigXML b;
-        
+
         b = new ActionLightXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new ActionSensorXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         // If the ActionScript is in a panel file, it will be replaced with
         // the ActionSimpleScript. That's why the ActionScriptXml class is
         // still there.
@@ -39,58 +39,58 @@ public class DigitalActionsXmlTest {
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new ActionThrottleXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new ActionTurnoutXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new DoAnalogActionXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new DoStringActionXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new IfThenElseXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new DigitalManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
-        
+
         b = new ShutdownComputerXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
     }
-    
+
     @Test
-    public void testShutdownComputerXml() {
+    public void testShutdownComputerXml() throws JmriConfigureXmlException {
         Element element = new Element("shutdown-computer");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent("IQDA1"));
-        
+
         // Test invalid type. This value should be a number but test it with
         // some letters.
 //        element.setAttribute("seconds", "abc");
-        
+
         ShutdownComputerXml shutdownComputerXml = new ShutdownComputerXml();
         shutdownComputerXml.load(element, null);
 //        JUnitAppender.assertErrorMessage("seconds attribute is not an integer");
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

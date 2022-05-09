@@ -402,6 +402,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         toolMenu.add(new PrintTrainBuildReportAction(true, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(false, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(true, _train));
+        toolMenu.add(new PrintSavedBuildReportAction(false, _train));
+        toolMenu.add(new PrintSavedBuildReportAction(true, _train));
     }
 
     // Save, Delete, Add, Edit, Reset, Set, Clear

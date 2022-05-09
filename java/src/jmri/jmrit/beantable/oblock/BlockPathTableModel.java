@@ -52,7 +52,6 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     private TableFrames _parent;
     private final boolean _tabbed;     // read from prefs (restart required)
     private ArrayList<Boolean> _units; // list to toggle units of length col for each path
-    private float _tempLen;
     
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
@@ -176,13 +175,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     } else {
                         return (twoDigit.format(path.getLengthIn()));
                     }
-                } else {
-                    if (_units.get(rowIndex)) {
-                        return (twoDigit.format(_tempLen/10));
-                    } else {
-                        return (twoDigit.format(_tempLen/25.4f));
-                    }
                 }
+                break;
             case UNITSCOL:
                 return _units.get(rowIndex);
             case EDIT_COL:
@@ -246,18 +240,6 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         } else {
                             tempRow[NAME_COLUMN] = strValue; // initial entry of Path name in cell
                         }
-                    }
-                    break;
-                case LENGTHCOL:
-                    try {
-                        _tempLen = IntlUtilities.floatValue(value.toString());
-                        if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
-                            _tempLen *= 10f;
-                        } else {
-                            _tempLen *= 25.4f;                            
-                        }
-                    } catch (ParseException e) {
-                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);
                     }
                     break;
                 case UNITSCOL:

@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -40,7 +41,9 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
     public void testPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        ExpressionTurnoutSwing t = new ExpressionTurnoutSwing();
+        JDialog dialog = new JDialog();
+
+        ExpressionTurnoutSwing t = new ExpressionTurnoutSwing(dialog);
         JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
@@ -49,10 +52,12 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ExpressionTurnoutSwing().getConfigPanel(new JPanel()));
+            null != new ExpressionTurnoutSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ExpressionTurnoutSwing().getConfigPanel(new ExpressionTurnout("IQDE1", null), new JPanel()));
+            null != new ExpressionTurnoutSwing(dialog).getConfigPanel(new ExpressionTurnout("IQDE1", null), new JPanel()));
     }
 
     ConditionalNG conditionalNG = null;
@@ -93,9 +98,9 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.Closed);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return expression.getTurnout() != null;});
+        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;});
 
-        Assert.assertEquals("IT1", expression.getTurnout().getBean().getSystemName());
+        Assert.assertEquals("IT1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
         Assert.assertEquals(ExpressionTurnout.TurnoutState.Closed, expression.getBeanState());
     }
 

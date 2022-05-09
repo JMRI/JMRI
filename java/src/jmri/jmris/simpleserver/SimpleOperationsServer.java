@@ -403,7 +403,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
             try {
                 sendFullStatus((Train) e.getSource());
             } catch (IOException e1) {
-                log.error(e1.getLocalizedMessage(), e1);
+                log.error("Exception: ", e1);
             }
         }
     }

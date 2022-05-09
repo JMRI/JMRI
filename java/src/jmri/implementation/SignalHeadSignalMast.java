@@ -94,7 +94,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     }
 
     private void configureHeads(String parts[], int start) {
-        heads = new ArrayList<NamedBeanHandle<SignalHead>>();
+        heads = new ArrayList<>();
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];
             // check head exists
@@ -183,7 +183,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             log.debug("No delay set");
             //can be considered normal if does not exists or is invalid
         }
-        HashMap<SignalHead, Integer> delayedSet = new HashMap<SignalHead, Integer>(heads.size());
+        HashMap<SignalHead, Integer> delayedSet = new HashMap<>(heads.size());
         for (int i = 0; i < heads.size(); i++) {
             // some extensive checking
             boolean error = false;
@@ -235,7 +235,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             try {
                 thr.start();
             } catch (java.lang.IllegalThreadStateException ex) {
-                log.error(ex.toString());
+                log.error("Illegal Thread Sate: {}",getDisplayName(), ex);
             }
         }
     }
@@ -266,13 +266,13 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                 thr.start();
                 thr.join();
             } catch (java.lang.IllegalThreadStateException | InterruptedException ex) {
-                log.error(ex.toString());
+                log.error("Exception: ", ex);
             }
         }
     }
 
     public static List<SignalHead> getSignalHeadsUsed() {
-        List<SignalHead> headsUsed = new ArrayList<SignalHead>();
+        List<SignalHead> headsUsed = new ArrayList<>();
         for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
             if (mast instanceof jmri.implementation.SignalHeadSignalMast) {
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast) mast).getHeadsUsed();

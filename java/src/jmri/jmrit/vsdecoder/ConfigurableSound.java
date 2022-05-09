@@ -101,6 +101,12 @@ class ConfigurableSound extends VSDSound {
         return true;
     }
 
+    /**
+     * Get the audio playing state.
+     * @return the playing state
+     * @deprecated As of 4.99.6, use {Audio.STATE_PLAYING} instead
+     */
+    @Deprecated(since="4.99.6")
     @Override
     public boolean isPlaying() {
         return is_playing;

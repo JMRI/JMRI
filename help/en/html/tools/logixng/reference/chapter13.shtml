@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Chapter 13</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG jython">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Chapter 13</h1>
+
+      <h2>Jython Scripting Support</h2>
+
+      <p>Jython is an important component provided by JMRI to make it possible to extend the JMRI
+      features.  LogixNG continues that ability to run scripts supporting JMRI using the same
+      actions that were part of the original Logix.  LogixNG extents that support to include the
+      ability to extend LogixNG itself, provide access to the LogixNG managers, provide access to
+      global variables and receiving results from a script, etc.</p>
+
+      <p>
+      The following is a summary of the scripting options.
+      </p>
+
+      <ul>
+        <li>The <a href="chapter5.shtml#script">Script</a> action in chapter 5 provides the basic
+        ability to run Jython commands or call a script.</li>
+        <li>The <a href="chapter6.shtml#script">Script</a> expression in chapter 6 provides the
+        ability to run Jython commands or call a script that return true or false.</li>
+        <li>Script options are available to set global and local variable values. See
+        <a href="chapter8.shtml#variableTypes"> Variable Types</a> for more details.</li>
+        <li>LogixNG has functions that can be called by formula actions.  Custom functions can be
+        created using a script.  See <a href="chapter9.shtml#jythonFunction">Jython Functions</a>
+        for details.
+      </ul>
+
+      <p>The LogixNG includes additional <strong>bindings</strong> to support LogixNG access.</p>
+
+      <ul>
+        <li>logixngs &rarr; LogixNG_Manager</li>
+        <li>conditionalngs &rarr; ConditionalNG_Manager</li>
+        <li>globalVariables &rarr; GlobalVariableManager</li>
+        <li>logixngModules &rarr; ModuleManager</li>
+        <li>logixngTables &rarr; NamedTableManager</li>
+        <li>analogActions &rarr; AnalogActionManager</li>
+        <li>analogExpressions &rarr; AnalogExpressionManager</li>
+        <li>digitalActions &rarr; DigitalActionManager</li>
+        <li>digitalBooleanActions &rarr; DigitalBooleanActionManager</li>
+        <li>digitalExpressions &rarr; DigitalExpressionManager</li>
+        <li>stringActions &rarr; StringActionManager</li>
+        <li>stringExpressions &rarr; StringExpressionManager</li>
+      </ul>
+
+      <p>These work like the standard bindings, such as <code>masts.getSignalMast('mastName')</code>.
+      For example:  <code>myTable = logixngTables.getNamedTable('tableName')</code>.</p>
+      <hr>
+
+      <h4>Sample script for accessing LogixNG content</h4>
+
+      <p>A global variable is defined using <strong>Tools &rArr; Tables &rArr; LogixNG &rArr; LogixNG
+      Global Variables</strong> with an initial value of <strong><em>Hello</em></strong>.  The
+      script is called using a Script action.  The <strong>Log local variables</strong> action
+      is called before and after the script.</p>
+
+      <p>The script gets access to the global variable and modifies the value.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+import java
+import jmri
+
+var = globalVariables.getGlobalVariable('first_prog')
+phrase = '{} World'.format(var.getValue())
+var.setValue(phrase)
+        </pre>
+      </div>
+
+      <p>The before and after global value shows the change.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+WARN  - Log local variables: [JMRI LogixNGThread]
+WARN  - Global variables: [JMRI LogixNGThread]
+WARN  -     Global Name: first_prog, value: Hello [JMRI LogixNGThread]
+WARN  - Log local variables done [JMRI LogixNGThread]
+WARN  - Log local variables: [JMRI LogixNGThread]
+WARN  - Global variables: [JMRI LogixNGThread]
+WARN  -     Global Name: first_prog, value: Hello World [JMRI LogixNGThread]
+WARN  - Log local variables done [JMRI LogixNGThread]
+        </pre>
+      </div>
+
+      <p><a href="index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

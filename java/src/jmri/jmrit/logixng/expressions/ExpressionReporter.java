@@ -2,17 +2,15 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -22,9 +20,15 @@ import jmri.util.TypeConversionUtil;
  * @author Dave Sand Copyright 2021
  */
 public class ExpressionReporter extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanHandle<Reporter> _reporterHandle;
+    private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private ReporterValue _reporterValue = ReporterValue.CurrentReport;
     private ReporterOperation _reporterOperation = ReporterOperation.Equal;
@@ -32,11 +36,9 @@ public class ExpressionReporter extends AbstractDigitalExpression
 
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
-    private NamedBeanHandle<Memory> _memoryHandle;
     private String _localVariable = "";
     private String _regEx = "";
     private boolean _listenToMemory = true;
-//    private boolean _listenToMemory = false;
 
     public ExpressionReporter(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -51,90 +53,24 @@ public class ExpressionReporter extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionReporter copy = new ExpressionReporter(sysName, userName);
         copy.setComment(getComment());
-        if (_reporterHandle != null) copy.setReporter(_reporterHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         copy.setReporterValue(_reporterValue);
         copy.setReporterOperation(_reporterOperation);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
         copy.setConstantValue(_constantValue);
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         copy.setListenToMemory(_listenToMemory);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-
-    public void setReporter(@Nonnull String reporterName) {
-        assertListenersAreNotRegistered(log, "setReporter");
-        Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterName);
-        if (reporter != null) {
-            setReporter(reporter);
-        } else {
-            removeReporter();
-            log.warn("reporter \"{}\" is not found", reporterName);
-        }
+    public LogixNG_SelectNamedBean<Reporter> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setReporter(@Nonnull NamedBeanHandle<Reporter> handle) {
-        assertListenersAreNotRegistered(log, "setReporter");
-        _reporterHandle = handle;
-        InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
-
-    public void setReporter(@Nonnull Reporter reporter) {
-        assertListenersAreNotRegistered(log, "setReporter");
-        setReporter(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(reporter.getDisplayName(), reporter));
-    }
-
-    public void removeReporter() {
-        assertListenersAreNotRegistered(log, "removeReporter");
-        if (_reporterHandle != null) {
-            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
-            _reporterHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Reporter> getReporter() {
-        return _reporterHandle;
-    }
-
-
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
-        } else {
-            removeMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
-        }
-    }
-
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "removeMemory");
-        if (_memoryHandle != null) {
-            _memoryHandle = null;
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
-    }
-
 
     public void setLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setLocalVariable");
@@ -208,37 +144,6 @@ public class ExpressionReporter extends AbstractDigitalExpression
         return _caseInsensitive;
     }
 
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Reporter) {
-                if (evt.getOldValue().equals(getReporter().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Reporter_ReporterInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Reporter_MemoryInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Reporter) {
-                if (evt.getOldValue().equals(getReporter().getBean())) {
-                    removeReporter();
-                }
-            }
-
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    removeMemory();
-                }
-            }
-        }
-    }
 
     /** {@inheritDoc} */
     @Override
@@ -364,21 +269,23 @@ public class ExpressionReporter extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
-        if (_reporterHandle == null) return false;
+    public boolean evaluate() throws JmriException {
+        Reporter reporter = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+
+        if (reporter == null) return false;
 
         Object obj;
         switch (_reporterValue) {
             case CurrentReport:
-                obj = _reporterHandle.getBean().getCurrentReport();
+                obj = reporter.getCurrentReport();
                 break;
 
             case LastReport:
-                obj = _reporterHandle.getBean().getLastReport();
+                obj = reporter.getLastReport();
                 break;
 
             case State:
-                obj = _reporterHandle.getBean().getState();
+                obj = reporter.getState();
                 break;
 
             default:
@@ -393,7 +300,8 @@ public class ExpressionReporter extends AbstractDigitalExpression
                 otherValue = _constantValue;
                 break;
             case Memory:
-                otherValue = getString(_memoryHandle.getBean().getValue());
+                Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                otherValue = getString(memory.getValue());
                 break;
             case LocalVariable:
                 otherValue = TypeConversionUtil.convertToString(getConditionalNG().getSymbolTable().getValue(_localVariable), false);
@@ -460,19 +368,9 @@ public class ExpressionReporter extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String reporterName;
-        if (_reporterHandle != null) {
-            reporterName = _reporterHandle.getName();
-        } else {
-            reporterName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
+        String reporterName = _selectNamedBean.getDescription(locale);
 
-        String memoryName;
-        if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getName();
-        } else {
-            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
+        String memoryName = _selectMemoryNamedBean.getDescription(locale);
 
         String message;
         String other;
@@ -539,14 +437,14 @@ public class ExpressionReporter extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_reporterHandle != null)) {
+        if (!_listenersAreRegistered) {
             switch (_reporterValue) {
                 case CurrentReport:
-                    _reporterHandle.getBean().addPropertyChangeListener("currentReport", this);
+                    _selectNamedBean.addPropertyChangeListener("currentReport", this);
                     break;
 
                 case LastReport:
-                    _reporterHandle.getBean().addPropertyChangeListener("lastReport", this);
+                    _selectNamedBean.addPropertyChangeListener("lastReport", this);
                     break;
 
                 case State:
@@ -556,9 +454,10 @@ public class ExpressionReporter extends AbstractDigitalExpression
                 default:
                     // Do nothing
             }
-            if (_listenToMemory && (_memoryHandle != null)) {
-                _memoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToMemory) {
+                _selectMemoryNamedBean.addPropertyChangeListener("value", this);
             }
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -567,11 +466,12 @@ public class ExpressionReporter extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _reporterHandle.getBean().removePropertyChangeListener("currentReport", this);
-            _reporterHandle.getBean().removePropertyChangeListener("lastReport", this);
-            if (_listenToMemory && (_memoryHandle != null)) {
-                _memoryHandle.getBean().removePropertyChangeListener("value", this);
+            _selectNamedBean.removePropertyChangeListener("currentReport", this);
+            _selectNamedBean.removePropertyChangeListener("lastReport", this);
+            if (_listenToMemory) {
+                _selectMemoryNamedBean.removePropertyChangeListener("value", this);
             }
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -660,12 +560,8 @@ public class ExpressionReporter extends AbstractDigitalExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionReporter: bean = {}, report = {}", cdl, report);
-        if (getReporter() != null && bean.equals(getReporter().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
+        _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionReporter.class);

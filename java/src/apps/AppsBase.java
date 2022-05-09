@@ -6,9 +6,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
@@ -60,6 +58,8 @@ public abstract class AppsBase {
      *
      * @param applicationName The application name as presented to the user
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Info String always needs to be evaluated")
     static public void preInit(String applicationName) {
         Log4JUtil.initLogging();
 
@@ -156,7 +156,7 @@ public abstract class AppsBase {
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // GUI should show message here
-                    log.info(Bundle.getMessage("ConfigMigratedToProfile"));
+                    log.info("Migrated {}",Bundle.getMessage("ConfigMigratedToProfile"));
                 }
             } catch (IOException | IllegalArgumentException ex) {
                 // GUI should show message here

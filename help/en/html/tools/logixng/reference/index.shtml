@@ -74,6 +74,16 @@
         <li>
           <a href="chapter11.shtml">Chapter 11 - Tables</a>
         </li>
+
+        <li>
+          <a href="chapter12.shtml">Chapter 12 - Global Variables</a>
+          <span class="since">since 4.99.7</span>
+        </li>
+
+        <li>
+          <a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>
+          <span class="since">since 4.99.7</span>
+        </li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->
     </div>

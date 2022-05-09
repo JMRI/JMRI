@@ -22,7 +22,6 @@ public class LayoutTrackViewTest {
 
     public LayoutEditor layoutEditor;
 
-    @BeforeAll
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         JUnitUtil.setUp();
@@ -33,7 +32,6 @@ public class LayoutTrackViewTest {
         }
     }
 
-    @AfterAll
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (layoutEditor != null) {

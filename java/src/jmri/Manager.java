@@ -637,10 +637,11 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int ENTRYEXIT = PANELFILES + 10;
     // All LogixNG beans share the "Q" letter. For example, a digital expression
     // has a system name like "IQDE001".
-    public static final int LOGIXNGS = ENTRYEXIT + 10;                          // LogixNG
-    public static final int LOGIXNG_CONDITIONALNGS = LOGIXNGS + 10;             // LogixNG ConditionalNG
-    public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;      // LogixNG Modules
-    public static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;              // LogixNG Tables (not bean tables)
+    public static final int LOGIXNGS = ENTRYEXIT + 10;                              // LogixNG
+    public static final int LOGIXNG_GLOBAL_VARIABLES = LOGIXNGS + 10;               // LogixNG Global Variables
+    public static final int LOGIXNG_CONDITIONALNGS = LOGIXNG_GLOBAL_VARIABLES + 10; // LogixNG ConditionalNG
+    public static final int LOGIXNG_MODULES = LOGIXNG_CONDITIONALNGS + 10;          // LogixNG Modules
+    public static final int LOGIXNG_TABLES = LOGIXNG_MODULES + 10;                  // LogixNG Tables (not bean tables)
     public static final int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_TABLES + 10;          // LogixNG Expression
     public static final int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
     public static final int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action

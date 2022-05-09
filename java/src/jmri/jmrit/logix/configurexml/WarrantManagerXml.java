@@ -270,11 +270,13 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 warrant.setShareRoute(SCWa);
             }
             List<Element> orders = elem.getChildren("blockOrder");
+            int count = 0;
             for (Element ord : orders) {
                 BlockOrder bo = loadBlockOrder(ord);
                 if (bo == null) {
-                    log.error("Bad BlockOrder in warrant \"{}\".", warrant.getDisplayName());
+                    log.error("Bad BlockOrder in warrant \"{}\" elem= {}.", warrant.getDisplayName(), elem.getText());
                 } else {
+                    bo.setIndex(count++);
                     warrant.addBlockOrder(bo);
                 }
             }

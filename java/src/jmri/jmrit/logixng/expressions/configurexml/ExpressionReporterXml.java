@@ -4,11 +4,12 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.expressions.ExpressionReporter;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for ActionReporterXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -34,10 +35,11 @@ public class ExpressionReporterXml extends jmri.managers.configurexml.AbstractNa
 
         storeCommon(p, element);
 
-        var reporter = p.getReporter();
-        if (reporter != null) {
-            element.addContent(new Element("reporter").addContent(reporter.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Reporter>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
 
         element.addContent(new Element("reporterValue").addContent(p.getReporterValue().name()));
         element.addContent(new Element("reporterOperation").addContent(p.getReporterOperation().name()));
@@ -46,11 +48,6 @@ public class ExpressionReporterXml extends jmri.managers.configurexml.AbstractNa
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
 
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
-
-        var memory = p.getMemory();
-        if (memory != null) {
-            element.addContent(new Element("memory").addContent(memory.getName()));
-        }
 
         String variableName = p.getLocalVariable();
         if (variableName != null) {
@@ -70,19 +67,13 @@ public class ExpressionReporterXml extends jmri.managers.configurexml.AbstractNa
 
         loadCommon(h, shared);
 
-        Element reporterName = shared.getChild("reporter");
-        if (reporterName != null) {
-            Reporter m = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterName.getTextTrim());
-            if (m != null) h.setReporter(m);
-            else h.removeReporter();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Reporter>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "reporter", null, null, null, null);
 
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (m != null) h.setMemory(m);
-            else h.removeMemory();
-        }
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
+        selectMemoryNamedBeanXml.loadLegacy(shared, h.getSelectMemoryNamedBean(), "memory", null, null, null, null);
 
         Element variableName = shared.getChild("variable");
         if (variableName != null) {
