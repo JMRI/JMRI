@@ -69,14 +69,18 @@ public class LightEditAction extends BeanEditAction<Light> {
         lcPanel.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lcp.setToLight(bean);
+                if ( lcp != null ) {
+                    lcp.setToLight(bean);
+                }
             }
         });
 
         lcPanel.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lcp.setLightFromControlTable(bean);
+                if ( lcp != null ) {
+                    lcp.setLightFromControlTable(bean);
+                }
             }
         });
         bei.add(lcPanel);
@@ -93,14 +97,16 @@ public class LightEditAction extends BeanEditAction<Light> {
         liPanel.setResetItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lip.setToLight(bean);
+                if ( lip != null ) {
+                    lip.setToLight(bean);
+                }
             }
         });
 
         liPanel.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (bean instanceof VariableLight) {
+                if (bean instanceof VariableLight && lip != null ) {
                     lip.setLightFromPane((VariableLight)bean);
                 }
             }
