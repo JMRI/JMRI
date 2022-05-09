@@ -1575,7 +1575,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public boolean replyExpected() {
         boolean retv;
         switch (this.getOpCodeChar()) {
-            case DCCppConstants.THROTTLE_CMD:
             case DCCppConstants.TURNOUT_CMD:
             case DCCppConstants.SENSOR_CMD:
             case DCCppConstants.PROG_WRITE_CV_BYTE:
@@ -1589,7 +1588,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.READ_MAXNUMSLOTS:
             case DCCppConstants.OUTPUT_CMD:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
-            case DCCppConstants.FUNCTION_V4_CMD:
                 retv = true;
                 break;
             default:
