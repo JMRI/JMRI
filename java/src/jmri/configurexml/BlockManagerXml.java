@@ -97,7 +97,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                         // and put this element out
                         blocks.addContent(elem);
                     } catch (Exception e) {
-                        log.error(e.toString());
+                        log.error("Exception: ", e);
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 // store common parts
                 storeCommon(b, elem);
 
-                if ((!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
+                if ((!b.getBlockSpeed().isEmpty()) && !b.getBlockSpeed().contains("Global")) {
                     elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
                 }
                 String perm = "no";
@@ -137,7 +137,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
                 }
 
-                if (b.getDeniedBlocks().size() > 0) {
+                if (!b.getDeniedBlocks().isEmpty()) {
                     Element denied = new Element("deniedBlocks");
                     b.getDeniedBlocks().forEach((deniedBlock) -> {
                         denied.addContent(new Element("block").addContent(deniedBlock));
@@ -216,12 +216,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         try {
             if (sharedBlocks.getChild("defaultspeed") != null) {
                 String speed = sharedBlocks.getChild("defaultspeed").getText();
-                if (speed != null && !speed.equals("")) {
+                if (speed != null && !speed.isEmpty()) {
                     InstanceManager.getDefault(jmri.BlockManager.class).setDefaultSpeed(speed);
                 }
             }
         } catch (IllegalArgumentException ex) {
-            log.error(ex.toString());
+            log.error("Ill Argument Exception: ", ex );
         }
 
         List<Element> list = sharedBlocks.getChildren("block");
@@ -288,12 +288,12 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             block.setBlockSpeed("Global");
             if (element.getChild("speed") != null) {
                 String speed = element.getChild("speed").getText();
-                if (speed != null && !speed.equals("") && !speed.contains("Global")) {
+                if (speed != null && !speed.isEmpty() && !speed.contains("Global")) {
                     block.setBlockSpeed(speed);
                 }
             }
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("Exception setting block speed, ", ex );
         }
         if (element.getChild("permissive") != null) {
             boolean permissive = false;
@@ -321,14 +321,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             //Old method of saving sensors
             if (sensors.get(0).getAttribute("systemName") != null) {
                 String name = sensors.get(0).getAttribute("systemName").getValue();
-                if (!name.equals("")) {
+                if (!name.isEmpty()) {
                     block.setSensor(name);
                 }
             }
         }
         if (element.getChild("occupancysensor") != null) {
             String name = element.getChild("occupancysensor").getText();
-            if (!name.equals("")) {
+            if (!name.isEmpty()) {
                 block.setSensor(name);
             }
         }

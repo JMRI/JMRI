@@ -51,6 +51,9 @@ public class DivisionEditFrame extends OperationsFrame implements java.beans.Pro
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
+        divisionNameTextField.setName("DivisionNameField"); // NOI18N for UI Test
+        commentTextField.setName("CommentField"); // NOI18N for UI Test
+
         // Layout the panel by rows
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
