@@ -387,7 +387,7 @@ public class SpjFile {
         @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare7;
 
-        String filename;
+        String filename = "";
 
         public int getType() {
             return type;
@@ -449,7 +449,7 @@ public class SpjFile {
 
         public void setName(String name) {
             if (name.length() > 72) {
-                log.error("new filename too long: {}", filename.length());
+                log.error("new filename \"{}\" too long: {}", name, name.length());
             }
             filename = name;
         }
