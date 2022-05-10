@@ -128,6 +128,13 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionMemory action = new ActionMemory("IQDA2", null);
 
+        try {
+            action.setMemoryOperation(MemoryOperation.CalculateFormula);
+            action.setOtherFormula(_calculateFormulaTextField.getText());
+        } catch (ParserException e) {
+            errorMessages.add(e.getMessage());
+        }
+
         _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
         validateDataSection(action, errorMessages);
 
