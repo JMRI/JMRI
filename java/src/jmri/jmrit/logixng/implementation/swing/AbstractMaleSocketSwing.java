@@ -128,7 +128,10 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         if (! (object instanceof AbstractMaleSocket)) {
             throw new IllegalArgumentException("object is not an AbstractMaleSocket: " + object.getClass().getName());
         }
-        
+        if ( errorHandlingComboBox == null || catchAbortExecutionCheckBox == null ){
+            throw new UnsupportedOperationException("No Bean Panel Present ");
+        }
+
         AbstractMaleSocket maleSocket = (AbstractMaleSocket)object;
         maleSocket.setErrorHandlingType(errorHandlingComboBox.getItemAt(errorHandlingComboBox.getSelectedIndex()));
         maleSocket.setCatchAbortExecution(catchAbortExecutionCheckBox.isSelected());

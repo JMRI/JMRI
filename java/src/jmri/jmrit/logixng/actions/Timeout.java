@@ -326,7 +326,7 @@ public class Timeout extends AbstractDigitalAction
 
         @Override
         public void execute() throws JmriException {
-            if (_actionSocket != null) {
+            if ( _actionSocket != null && conditionalNG != null ) {
                 SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
                 conditionalNG.setSymbolTable(newSymbolTable);
                 _actionSocket.execute();
