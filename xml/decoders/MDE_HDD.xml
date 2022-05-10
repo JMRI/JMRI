@@ -270,7 +270,7 @@
         <label>Reverse Loop Wait Time</label>
       </variable>
 
-      <variable item="Reverse Loop Sampling Gate" CV="116" default="5">
+      <variable item="Reverse Loop Sampling Rate" CV="116" default="5">
         <decVal/>
         <label>Reverse Loop Current Sampling Gate</label>
       </variable>
