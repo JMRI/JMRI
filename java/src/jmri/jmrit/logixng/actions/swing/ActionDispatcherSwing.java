@@ -410,9 +410,7 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void setDefaultValues() {
-//        if (_stateComboBox.getSelectedIndex() < 1) {
-//            _stateComboBox.setSelectedIndex(1);
-//        }
+        _selectOperationSwing.setEnum(DirectOperation.LoadTrainFromFile);
     }
 
     @Override
