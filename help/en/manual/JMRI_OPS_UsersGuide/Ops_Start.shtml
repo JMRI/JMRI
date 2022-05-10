@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>What does OperationsPro do?</h2>
 
@@ -28,7 +28,7 @@
 
       <hr>
 
-      <p>Using JMRI® to operate trains allows you to build computer generated car Manifests for
+      <p>Using JMRI&reg; to operate trains allows you to build computer generated car Manifests for
       your railroad. A Manifest or Switch List details the work that a train will perform during an
       operations session. The Manifest provides a list of car pick up and set out and shows where
       the cars are located and where they should be eventually positioned on the railroad. The
@@ -49,8 +49,8 @@
       on a JMRI Panel. The icon can be taught to move across the panel along with the train from
       Location to Location.</p>
 
-      <p>The OperationsPro program is included in the JMRI® suite of tools, so when you install and
-      start up either DecoderPro® or PanelPro you will find OperationsPro menus in the main menu
+      <p>The OperationsPro program is included in the JMRI&reg; suite of tools, so when you install and
+      start up either DecoderPro&reg; or PanelPro you will find OperationsPro menus in the main menu
       bar under <strong>Tools &gt; Operations</strong> or as an <strong>Operations</strong> menu,
       if enabled in your <a href="Ops_Settings.shtml">OperationsPro Settings</a>.</p>
 
@@ -78,7 +78,7 @@
       <p><img src="images/Ops_Demo01.png" width="788" height="253" alt="Demo">
       </p>
 
-      <p>Selecting Load Demo Files closes DecoderPro® and it must be restarted to open the Demo
+      <p>Selecting Load Demo Files closes DecoderPro&reg; and it must be restarted to open the Demo
       Railroad.</p>
 
       <p><img src="images/Ops_Demo02.png" width="796" height="151" alt="Demo">

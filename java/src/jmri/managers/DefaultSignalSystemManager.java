@@ -134,7 +134,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                     if (file.isDirectory()) {
                         // check that there's an aspects.xml file
                         File aspects = new File(file.getPath() + File.separator + "aspects.xml");
-                        log.trace("checking for {}");
+                        log.trace("checking for {}", aspects);
                         if ((aspects.exists()) && (!retval.contains(file.getName()))) {
                             log.debug("found user system: {}", file.getName());
                             retval.add(file.getName());
@@ -164,7 +164,7 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
                 loadBean(s, root);
                 return s;
             } catch (IOException | JDOMException e) {
-                log.error("Could not parse aspect file \"{}\" due to: {}", path, e);
+                log.error("Could not parse aspect file \"{}\" due to", path, e);
             }
         }
 

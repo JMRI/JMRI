@@ -57,6 +57,9 @@
             e.g. the text box. Possible values are "left", "above", "below", "right" with a default
             of "right".</li>
 
+            <li><dfn>viewOnly</dfn> - Present the variable but do not allow the user to change
+            its value in this place. Possible values are "yes" or "no", with a default of "no".</li>
+
             <li>
               <dfn>format</dfn> -
               <p>How the variable should be presented. Numeric variables can be presented as</p>
@@ -208,11 +211,11 @@
           </ul>
 
           <p>The "gridx" and "gridy" attributes of a grid item specify the location of that item
-          within the grid. A value of gridx="0" puts the item in the lefmost column. A value of
+          within the grid. A value of gridx="0" puts the item in the leftmost column. A value of
           gridy="0" puts the item in the topmost row. Other attributes to control the format of the
           grid items are available and are documented in the <a href=
           "http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target=
-          "_blank">Java® GridBagLayout Tutorial</a>.</p>
+          "_blank">Java&reg; GridBagLayout Tutorial</a>.</p>
 
           <ul>
             <li>Attributes of "grid" apply to all items in the table.</li>

@@ -68,6 +68,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      */
     public void configureManagersPR2() {
         mode = PR3MODE;
+        log.info("Connection [{}] initialized as \"Stand Alone Programmer\", no access to attached devices. (see preferences)",getSystemPrefix());
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setThrottleManager(
@@ -112,7 +113,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.getThrottleManager();
         }
-        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,(Class c) -> new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
+        return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,(Class<?> c) -> new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
     }
 
     @Override
@@ -138,7 +139,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         }
         if(type.equals(jmri.ConsistManager.class)){
            return(getConsistManager()!=null);
-        } 
+        }
         return false;
     }
     //private jmri.jmrix.loconet.pr2.LnPr2PowerManager powerManager;
@@ -156,7 +157,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (mode == MS100MODE) {
             return super.getPowerManager();
         }
-        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class c) -> new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
+        return (LnPowerManager) classObjectMap.computeIfAbsent(PowerManager.class,(Class<?> c) -> new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
     }
 
     /**
@@ -164,6 +165,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      */
     public void configureManagersMS100() {
         mode = MS100MODE;
+        log.info("Connection [{}] initialized as LocoNet interface, allows access to attached devices. (see preferences)",getSystemPrefix());
         super.configureManagers();
     }
 

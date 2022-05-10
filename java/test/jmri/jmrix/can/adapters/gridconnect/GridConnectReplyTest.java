@@ -132,6 +132,7 @@ public class GridConnectReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         m = null;
         JUnitUtil.tearDown();

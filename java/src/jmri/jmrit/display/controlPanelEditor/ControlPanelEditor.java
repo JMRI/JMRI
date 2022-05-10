@@ -159,7 +159,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setScroll(SCROLL_BOTH);
         scrollBoth.setSelected(true);
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
-                Color.black, new Color(255, 250, 210), Color.black));
+                Color.black, new Color(255, 250, 210), Color.black, null));
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
@@ -210,9 +210,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     @SuppressWarnings("deprecation")  // META_MASK CTRL_MASK
     private void setMenuAcceleratorKey (JMenuItem mi,  int key) {
         if (SystemType.isMacOSX()) {
-            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.META_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.META_DOWN_MASK));
         } else {
-            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.CTRL_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(key, InputEvent.CTRL_DOWN_MASK));
         }
     }
 

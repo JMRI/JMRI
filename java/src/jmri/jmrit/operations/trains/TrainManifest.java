@@ -70,8 +70,8 @@ public class TrainManifest extends TrainCommon {
                 newLine(fileOut, valid);
             }
 
-            if (!train.getComment().equals(Train.NONE)) {
-                newLine(fileOut, train.getComment());
+            if (!train.getCommentWithColor().equals(Train.NONE)) {
+                newLine(fileOut, train.getCommentWithColor());
             }
 
             List<Engine> engineList = engineManager.getByTrainBlockingList(train);
@@ -139,8 +139,8 @@ public class TrainManifest extends TrainCommon {
 
                         // add location comment
                         if (Setup.isPrintLocationCommentsEnabled() &&
-                                !rl.getLocation().getComment().equals(Location.NONE)) {
-                            newLine(fileOut, rl.getLocation().getComment());
+                                !rl.getLocation().getCommentWithColor().equals(Location.NONE)) {
+                            newLine(fileOut, rl.getLocation().getCommentWithColor());
                         }
                     }
                 }
@@ -263,8 +263,8 @@ public class TrainManifest extends TrainCommon {
 
                         // add location comment
                         if (Setup.isPrintLocationCommentsEnabled() &&
-                                !rl.getLocation().getComment().equals(Location.NONE)) {
-                            newLine(fileOut, rl.getLocation().getComment());
+                                !rl.getLocation().getCommentWithColor().equals(Location.NONE)) {
+                            newLine(fileOut, rl.getLocation().getCommentWithColor());
                         }
                     }
                 } else {

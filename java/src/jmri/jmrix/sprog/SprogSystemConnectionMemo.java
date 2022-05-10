@@ -44,7 +44,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         super("S", SprogConnectionTypeList.SPROG); // default to S
         init(sm, type);
     }
-    
+
     private void init(SprogMode sm, SprogType type) {
         sprogMode = sm;  // static
         sprogVersion = new SprogVersion(type);
@@ -127,12 +127,12 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
     public Thread getSlotThread() {
         return slotThread;
     }
-    
+
     private int numSlots = SprogConstants.DEFAULT_MAX_SLOTS;
-    
+
     /**
      * Get the number of command station slots
-     * 
+     *
      * @return The number fo slots
      */
     public int getNumSlots() {
@@ -170,10 +170,10 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         numSlots = slots;
         this.configureCommandStation();
     }
-    
+
     /**
      * Get the command station object associated with this connection.
-     * 
+     *
      * @return the command station
      */
     public SprogCommandStation getCommandStation() {
@@ -246,7 +246,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
 
     public SprogProgrammerManager getProgrammerManager() {
 
-        return (SprogProgrammerManager) classObjectMap.computeIfAbsent(SprogProgrammerManager.class, (Class c) -> new SprogProgrammerManager(new SprogProgrammer(this), sprogMode, this));
+        return (SprogProgrammerManager) classObjectMap.computeIfAbsent(SprogProgrammerManager.class, (Class<?> c) -> new SprogProgrammerManager(new SprogProgrammer(this), sprogMode, this));
     }
 
     public void setProgrammerManager(SprogProgrammerManager p) {

@@ -35,13 +35,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a Block Table.
  * Code originally within BlockTableAction.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Egbert Broerse Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
  */
 public class BlockTableDataModel extends BeanTableDataModel<Block> {
-    
+
     static public final int EDITCOL = BeanTableDataModel.NUMCOLUMN;
     static public final int DIRECTIONCOL = EDITCOL + 1;
     static public final int LENGTHCOL = DIRECTIONCOL + 1;
@@ -54,19 +54,19 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     static public final int SPEEDCOL = PERMISCOL + 1;
 
     private final boolean _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
-    
+
     private final DecimalFormat twoDigit = new DecimalFormat("0.00");
-    
+
     private Vector<String> speedList = new Vector<>();
     private String[] sensorList;
     private String[] reporterList;
-    
+
     String defaultBlockSpeedText;
-    
+
     public BlockTableDataModel(Manager<Block> mgr){
         super();
         setManager(mgr); // for consistency with other BeanTableModels, default BlockManager always used.
-        
+
         defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.getDefault(BlockManager.class).getDefaultSpeed()); // first entry in drop down list
         speedList.add(defaultBlockSpeedText);
         Vector<String> _speedMap = InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
@@ -75,11 +75,11 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 speedList.add(_speedMap.get(i));
             }
         }
-        
+
         updateSensorList();
         updateReporterList();
     }
-    
+
     @Override
     public String getValue(String name) {
         if (name == null) {
@@ -198,7 +198,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return super.getValueAt(row, col);
         }
     }
-    
+
     // TODO : Add Block.UNDETECTED
     // TODO : Move to Block.describeState(int)
     private String blockDescribeState(int blockState){
@@ -384,7 +384,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         configStateColumn(table);
         super.configureTable(table);
     }
-    
+
     void editButton(Block b) {
         BlockEditAction beanEdit = new BlockEditAction();
         beanEdit.setBean(b);
@@ -425,10 +425,10 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             super.propertyChange(e);
         }
     }
-    
+
     private boolean metricUi = InstanceManager.getDefault(UserPreferencesManager.class)
         .getSimplePreferenceState(BlockTableAction.BLOCK_METRIC_PREF);
-    
+
     /**
      * Set and refresh the UI to use Metric or Imperial values.
      * @param boo true if metric, false for Imperial.
@@ -437,7 +437,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         metricUi = boo;
         fireTableDataChanged();
     }
-    
+
     private void updateSensorList() {
         Set<Sensor> nameSet = InstanceManager.sensorManagerInstance().getNamedBeanSet();
         String[] displayList = new String[nameSet.size()];
@@ -482,10 +482,11 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         speedList.add(0, defaultBlockSpeedText);
         fireTableDataChanged();
     }
-    
+
     public void setDefaultSpeeds(JFrame _who) {
         JComboBox<String> blockSpeedCombo = new JComboBox<>(speedList);
-        
+        JComboBoxUtil.setupComboBoxMaxRows(blockSpeedCombo);
+
         blockSpeedCombo.setEditable(true);
 
         JPanel block = new JPanel();
@@ -526,7 +527,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             JOptionPane.showMessageDialog(_who, ex.getMessage() + "\n" + speedValue);
         }
     }
-    
+
     @Override
     synchronized public void dispose() {
         InstanceManager.getDefault(SensorManager.class).removePropertyChangeListener(this);
@@ -553,7 +554,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             // else, classic text style state indication, do nothing extra
         }
     }
-    
+
     // state column may be image so have the tooltip as text version of Block state.
     // length column tooltip confirms inches or cm.
     @Override
@@ -675,5 +676,5 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     } // end of ImageIconRenderer class
 
     private final static Logger log = LoggerFactory.getLogger(BlockTableDataModel.class);
-    
+
 }

@@ -30,8 +30,8 @@
       <p>We have been evolving a particular pattern for using Swing, described here. The JMRI
       codebase contains several generations of implementations, so not all of it looks like this,
       but we're moving classes in this direction as time allows.</p>
-      <a href="images/SwingStructureExample.png"><img src="images/SwingStructureExample.png" class=
-      "floatRight" height="193" width="334" alt="class structure"></a>
+      <a href="images/SwingStructureExample.png"><img src="images/SwingStructureExample.png"
+      alt="class structure"></a>
       <p>The basic structure is:</p>
 
       <ul>

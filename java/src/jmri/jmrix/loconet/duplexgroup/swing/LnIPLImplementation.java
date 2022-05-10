@@ -388,6 +388,19 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     /**
+     * Check message m to determine if it contains a UR93 IPL Identity Report
+     * message.
+     *
+     * @param m message to analyse
+     * @return true if message is report of UR92 IPL Identity
+     */
+    public static final boolean isIplUr93IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_UR93);
+    }
+
+    /**
      * Check message m to determine if it contains a PR3 IPL Identity Report
      * message.
      *

@@ -22,7 +22,7 @@ public class MqttLightTest extends AbstractLightTestBase {
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         // prepare an interface
         saveTopic = null;
@@ -41,8 +41,8 @@ public class MqttLightTest extends AbstractLightTestBase {
 
     @AfterEach
     public void tearDown() {
-       jmri.util.JUnitUtil.tearDown();
-     }
+        JUnitUtil.tearDown();
+    }
 
     @Override
     public int numListeners() {

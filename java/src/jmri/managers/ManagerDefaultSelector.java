@@ -370,7 +370,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     providing.forEach((cls, clsProviders) -> {
                         log.debug("{} default provider is {}, is provided by:", cls.getName(), defaults.get(cls));
                         clsProviders.forEach((provider) -> {
-                            log.debug("    {}", provider.getUserName());
+                            log.debug("   user name: {}", provider.getUserName());
                         });
                     });
                 }

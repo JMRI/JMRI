@@ -87,6 +87,21 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
+      <model  model="MX605N version 39+" replacementModel="MX605N version 40+" replacementFamily="query:Zimo Unified software (version 40+)"
+              lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A"
+              formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186"
+              comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+        <output name="1" label="Front Light|(MX605SL)">
+          <label xml:lang="de">Lvor|(MX605SL)</label>
+        </output>
+        <output name="2" label="Rear Light|(MX605SL)">
+          <label xml:lang="de">Lrück|(MX605SL)</label>
+        </output>
+        <output name="3" label="Interior Light|(MX605FL)">
+          <label xml:lang="de">FA1|(MX605FL)</label>
+        </output>
+        <size length="27" width="14" height="4" units="mm"/>
+      </model>
       <model model="MX615 version 39+" replacementModel="MX615 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -1713,7 +1728,7 @@
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
         <label xml:lang="cs">Verze dekodéru: </label>
-      </variable> 
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="130" readOnly="yes" include="130">
         <decVal/>
         <label>Decoder ID 1</label>
@@ -1755,6 +1770,15 @@
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="186" readOnly="yes" include="186">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="186" readOnly="yes" include="186">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="181" readOnly="yes" include="181">
         <decVal/>

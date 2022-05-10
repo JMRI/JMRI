@@ -140,23 +140,43 @@
   </variable>
   <variable CV="155" item="Half Speed" mask="VVVXXXXX">
      <enumVal>
-      <enumChoice choice="0,625 (default)">
-        <choice>0,625 (default)</choice>
+      <enumChoice choice="0.625 (default)">
+        <choice>0.625 (default)</choice>
         <choice xml:lang="de">0,625 (Standard)</choice>
         <choice xml:lang="cs">0,625 (Výchozí)</choice>
       </enumChoice>
-      <enumChoice choice="0,125">
-        <choice>0,125</choice>
+      <enumChoice choice="0.125">
+        <choice>0.125</choice>
         <choice xml:lang="de">0,125</choice>
         <choice xml:lang="cs">0,125</choice>
       </enumChoice>
-      <enumChoice choice="0,5">
-        <choice>0,5</choice>
+      <enumChoice choice="0.250">
+        <choice>0.250</choice>
+        <choice xml:lang="de">0,250</choice>
+        <choice xml:lang="cs">0,250</choice>
+      </enumChoice>
+      <enumChoice choice="0.375">
+        <choice>0.375</choice>
+        <choice xml:lang="de">0,375</choice>
+        <choice xml:lang="cs">0,375</choice>
+      </enumChoice>
+      <enumChoice choice="0.5">
+        <choice>0.5</choice>
         <choice xml:lang="de">0,5</choice>
         <choice xml:lang="cs">0,5</choice>
       </enumChoice>
-      <enumChoice choice="0,875">
-        <choice>0,875</choice>
+      <enumChoice choice="0.625">
+        <choice>0.625</choice>
+        <choice xml:lang="de">0,625</choice>
+        <choice xml:lang="cs">0,625</choice>
+      </enumChoice>
+      <enumChoice choice="0.75">
+        <choice>0.75</choice>
+        <choice xml:lang="de">0,75</choice>
+        <choice xml:lang="cs">0,75</choice>
+      </enumChoice>
+      <enumChoice choice="0.875">
+        <choice>0.875</choice>
         <choice xml:lang="de">0,875</choice>
         <choice xml:lang="cs">0,875</choice>
       </enumChoice>
@@ -205,6 +225,9 @@
     <label xml:lang="cs">Chování funkčního výstupu 8</label>
     <label xml:lang="de">FA8 Verhalten</label>
   </variable>
+
+  <!-- CV300, CV301, CV302, moved to feature "Extra Menu" on 14 Feb 2022 / JMRI 4.99.3.  All three CVs trigger behaviour, rather than setting a value, hence the change. -->
+  <!--
   <variable CV="300" item="CV300-procedures" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>Pseudo programming 1</label>
@@ -232,6 +255,8 @@
       <tooltip xml:lang="de">Messfahrt zur Bestimmung der Motor-Grundlast</tooltip>
       <tooltip xml:lang="cs">Průběh měření pro zjištění základního zatížení mototu</tooltip>
   </variable>
+  -->
+
   <variable CV="307" item="Curve squeal reed" default="0" exclude="130,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>Curve squeal reed input</label>

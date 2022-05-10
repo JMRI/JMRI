@@ -89,7 +89,7 @@ public class ApplicationTestAcceptanceSteps implements En {
                 }
             } finally {
                 // wait for threads, etc
-                jmri.util.JUnitUtil.releaseThread(this, 5000);
+                JUnitUtil.waitFor(5000);
             }
             FileUtils.deleteDirectory(tempFolder);
             System.clearProperty("org.jmri.profile");

@@ -57,7 +57,10 @@ public class CompositeVariableValue extends EnumVariableValue {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
+
         _value = new JComboBox<String>();
+        _value.getAccessibleContext().setAccessibleName(label());
+
         log.debug("New Composite named {}", name);
     }
 
@@ -67,6 +70,7 @@ public class CompositeVariableValue extends EnumVariableValue {
      */
     public CompositeVariableValue() {
         _value = new JComboBox<String>();
+        _value.getAccessibleContext().setAccessibleName(label());
     }
 
     @Override
@@ -219,7 +223,7 @@ public class CompositeVariableValue extends EnumVariableValue {
         _defaultColor = _value.getBackground();
         super.setState(READ);
 
-        // note that we don't set this to COLOR_UNKNOWN!  Rather, 
+        // note that we don't set this to COLOR_UNKNOWN!  Rather,
         // we check the current value
         findValue();
 

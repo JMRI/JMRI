@@ -66,7 +66,7 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
 
         return p;
     }
-    JLabel aspectAddressLabel = new JLabel(Bundle.getMessage("MakeLabel", "Address number:"));
+    JLabel aspectAddressLabel = new JLabel(Bundle.getMessage("TopicSuffix"));
     JTextField aspectAddressField = new JTextField(5);
 
     /** {@inheritDoc} */
@@ -168,7 +168,14 @@ public class MqttSignalMastAddPane extends SignalMastAddPane {
                 currentMast.setUserName(username);
             }
             currentMast.setMastType(mastname.substring(11, mastname.length() - 4));
-            InstanceManager.getDefault(SignalMastManager.class).register(currentMast);
+            try {
+                InstanceManager.getDefault(SignalMastManager.class).register(currentMast);
+            } catch (jmri.NamedBean.DuplicateSystemNameException e) {
+                // clear the signal mast and rethrow
+                currentMast = null;
+                throw e;
+            }
+
         }
 
         // load a new or existing mast

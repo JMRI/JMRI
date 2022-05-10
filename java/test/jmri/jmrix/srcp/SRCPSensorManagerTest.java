@@ -34,7 +34,7 @@ public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             }
         }, "A", 1);
 
-        l = new SRCPSensorManager(sm, 1);
+        l = new SRCPSensorManager(sm);
     }
 
     @AfterEach

@@ -11,8 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-   <version author="robin@n3ix.com" version="3.00.1" lastUpdated="20200902"/>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+   <version author="robin@n3ix.com" version="3.01.3" lastUpdated="20220328"/>
    <decoder>
         <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
             <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6"/>
@@ -23,155 +23,6 @@
         </programming>
       
         <variables>
-            <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
-                <enumVal>
-                    <enumChoice choice="Relay"/>
-                    <enumChoice choice="Signaling"/>
-                    <enumChoice choice="Servo"/>
-                </enumVal>
-            </variable>
-            <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0">
-                <decVal/>
-             </variable>
-         
-            <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
-                <enumVal>
-                    <enumChoice choice="Both IO"/>
-                    <enumChoice choice="Main IO, Aux Servo"/>
-                    <enumChoice choice="Both Servo" value="3"/>
-                </enumVal>
-            </variable>
-            <variable item="ServoMain" CV="11" mask="XXVXXXXX" default="0" include="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" include="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" include="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" exclude="Quad-LN_S_v3">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" exclude="Quad-LN_S_v3">
-                <enumVal>
-                    <enumChoice choice="Perform Internally"/>
-                    <enumChoice choice="Visible on Loconet"/>
-                </enumVal>
-            </variable>
-             <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
-                <enumVal>
-                    <enumChoice choice="Both IO"/>
-                </enumVal>
-            </variable>
-           <variable item="ServoMain" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="ServoAux" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-            <variable item="Servo16" CV="11" mask="XXXXXXVX" default="0" exclude="Quad-LN_S_v3">
-                <decVal/>
-            </variable>
-         
-            <variable item="Signaling" CV="11" mask="XXXXXXXV" default="0">
-                <decVal/>
-            </variable>
-            <variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
-                <qualifier>
-                    <variableref>Signaling</variableref>
-                    <relation>eq</relation>
-                    <value>1</value>
-                </qualifier>
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Blink when Locked"/>
-                    <enumChoice choice="Blink when Unlocked"/>
-                </enumVal>
-            </variable>
-            <variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-
-            <variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
-                <enumVal>
-                    <enumChoice choice="Normal"/>
-                    <enumChoice choice="Inverted"/>
-                </enumVal>
-            </variable>
-            <variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0">
-                <qualifier>
-                    <variableref>Servo16</variableref>
-                    <relation>le</relation>
-                    <value>8</value>
-                </qualifier>
-                <enumVal>
-                    <enumChoice choice="Always On"/>
-                    <enumChoice choice="Off when Stopped"/>
-                </enumVal>
-            </variable>
-            <variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Disable"/>
-                    <enumChoice choice="Enable"/>
-                </enumVal>
-            </variable>
-            <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" include="Quad-LN_S_v3">
-                <enumVal>
-                    <enumChoice choice="Perform Internally"/>
-                    <enumChoice choice="Visible on Loconet"/>
-                </enumVal>
-            </variable>
-            <variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="1 Sec"/>
-                    <enumChoice choice="2 Sec"/>
-                    <enumChoice choice="4 Sec"/>
-                    <enumChoice choice="8 Sec"/>
-                </enumVal>
-            </variable>
-            <variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Normal"/>
-                    <enumChoice choice="Disable"/>
-                </enumVal>
-            </variable>
-            <variable item="Switch State Request" CV="12" mask="VXXXXXXX" default="0">
-                <enumVal>
-                    <enumChoice choice="Ignore"/>
-                    <enumChoice choice="Respond"/>
-                </enumVal>
-            </variable>
-
-            <variable item="Long Address" CV="17" default="11000" comment="Range 1-16383">
-                <longAddressVal/>
-            </variable>
-
-            <variable item="Lock Start Address" CV="13" mask="VVVVVVVV" default="100">
-                <splitVal highCV="14" upperMask="XXXXXVVV" offset="1" /> 
-            </variable>
-
-            <variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
-                <splitVal highCV="3" upperMask="XXXXXVVV" offset="1" />
-            </variable>
-
             <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="no" default="1">
                 <decVal/>
             </variable>
@@ -191,22 +42,198 @@
                 <decVal/>
             </variable>
 
-            <variable item="Main IO Start Address" CV="9" mask="VVVVVVVV" default="0">
+            <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
+                <enumVal>
+                    <enumChoice choice="Relay"/>
+                    <enumChoice choice="Signaling"/>
+                    <enumChoice choice="Servo" include="Quad-LN_S_v1" />
+                    <enumChoice choice="Turnout" include="Quad-LN_S_v3" />
+                </enumVal>
+            </variable>
+            <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0">
+                <decVal/>
+             </variable>
+         
+            <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Both IO"/>
+                    <enumChoice choice="Main IO, Aux Servo" include="Quad-LN_S_v1" />
+                    <enumChoice choice="Main IO, Aux Turnout" include="Quad-LN_S_v3" />
+                    <enumChoice choice="Both Servo" value="3" include="Quad-LN_S_v1" />
+                    <enumChoice choice="Both Turnout" value="3" include="Quad-LN_S_v3" />
+                </enumVal>
+            </variable>
+            <variable item="ServoMain" CV="11" mask="XXVXXXXX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="ServoMain" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                <decVal/>
+            </variable>
+            <variable item="ServoAux" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                <decVal/>
+            </variable>
+            <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="Servo16" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
+                <decVal/>
+            </variable>
+            <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" exclude="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" exclude="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Perform Internally"/>
+                    <enumChoice choice="Visible on Loconet"/>
+                </enumVal>
+            </variable>
+             <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Both IO"/>
+                </enumVal>
+            </variable>
+         
+            <variable item="Signaling" CV="11" mask="XXXXXXXV" default="0">
+                <decVal/>
+            </variable>
+            <variable item="Servo State Memory" CV="11" mask="XXXXXVXX" default="1" include="Quad-LN_S_v1">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Turnout State Memory" CV="11" mask="XXXXXVXX" default="1" include="Quad-LN_S_v3">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Signal State Memory" CV="11" mask="XXXXVXXX" default="0">
+                <qualifier>
+                    <variableref>Signaling</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variables>
+                <qualifier>
+                    <variableref>Servo16</variableref>
+                    <relation>lt</relation>
+                    <value>24</value>
+                </qualifier>
+                <variable item="Lock Indicator" CV="11" mask="XVXXXXXX" default="0">
+                   <enumVal>
+                        <enumChoice choice="Blink when Locked"/>
+                        <enumChoice choice="Blink when Unlocked"/>
+                    </enumVal>
+                </variable>
+                <variable item="Sensor Input Polarity" CV="12" mask="XXXXXXXV" default="0">
+                   <enumVal>
+                        <enumChoice choice="Normal"/>
+                        <enumChoice choice="Inverted"/>
+                    </enumVal>
+                </variable>
+                <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" include="Quad-LN_S_v3">
+                    <enumVal>
+                        <enumChoice choice="Perform Internally"/>
+                        <enumChoice choice="Visible on Loconet"/>
+                    </enumVal>
+                </variable>
+            </variables>
+            <variable item="DCC Busy Retry" CV="11" mask="VXXXXXXX" default="1">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variables>
+                <qualifier>
+                    <variableref>Minor Version</variableref>
+                    <relation>ge</relation>
+                    <value>1</value>
+                </qualifier>
+                <variable item="Lock Scope" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v3">
+                    <enumVal>
+                        <enumChoice choice="Local IO Only"/>
+                        <enumChoice choice="Local and LocoNet"/>
+                    </enumVal>
+                </variable>
+                <variable item="CV7 Interrogate" CV="12" mask="VXXXXXXX" default="0" include="Quad-LN_S_v3">
+                    <enumVal>
+                        <enumChoice choice="Ignore"/>
+                        <enumChoice choice="Respond"/>
+                    </enumVal>
+                </variable>
+            </variables>
+            <variable item="Servo Drive" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
+                <enumVal>
+                    <enumChoice choice="Always On"/>
+                    <enumChoice choice="Off when Stopped"/>
+                </enumVal>
+            </variable>
+
+            <variable item="No CS" CV="12" mask="XXXXXVXX" default="0">
+                <enumVal>
+                    <enumChoice choice="Disable"/>
+                    <enumChoice choice="Enable"/>
+                </enumVal>
+            </variable>
+            <variable item="Route Delay" CV="12" mask="XXVVXXXX" default="0">
+                <enumVal>
+                    <enumChoice choice="1 Sec"/>
+                    <enumChoice choice="2 Sec"/>
+                    <enumChoice choice="4 Sec"/>
+                    <enumChoice choice="8 Sec"/>
+                </enumVal>
+            </variable>
+            <variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
+                <enumVal>
+                    <enumChoice choice="Normal"/>
+                    <enumChoice choice="Disable"/>
+                </enumVal>
+            </variable>
+
+            <variable item="Long Address" CV="17" default="11000" comment="Range 1-16383">
+                <longAddressVal/>
+            </variable>
+
+            <variable item="Lock Start Address" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
+                <splitVal offset="1" /> 
+            </variable>
+
+            <variable item="Servo Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v1">
+                <splitVal offset="1" />
+            </variable>
+            <variable item="Turnout Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v3">
+                <splitVal offset="1" />
+            </variable>
+
+            <variable item="Main IO Start Address" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
                 <qualifier>
                     <variableref>ServoMain</variableref>
                     <relation>eq</relation>
                     <value>0</value>
                 </qualifier>
-                <splitVal highCV="10" upperMask="XXXXVVVV" offset="1" /> 
+                <splitVal offset="1" /> 
             </variable>
 
-            <variable item="Aux IO Start Address" CV="15" mask="VVVVVVVV" default="4">
+            <variable item="Aux IO Start Address" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
                 <qualifier>
                     <variableref>ServoAux</variableref>
                     <relation>eq</relation>
                     <value>0</value>
                 </qualifier>
-                <splitVal highCV="16" upperMask="XXXXVVVV" offset="1" /> 
+                <splitVal offset="1" /> 
             </variable>
             
             <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
@@ -243,6 +270,9 @@
                     <label label=" "/>
                     <display item="Servo Start Address" tooltip="Address of first servo: 1-2045. Recommend not using 1017-1020 for any servo.">
                         <label>Servo Start Address</label>
+                    </display>
+                    <display item="Turnout Start Address" tooltip="Address of first turnout: 1-2045. Recommend not using 1017-1020 for any turnout.">
+                        <label>Turnout Start Address</label>
                     </display>
                     <display item="Lock Start Address" tooltip="Address of first lock: 1-2045. Recommend not using 1017-1020 for any lock.">
                         <label>Lock Start Address</label>
@@ -290,6 +320,9 @@
                     <display item="Servo State Memory" format="checkbox" tooltip="Retain servo states when powered down">
                         <label>Servo State Memory</label>
                     </display>
+                    <display item="Turnout State Memory" format="checkbox" tooltip="Retain turnout states when powered down">
+                        <label>Turnout State Memory</label>
+                    </display>
                     <display item="Signal State Memory" format="checkbox" tooltip="Retain signal states when powered down">
                         <label>Signal State Memory</label>
                     </display>
@@ -308,14 +341,17 @@
                     <display item="Lock Indicator" format="checkbox" tooltip="LED blink indicates Unlock state rather than Lock state">
                         <label>Blink indicates Unlock</label>
                     </display>
+                    <display item="Lock Scope" format="checkbox" tooltip="Disable LocoNet turnout command when Locked">
+                        <label>Lock Disables LocoNet Control</label>
+                    </display>
                     <display item="Local Actions" format="checkbox" tooltip="Provide visibililty on Loconet for local actions">
                         <label>Broadcast Local Actions</label>
                     </display>
-                    <display item="Switch State Request" format="checkbox" tooltip="Respond to Switch State request with servo, lock and sensor states">
-                        <label>Switch State Request</label>
-                    </display>
                     <display item="Disable Interrogate" format="checkbox" tooltip="Ignore Stationary Decoder Interrogation messages">
-                        <label>Disable Interrogate</label>
+                        <label>Disable Statonary Interrogate</label>
+                    </display>
+                    <display item="CV7 Interrogate" format="checkbox" tooltip="Treat a write to CV7 as an Interrogate">
+                        <label>Enable CV7 Interrogate</label>
                     </display>
                     <label label=" "/>
                 </column>
@@ -411,10 +447,10 @@
                     </group>
                     <label label=" "/>
                     <label>
-                        <text>Decoder Template File Version: 3.00.1</text>
+                        <text>Decoder Template File Version: 3.01.3</text>
                     </label>
                     <label>
-                        <text>Decoder Transform File Version: x.xx</text>
+                        <text>Decoder Transform File Version: x.xx.x</text>
                     </label>
                 </column>
             </row>

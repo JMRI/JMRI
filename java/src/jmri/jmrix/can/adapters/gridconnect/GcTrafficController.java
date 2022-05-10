@@ -127,8 +127,7 @@ public class GcTrafficController extends TrafficController {
     @Override
     protected AbstractMRMessage newMessage() {
         log.debug("New GridConnectMessage created");
-        GridConnectMessage msg = new GridConnectMessage();
-        return msg;
+        return new GridConnectMessage();
     }
 
     /**
@@ -155,9 +154,7 @@ public class GcTrafficController extends TrafficController {
     @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
-        GridConnectMessage ret = new GridConnectMessage(m);
-
-        return ret;
+        return new GridConnectMessage(m);
     }
 
     /**
@@ -167,8 +164,7 @@ public class GcTrafficController extends TrafficController {
     @Override
     protected AbstractMRReply newReply() {
         log.debug("New GridConnectReply created");
-        GridConnectReply reply = new GridConnectReply();
-        return reply;
+        return new GridConnectReply();
     }
 
     /*
@@ -187,7 +183,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Detect if the reply buffer ends with ";".
      * @param r Reply
-     * @return true if contais end, else false.
+     * @return true if contains end, else false.
      */
     boolean endNormalReply(AbstractMRReply r) {
         int num = r.getNumDataElements() - 1;

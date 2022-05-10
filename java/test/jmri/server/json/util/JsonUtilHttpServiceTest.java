@@ -56,7 +56,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @SuppressWarnings("deprecation")
     @AfterEach
     @Override
     public void tearDown() throws Exception {
@@ -401,7 +400,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     }
 
     /**
-     * Test of getConfigProfile method, of class JsonUtilHttpService. 
+     * Test of getConfigProfile method, of class JsonUtilHttpService.
      * only runs negative test that a profile is not found
      *
      */
@@ -414,7 +413,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         } catch (JsonException ex) {
             assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
         }
-        
+
     }
 
     /**

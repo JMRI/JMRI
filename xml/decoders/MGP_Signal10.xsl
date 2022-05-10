@@ -31,14 +31,33 @@
 
     <variable item="Short Signal {$index} Rule" CV="{$CV1}" mask="XXXXXVVV" default="0">
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Use extra GO rule 1" value="1"/>
-          <enumChoice choice="Use extra GO rule 2" value="2"/>
-          <enumChoice choice="Use extra GO rule 3" value="3"/>
-          <enumChoice choice="Use extra GO rule 4" value="4"/>
-          <enumChoice choice="Use extra GO rule 5" value="5"/>
+            <enumChoice choice="Not used" value="0">
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+            </enumChoice>
+            <enumChoice choice="Use extra GO rule 1" value="1">
+                <choice>Use extra GO rule 1</choice>
+                <choice xml:lang="cs">Použít další pravidlo pro volnoznak 1</choice>
+            </enumChoice>
+            <enumChoice choice="Use extra GO rule 2" value="2">
+                <choice>Use extra GO rule 2</choice>
+                <choice xml:lang="cs">Použít další pravidlo pro volnoznak 2</choice>
+            </enumChoice>
+            <enumChoice choice="Use extra GO rule 3" value="3">
+                <choice>Use extra GO rule 3</choice>
+                <choice xml:lang="cs">Použít další pravidlo pro volnoznak 3</choice>
+            </enumChoice>
+            <enumChoice choice="Use extra GO rule 4" value="4">
+                <choice>Use extra GO rule 4</choice>
+                <choice xml:lang="cs">Použít další pravidlo pro volnoznak 4</choice>
+            </enumChoice>
+            <enumChoice choice="Use extra GO rule 5" value="5">
+                <choice>Use extra GO rule 5</choice>
+                <choice xml:lang="cs">Použít další pravidlo pro volnoznak 5</choice>
+            </enumChoice>
         </enumVal>
-        <label>Short Signal <xsl:value-of select="$index"/> Rule</label>
+        <label>Rule</label>
+        <label xml:lang="cs">Pravidlo</label>
     </variable>
 </xsl:template>
 
@@ -66,10 +85,11 @@
   <xsl:param name="index"/>
   
 		<label><text>&#160;</text></label>
-		<label><text>Signal <xsl:value-of select="$index"/></text></label>
-       		  <display item="Short Signal {$index} Rule">
-		<label>Rule</label>
-		</display>
+		<label>
+                    <text>Signal <xsl:value-of select="$index"/></text>
+                    <text xml:lang="cs">Návěstidlo <xsl:value-of select="$index"/></text>
+                </label>
+       		  <display item="Short Signal {$index} Rule"/>
 </xsl:template>
 
 
@@ -77,6 +97,7 @@
 <xsl:template match="pane[name='ShortSignalPane']">
 	<pane>
 	<name>Rules Short</name>
+	<name xml:lang="cs">Pravidla pro nedostatečnou zábrzdnou vzdálenost</name>
     <column>
 		<xsl:call-template name="ShortSignalInPane">
 		  <xsl:with-param name="index" select="1"/>
@@ -121,10 +142,17 @@
 
     <variable item="Repeat Signal {$index} Type" CV="{$CV1}" mask="XXXXXVVV" default="0">
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="2 light" value="1"/>
+          <enumChoice choice="Not used" value="0">
+            <choice>Not used</choice>
+            <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="2 light" value="1">
+            <choice>2 light</choice>
+            <choice xml:lang="cs">2 světla</choice>
+          </enumChoice>
         </enumVal>
-        <label>Repeat Signal <xsl:value-of select="$index"/> Type</label>
+        <label>Type</label>
+        <label xml:lang="cs">Typ</label>
     </variable>
     <variable item="Repeat Signal {$index} Intensity bank number" CV="{$CV1}" mask="XXVVXXXX" default="0">
         <enumVal>
@@ -132,15 +160,18 @@
           <enumChoice choice="2" value="1"/>
           <enumChoice choice="3" value="2"/>
         </enumVal>
-        <label>Repeat Signal <xsl:value-of select="$index"/> Intensity bank number</label>
+        <label>Intensity bank number</label>
+        <label xml:lang="cs">Intenzita banka číslo</label>
     </variable>
     <variable item="Repeat Signal {$index} First LED number" CV="{$CV1 +1}" default="0">
         <decVal max="64"/>
-        <label>Repeat Signal <xsl:value-of select="$index"/> First LED number</label>
+        <label>First LED number</label>
+        <label xml:lang="cs">Číslo první LED</label>
     </variable>
 	<variable item="Repeat Signal {$index} Main signal address" CV="{$CV1 +2}" default="0">
         <splitVal highCV="{$CV1 +3}" upperMask="XXXXXVVV"/>
-        <label>Repeat Signal <xsl:value-of select="$index"/> Main signal address</label>
+        <label>Main signal address</label>
+        <label xml:lang="cs">Adresa hlavního návěstidla</label>
     </variable>
 </xsl:template>
 
@@ -168,25 +199,21 @@
   <xsl:param name="index"/>
   
 		<label><text>&#160;</text></label>
-		<label><text>Repeat Signal <xsl:value-of select="$index"/></text></label>
-        	<display item="Repeat Signal {$index} Type">
-			<label>Type</label>
-		</display>
-		<display item="Repeat Signal {$index} First LED number">
-			<label>First LED number</label>
-		</display>
-		<display item="Repeat Signal {$index} Intensity bank number">
-			<label>Intensity bank number</label>
-		</display>
-		<display item="Repeat Signal {$index} Main signal address">
-			<label>Main signal address</label>
-		</display>
+		<label>
+                    <text>Repeat Signal <xsl:value-of select="$index"/></text>
+                    <text xml:lang="cs">Opakovací návěstidlo <xsl:value-of select="$index"/></text>
+                </label>
+        	<display item="Repeat Signal {$index} Type"/>
+		<display item="Repeat Signal {$index} First LED number"/>
+		<display item="Repeat Signal {$index} Intensity bank number"/>
+		<display item="Repeat Signal {$index} Main signal address"/>
 </xsl:template>
 
 <!-- - - - MATCH - - - -->
 <xsl:template match="pane[name='RepeatSignalPane']">
 	<pane>
 	<name>Repeat Signals</name>
+	<name xml:lang="cs">Opakovací návěstidla</name>
     <column>
 		<xsl:call-template name="RepeatSignalInPane">
 		  <xsl:with-param name="index" select="1"/>
@@ -214,19 +241,23 @@
 
     <variable item="Direction Detection {$index} First Address" CV="{$CV1}" default="0">
         <splitVal highCV="{$CV1 +1}" upperMask="XXXXXVVV"/>
-        <label>Direction Detection <xsl:value-of select="$index"/> First Address</label>
+        <label>First Address</label>
+        <label xml:lang="cs">První adresa</label>
     </variable>
     <variable item="Direction Detection {$index} Delay Free Status" CV="{$CV1 +2}" default="0">
         <decVal max="255"/>
-        <label>Direction Detection <xsl:value-of select="$index"/> Delay Free Status</label>
+        <label>Delay Free Status</label>
+        <label xml:lang="cs">Zpoždění stavu neobsazeno</label>
     </variable>
     <variable item="Direction Detection {$index} Address A" CV="{$CV1 + 3}" default="0">
         <splitVal highCV="{$CV1 +4}" upperMask="XXXXXVVV"/>
-        <label>Direction Detection <xsl:value-of select="$index"/> Address A</label>
+        <label>Address A</label>
+        <label xml:lang="cs">Adresa A</label>
     </variable>
     <variable item="Direction Detection {$index} Address B" CV="{$CV1 + 5}" default="0">
         <splitVal highCV="{$CV1 +6}" upperMask="XXXXXVVV"/>
-        <label>Direction Detection <xsl:value-of select="$index"/> Address B</label>
+        <label>Address B</label>
+        <label xml:lang="cs">Adresa B</label>
     </variable>
 </xsl:template>
 
@@ -254,25 +285,21 @@
   <xsl:param name="index"/>
   
 		<label><text>&#160;</text></label>
-		<label><text>Direction Detection <xsl:value-of select="$index"/></text></label>
-        <display item="Direction Detection {$index} First Address">
-			<label>First Address</label>
-		</display>
-		<display item="Direction Detection {$index} Delay Free Status">
-			<label>Delay Free Status</label>
-		</display>
-		<display item="Direction Detection {$index} Address A">
-			<label>Address A</label>
-		</display>
-		<display item="Direction Detection {$index} Address B">
-			<label>Address B</label>
-		</display>
+		<label>
+                    <text>Direction Detection <xsl:value-of select="$index"/></text>
+                    <text xml:lang="cs">Detekce směru <xsl:value-of select="$index"/></text>
+                </label>
+                <display item="Direction Detection {$index} First Address"/>
+		<display item="Direction Detection {$index} Delay Free Status"/>
+		<display item="Direction Detection {$index} Address A"/>
+		<display item="Direction Detection {$index} Address B"/>
 </xsl:template>
 
 <!-- - - - MATCH - - - -->
 <xsl:template match="pane[name='DirectionDetectionPane']">
 	<pane>
 	<name>Direction Detection</name>
+	<name xml:lang="cs">Detekce směru</name>
     <column>
 		<xsl:call-template name="DirectionDetectionInPane">
 		  <xsl:with-param name="index" select="1"/>
@@ -303,23 +330,47 @@
 
     <variable item="Rule {$ruleIndex} statement {$stmntIndex} Logic" CV="{$CV1}" mask="XXXXXXXV" default="0">
         <enumVal>
-          <enumChoice choice="OR" value="0"/>
-          <enumChoice choice="AND" value="1"/>
+          <enumChoice choice="OR" value="0">
+            <choice>OR</choice>
+            <choice xml:lang="cs">NEBO</choice>
+          </enumChoice>
+          <enumChoice choice="AND" value="1">
+            <choice>AND</choice>
+            <choice xml:lang="cs">A ZÁROVEŇ</choice>
+          </enumChoice>
         </enumVal>
     </variable>
 
     <variable item="Rule {$ruleIndex} statement {$stmntIndex} Status" CV="{$CV1}" mask="XXXXXXVX" default="0">
         <enumVal>
-          <enumChoice choice="0/Thrown/Free" value="0"/>
-          <enumChoice choice="1/Closed/Occupied" value="1"/>
+          <enumChoice choice="0/Thrown/Free" value="0">
+              <choice>0/Thrown/Free</choice>
+              <choice xml:lang="cs">0 / Do odbočky / Neobsazeno</choice>
+          </enumChoice>
+          <enumChoice choice="1/Closed/Occupied" value="1">
+              <choice>1/Closed/Occupied</choice>
+              <choice xml:lang="cs">1 / Přímo / Obsazeno</choice>
+          </enumChoice>
         </enumVal>
     </variable>
     <variable item="Rule {$ruleIndex} statement {$stmntIndex} Type" CV="{$CV1}" mask="XXXVVVXX" default="0">
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Sw status" value="1"/>
-          <enumChoice choice="Occ sensor" value="2"/>
-          <enumChoice choice="SE" value="3"/>
+          <enumChoice choice="Not used" value="0">
+              <choice>Not used</choice>
+              <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Sw status" value="1">
+              <choice>Sw status</choice>
+              <choice xml:lang="cs">Stav výhybky</choice>
+          </enumChoice>
+          <enumChoice choice="Occ sensor" value="2">
+              <choice>Occ sensor</choice>
+              <choice xml:lang="cs">Detekce obsazení</choice>
+          </enumChoice>
+          <enumChoice choice="SE" value="3">
+              <choice>SE</choice>
+              <choice xml:lang="cs">Změna návěsti</choice>
+          </enumChoice>
         </enumVal>
     </variable>
 	<variable item="Rule {$ruleIndex} statement {$stmntIndex} Address" CV="{$CV1 +1}" default="0">
@@ -334,25 +385,64 @@
     <variable item="Rule {$index} Signal Number" CV="{$CV1}" mask="XXXVVVVX" default="0">
 	    <qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
         <enumVal>
-			<enumChoice choice="Not used" value='0'/>
-			<enumChoice choice="Signal 1" value='1'/>
-			<enumChoice choice="Signal 2" value='2'/>
-			<enumChoice choice="Signal 3" value='3'/>
-			<enumChoice choice="Signal 4" value='4'/>
-			<enumChoice choice="Signal 5" value='5'/>
-			<enumChoice choice="Signal 6" value='6'/>
-			<enumChoice choice="Signal 7" value='7'/>
-			<enumChoice choice="Signal 8" value='8'/>
-			<enumChoice choice="Signal 9" value='9'/>
-			<enumChoice choice="Signal 10" value='10'/>
+			<enumChoice choice="Not used" value='0'>
+                            <choice>Not used</choice>
+                            <choice xml:lang="cs">Nepoužito</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 1" value='1'>
+                            <choice>Signal 1</choice>
+                            <choice xml:lang="cs">Návěstidlo 1</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 2" value='2'>
+                            <choice>Signal 2</choice>
+                            <choice xml:lang="cs">Návěstidlo 2</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 3" value='3'>
+                            <choice>Signal 3</choice>
+                            <choice xml:lang="cs">Návěstidlo 3</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 4" value='4'>
+                            <choice>Signal 4</choice>
+                            <choice xml:lang="cs">Návěstidlo 4</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 5" value='5'>
+                            <choice>Signal 5</choice>
+                            <choice xml:lang="cs">Návěstidlo 5</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 6" value='6'>
+                            <choice>Signal 6</choice>
+                            <choice xml:lang="cs">Návěstidlo 6</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 7" value='7'>
+                            <choice>Signal 7</choice>
+                            <choice xml:lang="cs">Návěstidlo 7</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 8" value='8'>
+                            <choice>Signal 8</choice>
+                            <choice xml:lang="cs">Návěstidlo 8</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 9" value='9'>
+                            <choice>Signal 9</choice>
+                            <choice xml:lang="cs">Návěstidlo 9</choice>
+                        </enumChoice>
+			<enumChoice choice="Signal 10" value='10'>
+                            <choice>Signal 10</choice>
+                            <choice xml:lang="cs">Návěstidlo 10</choice>
+                        </enumChoice>
         </enumVal>
     </variable>
 
     <variable item="Rule {$index}, Controlled status" CV="{$CV1}" mask="XXXVXXXXX" default="0">
 	    <qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
         <enumVal>
-          <enumChoice choice="Signal Stop" value="0"/>
-          <enumChoice choice="Signal Go" value="1"/>
+          <enumChoice choice="Signal Stop" value="0">
+            <choice>Signal Stop</choice>
+            <choice xml:lang="cs">Návěst Stůj</choice>
+          </enumChoice>
+          <enumChoice choice="Signal Go" value="1">
+            <choice>Signal Go</choice>
+            <choice xml:lang="cs">Návěst Volnoznak</choice>
+          </enumChoice>
         </enumVal>
     </variable>
 
@@ -396,54 +486,71 @@
 	<xsl:param name="index"/>
 
 	<label><text>&#160;</text></label>
-	<label><text>Rule <xsl:value-of select="$index"/></text></label>
+	<label>
+            <text>Rule <xsl:value-of select="$index"/></text>
+            <text xml:lang="cs">Pravidlo <xsl:value-of select="$index"/></text>
+        </label>
 	<display item="Rule {$index} Signal Number">
 		<label>Signal Number</label>
+		<label xml:lang="cs">Návěstidlo číslo</label>
 	</display>
 	<display item="Rule {$index}, Controlled status">
 		<label>Controlled status</label>
+                <label xml:lang="cs">Řízený stav</label>
 	</display>
 
 	<label><text>&#160;</text></label>
 	<display item="Rule {$index} statement 1 Logic">
-		<label>Stmnt 1 Logic</label>
+            <label>Stmnt 1 Logic</label>
+            <label xml:lang="cs">Výrok 1 Logika</label>
 	</display>
 	<display item="Rule {$index} statement 1 Status">
-		<label>Stmnt 1 Status</label>
+            <label>Stmnt 1 Status</label>
+            <label xml:lang="cs">Výrok 1 Stav</label>
 	</display>
 	<display item="Rule {$index} statement 1 Type">
-		<label>Stmnt 1 Type</label>
+            <label>Stmnt 1 Type</label>
+            <label xml:lang="cs">Výrok 1 Typ</label>
 	</display>
 	<display item="Rule {$index} statement 1 Address">
-		<label>Stmnt 1 Address</label>
+            <label>Stmnt 1 Address</label>
+            <label xml:lang="cs">Výrok 1 Adresa</label>
 	</display>
 
 	<label><text>&#160;</text></label>
 	<display item="Rule {$index} statement 2 Logic">
 		<label>Stmnt 2 Logic</label>
+            <label xml:lang="cs">Výrok 2 Logika</label>
 	</display>
 	<display item="Rule {$index} statement 2 Status">
 		<label>Stmnt 2 Status</label>
+            <label xml:lang="cs">Výrok 2 Stav</label>
 	</display>
 	<display item="Rule {$index} statement 2 Type">
 		<label>Stmnt 2 Type</label>
+            <label xml:lang="cs">Výrok 2 Typ</label>
 	</display>
 	<display item="Rule {$index} statement 2 Address">
 		<label>Stmnt 2 Address</label>
+            <label xml:lang="cs">Výrok 2 Adresa</label>
 	</display>
 
 	<label><text>&#160;</text></label>
 	<display item="Rule {$index} statement 3 Logic">
 		<label>Stmnt 3 Logic</label>
+            <label xml:lang="cs">Výrok 3 Logika</label>
 	</display>
 	<display item="Rule {$index} statement 3 Status">
 		<label>Stmnt 3 Status</label>
+            <label xml:lang="cs">Výrok 3 Stav</label>
 	</display>
 	<display item="Rule {$index} statement 3 Type">
 		<label>Stmnt 3 Type</label>
+            <label xml:lang="cs">Výrok 3 Typ</label>
 	</display>
 	<display item="Rule {$index} statement 3 Address">
 		<label>Stmnt 3 Address</label>
+            <label xml:lang="cs">Výrok 3 Adresa</label>
 	</display>
 
 </xsl:template>
@@ -453,6 +560,7 @@
 <xsl:template match="pane[name='TriggerRulePane']">
 	<pane>
 	<name>Trigger Rules</name>
+	<name xml:lang="cs">Pravidla spouštění</name>
  
 	<row>
 		 <column>
@@ -505,18 +613,39 @@
 
     <variable item="Extra Rule {$ruleIndex} GO {$goIndex}, Logic" CV="{$CV1}" mask="XXXXXXXV" default="0">
         <enumVal>
-			<enumChoice choice="OR" value='0'/>
-			<enumChoice choice="AND" value='1'/>
+          <enumChoice choice="OR" value="0">
+            <choice>OR</choice>
+            <choice xml:lang="cs">NEBO</choice>
+          </enumChoice>
+          <enumChoice choice="AND" value="1">
+            <choice>AND</choice>
+            <choice xml:lang="cs">A ZÁROVEŇ</choice>
+          </enumChoice>
         </enumVal>
     </variable>
 
     <variable item="Extra Rule {$ruleIndex} GO {$goIndex}, Type" CV="{$CV1}" mask="VVVVXXXX" default="0">
         <enumVal>
-          <enumChoice choice="Not used" value="0"/>
-          <enumChoice choice="Sw status" value="1"/>
-          <enumChoice choice="Occ sensor" value="2"/>
-          <enumChoice choice="SE" value="3"/>
-          <enumChoice choice="xRule" value="5"/>
+          <enumChoice choice="Not used" value="0">
+              <choice>Not used</choice>
+              <choice xml:lang="cs">Nepoužito</choice>
+          </enumChoice>
+          <enumChoice choice="Sw status" value="1">
+              <choice>Sw status</choice>
+              <choice xml:lang="cs">Stav výhybky</choice>
+          </enumChoice>
+          <enumChoice choice="Occ sensor" value="2">
+              <choice>Occ sensor</choice>
+              <choice xml:lang="cs">Detekce obsazení</choice>
+          </enumChoice>
+          <enumChoice choice="SE" value="3">
+              <choice>SE</choice>
+              <choice xml:lang="cs">Změna návěsti</choice>
+          </enumChoice>
+          <enumChoice choice="xRule" value="5">
+              <choice>xRule</choice>
+              <choice xml:lang="cs">Další pravidlo</choice>
+          </enumChoice>          
         </enumVal>
     </variable>
 
@@ -526,8 +655,14 @@
 
     <variable item="Extra Rule {$ruleIndex} GO {$goIndex}, Status" CV="{$CV1 +2}" mask="XVXXXXXX" default="0">
         <enumVal>
-			<enumChoice choice="Thrown/0" value='0'/>
-			<enumChoice choice="CLosed/1" value='1'/>
+         <enumChoice choice="Thrown/0" value="0">
+              <choice>Thrown/0</choice>
+              <choice xml:lang="cs">Do odbočky / 0</choice>
+          </enumChoice>
+          <enumChoice choice="Closed/1" value="1">
+              <choice>Closed/1</choice>
+              <choice xml:lang="cs">Přímo / 1</choice>
+          </enumChoice>
         </enumVal>
     </variable>
 
@@ -578,18 +713,25 @@
 
 	<xsl:if test="7 > $goIndex">
 
-		<label><text>Rule <xsl:value-of select="$ruleIndex"/>, GO <xsl:value-of select="$goIndex"/></text></label>
+		<label>
+                    <text>Rule <xsl:value-of select="$ruleIndex"/>, GO <xsl:value-of select="$goIndex"/></text>
+                    <text xml:lang="cs">Pravidlo <xsl:value-of select="$ruleIndex"/>, Volnoznak <xsl:value-of select="$goIndex"/></text>
+                </label>
 		<display item="Extra Rule {$ruleIndex} GO {$goIndex}, Logic">
 			<label>Logic</label>
+			<label xml:lang="cs">Logika</label>
 		</display>
 		<display item="Extra Rule {$ruleIndex} GO {$goIndex}, Type">
 			<label>Type</label>
+			<label xml:lang="cs">Typ</label>
 		</display>
 		<display item="Extra Rule {$ruleIndex} GO {$goIndex}, Address">
 			<label>Address</label>
+			<label xml:lang="cs">Adresa</label>
 		</display>
 		<display item="Extra Rule {$ruleIndex} GO {$goIndex}, Status">
 			<label>Status</label>
+			<label xml:lang="cs">Stav</label>
 		</display>
 		<label><text>&#160;</text></label>
 
@@ -606,7 +748,10 @@
 
 <!--	<xsl:if test="6 > $index"> -->
 		<label><text>&#160;</text></label>
-		<label><text>Rule <xsl:value-of select="$index"/></text></label>
+		<label>
+                    <text>Rule <xsl:value-of select="$index"/></text>
+                    <text xml:lang="cs">Pravidlo <xsl:value-of select="$index"/></text>
+                </label>
 
 		<xsl:call-template name="ExtraRuleGoInPane">
 			<xsl:with-param name="ruleIndex" select="$index"/>
@@ -625,6 +770,7 @@
 <xsl:template match="pane[name='ExtraRulesPane']">
 	<pane>
 	<name>Extra GO Rules</name>
+	<name xml:lang="cs">Další pravidla pro volnoznak</name>
 	<column>
 				<xsl:call-template name="AllExtraRuleInPane">
 				  <xsl:with-param name="index" select="1"/>
@@ -664,15 +810,12 @@
 
     <variable item="Signal Selectors {$index} Switch Address" CV="{$CV1}" default="0">
         <splitVal highCV="{$CV1 +1}" upperMask="XXXXXVVV"/>
-        <label>Signal Selectors <xsl:value-of select="$index"/> Switch Address</label>
     </variable>
     <variable item="Signal Selectors {$index} Thrown Signal Address" CV="{$CV1 + 2}" default="0">
         <splitVal highCV="{$CV1 +3}" upperMask="XXXXXVVV"/>
-        <label>Signal Selectors <xsl:value-of select="$index"/> Thrown Signal Address</label>
     </variable>
     <variable item="Signal Selectors {$index} Closed Signal Address" CV="{$CV1 + 4}" default="0">
         <splitVal highCV="{$CV1 +5}" upperMask="XXXXXVVV"/>
-        <label>Signal Selectors <xsl:value-of select="$index"/> Closed Signal Address</label>
     </variable>
 </xsl:template>
 
@@ -700,15 +843,21 @@
   <xsl:param name="index"/>
   
 		<label><text>&#160;</text></label>
-		<label><text>Signal Selectors <xsl:value-of select="$index"/></text></label>
-        <display item="Signal Selectors {$index} Switch Address">
+		<label>
+                    <text>Signal Selectors <xsl:value-of select="$index"/></text>
+                    <text xml:lang="cs">Volič návěstidel <xsl:value-of select="$index"/></text>
+                </label>
+                <display item="Signal Selectors {$index} Switch Address">
 			<label>Switch Address</label>
+			<label xml:lang="cs">Adresa výhybky</label>
 		</display>
 		<display item="Signal Selectors {$index} Thrown Signal Address">
 			<label>Thrown Signal Address</label>
+			<label xml:lang="cs">Adresa návěstidla Do odbočky</label>
 		</display>
 		<display item="Signal Selectors {$index} Closed Signal Address">
 			<label>Closed Signal Address</label>
+			<label xml:lang="cs">Adresa návěstidla Přímo</label>
 		</display>
 </xsl:template>
 
@@ -716,6 +865,7 @@
 <xsl:template match="pane[name='SignalSelectorsPane']">
 	<pane>
 	<name>Signal Selectors</name>
+	<name xml:lang="cs">Voliče návěstidel</name>
     <column>
 		<display item="Start Address"/>
 		<xsl:call-template name="SignalSelectorsInPane">
@@ -804,20 +954,61 @@
 	<variable item="SignalCZ {$sigIndex} Type" CV="{$CV1}" mask="XXXVVVVV" default="0">
 	  <qualifier><variableref>Product Id</variableref><relation>eq</relation><value>11</value></qualifier>
         <enumVal>
-            <enumChoice choice="Not used" value='0'/>
-            <enumChoice choice="Cz V2" value='2'/>
-            <enumChoice choice="Cz V3" value='3'/>
-            <enumChoice choice="Cz V4" value='4'/>
-            <enumChoice choice="Cz V5" value='5'/>
-            <enumChoice choice="Cz O2" value='12'/>
-            <enumChoice choice="Cz O3" value='13'/>
-            <enumChoice choice="Cz O3GRW" value='16'/>
-            <enumChoice choice="Cz O4" value='14'/>
-            <enumChoice choice="Cz P" value='6'/>
-            <enumChoice choice="Cz Distant" value='10'/>
-            <enumChoice choice="Cz RoadCrossing" value='20'/>        <!-- note, this one is valid from decoder version 11 -->
-            <enumChoice choice="Cz StopLight" value='27'/>           <!-- note, this one is valid from decoder version 11 -->
+            <enumChoice choice="Not used" value='0'>
+                <choice>Not used</choice>
+                <choice xml:lang="cs">Nepoužito</choice>
+            </enumChoice>
+            <enumChoice choice="Cz V2" value='2'>
+                <choice>Cz V2</choice>
+                <choice xml:lang="cs">V2 zč</choice>
+            </enumChoice>
+            <enumChoice choice="Cz V3" value='3'>
+                <choice>Cz V3</choice>
+                <choice xml:lang="cs">V3 žzč</choice>
+            </enumChoice>
+            <enumChoice choice="Cz V4" value='4'>
+                <choice>Cz V4</choice>
+                <choice xml:lang="cs">V4 žzčž</choice>
+            </enumChoice>
+            <enumChoice choice="Cz V5" value='5'>
+                <choice>Cz V5</choice>
+                <choice xml:lang="cs">V5 žzčbž</choice>
+            </enumChoice>
+            <enumChoice choice="Cz O2" value='12'>
+                <choice>Cz O2</choice>
+                <choice xml:lang="cs">O2 zč</choice>
+            </enumChoice>
+            <enumChoice choice="Cz O3" value='13'>
+                <choice>Cz O3</choice>
+                <choice xml:lang="cs">O3 zčž</choice>
+            </enumChoice>
+            <enumChoice choice="Cz O3GRW" value='16'>
+                <choice>Cz O3GRW</choice>
+                <choice xml:lang="cs">O3 zčb</choice>
+            </enumChoice>
+            <enumChoice choice="Cz O4" value='14'>
+                <choice>Cz O4</choice>
+                <choice xml:lang="cs">O4 zčbž</choice>
+            </enumChoice>
+            <enumChoice choice="Cz P" value='6'>
+                <choice>Cz P</choice>
+                <choice xml:lang="cs">P seřaďovací</choice>
+            </enumChoice>
+            <enumChoice choice="Cz Distant" value='10'>
+                <choice>Cz Distant</choice>
+                <choice xml:lang="cs">D předvěst</choice>
+            </enumChoice>
+            <enumChoice choice="Cz RoadCrossing" value='20'>        <!-- note, this one is valid from decoder version 11 -->
+                <choice>Cz RoadCrossing</choice>
+                <choice xml:lang="cs">Přejezd</choice>
+            </enumChoice>
+            <enumChoice choice="Cz StopLight" value='27'>           <!-- note, this one is valid from decoder version 11 -->
+                <choice>Cz StopLight</choice>
+                <choice xml:lang="cs">Indikátor</choice>
+            </enumChoice>
         </enumVal>
+            <label>Type</label>
+            <label xml:lang="cs">Typ</label>
 	</variable>
 	<variable item="SignalUS {$sigIndex} Type" CV="{$CV1}" mask="XXXVVVVV" default="0">
 	  <qualifier><variableref>Product Id</variableref><relation>eq</relation><value>12</value></qualifier>
@@ -866,36 +1057,77 @@
 	<variable item="Signal {$sigIndex} Default start" CV="{$CV1}" mask="VXXXXXXX" default="1">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>2</value></qualifier>
 		<enumVal>
-			<enumChoice choice="Stop" value='0'/>
-			<enumChoice choice="Go" value='1'/>
+                    <enumChoice choice="Stop" value='0'>
+                        <choice>Stop</choice>
+                        <choice xml:lang="cs">Stůj</choice>
+                    </enumChoice>
+                    <enumChoice choice="Go" value='1'>
+                        <choice>Go</choice>
+                        <choice xml:lang="cs">Volnoznak</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Default start</label>
+            <label xml:lang="cs">Výchozí návěst po startu</label>
 	</variable>
 
 	<!-- <SV offset="1" type="int1" minValue='1'  maxValue='64' name="First LED number" rw="1"/> -->
 	<variable item="Signal {$sigIndex} First LED number" CV="{$CV1+1}" default="0">
 		<decVal min="1" max="64"/>
+            <label>First LED number</label>
+            <label xml:lang="cs">Číslo první LED</label>
 	</variable>
 
 	<!-- <SV offset="2" type="bits" start='0' length='1' name="Short way" rw="1" minVersion='3'> -->
 	<variable item="Signal {$sigIndex} Short way" CV="{$CV1+2}" mask="XXXXXXXV" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<enumVal>
-			<enumChoice choice="No" value='0'/>
-			<enumChoice choice="Yes" value='1'/>
+                    <enumChoice choice="No" value='0'>
+                        <choice>No</choice>
+                        <choice xml:lang="cs">Ne</choice>
+                    </enumChoice>
+                    <enumChoice choice="Yes" value='1'>
+                        <choice>Yes</choice>
+                        <choice xml:lang="cs">Ano</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Short way</label>
+            <label xml:lang="cs">Nedostatečná zábrzdná vzdálenost</label>
 	</variable>
 	
 	<!-- <SV offset="2" type="bits" start='1' length='3' name="Direction Control" rw="1" minVersion='1'> -->
 	<variable item="Signal {$sigIndex} Direction Control" CV="{$CV1+2}" mask="XXXXVVVX" default="0">
 		<enumVal>
-			<enumChoice choice="Not used" value='0'/>
-			<enumChoice choice="1 - West to East" value='2'/>
-			<enumChoice choice="1 - East to West" value='3'/>
-			<enumChoice choice="2 - West to East" value='4'/>
-			<enumChoice choice="2 - East to West" value='5'/>
-			<enumChoice choice="3 - West to East" value='6'/>
-			<enumChoice choice="3 - East to West" value='7'/>
+                    <enumChoice choice="Not used" value='0'>
+                        <choice>Not used</choice>
+                        <choice xml:lang="cs">Nepoužito</choice>
+                    </enumChoice>
+                    <enumChoice choice="1 - West to East" value='2'>
+                        <choice>1 - West to East</choice>
+                        <choice xml:lang="cs">1 – od Západu na Východ</choice>
+                    </enumChoice>
+                    <enumChoice choice="1 - East to West" value='3'>
+                        <choice>1 - East to West</choice>
+                        <choice xml:lang="cs">1 – od Východu na Západ</choice>
+                    </enumChoice>
+                    <enumChoice choice="2 - West to East" value='4'>
+                        <choice>2 - West to East</choice>
+                        <choice xml:lang="cs">2 – od Západu na Východ</choice>
+                    </enumChoice>
+                    <enumChoice choice="2 - East to West" value='5'>
+                        <choice>2 - East to West</choice>
+                        <choice xml:lang="cs">2 – od Východu na Západ</choice>
+                    </enumChoice>
+                    <enumChoice choice="3 - West to East" value='6'>
+                        <choice>3 - West to East</choice>
+                        <choice xml:lang="cs">3 – od Západu na Východ</choice>
+                    </enumChoice>
+                    <enumChoice choice="3 - East to West" value='7'>
+                        <choice>3 - East to West</choice>
+                        <choice xml:lang="cs">3 – od Východu na Západ</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Direction Control</label>
+            <label xml:lang="cs">Řízení směru</label>
 	</variable>
 
 	<!-- <SV offset="2" type="bits" start='4' length='2' name="Intensity bank number" rw="1"> -->
@@ -905,66 +1137,116 @@
 			<enumChoice choice="2" value='1'/>
 			<enumChoice choice="3" value='2'/>
 		</enumVal>
+            <label>Intensity bank number</label>
+            <label xml:lang="cs">Intenzita banka číslo</label>
 	</variable>
 
 	<!-- <SV offset="3" type="int2" minValue='0'  maxValue='4096' name="Next signal address" rw="1"/> -->
 	<variable item="Signal {$sigIndex} Next signal address" CV="{$CV1 +3}" default="0">
 		<splitVal highCV="{$CV1 +4}" upperMask="XXXXVVVV"/>
+            <label>Next signal address</label>
+            <label xml:lang="cs">Adresa následujícího návěstidla</label>
 	</variable>
 
 	<!-- <SV offset="2" type="bits" start='6' length='1' name="Combine with next" rw="1" minVersion='1'> -->
 	<variable item="Signal {$sigIndex} Combine with next" CV="{$CV1+2}" mask="XVXXXXXX" default="0">
 		<enumVal>
-			<enumChoice choice="No" value='0'/>
-			<enumChoice choice="Yes" value='1'/>
+                    <enumChoice choice="No" value='0'>
+                        <choice>No</choice>
+                        <choice xml:lang="cs">Ne</choice>
+                    </enumChoice>
+                    <enumChoice choice="Yes" value='1'>
+                        <choice>Yes</choice>
+                        <choice xml:lang="cs">Ano</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Combine rule space with next</label>
+            <label xml:lang="cs">Spojit pravidlo oddílu s následujícím</label>
 	</variable>
 
 	<!-- <SV offset="2" type="bits" start='7' length='1' name="Combined with previous" rw="0" minVersion='1'> -->
 	<variable item="Signal {$sigIndex} Combined with previous" CV="{$CV1+2}" mask="VXXXXXXX" default="0">
 		<enumVal>
-			<enumChoice choice="No" value='0'/>
-			<enumChoice choice="Yes" value='1'/>
+                    <enumChoice choice="No" value='0'>
+                        <choice>No</choice>
+                        <choice xml:lang="cs">Ne</choice>
+                    </enumChoice>
+                    <enumChoice choice="Yes" value='1'>
+                        <choice>Yes</choice>
+                        <choice xml:lang="cs">Ano</choice>
+                    </enumChoice>
 		</enumVal>
+                <label>Combined rule space with previous</label>
+            <label xml:lang="cs">Spojeno pravidlo oddílu s předcházejícím</label>
 	</variable>
 
 	<!-- <SV offset="5" type="bits" start='0' length='12' name="Set Diverging 1, Address" minValue='0' maxValue='2048' rw="1"/> -->
 	<variable item="Signal {$sigIndex} Set Diverging 1, Address" CV="{$CV1 +5}" default="0">
 		<splitVal highCV="{$CV1 +6}" upperMask="XXXXXVVV"/>
+            <label>Set Diverging 1, Address</label>
+            <label xml:lang="cs">Nastavuje Do odbočky 1, Adresa</label>
 	</variable>
 	<!-- <SV offset="6" type="bits" start='7' length='1' name="Set Diverging 1, Use switch order" advanced="1" minVersion='3' rw="1"> -->
 	<variable item="Signal {$sigIndex} Set Diverging 1, Use switch order" CV="{$CV1+6}" mask="VXXXXXXX" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<enumVal>
-			<enumChoice choice="No, react on normal feedback" value='0'/>
-			<enumChoice choice="Yes, handle feedback" value='1'/>
+                    <enumChoice choice="No, react on normal feedback" value='0'>
+                        <choice>No, react on normal feedback</choice>
+                        <choice xml:lang="cs">Ne, reagovat na normální ohlas</choice>
+                    </enumChoice>
+                    <enumChoice choice="Yes, handle feedback" value='1'>
+                        <choice>Yes, handle feedback</choice>
+                        <choice xml:lang="cs">Ano, zpracovat ohlas</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Set Diverging 1, Use switch order</label>
+            <label xml:lang="cs">Nastavuje do odbočky 1, Použít příkaz výhybky</label>
 	</variable>
 	
 	<!-- <SV offset="7" type="bits" start='0' length='12' name="Set Diverging 2, Address" minValue='0' maxValue='2048' rw="1"/> -->
 	<variable item="Signal {$sigIndex} Set Diverging 2, Address" CV="{$CV1 +7}" default="0">
 		<splitVal highCV="{$CV1 +8}" upperMask="XXXXXVVV"/>
+            <label>Set Diverging 2, Address</label>
+            <label xml:lang="cs">Nastavuje Do odbočky 2, Adresa</label>
 	</variable>
 	<!-- <SV offset="8" type="bits" start='7' length='1' name="Set Diverging 2, Direct order" advanced="1" minVersion='3' rw="1"> -->
 	<variable item="Signal {$sigIndex} Set Diverging 2, Use switch order" CV="{$CV1+8}" mask="VXXXXXXX" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<enumVal>
-			<enumChoice choice="No, react on normal feedback" value='0'/>
-			<enumChoice choice="Yes, handle feedback" value='1'/>
+                    <enumChoice choice="No, react on normal feedback" value='0'>
+                        <choice>No, react on normal feedback</choice>
+                        <choice xml:lang="cs">Ne, reagovat na normální ohlas</choice>
+                    </enumChoice>
+                    <enumChoice choice="Yes, handle feedback" value='1'>
+                        <choice>Yes, handle feedback</choice>
+                        <choice xml:lang="cs">Ano, zpracovat ohlas</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Set Diverging 2, Use switch order</label>
+            <label xml:lang="cs">Nastavuje do odbočky 2, Použít příkaz výhybky</label>
 	</variable>
 	
 	<!-- <SV offset="9" type="bits" start='0' length='12' name="Set Diverging 3, Address" minValue='0' maxValue='2048' rw="1"/> -->
 	<variable item="Signal {$sigIndex} Set Diverging 3, Address" CV="{$CV1 +9}" default="0">
 		<splitVal highCV="{$CV1 +10}" upperMask="XXXXXVVV"/>
+            <label>Set Diverging 3, Address</label>
+            <label xml:lang="cs">Nastavuje Do odbočky 3, Adresa</label>
 	</variable>
 	<!-- <SV offset="10" type="bits" start='7' length='1' name="Set Diverging 3, Direct order" advanced="1" minVersion='3' rw="1"> -->
 	<variable item="Signal {$sigIndex} Set Diverging 3, Use switch order" CV="{$CV1+10}" mask="VXXXXXXX" default="0">
 		<qualifier><variableref>Decoder Version</variableref><relation>ge</relation><value>3</value></qualifier>
 		<enumVal>
-			<enumChoice choice="No, react on normal feedback" value='0'/>
-			<enumChoice choice="Yes, handle feedback" value='1'/>
+                    <enumChoice choice="No, react on normal feedback" value='0'>
+                        <choice>No, react on normal feedback</choice>
+                        <choice xml:lang="cs">Ne, reagovat na normální ohlas</choice>
+                    </enumChoice>
+                    <enumChoice choice="Yes, handle feedback" value='1'>
+                        <choice>Yes, handle feedback</choice>
+                        <choice xml:lang="cs">Ano, zpracovat ohlas</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Set Diverging 3, Use switch order</label>
+            <label xml:lang="cs">Nastavuje do odbočky 3, Použít příkaz výhybky</label>
 	</variable>
 	
 	
@@ -986,33 +1268,68 @@
 		<!-- <SV offset="11" type="bits" start='0' length='1' name="GO 1, Logic" rw="1" minVersion='1'> -->
 		<variable item="Signal {$sigIndex} GO {$goIndex}, Logic" CV="{$CV1}" mask="XXXXXXXV" default="0">
 			<enumVal>
-				<enumChoice choice="OR" value='0'/>
-				<enumChoice choice="AND" value='1'/>
+                        <enumChoice choice="OR" value="0">
+                          <choice>OR</choice>
+                          <choice xml:lang="cs">NEBO</choice>
+                        </enumChoice>
+                        <enumChoice choice="AND" value="1">
+                          <choice>AND</choice>
+                          <choice xml:lang="cs">A ZÁROVEŇ</choice>
+                        </enumChoice>
 			</enumVal>
+			<label>Logic</label>
+			<label xml:lang="cs">Logika</label>
 		</variable>
 
 		<!--	<SV offset="11" type="bits" start='4' length='4' name="GO 1, Type" rw="1"> -->
 		<variable item="Signal {$sigIndex} GO {$goIndex}, Type" CV="{$CV1}" mask="VVVVXXXX" default="0">
 			<enumVal>
-			  <enumChoice choice="Not used" value="0"/>
-			  <enumChoice choice="Sw status" value="1"/>
-			  <enumChoice choice="Occ sensor" value="2"/>
-			  <enumChoice choice="SE" value="3"/>
-			  <enumChoice choice="xRule" value="5"/>
+                            <enumChoice choice="Not used" value="0">
+                                <choice>Not used</choice>
+                                <choice xml:lang="cs">Nepoužito</choice>
+                            </enumChoice>
+                            <enumChoice choice="Sw status" value="1">
+                                <choice>Sw status</choice>
+                                <choice xml:lang="cs">Stav výhybky</choice>
+                            </enumChoice>
+                            <enumChoice choice="Occ sensor" value="2">
+                                <choice>Occ sensor</choice>
+                                <choice xml:lang="cs">Detekce obsazení</choice>
+                            </enumChoice>
+                            <enumChoice choice="SE" value="3">
+                                <choice>SE</choice>
+                                <choice xml:lang="cs">Změna návěsti</choice>
+                            </enumChoice>
+                            <enumChoice choice="xRule" value="5">
+                                <choice>xRule</choice>
+                                <choice xml:lang="cs">Další pravidlo</choice>
+                            </enumChoice>
 			</enumVal>
+			<label>Type</label>
+			<label xml:lang="cs">Typ</label>
 		</variable>
 
 		<!-- <SV offset="12" type="bits" start='0' length='12' name="GO 1, Address" minValue='0' maxValue='4095' rw="1"/> -->
 		<variable item="Signal {$sigIndex} GO {$goIndex}, Address" CV="{$CV1 +1}" default="0">
 			<splitVal highCV="{$CV1 +2}" upperMask="XXXXVVVV"/>
+			<label>Address</label>
+			<label xml:lang="cs">Adresa</label>
 		</variable>
 
 		<!-- <SV offset="13" type="bits" start='6' length='1' name="GO 1, Status" rw="1" minVersion='1'> -->
 		<variable item="Signal {$sigIndex} GO {$goIndex}, Status" CV="{$CV1 +2}" mask="XVXXXXXX" default="0">
 			<enumVal>
-				<enumChoice choice="Thrown/0" value='0'/>
-				<enumChoice choice="CLosed/1" value='1'/>
+                            <enumChoice choice="Thrown/0" value="0">
+                                 <choice>Thrown/0</choice>
+                                 <choice xml:lang="cs">Do odbočky / 0</choice>
+                             </enumChoice>
+                             <enumChoice choice="Closed/1" value="1">
+                                 <choice>Closed/1</choice>
+                                 <choice xml:lang="cs">Přímo / 1</choice>
+                             </enumChoice>
 			</enumVal>
+			<label>Status</label>
+			<label xml:lang="cs">Stav</label>
 		</variable>
 
 		<xsl:call-template name="SignalGoRulesVar">
@@ -1051,19 +1368,14 @@
 
 	<xsl:if test="6 >= $goIndex">
 	
-		<label><text>Signal <xsl:value-of select="$sigIndex"/>, Go rule <xsl:value-of select="$goIndex"/></text></label>
-		<display item="Signal {$sigIndex} GO {$goIndex}, Logic">
-			<label>Logic</label>
-		</display>
-		<display item="Signal {$sigIndex} GO {$goIndex}, Type">
-			<label>Type</label>
-		</display>
-		<display item="Signal {$sigIndex} GO {$goIndex}, Address">
-			<label>Address</label>
-		</display>
-		<display item="Signal {$sigIndex} GO {$goIndex}, Status">
-			<label>Status</label>
-		</display>
+		<label>
+                    <text>Signal <xsl:value-of select="$sigIndex"/>, Go rule <xsl:value-of select="$goIndex"/></text>
+                    <text xml:lang="cs">Návěstidlo <xsl:value-of select="$sigIndex"/>, Pravidlo Volnoznak <xsl:value-of select="$goIndex"/></text>
+                </label>
+		<display item="Signal {$sigIndex} GO {$goIndex}, Logic"/>
+		<display item="Signal {$sigIndex} GO {$goIndex}, Type"/>
+		<display item="Signal {$sigIndex} GO {$goIndex}, Address"/>
+		<display item="Signal {$sigIndex} GO {$goIndex}, Status"/>
 
 		<xsl:call-template name="SigGoInPane">
 			<xsl:with-param name="sigIndex" select="$sigIndex"/>
@@ -1081,7 +1393,10 @@
 
 		<label><text>&#160;</text></label>
 		<separator/> 
-		<label><text>Signal <xsl:value-of select="$sigIndex"/></text></label>
+		<label>
+                    <text>Signal <xsl:value-of select="$sigIndex"/></text>
+                    <text xml:lang="cs">Návěstidlo <xsl:value-of select="$sigIndex"/></text>
+                </label>
 
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>ne</relation><value>6</value></qualifier>
@@ -1109,7 +1424,6 @@
 		</display>
 		<display item="SignalCZ {$sigIndex} Type">
 		  <qualifier><variableref>Product Id</variableref><relation>eq</relation><value>11</value></qualifier>
-		    <label>Type</label>
 		</display>
 		<display item="SignalUS {$sigIndex} Type">
 		  <qualifier><variableref>Product Id</variableref><relation>eq</relation><value>12</value></qualifier>
@@ -1123,55 +1437,33 @@
 		  <qualifier><variableref>Product Id</variableref><relation>eq</relation><value>14</value></qualifier>
 		    <label>Type</label>
 		</display>
-		<display item="Signal {$sigIndex} Default start">
-			<label>Default start</label>
-		</display>
-		<display item="Signal {$sigIndex} First LED number">
-			<label>First LED number</label>
-		</display>
-		<display item="Signal {$sigIndex} Short way">
-			<label>Short way</label>
-		</display>
-		<display item="Signal {$sigIndex} Direction Control">
-			<label>Direction Control</label>
-		</display>
-		<display item="Signal {$sigIndex} Intensity bank number">
-			<label>Intensity bank number</label>
-		</display>
-		<display item="Signal {$sigIndex} Combine with next">
-			<label>Combine rule space with next</label>
-		</display>
-		<display item="Signal {$sigIndex} Combined with previous">
-			<label>Combined rule space with previous</label>
-		</display>
+		<display item="Signal {$sigIndex} Default start"/>
+		<display item="Signal {$sigIndex} First LED number"/>
+		<display item="Signal {$sigIndex} Short way"/>
+		<display item="Signal {$sigIndex} Direction Control"/>
+		<display item="Signal {$sigIndex} Intensity bank number"/>
+		<display item="Signal {$sigIndex} Combine with next"/>
+		<display item="Signal {$sigIndex} Combined with previous"/>
 
 		<label><text>&#160;</text></label>
-		<label><text>Distant signalling</text></label>
-		<display item="Signal {$sigIndex} Next signal address">
-			<label>Next signal address</label>
-		</display>
+		<label>
+                    <text>Distant signalling</text>
+                    <text xml:lang="cs">Předvěstění</text>
+                </label>
+		<display item="Signal {$sigIndex} Next signal address"/>
 
 		<label><text>&#160;</text></label>
-		<label><text>Divering switches</text></label>
+		<label>
+                    <text>Divering switches</text>
+                    <text xml:lang="cs">Odbočující výhybky</text>
+                </label>
 
-		<display item="Signal {$sigIndex} Set Diverging 1, Address">
-			<label>Set Diverging 1, Address</label>
-		</display>
-		<display item="Signal {$sigIndex} Set Diverging 1, Use switch order">
-			<label>Set Diverging 1, Use switch order</label>
-		</display>
-		<display item="Signal {$sigIndex} Set Diverging 2, Address">
-			<label>Set Diverging 2, Address</label>
-		</display>
-		<display item="Signal {$sigIndex} Set Diverging 2, Use switch order">
-			<label>Set Diverging 2, Use switch order</label>
-		</display>
-		<display item="Signal {$sigIndex} Set Diverging 3, Address">
-			<label>Set Diverging 3, Address</label>
-		</display>
-		<display item="Signal {$sigIndex} Set Diverging 3, Use switch order">
-			<label>Set Diverging 3, Use switch order</label>
-		</display>
+		<display item="Signal {$sigIndex} Set Diverging 1, Address"/>
+		<display item="Signal {$sigIndex} Set Diverging 1, Use switch order"/>
+		<display item="Signal {$sigIndex} Set Diverging 2, Address"/>
+		<display item="Signal {$sigIndex} Set Diverging 2, Use switch order"/>
+		<display item="Signal {$sigIndex} Set Diverging 3, Address"/>
+		<display item="Signal {$sigIndex} Set Diverging 3, Use switch order"/>
 
 		<label><text>&#160;</text></label>
 		<xsl:call-template name="SigGoInPane">
@@ -1189,40 +1481,46 @@
 <xsl:template match="pane[name='SignalsPane']">
 	<pane>
 	<name>Signals</name>
+	<name xml:lang="cs">Návěstidla</name>
 
 	<column>
 		<row>
-			<display item="Product Id">
-				<label>Product Id</label>
-			</display>
+			<display item="Product Id"/>
 			<label><text>&#160;&#160;&#160;</text></label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>6</value></qualifier>
 				<text>Swedish signal decoder</text>
+				<text xml:lang="cs">Švédský návěstní dekodér</text>
 			</label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>7</value></qualifier>
 				<text>German signal decoder</text>
+				<text xml:lang="cs">Německý návěstní dekodér</text>
 			</label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>8</value></qualifier>
 				<text>Danish signal decoder</text>
+				<text xml:lang="cs">Dánský návěstní dekodér</text>
 			</label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>11</value></qualifier>
 				<text>Czech signal decoder</text>
+				<text xml:lang="cs">Český návěstní dekodér</text>
 			</label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>12</value></qualifier>
 				<text>US signal decoder</text>
+				<text xml:lang="cs">USA návěstní dekodér</text>
 			</label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>13</value></qualifier>
 				<text>Norweigen signal decoder</text>
+				<text xml:lang="cs">Norský návěstní dekodér</text>
 			</label>
 			<label>
 				<qualifier><variableref>Product Id</variableref><relation>eq</relation><value>14</value></qualifier>
 				<text>Dutch signal decoder</text>
+				<text xml:lang="cs">Holandský návěstní dekodér</text>
 			</label>
 		</row>
 		<row>
@@ -1235,6 +1533,7 @@
 				<qualifier><variableref>Product Id</variableref><relation>ne</relation><value>13</value></qualifier>
 				<qualifier><variableref>Product Id</variableref><relation>ne</relation><value>14</value></qualifier>
 				<text>Country for Signal decoder is not defined, please read data from decoder</text>
+				<text xml:lang="cs">Není definovaná země návěstního dekodéru, prosím přečtěte data z dekodéru</text>
 			</label>
 		</row>
 
@@ -1307,38 +1606,72 @@
 		<!-- <SV offset="0" type="int2" minValue='0'  maxValue='4096' name="Control Address" rw="1"/> -->
 		<variable item="Signal {$sigIndex} Control {$goIndex} Control Address" CV="{$CV1}" default="0">
 			<splitVal highCV="{$CV1 +1}" upperMask="XXXXVVVV"/>
+                    <label>Control Address</label>
+                    <label xml:lang="cs">Řídí adresu</label>
 		</variable>
 
 		<!-- <SV offset="1" type="bits" start='0' length='1' name="Feedback" rw="1" minVersion='12'> -->
 		<variable item="Signal {$sigIndex} Control {$goIndex} Default State" CV="{$CV1+1}" mask="XXXVXXXX" default="0">
 			<enumVal>
-				<enumChoice choice="Thrown at start" value='0'/>
-				<enumChoice choice="Closed at start" value='1'/>
+                            <enumChoice choice="Thrown at start" value='0'>
+                                <choice>Thrown at start</choice>
+                                <choice xml:lang="cs">Do odbočky po startu</choice>
+                            </enumChoice>
+                            <enumChoice choice="Closed at start" value='1'>
+                                <choice>Closed at start</choice>
+                                <choice xml:lang="cs">Přímo po startu</choice>
+                            </enumChoice>
 			</enumVal>
+                    <label>Default State</label>
+                    <label xml:lang="cs">Výchozí stav</label>
 		</variable>
 
 		<!-- <SV offset="1" type="bits" start='0' length='1' name="Feedback" rw="1" minVersion='9'> -->
 		<variable item="Signal {$sigIndex} Control {$goIndex} Feedback" CV="{$CV1+1}" mask="XXVXXXXX" default="0">
 			<enumVal>
-				<enumChoice choice="No, react on normal feedback" value='0'/>
-				<enumChoice choice="Yes, handle feedback" value='1'/>
+                            <enumChoice choice="No, react on normal feedback" value='0'>
+                                <choice>No, react on normal feedback</choice>
+                                <choice xml:lang="cs">Ne, reagovat na normální ohlas</choice>
+                            </enumChoice>
+                            <enumChoice choice="Yes, handle feedback" value='1'>
+                                <choice>Yes, handle feedback</choice>
+                                <choice xml:lang="cs">Ano, zpracovat ohlas</choice>
+                            </enumChoice>
 			</enumVal>
+                    <label>Feedback</label>
+                    <label xml:lang="cs">Ohlas</label>
 		</variable>
 		
 		<!-- <SV offset="1" type="bits" start='0' length='1' name="Special State" rw="1" minVersion='9'> -->
 		<variable item="Signal {$sigIndex} Control {$goIndex} Special State" CV="{$CV1+1}" mask="XVXXXXXX" default="0">
 			<enumVal>
-				<enumChoice choice="Active at thrown" value='0'/>
-				<enumChoice choice="Active at closed" value='1'/>
+                            <enumChoice choice="Active at thrown" value='0'>
+                                <choice>Active at thrown</choice>
+                                <choice xml:lang="cs">Aktivní při Do odbočky</choice>
+                            </enumChoice>
+                            <enumChoice choice="Active at closed" value='1'>
+                                <choice>Active at closed</choice>
+                                <choice xml:lang="cs">Aktivní při Přímo</choice>
+                            </enumChoice>
 			</enumVal>
+			<label>Special State</label>
+			<label xml:lang="cs">Zvláštní stav</label>
 		</variable>
 		
 		<!-- <SV offset="1" type="bits" start='0' length='1' name="Force View" rw="1" minVersion='9'> -->
 		<variable item="Signal {$sigIndex} Control {$goIndex} Force View" CV="{$CV1+1}" mask="VXXXXXXX" default="0">
 			<enumVal>
-				<enumChoice choice="No,view when alloved" value='0'/>
-				<enumChoice choice="Yes, force this view" value='1'/>
+                            <enumChoice choice="No,view when alloved" value='0'>
+                                <choice>No,view when alloved</choice>
+                                <choice xml:lang="cs">Ne, zobrazení je povoleno</choice>
+                            </enumChoice>
+                            <enumChoice choice="Yes, force this view" value='1'>
+                                <choice>Yes, force this view</choice>
+                                <choice xml:lang="cs">Ano, vynutit toto zobrazení</choice>
+                            </enumChoice>
 			</enumVal>
+                    <label>Force View</label>
+                    <label xml:lang="cs">Vynutit zobrazení</label>
 		</variable>
 
 		<xsl:call-template name="SpecialSignalControls">
@@ -1365,50 +1698,130 @@
 	<!-- <SV offset="8" type="bits" start='0' length='4' name="Control 1 Address Type" rw="1" minVersion='11'> -->
 	<variable item="Signal {$sigIndex} Control 1 Address Type" CV="{$CV1+8}" mask="XXXXVVVV" default="0">
 		<enumVal>
-			<enumChoice choice="Not used" value='0'/>
-			<enumChoice choice="Switch Status" value='1'/>
-			<enumChoice choice="Track Sensor" value='2'/>
-			<enumChoice choice="Signal Status" value='3'/>
-			<enumChoice choice="Extra Rule" value='4'/>
-			<enumChoice choice="Fixed Setting" value='5'/>
-		</enumVal>
+                    <enumChoice choice="Not used" value="0">
+                        <choice>Not used</choice>
+                        <choice xml:lang="cs">Nepoužito</choice>
+                    </enumChoice>
+                    <enumChoice choice="Switch status" value="1">
+                        <choice>Switch status</choice>
+                        <choice xml:lang="cs">Stav výhybky</choice>
+                    </enumChoice>
+                    <enumChoice choice="Track Sensor" value="2">
+                        <choice>Track Sensor</choice>
+                        <choice xml:lang="cs">Detekce obsazení</choice>
+                    </enumChoice>
+                    <enumChoice choice="Signal Status" value="3">
+                        <choice>Signal Status</choice>
+                        <choice xml:lang="cs">Stav návěstidla</choice>
+                    </enumChoice>
+                    <enumChoice choice="Extra Rule" value='4'>
+                        <choice>Extra Rule</choice>
+                        <choice xml:lang="cs">Další pravidlo</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fixed Setting" value='5'>
+                        <choice>Fixed Setting</choice>
+                        <choice xml:lang="cs">Pevné nastavení</choice>
+                    </enumChoice>
+                </enumVal>
+            <label>Control 1 Address Type</label>
+            <label xml:lang="cs">Řídí 1 Typ adresy</label>
 	</variable>
 	
 	<!-- <SV offset="8" type="bits" start='4' length='4' name="Control 2 Address Type" rw="1" minVersion='11'> -->
 	<variable item="Signal {$sigIndex} Control 2 Address Type" CV="{$CV1+8}" mask="VVVVXXXX" default="0">
 		<enumVal>
-			<enumChoice choice="Not used" value='0'/>
-			<enumChoice choice="Switch Status" value='1'/>
-			<enumChoice choice="Track Sensor" value='2'/>
-			<enumChoice choice="Signal Status" value='3'/>
-			<enumChoice choice="Extra Rule" value='4'/>
-			<enumChoice choice="Fixed Setting" value='5'/>
+                    <enumChoice choice="Not used" value="0">
+                        <choice>Not used</choice>
+                        <choice xml:lang="cs">Nepoužito</choice>
+                    </enumChoice>
+                    <enumChoice choice="Switch status" value="1">
+                        <choice>Switch status</choice>
+                        <choice xml:lang="cs">Stav výhybky</choice>
+                    </enumChoice>
+                    <enumChoice choice="Track Sensor" value="2">
+                        <choice>Track Sensor</choice>
+                        <choice xml:lang="cs">Detekce obsazení</choice>
+                    </enumChoice>
+                    <enumChoice choice="Signal Status" value="3">
+                        <choice>Signal Status</choice>
+                        <choice xml:lang="cs">Stav návěstidla</choice>
+                    </enumChoice>
+                    <enumChoice choice="Extra Rule" value='4'>
+                        <choice>Extra Rule</choice>
+                        <choice xml:lang="cs">Další pravidlo</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fixed Setting" value='5'>
+                        <choice>Fixed Setting</choice>
+                        <choice xml:lang="cs">Pevné nastavení</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Control 2 Address Type</label>
+            <label xml:lang="cs">Řídí 2 Typ adresy</label>
 	</variable>
 	
 		
 	<!-- <SV offset="9" type="bits" start='0' length='4' name="Control 3 Address Type" rw="1" minVersion='11'> -->
 	<variable item="Signal {$sigIndex} Control 3 Address Type" CV="{$CV1+9}" mask="XXXXVVVV" default="0">
 		<enumVal>
-			<enumChoice choice="Not used" value='0'/>
-			<enumChoice choice="Switch Status" value='1'/>
-			<enumChoice choice="Track Sensor" value='2'/>
-			<enumChoice choice="Signal Status" value='3'/>
-			<enumChoice choice="Extra Rule" value='4'/>
-			<enumChoice choice="Fixed Setting" value='5'/>
+                    <enumChoice choice="Not used" value="0">
+                        <choice>Not used</choice>
+                        <choice xml:lang="cs">Nepoužito</choice>
+                    </enumChoice>
+                    <enumChoice choice="Switch status" value="1">
+                        <choice>Switch status</choice>
+                        <choice xml:lang="cs">Stav výhybky</choice>
+                    </enumChoice>
+                    <enumChoice choice="Track Sensor" value="2">
+                        <choice>Track Sensor</choice>
+                        <choice xml:lang="cs">Detekce obsazení</choice>
+                    </enumChoice>
+                    <enumChoice choice="Signal Status" value="3">
+                        <choice>Signal Status</choice>
+                        <choice xml:lang="cs">Stav návěstidla</choice>
+                    </enumChoice>
+                    <enumChoice choice="Extra Rule" value='4'>
+                        <choice>Extra Rule</choice>
+                        <choice xml:lang="cs">Další pravidlo</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fixed Setting" value='5'>
+                        <choice>Fixed Setting</choice>
+                        <choice xml:lang="cs">Pevné nastavení</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Control 3 Address Type</label>
+            <label xml:lang="cs">Řídí 3 Typ adresy</label>
 	</variable>
 	
 	<!-- <SV offset="9" type="bits" start='4' length='4' name="Control 4 Address Type" rw="1" minVersion='11'> -->
 	<variable item="Signal {$sigIndex} Control 4 Address Type" CV="{$CV1+9}" mask="VVVVXXXX" default="0">
 		<enumVal>
-			<enumChoice choice="Not used" value='0'/>
-			<enumChoice choice="Switch Status" value='1'/>
-			<enumChoice choice="Track Sensor" value='2'/>
-			<enumChoice choice="Signal Status" value='3'/>
-			<enumChoice choice="Extra Rule" value='4'/>
-			<enumChoice choice="Fixed Setting" value='5'/>
+                    <enumChoice choice="Not used" value="0">
+                        <choice>Not used</choice>
+                        <choice xml:lang="cs">Nepoužito</choice>
+                    </enumChoice>
+                    <enumChoice choice="Switch status" value="1">
+                        <choice>Switch status</choice>
+                        <choice xml:lang="cs">Stav výhybky</choice>
+                    </enumChoice>
+                    <enumChoice choice="Track Sensor" value="2">
+                        <choice>Track Sensor</choice>
+                        <choice xml:lang="cs">Detekce obsazení</choice>
+                    </enumChoice>
+                    <enumChoice choice="Signal Status" value="3">
+                        <choice>Signal Status</choice>
+                        <choice xml:lang="cs">Stav návěstidla</choice>
+                    </enumChoice>
+                    <enumChoice choice="Extra Rule" value='4'>
+                        <choice>Extra Rule</choice>
+                        <choice xml:lang="cs">Další pravidlo</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fixed Setting" value='5'>
+                        <choice>Fixed Setting</choice>
+                        <choice xml:lang="cs">Pevné nastavení</choice>
+                    </enumChoice>
 		</enumVal>
+            <label>Control 4 Address Type</label>
+            <label xml:lang="cs">Řídí 4 Typ adresy</label>
 	</variable>
 	
 
@@ -1428,23 +1841,16 @@
 
 	<xsl:if test="4 >= $goIndex">
 	
-		<label><text>Signal <xsl:value-of select="$sigIndex"/>, Control <xsl:value-of select="$goIndex"/></text></label>
+		<label>
+                    <text>Signal <xsl:value-of select="$sigIndex"/>, Control <xsl:value-of select="$goIndex"/></text>
+                    <text xml:lang="cs">Návěstidlo <xsl:value-of select="$sigIndex"/>, Řídí <xsl:value-of select="$goIndex"/></text>
+                </label>
 
-		<display item="Signal {$sigIndex} Control {$goIndex} Control Address">
-			<label>Control Address</label>
-		</display>
-		<display item="Signal {$sigIndex} Control {$goIndex} Default State">
-			<label>Default State</label>
-		</display>
-		<display item="Signal {$sigIndex} Control {$goIndex} Feedback">
-			<label>Feedback</label>
-		</display>
-		<display item="Signal {$sigIndex} Control {$goIndex} Special State">
-			<label>Special State</label>
-		</display>
-		<display item="Signal {$sigIndex} Control {$goIndex} Force View">
-			<label>Force View</label>
-		</display>
+		<display item="Signal {$sigIndex} Control {$goIndex} Control Address"/>
+		<display item="Signal {$sigIndex} Control {$goIndex} Default State"/>
+		<display item="Signal {$sigIndex} Control {$goIndex} Feedback"/>
+		<display item="Signal {$sigIndex} Control {$goIndex} Special State"/>
+		<display item="Signal {$sigIndex} Control {$goIndex} Force View"/>
 
 		<xsl:call-template name="SigSpecialInPane">
 			<xsl:with-param name="sigIndex" select="$sigIndex"/>
@@ -1461,21 +1867,16 @@
 	<xsl:if test="11 > $sigIndex">
 
 -		<label><text>&#160;</text></label>
-		<label><text>Signal <xsl:value-of select="$sigIndex"/></text></label>
+		<label>
+                    <text>Signal <xsl:value-of select="$sigIndex"/></text>
+                    <text xml:lang="cs">Návěstidlo <xsl:value-of select="$sigIndex"/></text>
+                </label>
 		<label><text>&#160;</text></label>
 
-		<display item="Signal {$sigIndex} Control 1 Address Type">
-			<label>Control 1 Address Type</label>
-		</display>
-		<display item="Signal {$sigIndex} Control 2 Address Type">
-			<label>Control 2 Address Type</label>
-		</display>
-		<display item="Signal {$sigIndex} Control 3 Address Type">
-			<label>Control 3 Address Type</label>
-		</display>
-		<display item="Signal {$sigIndex} Control 4 Address Type">
-			<label>Control 4 Address Type</label>
-		</display>
+		<display item="Signal {$sigIndex} Control 1 Address Type"/>
+		<display item="Signal {$sigIndex} Control 2 Address Type"/>
+		<display item="Signal {$sigIndex} Control 3 Address Type"/>
+		<display item="Signal {$sigIndex} Control 4 Address Type"/>
 		
 		<label><text>&#160;</text></label>
 		<xsl:call-template name="SigSpecialInPane">
@@ -1491,6 +1892,7 @@
 <xsl:template match="pane[name='SigSpecialsPane']">
 	<pane>
 	<name>Special Signal Controls</name>
+	<name xml:lang="cs">Zvláštní řízení návěstidla</name>
 		<column>
 			<xsl:call-template name="AllSpecialSignalsInPane">
 				<xsl:with-param name="sigIndex" select="1"/>

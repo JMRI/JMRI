@@ -18,7 +18,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 
 /**
  * Helper class for DefaultConditional that executes the  actions of a
@@ -50,7 +50,7 @@ public class DefaultConditionalExecute {
             increaseCounter(actionCount);
         }
     }
-    
+
     void delayedTurnout(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull TimeTurnout timeTurnout, boolean reset, String devName) {
         if (reset) action.stopTimer();
         if (!action.isTimerActive()) {
@@ -74,7 +74,7 @@ public class DefaultConditionalExecute {
             log.warn("timer already active on request to start delayed turnout action - {}", devName);
         }
     }
-    
+
     void cancelTurnoutTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
         ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
         java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
@@ -92,7 +92,7 @@ public class DefaultConditionalExecute {
             increaseCounter(actionCount);
         }
     }
-    
+
     void lockTurnout(@Nonnull ConditionalAction action, Turnout tl, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (tl == null) {
             errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
@@ -113,7 +113,7 @@ public class DefaultConditionalExecute {
             increaseCounter(actionCount);
         }
     }
-    
+
     void setSignalAppearance(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -432,7 +432,7 @@ public class DefaultConditionalExecute {
             ScriptOutput.writeScript(actionStr);
             // and execute
 
-            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
             if (se!=null) {
                 try {
                     JmriScriptEngineManager.getDefault().eval(actionStr, se);

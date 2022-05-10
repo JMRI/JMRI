@@ -124,7 +124,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         _memorySystemName = "IM1";
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _action = new MyStringActionMemory("IQSA321");
-        _action.setMemory(_memory);
+        _action.getSelectNamedBean().setNamedBean(_memory);
         StringActionMemory otherAction = new StringActionMemory("IQSA322", null);
         manager = InstanceManager.getDefault(StringActionManager.class);
         maleSocket = ((StringActionManager)manager).registerAction(_action);

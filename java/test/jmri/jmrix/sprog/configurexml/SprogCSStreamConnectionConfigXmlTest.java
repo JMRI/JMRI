@@ -32,9 +32,8 @@ public class SprogCSStreamConnectionConfigXmlTest extends jmri.jmrix.configurexm
                     ((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController().dispose();
             }
         }
-
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

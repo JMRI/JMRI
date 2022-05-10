@@ -43,7 +43,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         try {
             newAddress = CbusAddress.validateSysName(addr);
         } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
+            log.error("Unable to create CbusTurnout, {}", e.getMessage());
             throw e;
         }
         // OK, make

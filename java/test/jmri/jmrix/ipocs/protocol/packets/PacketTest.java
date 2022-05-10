@@ -1,43 +1,22 @@
 package jmri.jmrix.ipocs.protocol.packets;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.nio.ByteBuffer;
 import java.util.Random;
 
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class PacketTest {
-  Packet pkt = null;
-  private final byte[] testPacket = { 0x20, 0x03, 0x12 };
 
-  @BeforeEach
-  public void beforeEach() {
-    pkt = new Packet() {
-      @Override
-      public byte getId() {
-        return (char)0x20;
-      }
-  
-      @Override
-      protected void parseSpecific(ByteBuffer buffer) {
-      }
-  
-      @Override
-      protected byte[] serializeSpecific() {
-        return new byte[0];
-      }
-    };
-  }
+    private Packet pkt = null;
+    private final byte[] testPacket = { 0x20, 0x03, 0x12 };
 
   @Test
   public void ackTest() {
-    if (pkt == null) {
-      beforeEach();
-    }
     byte[] bytes = new byte[1];
     new Random().nextBytes(bytes);
     pkt.setAck(bytes[0]);
@@ -57,12 +36,35 @@ public class PacketTest {
 
   @Test
   public void serializeTest() {
-    if (pkt == null) {
-      beforeEach();
-    }
     pkt.setAck((byte)0x12);
     assertEquals(ByteBuffer.wrap(testPacket), pkt.serialize());
     assertEquals(0x03, pkt.getLength());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        pkt = new Packet() {
+            @Override
+            public byte getId() {
+                return (char)0x20;
+            }
+
+            @Override
+            protected void parseSpecific(ByteBuffer buffer) {
+            }
+
+            @Override
+            protected byte[] serializeSpecific() {
+                return new byte[0];
+            }
+        };
+    }
+
+    @AfterEach
+    public void tearDown() {
+        pkt = null;
+        JUnitUtil.tearDown();
+    }
 
 }

@@ -55,7 +55,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
             return null;
         }
         return (MrcProgrammerManager)classObjectMap.computeIfAbsent(MrcProgrammerManager.class,
-                (Class c) -> new MrcProgrammerManager(new MrcProgrammer(this), this));
+                (Class<?> c) -> new MrcProgrammerManager(new MrcProgrammer(this), this));
     }
 
     public void setProgrammerManager(MrcProgrammerManager p) {

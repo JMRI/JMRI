@@ -45,7 +45,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /**
      * Get the Turnout with the user name, then system name if needed; if that fails, create a
-     * new Turnout. 
+     * new Turnout.
      * If the name is a valid system name, it will be used for the new Turnout.
      * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
@@ -68,10 +68,10 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     @Override
     @Nonnull
     default public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
-    
+
     /**
-     * Get an existing Turnout or return null if it doesn't exist. 
-     * 
+     * Get an existing Turnout or return null if it doesn't exist.
+     *
      * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
@@ -232,38 +232,19 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
-     * Get the next valid address.
-     * <p>
-     * Determine if the address supplied is valid and free. 
-     * If not then it shall return the next free valid address up to a maximum 
-     * of 10 addresses away from the initial address.
-     * Used when adding add a range of Turnouts.
-     *
-     * @param prefix     System prefix used in system name
-     * @param curAddress desired hardware address
-     * @return the next available address or null if next 10 addresses unavailable.
-     * @throws jmri.JmriException if unable to provide a turnout at the desired
-     *                            address due to invalid format for the current
-     *                            address or other reasons.
-     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
-     */
-    @Deprecated
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
-
-    /**
      * Get the Next valid Turnout address.
      * <p>
      * @param curAddress the starting hardware address to get the next valid from.
      * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it 
+     * @param ignoreInitialExisting false to return the starting address if it
      *                          does not exist, else true to force an increment.
      * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
+     * @throws JmriException    if unable to get the current / next address,
      *                          or more than 10 next addresses in use.
      */
     @Nonnull
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
-    
+
     /**
      * Get a system name for a given hardware address and system prefix.
      *

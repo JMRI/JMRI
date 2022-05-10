@@ -3,15 +3,22 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static jmri.NamedBean.INCONSISTENT;
+import static jmri.NamedBean.UNKNOWN;
+import static jmri.Turnout.CLOSED;
+import static jmri.Turnout.THROWN;
 
 /**
  * An icon to display a status of a Slip, either Single or Double.<p>
@@ -51,7 +58,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         setPopupUtility(null);
     }
 
-    // the associated Turnout object
+    // the associated Turnout objects
     private NamedBeanHandle<Turnout> namedTurnoutWest = null;
     private NamedBeanHandle<Turnout> namedTurnoutWestLower = null;
     private NamedBeanHandle<Turnout> namedTurnoutEast = null;
@@ -204,8 +211,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     boolean singleSlipRoute = false;
-    static boolean LOWERWESTtoLOWEREAST = false;
-    static boolean UPPERWESTtoUPPEREAST = true;
+    //static boolean LOWERWESTtoLOWEREAST = false;
+    //static boolean UPPERWESTtoUPPEREAST = true;
 
     /**
      * Single Slip Route, determines if the slip route is from upper west to
@@ -387,16 +394,16 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Get current state of attached turnouts This adds the two turnout states
+     * Get current state of attached turnouts. This adds the two turnout states
      * together, however for the second turnout configured it will add 1 to the
-     * Closed state and 3 to the Thrown state. This helps to indentify which
+     * Closed state and 3 to the Thrown state. This helps to identify which
      * turnout is thrown and/or closed.
      * <p>
      * For a Scissor crossing that uses four turnouts, the code simply checks to
-     * ensure that diagonally opposite turnouts are set the same. If not is will
-     * return an Inconsistent state.
+     * ensure that diagonally opposite turnouts are set the same. If not, it will
+     * return Inconsistent state.
      * <p>
-     * If any turnout that has either not been configured or in an Unknown or
+     * If any turnout that has either not been configured or is in an Unknown or
      * Inconsistent state, the code will return the state UNKNOWN or
      * INCONSISTENT.
      *
@@ -409,75 +416,58 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         //back will be unknown
         int state;
         if (namedTurnoutWest != null) {
-            if (getTurnout(WEST).getKnownState() == Turnout.UNKNOWN) {
-                return Turnout.UNKNOWN;
-            }
-            if (getTurnout(WEST).getKnownState() == Turnout.INCONSISTENT) {
-                return Turnout.INCONSISTENT;
-            }
-            state = +getTurnout(WEST).getKnownState();
+            state = getTurnout(WEST).getKnownState(); // part 1 of the slip(turnouticon)state
         } else {
-            return Turnout.UNKNOWN;
+            state  = UNKNOWN;
         }
-        //We add 1 to the value of the west turnout to help identify the states for both turnouts
+        if ((state == UNKNOWN) || (state == INCONSISTENT)) {
+            return state;
+        }
+        //We add 1 (or 3) to the value of the west turnout to help identify the states for both turnouts
         if (namedTurnoutEast != null) {
-            if (getTurnout(EAST).getKnownState() == Turnout.UNKNOWN) {
-                return Turnout.UNKNOWN;
+            int eState = getTurnout(EAST).getKnownState();
+            if (eState == CLOSED) {
+                eState = state + (getTurnout(EAST).getKnownState() + 1);  // part 2 of the slip(turnouticon)state
+            } else if (eState == THROWN) {
+                eState = state + (getTurnout(EAST).getKnownState() + 3);  // part 2 of the slip(turnouticon)state
             }
-            if (getTurnout(EAST).getKnownState() == Turnout.INCONSISTENT) {
-                return Turnout.INCONSISTENT;
-            }
-            if (getTurnout(EAST).getKnownState() == Turnout.CLOSED) {
-                state = state + (getTurnout(EAST).getKnownState() + 1);
-            }
-            if (getTurnout(EAST).getKnownState() == Turnout.THROWN) {
-                state = state + (getTurnout(EAST).getKnownState() + 3);
-            }
+            state = eState;
         } else {
-            return Turnout.UNKNOWN;
+            state = UNKNOWN;
         }
+
         if ((turnoutType == SCISSOR) && (!singleSlipRoute)) {
-            //We simply need to check that the opposite turnout is set the same
+            // We simply check that the opposite turnout is set the same state
             if (namedTurnoutEastLower != null) {
-                if (getTurnout(LOWEREAST).getKnownState() == Turnout.UNKNOWN) {
-                    return Turnout.UNKNOWN;
-                }
-                if (getTurnout(LOWEREAST).getKnownState() == Turnout.INCONSISTENT) {
-                    return Turnout.INCONSISTENT;
+                int leState = getTurnout(LOWEREAST).getKnownState();
+                if (( leState== UNKNOWN) || (leState == INCONSISTENT)) {
+                    state = leState;
+                } else if (leState != getTurnout(WEST).getKnownState()) {
+                    state = INCONSISTENT;
                 }
             } else {
-                return Turnout.UNKNOWN;
+                state = UNKNOWN;
             }
             if (namedTurnoutWestLower != null) {
-                if (getTurnout(LOWERWEST).getKnownState() == Turnout.UNKNOWN) {
-                    return Turnout.UNKNOWN;
-                }
-                if (getTurnout(LOWERWEST).getKnownState() == Turnout.INCONSISTENT) {
-                    return Turnout.INCONSISTENT;
+                int lwState = getTurnout(LOWERWEST).getKnownState();
+                if ((lwState == UNKNOWN) || (lwState == INCONSISTENT)) {
+                    state = lwState;
+                } else if (lwState != getTurnout(EAST).getKnownState()) {
+                    state = INCONSISTENT;
                 }
             } else {
-                return Turnout.UNKNOWN;
-            }
-
-            if (getTurnout(LOWEREAST).getKnownState() != getTurnout(WEST).getKnownState()) {
-                return Turnout.INCONSISTENT;
-            }
-            if (getTurnout(LOWERWEST).getKnownState() != getTurnout(EAST).getKnownState()) {
-                return Turnout.INCONSISTENT;
+                state = UNKNOWN;
             }
         }
-
         return state;
     }
 
     /**
-     * Ipdate icon as state of turnout changes.
+     * Update icon as state of turnout changes.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
-        }
+        log.debug("property change: {} {} is now {}", getNameString(), e.getPropertyName(), e.getNewValue());
 
         // when there's feedback, transition through inconsistent icon for better
         // animation
@@ -486,8 +476,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 && (e.getPropertyName().equals("CommandedState"))) {
             if ((getTurnout(WEST).getCommandedState() != getTurnout(WEST).getKnownState())
                     || (getTurnout(EAST).getCommandedState() != getTurnout(EAST).getKnownState())) {
-                int now = Turnout.INCONSISTENT;
-                displayState(now);
+                displayState(INCONSISTENT);
             }
             // this takes care of the quick double click
             if ((getTurnout(WEST).getCommandedState() == getTurnout(WEST).getKnownState())
@@ -502,6 +491,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     @Override
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedTurnoutWest == null) {
@@ -587,7 +577,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * @param state An integer value of the turnout states.
      */
     void displayState(int state) {
-        //This needs to be worked on
+        // TODO This needs to be worked on.
+        //  When changes are made, update the slipturnouticon code in web/js/panel.js accordingly
         log.debug("{} displayState {}", getNameString(), state);
         updateSize();
         // we have to make some adjustments if we are using a single slip, three way point
@@ -614,7 +605,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 }
                 break;
             case SCISSOR:
-
                 //State 11 should not be allowed for a scissor.
                 switch (state) {
                     case 5:
@@ -631,6 +621,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                         break;
                     default:
                         log.warn("Unhandled scissors state: {}", state);
+                        state = 8;
                         break;
                 }
                 break;
@@ -643,7 +634,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 break;
         }
         switch (state) {
-            case Turnout.UNKNOWN:
+            case UNKNOWN:
                 if (isText()) {
                     super.setText(Bundle.getMessage("BeanStateUnknown"));
                 }
@@ -651,7 +642,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     super.setIcon(unknown);
                 }
                 break;
-            case 5: //first closed, second closed
+            case 5: //first Closed, second Closed
                 if (isText()) {
                     super.setText(upperWestToLowerEastText);
                 }
@@ -675,7 +666,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                     super.setIcon(upperWestToUpperEast);
                 }
                 break;
-            case 11: //first Thrown second Thrown
+            case 11: //first Thrown, second Thrown
                 if (isText()) {
                     super.setText(lowerWestToUpperEastText);
                 }
@@ -701,8 +692,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Lower West to
-     * Upper East For a scissor crossing this the Left-hand crossing. For a 3
-     * Way turnout this is the Upper Exit.
+     * Upper East.
+     * For a scissor crossing this is the Left-hand crossing.
+     * For a 3 Way turnout this is the Upper Exit.
      *
      * @return localized description of route
      */
@@ -712,8 +704,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Upper West to
-     * Lower East. For a scissor crossing this the Right-hand crossing. For a 3
-     * Way turnout this is the Middle Exit.
+     * Lower East.
+     * For a scissor crossing this is the Right-hand crossing.
+     * For a 3 Way turnout this is the Middle Exit.
      *
      * @return localized description of route
      */
@@ -723,8 +716,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Lower West to
-     * Lower East. For a scissor crossing this the Straight (Normal) Route. For
-     * a 3 Way turnout this is the Lower Exit.
+     * Lower East.
+     * For a scissor crossing this is the Straight (Normal) Route.
+     * For a 3 Way turnout this is the Lower Exit.
      *
      * @return localized description of route
      */
@@ -734,8 +728,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     /**
      * Get the text used in the pop-up for setting the route from Upper West to
-     * Upper East. For a scissor crossing this is not used. For a 3 Way turnout
-     * this is not used.
+     * Upper East.
+     * For a scissor crossing this is not used.
+     * For a 3 Way turnout this is not used.
      *
      * @return localized description of route
      */
@@ -890,7 +885,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             default:
                 log.error("turnoutType value {} should not have appeared", turnoutType);
         }
-
     }
 
     /**
@@ -1013,22 +1007,22 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Set the turnouts appropriate for Upper West to Lower East line in a Slip
-     * which is the equivalent a of right hand crossing in a scissors. With a
+     * Set the turnouts appropriate for Upper West to Lower East line in a Slip,
+     * which is the equivalent of the right hand crossing in a scissors. With a
      * three way turnout, this is also the middle route.
      */
     private void setUpperWestToLowerEast() {
         reset();
         if (getTurnoutType() == SCISSOR) {
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.THROWN);
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.CLOSED);
+            _turnoutSetting.put(getTurnout(WEST), THROWN);
+            _turnoutSetting.put(getTurnout(EAST), CLOSED);
             if (!singleSlipRoute) {
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), jmri.Turnout.CLOSED);
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), jmri.Turnout.THROWN);
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), CLOSED);
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), THROWN);
             }
         } else {
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.CLOSED);
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.CLOSED);
+            _turnoutSetting.put(getTurnout(WEST), CLOSED);
+            _turnoutSetting.put(getTurnout(EAST), CLOSED);
         }
         setSlip();
     }
@@ -1041,15 +1035,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setLowerWestToUpperEast() {
         reset();
         if (getTurnoutType() == SCISSOR) {
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.THROWN);
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.CLOSED);
+            _turnoutSetting.put(getTurnout(EAST), THROWN);
+            _turnoutSetting.put(getTurnout(WEST), CLOSED);
             if (!singleSlipRoute) {
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), jmri.Turnout.THROWN);
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), jmri.Turnout.CLOSED);
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), THROWN);
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), CLOSED);
             }
         } else {
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.THROWN);
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.THROWN);
+            _turnoutSetting.put(getTurnout(EAST), THROWN);
+            _turnoutSetting.put(getTurnout(WEST), THROWN);
         }
         setSlip();
     }
@@ -1062,15 +1056,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setUpperWestToUpperEast() {
         reset();
         if (getTurnoutType() == SCISSOR) {
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.CLOSED);
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.CLOSED);
+            _turnoutSetting.put(getTurnout(WEST), CLOSED);
+            _turnoutSetting.put(getTurnout(EAST), CLOSED);
             if (!singleSlipRoute) {
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), jmri.Turnout.CLOSED);
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), jmri.Turnout.CLOSED);
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), CLOSED);
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), CLOSED);
             }
         } else {
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.THROWN);
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.CLOSED);
+            _turnoutSetting.put(getTurnout(WEST), THROWN);
+            _turnoutSetting.put(getTurnout(EAST), CLOSED);
         }
         setSlip();
     }
@@ -1083,15 +1077,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setLowerWestToLowerEast() {
         reset();
         if (getTurnoutType() == SCISSOR) {
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.CLOSED);
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.CLOSED);
+            _turnoutSetting.put(getTurnout(WEST), CLOSED);
+            _turnoutSetting.put(getTurnout(EAST), CLOSED);
             if (!singleSlipRoute) {
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), jmri.Turnout.CLOSED);
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), jmri.Turnout.CLOSED);
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), CLOSED);
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), CLOSED);
             }
         } else {
-            _turnoutSetting.put(getTurnout(WEST), jmri.Turnout.CLOSED);
-            _turnoutSetting.put(getTurnout(EAST), jmri.Turnout.THROWN);
+            _turnoutSetting.put(getTurnout(WEST), CLOSED);
+            _turnoutSetting.put(getTurnout(EAST), THROWN);
         }
         setSlip();
     }
@@ -1157,9 +1151,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         return true;
     }
 
-    // overide
     @Override
-    public boolean setTextEditMenu(JPopupMenu popup) {
+    public boolean setTextEditMenu(@Nonnull JPopupMenu popup) {
         String popuptext = Bundle.getMessage("SetSlipText");
         if (turnoutType == THREEWAY) {
             popuptext = Bundle.getMessage("Set3WayText");
@@ -1236,7 +1229,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Check if Slip is busy.
      *
-     * @return true if commands are being issued to Slips turnouts.
+     * @return true if commands are being issued to Slip turnouts.
      */
     protected boolean isSlipBusy() {
         return (busy);

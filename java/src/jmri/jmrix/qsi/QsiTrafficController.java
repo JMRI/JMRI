@@ -76,7 +76,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                 try {
                     client.message(m);
                 } catch (Exception e) {
-                    log.warn("notify: During dispatch to {}\nException {}", client, e);
+                    log.warn("notify: During dispatch to {}", client, e);
                 }
             }
         }
@@ -141,7 +141,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
                     client.reply(r);
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", client, e);
+                log.warn("notify: During dispatch to {}", client, e);
             }
         }
 

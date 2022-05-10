@@ -880,7 +880,7 @@ public class TableFrames implements InternalFrameListener {
         _portalTable.doLayout();
         int tableWidth = _portalTable.getPreferredSize().width;
         _portalTable.setRowHeight(ROW_HEIGHT);
-        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, 
+        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
                 ROW_HEIGHT * Math.min(20, InstanceManager.getDefault(PortalManager.class).getPortalCount())));
         return _portalTable;
     }
@@ -985,7 +985,7 @@ public class TableFrames implements InternalFrameListener {
             try {
                 frame.setIcon(false);
             } catch (PropertyVetoException pve) {
-                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon {}", blockSystemName, pve);
+                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon", blockSystemName, pve);
             }
         }
         frame.moveToFront();
@@ -1363,7 +1363,7 @@ public class TableFrames implements InternalFrameListener {
             try {
                 frame.setIcon(false);
             } catch (PropertyVetoException pve) {
-                log.warn("PathTurnout Table Frame for \"{}\" vetoed setIcon {}", pathTurnoutName, pve);
+                log.warn("PathTurnout Table Frame for \"{}\" vetoed setIcon", pathTurnoutName, pve);
             }
         }
         frame.moveToFront();
@@ -1457,7 +1457,7 @@ public class TableFrames implements InternalFrameListener {
         JButton ok;
         btns.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
-            if (turnoutBox.getSelectedItem() == null || turnoutBox.getSelectedIndex() == 0) {
+            if (turnoutBox.getSelectedItem() == null || turnoutBox.getSelectedIndex() < 0) {
                 statusBar.setText(Bundle.getMessage("WarningSelectionEmpty"));
                 statusBar.setForeground(Color.red);
             } else {

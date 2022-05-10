@@ -99,7 +99,7 @@ abstract public class PositionableTestBase {
     public void testGetAndSetToolTip() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("default tool tip", p.getToolTip());
-        p.setToolTip(new ToolTip("hello",0,0));
+        p.setToolTip(new ToolTip("hello",0,0,null));
         Assert.assertNotNull("tool tip after set", p.getToolTip());
     }
 

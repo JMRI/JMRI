@@ -420,7 +420,7 @@ public class OptionsMenu extends JMenu {
         try {
             InstanceManager.getDefault(OptionsFile.class).writeDispatcherOptions(dispatcher);
         } catch (java.io.IOException ioe) {
-            log.error("Exception writing Dispatcher options: {}", ioe);
+            log.error("Exception writing Dispatcher options", ioe);
         }
     }
 

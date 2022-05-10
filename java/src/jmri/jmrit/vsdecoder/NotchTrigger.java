@@ -1,6 +1,8 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Notch trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -41,7 +43,7 @@ class NotchTrigger extends Trigger {
     }
 
     public int getNotch() {
-        return (current_notch);
+        return current_notch;
     }
 
     @Override
@@ -52,11 +54,11 @@ class NotchTrigger extends Trigger {
         // then just return quickly.
         // Careful: Takes advantage of "lazy OR" behavior
         if (target == null) {
-            log.debug("Quit.  No target.");
+            //log.debug("Quit.  No target.");
             return;
         }
-        if (event.getPropertyName().equals(this.getEventName()) != true) {
-            //log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+        if (!event.getPropertyName().equals(this.getEventName())) {
+            //log.debug("Quit. Event name mismatch event: {}, this: {}", event.getPropertyName(), this.getEventName());
             return;
         }
         if (this.getTriggerType() == TriggerType.NONE) {
@@ -72,7 +74,7 @@ class NotchTrigger extends Trigger {
         prev_notch = current_notch;
         current_notch = EngineSound.calcEngineNotch((Float) event.getNewValue());
 
-        log.debug("Notch Trigger prev_notch = {} current_notch = {}", prev_notch, current_notch);
+        log.debug("Notch Trigger prev_notch: {}, current_notch: {}", prev_notch, current_notch);
         this.callback.takeAction(current_notch);
         /*
          if ((prev == prev_notch) && (next == next_notch)) {
@@ -87,7 +89,7 @@ class NotchTrigger extends Trigger {
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "NOTCH");
         log.warn("CompareTrigger.getXml() not implemented");
-        return (me);
+        return me;
     }
 
     @Override

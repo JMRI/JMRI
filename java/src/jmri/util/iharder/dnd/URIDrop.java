@@ -265,13 +265,13 @@ public class URIDrop {
             public void dragOver(DropTargetDragEvent evt) {   // This is called continually as long as the mouse is
                 // over the drag target.
             }
-           
+
             @SuppressWarnings("unchecked")
             @Override
             public void drop(DropTargetDropEvent evt) {
                 log.debug("URIDrop: drop event.");
                 try {   // Get whatever was dropped
-                    Transferable tr = evt.getTransferable();                    
+                    Transferable tr = evt.getTransferable();
                     boolean handled = false;
                     // Is it a file list?
                     if (!handled && tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
@@ -279,7 +279,7 @@ public class URIDrop {
                         evt.acceptDrop(DnDConstants.ACTION_COPY);
                         log.debug("FileDrop: file list accepted.");
                         // Get a useful list
-                        List<File> fileList = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);    
+                        List<File> fileList = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
                         // Alert listener to drop.
                         if (listener != null) {
                             listener.URIsDropped(createURIArray(fileList));
@@ -287,8 +287,8 @@ public class URIDrop {
                         // Mark that drop is completed.
                         evt.getDropTargetContext().dropComplete(true);
                         handled = true;
-                        log.debug("FileDrop: drop complete as files.");                        
-                    }                    
+                        log.debug("FileDrop: drop complete as files.");
+                    }
                     // Is it a string?
                     if (!handled && tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                         // Say we'll take it.
@@ -304,10 +304,10 @@ public class URIDrop {
                         evt.getDropTargetContext().dropComplete(true);
                         handled = true;
                         log.debug("URIDrop: drop complete as URIs.");
-                    } 
+                    }
                     // this section will check for a reader flavor.
                     if (!handled) {
-                        DataFlavor[] flavors = tr.getTransferDataFlavors();                        
+                        DataFlavor[] flavors = tr.getTransferDataFlavors();
                         for (DataFlavor flavor : flavors) {
                             if (flavor.isRepresentationClassReader()) {
                                 // Say we'll take it.
@@ -320,7 +320,7 @@ public class URIDrop {
                                 }
                                 // Mark that drop is completed.
                                 evt.getDropTargetContext().dropComplete(true);
-                                log.debug("URIDrop: drop complete as ",flavor.getHumanPresentableName());
+                                log.debug("URIDrop: drop complete as {}",flavor.getHumanPresentableName());
                                 handled = true;
                                 break;
                             }
@@ -393,7 +393,7 @@ public class URIDrop {
                     list.add(uri);
                 } catch (java.net.URISyntaxException ex) {
                     log.error("URIDrop: URISyntaxException");
-                    log.debug("URIDrop: line for URI : ",line);
+                    log.debug("URIDrop: line for URI : {}",line);
                 }
             }
 
@@ -403,7 +403,7 @@ public class URIDrop {
         }
         return new java.net.URI[0];
     }
-    
+
     private static java.net.URI[] createURIArray(String str) {
         java.util.List<java.net.URI> list = new java.util.ArrayList<>();
         String lines[] = str.split("(\\r|\\n)");
@@ -421,7 +421,7 @@ public class URIDrop {
         }
         return list.toArray(new java.net.URI[list.size()]);
     }
-    
+
     private static java.net.URI[] createURIArray(List<File> fileList) {
         java.util.List<java.net.URI> list = new java.util.ArrayList<>();
         fileList.forEach((f) -> {

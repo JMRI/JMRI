@@ -18,7 +18,7 @@
 
       <p>JMRI uses XML for a number of purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for configuration and panel information, and to
-      create parts of the web site from other files.</p>
+      create parts of the website from other files.</p>
 
       <p>XML is a text format, and you can edit it with any convenient text editor (though you
       might have trouble with word processors that insist on reformatting the content).</p>

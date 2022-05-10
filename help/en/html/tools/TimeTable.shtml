@@ -222,6 +222,7 @@
             <th>Train</th>
             <td>4</td>
             <td>Add Stop</td>
+            <td>Copy Stops</td>
             <td>Delete Train</td>
           </tr>
 
@@ -313,16 +314,16 @@
       <p>The Layout item contains global information.</p>
 
       <ul>
-        <li>Layout name — The layout name.</li>
+        <li>Layout name &mdash; The layout name.</li>
 
-        <li>Scale — The layout scale. The default is HO</li>
+        <li>Scale &mdash; The layout scale. The default is HO</li>
 
-        <li>Fast clock speed — The speed of the fast clock, e.g. 4:1, is entered as 4.</li>
+        <li>Fast clock speed &mdash; The speed of the fast clock, e.g. 4:1, is entered as 4.</li>
 
-        <li>Throttles — The number of the throttles for the throttle section of the graph.
+        <li>Throttles &mdash; The number of the throttles for the throttle section of the graph.
         Optional.</li>
 
-        <li>Metric — Indicate if distances are metric based.</li>
+        <li>Metric &mdash; Indicate if distances are metric based.</li>
       </ul>
 
       <p>The scale is combined with the fast clock speed and the metric indication to calculate the
@@ -333,9 +334,9 @@
       <p>The train type contains a color that will be used for the train graph.</p>
 
       <ul>
-        <li>Type name — The train type name, such as Passenger, Thru Freight, etc.</li>
+        <li>Type name &mdash; The train type name, such as Passenger, Thru Freight, etc.</li>
 
-        <li>Color — The color is selected using a split selector. Click on the color swatch to get
+        <li>Color &mdash; The color is selected using a split selector. Click on the color swatch to get
         the full color chooser or the arrow to get a list of current and standard colors.</li>
       </ul>
 
@@ -360,16 +361,16 @@
       segment will have the <strong>SAME</strong> station name as the mainline station.</p>
 
       <ul>
-        <li>Station name — The name of the station.</li>
+        <li>Station name &mdash; The name of the station.</li>
 
-        <li>Distance — The cumulative distance in feet or meters from the beginning of the
+        <li>Distance &mdash; The cumulative distance in feet or meters from the beginning of the
         segment.</li>
 
-        <li>Double track — Set if a double (or more) track line.</li>
+        <li>Double track &mdash; Set if a double (or more) track line.</li>
 
-        <li>Sidings — The number of siding tracks at this station.</li>
+        <li>Sidings &mdash; The number of siding tracks at this station.</li>
 
-        <li>Staging — The number of staging tracks when the station is a staging yard.</li>
+        <li>Staging &mdash; The number of staging tracks when the station is a staging yard.</li>
       </ul>
 
       <p>The double track, sidings and staging fields provide documentation that may be useful.</p>
@@ -379,14 +380,14 @@
       <p>The schedule defines time frame for the timetable.</p>
 
       <ul>
-        <li>Schedule name — The name of the schedule, such as #28.</li>
+        <li>Schedule name &mdash; The name of the schedule, such as #28.</li>
 
-        <li>Effective date — The date the schedule takes effect. This is a free format field and is
+        <li>Effective date &mdash; The date the schedule takes effect. This is a free format field and is
         only used on the graph.</li>
 
-        <li>Start hour — The start hour is limited to 0 thru 23.</li>
+        <li>Start hour &mdash; The start hour is limited to 0 thru 23.</li>
 
-        <li>Duration — The duration can be from 1 to 24 hours.</li>
+        <li>Duration &mdash; The duration can be from 1 to 24 hours.</li>
       </ul>
 
       <p>if the duration is less than 24 hours, then trains will be restricted to running within
@@ -398,23 +399,28 @@
       data.</p>
 
       <ul>
-        <li>Train name — This is usually a short name, or symbol, for the train.</li>
+        <li>Train name &mdash; This is usually a short name, or symbol, for the train.</li>
 
-        <li>Description — This is a more descriptive name for the train.</li>
+        <li>Description &mdash; This is a more descriptive name for the train.</li>
 
-        <li>Type — The train type is selected from the train type list defined earlier.</li>
+        <li>Type &mdash; The train type is selected from the train type list defined earlier.</li>
 
-        <li>Default speed — The default speed is used when the next speed for a stop is set to
+        <li>Default speed &mdash; The default speed is used when the next speed for a stop is set to
         zero.</li>
 
-        <li>Start time — The start time using hh:mm.</li>
+        <li>Start time &mdash; The start time using hh:mm.</li>
 
-        <li>Throttle — The assigned throttle if using the throttles feature.</li>
+        <li>Throttle &mdash; The assigned throttle if using the throttles feature.</li>
 
-        <li>Notes — Additional information about the train, such as special handling.</li>
+        <li>Notes &mdash; Additional information about the train, such as special handling.</li>
       </ul>
 
       <p>The calculated duration for the train is also displayed.</p>
+
+      <p><span class="since">since 4.99.4</span>When a new train is added and before any stops have
+      been added, the <strong>Copy Stops</strong> action button can be used to copy the stops from
+      another train.</p>
+
 
       <h3 id="stop">Stop</h3>
 
@@ -422,18 +428,18 @@
       display the time a train passes a location.</p>
 
       <ul>
-        <li>Station — The selected station for this Stop. The station selection drop down displays
+        <li>Station &mdash; The selected station for this Stop. The station selection drop down displays
         both the segment name and the station name.</li>
 
-        <li>Duration — The number of minutes that the train will be at the station. When set to
+        <li>Duration &mdash; The number of minutes that the train will be at the station. When set to
         zero, the arrival and departure times are the same.</li>
 
-        <li>Next speed — When set to zero, the train's default speed will be used. If not zero, the
+        <li>Next speed &mdash; When set to zero, the train's default speed will be used. If not zero, the
         next speed will be used to calculate the time to the next station.</li>
 
-        <li>Staging track — The assigned staging track.</li>
+        <li>Staging track &mdash; The assigned staging track.</li>
 
-        <li>Notes — Additional information about the stop for train.</li>
+        <li>Notes &mdash; Additional information about the stop for train.</li>
       </ul>
 
       <p>The series of stops define the route for the train. The assigned sequence number and the
@@ -610,23 +616,23 @@
       reviewed and changed as necessary.</p>
 
       <ul>
-        <li>Train types — Four train types are created with different colors.</li>
+        <li>Train types &mdash; Four train types are created with different colors.</li>
 
-        <li>Segment — A single segment is created with the name <strong>Locations</strong>.</li>
+        <li>Segment &mdash; A single segment is created with the name <strong>Locations</strong>.</li>
 
-        <li>Stations — If an Operations route with the name <strong>Timetable</strong> exists it
+        <li>Stations &mdash; If an Operations route with the name <strong>Timetable</strong> exists it
         will be used to build the station list. Otherwise the station list will be the Operations'
         locations sorted by name. In either case, the distance between stations will be one foot.
         The distances will need to be changed to the actual values which will also get the station
         names in the correct sequence.</li>
 
-        <li>Schedules — A schedule is created with the current date and time as the name. The
+        <li>Schedules &mdash; A schedule is created with the current date and time as the name. The
         schedule starts at midnight and runs for 24 hours.</li>
 
-        <li>Trains — Each train has a default speed of 4 and will be assigned to one of the 4 train
+        <li>Trains &mdash; Each train has a default speed of 4 and will be assigned to one of the 4 train
         types.</li>
 
-        <li>Stops — The duration of each stop is based on the move counts in Operations.</li>
+        <li>Stops &mdash; The duration of each stop is based on the move counts in Operations.</li>
       </ul>
 
       <h2 id="csvexport">CSV Export</h2>

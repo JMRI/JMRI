@@ -55,7 +55,7 @@ public class SerialDriverAdapter extends SerialPortController {
                 activeSerialPort.enableReceiveTimeout(10);
                 log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream
@@ -206,23 +206,6 @@ public class SerialDriverAdapter extends SerialPortController {
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    /**
-     * @return the default adapter
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

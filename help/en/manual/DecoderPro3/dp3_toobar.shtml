@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Main Window</h1>
+      <h1>DecoderPro&reg; Main Window</h1>
 
       <h2>Toolbar</h2>
 
@@ -63,7 +63,7 @@
           <tr>
             <td><img src="images/dp3_toolbar_help.png" alt="help button" height="47" width="71">
             </td>
-            <td>Displays the Help file for the DecoderPro® window</td>
+            <td>Displays the Help file for the DecoderPro&reg; window</td>
           </tr>
 
           <tr>

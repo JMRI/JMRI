@@ -72,7 +72,6 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 Element e = new Element("temp");
                 try {
                     e = positionableElement(sub);
-
                 } catch (Exception ex) {
                     log.error("Error storing panel element: {}", ex, ex);
                 }

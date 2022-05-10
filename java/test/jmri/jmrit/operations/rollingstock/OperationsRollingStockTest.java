@@ -78,14 +78,15 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
         e.setAttribute(Xml.BLOCKING, "5");
         e.setAttribute(Xml.COMMENT, "Test Comment");
+        Car rs1 = null;
         try {
-            Car rs1 = new Car(e);
+            rs1 = new Car(e);
             Assert.assertNotNull("Xml Element Constructor", rs1);
         } catch (java.lang.NullPointerException npe) {
             Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
-
-        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 not found");
+        Assert.assertNotNull(rs1);
+        Assert.assertEquals("Tag 12345", "ID12345", rs1.getRfid() );
     }
 
     // test creation

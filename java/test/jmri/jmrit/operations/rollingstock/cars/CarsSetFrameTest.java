@@ -184,6 +184,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CarsSetFrameTest.class);

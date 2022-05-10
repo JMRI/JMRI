@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>DecoderPro® Main Window</title><!--#include virtual="/Style.shtml" -->
+  <title>DecoderPro&reg; Main Window</title><!--#include virtual="/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>DecoderPro® Debug Menu</h1>
+      <h1>DecoderPro&reg; Debug Menu</h1>
 
       <h2>Virtual Sound Decoder</h2>
 
@@ -80,7 +80,7 @@
       <ol>
         <li>Make sure your sound system is working, and (if needed) you have installed OpenAL</li>
 
-        <li>Select Debug-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager</li>
+        <li>Select Tools-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager</li>
 
         <li>With the VSDecoder Manager window selected, click the <em>Add Decoder</em> button.</li>
 
@@ -222,7 +222,7 @@
       then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em> the
       train in Operations, the sound will move to the next location on the Route.</p>
 
-      <p>For more information on Operations, see the JMRI® Operating User's Guide.</p>
+      <p>For more information on Operations, see the JMRI&reg; Operating User's Guide.</p>
 
       <h4 id="advanced_location_following">Advanced Location Following</h4>
 
@@ -251,11 +251,11 @@
       <p>The VSDecoder Preferences pane allows the user to change various preferences in how the
       VSDecoder works.</p>
 
-      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="773" height="220">
+      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="773" height="248">
       </p>
 
       <h5>Auto Start Engine</h5>
-
+      <a id="auto-start"></a>
       <p>If checked, the Engine sounds will react immediately to Throttle changes, without the
       Engine Start button first having to be pressed.</p>
 
@@ -273,7 +273,7 @@
         <li>Make sure that the Roster Group "VSD" exists and at least one Roster Entry is
         associated.</li>
 
-        <li>Navigate to Debug &gt;&gt; Virtual Sound Decoder &gt;&gt; VSDecoder Manager</li>
+        <li>Navigate to Tools-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager</li>
 
         <li>Add Decoder</li>
 
@@ -303,6 +303,12 @@
       "Save to Roster".<br>
       The attribute can be changed manually or by a Jython script (see <a href=
       "https://groups.io/g/jmriusers/files/VSD/Utilities">here</a>).</p>
+
+      <h5>Use Blocks</h5>
+      <a id="use-blocks"></a>
+      <p>If unchecked, Blocks are ignored. This may be helpful on <a href=
+      "VSD_LocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>
+      in Simulator Mode. Default: checked.</p>
 
       <h5>Default VSD File Path</h5>
 

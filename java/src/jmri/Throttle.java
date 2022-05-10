@@ -36,16 +36,16 @@ public interface Throttle extends PropertyChangeProvider {
      * Constant used in getThrottleInfo.
      */
     public static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
-    
+
     /*
      * Properties strings sent to property change listeners
      */
-    
+
     /**
      * Constant sent by Throttle on Property Change.
      */
     public static final String SPEEDSTEPS = "SpeedSteps"; // speed steps NOI18N
-    
+
     public static final String SPEEDSETTING = "SpeedSetting"; // speed setting NOI18N
     public static final String ISFORWARD = "IsForward"; // direction setting NOI18N
     public static final String SPEEDINCREMENT = "SpeedIncrement"; // direction setting NOI18N
@@ -82,7 +82,7 @@ public interface Throttle extends PropertyChangeProvider {
     public static final String F26 = "F26"; // NOI18N
     public static final String F27 = "F27"; // NOI18N
     public static final String F28 = "F28"; // NOI18N
-    
+
     /**
      * Constants to represent Function Groups.
      * <p>
@@ -90,10 +90,10 @@ public interface Throttle extends PropertyChangeProvider {
      */
     public static final int[] FUNCTION_GROUPS = new int[]{ 1, 1, 1, 1, 1, /** 0-4 */
         2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
-        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 21-28 */ 
-        
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 21-28 */
+
     };
-    
+
     /**
      * Constants to represent the functions F0 through F28.
      */
@@ -153,7 +153,7 @@ public interface Throttle extends PropertyChangeProvider {
         sb.append("Momentary"); // NOI18N
         return sb.toString();
     }
-    
+
     /**
      * Get copy of function array.
      * Typically returns array length of 29, i.e. 0-28.
@@ -161,7 +161,7 @@ public interface Throttle extends PropertyChangeProvider {
      */
     @Nonnull
     public abstract boolean[] getFunctions();
-    
+
     /**
      * Get copy of function momentary status array.
      * Typically returns array length of 29, i.e. 0-28.
@@ -169,9 +169,9 @@ public interface Throttle extends PropertyChangeProvider {
      */
     @Nonnull
     public abstract boolean[] getFunctionsMomentary();
-    
+
     /**
-     * Get the current speed setting, expressed as a value {@literal 0.0 -> 1.0.} 
+     * Get the current speed setting, expressed as a value {@literal 0.0 -> 1.0.}
      * This property is bound to the {@link #SPEEDSETTING} name.
      *
      * @return the speed as a {@literal 0.0 -> 1.0.}  fraction of maximum possible speed or -1 for emergency stop.
@@ -180,7 +180,7 @@ public interface Throttle extends PropertyChangeProvider {
 
     /**
      * Set the desired speed setting, expressed as a value {@literal 0.0 -> 1.0.} Negative means
-     * emergency stop. 
+     * emergency stop.
      * This property is bound to the {@link #SPEEDSETTING} name.
      *
      * @param speed the speed as a {@literal 0.0 -> 1.0.} fraction of maximum possible speed or -1 for emergency stop.
@@ -188,9 +188,9 @@ public interface Throttle extends PropertyChangeProvider {
     public void setSpeedSetting(float speed);
 
     /**
-     * Set the desired speed, expressed as a value {@literal 0.0 -> 1.0.}, 
+     * Set the desired speed, expressed as a value {@literal 0.0 -> 1.0.},
      * with extra control over the messages to the layout. Negative means
-     * emergency stop. 
+     * emergency stop.
      * On systems which normally suppress the sending of a
      * message if the new speed won't (appear to JMRI to) make any difference,
      * the two extra options allow the calling method to insist the message is
@@ -228,35 +228,35 @@ public interface Throttle extends PropertyChangeProvider {
 
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
-    
+
     /**
      * Set Loco Function and send to Layout.
      * @param functionNum Function Number, 0-28
      * @param newState New Function State. True on, false off.
      */
     public abstract void setFunction(int functionNum, boolean newState);
-    
+
     /**
      * Get Loco Function status.
      * @param functionNum Function Number, 0-28
      * @return Function State. True on, false off.
      */
     public boolean getFunction(int functionNum);
-    
+
     /**
      * Set Momentary Loco Function and send to Layout.
      * @param momFuncNum Momentary Function Number, 0-28
      * @param state New Function State. True on, false off.
      */
     public abstract void setFunctionMomentary(int momFuncNum, boolean state);
-    
+
     /**
      * Get the Momentary Function Value.
      * @param fN Momentary function number
      * @return true if momentary function is on, else false.
      */
     public abstract boolean getFunctionMomentary(int fN);
-            
+
     /**
      * Get Function 0 Status.
      * @return true for Function On, false for Function Off.
@@ -336,7 +336,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF9() {
         return getFunction(9);
     }
-    
+
     /**
      * Get Function 10 Status.
      * @return true for Function On, false for Function Off.
@@ -344,7 +344,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF10() {
         return getFunction(10);
     }
-    
+
     /**
      * Get Function 11 Status.
      * @return true for Function On, false for Function Off.
@@ -352,7 +352,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF11() {
         return getFunction(11);
     }
-        
+
     /**
      * Get Function 12 Status.
      * @return true for Function On, false for Function Off.
@@ -360,7 +360,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF12() {
         return getFunction(12);
     }
-    
+
     /**
      * Get Function 13 Status.
      * @return true for Function On, false for Function Off.
@@ -368,7 +368,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF13() {
         return getFunction(13);
     }
-        
+
     /**
      * Get Function 14 Status.
      * @return true for Function On, false for Function Off.
@@ -376,7 +376,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF14() {
         return getFunction(14);
     }
-    
+
     /**
      * Get Function 15 Status.
      * @return true for Function On, false for Function Off.
@@ -384,7 +384,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF15() {
         return getFunction(15);
     }
-    
+
     /**
      * Get Function 16 Status.
      * @return true for Function On, false for Function Off.
@@ -392,7 +392,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF16() {
         return getFunction(16);
     }
-    
+
     /**
      * Get Function 17 Status.
      * @return true for Function On, false for Function Off.
@@ -400,7 +400,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF17() {
         return getFunction(17);
     }
-    
+
     /**
      * Get Function 18 Status.
      * @return true for Function On, false for Function Off.
@@ -408,7 +408,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF18() {
         return getFunction(18);
     }
-    
+
     /**
      * Get Function 19 Status.
      * @return true for Function On, false for Function Off.
@@ -416,7 +416,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF19() {
         return getFunction(19);
     }
-    
+
     /**
      * Get Function 20 Status.
      * @return true for Function On, false for Function Off.
@@ -424,7 +424,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF20() {
         return getFunction(20);
     }
-    
+
     /**
      * Get Function 21 Status.
      * @return true for Function On, false for Function Off.
@@ -432,7 +432,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF21() {
         return getFunction(21);
     }
-    
+
     /**
      * Get Function 22 Status.
      * @return true for Function On, false for Function Off.
@@ -440,7 +440,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF22() {
         return getFunction(22);
     }
-    
+
     /**
      * Get Function 23 Status.
      * @return true for Function On, false for Function Off.
@@ -448,7 +448,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF23() {
         return getFunction(23);
     }
-    
+
     /**
      * Get Function 24 Status.
      * @return true for Function On, false for Function Off.
@@ -456,7 +456,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF24() {
         return getFunction(24);
     }
-    
+
     /**
      * Get Function 25 Status.
      * @return true for Function On, false for Function Off.
@@ -464,7 +464,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF25() {
         return getFunction(25);
     }
-    
+
     /**
      * Get Function 26 Status.
      * @return true for Function On, false for Function Off.
@@ -472,7 +472,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF26() {
         return getFunction(26);
     }
-    
+
     /**
      * Get Function 27 Status.
      * @return true for Function On, false for Function Off.
@@ -480,7 +480,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF27() {
         return getFunction(27);
     }
-    
+
     /**
      * Get Function 28 Status.
      * @return true for Function On, false for Function Off.
@@ -720,11 +720,11 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF28(boolean f28) {
         setFunction(28,f28);
     }
-    
+
     // functions momentary status - note that we use the naming for DCC,
     // though that's not the implication;
     // see also DccThrottle interface
-    
+
     /**
      * Get Momentary Function 0 Status.
      * @return true for Momentary Function On, else false.
@@ -732,7 +732,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF0Momentary() {
         return getFunctionMomentary(0);
     }
-    
+
     /**
      * Get Momentary Function 1 Status.
      * @return true for Momentary Function On, else false.
@@ -740,7 +740,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF1Momentary() {
         return getFunctionMomentary(1);
     }
-    
+
     /**
      * Get Momentary Function 2 Status.
      * @return true for Momentary Function On, else false.
@@ -748,7 +748,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF2Momentary() {
         return getFunctionMomentary(2);
     }
-    
+
     /**
      * Get Momentary Function 3 Status.
      * @return true for Momentary Function On, else false.
@@ -756,7 +756,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF3Momentary() {
         return getFunctionMomentary(3);
     }
-    
+
     /**
      * Get Momentary Function 4 Status.
      * @return true for Momentary Function On, else false.
@@ -764,7 +764,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF4Momentary() {
         return getFunctionMomentary(4);
     }
-    
+
     /**
      * Get Momentary Function 5 Status.
      * @return true for Momentary Function On, else false.
@@ -772,7 +772,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF5Momentary() {
         return getFunctionMomentary(5);
     }
-    
+
     /**
      * Get Momentary Function 6 Status.
      * @return true for Momentary Function On, else false.
@@ -780,7 +780,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF6Momentary() {
         return getFunctionMomentary(6);
     }
-    
+
     /**
      * Get Momentary Function 7 Status.
      * @return true for Momentary Function On, else false.
@@ -788,7 +788,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF7Momentary() {
         return getFunctionMomentary(7);
     }
-    
+
     /**
      * Get Momentary Function 8 Status.
      * @return true for Momentary Function On, else false.
@@ -796,7 +796,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF8Momentary() {
         return getFunctionMomentary(8);
     }
-    
+
     /**
      * Get Momentary Function 9 Status.
      * @return true for Momentary Function On, else false.
@@ -804,7 +804,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF9Momentary() {
         return getFunctionMomentary(9);
     }
-    
+
     /**
      * Get Momentary Function 10 Status.
      * @return true for Momentary Function On, else false.
@@ -812,7 +812,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF10Momentary() {
         return getFunctionMomentary(10);
     }
-    
+
     /**
      * Get Momentary Function 11 Status.
      * @return true for Momentary Function On, else false.
@@ -820,7 +820,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF11Momentary() {
         return getFunctionMomentary(11);
     }
-    
+
     /**
      * Get Momentary Function 12 Status.
      * @return true for Momentary Function On, else false.
@@ -828,7 +828,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF12Momentary() {
         return getFunctionMomentary(12);
     }
-    
+
     /**
      * Get Momentary Function 13 Status.
      * @return true for Momentary Function On, else false.
@@ -836,7 +836,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF13Momentary() {
         return getFunctionMomentary(13);
     }
-    
+
     /**
      * Get Momentary Function 14 Status.
      * @return true for Momentary Function On, else false.
@@ -844,7 +844,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF14Momentary() {
         return getFunctionMomentary(14);
     }
-    
+
     /**
      * Get Momentary Function 15 Status.
      * @return true for Momentary Function On, else false.
@@ -852,7 +852,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF15Momentary() {
         return getFunctionMomentary(15);
     }
-    
+
     /**
      * Get Momentary Function 16 Status.
      * @return true for Momentary Function On, else false.
@@ -860,7 +860,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF16Momentary() {
         return getFunctionMomentary(16);
     }
-    
+
     /**
      * Get Momentary Function 17 Status.
      * @return true for Momentary Function On, else false.
@@ -868,7 +868,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF17Momentary() {
         return getFunctionMomentary(17);
     }
-    
+
     /**
      * Get Momentary Function 18 Status.
      * @return true for Momentary Function On, else false.
@@ -876,7 +876,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF18Momentary() {
         return getFunctionMomentary(18);
     }
-    
+
     /**
      * Get Momentary Function 19 Status.
      * @return true for Momentary Function On, else false.
@@ -884,7 +884,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF19Momentary() {
         return getFunctionMomentary(19);
     }
-    
+
     /**
      * Get Momentary Function 20 Status.
      * @return true for Momentary Function On, else false.
@@ -892,7 +892,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF20Momentary() {
         return getFunctionMomentary(20);
     }
-    
+
     /**
      * Get Momentary Function 21 Status.
      * @return true for Momentary Function On, else false.
@@ -900,7 +900,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF21Momentary() {
         return getFunctionMomentary(21);
     }
-    
+
     /**
      * Get Momentary Function 22 Status.
      * @return true for Momentary Function On, else false.
@@ -908,7 +908,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF22Momentary() {
         return getFunctionMomentary(22);
     }
-    
+
     /**
      * Get Momentary Function 23 Status.
      * @return true for Momentary Function On, else false.
@@ -916,7 +916,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF23Momentary() {
         return getFunctionMomentary(23);
     }
-    
+
     /**
      * Get Momentary Function 24 Status.
      * @return true for Momentary Function On, else false.
@@ -924,7 +924,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF24Momentary() {
         return getFunctionMomentary(24);
     }
-    
+
     /**
      * Get Momentary Function 25 Status.
      * @return true for Momentary Function On, else false.
@@ -932,7 +932,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF25Momentary() {
         return getFunctionMomentary(25);
     }
-    
+
     /**
      * Get Momentary Function 26 Status.
      * @return true for Momentary Function On, else false.
@@ -940,7 +940,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF26Momentary() {
         return getFunctionMomentary(26);
     }
-    
+
     /**
      * Get Momentary Function 27 Status.
      * @return true for Momentary Function On, else false.
@@ -948,7 +948,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF27Momentary() {
         return getFunctionMomentary(27);
     }
-    
+
     /**
      * Get Momentary Function 28 Status.
      * @return true for Momentary Function On, else false.
@@ -956,7 +956,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default boolean getF28Momentary() {
         return getFunctionMomentary(28);
     }
-    
+
     /**
      * Set Momentary Function 0 Status.
      * @param f0Momentary true for Momentary Function On, else false.
@@ -964,7 +964,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF0Momentary(boolean f0Momentary) {
         setFunctionMomentary(0,f0Momentary);
     }
-    
+
     /**
      * Set Momentary Function 1 Status.
      * @param f1Momentary true for Momentary Function On, else false.
@@ -972,7 +972,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF1Momentary(boolean f1Momentary) {
         setFunctionMomentary(1,f1Momentary);
     }
-    
+
     /**
      * Set Momentary Function 2 Status.
      * @param f2Momentary true for Momentary Function On, else false.
@@ -980,7 +980,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF2Momentary(boolean f2Momentary) {
         setFunctionMomentary(2,f2Momentary);
     }
-    
+
     /**
      * Set Momentary Function 3 Status.
      * @param f3Momentary true for Momentary Function On, else false.
@@ -988,7 +988,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF3Momentary(boolean f3Momentary) {
         setFunctionMomentary(3,f3Momentary);
     }
-    
+
     /**
      * Set Momentary Function 4 Status.
      * @param f4Momentary true for Momentary Function On, else false.
@@ -996,7 +996,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF4Momentary(boolean f4Momentary) {
         setFunctionMomentary(4,f4Momentary);
     }
-    
+
     /**
      * Set Momentary Function 5 Status.
      * @param f5Momentary true for Momentary Function On, else false.
@@ -1004,7 +1004,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF5Momentary(boolean f5Momentary) {
         setFunctionMomentary(5,f5Momentary);
     }
-    
+
     /**
      * Set Momentary Function 6 Status.
      * @param f6Momentary true for Momentary Function On, else false.
@@ -1012,7 +1012,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF6Momentary(boolean f6Momentary) {
         setFunctionMomentary(6,f6Momentary);
     }
-    
+
     /**
      * Set Momentary Function 7 Status.
      * @param f7Momentary true for Momentary Function On, else false.
@@ -1020,7 +1020,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF7Momentary(boolean f7Momentary) {
         setFunctionMomentary(7,f7Momentary);
     }
-    
+
     /**
      * Set Momentary Function 8 Status.
      * @param f8Momentary true for Momentary Function On, else false.
@@ -1028,7 +1028,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF8Momentary(boolean f8Momentary) {
         setFunctionMomentary(8,f8Momentary);
     }
-    
+
     /**
      * Set Momentary Function 9 Status.
      * @param f9Momentary true for Momentary Function On, else false.
@@ -1036,7 +1036,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF9Momentary(boolean f9Momentary) {
         setFunctionMomentary(9,f9Momentary);
     }
-    
+
     /**
      * Set Momentary Function 10 Status.
      * @param f10Momentary true for Momentary Function On, else false.
@@ -1044,7 +1044,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF10Momentary(boolean f10Momentary) {
         setFunctionMomentary(10,f10Momentary);
     }
-    
+
     /**
      * Set Momentary Function 11 Status.
      * @param f11Momentary true for Momentary Function On, else false.
@@ -1052,7 +1052,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF11Momentary(boolean f11Momentary) {
         setFunctionMomentary(11,f11Momentary);
     }
-    
+
     /**
      * Set Momentary Function 12 Status.
      * @param f12Momentary true for Momentary Function On, else false.
@@ -1060,7 +1060,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF12Momentary(boolean f12Momentary) {
         setFunctionMomentary(12,f12Momentary);
     }
-    
+
     /**
      * Set Momentary Function 13 Status.
      * @param f13Momentary true for Momentary Function On, else false.
@@ -1068,7 +1068,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF13Momentary(boolean f13Momentary) {
         setFunctionMomentary(13,f13Momentary);
     }
-    
+
     /**
      * Set Momentary Function 14 Status.
      * @param f14Momentary true for Momentary Function On, else false.
@@ -1076,7 +1076,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF14Momentary(boolean f14Momentary) {
         setFunctionMomentary(14,f14Momentary);
     }
-    
+
     /**
      * Set Momentary Function 15 Status.
      * @param f15Momentary true for Momentary Function On, else false.
@@ -1084,7 +1084,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF15Momentary(boolean f15Momentary) {
         setFunctionMomentary(15,f15Momentary);
     }
-    
+
     /**
      * Set Momentary Function 16 Status.
      * @param f16Momentary true for Momentary Function On, else false.
@@ -1092,7 +1092,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF16Momentary(boolean f16Momentary) {
         setFunctionMomentary(16,f16Momentary);
     }
-    
+
     /**
      * Set Momentary Function 17 Status.
      * @param f17Momentary true for Momentary Function On, else false.
@@ -1100,7 +1100,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF17Momentary(boolean f17Momentary) {
         setFunctionMomentary(17,f17Momentary);
     }
-    
+
     /**
      * Set Momentary Function 18 Status.
      * @param f18Momentary true for Momentary Function On, else false.
@@ -1108,7 +1108,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF18Momentary(boolean f18Momentary) {
         setFunctionMomentary(18,f18Momentary);
     }
-    
+
     /**
      * Set Momentary Function 19 Status.
      * @param f19Momentary true for Momentary Function On, else false.
@@ -1116,7 +1116,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF19Momentary(boolean f19Momentary) {
         setFunctionMomentary(19,f19Momentary);
     }
-    
+
     /**
      * Set Momentary Function 20 Status.
      * @param f20Momentary true for Momentary Function On, else false.
@@ -1132,7 +1132,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF21Momentary(boolean f21Momentary) {
         setFunctionMomentary(21,f21Momentary);
     }
-    
+
     /**
      * Set Momentary Function 22 Status.
      * @param f22Momentary true for Momentary Function On, else false.
@@ -1140,7 +1140,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF22Momentary(boolean f22Momentary) {
         setFunctionMomentary(22,f22Momentary);
     }
-    
+
     /**
      * Set Momentary Function 23 Status.
      * @param f23Momentary true for Momentary Function On, else false.
@@ -1148,7 +1148,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF23Momentary(boolean f23Momentary) {
         setFunctionMomentary(23,f23Momentary);
     }
-    
+
     /**
      * Set Momentary Function 24 Status.
      * @param f24Momentary true for Momentary Function On, else false.
@@ -1156,7 +1156,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF24Momentary(boolean f24Momentary) {
         setFunctionMomentary(24,f24Momentary);
     }
-    
+
     /**
      * Set Momentary Function 25 Status.
      * @param f25Momentary true for Momentary Function On, else false.
@@ -1164,7 +1164,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF25Momentary(boolean f25Momentary) {
         setFunctionMomentary(25,f25Momentary);
     }
-    
+
     /**
      * Set Momentary Function 26 Status.
      * @param f26Momentary true for Momentary Function On, else false.
@@ -1172,7 +1172,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF26Momentary(boolean f26Momentary) {
         setFunctionMomentary(26,f26Momentary);
     }
-    
+
     /**
      * Set Momentary Function 27 Status.
      * @param f27Momentary true for Momentary Function On, else false.
@@ -1180,7 +1180,7 @@ public interface Throttle extends PropertyChangeProvider {
     public default void setF27Momentary(boolean f27Momentary) {
         setFunctionMomentary(27,f27Momentary);
     }
-    
+
     /**
      * Set Momentary Function 28 Status.
      * @param f28Momentary true for Momentary Function On, else false.
@@ -1199,16 +1199,6 @@ public interface Throttle extends PropertyChangeProvider {
      * @return The locomotive address
      */
     public LocoAddress getLocoAddress();
-
-    /**
-     * Get a list of property change listeners.
-     * 
-     * @return a list of listeners
-     * @deprecated since 4.19.5; use {@link #getPropertyChangeListeners()} or
-     * {@link #getPropertyChangeListeners(java.lang.String)} instead
-     */
-    @Deprecated
-    public List<PropertyChangeListener> getListeners();
 
     /**
      * Not for general use, see {@link #release(ThrottleListener l)} and

@@ -53,6 +53,9 @@
 ; - Version 0.1.27.0
 ; - Updated "-CleanUp" so that old/error files are removed before installation in jython directory
 ; -------------------------------------------------------------------------
+; - Version 0.1.26.2
+; - Update Java-install message URL
+; -------------------------------------------------------------------------
 ; - Version 0.1.26.1
 ; - Remove Tools start menu items
 ; - Add support for Open JDK 8 Registry Keys
@@ -353,7 +356,7 @@ SetCompressor /SOLID /FINAL lzma
 ; -------------------------------------------------------------------------
 ; - Defines for downloading
 ; -------------------------------------------------------------------------
-!define JRE_URL     "https://java.com/winoffline_installer/"
+!define JRE_URL     "https://jmri.org/java"
 !define INTERNET_CONNECTION_CONFIGURED 64  ; 0x40
 !define INTERNET_CONNECTION_LAN 2          ; 0x02
 !define INTERNET_CONNECTION_MODEM 1        ; 0x01
@@ -493,7 +496,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Clean up of JMRI folder
     SetOutPath "$INSTDIR"
 
-    ; -- Recursively delete classes folder, which historically contained 
+    ; -- Recursively delete classes folder, which historically contained
     ; -- individual .properties and .classes patch files
     ; -- that might not be consistent with this new version
     RMDir /R "$OUTDIR\classes"
@@ -510,14 +513,14 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
- 
+
     ; -- Delete certain jython files that have been moved, or were entered erroneously, as of JMRI 4.21.3
     Delete "$OUTDIR\jython\SetMqttOptions.py"
     Delete "$OUTDIR\jython\SetMqttParser.py"
     Delete "$OUTDIR\jython\SetMqttPrefix.py"
     Delete "$OUTDIR\jython\ReceiveMqttMessage.py"
     Delete "$OUTDIR\jython\SendMqttMessage.py"
-    Delete "$OUTDIR\jython\CmriBitsToBytes.jy"    
+    Delete "$OUTDIR\jython\CmriBitsToBytes.jy"
 
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
@@ -620,7 +623,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"
     Delete "$OUTDIR\resources\YellowPowerLED.gif"
-        
+
 
     ; -- If the current install Start Menu folder exists, remove any
     ; --        predictably-named JMRI-related contents.

@@ -23,14 +23,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -56,9 +56,10 @@ public class VSDecoderPreferences {
 
     // Private variables to hold preference values
     private boolean _autoStartEngine = false; // play engine sound w/o waiting for "Engine Start" button pressed.
+    private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
+    private boolean _use_blocks = true;
     private String _defaultVSDFilePath = null;
     private String _defaultVSDFileName = null;
-    private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
     private ListeningSpot _listenerPosition;
     private AudioMode _audioMode;
     private int _masterVolume;
@@ -88,7 +89,7 @@ public class VSDecoderPreferences {
             log.info("Did not find VSDecoder preferences file.  This is normal if you haven't save the preferences before");
             root = null;
         } catch (JDOMException | RuntimeException e) {
-            log.error("Exception while loading VSDecoder preferences: {}", e);
+            log.error("Exception while loading VSDecoder preferences", e);
             root = null;
         }
         if (root != null) {
@@ -110,6 +111,9 @@ public class VSDecoderPreferences {
         }
         if ((a = e.getAttribute("isAutoLoadingDefaultVSDFile")) != null) {
             setAutoLoadDefaultVSDFile(a.getValue().compareTo("true") == 0);
+        }
+        if ((a = e.getAttribute("useBlocks")) != null) {
+            setUseBlocksSetting(a.getValue().compareTo("true") == 0);
         }
         if ((c = e.getChild("DefaultVSDFilePath")) != null) {
             setDefaultVSDFilePath(c.getValue());
@@ -142,6 +146,7 @@ public class VSDecoderPreferences {
         org.jdom2.Element e = new org.jdom2.Element("VSDecoderPreferences");
         e.setAttribute("isAutoStartingEngine", "" + isAutoStartingEngine());
         e.setAttribute("isAutoLoadingDefaultVSDFile", "" + isAutoLoadingDefaultVSDFile());
+        e.setAttribute("useBlocks", "" + getUseBlocksSetting());
         ec = new Element("DefaultVSDFilePath");
         ec.setText("" + getDefaultVSDFilePath());
         e.addContent(ec);
@@ -161,6 +166,7 @@ public class VSDecoderPreferences {
     public void set(VSDecoderPreferences tp) {
         setAutoStartEngine(tp.isAutoStartingEngine());
         setAutoLoadDefaultVSDFile(tp.isAutoLoadingDefaultVSDFile());
+        setUseBlocksSetting(tp.getUseBlocksSetting());
         setDefaultVSDFilePath(tp.getDefaultVSDFilePath());
         setDefaultVSDFileName(tp.getDefaultVSDFileName());
         setListenerPosition(tp.getListenerPosition());
@@ -179,6 +185,7 @@ public class VSDecoderPreferences {
     public boolean compareTo(VSDecoderPreferences tp) {
         return (isAutoStartingEngine() != tp.isAutoStartingEngine()
                 || isAutoLoadingDefaultVSDFile() != tp.isAutoLoadingDefaultVSDFile()
+                || getUseBlocksSetting() != tp.getUseBlocksSetting()
                 || !(getDefaultVSDFilePath().equals(tp.getDefaultVSDFilePath()))
                 || !(getDefaultVSDFileName().equals(tp.getDefaultVSDFileName()))
                 || !(getListenerPosition().equals(tp.getListenerPosition()))
@@ -206,7 +213,7 @@ public class VSDecoderPreferences {
                 log.error("createNewFile failed");
             }
         } catch (IOException | RuntimeException exp) {
-            log.error("Exception while writing the new VSDecoder preferences file, may not be complete: {}", exp);
+            log.error("Exception while writing the new VSDecoder preferences file, may not be complete", exp);
         }
 
         try {
@@ -223,7 +230,7 @@ public class VSDecoderPreferences {
             root.setContent(store());
             xf.writeXML(file, doc);
         } catch (IOException | RuntimeException ex) { // TODO fix null value for Attribute
-            log.warn("Exception in storing vsdecoder preferences xml: {}", ex);
+            log.warn("Exception in storing vsdecoder preferences xml", ex);
         }
     }
 
@@ -253,6 +260,14 @@ public class VSDecoderPreferences {
 
     public boolean isAutoLoadingDefaultVSDFile() {
         return _autoLoadDefaultVSDFile;
+    }
+
+    public void setUseBlocksSetting(boolean b) {
+        _use_blocks = b;
+    }
+
+    public boolean getUseBlocksSetting() {
+        return _use_blocks;
     }
 
     public void setAutoLoadDefaultVSDFile(boolean b) {
@@ -319,7 +334,7 @@ public class VSDecoderPreferences {
      * <p>
      * AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address.
-     * 
+     *
      * @param l listener to add.
      *
      */

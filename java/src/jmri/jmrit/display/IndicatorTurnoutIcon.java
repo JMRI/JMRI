@@ -188,9 +188,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             if (_iconMaps != null) {
                 displayState(turnoutState());
             }
-            setToolTip(new ToolTip(block.getDescription(), 0, 0));
+            setToolTip(new ToolTip(block.getDescription(), 0, 0, this));
         } else {
-            setToolTip(new ToolTip(null, 0, 0));
+            setToolTip(new ToolTip(null, 0, 0, this));
         }
     }
 
@@ -415,6 +415,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
+        log.debug("setStatus _status= {} state= {} block= \"{}\"", _status, state, block.getDisplayName());
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             ThreadingUtil.runOnLayoutEventually(() -> {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);

@@ -58,10 +58,6 @@ public class JemmyUtil {
             jbo.push();
         });
         t.start();
-        
-//        jmri.util.JUnitUtil.waitFor(() -> {
-//            return t.getState().equals(Thread.State.WAITING);
-//        }, "wait for dialog window to appear");
     }
 
     static public void enterClickAndLeave(JCheckBox comp) {

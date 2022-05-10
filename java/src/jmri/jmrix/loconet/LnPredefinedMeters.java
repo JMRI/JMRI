@@ -120,7 +120,7 @@ public class LnPredefinedMeters implements LocoNetListener {
             try {
                 newMeter.setCommandedAnalogValue(value);
             } catch (JmriException e) {
-                log.debug("Exception setting {}Meter {} to value {}: {}",
+                log.debug("Exception setting {}Meter {} to value {}",
                         (typeVolt?"volt":"current"), // NOI18N
                         sysName, value, e);
             }
@@ -132,7 +132,7 @@ public class LnPredefinedMeters implements LocoNetListener {
             try {
                 m.setCommandedAnalogValue(value);
             } catch (JmriException e) {
-                log.debug("Exception setting {}Meter {} to value {}: {}",
+                log.debug("Exception setting {}Meter {} to value {}",
                         (typeVolt?"volt":"current"), // NOI18N
                         sysName, value, e);
             }

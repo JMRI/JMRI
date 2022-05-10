@@ -140,7 +140,6 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private static String addIntAsTwo(int val, Message m, int offset) {
         String s = "" + val;

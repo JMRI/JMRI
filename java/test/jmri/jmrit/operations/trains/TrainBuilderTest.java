@@ -777,6 +777,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train built 8", train1.isBuilt());
+        Assert.assertEquals("Engine assignment", train1, e1.getTrain());
+        Assert.assertEquals("Engine assignment", train1, e2.getTrain());
         Assert.assertEquals("5 Destination e1", "C", e1.getDestinationName());
         Assert.assertEquals("5 Destination e2", "C", e2.getDestinationName());
 
@@ -790,10 +792,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse("Train length test, can't service car with FRED", train1.isBuilt());
 
         // build failed after engines were assigned to train 1
-        Assert.assertEquals("Engine assignment ignores train length restrictions", train1, e1.getTrain());
-        Assert.assertEquals("Engine assignment ignores train length restrictions", train1, e2.getTrain());
-        Assert.assertEquals("Engine destination ignores train length restrictions", "C", e1.getDestinationName());
-        Assert.assertEquals("Engine destination ignores train length restrictions", "C", e2.getDestinationName());
+        Assert.assertEquals("Engine assignment ignores train length restrictions", null, e1.getTrain());
+        Assert.assertEquals("Engine assignment ignores train length restrictions", null, e2.getTrain());
 
         Assert.assertEquals("Check CP30 engine length", "56", e1.getLength());
         Assert.assertEquals("Check CP 20 length", "32", c2.getLength());
@@ -4115,10 +4115,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train status", train1.isBuilt());
 
-        // the two cabooses are departing with load "E" but were assigned to the train
+        // the two cabooses are trying to depart with load "E"
         // No ship load restriction for caboose
-        Assert.assertEquals("train assignment", train1, c1.getTrain());
-        Assert.assertEquals("train assignment", train1, c2.getTrain());
+        Assert.assertEquals("train assignment", null, c1.getTrain());
+        Assert.assertEquals("train assignment", null, c2.getTrain());
 
         // build failed due to the two boxcars attempting to depart with load "E"
         Assert.assertEquals("train assignment", null, c3.getTrain());
@@ -4133,15 +4133,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse("Train status", train1.isBuilt());
 
         // No ship load restriction for caboose or car with FRED
-        Assert.assertEquals("train assignment", train1, c1.getTrain());
-        Assert.assertEquals("train assignment", train1, c2.getTrain()); // car with FRED, load restriction ignored
+        Assert.assertEquals("train assignment", null, c1.getTrain());
+        Assert.assertEquals("train assignment", null, c2.getTrain()); // car with FRED, load restriction ignored
 
         // build failed due to the two boxcars attempting to depart with load "E"
         Assert.assertEquals("train assignment", null, c3.getTrain());
         Assert.assertEquals("train assignment", null, c4.getTrain());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
-
     }
 
     /*
@@ -5127,8 +5126,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train1));
 
         // confirm train assignment
-        Assert.assertEquals("car assigned to train", train1, c1.getTrain());
-        Assert.assertEquals("car assigned to train", train1, c2.getTrain());
+        Assert.assertEquals("car assigned to train", null, c1.getTrain());
+        Assert.assertEquals("car assigned to train", null, c2.getTrain());
         Assert.assertEquals("car assigned to train", null, c3.getTrain());
         Assert.assertEquals("car assigned to train", null, c4.getTrain());
 

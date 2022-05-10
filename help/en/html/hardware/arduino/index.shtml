@@ -156,7 +156,7 @@
 
         <li>via connection to the track or a connection to <a href=
         "../loconet/Digitrax.shtml">Loconet</a> (requires additional circuitry) or <a href=
-        "../can/cbus/index.shtml#thirdpary">CBUS®</a> network if acting as a DCC decoder (see, for
+        "../can/cbus/index.shtml#thirdpary">CBUS&reg;</a> network if acting as a DCC decoder (see, for
         example, this <a href="https://github.com/mrrwa/NmraDcc" target="_blank">arduino library on
         Github</a>)
         </li>
@@ -187,7 +187,7 @@
       Michael Adams <a href="https://github.com/madleech/ArduinoCMRI" target="blank_">available on
       Github</a> ( see also <a href=
       "http://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">Stephen
-      Brackstone's web site</a> for an example of its use). See also <a href=
+      Brackstone's website</a> for an example of its use). See also <a href=
       "#example-CMRI">below</a> for a set of steps to get up and operating with an arduino as CMRI
       node with JMRI.</p>
 
@@ -436,7 +436,7 @@
       <p><a href="#top">[Go to top of page]</a>
       </p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

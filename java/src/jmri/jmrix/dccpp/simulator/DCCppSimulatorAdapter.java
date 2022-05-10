@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.LinkedHashMap;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,8 +56,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     private static final long keepAliveTimeoutValue = 30000; // Interval
-    //keep track of recreation command, including state, for each turnout and output 
-    private LinkedHashMap<Integer,String> turnouts = new LinkedHashMap<Integer, String>();  
+    //keep track of recreation command, including state, for each turnout and output
+    private LinkedHashMap<Integer,String> turnouts = new LinkedHashMap<Integer, String>();
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -207,14 +208,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return new int[]{};
     }
 
-    @Deprecated
-    static public DCCppSimulatorAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new DCCppSimulatorAdapter();
-        }
-        return mInstance;
-    }
-
     @Override
     public void run() { // start a new thread
         // this thread has one task.  It repeatedly reads from the input pipe
@@ -295,13 +288,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 break;
 
             case DCCppConstants.TURNOUT_CMD:
-                if (msg.isTurnoutAddMessage() 
-                        || msg.isTurnoutAddDCCMessage() 
+                if (msg.isTurnoutAddMessage()
+                        || msg.isTurnoutAddDCCMessage()
                         || msg.isTurnoutAddServoMessage()
                         || msg.isTurnoutAddVpinMessage()) {
                     log.debug("Add Turnout Message");
-                    s = "H" + msg.toString().substring(1) + " 0"; //T reply is H, init to closed 
-                    turnouts.put(msg.getTOIDInt(), s); 
+                    s = "H" + msg.toString().substring(1) + " 0"; //T reply is H, init to closed
+                    turnouts.put(msg.getTOIDInt(), s);
                     r = "O";
                 } else if (msg.isTurnoutDeleteMessage()) {
                     log.debug("Delete Turnout Message");
@@ -316,7 +309,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     s = turnouts.get(msg.getTOIDInt()); //retrieve the stored turnout def
                     if (s != null) {
                         s = s.substring(0, s.length()-1) + msg.getTOStateInt(); //replace the last char with new state
-                        turnouts.put(msg.getTOIDInt(), s); //update the stored turnout                     
+                        turnouts.put(msg.getTOIDInt(), s); //update the stored turnout
                         r = "H " + msg.getTOIDString() + " " + msg.getTOStateInt();
                     } else {
                         log.warn("Unknown turnout ID '{}'", msg.getTOIDInt());
@@ -337,7 +330,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     s = turnouts.get(msg.getOutputIDInt()); //retrieve the stored turnout def
                     if (s != null) {
                         s = s.substring(0, s.length()-1) + (msg.getOutputStateBool() ? "1" : "0"); //replace the last char with new state
-                        turnouts.put(msg.getOutputIDInt(), s); //update the stored turnout                     
+                        turnouts.put(msg.getOutputIDInt(), s); //update the stored turnout
                         r = "Y " + msg.getOutputIDInt() + " " + (msg.getOutputStateBool() ? "1" : "0");
                         reply = DCCppReply.parseDCCppReply(r);
                         log.debug("Reply generated = {}", reply.toString());
@@ -347,13 +340,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     }
                 } else if (msg.isOutputAddMessage()) {
                     log.debug("Output Add Message");
-                    s = "Y" + msg.toString().substring(1) + " 0"; //Z reply is Y, init to closed 
-                    turnouts.put(msg.getOutputIDInt(), s); 
+                    s = "Y" + msg.toString().substring(1) + " 0"; //Z reply is Y, init to closed
+                    turnouts.put(msg.getOutputIDInt(), s);
                     r = "O";
                 } else if (msg.isOutputDeleteMessage()) {
                     log.debug("Output Delete Message");
                     turnouts.remove(msg.getOutputIDInt());
-                    r = "O";                    
+                    r = "O";
                 } else if (msg.isListOutputsMessage()) {
                     log.debug("Output List Message");
                     generateTurnoutListReply();
@@ -388,18 +381,32 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.PROG_WRITE_CV_BYTE:
                 log.debug("PROG_WRITE_CV_BYTE detected");
                 s = msg.toString();
+                r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
-                    m = p.matcher(s);
-                    if (!m.matches()) {
-                        log.error("Malformed ProgWriteCVByte Command: {}", s);
-                        return (null);
-                    }
-                    // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
-                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-                    r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
-                            " " + m.group(2);
-                    CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    if (s.matches(DCCppConstants.PROG_WRITE_BYTE_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed ProgWriteCVByte Command: {}", s);
+                            return (null);
+                        }
+                        // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
+                        // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                        r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
+                                " " + m.group(2);
+                        CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    } else if (s.matches(DCCppConstants.PROG_WRITE_BYTE_V4_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_V4_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed ProgWriteCVByte Command: {}", s);
+                            return (null);
+                        }
+                        // CMD: <W CV Value>
+                        // Response: <r CV Value>
+                        r = "r " + m.group(1) + " " + m.group(2);
+                        CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    }                    
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -453,24 +460,44 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.PROG_READ_CV:
                 log.debug("PROG_READ_CV detected");
                 s = msg.toString();
+                r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_READ_REGEX);
-                    m = p.matcher(s);
-                    if (!m.matches()) {
+                    if (s.matches(DCCppConstants.PROG_READ_CV_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_CV_REGEX);
+                        m = p.matcher(s);
+                        int cv = Integer.parseInt(m.group(1));
+                        int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                        if (cv < CVs.length) {
+                            cvVal = CVs[Integer.parseInt(m.group(1))];
+                        }
+                        // CMD: <R CV CALLBACKNUM CALLBACKSUB>
+                        // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                        r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
+                                + cvVal;
+                    } else if (s.matches(DCCppConstants.PROG_READ_CV_V4_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_CV_V4_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed PROG_READ_CV Command: {}", s);
+                            return (null);
+                        }
+                        int cv = Integer.parseInt(m.group(1));
+                        int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                        if (cv < CVs.length) {
+                            cvVal = CVs[Integer.parseInt(m.group(1))];
+                        }
+                        // CMD: <R CV>
+                        // Response: <r CV Value>
+                        r = "r " + m.group(1) + " " + cvVal;
+                    } else if (s.matches(DCCppConstants.PROG_READ_LOCOID_REGEX)) {
+                        int locoId = ThreadLocalRandom.current().nextInt(9999)+1; //get a random locoId between 1 and 9999
+                        // CMD: <R>
+                        // Response: <r LocoId>
+                        r = "r " + locoId;
+                    } else {
                         log.error("Malformed PROG_READ_CV Command: {}", s);
                         return (null);
                     }
-                    // TODO: Work Magic Here to retrieve stored value.
-                    // Make sure that CV exists
-                    int cv = Integer.parseInt(m.group(1));
-                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
-                    if (cv < CVs.length) {
-                        cvVal = CVs[Integer.parseInt(m.group(1))];
-                    }
-                    // CMD: <R CV CALLBACKNUM CALLBACKSUB>
-                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-                    r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
-                            + cvVal;
 
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
@@ -548,8 +575,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
+            case DCCppConstants.FUNCTION_V4_CMD:
+                log.debug("FunctionV2Detected");
+                reply = DCCppReply.parseDCCppReply("O"); //TODO: return the locoState message
+                break;
+
             case DCCppConstants.FUNCTION_CMD:
-            case DCCppConstants.FUNCTION_V2_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
             case DCCppConstants.OPS_WRITE_CV_BYTE:
@@ -571,43 +602,43 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.1.7 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }
 
     /* Send list of creation command with states for all defined turnouts and outputs */
     private void generateTurnoutListReply() {
-        if (!turnouts.isEmpty()) { 
+        if (!turnouts.isEmpty()) {
             turnouts.forEach((key, value) -> { //send back the full create string for each
                 DCCppReply r = new DCCppReply(value);
                 writeReply(r);
             });
         } else {
-            writeReply(new DCCppReply("X No Turnouts Defined"));            
+            writeReply(new DCCppReply("X No Turnouts Defined"));
         }
     }
 
     /* Send list of turnout states */
     private void generateTurnoutStatesReply() {
-        if (!turnouts.isEmpty()) { 
-            turnouts.forEach((key, value) -> { 
+        if (!turnouts.isEmpty()) {
+            turnouts.forEach((key, value) -> {
                 String s = value.substring(0,2) + key + value.substring(value.length()-2); //command char + id + state
                 DCCppReply r = new DCCppReply(s);
                 writeReply(r);
             });
         } else {
-            writeReply(new DCCppReply("X No Turnouts Defined"));            
+            writeReply(new DCCppReply("X No Turnouts Defined"));
         }
     }
 
     /* 'c' current request message gets multiple reply messages */
     private void generateMeterReplies() {
         int currentmA = 1100 + ThreadLocalRandom.current().nextInt(64);
-        double voltageV = 14.5 + ThreadLocalRandom.current().nextInt(10)/10.0; 
+        double voltageV = 14.5 + ThreadLocalRandom.current().nextInt(10)/10.0;
         String rs = "c CurrentMAIN " + (trackPowerState ? Double.toString(currentmA) : "0") + " C Milli 0 1997 1 1997";
         DCCppReply r = new DCCppReply(rs);
-        writeReply(r);       
+        writeReply(r);
         r = new DCCppReply("c VoltageMAIN " + voltageV + " V NoPrefix 0 18.0 0.1 16.0");
         writeReply(r);
         rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");

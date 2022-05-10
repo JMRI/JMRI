@@ -13,36 +13,36 @@ package jmri.jmrit.display.layoutEditor;
 
 public enum HitPointType {
                     //  Historical numerical values, used in old files, now ordinals with tests
-    NONE,           //     0   
-    POS_POINT,      //     1   
+    NONE,           //     0
+    POS_POINT,      //     1
     TURNOUT_A,      //     2    throat for RH, LH, and WYE turnouts
     TURNOUT_B,      //     3    continuing route for RH and LH turnouts
     TURNOUT_C,      //     4    diverging route for RH and LH turnouts
     TURNOUT_D,      //     5    4th route for crossovers
-    LEVEL_XING_A,   //     6   
-    LEVEL_XING_B,   //     7   
-    LEVEL_XING_C,   //     8   
-    LEVEL_XING_D,   //     9   
-    TRACK,          //     10   
+    LEVEL_XING_A,   //     6
+    LEVEL_XING_B,   //     7
+    LEVEL_XING_C,   //     8
+    LEVEL_XING_D,   //     9
+    TRACK,          //     10
     TURNOUT_CENTER,   //     11    non-connection points should be last
-    LEVEL_XING_CENTER,  //     12   
-    TURNTABLE_CENTER,   //     13   
-    LAYOUT_POS_LABEL,   //     14   
-    LAYOUT_POS_JCOMP,   //     15   
-    MULTI_SENSOR,   //     16   
-    MARKER,         //     17   
-    TRACK_CIRCLE_CENTRE,   //     18   
-    UNUSED_19,      //     19   
-    SLIP_CENTER,    //     20   should be @Deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
-    SLIP_A,         //     21   
-    SLIP_B,         //     22   
-    SLIP_C,         //     23   
-    SLIP_D,         //     24   
-    SLIP_LEFT,      //     25   
-    SLIP_RIGHT,     //     26  
-    UNUSED_27,      //     27   
-    UNUSED_28,                //     28   
-    UNUSED_29,                //     29   
+    LEVEL_XING_CENTER,  //     12
+    TURNTABLE_CENTER,   //     13
+    LAYOUT_POS_LABEL,   //     14
+    LAYOUT_POS_JCOMP,   //     15
+    MULTI_SENSOR,   //     16
+    MARKER,         //     17
+    TRACK_CIRCLE_CENTRE,   //     18
+    UNUSED_19,      //     19
+    SLIP_CENTER,    //     20   TODO: should be deprecated (use SLIP_LEFT & SLIP_RIGHT instead)
+    SLIP_A,         //     21
+    SLIP_B,         //     22
+    SLIP_C,         //     23
+    SLIP_D,         //     24
+    SLIP_LEFT,      //     25
+    SLIP_RIGHT,     //     26
+    UNUSED_27,      //     27
+    UNUSED_28,                //     28
+    UNUSED_29,                //     29
     BEZIER_CONTROL_POINT_0,   //     30    offset for TrackSegment Bezier control points , minimum)
     BEZIER_CONTROL_POINT_1,   //     31     \
     BEZIER_CONTROL_POINT_2,   //     32      \
@@ -52,7 +52,7 @@ public enum HitPointType {
     BEZIER_CONTROL_POINT_6,   //     36      /
     BEZIER_CONTROL_POINT_7,   //     37     /
     BEZIER_CONTROL_POINT_8,   //     38    offset for TrackSegment Bezier control points , maximum)
-    SHAPE_CENTER,    //     39   
+    SHAPE_CENTER,    //     39
     SHAPE_POINT_0,   //     40    offset for Shape points, minimum)
     SHAPE_POINT_1,   //     41     \
     SHAPE_POINT_2,   //     42      \
@@ -126,8 +126,8 @@ public enum HitPointType {
     TURNTABLE_RAY_60,   //     110      /
     TURNTABLE_RAY_61,   //     111     /
     TURNTABLE_RAY_62,   //     112    /
-    TURNTABLE_RAY_63;   //     113  
-        
+    TURNTABLE_RAY_63;   //     113
+
     /**
      * @param hitType the hit point type
      * @return true if this is for a connection to a LayoutTrack
@@ -436,5 +436,5 @@ public enum HitPointType {
     }
     // limited use, remove?
     public static final int NUM_BEZIER_CONTROL_POINTS = 9;
-    
+
 }

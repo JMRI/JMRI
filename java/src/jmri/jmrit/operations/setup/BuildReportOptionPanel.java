@@ -135,6 +135,10 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
     @Override
     protected void checkBoxActionPerformed(ActionEvent ae) {
         buildReportIndentCheckBox.setEnabled(buildReportCheckBox.isSelected());
+        // use the smallest font to create the longest lines in the build report
+        if (buildReportCheckBox.isSelected()) {
+            fontSizeComboBox.setSelectedItem(7);
+        }
     }
 
     @Override

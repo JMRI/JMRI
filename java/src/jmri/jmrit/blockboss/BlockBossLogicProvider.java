@@ -19,7 +19,7 @@ public class BlockBossLogicProvider implements Disposable, InstanceManagerAutoDe
 
     public BlockBossLogicProvider() {
         signalHeadManager = InstanceManager.getDefault(SignalHeadManager.class);
-        headToBlockBossLogicMap = new HashMap<>();
+        headToBlockBossLogicMap = new TreeMap<>(new jmri.util.NamedBeanComparator<SignalHead>());
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
             cm.registerConfig(this, jmri.Manager.BLOCKBOSS);

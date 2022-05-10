@@ -25,11 +25,11 @@
       You <em>do</em> need to have a working sound system and speakers on your computer, of
       course!<br>
       You must also have the OpenAL or JavaSound audio system installed on your computer. See the
-      <a href="https://jmri.org/help/en/html/tools/Audio.shtml">JMRI Audio Help Pages</a> for
+      <a href="../../../../../html/tools/Audio.shtml">JMRI Audio Help Pages</a> for
       details.<br>
       <br>
-      See the <a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml">DecoderPro Manual
-      Pages</a> for more details on Virtual Sound Decoder.<br>
+      See the <a href="../../../../../html/tools/vsd/index.shtml">
+      documentation pages</a> for more details on Virtual Sound Decoder.<br>
       <br>
 
       <hr>
@@ -60,9 +60,9 @@
       the package, more examples are available for download <a href=
       "https://github.com/JMRI/vsdecoder">on the web</a> and you can make (and share!) your
       own.<br>
-      Click the "Load VSD File" button or choose "File-&gt;Load VSD File" from the menu bar to load
-      a VSD file. You can't do anything else (except pick a roster entry) until a VSD file is
-      loaded.<br>
+      Click the "Load VSD File" button or choose <strong>File &rArr; Load VSD File</strong> from
+      the menu bar to load a VSD file. You can't do anything else (except pick a roster entry)
+      until a VSD file is loaded.<br>
       Now you can choose one of the listed Profiles from the Profile drop-down. Note that you can't
       do anything else (except pick a roster entry) until you've selected a Profile.
       <h4>Address Assignment and the Roster</h4>
@@ -153,8 +153,8 @@
         <dd>
           If this box is checked, the VSD File(s) referenced in the Roster Group "VSD" will be
           automatically loaded on start-up. See the <a href=
-          "https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#auto-load">DecoderPro Manual
-          Pages</a> for more details.
+          "../../../../../html/tools/vsd/VSDMain.shtml#auto_load">
+          documentation pages</a> for more details.
         </dd>
 
         <dt>Default VSD File Path</dt>

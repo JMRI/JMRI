@@ -291,6 +291,7 @@ fi
 parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
+[ -n "${DEBUG}" ] && echo "initial JAVA_HOME: '${JAVA_HOME}' OS: '${OS}'" | tee -a ${launcher_log}
 if [ -z "${JAVA_HOME}" ] ; then
     #
     # macOS / OS X get special treatment
@@ -304,25 +305,17 @@ if [ -z "${JAVA_HOME}" ] ; then
         # /usr/libexec/java_home will find the correct version, if a JDK for the
         # required version or newer is installed.
         #
-        # As 10.8 and newer do not ship with a JRE, this command will prompt
-        # the user and download a JRE as needed.
-        #
-        # But if the user already has the Oracle Java 8 JRE installed, we should
-        # use that instead of forcing a download of Apple's Java 6 (10.11 and
-        # newer will always direct the user to Oracle for Java.)
-        #
-        # Look for the Oracle Java 8 JRE and use it if found
+        # Look for the Oracle Java 11 JRE and use it if found
         # Otherwise, use java_home if it's present
         # Otherwise, prompt the user to install Java
         #
-        # Oracle JRE location; note that Oracle only shipped JREs for Java 8, 9, and 10
-        # and now only ships the JRE for Java 8.
         JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
-            # Test if java is present and version 1.8, 9, or 10
+            # Test if java is present and version 11 through 17
             java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
-            if [[ ! "${java_version}" =~ \"1.8|\"9|\"10 ]] ; then
+            [ -n "${DEBUG}" ] && echo "JAVA_HOME/bin/java: '${java_version}'" | tee -a ${launcher_log}
+            if [[ ! "${java_version}" =~ \"11|\"12|\"13|\"14|\"15|\"16|\"17 ]] ; then
                 JAVA_HOME=""
             fi
         else
@@ -330,9 +323,10 @@ if [ -z "${JAVA_HOME}" ] ; then
             JAVA_HOME=""
         fi
         # Find an installed JRE/JDK location
-        for jversion in 1.8 9 10 11 12 13 14 15 16 17 ; do
+        for jversion in 11 12 13 14 15 16 17 ; do
             if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
                 # Test for any JDKs
+                [ -n "${DEBUG}" ] && echo "test for Java: '${jversion}'" | tee -a ${launcher_log}
                 JAVA_HOME=$( /usr/libexec/java_home --version ${jversion} --failfast 2>/dev/null )
                 if [ -n "${JAVA_HOME}" ] ; then
                     JAVACMD="${JAVA_HOME}/bin/java"
@@ -360,7 +354,7 @@ EOT
         JAVACMD=$( which java )
         JAVA_HOME="$( dirname ${JAVACMD} )/.."
     else
-        echo "Please install Java 1.8 per your operating system vendor's instructions." | tee -a ${launcher_log}
+        echo "Please install Java 11 per your operating system vendor's instructions." | tee -a ${launcher_log}
         exit 1
     fi
 else
@@ -561,6 +555,12 @@ if [ "$OS" = "macosx" ] ; then
     [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'" | tee -a ${launcher_log}
 fi
 
+# check java version
+"${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp lib/JavaVersionCheckWindow.jar apps.JavaVersionCheckWindow
+EXIT_STATUS=$?
+if [ $EXIT_STATUS -ne 0 ] ; then
+    exit $EXIT_STATUS
+fi
 
 RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}

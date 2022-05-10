@@ -243,7 +243,7 @@ public class XmlTest extends OperationsTestCase {
             if (i == 0) {
                 Assert.assertEquals("New Location by Name List 1", "Test Location 1", loc.getName());
                 Assert.assertEquals("Location 1 direction", Location.EAST, loc.getTrainDirections());
-                Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getComment());
+                Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getCommentWithColor());
                 Assert.assertEquals("Location 1 switchList", true, loc.isSwitchListEnabled());
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
@@ -261,7 +261,7 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("New Location by Name List 2", "Test Location 2", loc.getName());
 //                Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
                 Assert.assertEquals("Location 2 direction", Location.WEST, loc.getTrainDirections());
-                Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getComment());
+                Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getCommentWithColor());
                 Assert.assertEquals("Location 2 switchList", false, loc.isSwitchListEnabled());
                 Assert.assertEquals("Location 2 car type", true, loc.acceptsTypeName("Boxcar"));
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
@@ -306,7 +306,7 @@ public class XmlTest extends OperationsTestCase {
 //                Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
                 Assert.assertEquals("Location 3 direction", Location.EAST + Location.WEST + Location.NORTH, loc
                         .getTrainDirections());
-                Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getComment());
+                Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getCommentWithColor());
                 Assert.assertEquals("Location 3 switchList", true, loc.isSwitchListEnabled());
                 Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));

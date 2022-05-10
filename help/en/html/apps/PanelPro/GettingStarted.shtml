@@ -129,7 +129,7 @@
 
       <p>Download the zip file and unzip it. Use the OS file manager to move the resulting profile
       and its contents to the <strong>settings</strong> location. When starting JMRI, select the
-      GettingStart profile. If the profile selector is not active, use <strong>Preferences ⇒ Config
+      GettingStart profile. If the profile selector is not active, use <strong>Preferences &rArr; Config
       Profiles</strong> to select the profile.</p>
 
       <p>The <strong>settings</strong> location is an OS specific location that provides access to
@@ -172,7 +172,7 @@
 
       <h2 id="Phase1">The Basic Panel</h2>
 
-      <p>When PanelPro <strong>Panels ⇒ New Panel ⇒ Layout Editor</strong> is selected, a blank
+      <p>When PanelPro <strong>Panels &rArr; New Panel &rArr; Layout Editor</strong> is selected, a blank
       panel will be created with a default name. The panel will fill the screen, it will have a
       grid and at the top will be the Layout Editor tool bar.</p>
 
@@ -185,7 +185,7 @@
       </div>
 
       <p>As the panel is switched between edit and display mode, the tool bar is shown/hidden and
-      the panel shifts. Layout Editor <strong>Options ⇒ Toolbar ⇒ Toolbar Side ⇒ Float</strong>
+      the panel shifts. Layout Editor <strong>Options &rArr; Toolbar &rArr; Toolbar Side &rArr; Float</strong>
       provides a floating tool box that avoids the shifting behavior. The tool box can be closed or
       minimized. To re-open the tool box use the <strong>Window</strong> menu (next to Help). The
       window name will start with <strong>Tool Box:</strong> followed by the panel name.</p>
@@ -197,7 +197,7 @@
 
       <h3 id="TrackPlan">Draw the Track Plan</h3>
 
-      <p>Click on Layout Editor <strong>Options ⇒ Show Help Bar in Edit Mode</strong>. This will
+      <p>Click on Layout Editor <strong>Options &rArr; Show Help Bar in Edit Mode</strong>. This will
       add a help bar to the bottom of the panel window or the floating tool box. It shows the mouse
       and keyboard actions to add and move layout components. The third line changes based on the
       operating system. The image shows the macOS version.</p>
@@ -221,8 +221,8 @@
 
       <p>Clean up the track plan by moving components to the grid. The <strong>snap to
       grid</strong> settings for adding and moving items can be set using Layout Editor
-      <strong>Options ⇒ Grid Options</strong>. The diverging legs of the turnouts have been
-      extended at a 45° angle. A label has been added to provide a name for the siding. Everything
+      <strong>Options &rArr; Grid Options</strong>. The diverging legs of the turnouts have been
+      extended at a 45&deg; angle. A label has been added to provide a name for the siding. Everything
       on the prototype has a name.</p>
 
       <div style="margin-left: 2em">
@@ -239,7 +239,7 @@
       <h4><a class="reflink" href="../../tools/Turnouts.shtml">Turnouts</a>
       </h4>
 
-      <p>Turnouts are defined using PanelPro <strong>Tools ⇒ Tables ⇒ Turnouts</strong>. Click on
+      <p>Turnouts are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Turnouts</strong>. Click on
       <strong>Add</strong>. Two turnouts are defined and assigned user names: T-Alpha-Left and
       T-Alpha-Right.</p>
 
@@ -256,7 +256,7 @@
       <h4><a class="reflink" href="../../tools/Sensors.shtml">Sensors</a>
       </h4>
 
-      <p>Sensors are defined using PanelPro <strong>Tools ⇒ Tables ⇒ Sensors</strong>. Click on
+      <p>Sensors are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Sensors</strong>. Click on
       <strong>Add</strong>. For now, create one <strong>Internal</strong> sensor with an address of
       999 and <strong>Reset</strong> as the user name. This will create a sensor with a system name
       of IS999.</p>
@@ -276,7 +276,7 @@
       <p>Since the connection is simulated, setting the initial value helps with testing later
       on.</p>
 
-      <p>Routes are defined using PanelPro <strong>Tools ⇒ Tables ⇒ Routes</strong>. Click on
+      <p>Routes are defined using PanelPro <strong>Tools &rArr; Tables &rArr; Routes</strong>. Click on
       <strong>Add</strong>. Select Automatically generate System Name, enter a Route user name,
       select the two turnouts and set the state to Close. Select the Reset sensor from the
       <strong>Sensor 1</strong> list. Click on Create.</p>
@@ -293,7 +293,7 @@
       <strong>RTXINITIALIZER</strong>. The Logix created by this LRoute is the very first Logix
       invoked after loading a data file. This makes it perfect for doing the initial setup.</p>
 
-      <p>Use PanelPro <strong>Tools ⇒ Tables ⇒ LRoutes</strong>. Click on <strong>Add</strong>.
+      <p>Use PanelPro <strong>Tools &rArr; Tables &rArr; LRoutes</strong>. Click on <strong>Add</strong>.
       Click on the <strong>Actions (output)</strong> tab, select the Reset sensor and set the state
       to Active.</p>
 
@@ -387,7 +387,7 @@
       <h5>Add the sensors to the <a class="reflink" href="../../tools/Blocks.shtml">Block</a> table
       entries.</h5>
 
-      <p>Use PanelPro <strong>Tools ⇒ Tables ⇒ Blocks</strong> to assign the occupancy sensors to
+      <p>Use PanelPro <strong>Tools &rArr; Tables &rArr; Blocks</strong> to assign the occupancy sensors to
       each block. The blocks were automatically created when the block names were assigned using
       the Layout Editor <strong>Edit</strong> dialog for each piece of track. To simplify the
       process, drag the Sensor column next to the User Name column.</p>
@@ -448,7 +448,7 @@
       <h4>Add Signal Masts to the <a class="reflink" href=
       "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a></h4>
 
-      <p>Signal masts are created using PanelPro <strong>Tools ⇒ Tables ⇒ Signals ⇒ Signal
+      <p>Signal masts are created using PanelPro <strong>Tools &rArr; Tables &rArr; Signals &rArr; Signal
       Masts</strong>.</p>
 
       <p>Select <strong>Add</strong> to create a new signal mast.</p>
@@ -556,11 +556,11 @@
       Table</a>
       </h4>
 
-      <p>Signal mast logic is maintained at PanelPro <strong>Tools ⇒ Tables ⇒ Signals ⇒ Signal Mast
+      <p>Signal mast logic is maintained at PanelPro <strong>Tools &rArr; Tables &rArr; Signals &rArr; Signal Mast
       Logic</strong>.</p>
 
       <p>While it is possible to use the Add button to create each set of signal mast logic, use
-      the <strong>Tools ⇒ Auto Generate Signaling Pairs</strong> menu item. This will discover all
+      the <strong>Tools &rArr; Auto Generate Signaling Pairs</strong> menu item. This will discover all
       the signal mast pairs and build the signal mast logic definitions.</p>
 
       <p>The first time SML is created, a system setting needs to be updated. Click on Yes.</p>

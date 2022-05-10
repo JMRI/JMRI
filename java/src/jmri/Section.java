@@ -14,7 +14,7 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil; // normally these would be rolloed
 import jmri.jmrit.display.layoutEditor.HitPointType;     // up into jmri.jmrit.display.layoutEditor.*
 import jmri.jmrit.display.layoutEditor.LayoutBlock;      // but during the LE migration it's
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager; // useful to be able to see 
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager; // useful to be able to see
 import jmri.jmrit.display.layoutEditor.LayoutEditor;     // what specific classe are used.
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -94,18 +94,18 @@ import jmri.util.NonNullArrayList;
 public class Section extends AbstractNamedBean {
 
     private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
-    
+
     /**
      * The value of {@link #getState()} if section is available for allocation.
      */
     public static final int FREE = 0x02;
-    
+
     /**
      * The value of {@link #getState()} if section is allocated for travel in
      * the forward direction.
      */
     public static final int FORWARD = 0x04;
-    
+
     /**
      * The value of {@link #getState()} if section is allocated for travel in
      * the reverse direction.
@@ -124,12 +124,12 @@ public class Section extends AbstractNamedBean {
      * Value representing an occupied section.
      */
     public static final int OCCUPIED = Block.OCCUPIED;
-    
+
     /**
      * Value representing an unoccupied section.
      */
     public static final int UNOCCUPIED = Block.UNOCCUPIED;
-    
+
     /**
      * Persistent instance variables (saved between runs)
      */
@@ -2343,17 +2343,17 @@ public class Section extends AbstractNamedBean {
         }
         // set up missing signal head message, if any
         if ((missingSignalsBB + missingSignalsTurnouts + missingSignalsLevelXings) > 0) {
-            String s = "Section - " + getDisplayName(USERSYS);
+            String s = "";
             if (missingSignalsBB > 0) {
-                s = s + ", " + (missingSignalsBB) + " anchor point signal heads missing";
+                s = ", " + (missingSignalsBB) + " anchor point signal heads missing";
             }
             if (missingSignalsTurnouts > 0) {
-                s = s + ", " + (missingSignalsTurnouts) + " turnouts missing signals";
+                s = ", " + (missingSignalsTurnouts) + " turnouts missing signals";
             }
             if (missingSignalsLevelXings > 0) {
-                s = s + ", " + (missingSignalsLevelXings) + " level crossings missing signals";
+                s = ", " + (missingSignalsLevelXings) + " level crossings missing signals";
             }
-            log.warn(s);
+            log.warn("Section - {} {}",getDisplayName(USERSYS),s);
         }
 
         return errorCount;
@@ -2383,35 +2383,6 @@ public class Section extends AbstractNamedBean {
         return null;
     }
 
-    /**
-     * Check that there are Signal Heads at all Entry Points to this Section.
-     * This method will warn if it finds unsignaled internal turnouts, but will
-     * continue checking. Unsignaled entry points except for those at unsignaled
-     * internal turnouts will be considered errors, and will be reported to the
-     * user. This method stops searching when it find the first missing Signal
-     * Head.
-     *
-     * @param frame ignored
-     * @param panel the panel containing signals to check
-     * @return true if successful; false otherwise
-     * @deprecated 4.19.7  No usages, so no replacement
-     */
-    @Deprecated // 4.19.7 for removal;  No usages, so no replacement
-    public boolean checkSignals(JmriJFrame frame, LayoutEditor panel) {
-        jmri.util.LoggingUtil.deprecationWarning(log, "checkSignals");
-        if (panel == null) {
-            log.error("Null Layout Editor panel on call to 'checkSignals'");
-            return false;
-        }
-        if (initializationNeeded) {
-            initializeBlocks();
-        }
-
-        // need code to fully implement checkSignals if (getListOfForwardBlockEntryPoints(getEntryBlock()).size() > 0)
-        return true;
-    }
-
-    @SuppressWarnings("unused") // not used now, preserved for later use
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification = "was previously marked with @SuppressWarnings, reason unknown")
     private List<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
         if (initializationNeeded) {

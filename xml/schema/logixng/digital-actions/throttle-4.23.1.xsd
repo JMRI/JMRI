@@ -63,6 +63,22 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
+              <xs:element name="LocoFunctionSocket" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="LocoFunctionOnOffSocket" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

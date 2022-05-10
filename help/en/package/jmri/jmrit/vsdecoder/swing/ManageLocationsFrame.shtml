@@ -48,8 +48,8 @@
         Both are loaded automatically at VSD start respectively JMRI start.</li>
 
         <li>Reporters and Blocks are not saved to a file.<br>
-          If you want to store Reporters or Blocks to a file, go to <strong>Tools ⇒ Tables ⇒ table
-          ⇒ File ⇒ Store...</strong><br>
+          If you want to store Reporters or Blocks to a file, go to <strong>Tools &rArr; Tables
+          &rArr; table &rArr; File &rArr; Store...</strong><br>
           In case you have an open Panel with a reference to a location, store that Panel.<br>
           Reporters or Blocks must be loaded manually or via JMRI Preferences Startup Action (Open
           File).<br>
@@ -69,7 +69,11 @@
         <li>The Listeners attribute "Listener Mode" is not supported and will be removed at a later
         time.</li>
       </ul>
-      <a id="prefs">(This is the jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page) 
+
+      <p>See the <a href="../../../../../html/tools/vsd/index.shtml">
+      documentation pages</a> for more details on Virtual Sound Decoder.</p>
+
+      <a id="prefs">(This is the jmri.jmrit.vsdecoder.swing.ManageLocationsFrame help page)
       <!--#include virtual="/Footer.shtml" --></a>
     </div>
   </div>

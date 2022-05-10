@@ -1,18 +1,9 @@
 package apps.plaf.macosx;
 
 import java.awt.Desktop;
-import java.io.InputStreamReader;
+import java.awt.desktop.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
-import javax.script.SimpleScriptContext;
-import jmri.script.JmriScriptEngineManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper for Apple provided extensions to Java that allow Java apps to feel
@@ -28,17 +19,12 @@ import org.slf4j.LoggerFactory;
  * </code></pre> A Try-Catch block will need to catch
  * {@link java.lang.NoClassDefFoundError} Failure to use one of these methods
  * will result in crashes.
- * <p>
- * This wrapper currently provides incomplete support for the Apple
- * {@link com.apple.eawt.Application} class, as it only provides support for
- * those integration aspects that were implemented in JMRI 3.1.
- *
- * @author Randall Wood (c) 2016
+  *
+ * @author Randall Wood     (c) 2016
+ * @author Daniel Bergqvist (c) 2021
  * @see Application
  */
 class Jdk9Application extends Application {
-
-    private static final Logger log = LoggerFactory.getLogger(Jdk9Application.class);
 
     Jdk9Application() {
     }
@@ -58,13 +44,7 @@ class Jdk9Application extends Application {
     @Override
     public void setAboutHandler(final AboutHandler handler) {
         if (handler != null) {
-            try {
-                InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream("AboutHandler.js")); // NOI18N
-                ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
-                engine.eval(reader, this.getContext(handler));
-            } catch (ScriptException ex) {
-                log.error("Unable to execute script AboutHandler.js", ex);
-            }
+            java.awt.Desktop.getDesktop().setAboutHandler(handler::handleAbout);
         } else {
             this.setHandler("setAboutHandler", "java.awt.desktop.AboutHandler", null); // NOI18N
         }
@@ -73,13 +53,7 @@ class Jdk9Application extends Application {
     @Override
     public void setPreferencesHandler(final PreferencesHandler handler) {
         if (handler != null) {
-            try {
-                InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream("PreferencesHandler.js")); // NOI18N
-                ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
-                engine.eval(reader, this.getContext(handler));
-            } catch (ScriptException ex) {
-                log.error("Unable to execute script PreferencesHandler.js", ex);
-            }
+            java.awt.Desktop.getDesktop().setPreferencesHandler(handler::handlePreferences);
         } else {
             this.setHandler("setPreferencesHandler", "java.awt.desktop.PreferencesHandler", null); // NOI18N
         }
@@ -88,23 +62,19 @@ class Jdk9Application extends Application {
     @Override
     public void setQuitHandler(final QuitHandler handler) {
         if (handler != null) {
-            try {
-                InputStreamReader reader = new InputStreamReader(Jdk9Application.class.getResourceAsStream("QuitHandler.js")); // NOI18N
-                ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngineByMimeType("js"); // NOI18N
-                engine.eval(reader, this.getContext(handler));
-            } catch (ScriptException ex) {
-                log.error("Unable to execute script QuitHandler.js", ex);
-            }
+            java.awt.Desktop.getDesktop().setQuitHandler(
+                    (QuitEvent qe, QuitResponse response) -> {
+                        if (handler.handleQuitRequest(qe)) {
+                            response.performQuit();
+                        } else {
+                            response.cancelQuit();
+                        }
+                    });
         } else {
             this.setHandler("setQuitHandler", "java.awt.desktop.QuitHandler", null); // NOI18N
         }
     }
 
-    private ScriptContext getContext(Object handler) {
-        Bindings bindings = new SimpleBindings();
-        bindings.put("handler", handler); // NOI18N
-        ScriptContext context = new SimpleScriptContext();
-        context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
-        return context;
-    }
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Jdk9Application.class);
+
 }

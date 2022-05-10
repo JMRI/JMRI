@@ -1,27 +1,22 @@
 package jmri.jmrit.vsdecoder.listener;
 
 /**
- * class ListeningSpot
- *
  * Represents a defined spot for viewing (and therefore listening to) a layout.
  *
- */
-
-/*
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2012
+ * @author Mark Underwood Copyright (C) 2012
  */
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,11 +75,11 @@ public class ListeningSpot {
     }
 
     public String getName() {
-        return (_name);
+        return _name;
     }
 
     public Vector3d getLocation() {
-        return (_location);
+        return _location;
     }
 
     public PhysicalLocation getPhysicalLocation() {
@@ -92,11 +87,11 @@ public class ListeningSpot {
     }
 
     public Vector3d getUpVector() {
-        return (_up);
+        return _up;
     }
 
     public Vector3d getLookAtVector() {
-        return (_lookAt);
+        return _lookAt;
     }
 
     /* TRig notes
@@ -192,7 +187,7 @@ public class ListeningSpot {
         up.cross(_la, _upVector);
         up.cross(up, _la);
         up.normalize();
-        return (up);
+        return up;
     }
 
     public void setOrientation(Double bearing, Double azimuth) {
@@ -237,15 +232,15 @@ public class ListeningSpot {
                 && (this._location == other.getLocation())
                 && (this._up == other.getUpVector())
                 && (this._lookAt == other.getLookAtVector())) {
-            return (true);
+            return true;
         } else {
-            return (false);
+            return false;
         }
     }
 
     private Vector3d parseVector3d(String pos) {
         if (pos == null) {
-            return (null);
+            return null;
         }
 
         // position is stored as a tuple string "(x,y,z)"
@@ -255,8 +250,8 @@ public class ListeningSpot {
             Pattern p = Pattern.compile(syntax);
             Matcher m = p.matcher(pos);
             if (!m.matches()) {
-                log.error("String does not match a valid position pattern. syntax= {} string = {}", syntax, pos);
-                return (null);
+                log.error("String does not match a valid position pattern. syntax: {}, string: {}", syntax, pos);
+                return null;
             }
             // ++debug
             String xs = m.group(1);
@@ -267,20 +262,20 @@ public class ListeningSpot {
             return (new Vector3d(Double.parseDouble(m.group(1)), Double.parseDouble(m.group(2)), Double.parseDouble(m.group(3))));
         } catch (PatternSyntaxException e) {
             log.error("Malformed Vector3d syntax! {}", syntax);
-            return (null);
+            return null;
         } catch (IllegalStateException e) {
-            log.error("Group called before match operation executed syntax={} string= {} {}", syntax, pos, e.toString());
-            return (null);
+            log.error("Group called before match operation executed syntax: {}, string: {}, {}", syntax, pos, e.toString());
+            return null;
         } catch (IndexOutOfBoundsException e) {
-            log.error("Index out of bounds {} string= {} {}", syntax, pos, e.toString());
-            return (null);
+            log.error("Index out of bounds: {}, string: {}, {}", syntax, pos, e.toString());
+            return null;
         }
     }
 
     @Override
     public String toString() {
         if ((_location == null) || (_lookAt == null) || (_up == null)) {
-            return ("ListeningSpot (undefined)");
+            return "ListeningSpot (undefined)";
         } else {
             return ("ListeningSpot Name: " + _name + " Location: " + _location.toString() + " LookAt: " + _lookAt.toString() + " Up: " + _up.toString());
         }
@@ -292,7 +287,7 @@ public class ListeningSpot {
         me.setAttribute("location", _location.toString());
         me.setAttribute("up", _up.toString());
         me.setAttribute("look_at", _lookAt.toString());
-        return (me);
+        return me;
     }
 
     public void setXml(Element e) {

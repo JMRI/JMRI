@@ -10,14 +10,10 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+
+import org.junit.jupiter.api.*;
 
 import jmri.jmrix.ipocs.protocol.Message;
 import jmri.jmrix.ipocs.protocol.packets.ConnectionRequestPacket;
@@ -25,11 +21,7 @@ import jmri.jmrix.ipocs.protocol.packets.SignOfLifePacket;
 
 public class IpocsClientHandlerTest {
 
-  @Mock
-  public AsynchronousSocketChannel client;
-
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
+  private AsynchronousSocketChannel client;
 
   private final IpocsClientListener listener = new IpocsClientListener() {
     @Override
@@ -68,6 +60,8 @@ public class IpocsClientHandlerTest {
 
     doThrow(new IOException()).when(client).close();
     ch.completed(-1, null);
+    
+    JUnitAppender.assertErrorMessage("Unable to close client: null");
   }
 
   @Test
@@ -141,14 +135,16 @@ public class IpocsClientHandlerTest {
     ch.send(msg);
   }
 
-  @BeforeEach
-  public void setUp() {
-    jmri.util.JUnitUtil.setUp();
-  }
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        client = mock(AsynchronousSocketChannel.class);
+    }
 
-  @AfterEach
-  public void tearDown() {
-    JUnitUtil.tearDown();
-  }
+    @AfterEach
+    public void tearDown() {
+        client = null;
+        JUnitUtil.tearDown();
+    }
 
 }

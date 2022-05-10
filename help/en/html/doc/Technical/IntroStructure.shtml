@@ -77,27 +77,33 @@
           "XmlPersistance.shtml">XML persistance</a>, and others.
         </dd>
       </dl>
-      plus specific files used by the <a href="Ant.shtml">build process</a>, to <a href=
-      "Logging.shtml">control logging</a>, and containing the <a href="/copyright.shtml">JMRI
-      license</a>.
+      <p>plus specific files used by the <a href="Ant.shtml">build process</a>, to <a href=
+      "Logging.shtml">control logging</a>, and containing the <a href="https://www.jmri.org/copyright.shtml">JMRI
+      license</a>.</p>
+
       <h3>Static Package and Class Structure</h3>
 
       <p>For interfaces in the <code>jmri</code> package, which might be implemented by lots of
-      different layout hardware types, <code>jmri.InstanceManager</code> satisfies these requests
-      by providing access to hardware-specific <code>Managers</code>, from which you can get the
+      different layout hardware types,
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/InstanceManager.html">jmri.InstanceManager</a>
+      satisfies requests for implemented objects by providing access to a hardware-specific
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/Manager.html">Manager</a>,
+      from which you can get the
       hardware-specific items that represent what you want to access on the layout.</p>
       <a href="images/OverallPackageStructure.png"><img src="images/OverallPackageStructure.png"
-      class="floatRight" height="261" width="247" style="border:1px solid blue" alt=
-      "package structure"></a>
+      alt="package structure"></a>
       <p>Because we have different hardware implementations in subpackages of the
       <code>jmrix</code> package, those are also accessed via the
-      <code>ConnectionManager</code>classes, which provide access to generally-defined objects.</p>
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/SystemConnectionMemo.html">SystemConnectionMemo</a>
+      classes, which provide access to generally-defined objects.</p>
 
       <p>Other code should, in general, not reference those specific implementations directly.</p>
 
-      <p>(The help/en/packages section of the in-program help files are also organized this
-      way)</p>
+      <p>(The <a href="https://www.jmri.org/help/en/package/">help/en/package</a>
+      section of the in-program help files are also organized this way)</p>
 
+      <a href="images/OverallImplementationStructure.png"><img src=
+      "images/OverallImplementationStructure.png" class="floatRight" alt="implementation structure"></a>
       <p>More specifically:</p>
 
       <dl>
@@ -112,10 +118,8 @@
 
         <dd>
           Contains commonly useful <strong>t</strong>ools and extensions.<br>
-          It can depend on jmri.* and externals. It must not depend on jmrix.* <a href=
-          "images/OverallImplementationStructure.png"><img src=
-          "images/OverallImplementationStructure.png" class="floatRight" height="261" width="360"
-          style="border:1px solid blue" alt="implementation structure"></a>
+          It can depend on <code>jmri.*</code> and externals. It must not depend on
+          <code>jmrix.*</code>
         </dd>
 
         <dt>jmrix</dt>
@@ -149,10 +153,7 @@
           jmri.jmrit or jmri.jmrix packages. The jmri.util.swing subpackage provides Swing
           utilities.
           <p>This is an exception to the idea that packages should not directly reference classes
-          across the tree: these utility classes are generally available for use. <a href=
-          "images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png" class=
-          "floatRight" height="456" width="325" style="border:1px solid blue" alt=
-          "dependencies"></a></p>
+          across the tree: these utility classes are generally available for use.</p>
         </dd>
 
         <dt>apps</dt>
@@ -163,7 +164,11 @@
         and system-specific tool objects for an application; that dependency is from the apps
         package)</dd>
       </dl>
-      Although it's not always honored, the tree structure here is important: Packages should
+
+      <a href="images/OverallAppDependencies.png"><img src="images/OverallAppDependencies.png"
+      class="floatRight" alt="dependencies"></a>
+
+      <p>Although it's not always honored, the tree structure here is important: Packages should
       <em>not</em> reference across the tree. Code in <code>jmri.jmrit</code> is welcome to
       reference classes in the <code>jmri</code> package, but should not reference directly to
       classes in <code>jmri.jmrix</code>. Classes should reference the interfaces in
@@ -179,40 +184,44 @@
       existing structure violations in addition to new ones because we haven't yet cleaned up some
       historical issues. There's also <code>jmri.ArchitectureTest</code> which is run as part of
       our <a href="ContinuousIntegration.shtml">CI tests</a>, and catches new violations of a
-      subset of the constraints.
+      subset of the constraints.</p>
       <p>Similarly, we have conventions for where to locate <a href="Swing.shtml">Swing GUI
       code</a> and <a href="XmlPersistance.shtml">persistance (store/load) code</a> that limits how
       embedded in them main code they become.</p>
 
-      <h3>Example: a Turnout</h3>
+      <h4>Example: Implementing a Turnout</h4>
       Turnouts involve multiple classes:
       <ul>
-        <li>Turnout - the basic interface. This is what you should expect to deal with when writing
-        your layout automation code; its what you get when you make a request from the
+        <li><a href="https://www.jmri.org/JavaDoc/doc/jmri/Turnout.html">Turnout</a>
+            - the basic interface. This is what you should expect to deal with when writing
+        your layout automation code; it's what you get when you make a request from the
         TurnoutManager, etc.</li>
 
-        <li>AbstractTurnout - provided for convenience when implementing the Turnout interface for
+        <li><a href="https://www.jmri.org/JavaDoc/doc/jmri/implementation/AbstractTurnout.html">AbstractTurnout</a>
+            - provided for convenience when implementing the Turnout interface for
         specific hardware, this provides the basic implementation.</li>
 
-        <li>LnTurnout - a specific implementation for LocoNet-connected turnouts. There are many
+        <li><a href="https://www.jmri.org/JavaDoc/doc/jmri/jmrix/loconet/LnTurnout.html">LnTurnout</a>
+            - a specific implementation for LocoNet-connected turnouts. There are many
         other implementations for different layout connections.</li>
       </ul>
 
       <h2>Dynamic (Object) Structure</h2>
 
       <p>For many JMRI objects, once they have been created they can be accessed either by type,
-      i.e. "The default configuration manager", or by name, i.e. "The East Yard Entrance turnout".
+      i.e. "The default configuration manager" via the InstanceManager,
+      or by name, i.e. "The East Yard Entrance turnout" via a type-specific Manager.
       More information on how things (e.g. objects representing items on the layout) are named
       <a href="Names.shtml">is available on a separate page</a>.</p>
 
       <p>The <a href="https://jmri.org/JavaDoc/doc/jmri/InstanceManager.html">"InstanceManager"</a>
-      as a key central point for this navigation.</p>
+      is a key central point for this navigation.</p>
 
       <ul>
         <li>It provides access to key objects, particularly the Managers that mediate access to
         Turnouts, Sensors, etc.</li>
 
-        <li>It automatically handles creation of many parts of JMRI via several mechanisms:
+        <li>It automatically handles initialization of many parts of JMRI via several mechanisms:
           <ul>
             <li>
               <a href=
@@ -237,19 +246,53 @@
         </li>
       </ul>
 
-      <p>Extensive use of Factory pattern via objects we call "Manager" objects.</p>
+      <p>JMRI makes extensive use of the Factory pattern via objects we call "Manager" objects.</p>
 
-      <h3>Example: a Turnout</h3>
+      <h4>Example: Accessing a Turnout</h4>
 
       <p>To get a specific Turnout instance that represents something on the layout, you make a
       request of a TurnoutManager. This is also an interface, with a similar implementation
-      pattern. In turn, you get that TurnoutManager from the InstanceManager.</p>
+      pattern. In turn, you got that TurnoutManager from the InstanceManager.</p>
 
-      <p>The role of the generic Manager&lt;T&gt; class</p>
+      <pre style="font-family: monospace;">
+      TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
+      Turnout turnout = manager.getTurnout("IT12");
+      </pre>
+      <p>The generic <a href="https://www.jmri.org/JavaDoc/doc/jmri/Manager.html">Manager&lt;T&gt;</a> class provides the basic interface.
+      which is then extended for specifics i.e.
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a>.
+      That then has specific implementations.</p>
 
-      <p>NamedBean and addressing as part of the Manager's role.</p>
+      <p>In many cases, there's one underlying implementation for a manager.
+      For example, there's one
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/LogixManager.html">LogixManager</a>, one
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/MemoryManager.html">MemoryManager</a>, etc.
+      <p>
+      In other cases, you might have multiple system-specific managers:
+      LnTurnoutManager for a LocoNet connection, NceTurnoutManager for an NCE
+      connection, and an InternalTurnoutManager for the internal turnouts.
+      These are handled by making them clients to a single
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/ProxyManager.html">ProxyManager</a>,
+      subclass i.e.
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/managers/ProxyTurnoutManager.html">ProxyTurnoutManager</a>
+      which uses name lookup to work with the individual managers.
 
-      <p>The role of NamedBeanHandle and the NamedBeanHandleManager.</p>
+      <h2>Object Referencing</h2>
+
+      <p>Code can hold a direct java reference to a specific object.
+      In some cases, typically GUIs or
+      <a href="XmlPersistance.shtml">persistance</a>,
+      you'll want to refer to an object by its name.  JMRI NamedBean objects
+      have both system names that can't change and user names that can.
+      For example, the user name "East Yard" for a turnout might refer to
+      "LI1" at some point and later refer to "NT12".  The
+      <a href="https://www.jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+      class takes care of this by remembering
+      which name is being used for an object, and keeping track of how
+      that name might be moved from one object to another.
+      For more information, see the description on the
+      <a href="Patterns.shtml">Patterns page</a>.
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

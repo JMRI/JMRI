@@ -110,20 +110,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
      * Keep autostring in line with {@link #provideSignalGroup(String, String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
-    @Deprecated // 4.25.2
-    @Nonnull
-    @Override
-    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName) {
-        jmri.util.LoggingUtil.deprecationWarning(log, "newSignaGroupWithUserName");
-        return newSignalGroupWithUserName(userName);
-    }
-    
-    /**
-     * {@inheritDoc}
-     *
-     * Keep autostring in line with {@link #provideSignalGroup(String, String)},
-     * {@link #getSystemPrefix()} and {@link #typeLetter()}
-     */
     @Nonnull
     @Override
     public SignalGroup newSignalGroupWithUserName(@Nonnull String userName) {

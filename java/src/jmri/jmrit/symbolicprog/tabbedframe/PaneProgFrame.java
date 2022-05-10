@@ -48,8 +48,13 @@ abstract public class PaneProgFrame extends JmriJFrame
     ResetTableModel resetModel = null;
     JMenu resetMenu = null;
 
+    ArrayList<ExtraMenuTableModel> extraMenuModelList = null;
+    ArrayList<JMenu> extraMenuList = new ArrayList<>();
+
     Programmer mProgrammer;
     JPanel modePane = null;
+
+    JMenuBar menuBar = new JMenuBar();
 
     JPanel tempPane; // passed around during construction
 
@@ -134,7 +139,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(fileDirtyTask);
 
         // Create a menu bar
-        JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
         // add a "File" menu
@@ -183,6 +187,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         exportSubMenu.add(new CsvExportAction(Bundle.getMessage("MenuExportCSV"), cvModel, this));
         exportSubMenu.add(new Pr1ExportAction(Bundle.getMessage("MenuExportPr1DOS"), cvModel, this));
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
+        exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
 
         // add "Import" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
@@ -298,8 +303,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         // and put that pane into the JFrame
         getContentPane().add(pane);
 
-        // add help
-        addHelp();
     }
 
     void setProgrammingGui(JPanel bottom) {
@@ -589,6 +592,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 cvModel);
 
         resetModel = new ResetTableModel(progStatus, mProgrammer);
+        extraMenuModelList = new ArrayList<>();
 
         // handle the roster entry
         _rosterEntry.setOpen(true);
@@ -624,6 +628,17 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
+        // if there are extra menus defined, enable them
+        log.trace("enabling {} {}", extraMenuModelList.size(), extraMenuModelList);
+        for (int i = 0; i<extraMenuModelList.size(); i++) {
+            log.trace("enabling {} {}", _opsMode, extraMenuModelList.get(i).hasOpsModeReset());
+            if ( !_opsMode || extraMenuModelList.get(i).hasOpsModeReset()) {
+                if (extraMenuModelList.get(i).getRowCount() > 0) {
+                    extraMenuList.get(i).setEnabled(true);
+                }
+            }
+        }
+
         // set the programming mode
         if (pProg != null) {
             if (InstanceManager.getOptionalDefault(AddressedProgrammerManager.class).isPresent()
@@ -649,6 +664,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                     mProgrammer = pf;
                     cvModel.setProgrammer(pf);
                     resetModel.setProgrammer(pf);
+                    for (var model : extraMenuModelList) {
+                        model.setProgrammer(pf);
+                    }
                     log.debug("Found programmer: {}", cvModel.getProgrammer());
 
                 }
@@ -795,7 +813,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             log.debug("XML specifies modes: P {} DBi {} Dby {} R {} now {}", paged, directbit, directbyte, register, mProgrammer.getMode());
             log.debug("Programmer supports:");
             for (ProgrammingMode m : modes) {
-                log.debug("   {} {}", m.getStandardName(), m.toString());
+                log.debug(" mode: {} {}", m.getStandardName(), m.toString());
             }
         }
 
@@ -902,6 +920,23 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // load reset from decoder tree
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
+
+        // load extra menus from decoder tree
+        df.loadExtraMenuModel(decoderRoot.getChild("decoder"), extraMenuModelList, progStatus, mProgrammer);
+
+        // add extra menus
+        log.trace("add menus {} {}", extraMenuModelList.size(), extraMenuList);
+        for (int i=0; i < extraMenuModelList.size(); i++ ) {
+            String name = extraMenuModelList.get(i).getName();
+            JMenu menu = new JMenu(name);
+            extraMenuList.add(i, menu);
+            menuBar.add(menu);
+            menu.add(new ExtraMenuAction(name, extraMenuModelList.get(i), this));
+            menu.setEnabled(false);
+        }
+
+        // add Window and Help menu items (_after_ the extra menus)
+        addHelp();
 
         // load function names from family
         re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"), "family");

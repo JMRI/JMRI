@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JPanel for IndicatorTurnout items.
- * 
+ *
  * @author Pete Cressman Copyright (c) 2010, 2020
  */
 public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
@@ -41,7 +41,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     private HashMap<String, HashMap<String, NamedIcon>> _unstoredMaps;
     private DetectionPanel _detectPanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
-    
+
     public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model) {
         super(parentFrame, type, family, model);
     }
@@ -79,7 +79,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         }
         if (_family == null || _family.isEmpty()) {
             _family = Bundle.getMessage("unNamed");
-        }     
+        }
         _detectPanel = new DetectionPanel(this);
         super.init(doneAction, null);
         add(_detectPanel, 1);
@@ -107,7 +107,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 return;
             }
         }
-        
+
     }
 
     protected String getValidFamily(String family, HashMap<String, HashMap<String, NamedIcon>> iconMap) {
@@ -119,7 +119,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         if (iconMap != null) {
             mapFamily = findFamilyOfMaps(null, iconMap, families);
             if (log.isDebugEnabled()) {
-                log.debug("getValidFamily: findFamilyOfMaps {} found stored family \"{}\" for family \"{}\".", _itemType, mapFamily, family);            
+                log.debug("getValidFamily: findFamilyOfMaps {} found stored family \"{}\" for family \"{}\".", _itemType, mapFamily, family);
             }
             if (mapFamily == null) {
                 _isUnstoredMap = true;
@@ -187,7 +187,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
     // Test if status families are equal
     protected boolean familiesAreEqual(
-                HashMap<String,  HashMap<String, NamedIcon>> famOne, 
+                HashMap<String,  HashMap<String, NamedIcon>> famOne,
                 HashMap<String, HashMap<String, NamedIcon>> famTwo) {
         if (famOne.size() != famTwo.size()) {
             return false;
@@ -216,7 +216,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         }
         return false;
     }
-    
+
     /*
      * Get a handle in order to change visibility.
      */
@@ -257,7 +257,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             }
             addFamilyPanels(false);
          } else {
-             makeFamiliesPanel(families);        
+             makeFamiliesPanel(families);
          }
     }
     private void makeFamiliesPanel(@Nonnull HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> families) {
@@ -286,7 +286,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
     /**
     * Add current family icons to Show Icons pane when _showIconsButton pressed
-    * Also, dropIcon is true, call is from Icondialog and current family icons are 
+    * Also, dropIcon is true, call is from Icondialog and current family icons are
     * added for editing.
     * @see #hideIcons()
     *
@@ -324,7 +324,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             for (Entry<String, NamedIcon> ent : iconMap.entrySet()) {
                 String key = ent.getKey();
                 panel = makeIconDisplayPanel(key, iconMap, dropIcon);
-                
+
                 gridbag.setConstraints(panel, c);
                 iconPanel.add(panel);
                 c.gridx++;
@@ -373,7 +373,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
             setFamily(_family);
         }
     }
-    
+
     protected HashMap<String, HashMap<String, NamedIcon>> makeNewIconMap() {
         HashMap<String, HashMap<String, NamedIcon>> map = new HashMap<>();
         for (String statusKey : INDICATOR_TRACK) {
@@ -441,7 +441,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
         _cntlDown = false;
         hideIcons();
         if (log.isDebugEnabled()) {
-            log.debug("dialogDoneAction done for {} {}. unStored={}",
+            log.debug("dialogDoneAction done for {} {}. {} unStored={}",
                     _itemType, _family, (_update?"update":""), _isUnstoredMap);
         }
     }
@@ -493,7 +493,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
     }
 
     @Override
-    protected JLabel getDragger(DataFlavor flavor, 
+    protected JLabel getDragger(DataFlavor flavor,
             HashMap<String, NamedIcon> map, NamedIcon icon) {
         return new IconDragJLabel(flavor, icon);
     }
@@ -548,7 +548,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                     }
                 }
                 t.setLevel(Editor.TURNOUTS);
-                return t;                
+                return t;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icons for \"");

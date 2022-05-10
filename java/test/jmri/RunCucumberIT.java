@@ -6,7 +6,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.web.BrowserFactory;
 
 import org.junit.runner.RunWith;
-
+import org.junit.Assume;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -23,7 +23,7 @@ import org.junit.BeforeClass;
  * To override those in ant, run:<br>
  * JAVA_OPTIONS='-Dcucumber.options="..."' ant target
  * </p>
- * 
+ *
  * @author Paul Bender Copyright 2017
  */
 
@@ -31,17 +31,17 @@ import org.junit.BeforeClass;
 @CucumberOptions(plugin = {"junit:cucumber-results.xml", "progress", "json:cucumber-results.json"},
         features = "java/acceptancetest/features/web",
         tags = {"not @webtest", "not @Disabled", "not @Ignore", "not @ignore"},
-        glue = {"jmri"})
+        glue = {"apps"})
 public class RunCucumberIT {
 
     @BeforeClass
     public static void beforeTests() {
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initZeroConfServiceManager();
     }
 
-    @SuppressWarnings("deprecation")
     @AfterClass
     public static void afterTests() {
         BrowserFactory.CloseAllDriver();

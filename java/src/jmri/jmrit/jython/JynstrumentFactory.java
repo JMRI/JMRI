@@ -35,7 +35,7 @@ public class JynstrumentFactory {
             path = parentPath;
         }
         String jyFile = path + File.separator + className + ".py";
-        ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+        ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
         Jynstrument jyns;
         try {
             FileReader fr = new FileReader(jyFile);
@@ -48,7 +48,7 @@ public class JynstrumentFactory {
                 fr.close();
             }
         } catch (java.io.IOException | javax.script.ScriptException ex) {
-            log.error("Exception while creating Jynstrument: {}", ex);
+            log.error("Exception while creating Jynstrument", ex);
             return null;
         }
         jyns.setClassName(className);
@@ -96,13 +96,13 @@ public class JynstrumentFactory {
             log.error("Didn't find any files in {}", f);
             return className;
         }
-        
+
         String assumedClassName = f.getName().substring(0, f.getName().length() - 4);
         // Try to find best candidate
         for (String c : children) {
             if ((c).compareToIgnoreCase(assumedClassName + ".py") == 0) {
                 return assumedClassName; // got exact match for folder name
-            } 
+            }
         }
         // If not, use first python file we can find
         log.warn("Coulnd't find best candidate ({}), reverting to first one", assumedClassName + ".py");

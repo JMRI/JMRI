@@ -228,6 +228,7 @@ public class MemoryComboIcon extends PositionableJPanel
             protected void addAdditionalButtons(JPanel p) {
                 _listModel = new DefaultListModel<>();
                 bDel.addActionListener(a -> {
+                    if ( list == null ){ return; }
                     idx = list.getSelectedIndex();
                     if (idx >= 0) {
                         _listModel.removeElementAt(idx);
@@ -235,7 +236,7 @@ public class MemoryComboIcon extends PositionableJPanel
                 });
                 bAdd.addActionListener(a -> {
                     String text = textfield.getText();
-                    if (text == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
+                    if (text == null || list == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
                         return;
                     }
                     idx = list.getSelectedIndex();

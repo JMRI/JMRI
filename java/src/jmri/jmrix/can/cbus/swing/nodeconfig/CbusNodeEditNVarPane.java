@@ -62,14 +62,14 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
         infoPane = new JPanel();
         infoPane.setLayout(new BorderLayout() );
         
-        saveNvButton = new JButton(("Save"));
+        saveNvButton = new JButton(Bundle.getMessage("ButtonSave"));
         saveNvButton.setToolTipText(Bundle.getMessage("SaveNvButtonTt"));
         
         liveUpdateNvButton = new JButton(Bundle.getMessage("LiveUpdateNode"));
-        liveUpdateNvButton.setToolTipText(("LiveUpdateNodeTt"));
+        liveUpdateNvButton.setToolTipText(Bundle.getMessage("LiveUpdateNodeTt"));
         
         resetNvButton = new JButton(Bundle.getMessage("Reset"));
-        resetNvButton.setToolTipText(("Reset table New NV values"));
+        resetNvButton.setToolTipText(Bundle.getMessage("ResetTt"));
         
         ActionListener reset = ae -> {
             cancelOption();

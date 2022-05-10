@@ -83,7 +83,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 
                         // save child TransitSectionAction entries if any
                         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
-                        if (tsaList.size() > 0) {
+                        if (!tsaList.isEmpty()) {
                             Element tsaElem;
                             for (TransitSectionAction tsa : tsaList) {
                                 if (tsa != null) {
@@ -156,7 +156,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
             try {
                 x = tm.createNewTransit(sysName, userName);
             } catch (IllegalArgumentException ex) {
-                log.error(ex.getMessage());
+                log.error("Continuing following Exception: ", ex);
                 continue; // go to next Element
             }
             // load common part

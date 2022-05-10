@@ -5,7 +5,8 @@ import jmri.configurexml.*;
 import java.io.File;
 import java.util.stream.Stream;
 
-import jmri.util.JUnitUtil;
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,6 +42,11 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     public LoadAndStoreTest() {
         // LogixNG cannot be loaded twice
         super(SaveType.Config, true);
+    }
+
+    @Override
+    protected void postLoadProcessing() {
+        InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
     }
 
     @AfterEach

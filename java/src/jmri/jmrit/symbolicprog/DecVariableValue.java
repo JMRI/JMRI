@@ -32,6 +32,7 @@ public class DecVariableValue extends VariableValue
         _maxVal = maxVal;
         _minVal = minVal;
         _value = new JTextField("0", fieldLength());
+        _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
         _value.setBackground(COLOR_UNKNOWN);
         // connect to the JTextField value, cv
@@ -95,8 +96,12 @@ public class DecVariableValue extends VariableValue
                 try {
                     int newVal = textToValue(_value.getText());
                     int oldVal = textToValue(oldContents);
-                    updatedTextField();
-                    prop.firePropertyChange("Value", oldVal, newVal);
+                    if (newVal < _minVal || newVal > _maxVal) {
+                        _value.setText(oldContents);
+                    } else {
+                        updatedTextField();
+                        prop.firePropertyChange("Value", oldVal, newVal);
+                    }
                 } catch (java.lang.NumberFormatException ex) {
                     _value.setText(oldContents);
                 }
@@ -141,8 +146,12 @@ public class DecVariableValue extends VariableValue
         log.debug("actionPerformed");
         try {
             int newVal = textToValue(_value.getText());
-            updatedTextField();
-            prop.firePropertyChange("Value", null, newVal);
+            if (newVal < _minVal || newVal > _maxVal) {
+                _value.setText(oldContents);
+            } else {
+                updatedTextField();
+                prop.firePropertyChange("Value", null, newVal);
+            }
         } catch (java.lang.NumberFormatException ex) {
             _value.setText(oldContents);
         }
@@ -270,7 +279,7 @@ public class DecVariableValue extends VariableValue
     /**
      * Set a new value, including notification as needed.
      * <p>
-     * This does the conversion from string to int, so if the place where 
+     * This does the conversion from string to int, so if the place where
      * formatting needs to be applied.
      * @param value new value.
      */

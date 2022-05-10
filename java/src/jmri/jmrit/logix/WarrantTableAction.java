@@ -4,8 +4,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -19,10 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
-import jmri.NamedBean;
 import jmri.Path;
 
 import org.slf4j.Logger;
@@ -55,7 +53,9 @@ public class WarrantTableAction extends AbstractAction {
     private boolean _hasErrors = false;
     private JDialog _errorDialog;
     private WarrantFrame _openFrame;
+    private Point _warFrameLoc = new Point(20,20);
     private NXFrame _nxFrame;
+    private Point _nxFrameLoc = new Point(40,40);
     private boolean _logging = false;
     private Runnable _shutDownTask = null;
 
@@ -175,6 +175,7 @@ public class WarrantTableAction extends AbstractAction {
     protected void closeNXFrame() {
         if (_nxFrame != null) {
             _nxFrame.clearTempWarrant();
+            _nxFrameLoc = _nxFrame.getLocation();
             _nxFrame.dispose();
             _nxFrame = null;
         }
@@ -188,6 +189,7 @@ public class WarrantTableAction extends AbstractAction {
         }
         _nxFrame.setState(java.awt.Frame.NORMAL);
         _nxFrame.setVisible(true);
+        _nxFrameLoc.setLocation(_nxFrameLoc);
         _nxFrame.toFront();
     }
 
@@ -197,6 +199,7 @@ public class WarrantTableAction extends AbstractAction {
             if (!_openFrame.askClose()) {
                 return false;
             }
+            _warFrameLoc = _openFrame.getLocation();
             _openFrame.close();
             _openFrame = null;
         }
@@ -221,6 +224,7 @@ public class WarrantTableAction extends AbstractAction {
         _openFrame = new WarrantFrame(w);
         _openFrame.setState(java.awt.Frame.NORMAL);
         _openFrame.toFront();            
+        _openFrame.setLocation(_warFrameLoc);
     }
 
     private void openWarrantFrame(String key) {
@@ -373,7 +377,6 @@ public class WarrantTableAction extends AbstractAction {
             _hasErrors = true;
         }
         // check whether any turnouts are shared between two blocks;
-        checkSharedTurnouts(b);
         return sb.toString();
     }
 
@@ -416,55 +419,6 @@ public class WarrantTableAction extends AbstractAction {
         _errorDialog.pack();
         _errorDialog.setVisible(true);
         return true;
-    }
-
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
-    public boolean checkSharedTurnouts(OBlock block) {
-        boolean hasShared = false;
-        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        List<Path> pathList = block.getPaths();
-        for (Path value : pathList) {
-            OPath path = (OPath) value;
-            for (OBlock b : manager.getNamedBeanSet()) {
-                if (block.getSystemName().equals(b.getSystemName())) {
-                    continue;
-                }
-                for (Path item : b.getPaths()) {
-                    boolean shared = sharedTO(path, (OPath) item);
-                    if (shared) {
-                        hasShared = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return hasShared;
-    }
-
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OBlock extends Block")
-    private boolean sharedTO(OPath myPath, OPath path) {
-        List<BeanSetting> myTOs = myPath.getSettings();
-        Iterator<BeanSetting> iter = myTOs.iterator();
-        List<BeanSetting> tos = path.getSettings();
-        boolean ret = false;
-        while (iter.hasNext()) {
-            BeanSetting mySet = iter.next();
-            NamedBean myTO = mySet.getBean();
-            int myState = mySet.getSetting();
-            for (BeanSetting set : tos) {
-                NamedBean to = set.getBean();
-                if (myTO.equals(to)) {
-                    // turnouts are equal.  check if settings are compatible.
-                    OBlock myBlock = (OBlock) myPath.getBlock();
-                    int state = set.getSetting();
-                    OBlock block = (OBlock) path.getBlock();
-                    if (myState != state) {
-                        ret = myBlock.addSharedTurnout(myPath, block, path);
-                    }
-                }
-            }
-        }
-        return ret;
     }
 
     private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class);

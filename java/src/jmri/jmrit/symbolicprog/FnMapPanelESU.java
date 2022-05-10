@@ -450,7 +450,7 @@ public final class FnMapPanelESU extends JPanel {
                             thisVar = null;
                         }
 
-                        int iVar = varModel.findVarIndex(name);  // now pick up the varModel entry we just created
+                        int iVar = varModel.findVarIndex(name, true);  // now pick up the varModel entry we just created
 
                         // hopefully we found it!
                         if (iVar >= 0) {
@@ -958,7 +958,8 @@ public final class FnMapPanelESU extends JPanel {
         } catch (NumberFormatException e) {
             log.error("error handling decoder's numFns value");
         }
-        log.debug("loadModelAttributes numFns={}, numRows={}, numOuts={}, numItems={}, {}", numFns, numRows, numOuts, numItems);
+        log.debug("loadModelAttributes numFns={}, numRows={}, numOuts={}, numItems={}",
+                            numFns, numRows, numOuts, numItems);
     }
 
     /**

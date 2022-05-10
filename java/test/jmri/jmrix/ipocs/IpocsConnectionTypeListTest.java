@@ -1,8 +1,6 @@
 package jmri.jmrix.ipocs;
 
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
@@ -16,17 +14,6 @@ import org.junit.Assert;
  */
 public class IpocsConnectionTypeListTest {
 
-    @BeforeEach        
-    public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
     @Test
     public void ConstructorTest() {
         Assert.assertNotNull("constructor", new IpocsConnectionTypeList());
@@ -34,11 +21,22 @@ public class IpocsConnectionTypeListTest {
 
     @Test
     public void GetManufacturersTest() {
-      new IpocsConnectionTypeList().getManufacturers();
+        new IpocsConnectionTypeList().getManufacturers();
     }
 
     @Test
     public void GetAvailableProtocolClassesTest() {
-      new IpocsConnectionTypeList().getAvailableProtocolClasses();
+        new IpocsConnectionTypeList().getAvailableProtocolClasses();
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

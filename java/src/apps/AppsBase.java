@@ -6,9 +6,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
@@ -60,6 +58,8 @@ public abstract class AppsBase {
      *
      * @param applicationName The application name as presented to the user
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Info String always needs to be evaluated")
     static public void preInit(String applicationName) {
         Log4JUtil.initLogging();
 
@@ -156,7 +156,7 @@ public abstract class AppsBase {
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // GUI should show message here
-                    log.info(Bundle.getMessage("ConfigMigratedToProfile"));
+                    log.info("Migrated {}",Bundle.getMessage("ConfigMigratedToProfile"));
                 }
             } catch (IOException | IllegalArgumentException ex) {
                 // GUI should show message here
@@ -323,14 +323,6 @@ public abstract class AppsBase {
     }
 
     /**
-     * @deprecated for removal since 4.17.2 without replacement
-     */
-    @Deprecated
-    protected void installShutDownManager() {
-        // nothing to do
-    }
-
-    /**
      * Final actions before releasing control of the application to the user,
      * invoked explicitly after object has been constructed in main().
      */
@@ -397,7 +389,7 @@ public abstract class AppsBase {
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (Exception e) {
-            log.error("Unable to set JMRI property {} to {}due to exception: {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {}due to exception", key, value, e);
         }
     }
 

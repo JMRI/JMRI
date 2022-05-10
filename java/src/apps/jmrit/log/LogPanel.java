@@ -19,6 +19,8 @@ public class LogPanel extends JPanel {
     JButton sendButton = new JButton(Bundle.getMessage("ButtonAddText"));
     JTextField textField = new JTextField(40);
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Error String always needs to be evaluated unchanged.")
     public LogPanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

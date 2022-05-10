@@ -480,59 +480,6 @@ public class Transit extends AbstractNamedBean {
     }
 
     /**
-     * Checks that exit Signal Heads are in place for all Sections in this
-     * Transit and for Block boundaries at turnouts or level crossings within
-     * Sections of the Transit for the direction defined in this Transit. Signal
-     * Heads are not required at anchor point block boundaries where both blocks
-     * are within the same Section, and for turnouts with two or more
-     * connections in the same Section.
-     *
-     * @param panel the panel to check against
-     * @return 0 if all Sections have all required signals or the number of
-     *         Sections missing required signals; -1 if the panel is null
-     * @deprecated 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
-     */
-    @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
-    public int checkSignals(LayoutEditor panel) {
-        if (panel == null) {
-            log.error("checkSignals called with a null LayoutEditor panel");
-            return -1;
-        }
-        int numErrors = 0;
-        for (TransitSection ts : mTransitSectionList) {
-            numErrors = numErrors + ts.getSection().placeDirectionSensors(panel);
-        }
-        return numErrors;
-    }
-
-    /**
-     * Validates connectivity through the Transit. Returns the number of errors
-     * found. Sends log messages detailing the errors if break in connectivity
-     * is detected. Checks all Sections before quitting.
-     *
-     * @param panel the panel containing Sections to validate
-     * @return number of invalid sections or -1 if panel if null
-     * @deprecated 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
-     */
-    @Deprecated // for removal 4.19.7 Without replacement, as moved to DispatcherFrame, its only usage
-    public int validateConnectivity(LayoutEditor panel) {
-        jmri.util.LoggingUtil.deprecationWarning(log, "validateConnectivity");
-        if (panel == null) {
-            log.error("validateConnectivity called with a null LayoutEditor panel");
-            return -1;
-        }
-        int numErrors = 0;
-        for (int i = 0; i < mTransitSectionList.size(); i++) {
-            String s = mTransitSectionList.get(i).getSection().validate(panel);
-            if (!s.equals("")) {
-                log.error(s);
-                numErrors++;
-            }
-        }
-        return numErrors;
-    }
-
-    /**
      * Initialize blocking sensors for Sections in this Transit. This should be
      * done before any Sections are allocated for this Transit. Only Sections
      * that are {@link jmri.Section#FREE} are initialized, so as not to

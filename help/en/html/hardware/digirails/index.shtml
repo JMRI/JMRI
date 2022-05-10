@@ -63,7 +63,7 @@
 
         <li>Enter the IP address for your DR5000 unit</li>
 
-        <li>Select whatever as Command station type (DB150 Empire Builder on my side)</li>
+        <li>Select whatever as Command station type (DCS210 Evolution Command Station)</li>
 
         <li>Under Additional Connection settings, set port to 5550</li>
       </ul>

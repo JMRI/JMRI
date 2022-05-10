@@ -92,6 +92,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
      */
     @Override
     public boolean load(Element shared, Element perNode) {
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
+            return true;
+        }
+
         boolean result = true;
         Attribute a;
         // find coordinates
@@ -227,8 +231,15 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             }
         }
         panel.setRows(rows); // if 0, autoRows is selected (handled in Editor)
-        value = (a = shared.getAttribute("showusername")) == null || !a.getValue().equals("no");
-        panel.setShowUserName(value);
+
+        a = shared.getAttribute("showusername");
+        if (a == null || a.getValue().equals("yes")) {
+            panel.setShowUserName(1); // default and migration
+        } else if (a.getValue().equals("no")) {
+            panel.setShowUserName(0); // only how system name
+        } else {
+            panel.setShowUserName(2); // display name (one, prefer user name)
+        }
 
         if (shared.getAttribute("iconscale") != null) {
             try {

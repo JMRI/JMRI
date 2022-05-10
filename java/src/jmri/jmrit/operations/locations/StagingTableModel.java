@@ -35,8 +35,7 @@ public class StagingTableModel extends TrackTableModel {
         SwingUtilities.invokeLater(() -> {
             tef = new StagingEditFrame();
             Track staging = _tracksList.get(row);
-            tef.initComponents(_location, staging);
-            tef.setTitle(Bundle.getMessage("EditStaging"));
+            tef.initComponents(staging);
         });
     }
     
