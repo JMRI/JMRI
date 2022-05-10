@@ -324,6 +324,26 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         return null;
     }
 
+    @Nonnull
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        int prefixLength = Manager.getSystemPrefixLength(currentBean.getSystemName());
+
+        String prefix = currentBean.getSystemName().substring(0, prefixLength);
+        char typeLetter = currentBean.getSystemName().charAt(prefixLength);
+
+        for (Manager<E> m : mgrs) {
+            log.debug("getNextValidSystemName requested for {}", currentBean.getSystemName());
+            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
+                try {
+                    return ((NameIncrementingManager) m).getNextValidSystemName(currentBean);
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        throw new jmri.JmriException("\""+currentBean.getSystemName()+"\" did not match a manager");
+    }
+
     /** {@inheritDoc} */
     @Override
     public void deleteBean(@Nonnull E s, @Nonnull String property) throws PropertyVetoException {

@@ -103,6 +103,19 @@ public class ProxyTurnoutManagerTest {
         Assert.assertNull("no old object", l.getByUserName("before"));
     }
 
+
+    @Test
+    public void testNextSystemName() throws JmriException {
+        // create
+        Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
+
+        String next = l.getNextValidSystemName(t);
+
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("based on ", "JT9", t.getSystemName());
+        Assert.assertEquals("correct next name ", "JT10", next);
+    }
+
     @Test
     public void testTwoNames() {
         Turnout jl212 = l.provideTurnout("JT212");

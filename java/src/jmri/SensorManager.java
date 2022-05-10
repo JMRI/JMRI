@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SensorManager extends ProvidingManager<Sensor> {
+public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementingManager {
 
     /**
      * Get the Sensor with the user name, then system name if needed; if that fails, create a

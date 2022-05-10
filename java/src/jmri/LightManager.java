@@ -24,11 +24,11 @@ import javax.annotation.Nonnull;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface LightManager extends ProvidingManager<Light> {
+public interface LightManager extends ProvidingManager<Light>, NameIncrementingManager {
 
     /**
      * Get the Light with the user name, then system name if needed; if that fails, create a
-     * new Light. 
+     * new Light.
      * If the name is a valid system name, it will be used for the new Light.
      * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
@@ -54,7 +54,7 @@ public interface LightManager extends ProvidingManager<Light> {
     /**
      * Get an existing Light or return null if it doesn't exist.
      * <p>
-     * Locates via user name, then system name if needed. 
+     * Locates via user name, then system name if needed.
      * @param name User name, system name, or address which can be promoted to
      *             system name
      * @return Light, or null if no existing Light.
@@ -178,7 +178,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
-    
+
     /**
      * Get the Next valid hardware address.
      * Used by the Turnout / Sensor / Reporter / Light Manager classes.
@@ -186,10 +186,10 @@ public interface LightManager extends ProvidingManager<Light> {
      * System-specific methods may want to override getIncrement() rather than this one.
      * @param curAddress the starting hardware address to get the next valid from.
      * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it 
+     * @param ignoreInitialExisting false to return the starting address if it
      *                          does not exist, else true to force an increment.
      * @return the next valid system name, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
+     * @throws JmriException    if unable to get the current / next address,
      *                          or more than 10 next addresses in use.
      */
     @Nonnull
@@ -208,5 +208,5 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
-    
+
 }

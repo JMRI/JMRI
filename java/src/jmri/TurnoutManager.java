@@ -41,7 +41,7 @@ import javax.annotation.CheckForNull;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface TurnoutManager extends ProvidingManager<Turnout> {
+public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrementingManager {
 
     /**
      * Get the Turnout with the user name, then system name if needed; if that fails, create a
