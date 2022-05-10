@@ -265,7 +265,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 if (_normalSpeed > speedMod) {
                     float trackSpeed = _speedUtil.getTrackSpeed(speedMod);
                     _timeRatio = _speedUtil.getTrackSpeed(_normalSpeed) / trackSpeed;
-//                    _timeRatio = _normalSpeed / speedMod;
                     setSpeed(speedMod);
                 } else {
                     _timeRatio = 1.0f;
@@ -540,9 +539,16 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private void setSpeedRatio(String speedType) {
         if (speedType.equals(Warrant.Normal)) {
             _timeRatio = 1.0f;
+        } else if (_normalSpeed > 0.0f) {
+            float speedMod = _speedUtil.modifySpeed(_normalSpeed, _speedType);
+            if (_normalSpeed > speedMod) {
+                float trackSpeed = _speedUtil.getTrackSpeed(speedMod);
+                _timeRatio = _speedUtil.getTrackSpeed(_normalSpeed) / trackSpeed;
+            } else {
+                _timeRatio = 1.0f;
+            }
         } else {
-            float speedMod = _speedUtil.modifySpeed(1.0f, speedType);
-            _timeRatio = 1.0f / speedMod;
+            _timeRatio = 1.0f;
         }
     }
 
@@ -1084,8 +1090,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 _idxCurrentCommand--;   // notify advances command.  Repeat wait for entry to next block
             }
         }
-        _warrant.rampDone(stop, _halt, speedType, endBlockIdx);
-
         if (log.isDebugEnabled()) {
             log.debug("{}: ThrottleRamp {} for speedType \"{}\". Thread.State= {}}", _warrant.getDisplayName(),
                     (stop?"stopped":"completed"), speedType, (_ramp != null?_ramp.getState():"_ramp is null!"));
@@ -1518,6 +1522,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 _warrant.fireRunStatus("RampDone", _halt, _endSpeedType);   // normal completion of ramp
             }
             stop = false;
+
+            if (_rampDown) {    // check for overrun status last
+                _warrant.downRampDone(stop, _halt, _endSpeedType, _endBlockIdx);
+            }
         }
     }
 

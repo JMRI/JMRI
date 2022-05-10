@@ -29,7 +29,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         super.loadTest();
         JUnitAppender.assertErrorMessageStartsWith("Serial port (none selected) not found");
-        JUnitAppender.assertErrorMessageStartsWith("Serial port (none selected) not found");
+        JUnitAppender.assertErrorMessageStartsWith("Load Error: Serial port (none selected) not found");
     }
 
     @AfterEach

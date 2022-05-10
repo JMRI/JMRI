@@ -51,6 +51,9 @@ LogixNG: Set Scale
 
       <hr>
 
+      <p><a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>
+      </p>
+
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
       <!--#include virtual="/Footer.shtml" -->

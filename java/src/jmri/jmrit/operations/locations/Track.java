@@ -208,6 +208,7 @@ public class Track extends PropertyChangeSupport {
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
     public static final String TRACK_REPORTER_PROPERTY = "trackReporterChange"; // NOI18N
     public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
+    public static final String HOLD_CARS_CHANGED_PROPERTY ="trackHoldCarsWithCustomLoads"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -518,7 +519,7 @@ public class Track extends PropertyChangeSupport {
     public void setHoldCarsWithCustomLoadsEnabled(boolean enable) {
         boolean old = _holdCustomLoads;
         _holdCustomLoads = enable;
-        setDirtyAndFirePropertyChange("trackHoldCarsWithCustomLoads", old, enable);
+        setDirtyAndFirePropertyChange(HOLD_CARS_CHANGED_PROPERTY, old, enable);
     }
 
     /**
