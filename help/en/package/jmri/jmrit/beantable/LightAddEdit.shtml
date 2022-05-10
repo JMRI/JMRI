@@ -148,12 +148,7 @@
       <strong>Add a sequential range</strong> check box.<br>
       When this box is checked, the <strong>Number of items:</strong> field is activated.<br>
       Set the number of Lights you want to add. Enter other properties for the first Light,
-      following the procedure above, and click the <strong>Create</strong> button. If any of the
-      requested addresses are not available (previously assigned to a Light or a Turnout by the
-      same address), a message will appear in the notes area, and no new Lights will be
-      created.<br>
-      If everything checks out, the requested Lights will be created, and a message will appear in
-      the notes area at the bottom of the window.</p>
+      following the procedure above, and click the <strong>Create</strong> button.
 
       <p>Adding multiple Lights at once is intended to support stationary decoders which require
       several addresses in sequence. As a result, restrictions apply when creating several Lights
@@ -167,11 +162,6 @@
 
         <li>
           <p>The addresses of the created Lights must be consecutive.</p>
-        </li>
-
-        <li>
-          <p>All requested addresses must be available, i.e., not currently assigned to a Light or
-          Turnout.</p>
         </li>
 
         <li>
