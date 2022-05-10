@@ -236,7 +236,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 }
                 break;
             case DCCppConstants.PROG_READ_CV:
-                myRegex = DCCppConstants.PROG_READ_REGEX;
+                if ((match(toString(), DCCppConstants.PROG_READ_CV_REGEX, "ctor")) != null) { //match from longest to shortest
+                    myRegex = DCCppConstants.PROG_READ_CV_REGEX;
+                } else if ((match(toString(), DCCppConstants.PROG_READ_CV_V4_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.PROG_READ_CV_V4_REGEX;
+                } else {
+                    myRegex = DCCppConstants.PROG_READ_LOCOID_REGEX;
+                }
                 break;
             case DCCppConstants.PROG_VERIFY_CV:
                 myRegex = DCCppConstants.PROG_VERIFY_REGEX;
@@ -469,10 +475,17 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 }
                 break;
             case DCCppConstants.PROG_READ_CV:
-                text = "Prog Read Cmd: ";
-                text += "CV: " + getCVString();
-                text += ", Callback Num: " + getCallbackNumString();
-                text += ", Sub: " + getCallbackSubString();
+                if (isProgReadCVMessage()) {
+                    text = "Prog Read Cmd: ";
+                    text += "CV: " + getCVString();
+                    text += ", Callback Num: " + getCallbackNumString();
+                    text += ", Sub: " + getCallbackSubString();
+                } else if (isProgReadCVMessageV4()) {
+                    text = "Prog Read CV: ";
+                    text += "CV:" + getCVString();
+                } else { // if (isProgReadLocoIdMessage())
+                    text = "Prog Read LocoID Cmd";
+                }
                 break;
             case DCCppConstants.PROG_VERIFY_CV:
                 text = "Prog Verify Cmd:  ";
@@ -775,8 +788,16 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return (this.match(DCCppConstants.PROG_WRITE_BIT_V4_REGEX) != null);
     }
 
-    public boolean isProgReadMessage() {
-        return (this.getOpCodeChar() == DCCppConstants.PROG_READ_CV);
+    public boolean isProgReadCVMessage() {
+        return (this.match(DCCppConstants.PROG_READ_CV_REGEX) != null);
+    }
+
+    public boolean isProgReadCVMessageV4() {
+        return (this.match(DCCppConstants.PROG_READ_CV_V4_REGEX) != null);
+    }
+
+    public boolean isProgReadLocoIdMessage() {
+        return (this.match(DCCppConstants.PROG_READ_LOCOID_REGEX) != null);
     }
 
     public boolean isProgVerifyMessage() {
@@ -1403,10 +1424,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         }
     }
 
-    //------------------------------------------------------
+    // ------------------------------------------------------
     // Helper methods for Prog Write and Read Byte Commands
     public String getCVString() {
-        if (this.isProgWriteByteMessage() || this.isProgWriteBitMessage() || this.isProgReadMessage() || this.isProgVerifyMessage()) {
+        if (this.isProgWriteByteMessage() ||
+                this.isProgWriteBitMessage() ||
+                this.isProgReadCVMessage() ||
+                this.isProgReadCVMessageV4() ||
+                this.isProgVerifyMessage()) {
             return (getValueString(1));
         } else {
             return ("0");
@@ -1414,7 +1439,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     public int getCVInt() {
-        if (this.isProgWriteByteMessage() || this.isProgWriteBitMessage() || this.isProgReadMessage() || this.isProgVerifyMessage()) {
+        if (this.isProgWriteByteMessage() ||
+                this.isProgWriteBitMessage() ||
+                this.isProgReadCVMessage() ||
+                this.isProgReadCVMessageV4() ||
+                this.isProgVerifyMessage()) {
             return (getValueInt(1));
         } else {
             return (0);
@@ -1427,7 +1456,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             idx = 3;
         } else if (this.isProgWriteBitMessage()) {
             idx = 4;
-        } else if (this.isProgReadMessage()) {
+        } else if (this.isProgReadCVMessage()) {
             idx = 2;
         } else {
             return ("0");
@@ -1441,7 +1470,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             idx = 3;
         } else if (this.isProgWriteBitMessage()) {
             idx = 4;
-        } else if (this.isProgReadMessage()) {
+        } else if (this.isProgReadCVMessage()) {
             idx = 2;
         } else {
             return (0);
@@ -1455,7 +1484,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             idx = 4;
         } else if (this.isProgWriteBitMessage()) {
             idx = 5;
-        } else if (this.isProgReadMessage()) {
+        } else if (this.isProgReadCVMessage()) {
             idx = 3;
         } else {
             return ("0");
@@ -1469,7 +1498,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             idx = 4;
         } else if (this.isProgWriteBitMessage()) {
             idx = 5;
-        } else if (this.isProgReadMessage()) {
+        } else if (this.isProgReadCVMessage()) {
             idx = 3;
         } else {
             return (0);
@@ -2006,7 +2035,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m.myMessage.append(" ").append(cv);
         m.myMessage.append(" ").append(callbacknum);
         m.myMessage.append(" ").append(callbacksub);
-        m.myRegex = DCCppConstants.PROG_READ_REGEX;
+        m.myRegex = DCCppConstants.PROG_READ_CV_REGEX;
 
         m._nDataChars = m.toString().length();
         m.setTimeout(DCCppProgrammingTimeout);

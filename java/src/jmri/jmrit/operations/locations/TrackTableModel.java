@@ -58,12 +58,13 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     protected static final int RESTRICTION_COLUMN = 14;
     protected static final int DESTINATION_COLUMN = 15;
     protected static final int ROUTED_COLUMN = 16;
-    protected static final int POOL_COLUMN = 17;
-    protected static final int PLANPICKUP_COLUMN = 18;
-    protected static final int ALT_TRACK_COLUMN = 19;
-    protected static final int ORDER_COLUMN = 20;
-    protected static final int REPORTER_COLUMN = 21;
-    protected static final int EDIT_COLUMN = 22;
+    protected static final int HOLD_COLUMN = 17;
+    protected static final int POOL_COLUMN = 18;
+    protected static final int PLANPICKUP_COLUMN = 19;
+    protected static final int ALT_TRACK_COLUMN = 20;
+    protected static final int ORDER_COLUMN = 21;
+    protected static final int REPORTER_COLUMN = 22;
+    protected static final int EDIT_COLUMN = 23;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -126,6 +127,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         tcm.getColumn(ROAD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(DESTINATION_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ROUTED_COLUMN).setPreferredWidth(50);
+        tcm.getColumn(HOLD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(POOL_COLUMN).setPreferredWidth(70);
         tcm.getColumn(PLANPICKUP_COLUMN).setPreferredWidth(70);
         tcm.getColumn(ALT_TRACK_COLUMN).setPreferredWidth(120);
@@ -153,6 +155,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(HOLD_COLUMN), _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
@@ -239,6 +242,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                 return Bundle.getMessage("Dest");
             case ROUTED_COLUMN:
                 return Bundle.getMessage("Routed");
+            case HOLD_COLUMN:
+                return Bundle.getMessage("Hold");
             case POOL_COLUMN:
                 return Bundle.getMessage("Pool");
             case PLANPICKUP_COLUMN:
@@ -286,6 +291,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case EDIT_COLUMN:
                 return JButton.class;
             case ROUTED_COLUMN:
+            case HOLD_COLUMN:
                 return Boolean.class;
             default:
                 return null;
@@ -296,6 +302,7 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ROUTED_COLUMN:
+            case HOLD_COLUMN:
             case EDIT_COLUMN:
             case MOVES_COLUMN:
                 return true;
@@ -359,6 +366,8 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             }
             case ROUTED_COLUMN:
                 return track.isOnlyCarsWithFinalDestinationEnabled();
+            case HOLD_COLUMN:
+                return track.isHoldCarsWithCustomLoadsEnabled();
             case POOL_COLUMN:
                 return track.getPoolName();
             case PLANPICKUP_COLUMN:
@@ -422,6 +431,9 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
             case ROUTED_COLUMN:
                 setRouted(row, value);
                 break;
+            case HOLD_COLUMN:
+                setHold(row, value);
+                break;
             case EDIT_COLUMN:
                 editTrack(row);
                 break;
@@ -440,6 +452,11 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
     private void setRouted(int row, Object value) {
         Track track = _tracksList.get(row);
         track.setOnlyCarsWithFinalDestinationEnabled(((Boolean) value).booleanValue());
+    }
+    
+    private void setHold(int row, Object value) {
+        Track track = _tracksList.get(row);
+        track.setHoldCarsWithCustomLoadsEnabled(((Boolean) value).booleanValue());
     }
 
     private void setMoves(int row, Object value) {

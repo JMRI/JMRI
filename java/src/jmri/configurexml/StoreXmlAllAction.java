@@ -42,7 +42,7 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
             log.error("Failed to get default configure manager");
         } else {
             boolean results = cm.storeAll(file);
-            log.debug(results ? "store was successful" : "store failed");
+            log.debug("store {}", results ? "was successful" : "failed");
             if (!results) {
                 JOptionPane.showMessageDialog(null,
                         rb.getString("PanelStoreHasErrors") + "\n"

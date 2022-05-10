@@ -35,6 +35,19 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
     
     protected Sol8BaseEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
+        initSpinners();
+    }
+
+    private void initSpinners() {
+
+        rechargeSpinner = new TitledSpinner(Bundle.getMessage("RechargeTimeUnits"), RECHARGE_TIME, rechargeUpdateFn);
+        rechargeSpinner.setToolTip(Bundle.getMessage("RechargeTimeTt"));
+        
+        fireDelaySpinner = new TitledSpinner(Bundle.getMessage("FireDelayUnits"), FIRE_DELAY, fireDelayUpdateFn);
+        fireDelaySpinner.setToolTip(Bundle.getMessage("FireDelayTt"));
+
+        enableDelaySpinner = new TitledSpinner(Bundle.getMessage("EnableDelayUnits"), ENABLE_DELAY, enableDelayUpdateFn);
+        enableDelaySpinner.setToolTip(Bundle.getMessage("EnableDelayTt"));
     }
     
     /** {@inheritDoc} */
@@ -64,22 +77,16 @@ public class Sol8BaseEditNVPane extends AbstractEditNVPane {
 
         c.gridx = 0;
         
-        rechargeSpinner = new TitledSpinner(Bundle.getMessage("RechargeTimeUnits"), RECHARGE_TIME, rechargeUpdateFn);
-        rechargeSpinner.setToolTip(Bundle.getMessage("RechargeTimeTt"));
         rechargeSpinner.init(getSelectValue(RECHARGE_TIME)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(rechargeSpinner, c);
         c.gridx++;
 
-        fireDelaySpinner = new TitledSpinner(Bundle.getMessage("FireDelayUnits"), FIRE_DELAY, fireDelayUpdateFn);
-        fireDelaySpinner.setToolTip(Bundle.getMessage("FireDelayTt"));
         fireDelaySpinner.init(getSelectValue(FIRE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(fireDelaySpinner, c);
         c.gridx++;
 
-        enableDelaySpinner = new TitledSpinner(Bundle.getMessage("EnableDelayUnits"), ENABLE_DELAY, enableDelayUpdateFn);
-        enableDelaySpinner.setToolTip(Bundle.getMessage("EnableDelayTt"));
         enableDelaySpinner.init(getSelectValue(ENABLE_DELAY)*TIME_STEP_SIZE, 0, TIME_STEP_SIZE*255, TIME_STEP_SIZE);
         
         gridPane.add(enableDelaySpinner, c);

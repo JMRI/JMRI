@@ -298,7 +298,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h3>Advanced: Add new function with Jython</h3>
+      <h3 id="jythonFunction">Advanced: Add new function with Jython</h3>
 
       <p>It's possible to create a new function using Jython to be used by a formula. The code below
       gives an example that you can use as a template. A new function is added by creating a new

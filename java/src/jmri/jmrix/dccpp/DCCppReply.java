@@ -193,20 +193,26 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += "Sub:" + getCallbackSubString() + ", ";
                     text += "CV:" + getCVString() + ", ";
                     text += "Bit:" + getProgramBitString() + ", ";
-                } else if (isProgramReplyV2()) {
+                    text += "Value:" + getReadValueString();
+                } else if (isProgramReplyV4()) {
                     text = "Program Reply: ";
                     text += "CV:" + getCVString() + ", ";
-                } else if (isProgramBitReplyV2()) {
+                    text += "Value:" + getReadValueString();
+                } else if (isProgramBitReplyV4()) {
                     text = "Program Bit Reply: ";
                     text += "CV:" + getCVString() + ", ";
                     text += "Bit:" + getProgramBitString() + ", ";
+                    text += "Value:" + getReadValueString();
+                } else if (isProgramLocoIdReply()) {
+                    text = "Program LocoId Reply: ";
+                    text += "LocoId:" + getLocoIdInt();
                 } else {
                     text = "Program Reply: ";
                     text += "CallbackNum:" + getCallbackNumString() + ", ";
                     text += "Sub:" + getCallbackSubString() + ", ";
                     text += "CV:" + getCVString() + ", ";
+                    text += "Value:" + getReadValueString();
                 }
-                text += "Value:" + getReadValueString();
                 break;
             case DCCppConstants.VERIFY_REPLY:
                 text = "Prog Verify Reply: ";
@@ -264,7 +270,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text = "DIAG: " + getValueString(1);
                 break;
             case DCCppConstants.LOCO_STATE_REPLY:
-                text = "Loco State: Cab:" + getCabInt();
+                text = "Loco State: LocoId:" + getLocoIdInt();
                 text += " Dir:" + getDirectionString();
                 text += " Speed:" + getSpeedInt();
                 text += " F0-28:" + getFunctionsString();
@@ -455,14 +461,17 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 } else if (s.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) {
                     log.debug("Matches ProgReplyV2");
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_V4_REGEX;
+                } else if (s.matches(DCCppConstants.PROGRAM_LOCOID_REPLY_REGEX)) {
+                    log.debug("Matches ProgLocoIDReply");
+                    r.myRegex = DCCppConstants.PROGRAM_LOCOID_REPLY_REGEX;
                 } else {
                     log.debug("Does not match ProgReply Regex");
                 }
                 return (r);
             case DCCppConstants.VERIFY_REPLY:
-                if (s.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)) {
+                if (s.matches(DCCppConstants.PROGRAM_VERIFY_REPLY_REGEX)) {
                     log.debug("Matches VerifyReply");
-                    r.myRegex = DCCppConstants.PROGRAM_VERIFY_REGEX;
+                    r.myRegex = DCCppConstants.PROGRAM_VERIFY_REPLY_REGEX;
                 } else {
                     log.debug("Does not match VerifyReply Regex");
                 }
@@ -759,12 +768,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     // Helper methods for Throttle and LocoState Replies
 
-    public int getCabInt() {
-        if (this.isLocoStateReply()) {
+    public int getLocoIdInt() {
+        if (this.isLocoStateReply() || this.isProgramLocoIdReply()) {
             return (this.getValueInt(1));
         } else {
-            log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
-            return (0);
+            log.error("LocoId Parser called on non-LocoId message type {}", this.getOpCodeChar());
+            return (-1);
         }
     }
 
@@ -1037,9 +1046,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return (this.getValueString(3));
         } else if (this.isVerifyReply()) {
             return (this.getValueString(1));
-        } else if (this.isProgramReplyV2()) {
+        } else if (this.isProgramReplyV4()) {
             return (this.getValueString(1));
-        } else if (this.isProgramBitReplyV2()) {
+        } else if (this.isProgramBitReplyV4()) {
             return (this.getValueString(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -1054,9 +1063,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return (this.getValueInt(3));
         } else if (this.isVerifyReply()) {
             return (this.getValueInt(1));
-        } else if (this.isProgramReplyV2()) {
+        } else if (this.isProgramReplyV4()) {
             return (this.getValueInt(1));
-        } else if (this.isProgramBitReplyV2()) {
+        } else if (this.isProgramBitReplyV4()) {
             return (this.getValueInt(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -1067,7 +1076,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public String getProgramBitString() {
         if (this.isProgramBitReply()) {
             return (this.getValueString(4));
-        } else if (this.isProgramBitReplyV2()) {
+        } else if (this.isProgramBitReplyV4()) {
             return (this.getValueString(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -1089,9 +1098,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return (this.getValueString(4));
         } else if (this.isProgramBitReply()) {
             return (this.getValueString(5));
-        } else if (this.isProgramBitReplyV2()) {
+        } else if (this.isProgramBitReplyV4()) {
             return (this.getValueString(3));
-        } else if (this.isProgramReplyV2()) {
+        } else if (this.isProgramReplyV4()) {
             return (this.getValueString(2));
         } else if (this.isVerifyReply()) {
             return (this.getValueString(2));
@@ -1517,19 +1526,23 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX));
     }
 
-    public boolean isProgramReplyV2() {
+    public boolean isProgramReplyV4() {
         return (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX));
     }
 
+    public boolean isProgramLocoIdReply() {
+        return (this.matches(DCCppConstants.PROGRAM_LOCOID_REPLY_REGEX));
+    }
+
     public boolean isVerifyReply() {
-        return (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX));
+        return (this.matches(DCCppConstants.PROGRAM_VERIFY_REPLY_REGEX));
     }
 
     public boolean isProgramBitReply() {
         return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX));
     }
 
-    public boolean isProgramBitReplyV2() {
+    public boolean isProgramBitReplyV4() {
         return (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_V4_REGEX));
     }
 
@@ -1632,7 +1645,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.PROGRAM_REPLY_V4_REGEX)) ||
-                (this.matches(DCCppConstants.PROGRAM_VERIFY_REGEX)) ||
+                (this.matches(DCCppConstants.PROGRAM_LOCOID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.PROGRAM_VERIFY_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TRACK_POWER_REPLY_NAMED_REGEX)) ||
                 (this.matches(DCCppConstants.CURRENT_REPLY_REGEX)) ||

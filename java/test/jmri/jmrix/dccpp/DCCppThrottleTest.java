@@ -525,20 +525,20 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     public void testLocoStateReplies() {
         DCCppReply l = DCCppReply.parseDCCppReply("l 1 2 123 789"); //reverse speed 122
-        Assert.assertEquals("Monitor string", "Loco State: Cab:1 Dir:Reverse Speed:122 F0-28:10101000110000000000000000000", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Loco State: LocoId:1 Dir:Reverse Speed:122 F0-28:10101000110000000000000000000", l.toMonitorString());
         Assert.assertFalse("reverse is false", l.getDirectionBool());
         Assert.assertEquals("reverse is 0", 0, l.getDirectionInt());
         Assert.assertFalse("not eStop", l.isEStop());
         l = DCCppReply.parseDCCppReply("l 99 0 246 32768"); //forward speed 117
-        Assert.assertEquals("Monitor string", "Loco State: Cab:99 Dir:Forward Speed:117 F0-28:00000000000000010000000000000", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Loco State: LocoId:99 Dir:Forward Speed:117 F0-28:00000000000000010000000000000", l.toMonitorString());
         Assert.assertTrue("forward is true", l.getDirectionBool());
         Assert.assertEquals("forward is 1", 1, l.getDirectionInt());
         Assert.assertFalse("not eStop", l.isEStop());
         l = DCCppReply.parseDCCppReply("l 88 3 1 0"); //eStop (reverse)
-        Assert.assertEquals("Monitor string", "Loco State: Cab:88 Dir:Reverse Speed:-1 F0-28:00000000000000000000000000000", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Loco State: LocoId:88 Dir:Reverse Speed:-1 F0-28:00000000000000000000000000000", l.toMonitorString());
         Assert.assertTrue("eStop", l.isEStop());
         l = DCCppReply.parseDCCppReply("l 88 3 129 0"); //eStop (forward)
-        Assert.assertEquals("Monitor string", "Loco State: Cab:88 Dir:Forward Speed:-1 F0-28:00000000000000000000000000000", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Loco State: LocoId:88 Dir:Forward Speed:-1 F0-28:00000000000000000000000000000", l.toMonitorString());
         Assert.assertTrue("eStop", l.isEStop());
     }
 

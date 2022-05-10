@@ -68,7 +68,7 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<SignalHead>();
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
-        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "signalMast");
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "signalHead");
 
         try {
             Element elem = shared.getChild("operationAddressing");
