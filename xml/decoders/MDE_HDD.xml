@@ -826,12 +826,12 @@
     </variables>
 
     <resets>
-        <factReset label="Basic settings (CV 1,11-13,17-19,29-119) CV8=>11" CV="8" default="11"/>
-        <factReset label="Programming lock (CV 15/16) CV8=>16"              CV="8" default="16"/>
-        <factReset label="Function and Switch outputs (CV 120-169) CV8=>33" CV="8" default="33"/>
-        <factReset label="Servo and turntable address (CV170-190) CV8=>66"  CV="8" default="66"/>
-        <factReset label="Array and steps (CV 191 – 268) CV8=>77"           CV="8" default="77"/>
-        <factReset label="Direct addresses CV8=>88"                         CV="8" default="88"/>
+        <factReset label="Basic settings (CV 1,11-13,17-19,29-119) CV8=>11" CV="7" default="11"/>
+        <factReset label="Programming lock (CV 15/16) CV8=>16"              CV="7" default="16"/>
+        <factReset label="Function and Switch outputs (CV 120-169) CV8=>33" CV="7" default="33"/>
+        <factReset label="Servo and turntable address (CV170-190) CV8=>66"  CV="7" default="66"/>
+        <factReset label="Array and steps (CV 191 – 268) CV8=>77"           CV="7" default="77"/>
+        <factReset label="Direct addresses CV8=>88"                         CV="7" default="88"/>
     </resets>
 
   </decoder>
