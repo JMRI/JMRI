@@ -55,7 +55,7 @@ public class NameIncrementingManagerTest {
         };
 
         try {
-            String next = testManager.getNextValidSystemName(start);
+            testManager.getNextValidSystemName(start);
         } catch (JmriException e) { return; }
         Assert.fail("didn't throw");
     }
@@ -106,5 +106,5 @@ public class NameIncrementingManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NameIncrementingManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NameIncrementingManagerTest.class);
 }
