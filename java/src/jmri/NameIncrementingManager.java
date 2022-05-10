@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Interface that indicates that a Manager class has a
- * {@link #getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix)} method that
+ * {@link #getNextValidSystemName(NamedBean currentBean)} method that
  * can be called without arguments.
  *
  * @author Bob Jacobsen Copyright 2022
@@ -21,7 +21,7 @@ public interface NameIncrementingManager {
      * a provide() call on the return value can still perhaps fail in some circumstances.
      * <p>
      * In some cases, there is no clear next address.  In that case, a JmriException is thrown.
-     * For example, OLCB has no concept of a "next" address; Internal sensors don't necessarily
+     * For example, some systems have no concept of a "next" address; Internal sensors don't necessarily
      * have numeric suffixes.
      * <p>
      * @param  currentBean      The NamedBean who's system name that provides the base for "next"
