@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +42,32 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTable yardTable = new JTable(yardModel);
     JScrollPane yardPane;
     SpurTableModel spurModel = new SpurTableModel();
-    JTable spurTable = new JTable(spurModel);
+    JTable spurTable = new JTable(spurModel) {
+        // create tool tip for Hold column
+        @Override
+        public String getToolTipText(MouseEvent e) {
+            int colIndex = columnAtPoint(e.getPoint());
+            int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.HOLD_COLUMN) {
+                return Bundle.getMessage("HoldCarsWithCustomLoads");
+            }
+            return null;
+        }
+    };
     JScrollPane spurPane;
     InterchangeTableModel interchangeModel = new InterchangeTableModel();
-    JTable interchangeTable = new JTable(interchangeModel);
+    JTable interchangeTable = new JTable(interchangeModel) {
+        // create tool tip for Routed column
+        @Override
+        public String getToolTipText(MouseEvent e) {
+            int colIndex = columnAtPoint(e.getPoint());
+            int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.ROUTED_COLUMN) {
+                return Bundle.getMessage("TipOnlyCarsWithFD");
+            }
+            return null;
+        }
+    };
     JScrollPane interchangePane;
     StagingTableModel stagingModel = new StagingTableModel();
     JTable stagingTable = new JTable(stagingModel);
