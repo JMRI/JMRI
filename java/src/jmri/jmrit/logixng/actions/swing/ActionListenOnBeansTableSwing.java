@@ -53,6 +53,9 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         _tableRowOrColumnComboBox.addActionListener((evt) -> {
             comboListener(action);
         });
+        _tableBeanPanel.getBeanCombo().addActionListener((evt) -> {
+            comboListener(action);
+        });
 
         JPanel tableRowOrColumnPanel = new JPanel();
         tableRowOrColumnPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumn")));
