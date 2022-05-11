@@ -14,7 +14,11 @@ import org.junit.jupiter.api.*;
  */
 public class NameIncrementingManagerTest {
 
-    class Testable implements NameIncrementingManager {}
+    class Testable implements NameIncrementingManager {
+        public boolean allowMultipleAdditions(@Nonnull String systemName) {
+            return true;
+        }
+    }
 
     @Test
     public void testSimpleSensor() throws JmriException {
