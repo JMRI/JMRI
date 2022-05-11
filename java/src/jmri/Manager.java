@@ -770,7 +770,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @param inputName System name to provide the suffix
      * @throws NamedBean.BadSystemNameException If the inputName can't be
      *                                          converted to normalized form
-     * @return The suffox part of the system name
+     * @return The suffix part of the system name
      */
     @CheckReturnValue
     @Nonnull

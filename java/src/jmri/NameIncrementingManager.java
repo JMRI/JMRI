@@ -16,7 +16,7 @@ import javax.annotation.CheckReturnValue;
 public interface NameIncrementingManager {
 
     /**
-     * Determines if it is possible to add a range of sensors in numerical
+     * Determines if it is possible to add a range of NamedBeans in numerical
      * order for a particular system implementation.
      * <p>
      * Default is not providing this service.  Systems should override this
@@ -56,6 +56,8 @@ public interface NameIncrementingManager {
     @Nonnull
     @CheckReturnValue
     public default String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        if (!allowMultipleAdditions(currentBean.getSystemName())) throw new UnsupportedOperationException("Not supported");
+
         String currentName = currentBean.getSystemName();
 
         int increment = ( currentBean instanceof Turnout ? ((Turnout)currentBean).getNumberOutputBits() : 1);
