@@ -745,6 +745,41 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     }
 
     /**
+     * Provides the type letter of the given system name.
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the type letter
+     * @throws NamedBean.BadSystemNameException If the inputName can't be
+     *                                          converted to normalized form
+     * @return The type letter of the system name
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String getTypeLetter(@Nonnull String inputName) {
+        return inputName.substring(getSystemPrefixLength(inputName), getSystemPrefixLength(inputName)+1);
+    }
+
+    /**
+     * Provides the suffix (part after the type letter) of the given system name.
+     * <p>
+     * This is a common operation across JMRI, as the system prefix can be
+     * parsed out without knowledge of the type of NamedBean involved.
+     *
+     * @param inputName System name to provide the suffix
+     * @throws NamedBean.BadSystemNameException If the inputName can't be
+     *                                          converted to normalized form
+     * @return The suffox part of the system name
+     */
+    @CheckReturnValue
+    @Nonnull
+    public static String getSystemSuffix(@Nonnull String inputName) {
+        return inputName.substring(getSystemPrefixLength(inputName)+1);
+    }
+
+
+    /**
      * Get a manager-specific tool tip for adding an entry to the manager.
      *
      * @return the tool tip or null to disable the tool tip
