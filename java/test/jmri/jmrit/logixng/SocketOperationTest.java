@@ -21,21 +21,18 @@ public class SocketOperationTest {
     @Test
     public void testAddRemoveChildren() throws PropertyVetoException, Exception {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(true, false);
     }
 
     @Test
     public void testFemaleSockets() throws PropertyVetoException, Exception {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(false, true);
     }
 
     @Test
     public void testAddRemoveChildrenAndFemaleSockets() throws PropertyVetoException, Exception {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(true, true);
     }
 
