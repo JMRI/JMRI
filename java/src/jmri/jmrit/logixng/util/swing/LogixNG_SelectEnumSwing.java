@@ -230,6 +230,10 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
         return _enumComboBox.getItemAt(_enumComboBox.getSelectedIndex());
     }
 
+    public void setEnum(E e) {
+        _enumComboBox.setSelectedItem(e);
+    }
+
     public void dispose() {
         _selectTableSwing.dispose();
     }
