@@ -3,8 +3,6 @@ package jmri.jmrix.powerline;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the system-specific Sensor implementation.
@@ -120,6 +118,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensorManager.class);
 
 }
