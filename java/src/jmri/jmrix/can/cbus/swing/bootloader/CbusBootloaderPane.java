@@ -112,7 +112,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     // Only needed for old AN274 based bootloader, which had no acknowledge. Used
     // to determine when to use a longer timeout for EEPROM and CONFIG.
     // New modules should use the CBUS bootloader.
-    private static final int CONFIG_START = 0x1FFFFF;
+    private static final int CONFIG_START = 0x200000;
 
     BusyDialog busyDialog;
 
@@ -444,7 +444,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             if (slowWrite.isSelected()) {
                 delay = CbusNode.BOOT_PROG_TIMEOUT_SLOW;
             }
-            if (bootAddress > CONFIG_START) {
+            if (bootAddress >= CONFIG_START) {
                 delay *= 8;
             }
         } else {
@@ -972,6 +972,14 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 addToLog(MessageFormat.format(Bundle.getMessage("BootNewAddress"), Integer.toHexString(bootAddress)));
                 CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                 tc.sendCanMessage(m, null);
+            }
+            if ((bootAddress < CONFIG_START) && (currentRecord.len%8 != 0)) {
+                // AN247 bootloader always writes 8 bytes to FLASH so we need to pad the packet and adjust the length
+                int pad = 8 - currentRecord.len%8;
+                for (int i = 0; i < pad; i++) {
+                    currentRecord.data[currentRecord.len + pad] = (byte)0xFF;
+                }
+                currentRecord.len += pad;
             }
             sendData(getWriteDelay());
         }
