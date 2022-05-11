@@ -389,15 +389,6 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
-
-        thrown = false;
-        try {
-            expressionMemory.getSelectNamedBean().setNamedBean((Memory)null);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test
