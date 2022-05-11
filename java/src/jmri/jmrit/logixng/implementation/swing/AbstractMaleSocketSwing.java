@@ -22,8 +22,8 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     private JPanel panel;
     private final JLabel errorHandlingLabel = new JLabel(Bundle.getMessage("MaleSocket_ErrorHandlingLabel"));
     private final JLabel catchAbortExecutionLabel = new JLabel(Bundle.getMessage("MaleSocket_CatchAbortExecutionCheckBox"));
-    private JComboBox<ErrorHandlingType> errorHandlingComboBox;
-    private JCheckBox catchAbortExecutionCheckBox;
+    private final JComboBox<ErrorHandlingType> errorHandlingComboBox = new JComboBox<>();
+    private final JCheckBox catchAbortExecutionCheckBox = new JCheckBox();
     private JPanel subPanel;
     
     
@@ -70,7 +70,6 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         panel.add(errorHandlingLabel, c);
         
         c.gridx = 1;
-        errorHandlingComboBox = new JComboBox<>();
         for (ErrorHandlingType type : ErrorHandlingType.values()) {
             errorHandlingComboBox.addItem(type);
             if ((maleSocket != null) && (maleSocket.getErrorHandlingType() == type)) {
@@ -87,7 +86,6 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         
         c.gridx = 1;
         c.fill = GridBagConstraints.HORIZONTAL;
-        catchAbortExecutionCheckBox = new JCheckBox();
         if (maleSocket != null) {
             catchAbortExecutionCheckBox.setSelected(maleSocket.getCatchAbortExecution());
         }
@@ -128,7 +126,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         if (! (object instanceof AbstractMaleSocket)) {
             throw new IllegalArgumentException("object is not an AbstractMaleSocket: " + object.getClass().getName());
         }
-        
+
         AbstractMaleSocket maleSocket = (AbstractMaleSocket)object;
         maleSocket.setErrorHandlingType(errorHandlingComboBox.getItemAt(errorHandlingComboBox.getSelectedIndex()));
         maleSocket.setCatchAbortExecution(catchAbortExecutionCheckBox.isSelected());
