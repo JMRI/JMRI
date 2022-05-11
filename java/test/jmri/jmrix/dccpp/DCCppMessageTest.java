@@ -619,7 +619,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
         msg = DCCppMessage.makeAddressedEmergencyStop(24);
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
     }
 
     @Test
@@ -677,7 +677,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());        
         //newer version without register
         msg = DCCppMessage.makeSpeedAndDirectionMsg(24, 0.5f, false);
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());        
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());        
     }
 
     @Test
@@ -686,7 +686,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
         //newer version without register
         msg = DCCppMessage.makeAddressedEmergencyStop(24);
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
     }
 
     @Test

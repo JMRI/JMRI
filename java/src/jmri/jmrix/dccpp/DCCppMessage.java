@@ -332,7 +332,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += ", Speed: " + getSpeedString();
                     text += ", Direction: " + getDirectionString();
                 } else if (isThrottleV3Message()) {
-                    text = "ThrottleV3 Cmd: ";
+                    text = "Throttle Cmd: ";
                     text += "Address: " + getAddressString();
                     text += ", Speed: " + getSpeedString();
                     text += ", Direction: " + getDirectionString();
