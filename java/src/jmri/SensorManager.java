@@ -135,17 +135,6 @@ public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementin
     public void updateAll();
 
     /**
-     * Determines if it is possible to add a range of sensors in numerical
-     * order.
-     *
-     * @param systemName the system name to check against; appears to be ignored
-     *                   in all implementations
-     * @return true if possible; false otherwise
-     */
-    @CheckReturnValue
-    public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
      * Get the Next valid Sensor address.
      * <p>
      * @param curAddress the starting hardware address to get the next valid from.

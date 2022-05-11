@@ -222,16 +222,6 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
     public boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
-     * Determines if it is possible to add a range of turnouts in
-     * numerical order.
-     *
-     * @param systemName the starting turnout system name; ignored in all known
-     *                   implementations
-     * @return true if a range of turnouts can be added; false otherwise
-     */
-    public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
      * Get the Next valid Turnout address.
      * <p>
      * @param curAddress the starting hardware address to get the next valid from.

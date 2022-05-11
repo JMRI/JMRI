@@ -170,16 +170,6 @@ public interface LightManager extends ProvidingManager<Light>, NameIncrementingM
     public boolean supportsVariableLights(@Nonnull String systemName);
 
     /**
-     * Test if possible to generate multiple lights given a numerical range to
-     * complete the system name.
-     *
-     * @param systemName the system name
-     * @return true if multiple lights can be created at once; false otherwise
-     */
-    @CheckReturnValue
-    public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
      * Get the Next valid hardware address.
      * Used by the Turnout / Sensor / Reporter / Light Manager classes.
      * <p>

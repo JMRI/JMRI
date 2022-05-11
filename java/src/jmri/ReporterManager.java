@@ -138,15 +138,6 @@ public interface ReporterManager extends ProvidingManager<Reporter>, NameIncreme
     public Reporter newReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
 
     /**
-     * Determine if it is possible to add a range of reporters in numerical
-     * order.
-     *
-     * @param systemName the system name
-     * @return true if multiple reporters can be added
-     */
-    public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
      * Get the Next valid Reporter address.
      * <p>
      * @param curAddress the starting hardware address to get the next valid from.
