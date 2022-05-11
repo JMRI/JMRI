@@ -4,9 +4,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
 
 /**
- * Interface that indicates that a Manager class has a
- * {@link #getNextValidSystemName(NamedBean currentBean)} method that
- * can be called without arguments.
+ * Interface that indicates that a Manager class
+ * capable of providing the
+ * next system name
+ * after the name of a given NamedBean.
+ * <p>
+ * This is used for e.g. providing a range of NamedBeans
  *
  * @author Bob Jacobsen Copyright 2022
  */
@@ -14,7 +17,10 @@ public interface NameIncrementingManager {
 
     /**
      * Determines if it is possible to add a range of sensors in numerical
-     * order.
+     * order for a particular system implementation.
+     * <p>
+     * Default is not providing this service.  Systems should override this
+     * method if they do provide the service.
      *
      * @param systemName the system name to check against; appears to be ignored
      *                   in all implementations
