@@ -455,7 +455,8 @@ public class ExecuteDelayed
         
         @Override
         public void execute() throws JmriException {
-            if ( _socket != null && conditionalNG != null ) {
+            if (conditionalNG == null) { throw new NullPointerException("conditionalNG is null"); }
+            if (_socket != null) {
                 SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
                 conditionalNG.setSymbolTable(newSymbolTable);
                 _socket.execute();

@@ -20,7 +20,7 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
-    private BeanSelectPanel<NamedTable> tableBeanPanel;
+    private BeanSelectPanel<NamedTable> _tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
     private JComboBox<String> _rowOrColumnNameComboBox;
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
@@ -40,8 +40,8 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
         JPanel tableBeanPanelPanel = new JPanel();
         tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_Table")));
-        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-        tableBeanPanelPanel.add(tableBeanPanel);
+        _tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        tableBeanPanelPanel.add(_tableBeanPanel);
         panel.add(tableBeanPanelPanel);
 
         _rowOrColumnNameComboBox = new JComboBox<>();
@@ -51,7 +51,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         }
         JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
         _tableRowOrColumnComboBox.addActionListener((evt) -> {
-            comboListener(action, _tableRowOrColumnComboBox, _rowOrColumnNameComboBox, tableBeanPanel);
+            comboListener(action);
         });
 
         JPanel tableRowOrColumnPanel = new JPanel();
@@ -88,7 +88,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
         if (action != null) {
             if (action.getSelectNamedBean().getNamedBean() != null) {
-                tableBeanPanel.setDefaultNamedBean(action.getSelectNamedBean().getNamedBean().getBean());
+                _tableBeanPanel.setDefaultNamedBean(action.getSelectNamedBean().getNamedBean().getBean());
             }
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
             _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
@@ -97,18 +97,17 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         }
     }
 
-    private void comboListener( ActionListenOnBeansTable action, JComboBox<TableRowOrColumn> rowOrColBox,
-            JComboBox<String> rowOrColnameComboBox, BeanSelectPanel<NamedTable> tblbeanPanel ) {
+    private void comboListener( ActionListenOnBeansTable action ) {
 
-        rowOrColnameComboBox.removeAllItems();
-        NamedTable table = tblbeanPanel.getNamedBean();
+        _rowOrColumnNameComboBox.removeAllItems();
+        NamedTable table = _tableBeanPanel.getNamedBean();
         if (table != null) {
-            if (rowOrColBox.getItemAt(rowOrColBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
                 for (int column=0; column <= table.numColumns(); column++) {
                     // If the header is null or empty, treat the row as a comment
                     Object header = table.getCell(0, column);
                     if ((header != null) && (!header.toString().isEmpty())) {
-                        rowOrColnameComboBox.addItem(header.toString());
+                        _rowOrColumnNameComboBox.addItem(header.toString());
                     }
                 }
             } else {
@@ -116,12 +115,12 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
                     // If the header is null or empty, treat the row as a comment
                     Object header = table.getCell(row, 0);
                     if ((header != null) && (!header.toString().isEmpty())) {
-                        rowOrColnameComboBox.addItem(header.toString());
+                        _rowOrColumnNameComboBox.addItem(header.toString());
                     }
                 }
             }
             if (action != null) {
-                rowOrColnameComboBox.setSelectedItem(action.getRowOrColumnName());
+                _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
             }
         }
     }
@@ -146,12 +145,12 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         if (!(object instanceof ActionListenOnBeansTable)) {
             throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
-        if ( tableBeanPanel == null ){
+        if ( _tableBeanPanel == null ){
             throw new UnsupportedOperationException("No Bean Panel Present ");
         }
 
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
-        NamedTable table = tableBeanPanel.getNamedBean();
+        NamedTable table = _tableBeanPanel.getNamedBean();
         if (table != null) {
             NamedBeanHandle<NamedTable> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
