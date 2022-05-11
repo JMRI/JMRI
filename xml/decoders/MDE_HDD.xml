@@ -277,7 +277,7 @@
 
       <variable item="Max Output Segments" CV="119" default="72">
         <decVal min="1" max="72"/>
-        <label>Max Output Segments</label>
+        <label>    Max Output Segments</label> <!-- for spacing on HDD Segments pane -->
       </variable>
 
 
@@ -993,9 +993,7 @@
       <display item="Max Output Segments"/>
       <separator/>
       <label><text>  </text></label>
-      <label><text>
-        Check the boxes for the exit tracks that you’ll be using; all unchecked ones will be inactive.
-      </text></label>
+      <label><text>    Check the boxes for the exit tracks that you’ll be using; all unchecked ones will be inactive.</text></label>
       <label><text>  </text></label>
         <row>
           <column>
