@@ -2886,21 +2886,23 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param cmdStartIdx   command index of delay  
      */
     private long makespeedChange(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
-
-        int cmdEndIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
-        float scriptSpeed = _engineer.getScriptSpeed();  // script throttle setting
-        float speedSetting = _engineer.getSpeedSetting();       // current speed
         String currentSpeedType = _engineer.getSpeedType(false); // current or pending speed type
 
-        float modSetting = speedSetting;      // _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
-        float beginTrackSpeed = _speedUtil.getTrackSpeed(modSetting);   // mm/sec track speed at modSetting
+        int cmdEndIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
+        float scriptSpeed = _speedUtil.getBlockSpeedInfo(idxSpeedChange).getEntranceSpeed();
+        float endSpeed = _speedUtil.modifySpeed(scriptSpeed, speedType);    // throttle at end of ramp
+
+        scriptSpeed = _engineer.getScriptSpeed();  // script throttle setting
+        float startSpeed = _engineer.getSpeedSetting();       // throttle at start of ramp
+
+        float beginTrackSpeed = _speedUtil.getTrackSpeed(startSpeed);   // mm/sec track speed at modSetting
         float trackSpeed = beginTrackSpeed;
         if (_idxCurrentOrder == 0 && availDist > BUFFER_DISTANCE) {
             changeDist = 0;
         }
         if (log.isDebugEnabled()) {
             log.debug("makespeedChange cmdIdx #{} to #{} at speedType \"{}\" to \"{}\". speedSetting={}, changeDist={}, availDist={}",
-                    cmdStartIdx+1, cmdEndIdx+1, currentSpeedType, speedType, speedSetting, changeDist, availDist);
+                    cmdStartIdx+1, cmdEndIdx+1, currentSpeedType, speedType, startSpeed, changeDist, availDist);
             // command index numbers biased by 1
         }
         float accumTime = 0;    // accumulated time of commands up to ramp start
@@ -2916,16 +2918,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         boolean messageFlag = false;
         for (int i = cmdStartIdx; i <= cmdEndIdx; i++) {
             ThrottleSetting ts = _commands.get(i);
+            accumDist += trackSpeed * ts.getTime() * timeRatio;
+            accumTime += ts.getTime() * timeRatio;
             ThrottleSetting.CommandValue cmdVal = ts.getValue();
             if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_FLOAT)) {
                 scriptSpeed = cmdVal.getFloat();
-                modSetting = _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
-                changeDist = _speedUtil.getRampLengthForEntry(speedSetting, modSetting) + bufDist;
-                trackSpeed = _speedUtil.getTrackSpeed(modSetting);
+                startSpeed = _speedUtil.modifySpeed(scriptSpeed, currentSpeedType);
+                changeDist = _speedUtil.getRampLengthForEntry(startSpeed, endSpeed) + bufDist;
+                trackSpeed = _speedUtil.getTrackSpeed(startSpeed);
                 timeRatio = _speedUtil.getTrackSpeed(scriptSpeed) / trackSpeed;
             }
-            accumDist += trackSpeed * ts.getTime() * timeRatio;
-            accumTime += ts.getTime() * timeRatio;
+            if (log.isDebugEnabled()) {
+                log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {} startSpeed= {}",
+                        getDisplayName(), i+1, accumTime, accumDist, changeDist, startSpeed);
+            }
             if (changeDist + accumDist >= availDist) {
                 float remDist = changeDist + accumDist - availDist;
                 if (trackSpeed > 0) {
@@ -2935,6 +2941,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     log.error("\"{}\" cmd#{} cannot make \"{}\" ramp for block \"{}\". trackSpeed= {} accumDist= {}", getDisplayName(),
                             i+1, speedType, getBlockAt(idxSpeedChange).getDisplayName(), trackSpeed, accumDist);
                 }
+                break;
             }
             if (cmdVal.getType().equals(ThrottleSetting.ValueType.VAL_NOOP)) {
                 // speed change is supposed to start in current block
@@ -2949,7 +2956,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
                 break;
             }
-            log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {}", getDisplayName(), i+1, accumTime, accumDist, changeDist);
         }
 
         if (accumTime == 0 && beginTrackSpeed > 0) {
@@ -2958,11 +2964,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         int waitTime = Math.round(accumTime);
 
         if (messageFlag || log.isDebugEnabled()) {
-            log.info("{}: RAMP waitTime={}, waitThrottle={}, availDist={}, enterLen={} accumDist={} for ramp start",
-                    getDisplayName(), waitTime, modSetting, availDist, changeDist, accumDist);
+            log.info("{}: RAMP waitTime={} availDist={}, enterLen={} accumDist={} startSpeed={} endSpeed={} for ramp start",
+                    getDisplayName(), waitTime, availDist, changeDist, accumDist, startSpeed, endSpeed);
         }
 
-        rampSpeedDelay(waitTime, speedType, modSetting, idxSpeedChange - 1);
+        rampSpeedDelay(waitTime, speedType, startSpeed, idxSpeedChange - 1);
         return waitTime;
     }
 
