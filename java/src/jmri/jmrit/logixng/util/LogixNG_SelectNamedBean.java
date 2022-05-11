@@ -123,7 +123,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     public void setNamedBean(@Nonnull String name, @Nonnull E namedBean) {
         _base.assertListenersAreNotRegistered(log, "setNamedBean");
         setNamedBean(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(namedBean.getDisplayName(), namedBean));
+                .getNamedBeanHandle(name, namedBean));
     }
 
     public void removeNamedBean() {
