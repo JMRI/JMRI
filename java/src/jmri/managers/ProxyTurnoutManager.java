@@ -196,11 +196,6 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return ((TurnoutManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
-    }
-
     /**
      * {@inheritDoc}
      */

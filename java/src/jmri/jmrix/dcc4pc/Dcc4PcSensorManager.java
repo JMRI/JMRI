@@ -130,32 +130,6 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     private int board;
     private int channel;
 
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            for (int x = 1; x < 10; x++) {
-                if (channel < 16) {
-                    channel++;
-                } else {
-                    board++;
-                    channel = 1;
-                }
-                s = getBySystemName(prefix + typeLetter() + board + ":" + channel);
-                if (s == null) {
-                    return board + ":" + channel;
-                }
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,board + ":" + channel));
-        } else {
-            return curAddress;
-        }
-    }
-
     public void notifyReply(Dcc4PcReply m) {
         // is this a list of sensors?
     }

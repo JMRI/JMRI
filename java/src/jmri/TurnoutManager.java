@@ -222,20 +222,6 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
     public boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
-     * Get the Next valid Turnout address.
-     * <p>
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it
-     *                          does not exist, else true to force an increment.
-     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address,
-     *                          or more than 10 next addresses in use.
-     */
-    @Nonnull
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
-
-    /**
      * Get a system name for a given hardware address and system prefix.
      *
      * @param curAddress desired hardware address

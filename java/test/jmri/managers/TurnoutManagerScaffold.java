@@ -199,11 +199,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        return curAddress;
-    }
-
-    @Override
     public boolean isControlTypeSupported(@Nonnull String systemName) {
         return false;
     }

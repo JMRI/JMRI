@@ -137,12 +137,12 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        // always return this (the current) name without change
-        /*String tmpSName = */ createSystemName(curAddress,prefix);
-        return curAddress;
+    @javax.annotation.Nonnull
+    @javax.annotation.CheckReturnValue
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        throw new jmri.JmriException("getNextValidSystemName should not have been called");
     }
-    
+
     /**
      * Validates to OpenLCB format.
      * {@inheritDoc}
@@ -153,7 +153,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         name = super.validateSystemNameFormat(name,locale);
         return OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
     }
-    
+
     /**
      * {@inheritDoc}
      */
