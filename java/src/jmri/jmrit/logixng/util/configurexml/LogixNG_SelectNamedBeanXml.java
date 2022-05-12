@@ -30,9 +30,9 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         namedBeanElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
-        NamedBeanHandle<E> table = selectNamedBean.getNamedBean();
-        if (table != null) {
-            namedBeanElement.addContent(new Element("name").addContent(table.getName()));
+        NamedBeanHandle<E> namedBeanHandle = selectNamedBean.getNamedBean();
+        if (namedBeanHandle != null) {
+            namedBeanElement.addContent(new Element("name").addContent(namedBeanHandle.getName()));
         }
         if (selectNamedBean.getReference() != null && !selectNamedBean.getReference().isEmpty()) {
             namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
@@ -77,8 +77,9 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
                     if (delayedLookup) {
                         selectNamedBean.setDelayedNamedBean(elem.getTextTrim());
                     } else {
-                        E t = selectNamedBean.getManager().getNamedBean(elem.getTextTrim());
-                        if (t != null) selectNamedBean.setNamedBean(t);
+                        String name = elem.getTextTrim();
+                        E t = selectNamedBean.getManager().getNamedBean(name);
+                        if (t != null) selectNamedBean.setNamedBean(name, t);
                         else selectNamedBean.removeNamedBean();
                     }
                 }

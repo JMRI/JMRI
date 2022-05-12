@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -43,6 +45,9 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     private JPanel _panelDataLocalVariable;
     private JPanel _panelDataFormula;
 
+    JLabel _priorityLabel;
+    JLabel _resetLabel;
+    JLabel _terminateLabel;
     private JSpinner _priority;
     private JCheckBox _resetOption;
     private JCheckBox _terminateOption;
@@ -121,13 +126,39 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
         _tabbedPaneData.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDataLocalVariable);
         _tabbedPaneData.addTab(NamedBeanAddressing.Formula.toString(), _panelDataFormula);
 
-        JPanel dataGroup = new JPanel();
+
+        _priorityLabel = new JLabel(Bundle.getMessage("ActionDispatcher_Priority"));
         _priority = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
-        dataGroup.add(_priority);
+        _resetLabel = new JLabel(Bundle.getMessage("ActionDispatcher_Reset"));
         _resetOption = new JCheckBox();
-        dataGroup.add(_resetOption);
+        _terminateLabel = new JLabel(Bundle.getMessage("ActionDispatcher_Terminate"));
         _terminateOption = new JCheckBox();
-        dataGroup.add(_terminateOption);
+
+        JPanel dataGroup = new JPanel();
+        dataGroup.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 1;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
+        dataGroup.add(_priorityLabel, constraint);
+        _priorityLabel.setLabelFor(_priority);
+        constraint.gridy = 1;
+        dataGroup.add(_resetLabel, constraint);
+        _resetLabel.setLabelFor(_resetOption);
+        constraint.gridy = 2;
+        dataGroup.add(_terminateLabel, constraint);
+        _terminateLabel.setLabelFor(_terminateOption);
+        constraint.gridx = 1;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.WEST;
+        dataGroup.add(_priority, constraint);
+        constraint.gridy = 1;
+        dataGroup.add(_resetOption, constraint);
+        constraint.gridy = 2;
+        dataGroup.add(_terminateOption, constraint);
+
         _panelDataDirect.add(dataGroup);
 
         _dispatcherDataReferenceTextField = new JTextField();
@@ -141,8 +172,6 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
         _dispatcherDataFormulaTextField = new JTextField();
         _dispatcherDataFormulaTextField.setColumns(30);
         _panelDataFormula.add(_dispatcherDataFormulaTextField);
-
-        setDataPanelState();
 
 
         if (action != null) {
@@ -171,8 +200,12 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
             _dispatcherDataReferenceTextField.setText(action.getDataReference());
             _dispatcherDataLocalVariableTextField.setText(action.getDataLocalVariable());
             _dispatcherDataFormulaTextField.setText(action.getDataFormula());
-
         }
+
+        setDataPanelState();
+
+        _selectOperationSwing.addAddressingListener((evt) -> { setDataPanelState(); });
+        _selectOperationSwing.addEnumListener((evt) -> { setDataPanelState(); });
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneDispatcher,
@@ -186,26 +219,33 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     }
 
     private void setDataPanelState() {
+
+        _priorityLabel.setVisible(false);
         _priority.setVisible(false);
+        _resetLabel.setVisible(false);
         _resetOption.setVisible(false);
+        _terminateLabel.setVisible(false);
         _terminateOption.setVisible(false);
 
         boolean newState = false;
 
         if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
                 DirectOperation.TrainPriority)) {
+            _priorityLabel.setVisible(true);
             _priority.setVisible(true);
             newState = true;
         }
 
         if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
                 DirectOperation.ResetWhenDoneOption)) {
+            _resetLabel.setVisible(true);
             _resetOption.setVisible(true);
             newState = true;
         }
 
         if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
                 DirectOperation.TerminateWhenDoneOption)) {
+            _terminateLabel.setVisible(true);
             _terminateOption.setVisible(true);
             newState = true;
         }
@@ -224,6 +264,11 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
 
         validateInfoFileSection(errorMessages);
         _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
+
+        if ((_selectOperationSwing.getAddressing() == NamedBeanAddressing.Direct)
+                && (_selectOperationSwing.getEnum() == DirectOperation.None)) {
+            errorMessages.add(Bundle.getMessage("ActionDispatcher_ErrorDispatcherActionNotSelected"));
+        }
         validateDataSection(errorMessages);
         return errorMessages.isEmpty();
     }
@@ -365,9 +410,7 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void setDefaultValues() {
-//        if (_stateComboBox.getSelectedIndex() < 1) {
-//            _stateComboBox.setSelectedIndex(1);
-//        }
+        _selectOperationSwing.setEnum(DirectOperation.LoadTrainFromFile);
     }
 
     @Override

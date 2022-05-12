@@ -16,6 +16,9 @@ import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrix.loconet.*;
+import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
+import jmri.util.JUnitUtil;
 
 import org.junit.*;
 
@@ -26,6 +29,11 @@ import org.junit.*;
  * compare the LogixNGs before and after store and load.
  */
 public class CreateLogixNGTreeScaffold {
+
+    private static boolean setupHasBeenCalled = false;
+
+    private static LocoNetSystemConnectionMemo _locoNetMemo;
+    private static MqttSystemConnectionMemo _mqttMemo;
 
 //    private AudioManager audioManager;
 
@@ -39,6 +47,9 @@ public class CreateLogixNGTreeScaffold {
 
     public static void createLogixNGTree() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // Ensure the setUp() and tearDown() methods of this class are called.
+        Assert.assertTrue(setupHasBeenCalled);
 /*
         audioManager = new jmri.jmrit.audio.DefaultAudioManager(
                 InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
@@ -515,6 +526,13 @@ public class CreateLogixNGTreeScaffold {
         actionClockRate.getSelectSpeed().setValue(1.22);
 
         maleSocket = digitalActionManager.registerAction(actionClockRate);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionDispatcher actionDispatcher = new ActionDispatcher(digitalActionManager.getAutoSystemName(), null);
+        actionDispatcher.getSelectEnum().setEnum(ActionDispatcher.DirectOperation.TrainPriority);
+        maleSocket = digitalActionManager.registerAction(actionDispatcher);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1162,6 +1180,12 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionReporter actionReporter = new ActionReporter(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionReporter);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionScript simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(simpleScript);
         maleSocket.setEnabled(false);
@@ -1698,6 +1722,28 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        // Test an action there the turnout is given by the system name.
+        // The system name should be stored and loaded from the panel file.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout2.getSystemName());
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        // Test an action there the turnout is given by the user name.
+        // The user name should be stored and loaded from the panel file.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout2.getUserName());
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
@@ -1785,6 +1831,12 @@ public class CreateLogixNGTreeScaffold {
         set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
                 NamedBeanAddressing.Direct);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionTurnoutLock actionTurnoutLock = new ActionTurnoutLock(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionTurnoutLock);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1906,6 +1958,47 @@ public class CreateLogixNGTreeScaffold {
 
         maleSocket = digitalActionManager.registerAction(actionWarrant);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        WebBrowser webBrowser = new WebBrowser(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(webBrowser);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrit.display.logixng.ActionPositionable actionPositionable =
+                new jmri.jmrit.display.logixng.ActionPositionable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionPositionable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrix.loconet.logixng.ActionClearSlots actionClearSlots =
+                new jmri.jmrix.loconet.logixng.ActionClearSlots(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(actionClearSlots);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrix.loconet.logixng.ActionUpdateSlots actionUpdateSlots =
+                new jmri.jmrix.loconet.logixng.ActionUpdateSlots(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(actionUpdateSlots);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrix.mqtt.logixng.Publish publish =
+                new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrix.mqtt.logixng.Subscribe subscribe =
+                new jmri.jmrix.mqtt.logixng.Subscribe(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        maleSocket = digitalActionManager.registerAction(subscribe);
+        maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -2812,6 +2905,12 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ExpressionDispatcher expressionDispatcher = new ExpressionDispatcher(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionDispatcher);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         ExpressionEntryExit expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         maleSocket.setEnabled(false);
@@ -3215,6 +3314,12 @@ public class CreateLogixNGTreeScaffold {
         expressionReference.setPointsTo(ExpressionReference.PointsTo.Light);
         expressionReference.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionReference);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        ExpressionReporter expressionReporter = new ExpressionReporter(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionReporter);
+        maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
 
@@ -3750,6 +3855,12 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        jmri.jmrix.loconet.logixng.ExpressionSlotUsage expressionSlotUsage =
+                new jmri.jmrix.loconet.logixng.ExpressionSlotUsage(digitalExpressionManager.getAutoSystemName(), null, _locoNetMemo);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSlotUsage);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
 
 
         doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
@@ -3830,6 +3941,11 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         doAnalogAction.getChild(0).connect(maleSocket);
 
+        AnalogActionLightIntensity analogActionLightIntensity = new AnalogActionLightIntensity(analogActionManager.getAutoSystemName(), null);
+        maleSocket = analogActionManager.registerAction(analogActionLightIntensity);
+        maleSocket.setEnabled(false);
+        doAnalogAction.getChild(1).connect(maleSocket);
+
 
         doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doAnalogAction);
@@ -3840,6 +3956,17 @@ public class CreateLogixNGTreeScaffold {
         analogFormula.setComment("A comment");
         analogFormula.setFormula("sin(a)*2 + 14");
         maleSocket = analogExpressionManager.registerExpression(analogFormula);
+        doAnalogAction.getChild(0).connect(maleSocket);
+
+
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        AnalogExpressionAnalogIO analogExpressionAnalogIO = new AnalogExpressionAnalogIO(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(analogExpressionAnalogIO);
+        maleSocket.setEnabled(false);
         doAnalogAction.getChild(0).connect(maleSocket);
 
 
@@ -3947,6 +4074,11 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         doStringAction.getChild(0).connect(maleSocket);
 
+        StringActionStringIO stringActionStringIO = new StringActionStringIO(stringActionManager.getAutoSystemName(), null);
+        maleSocket = stringActionManager.registerAction(stringActionStringIO);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(1).connect(maleSocket);
+
 
         doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(doStringAction);
@@ -3993,6 +4125,51 @@ public class CreateLogixNGTreeScaffold {
             }
         });
 
+
+        // Verify that we have all the actions and expressions in the tree, even
+        // actions and expressions defined outside of the jmri.jmrit.logixng tree.
+
+        Set<Class<? extends Base>> testedClasses = new HashSet<>();
+        Map<Class<? extends FemaleSocket>, FemaleSocket> femaleSocketMap = new HashMap<>();
+        List<Class<? extends Base>> missingClasses = new ArrayList<>();
+
+        femaleRootSocket.forEntireTree((Base b) -> {
+//            if (!(b instanceof FemaleSocket) && !(b instanceof MaleSocket)) {
+            if (b instanceof MaleSocket) {
+                Base o = ((MaleSocket) b).getObject();
+                while (o instanceof MaleSocket) {
+                    o = ((MaleSocket) o).getObject();
+                }
+//                System.out.format("Class: %s%n", o.getClass().getName());
+                testedClasses.add(o.getClass());
+                for (int i=0; i < o.getChildCount(); i++) {
+                    FemaleSocket fs = o.getChild(i);
+                    femaleSocketMap.put(fs.getClass(), fs);
+                }
+            }
+        });
+
+        for (var femaleSocket : femaleSocketMap.values()) {
+            var connectableClasses = femaleSocket.getConnectableClasses();
+
+            for (var list : connectableClasses.values()) {
+                for (var clazz : list) {
+                    if (!testedClasses.contains(clazz)) {
+//                        System.out.format("Class is not tested: %s%n", clazz.getName());
+                        missingClasses.add(clazz);
+                    }
+                }
+            }
+        }
+
+        Collections.sort(missingClasses, (o1,o2) -> {
+            return o1.getName().compareTo(o2.getName());
+        });
+
+        for (var clazz : missingClasses) {
+            log.error("Class {} is not added by CreateLogixNGTreeScaffold.createLogixNGTree()", clazz.getName());
+        }
+        Assert.assertTrue(missingClasses.isEmpty());
 
 /*
         if (1==1) {
@@ -4210,6 +4387,54 @@ public class CreateLogixNGTreeScaffold {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CreateLogixNGTreeScaffold.class);
+    public static void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugPowerManager();
+
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDefaultSignalMastManager();
+//        JUnitUtil.initSignalMastLogicManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initWarrantManager();
+
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager sm = new SlotManager(lnis);
+        _locoNetMemo = new LocoNetSystemConnectionMemo(lnis, sm);
+        sm.setSystemConnectionMemo(_locoNetMemo);
+        InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, _locoNetMemo);
+
+        _mqttMemo = new MqttSystemConnectionMemo();
+        InstanceManager.setDefault(MqttSystemConnectionMemo.class, _mqttMemo);
+
+//        JUnitUtil.initLogixNGManager();
+
+        setupHasBeenCalled = true;
+    }
+
+    public static void tearDown() {
+        setupHasBeenCalled = false;     // Reset for the next test
+
+        _locoNetMemo = null;
+        _mqttMemo = null;
+
+//        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+
+        // Delete all the LogixNGs, ConditionalNGs, and so on.
+        cleanup();
+
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
+
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CreateLogixNGTreeScaffold.class);
 
 }

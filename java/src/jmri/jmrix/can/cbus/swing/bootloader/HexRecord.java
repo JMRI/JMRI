@@ -146,10 +146,6 @@ public class HexRecord {
             // update address, extended address should be handled by caller
             address = addrh * 256 + addrl;
         }
-        if ((address & 0x7) != 0) {
-            // Hex record address is not 8-byte aligned
-            len = -1;
-        }
     }
     
     
