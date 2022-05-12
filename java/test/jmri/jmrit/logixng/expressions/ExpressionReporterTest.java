@@ -601,15 +601,6 @@ public class ExpressionReporterTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
-
-        thrown = false;
-        try {
-            expressionReporter.getSelectNamedBean().setNamedBean((Reporter)null);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setNamedBean must not be called when listeners are registered");
     }
 
     @Test

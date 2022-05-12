@@ -20,18 +20,21 @@ public class SocketOperationTest {
 
     @Test
     public void testAddRemoveChildren() throws PropertyVetoException, Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(true, false);
     }
 
     @Test
     public void testFemaleSockets() throws PropertyVetoException, Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(false, true);
     }
 
     @Test
     public void testAddRemoveChildrenAndFemaleSockets() throws PropertyVetoException, Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(true, true);
     }
@@ -41,7 +44,7 @@ public class SocketOperationTest {
     Set<Base> listOfSockets = new HashSet<>();
     Map<Class<? extends Base>, SwingConfiguratorInterface> sciSet = new HashMap<>();
 
-    public void runTest(boolean addRemoveChildren, boolean testSocketOperations)
+    private void runTest(boolean addRemoveChildren, boolean testSocketOperations)
             throws PropertyVetoException, Exception {
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
