@@ -359,7 +359,7 @@ public interface SymbolTable {
                 List<Object> array = new java.util.ArrayList<>();
                 Object initialValue = array;
                 String initialValueData = initialData;
-                if (!initialValueData.isEmpty()) {
+                if ((initialValueData != null) && !initialValueData.isEmpty()) {
                     Object data = "";
                     String[] parts = initialValueData.split(":", 2);
                     if (parts.length > 1) {
