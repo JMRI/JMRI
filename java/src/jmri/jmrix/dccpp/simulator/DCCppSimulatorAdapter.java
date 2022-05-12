@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.LinkedHashMap;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,10 +57,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private static final long keepAliveTimeoutValue = 30000; // Interval
     //keep track of recreation command, including state, for each turnout and output
     private LinkedHashMap<Integer,String> turnouts = new LinkedHashMap<Integer, String>();
-    //keep track of speed, direction and functions for loco address
-    private LinkedHashMap<Integer,Integer> locoSpeed = new LinkedHashMap<Integer,Integer>();
-    private LinkedHashMap<Integer,Integer> locoDir = new LinkedHashMap<Integer, Integer>();
-    private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer, Integer>();
+    //keep track of speed, direction and functions for each loco address
+    private LinkedHashMap<Integer,Integer> locoSpeedByte = new LinkedHashMap<Integer,Integer>();
+    private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer,Integer>();
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -282,7 +280,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         int locoId = Integer.parseInt(m.group(1));
                         int speed = Integer.parseInt(m.group(2));
                         int dir = Integer.parseInt(m.group(3));
-                        storeLocoSpeedAndDir(locoId, speed, dir);
+                        storeLocoSpeedByte(locoId, speed, dir);
                         r = getLocoStateString(locoId);
                     } else {
                         r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
@@ -637,10 +635,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
-    //stores the raw values for speed and direction, so they can be used in the function reply
-    private void storeLocoSpeedAndDir(int locoId, int speed, int dir) {
-        locoSpeed.put(locoId, speed);
-        locoDir.put(locoId, dir);
+    //calc speedByte value matching DCC++EX, then store it, so it can be used in the locoState replies
+    private void storeLocoSpeedByte(int locoId, int speed, int dir) {
+        if (speed>0) speed++; //add 1 to speed if not zero or estop
+        if (speed<0) speed = 1; //eStop is actually 1
+        int dirBit = dir*128; //calc value for direction bit
+        int speedByte = dirBit + speed; //add dirBit to adjusted speed value
+        locoSpeedByte.put(locoId, speedByte); //store it
         if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
     }
 
@@ -656,22 +657,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             functions = functions & ~mask; //apply OFF            
         }
         locoFunctions.put(locoId, functions); //store new value
-        if (!locoSpeed.containsKey(locoId)) 
-            locoSpeed.put(locoId, 0); //init speed if not set
-        if (!locoDir.containsKey(locoId)) 
-            locoDir.put(locoId, 0); //init dir if not set
+        if (!locoSpeedByte.containsKey(locoId)) 
+            locoSpeedByte.put(locoId, 0); //init speedByte if not set
     }
 
     //retrieve stored values and calculate and format the locostate message text
     private String getLocoStateString(int locoId) {
         String s;
-        int speed = locoSpeed.get(locoId);
-        int dir = locoDir.get(locoId);
+        int speedByte = locoSpeedByte.get(locoId);
         int functions = locoFunctions.get(locoId);
-        if (speed>0) speed++; //add 1 to speed if not zero or estop
-        if (speed<0) speed = 1; //eStop is actually 1
-        int dirBit = dir*128; //calc value for direction bit
-        int speedByte = dirBit + speed; //add dirBit to adjusted speed value
         s = "l " + locoId + " 0 " + speedByte + " " + functions;  //<l loco slot speedByte functions>
         return s;
     }

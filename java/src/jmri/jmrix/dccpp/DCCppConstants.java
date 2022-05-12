@@ -135,7 +135,7 @@ public final class DCCppConstants {
     public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)"; // <W cv value callbacknum callbacksub>
     public static final String PROG_WRITE_BYTE_V4_REGEX =  "W\\s*(\\d+)\\s(\\d+)"; // <W cv value>
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)"; // <B cv bit value callbacknum callbacksub>
-    public static final String PROG_WRITE_BIT_V4_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([1,0])"; // <B cv bit value> 
+    public static final String PROG_WRITE_BIT_V4_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([01])"; // <B cv bit value> 
     public static final String PROG_READ_CV_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)"; // <R cv callbacknum callbacksub> 
     public static final String PROG_READ_CV_V4_REGEX = "R\\s*(\\d+)"; // <R cv> - use <V cv guess> instead
     public static final String PROG_READ_LOCOID_REGEX =  "R"; // <R>

@@ -325,7 +325,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMakesAndMonitors() {
         msg = new DCCppMessage("F 123 22 1");
-        Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 2, State: 1", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 22, State: 1", msg.toMonitorString());
         msg = DCCppMessage.makeFunctionV4Message(123, 4, true);
         Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 4, State: 1", msg.toMonitorString());
         msg = DCCppMessage.makeFunctionV4Message(123, 5, false);
