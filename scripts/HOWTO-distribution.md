@@ -181,10 +181,12 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
         git pull
         cp jmri4.99.8.shtml jmri4.99.9.shtml
         $EDITOR jmri4.99.9.shtml
+
             (edit the new release note accordingly)
                 change numbers throughout
                 move new warnings to old (see below)
                 remove old-version change notes
+
         git add jmri4.99.9.shtml
         git commit -m"start new 4.99.9 next release note" jmri4.99.9.shtml
         git push github
@@ -244,6 +246,24 @@ This is the next release in the 4.26 cycle. It's intended to be created from the
 
 For each, if it doesn't have the right milestone set, add the current milestone.’
 
+====================================================================================
+## Update Development Release Number on Master Branch
+
+- Update the &lt;version> element in `pom.xml` to this release:
+```
+        git checkout master
+        git pull
+        sed -i .bak s/4.99.7-SNAPSHOT/4.99.8-SNAPSHOT/g pom.xml
+        git commit -m"4.99.8 until next release" pom.xml
+```
+
+- Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field to 4.99.7 and 4.99.8)
+```
+        sed -i .bak s/release.build=7/release.build=8/g release.properties
+        git commit -m"4.99.8 until next release" release.properties
+        git push github
+```
+
 ================================================================================
 ## Create the Release Branch
 
@@ -258,6 +278,8 @@ For each, if it doesn't have the right milestone set, add the current milestone.
         git push github
         git pull
 ```
+
+(Should set to 4.99.8 here)
 
 - Remove the 4.99.8 milestone on [unmerged PRs or [click here]](https://github.com/JMRI/JMRI/pulls?q=is%3Aopen+is%3Apr+milestone%3A4.99.8)
 
@@ -456,16 +478,15 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
-
 [Release notes](https://jmri.org/releasenotes/jmri4.99.8.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.8+Rc450896c88.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.8/JMRI.4.99.8+Rc450896c88.dmg) | c681cf3b58f31ec1bfd404dbf01cfd8c36f5d5b2e6006379d6a94197d3a51845
-[JMRI.4.99.8+Rc450896c88.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.8/JMRI.4.99.8+Rc450896c88.exe) | 1dd9d4661dd555e980395b3f0d867b9508e8f4353a00580ca6a12f5bb4f97b49
-[JMRI.4.99.8+Rc450896c88.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.8/JMRI.4.99.8+Rc450896c88.tgz) | e298bcba2083ee15a9df70b67a1bc37d1747d9c462222d6476d38c363ed3fd55
+[JMRI.4.99.8+Rc81de3c361.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.8/JMRI.4.99.8+Rc81de3c361.dmg) | 8c6c0b549cb85db16a571d86297f8bbac8f6db2207eb1c6dca986b7e7975dbf9
+[JMRI.4.99.8+Rc81de3c361.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.8/JMRI.4.99.8+Rc81de3c361.exe) | 9361d25468b27ef2236fdf46d522b02ce9e63ffe93b9a9825894281b913742de
+[JMRI.4.99.8+Rc81de3c361.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.8/JMRI.4.99.8+Rc81de3c361.tgz) | dba6a4825cf8a310bb44a0bf15c8ea0509abd6c45cf17c510116f6632c098be4
 
 ```
 
@@ -479,6 +500,7 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 
 - Wait for completion, which might be a while with big uploads
 
+- Reenable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to restart creation of development releases
 
 ====================================================================================
 ## Check for Unmerged Changes
@@ -514,28 +536,6 @@ If there are any changes in other files, do both of:
    - Figure out what went wrong and fix it in these instructions
 
 - You can delete that temp-master local branch now
-
-====================================================================================
-## Update Development Release Number on Master Branch
-
-This step changes release numbering so that builds will be labeled 4.99.9-dev until the 4.99.9 release is created
-
-- Update the &lt;version> element in `pom.xml` to this release:
-```
-        git checkout master
-        git pull
-        sed -i .bak s/4.99.8-SNAPSHOT/4.99.9-SNAPSHOT/g pom.xml
-        git commit -m"4.99.9 until next release" pom.xml
-```
-
-- Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field of 4.99.8 and 4.99.9)
-```
-        sed -i .bak s/release.build=6/release.build=7/g release.properties
-        git commit -m"4.99.9 until next release" release.properties
-        git push github
-```
-
-- Reenable the [Jenkins Packages job](https://builds.jmri.org/jenkins/job/development/job/packages/) to restart creation of development releases
 
 ====================================================================================
 ## Update GitHub Status items
