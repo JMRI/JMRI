@@ -2,7 +2,6 @@ package jmri.jmrix.dccpp.simulator;
 
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
-import jmri.jmrix.dccpp.simulator.DCCppSimulatorAdapter;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
