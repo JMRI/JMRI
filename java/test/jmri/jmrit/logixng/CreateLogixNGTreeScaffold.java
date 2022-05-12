@@ -1722,6 +1722,28 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        // Test an action there the turnout is given by the system name.
+        // The system name should be stored and loaded from the panel file.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout2.getSystemName());
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        // Test an action there the turnout is given by the user name.
+        // The user name should be stored and loaded from the panel file.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setNamedBean(turnout2.getUserName());
+        set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectNamedBean().getSelectTable(),
+                NamedBeanAddressing.Direct);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
