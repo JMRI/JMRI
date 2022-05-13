@@ -16,14 +16,6 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public String getSystemName(int i){
        return "TS" + i;
     }
-    
-    @Disabled("Tams SensorManager does not seem to increment correctly, "
-            + "ERROR - systemName is already registered. "
-            + "Current system name: TS1:1. New system name: TS1:01")
-    @ToDo("Someone with knowledge of Tams could test the expected output.")
-    @Override
-    public void testGetNextValidAddress(){
-    }
 
     @Test
     public void testCTor() {
@@ -35,7 +27,7 @@ public class TamsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void setUp() {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsInterfaceScaffold();
-        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);  
+        TamsSystemConnectionMemo memo = new TamsSystemConnectionMemo(tc);
         l = new TamsSensorManager(memo);
     }
 
