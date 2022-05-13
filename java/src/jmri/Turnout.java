@@ -72,7 +72,7 @@ import javax.annotation.CheckForNull;
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
  */
-public interface Turnout extends DigitalIO {
+public interface Turnout extends DigitalIO, VariableControlSpanBean {
 
     /**
      * Constant representing a "closed" state, either in readback or as a
@@ -357,14 +357,6 @@ public interface Turnout extends DigitalIO {
      */
     @InvokeOnLayoutThread
     public void setInitialKnownStateFromFeedback();
-
-    /**
-     * Set number of control bits.
-     *
-     * @param num the size of the output, currently 1 or 2
-     */
-    @InvokeOnLayoutThread
-    public void setNumberControlBits(int num);
 
     /**
      * Get control type.
