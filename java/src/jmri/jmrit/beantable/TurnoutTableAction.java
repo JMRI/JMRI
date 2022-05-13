@@ -572,7 +572,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     }
                 }
 
-                t.setNumberOutputBits(iNum);
+                t.setNumberControlBits(iNum);
                 // Ask about the type of turnout control if appropriate
                 if (!useLastType) {
                     iType = InstanceManager.getDefault(TurnoutManager.class).askControlType(sName);

@@ -592,7 +592,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             testAddr = validateSystemNameFormat(createSystemName(curAddress,prefix));
             // System.out.format("testaddr: "+testAddr);
             bean = getBySystemName(testAddr);
-            increment = ( bean instanceof Turnout ? ((Turnout)bean).getNumberOutputBits() : 1);
+            increment = (bean != null) ? bean.getNumberControlBits() : 1;
             testAddr = testAddr.substring(getSystemNamePrefix().length());
 
             // do not check for incrementability here as could be String only

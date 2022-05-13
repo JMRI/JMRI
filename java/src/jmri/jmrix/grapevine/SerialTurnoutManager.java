@@ -127,7 +127,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
         // The Number of Output Bits of the previous turnout will help determine the next
         // valid address.
-        int increment = ( t==null ? 1 : t.getNumberOutputBits());
+        int increment = ( t==null ? 1 : t.getNumberControlBits());
         for (int x = 0; x < 10; x++) {
             bitNum = bitNum + increment;
             tmpSName = prefix + "T" + nNode + (nCard + bitNum);
