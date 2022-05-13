@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.LinkedHashMap;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,6 +57,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private static final long keepAliveTimeoutValue = 30000; // Interval
     //keep track of recreation command, including state, for each turnout and output
     private LinkedHashMap<Integer,String> turnouts = new LinkedHashMap<Integer, String>();
+    //keep track of speed, direction and functions for each loco address
+    private LinkedHashMap<Integer,Integer> locoSpeedByte = new LinkedHashMap<Integer,Integer>();
+    private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer,Integer>();
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -253,7 +255,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
     private DCCppReply generateReply(DCCppMessage msg) {
-        String s, r;
+        String s, r = null;
         Pattern p;
         Matcher m;
         DCCppReply reply = null;
@@ -267,14 +269,22 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 s = msg.toString();
                 try {
                     p = Pattern.compile(DCCppConstants.THROTTLE_CMD_REGEX);
-                    m = p.matcher(s);
+                    m = p.matcher(s); //<t REG CAB SPEED DIR>
                     if (!m.matches()) {
-                        log.error("Malformed Throttle Command: {}", s);
-                        return (null);
+                        p = Pattern.compile(DCCppConstants.THROTTLE_V3_CMD_REGEX);
+                        m = p.matcher(s); //<t locoId speed dir>
+                        if (!m.matches()) {
+                            log.error("Malformed Throttle Command: {}", s);
+                            return (null);
+                        }                       
+                        int locoId = Integer.parseInt(m.group(1));
+                        int speed = Integer.parseInt(m.group(2));
+                        int dir = Integer.parseInt(m.group(3));
+                        storeLocoSpeedByte(locoId, speed, dir);
+                        r = getLocoStateString(locoId);
+                    } else {
+                        r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
                     }
-                    r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
-                    reply = DCCppReply.parseDCCppReply(r);
-                    log.debug("Reply generated = '{}'", reply);
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
                     return (null);
@@ -285,6 +295,38 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.error("Index out of bounds string= {}", s);
                     return (null);
                 }
+                reply = DCCppReply.parseDCCppReply(r);
+                log.debug("Reply generated = '{}'", reply);
+                break;
+
+            case DCCppConstants.FUNCTION_V4_CMD:
+                log.debug("FunctionV4Detected");
+                s = msg.toString();
+                r = "";
+                try {
+                    p = Pattern.compile(DCCppConstants.FUNCTION_V4_CMD_REGEX); 
+                    m = p.matcher(s); //<F locoId func 1|0>
+                    if (!m.matches()) {
+                        log.error("Malformed FunctionV4 Command: {}", s);
+                        return (null);
+                    }                       
+                    int locoId = Integer.parseInt(m.group(1));
+                    int fn = Integer.parseInt(m.group(2));
+                    int state = Integer.parseInt(m.group(3));
+                    storeLocoFunction(locoId, fn, state);
+                    r = getLocoStateString(locoId);
+                } catch (PatternSyntaxException e) {
+                    log.error("Malformed pattern syntax!");
+                    return (null);
+                } catch (IllegalStateException e) {
+                    log.error("Group called before match operation executed string= {}", s);
+                    return (null);
+                } catch (IndexOutOfBoundsException e) {
+                    log.error("Index out of bounds string= {}", s);
+                    return (null);
+                }
+                reply = DCCppReply.parseDCCppReply(r);
+                log.debug("Reply generated = '{}'", reply);
                 break;
 
             case DCCppConstants.TURNOUT_CMD:
@@ -575,11 +617,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
-            case DCCppConstants.FUNCTION_V4_CMD:
-                log.debug("FunctionV2Detected");
-                reply = DCCppReply.parseDCCppReply("O"); //TODO: return the locoState message
-                break;
-
             case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
@@ -596,6 +633,41 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 return (null);
         }
         return (reply);
+    }
+
+    //calc speedByte value matching DCC++EX, then store it, so it can be used in the locoState replies
+    private void storeLocoSpeedByte(int locoId, int speed, int dir) {
+        if (speed>0) speed++; //add 1 to speed if not zero or estop
+        if (speed<0) speed = 1; //eStop is actually 1
+        int dirBit = dir*128; //calc value for direction bit
+        int speedByte = dirBit + speed; //add dirBit to adjusted speed value
+        locoSpeedByte.put(locoId, speedByte); //store it
+        if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
+    }
+
+    //stores the calculated value of the functionsByte as used by DCC++EX
+    private void storeLocoFunction(int locoId, int function, int state) {
+        int functions = 0; //init functions to all off if not stored
+        if (locoFunctions.containsKey(locoId)) 
+            functions = locoFunctions.get(locoId); //get stored value, if any
+        int mask = 1 << function;
+        if (state == 1) {
+            functions = functions | mask; //apply ON
+        } else {
+            functions = functions & ~mask; //apply OFF            
+        }
+        locoFunctions.put(locoId, functions); //store new value
+        if (!locoSpeedByte.containsKey(locoId)) 
+            locoSpeedByte.put(locoId, 0); //init speedByte if not set
+    }
+
+    //retrieve stored values and calculate and format the locostate message text
+    private String getLocoStateString(int locoId) {
+        String s;
+        int speedByte = locoSpeedByte.get(locoId);
+        int functions = locoFunctions.get(locoId);
+        s = "l " + locoId + " 0 " + speedByte + " " + functions;  //<l loco slot speedByte functions>
+        return s;
     }
 
     /* 's'tatus message gets multiple reply messages */

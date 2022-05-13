@@ -519,7 +519,17 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         DCCppMessage msg = new DCCppMessage("t 1 2 3 1");
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 1, Address: 2, Speed: 3, Direction: Forward", msg.toMonitorString());
         msg = new DCCppMessage("t 2 3 1");
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 2, Speed: 3, Direction: Forward", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 2, Speed: 3, Direction: Forward", msg.toMonitorString());
+    }
+
+    @Test
+    public void testFunctionV4Monitors() {
+        DCCppMessage msg = new DCCppMessage("F 1234 1 0"); //<F locoId func 1|0>
+        Assert.assertEquals("Function Cmd: CAB: 1234, FUNC: 1, State: 0", msg.toMonitorString());
+        msg = new DCCppMessage("F 1234 8 1"); //<F locoId func 1|0>
+        Assert.assertEquals("Function Cmd: CAB: 1234, FUNC: 8, State: 1", msg.toMonitorString());
+        msg = new DCCppMessage("F 1234 18 1"); //<F locoId func 1|0>
+        Assert.assertEquals("Function Cmd: CAB: 1234, FUNC: 18, State: 1", msg.toMonitorString());
     }
 
     @Test
