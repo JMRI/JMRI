@@ -703,8 +703,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System Name to provide the prefix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The length of the system-prefix part of the system name in
      *         standard normalized form
      */
@@ -733,8 +733,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System name to provide the prefix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The system-prefix part of the system name in standard normalized
      *         form
      */
@@ -751,8 +751,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System name to provide the type letter
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The type letter of the system name
      */
     @CheckReturnValue
@@ -768,8 +768,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * parsed out without knowledge of the type of NamedBean involved.
      *
      * @param inputName System name to provide the suffix
-     * @throws NamedBean.BadSystemNameException If the inputName can't be
-     *                                          converted to normalized form
+     * @throws NamedBean.BadSystemNameException If the inputName is not
+     *                                          in normalized form
      * @return The suffix part of the system name
      */
     @CheckReturnValue
