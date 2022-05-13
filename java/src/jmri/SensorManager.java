@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SensorManager extends ProvidingManager<Sensor> {
+public interface SensorManager extends ProvidingManager<Sensor>, NameIncrementingManager {
 
     /**
      * Get the Sensor with the user name, then system name if needed; if that fails, create a
@@ -133,31 +133,6 @@ public interface SensorManager extends ProvidingManager<Sensor> {
      * layout is possible.
      */
     public void updateAll();
-
-    /**
-     * Determines if it is possible to add a range of sensors in numerical
-     * order.
-     *
-     * @param systemName the system name to check against; appears to be ignored
-     *                   in all implementations
-     * @return true if possible; false otherwise
-     */
-    @CheckReturnValue
-    public boolean allowMultipleAdditions(@Nonnull String systemName);
-
-    /**
-     * Get the Next valid Sensor address.
-     * <p>
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it
-     *                          does not exist, else true to force an increment.
-     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address,
-     *                          or more than 10 next addresses in use.
-     */
-    @Nonnull
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
 
     /**
      * Get a system name for a given hardware address and system prefix.

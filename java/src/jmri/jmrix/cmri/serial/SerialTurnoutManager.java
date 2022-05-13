@@ -282,44 +282,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        String tmpSName = "";
-        try {
-            tmpSName = validateSystemNameFormat(createSystemName(curAddress, prefix));
-        } catch (JmriException | NamedBean.BadNameException ex) {
-            throw new JmriException(ex.getMessage());
-        }
-
-        //If the hardware address part does not already exist then this can
-        //be considered the next valid address.
-        Turnout t = getBySystemName(tmpSName);
-        if (t == null && !ignoreInitialExisting) {
-            /* We look for the last instance of T, as the hardware address side
-             of the system name should not contain the letter, however parts of the prefix might */
-            int seperator = tmpSName.lastIndexOf("T") + 1;
-            return tmpSName.substring(seperator);
-        }
-
-        //The Number of Output Bits of the previous turnout will help determine the next
-        //valid address.
-        int increment = t==null ? 1 : t.getNumberOutputBits();
-        for (int x = 0; x < 10; x++) {
-            bitNum = bitNum + increment;
-            //System.out.println("This should increment " + bitNum);
-            tmpSName = getMemo().makeSystemName("T", nAddress, bitNum);
-            t = getBySystemName(tmpSName);
-            if (t == null) {
-                int seperator = tmpSName.lastIndexOf("T") + 1;
-                return tmpSName.substring(seperator);
-            }
-        }
-        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) throws NamedBean.BadSystemNameException {
         systemName = validateSystemNamePrefix(systemName, locale);

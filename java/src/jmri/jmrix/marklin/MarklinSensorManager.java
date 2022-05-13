@@ -124,40 +124,6 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
-    
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-
-        // Check to determine if the System Name is in use, return null if it is,
-        // otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            port++;
-            while (port < 17) {
-                tmpSName = createSystemName(board + ":" + port, prefix);
-                s = getBySystemName(tmpSName);
-                if (s == null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(board);
-                    sb.append(":");
-                    //Little work around to pad single digit address out.
-                    padPortNumber(port, sb);
-                    return sb.toString();
-                }
-                port++;
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
-        } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append(board);
-            sb.append(":");
-            //Little workaround to pad single digit address out.
-            padPortNumber(port, sb);
-            return sb.toString();
-        }
-    }
 
     void padPortNumber(int portNo, StringBuilder sb) {
         if (portNo < 10) {
