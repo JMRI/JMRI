@@ -60,7 +60,7 @@ public interface NameIncrementingManager {
 
         String currentName = currentBean.getSystemName();
 
-        int increment = ( currentBean instanceof Turnout ? ((Turnout)currentBean).getNumberOutputBits() : 1);
+        int increment = ( currentBean instanceof VariableControlSpanBean ? ((Turnout)currentBean).getNumberOutputBits() : 1);
 
         String nextName = jmri.util.StringUtil.incrementLastNumberInString(currentName, increment);
 
