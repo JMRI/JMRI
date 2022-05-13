@@ -309,11 +309,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         for (Manager<E> m : mgrs) {
             log.debug("getNextValidSystemName requested for {}", currentBean.getSystemName());
             if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
-                try {
-                    return ((NameIncrementingManager) m).getNextValidSystemName(currentBean);
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
+                return ((NameIncrementingManager) m).getNextValidSystemName(currentBean); // can thrown JmriException upward
             }
         }
         throw new jmri.JmriException("\""+currentBean.getSystemName()+"\" did not match a manager");
