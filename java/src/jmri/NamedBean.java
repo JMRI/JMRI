@@ -476,15 +476,6 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n2);
 
     /**
-     * Get number of control bits.
-     *
-     * @return the size of the input or output. Usually 1 bit.
-     */
-    public default int getNumberControlBits() {
-        return 1;
-    }
-
-    /**
      * Parent class for a set of classes that describe if a user name or system
      * name is a bad name.
      */

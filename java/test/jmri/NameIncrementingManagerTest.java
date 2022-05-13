@@ -15,6 +15,7 @@ import org.junit.jupiter.api.*;
 public class NameIncrementingManagerTest {
 
     class Testable implements NameIncrementingManager {
+        @Override
         public boolean allowMultipleAdditions(@Nonnull String systemName) {
             return true;
         }
@@ -38,7 +39,7 @@ public class NameIncrementingManagerTest {
         };
 
         String next = testManager.getNextValidSystemName(start);
-        Assert.assertEquals(next, "IS13");
+        Assert.assertEquals("IS13", next);
     }
 
     @Test
@@ -90,14 +91,14 @@ public class NameIncrementingManagerTest {
             }
 
             @Override
-            public int getNumberOutputBits() {
+            public int getNumberControlBits() {
                 return 2;
             }
 
         };
 
         String next = testManager.getNextValidSystemName(start);
-        Assert.assertEquals(next, "IT14");
+        Assert.assertEquals("IT14", next);
     }
 
     @BeforeEach
