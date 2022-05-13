@@ -24,7 +24,7 @@
       <p>In this user guide, we walk you through the process of creating a file to describe a new
       decoder. You might benefit from reading the other sections of the DecoderPro user guide to
       get background information, especially the <a href="IntroXML.shtml">XML introduction</a> and
-      the section on <a href="Files.shtml">Configuration Files contents</a>.</p>
+      the section on <a href="../../doc/Technical/ProfileFileStructure.shtml">Configuration Files contents</a>.</p>
 
       <p>The easiest way to create a configuration file is to modify an existing one. In this
       section, we walk you through doing this.</p>
@@ -42,10 +42,11 @@
           manufacturer uses in their documentation.</p>
 
           <p>This new file should go in the <code>decoders</code> subdirectory in the
-          <code>JMRI</code> preferences directory so that the program can find it. The
-          <code>DecoderProConfig2.xml</code> file lives in the preferences directory, so you can
-          search for that file to locate it. (See the <a href=
-          "Files.shtml#location"><em>configuration files page</em></a> for further details about
+          <code>JMRI</code> User Files Location so that the program can find it.
+          You can select "Locations..."
+          from the JMRI Help menu find the User Files Location. (See the <a href=
+          "../../doc/Technical/ProfileFileStructure.shtml"><em>configuration files page</em></a>
+          for further details about
           how to find that directory and its contents)</p>
 
           <p>If you're modifying a decoder definition, it is best to start with the most recent
