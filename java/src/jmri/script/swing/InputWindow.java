@@ -1,6 +1,7 @@
 package jmri.script.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -15,22 +16,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
+
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.text.BadLocationException;
+
 import jmri.UserPreferencesManager;
 import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptEngineSelector;
+import jmri.script.ScriptEngineSelector.Engine;
+import jmri.script.swing.ScriptEngineSelectorSwing;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+
 import org.python.google.common.io.Files;
 
 /**
@@ -49,7 +49,8 @@ public class InputWindow extends JPanel {
     JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
 
-    ScriptEngineSelector languages = ScriptEngineSelector.getScriptEngineSelector();
+    private ScriptEngineSelector scriptEngineSelector = new ScriptEngineSelector();
+    private ScriptEngineSelectorSwing scriptEngineSelectorSwing;
 
     JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
 
@@ -103,14 +104,16 @@ public class InputWindow extends JPanel {
 
         // set the preferred language
         if (pref.getComboBoxLastSelection(languageSelection) != null) {
-            languages.setSelectedItem(pref.getComboBoxLastSelection(languageSelection));
+            scriptEngineSelector.setSelectedEngine(pref.getComboBoxLastSelection(languageSelection));
         }
+
+        scriptEngineSelectorSwing = new ScriptEngineSelectorSwing(scriptEngineSelector);
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(loadButton = new JButton(Bundle.getMessage("ButtonLoad_")));
         p.add(storeButton = new JButton(Bundle.getMessage("ButtonStore_")));
-        p.add(this.languages);
+        p.add(this.scriptEngineSelectorSwing.getComboBox());
         p.add(button = new JButton(Bundle.getMessage("ButtonExecute")));
 
         alwaysOnTopCheckBox.setText(Bundle.getMessage("WindowAlwaysOnTop"));
@@ -136,8 +139,10 @@ public class InputWindow extends JPanel {
             storeButtonPressed();
         });
 
-        languages.addItemListener((java.awt.event.ItemEvent e) -> {
-            pref.setComboBoxLastSelection(languageSelection, (String) languages.getSelectedItem());
+        scriptEngineSelectorSwing.getComboBox().addItemListener((java.awt.event.ItemEvent e) -> {
+            var comboBox = scriptEngineSelectorSwing.getComboBox();
+            Engine engine = comboBox.getItemAt(comboBox.getSelectedIndex());
+            pref.setComboBoxLastSelection(languageSelection, engine.getLanguageName());
         });
 
         alwaysOnTopCheckBox.addActionListener((ActionEvent e) -> {
@@ -172,10 +177,12 @@ public class InputWindow extends JPanel {
         if (file != null) {
             try {
                 try {
-                    languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactoryByExtension(Files.getFileExtension(file.getName())).getLanguageName());
+                    scriptEngineSelector.setSelectedEngine(JmriScriptEngineManager.getDefault().getFactoryByExtension(Files.getFileExtension(file.getName())).getLanguageName());
+                    scriptEngineSelectorSwing.updateSetComboBoxSelection();
                 } catch (ScriptException npe) {
                     log.error("Unable to identify script language for {}, assuming its Python.", file);
-                    languages.setSelectedItem(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.JYTHON).getLanguageName());
+                    scriptEngineSelector.setSelectedEngine(JmriScriptEngineManager.getDefault().getFactory(JmriScriptEngineManager.JYTHON).getLanguageName());
+                    scriptEngineSelectorSwing.updateSetComboBoxSelection();
                 }
                 StringBuilder fileData = new StringBuilder(1024);
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -280,7 +287,7 @@ public class InputWindow extends JPanel {
                 .getDefault()
                 .eval(
                     area.getText(),
-                    languages.getEngine());
+                    scriptEngineSelector.getSelectedEngine().getScriptEngine());
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }
