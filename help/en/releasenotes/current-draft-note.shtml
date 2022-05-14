@@ -582,6 +582,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The xercesImpl library was updated to 2.12.2, which may change
+                the content of some error messages.</li>
         </ul>
 
