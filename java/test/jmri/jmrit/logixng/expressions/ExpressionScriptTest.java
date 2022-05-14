@@ -52,7 +52,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Evaluate script: Jython command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE ) ::: Use default%n");
+                "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE ) ::: Use default%n");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
                 "      ! A%n" +
                 "         If Then Else. Always execute ::: Use default%n" +
                 "            ? If%n" +
-                "               Evaluate script: Jython command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE ) ::: Use default%n" +
+                "               Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE ) ::: Use default%n" +
                 "            ! Then%n" +
                 "               Set light IL1 to state On ::: Use default%n" +
                 "            ! Else%n" +
@@ -88,13 +88,13 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         expression2.setScript(_scriptText);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Evaluate script: Jython command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
 
         expression2 = new ExpressionScript("IQDE321", "My expression");
         expression2.setScript(_scriptText);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "Evaluate script: Jython command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expression2.getLongDescription());
 
         boolean thrown = false;
         try {
@@ -141,11 +141,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testDescription() {
         Assert.assertEquals("Script", expressionScript.getShortDescription());
-        Assert.assertEquals("Evaluate script: Jython command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expressionScript.getLongDescription());
+        Assert.assertEquals("Evaluate script: Single line command. Script result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )", expressionScript.getLongDescription());
     }
 
     @Test
-    public void testExpression_JythonCommand() throws Exception {
+    public void testExpression_SingleJythonCommand() throws Exception {
         // Test expression
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
