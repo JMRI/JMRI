@@ -283,11 +283,13 @@ public class InputWindow extends JPanel {
     public void buttonPressed() {  // public for testing
         ScriptOutput.writeScript(area.getText());
         try {
-            JmriScriptEngineManager
-                .getDefault()
-                .eval(
-                    area.getText(),
-                    scriptEngineSelector.getSelectedEngine().getScriptEngine());
+            ScriptEngineSelector.Engine engine = scriptEngineSelector.getSelectedEngine();
+            if (engine != null) {
+                JmriScriptEngineManager
+                    .getDefault().eval(area.getText(),engine.getScriptEngine());
+            } else {
+                throw new NullPointerException("scriptEngineSelector.getSelectedEngine() returns null");
+            }
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }
