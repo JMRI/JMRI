@@ -49,9 +49,9 @@
                     <xs:enumeration value="RunScript"/>
                     <xs:enumeration value="SingleLineCommand"/>
 
-					<!-- For backwards compatibility pre 4.99.9 -->
+                    <!-- For backwards compatibility pre 4.99.9 -->
                     <xs:enumeration value="JythonCommand"/>
-					<!-- For backwards compatibility pre 4.99.9 -->
+                    <!-- For backwards compatibility pre 4.99.9 -->
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
