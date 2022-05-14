@@ -280,9 +280,13 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
-##### xercesImpl-2.12.0.jar
-- version Xerces-J 2.12.0
-- from Maven
+##### xercesImpl-2.12.2.jar
+- version Xerces-J 2.12.2
+- from Maven https://mvnrepository.com/artifact/xerces/xercesImpl/2.12.2
+
+##### xml-apis-1.4.01.jar
+#- For xercesImpl 2.12.2
+# but we use the one provided by the JRE - see pom.xml - so there's no file for this
 
 ##### xml-apis-ext-1.3.04.jar
 - from Maven
