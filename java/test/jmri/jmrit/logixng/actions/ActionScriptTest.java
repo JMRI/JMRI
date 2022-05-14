@@ -54,7 +54,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n");
+                "Execute script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n");
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
                 "            ? If%n" +
                 "               Sensor IS1 is Active ::: Use default%n" +
                 "            ! Then%n" +
-                "               Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n" +
+                "               Execute script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON ::: Use default%n" +
                 "            ! Else%n" +
                 "               Socket not connected%n");
     }
@@ -90,13 +90,13 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         action2.setScript(_scriptText);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Execute script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
 
         action2 = new ActionScript("IQDA321", "My action");
         action2.setScript(_scriptText);
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My action", action2.getUserName());
-        Assert.assertEquals("String matches", "Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Execute script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", action2.getLongDescription());
 
         boolean thrown = false;
         try {
@@ -143,7 +143,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Test
     public void testDescription() {
         Assert.assertEquals("Script", actionScript.getShortDescription());
-        Assert.assertEquals("Execute simple script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", actionScript.getLongDescription());
+        Assert.assertEquals("Execute script: Jython command. Script lights.provideLight(\"IL1\").commandedState = ON", actionScript.getLongDescription());
     }
 
     @Test
