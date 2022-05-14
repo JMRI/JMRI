@@ -17,7 +17,7 @@ public class ScriptEngineSelector {
     public static final String ECMA_SCRIPT = "ECMAScript";
 
     private static final Engine _defaultEngine;
-    private static final List<Engine> _engines = new ArrayList();
+    private static final List<Engine> _engines = new ArrayList<>();
     private static final Map<String, Engine> _engineMap = new HashMap<>();
     private static final Set<String> languageNames = new HashSet<>();
 
