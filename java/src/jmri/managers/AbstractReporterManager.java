@@ -20,7 +20,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /**
      * Create a new ReporterManager instance.
-     * 
+     *
      * @param memo the system connection
      */
     public AbstractReporterManager(SystemConnectionMemo memo) {
@@ -74,7 +74,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @Override
     @CheckForNull
     public Reporter getByDisplayName(@Nonnull String key) {
-        return getReporter(key);        
+        return getReporter(key);
     }
 
     /** {@inheritDoc} */
@@ -139,12 +139,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      */
     @Nonnull
     abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        return false;
-    }
 
     /** {@inheritDoc} */
     @Override

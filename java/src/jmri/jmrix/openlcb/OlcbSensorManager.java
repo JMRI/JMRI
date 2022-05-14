@@ -161,12 +161,12 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        // always return this (the current) name without change
-        /*String tmpSName = */ createSystemName(curAddress,prefix);
-        return curAddress;
+    @javax.annotation.Nonnull
+    @javax.annotation.CheckReturnValue
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        throw new jmri.JmriException("getNextValidSystemName should not have been called");
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -196,7 +196,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void updateAll() {
         // no current mechanisim to request status updates from all layout sensors
     }
-    
+
     /**
      * Validates to OpenLCB format.
      * {@inheritDoc}

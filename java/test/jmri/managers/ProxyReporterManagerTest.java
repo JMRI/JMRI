@@ -87,21 +87,16 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2"));
     }
-    
+
     // No manager-specific system name validation
     @Test
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
+
     // No manager-specific system name validation
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
-    
-    // No manager-specific system name validation
-    @Test
-    @Override
-    public void testIncorrectGetNextValidAddress() {}
 
     @BeforeEach
     @Override

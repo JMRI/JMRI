@@ -164,46 +164,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         return validateTrimmedMin1NumberSystemNameFormat(name,locale);
     }
-    
+
     int board = 0;
     int port = 0;
-
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            port++;
-            while (port < 17) {
-                try {
-                    tmpSName = createSystemName(board + ":" + port, prefix);
-                } catch (JmriException e) {
-                    throw new JmriException("Error creating system name from "+curAddress+" for "+board+":"+port);
-                }
-                s = getBySystemName(tmpSName);
-                if (s == null) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(board);
-                    sb.append(":");
-                    //Little work around to pad single digit address out.
-                    padPortNumber(port, sb);
-                    return sb.toString();
-                }
-                port++;
-            }
-            throw new JmriException("Error creating system name from "+curAddress+" , port needs to be less than 16");
-        } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append(board);
-            sb.append(":");
-            //Little work around to pad single digit address out.
-            padPortNumber(port, sb);
-            return sb.toString();
-        }
-    }
 
     void padPortNumber(int portNo, StringBuilder sb) {
         if (portNo < 10) {

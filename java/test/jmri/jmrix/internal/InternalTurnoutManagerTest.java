@@ -22,7 +22,7 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     public String getSystemName(int i) {
         return "IT" + i;
     }
-    
+
     @Override
     protected String getASystemNameWithNoPrefix() {
         return "My Turnout 6";
@@ -169,21 +169,16 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         Assert.assertEquals("new outputInterval in memo", 50, l.getMemo().getOutputInterval()); // get directly from memo
         Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // get via turnoutManager
     }
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
+
     // No manager-specific system name validation at present
     @Test
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
-    
-    // No manager-specific system name validation at present
-    @Test
-    @Override
-    public void testIncorrectGetNextValidAddress() {}
 
     // from here down is testing infrastructure
     @Override

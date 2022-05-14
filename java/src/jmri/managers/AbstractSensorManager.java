@@ -20,7 +20,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /**
      * Create a new SensorManager instance.
-     * 
+     *
      * @param memo the system connection
      */
     public AbstractSensorManager(SystemConnectionMemo memo) {
@@ -137,13 +137,13 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /**
      * Internal method to invoke the factory and create a new Sensor.
-     * 
+     *
      * Called after all the logic for returning an existing Sensor
      * has been invoked.
      * An existing SystemName is not found, existing UserName not found.
-     * 
+     *
      * Implementing classes should base Sensor on the system name, then add user name.
-     * 
+     *
      * @param systemName the system name to use for the new Sensor
      * @param userName   the optional user name to use for the new Sensor
      * @return the new Sensor
@@ -162,22 +162,16 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     public void updateAll() {
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        return false;
-    }
-
     /**
      * Default Sensor ensures a numeric only system name.
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Nonnull
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return prefix + typeLetter() + checkNumeric(curAddress);
     }
-    
+
     protected long sensorDebounceGoingActive = 0L;
     protected long sensorDebounceGoingInActive = 0L;
 

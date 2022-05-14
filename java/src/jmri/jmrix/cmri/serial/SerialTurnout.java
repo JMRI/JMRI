@@ -139,7 +139,7 @@ public class SerialTurnout extends AbstractTurnout {
                     return;
                 }
             }
-            if (getNumberOutputBits() == 1) {
+            if (getNumberControlBits() == 1) {
                 // check for pulsed control
                 if (getControlType() == 0) {
                     // steady state control, get current status of the output bit
@@ -218,7 +218,7 @@ public class SerialTurnout extends AbstractTurnout {
                         mPulseClosedTimer.start();
                     }
                 }
-            } else if (getNumberOutputBits() == 2) {
+            } else if (getNumberControlBits() == 2) {
                 // two output bits
                 if (getControlType() == 0) {
                     // Steady state control e.g. stall motor turnout control
@@ -270,8 +270,8 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * {@inheritDoc} 
-     * 
+     * {@inheritDoc}
+     *
      * Sorts by node number and then by bit
      */
     @CheckReturnValue

@@ -207,14 +207,14 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
             sysName = makeSystemName("T", nAddress, bitNum - 1);
             t = InstanceManager.turnoutManagerInstance().getBySystemName(sysName);
             if (t != null) {
-                if (t.getNumberOutputBits() == 2) {
+                if (t.getNumberControlBits() == 2) {
                     return sysName;
                 }
             } else {
                 altName = convertSystemNameToAlternate(sysName);
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(altName);
                 if (t != null) {
-                    if (t.getNumberOutputBits() == 2) {
+                    if (t.getNumberControlBits() == 2) {
                         return altName;
                     }
                 }

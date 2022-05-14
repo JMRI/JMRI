@@ -325,7 +325,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMakesAndMonitors() {
         msg = new DCCppMessage("F 123 22 1");
-        Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 2, State: 1", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 22, State: 1", msg.toMonitorString());
         msg = DCCppMessage.makeFunctionV4Message(123, 4, true);
         Assert.assertEquals("Monitor string", "Function Cmd: CAB: 123, FUNC: 4, State: 1", msg.toMonitorString());
         msg = DCCppMessage.makeFunctionV4Message(123, 5, false);
@@ -619,7 +619,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg = DCCppMessage.makeAddressedEmergencyStop(5, 24);
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
         msg = DCCppMessage.makeAddressedEmergencyStop(24);
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());
     }
 
     @Test
@@ -677,7 +677,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());        
         //newer version without register
         msg = DCCppMessage.makeSpeedAndDirectionMsg(24, 0.5f, false);
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());        
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: 63, Direction: Reverse", msg.toMonitorString());        
     }
 
     @Test
@@ -686,7 +686,7 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Throttle Cmd: Register: 5, Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
         //newer version without register
         msg = DCCppMessage.makeAddressedEmergencyStop(24);
-        Assert.assertEquals("Monitor string", "ThrottleV3 Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
+        Assert.assertEquals("Monitor string", "Throttle Cmd: Address: 24, Speed: -1, Direction: Forward", msg.toMonitorString());        
     }
 
     @Test
