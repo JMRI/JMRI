@@ -52,7 +52,6 @@ public class XmlFileValidateRunnerTest {
             }
             @Override
             protected void showFailResults(Component who, String fileName, String text) {
-                System.out.println(text);
                 Assert.assertTrue("check message", text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1]"));
                 fail = true;
             }
