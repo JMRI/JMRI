@@ -133,7 +133,7 @@ public class SerialTurnout extends AbstractTurnout {
     protected void sendMessage(boolean closed) {
         // if a Pulse Timer is running, ignore the call
         if (!mPulseTimerOn) {
-            if (getNumberOutputBits() == 1) {
+            if (getNumberControlBits() == 1) {
                 // check for pulsed control
                 if (getControlType() == 0) {
                     // steady state control, get current status of the output bit
@@ -153,7 +153,7 @@ public class SerialTurnout extends AbstractTurnout {
                                 _memo.getTrafficController().outputBits().setOutputBit(tBit, false ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseClosedTimer==null) {
-//         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
+//         mPulseClosedTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(),
 //           new java.awt.event.ActionListener() {
 //          public void actionPerformed(java.awt.event.ActionEvent e) {
 //           OutputBits.instance().setOutputBit(tBit, true^getInverted());
@@ -173,12 +173,12 @@ public class SerialTurnout extends AbstractTurnout {
                                 _memo.getTrafficController().outputBits().setOutputBit(tBit, true ^ getInverted());
 //        // start a timer to finish setting this turnout
 //        if (mPulseThrownTimer==null) {
-//         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(), 
+//         mPulseThrownTimer = new javax.swing.Timer(OutputBits.instance().getPulseWidth(),
 //           new java.awt.event.ActionListener() {
 //          public void actionPerformed(java.awt.event.ActionEvent e) {
 //           OutputBits.instance().setOutputBit(tBit, false^getInverted());
 //           mPulseThrownTimer.stop();
-//           mPulseTimerOn = false;        
+//           mPulseTimerOn = false;
 //          }
 //         });
 //        }
@@ -199,7 +199,7 @@ public class SerialTurnout extends AbstractTurnout {
 //      OutputBits.instance().setOutputBit(tBit,false^getInverted());
 //      // Start a timer to return bit to off state
 //      if (mPulseClosedTimer==null) {
-//       mPulseClosedTimer = new javax.swing.Timer(iTime, new 
+//       mPulseClosedTimer = new javax.swing.Timer(iTime, new
 //          java.awt.event.ActionListener() {
 //        public void actionPerformed(java.awt.event.ActionEvent e) {
 //         OutputBits.instance().setOutputBit(tBit, true^getInverted());
@@ -209,7 +209,7 @@ public class SerialTurnout extends AbstractTurnout {
 //       });
 //      }
 //      mPulseTimerOn = true;
-//      mPulseClosedTimer.start();      
+//      mPulseClosedTimer.start();
 //     }
                 }
             }

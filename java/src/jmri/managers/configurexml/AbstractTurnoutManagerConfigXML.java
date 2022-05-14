@@ -103,7 +103,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 }
 
                 // include number of control bits, if different from one
-                int iNum = t.getNumberOutputBits();
+                int iNum = t.getNumberControlBits();
                 if (iNum != 1) {
                     elem.setAttribute("numBits", "" + iNum);
                 }
@@ -292,14 +292,14 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             // number of bits, if present - if not, defaults to 1
             a = elem.getAttribute("numBits");
             if (a == null) {
-                t.setNumberOutputBits(1);
+                t.setNumberControlBits(1);
             } else {
                 int iNum = Integer.parseInt(a.getValue());
                 if ((iNum == 1) || (iNum == 2)) {
-                    t.setNumberOutputBits(iNum);
+                    t.setNumberControlBits(iNum);
                 } else {
                     log.warn("illegal number of output bits for control of turnout {}", sysName);
-                    t.setNumberOutputBits(1);
+                    t.setNumberControlBits(1);
                     result = false;
                 }
             }
