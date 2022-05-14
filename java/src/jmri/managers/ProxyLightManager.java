@@ -128,11 +128,6 @@ public class ProxyLightManager extends AbstractProvidingProxyManager<Light>
         LightManager m = (LightManager) getManager(systemName);
         return (m == null) ? false : m.allowMultipleAdditions(systemName);
     }
-    
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
-    }
 
     @Override
     @Nonnull

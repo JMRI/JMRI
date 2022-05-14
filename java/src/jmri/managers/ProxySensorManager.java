@@ -75,11 +75,6 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
-    }
-
-    @Override
     public long getDefaultSensorDebounceGoingActive() {
         return ((SensorManager) getDefaultManager()).getDefaultSensorDebounceGoingActive();
     }

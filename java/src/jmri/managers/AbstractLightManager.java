@@ -25,7 +25,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
 
     /**
      * Create a new LightManager instance.
-     * 
+     *
      * @param memo the system connection
      */
     public AbstractLightManager(SystemConnectionMemo memo) {
@@ -79,7 +79,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
         log.debug("newLight: {};{}", systemName, userName);
-        
+
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Light l;
@@ -148,14 +148,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      */
     @Override
     public boolean supportsVariableLights(@Nonnull String systemName) {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
