@@ -13,11 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.MissingResourceException;
 
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 import javax.swing.*;
 import javax.swing.event.CaretEvent;
@@ -27,7 +23,6 @@ import jmri.UserPreferencesManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptEngineSelector;
 import jmri.script.ScriptEngineSelector.Engine;
-import jmri.script.swing.ScriptEngineSelectorSwing;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
