@@ -81,6 +81,7 @@ public class MqttSignalMast extends AbstractSignalMast {
         setMastType(mast);
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
+            log.debug("Parse {} as integer from {}?", tmp, parts[2]);
             int autoNumber = Integer.parseInt(tmp);
             synchronized (MqttSignalMast.class) {
                 if (autoNumber > getLastRef()) {
@@ -88,7 +89,7 @@ public class MqttSignalMast extends AbstractSignalMast {
                 }
             }
         } catch (NumberFormatException e) {
-            log.warn("Auto generated SystemName {} is not in the correct format", systemName);
+            log.debug("Auto generated SystemName {} does not have numeric form, skipping autoincrement", systemName);
         }
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
