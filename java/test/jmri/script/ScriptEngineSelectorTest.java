@@ -18,9 +18,8 @@ public class ScriptEngineSelectorTest {
             "import jmri%n" +
             "turnouts.provide(\"IT1\").setState(jmri.Turnout.THROWN)");
 
-    private final ScriptEngineSelector _scriptEngineSelector =
-            new ScriptEngineSelector();
-    private Turnout turnout;
+    private ScriptEngineSelector _scriptEngineSelector;
+    private Turnout _turnout;
 
     private void runScriptOldStyle() throws ScriptException {
         Bindings bindings = new SimpleBindings();
@@ -40,42 +39,42 @@ public class ScriptEngineSelectorTest {
     @Test
     public void testOldStyle1() throws JmriException, ScriptException {
         runScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testOldStyle2() throws JmriException, ScriptException {
-        turnout.setState(Turnout.CLOSED);
+        _turnout.setState(Turnout.CLOSED);
         runScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testOldStyle3() throws JmriException, ScriptException {
-        turnout.setState(Turnout.CLOSED);
+        _turnout.setState(Turnout.CLOSED);
         runScriptOldStyle();
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testNewStyle1() throws JmriException, ScriptException {
-        turnout.setState(Turnout.CLOSED);
+        _turnout.setState(Turnout.CLOSED);
         runScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testNewStyle2() throws JmriException, ScriptException {
-        turnout.setState(Turnout.CLOSED);
+        _turnout.setState(Turnout.CLOSED);
         runScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
     public void testNewStyle3() throws JmriException, ScriptException {
-        turnout.setState(Turnout.CLOSED);
+        _turnout.setState(Turnout.CLOSED);
         runScriptNewStyle();
-        Assert.assertEquals(Turnout.THROWN, turnout.getState());
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     // The minimal setup for log4J
@@ -86,12 +85,13 @@ public class ScriptEngineSelectorTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        _turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        _scriptEngineSelector = new ScriptEngineSelector();
     }
 
     @After
     public void tearDown() {
-        turnout = null;
+        _turnout = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
