@@ -14,66 +14,102 @@ import org.junit.*;
  */
 public class ScriptEngineSelectorTest {
 
-    private static final String SCRIPT = String.format(
+    private static final String JYTHON_SCRIPT = String.format(
             "import jmri%n" +
             "turnouts.provide(\"IT1\").setState(jmri.Turnout.THROWN)");
+
+    private static final String ECMA_SCRIPT = String.format(
+            "var Turnout = Java.type(\"jmri.Turnout\");%n" +
+            "turnouts.provide(\"IT1\").setState(Turnout.THROWN);");
 
     private ScriptEngineSelector _scriptEngineSelector;
     private Turnout _turnout;
 
-    private void runScriptOldStyle() throws ScriptException {
+    private void runJythonScriptOldStyle() throws ScriptException {
         Bindings bindings = new SimpleBindings();
         JmriScriptEngineManager scriptEngineManager =
                 jmri.script.JmriScriptEngineManager.getDefault();
         scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                .eval(SCRIPT, bindings);
+                .eval(JYTHON_SCRIPT, bindings);
     }
 
-    private void runScriptNewStyle() throws ScriptException {
+    private void runEcmaScriptOldStyle() throws ScriptException {
+        Bindings bindings = new SimpleBindings();
+        JmriScriptEngineManager scriptEngineManager =
+                jmri.script.JmriScriptEngineManager.getDefault();
+        scriptEngineManager.getEngineByName("ecmascript")
+                .eval(ECMA_SCRIPT, bindings);
+    }
+
+    private void runJythonScriptNewStyle() throws ScriptException {
+        System.out.format("runJythonScriptNewStyle()%n");
         Bindings bindings = new SimpleBindings();
         ScriptEngineSelector.Engine engine =
                 _scriptEngineSelector.getSelectedEngine();
-        engine.getScriptEngine().eval(SCRIPT, bindings);
+        engine.getScriptEngine().eval(JYTHON_SCRIPT, bindings);
+    }
+
+    private void runEcmaScriptNewStyle() throws ScriptException {
+        System.out.format("runEcmaScriptNewStyle()%n");
+        Bindings bindings = new SimpleBindings();
+        _scriptEngineSelector.setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+        ScriptEngineSelector.Engine engine =
+                _scriptEngineSelector.getSelectedEngine();
+        engine.getScriptEngine().eval(ECMA_SCRIPT, bindings);
     }
 
     @Test
-    public void testOldStyle1() throws JmriException, ScriptException {
-        runScriptOldStyle();
+    public void testJythonOldStyle1() throws JmriException, ScriptException {
+        runJythonScriptOldStyle();
         Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
-    public void testOldStyle2() throws JmriException, ScriptException {
+    public void testJythonOldStyle2() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
-        runScriptOldStyle();
+        runJythonScriptOldStyle();
         Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
-    public void testOldStyle3() throws JmriException, ScriptException {
+    public void testEcmaOldStyle1() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
-        runScriptOldStyle();
+        runEcmaScriptOldStyle();
         Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
-    public void testNewStyle1() throws JmriException, ScriptException {
+    public void testEcmaOldStyle2() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
-        runScriptNewStyle();
+        runEcmaScriptOldStyle();
         Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
-    public void testNewStyle2() throws JmriException, ScriptException {
+    public void testJythonNewStyle1() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
-        runScriptNewStyle();
+        runJythonScriptNewStyle();
         Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
     @Test
-    public void testNewStyle3() throws JmriException, ScriptException {
+    public void testJythonNewStyle2() throws JmriException, ScriptException {
         _turnout.setState(Turnout.CLOSED);
-        runScriptNewStyle();
+        runJythonScriptNewStyle();
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+    }
+
+    @Test
+    public void testEcmaNewStyle1() throws JmriException, ScriptException {
+        _turnout.setState(Turnout.CLOSED);
+        runEcmaScriptNewStyle();
+        Assert.assertEquals(Turnout.THROWN, _turnout.getState());
+    }
+
+    @Test
+    public void testEcmaNewStyle2() throws JmriException, ScriptException {
+        _turnout.setState(Turnout.CLOSED);
+        runEcmaScriptNewStyle();
         Assert.assertEquals(Turnout.THROWN, _turnout.getState());
     }
 
