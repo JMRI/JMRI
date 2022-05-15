@@ -1,55 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Hardware Support - XpressNet System Information
-  Tool</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Hardware Support - XpressNet System Information Tool</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
+      <h1>Hardware Support: XpressNet System Information Tool</h1>
+      <img src="images/XPressNetSystemInfo.jpg" alt="XpressNet System Information Tool Image">
+      <p>The XpressNet System Information tool is used to determine what hardware is connected to
+      the system.</p>
 
-      <h1>Hardware Support: XpressNet System Information
-      Tool</h1><img src="images/XPressNetSystemInfo.jpg" alt=
-      "XpressNet System Information Tool Image">
+      <p>The top two lines indicate the Command Station type and software version that is connected
+      to your computer. This information is read as part of the auto configuration process when
+      JMRI first starts, but can be re-read using the "Get System Info" button.</p>
 
-      <p>The XpressNet System Information tool is used to determine
-      what hardware is connected to the system.</p>
-
-      <p>The top two lines indicate the Command Station type and
-      software version that is connected to your computer. This
-      information is read as part of the auto configuration process
-      when JMRI first starts, but can be re-read using the "Get
-      System Info" button.</p>
-
-      <p>Below the Interface field, the hardware and software
-      version of the computer interface are displayed.<br>
-      These values are only shown after clicking on "Get System
-      Info"</p>
+      <p>Below the Interface field, the hardware and software version of the computer interface are
+      displayed.<br>
+      These values are only shown after clicking on "Get System Info"</p>
 
       <h4>Buttons</h4>
 
-      <p>The image shows the results obtained by pressing the "Get
-      System Info" button with a Software version 2 LI101F
-      connected to an atlas Commander with software 3.2.</p>
+      <p>The image shows the results obtained by pressing the "Get System Info" button with a
+      Software version 2 LI101F connected to an atlas Commander with software 3.2.</p>
 
       <p>Clicking on "Close" will close the pane.</p>
 
-      <p>Back to the <a href="index.shtml">XpressNet Help</a>
-      page</p>
+      <p>Back to the <a href="index.shtml">XpressNet Help</a> page</p>
+
       <hr>
       Paul Bender<br>
-      paul.bender@acm.org
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      paul.bender@acm.org <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

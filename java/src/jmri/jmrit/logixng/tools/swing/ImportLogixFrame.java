@@ -198,11 +198,11 @@ public final class ImportLogixFrame extends JmriJFrame {
         boolean error = false;
         StringBuilder errorMessage = new StringBuilder("<html><table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">");
         errorMessage.append("<tr><th>");
-        errorMessage.append("System name");
+        errorMessage.append(Bundle.getMessage("ColumnSystemName"));
         errorMessage.append("</th><th>");
-        errorMessage.append("User name");
+        errorMessage.append(Bundle.getMessage("ColumnUserName"));
         errorMessage.append("</th><th>");
-        errorMessage.append("Error");
+        errorMessage.append(Bundle.getMessage("ImportLogixColumnError"));
         errorMessage.append("</th></tr>");
 
         for (Logix logix : logixs) {
@@ -231,9 +231,10 @@ public final class ImportLogixFrame extends JmriJFrame {
                     throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
                 }
             }
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("LogixsAreImported"), Bundle.getMessage("TitleLogixsImportSuccess"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             errorMessage.append("</table></html>");
-            JOptionPane.showMessageDialog(this, errorMessage.toString(), "Error during import", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, errorMessage.toString(), Bundle.getMessage("TitleLogixImportError"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

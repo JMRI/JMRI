@@ -53,6 +53,13 @@
       <p>If you're making up your own system, describe it in some detail so that you can come back
       to it later on and remember what you had in mind.</p>
 
+      <p>At a minimum, the index.shtml contains a link to the aspects.xml file and each
+      appearance xml file.  This is used to display formatted pages for each xml file.  Use the
+      index.xml for the Basic signal system as a model.</p>
+
+      <p>If the new signal system is going to be contributed to JMRI, the xml/signals/index.shtml
+      file needs to be updated with a link to the new signal system index.shtml file.
+
       <h3>Create a new aspects.xml file</h3>
       The <code>&lt;name&gt;</code> element at the top of this file provides the user name for your
       signaling system, which features prominently in the user interface. It can be a little more
@@ -190,7 +197,7 @@ locate all of them and display them to the user.
       preference:resources/etc paths. If all aspects of your new signal definition are working on
       your panel/layout and you plan to submit your new signal system as a patch to JMRI, use full
       URL paths like https://jmri.org/resources/icons/etc in the XML files so that they'll work
-      with both the local JMRI program and for people viewing them on the JMRI web site.</p>
+      with both the local JMRI program and for people viewing them on the JMRI website.</p>
 
       <h4>Specific Appearances</h4>
       There are four specific appearances that JMRI will and can refer to, as the appearance names
@@ -264,7 +271,7 @@ entered, the corresponding <code>&lt;aspect&gt;</code> entry must be a valid
 
       <p>You can use the "Validate XML File" tools under the JMRI "Debug" window to check your
       files. (Note that you have to be connected to the internet to do this, as the files refer to
-      some checking resources that live on the JMRI web site.) First, it checks the basic format:
+      some checking resources that live on the JMRI website.) First, it checks the basic format:
       Are all the &lt; and &gt; characters in the right place? Etc. Then it makes sure that the
       right elements are in the right places, checks some of the contents, etc.</p>
 

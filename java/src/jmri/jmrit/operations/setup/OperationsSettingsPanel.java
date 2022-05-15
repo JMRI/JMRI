@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -366,8 +365,6 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         addButtonAction(saveButton);
         addCheckBoxAction(eastCheckBox);
         addCheckBoxAction(northCheckBox);
-
-        initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
 
         // now provide the railroad name
         railroadNameTextField.setText(Setup.getRailroadName());

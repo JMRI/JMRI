@@ -12,7 +12,7 @@
 #
 # If there is no main() method found in the named class, an
 # org.junit.runner.JUnitCore runner is asked to try to run the
-# class as JUnit4 tests. 
+# class as JUnit4 tests.
 #
 # This works by calling .run.sh, which is generated from the JMRI POSIX launcher
 # by running 'ant run-sh'
@@ -35,11 +35,11 @@
 #  jmri.skipscripttests     Skip tests of Jython scripts if true
 #  jmri.log4jconfigfilename Specify replacement for details tests.lcf file (tests only)
 #
-# E.g.: 
+# E.g.:
 # setenv JMRI_OPTIONS -Djmri.skipschematests=true
 #
 # You can run separate instances of the program with their
-# own preferences and setup if you provide the name of a configuration file 
+# own preferences and setup if you provide the name of a configuration file
 # as the 1st argument
 #
 # If you are getting X11 warnings about meta keys, uncomment the next line
@@ -93,4 +93,4 @@ fi
 # tests to the classpaths
 testclasspath="--cp:a=${dirname}/target/test-classes"
 
-"${dirname}/.run.sh" "${settingsdir}" "${prefsdir}" "${testclasspath}" $@
+"${dirname}/.run.sh" -T "${settingsdir}" "${prefsdir}" "${testclasspath}" $@

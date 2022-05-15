@@ -1,6 +1,10 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
+import java.awt.Component;
+import java.awt.Container;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -13,42 +17,33 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;
-import jmri.util.junit.rules.*;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
-import org.openide.util.Exceptions;
 
-
-/*
+/**
 * Tests for the LogixNGTableAction Class
-* Re-created using JUnit4 with support for the new conditional editors
+* Re-created using JUnit5 with support for the new conditional editors
 * @author Dave Sand Copyright (C) 2017 (for the LogixTableActionTest class)
 * @author Daniel Bergqvist Copyright (C) 2019
 */
+@Timeout(10) // 10 second timeout for methods in this test class.
 public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
     static final ResourceBundle rbxLogixNGSwing = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
         Assert.assertNotNull("LogixNGTableActionTest Constructor Return", new LogixNGTableAction());  // NOI18N
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LogixNGTableAction Constructor Return", new LogixNGTableAction("test"));  // NOI18N
     }
 
@@ -79,11 +74,11 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         return Bundle.getMessage("TitleAddLogixNG");
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -91,7 +86,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertNull("LogixNG does not exist", logixNG);
 
         // find the "Add... " button and press it.
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
+        JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
@@ -103,13 +98,13 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 //        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("IQ1");
         //and press create
-        jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
+        JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
 
         // Click button "Done" on the EditLogixNG frame
         String title = String.format("Edit LogixNG %s", "IQ1");
         JFrame frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
         JFrameOperator jf2 = new JFrameOperator(frame);
-        jmri.util.swing.JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
+        JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
         JUnitUtil.dispose(frame);
 
         // Test that we can open the LogixNGEdtior window twice
@@ -118,7 +113,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         title = String.format("Edit LogixNG %s - %s", "IQ101", "LogixNG 101");
         frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
         jf2 = new JFrameOperator(frame);
-        jmri.util.swing.JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
+        JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
         JUnitUtil.dispose(frame);
 
         JUnitUtil.dispose(f1);
@@ -128,11 +123,11 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertNotNull("LogixNG has been created", logixNG);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
         Assert.assertNotNull("LogixNG exists", logixNG);
@@ -140,12 +135,11 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         logixNGTable.editPressed("IQ101");  // NOI18N
 
         String title = String.format("Edit LogixNG %s - %s", logixNG.getSystemName(), logixNG.getUserName());
-        JFrame frame = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
-//        JFrame frame2 = JFrameOperator.waitJFrame(Bundle.getMessage("EditTitle"), true, true);  // NOI18N
+        JFrameOperator jf = new JFrameOperator(title);
+        Assert.assertNotNull(jf);
 
         // Click button "New ConditionalNG" on the EditLogixNG frame
-        JFrameOperator jf = new JFrameOperator(frame);
-        jmri.util.swing.JemmyUtil.pressButton(jf,"New ConditionalNG");
+        JemmyUtil.pressButton(jf,"New ConditionalNG");
 
 
         JDialogOperator addDialog = new JDialogOperator("Add ConditionalNG");  // NOI18N
@@ -154,16 +148,17 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         // Close window
         JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG " + logixNG.getConditionalNG(0));
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
-
-        Assert.assertNotNull(frame);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(frame),Bundle.getMessage("ButtonDone"));
-        JUnitUtil.dispose(frame);
+        editConditionalNGFrameOperator.waitClosed();
+        
+        JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonDone"));
+        jf.requestClose();
+        jf.waitClosed();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testLogixNGBrowser() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.browserPressed("IQ101");  // NOI18N
 
@@ -172,27 +167,30 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JUnitUtil.dispose(frame);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testTreeEditor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixNGTableAction", "Edit Mode", "TREEEDIT");  // NOI18N
         a.actionPerformed(null);
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
         JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
         Assert.assertNotNull(logixNGFrame);
 
         logixNGTable.editPressed("IQ104");  // NOI18N
         JFrameOperator cdlFrame = new JFrameOperator(jmri.Bundle.formatMessage(rbxLogixNGSwing.getString("TitleEditLogixNG"), "IQ104"));  // NOI18N
         Assert.assertNotNull(cdlFrame);
-        new JMenuBarOperator(cdlFrame).pushMenuNoBlock(Bundle.getMessage("MenuFile")+"|"+rbxLogixNGSwing.getString("CloseWindow"), "|");  // NOI18N
+
+        JemmyUtil.pressButton(cdlFrame,Bundle.getMessage("ButtonDone"));
+        cdlFrame.waitClosed();
+
         logixNGFrame.dispose();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddLogixNGAutoName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -215,10 +213,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JUnitUtil.dispose(logixNGFrame);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddLogixNG() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -245,37 +243,201 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JUnitUtil.dispose(logixNGFrame);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteLogixNG() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+
+        logixNGTable.actionPerformed(null); // show table
+        JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
+        Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
+
+        // Delete IQ102, respond No
+        Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQ102?");  // NOI18N
+        logixNGTable.deletePressed("IQ102");  // NOI18N
+        JUnitUtil.waitFor(() -> {return !t1.isAlive();});
+
+        LogixNG chk102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
+        Assert.assertNotNull("Verify IQ102 Not Deleted", chk102);  // NOI18N
+
+        // Delete IQ103, respond Yes
+        Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQ103?");  // NOI18N
+        logixNGTable.deletePressed("IQ103");  // NOI18N
+        JUnitUtil.waitFor(() -> {return !t2.isAlive();});
+
+        LogixNG chk103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");  // NOI18N
+        Assert.assertNull("Verify IQ103 Is Deleted", chk103);  // NOI18N
+
+        logixNGFrame.requestClose();
+        logixNGFrame.waitClosed();
+    }
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testDeleteLogixNGWithConditionalNG() throws InterruptedException, SocketAlreadyConnectedException {
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+
+        LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
+        InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
+
+        LogixNG logixNG_103 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");   // NOI18N
+        InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_103, "IQC103", null);   // NOI18N
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         // Delete IQ102, respond No
-        Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
+        Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQ102 and its children?");  // NOI18N
         logixNGTable.deletePressed("IQ102");  // NOI18N
-        t1.join();
-        LogixNG chk102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
-        Assert.assertNotNull("Verify IQ102 Not Deleted", chk102);  // NOI18N
+        JUnitUtil.waitFor(() -> {return !t1.isAlive();});
+        LogixNG log102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
+        Assert.assertNotNull("Verify IQ102 Not Deleted", log102);  // NOI18N
+        ConditionalNG cond102 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC102");   // NOI18N
+        Assert.assertNotNull("Verify IQC102 Not Deleted", cond102);  // NOI18N
 
         // Delete IQ103, respond Yes
-        Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQ103 and its children?");  // NOI18N
         logixNGTable.deletePressed("IQ103");  // NOI18N
-        t2.join();
+        JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         LogixNG chk103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");  // NOI18N
         Assert.assertNull("Verify IQ103 Is Deleted", chk103);  // NOI18N
+        ConditionalNG cond103 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC103");   // NOI18N
+        Assert.assertNull("Verify IQC103 Is Deleted", cond103);  // NOI18N
 
         JUnitUtil.dispose(logixNGFrame);
     }
 
-    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testDeleteLogixNGWithDigitalAction() throws InterruptedException, SocketAlreadyConnectedException {
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+
+        LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
+        ConditionalNG conditionalNG_102 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
+        jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
+                new jmri.jmrit.logixng.actions.DigitalMany("IQDA102", null);
+        conditionalNG_102.getFemaleSocket().connect(
+                InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(digitalMany_102));
+
+        LogixNG logixNG_103 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");   // NOI18N
+        ConditionalNG conditionalNG_103 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_103, "IQC103", null);   // NOI18N
+        jmri.jmrit.logixng.actions.DigitalMany digitalMany_103 =
+                new jmri.jmrit.logixng.actions.DigitalMany("IQDA103", null);
+        conditionalNG_103.getFemaleSocket().connect(
+                InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(digitalMany_103));
+
+        logixNGTable.actionPerformed(null); // show table
+        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
+        Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
+
+        // Delete IQ102, respond No
+        Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQ102 and its children?");  // NOI18N
+        logixNGTable.deletePressed("IQ102");  // NOI18N
+        t1.join();
+        LogixNG log102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
+        Assert.assertNotNull("Verify IQ102 Not Deleted", log102);  // NOI18N
+        ConditionalNG cond102 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC102");   // NOI18N
+        Assert.assertNotNull("Verify IQC102 Not Deleted", cond102);  // NOI18N
+        MaleSocket digMany102 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA102");   // NOI18N
+        Assert.assertNotNull("Verify IQDA102 Not Deleted", digMany102);  // NOI18N
+
+        // Delete IQ103, respond Yes
+        Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQ103 and its children?");  // NOI18N
+        logixNGTable.deletePressed("IQ103");  // NOI18N
+        t2.join();
+        LogixNG chk103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");  // NOI18N
+        Assert.assertNull("Verify IQ103 Is Deleted", chk103);  // NOI18N
+        ConditionalNG cond103 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC103");   // NOI18N
+        Assert.assertNull("Verify IQC103 Is Deleted", cond103);  // NOI18N
+        MaleSocket digMany103 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA103");   // NOI18N
+        Assert.assertNull("Verify IQDA103 Is Deleted", digMany103);  // NOI18N
+
+        JUnitUtil.dispose(logixNGFrame);
+    }
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testDeleteLogixNGWithDigitalActionWithListenerRef() throws InterruptedException, SocketAlreadyConnectedException {
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+
+        PropertyChangeListener pcl = (PropertyChangeEvent evt) -> {
+            throw new UnsupportedOperationException("Not supported");
+        };
+
+        final String listenerRefs =
+                "<html>\n" +
+                "  <head>\n" +
+                "    \n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <br>\n" +
+                "    It is in use by 1 other objects including.\n" +
+                "\n" +
+                "    <ul>\n" +
+                "      <li>\n" +
+                "        A listener ref\n" +
+                "      </li>\n" +
+                "    </ul>\n" +
+                "  </body>\n" +
+                "</html>\n";
+
+        LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
+        ConditionalNG conditionalNG_102 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
+        jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
+                new jmri.jmrit.logixng.actions.DigitalMany("IQDA102", null);
+        conditionalNG_102.getFemaleSocket().connect(
+                InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(digitalMany_102));
+        digitalMany_102.addPropertyChangeListener(pcl, null, "A listener ref");
+
+        LogixNG logixNG_103 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");   // NOI18N
+        ConditionalNG conditionalNG_103 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_103, "IQC103", null);   // NOI18N
+        jmri.jmrit.logixng.actions.DigitalMany digitalMany_103 =
+                new jmri.jmrit.logixng.actions.DigitalMany("IQDA103", null);
+        conditionalNG_103.getFemaleSocket().connect(
+                InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(digitalMany_103));
+        digitalMany_103.addPropertyChangeListener(pcl, null, "A listener ref");
+
+        logixNGTable.actionPerformed(null); // show table
+        JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
+        Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
+
+        // Delete IQ102, respond No
+        Thread t1 = createModalDialogOperatorThread_WithListenerRefs(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), listenerRefs);  // NOI18N
+        logixNGTable.deletePressed("IQ102");  // NOI18N
+        t1.join();
+        LogixNG log102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
+        Assert.assertNotNull("Verify IQ102 Not Deleted", log102);  // NOI18N
+        ConditionalNG cond102 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC102");   // NOI18N
+        Assert.assertNotNull("Verify IQC102 Not Deleted", cond102);  // NOI18N
+        MaleSocket digMany102 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA102");   // NOI18N
+        Assert.assertNotNull("Verify IQDA102 Not Deleted", digMany102);  // NOI18N
+
+        // Delete IQ103, respond Yes
+        Thread t2 = createModalDialogOperatorThread_WithListenerRefs(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), listenerRefs);  // NOI18N
+        logixNGTable.deletePressed("IQ103");  // NOI18N
+        t2.join();
+        LogixNG chk103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");  // NOI18N
+        Assert.assertNull("Verify IQ103 Is Deleted", chk103);  // NOI18N
+        ConditionalNG cond103 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC103");   // NOI18N
+        Assert.assertNull("Verify IQC103 Is Deleted", cond103);  // NOI18N
+        MaleSocket digMany103 = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA103");   // NOI18N
+        Assert.assertNull("Verify IQDA103 Is Deleted", digMany103);  // NOI18N
+
+        JUnitUtil.dispose(logixNGFrame);
+    }
+
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String labelText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            JLabelOperator jlo = new JLabelOperator(jdo, labelText);     // Throws exception if not found
+            Assert.assertNotNull(jlo);
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread");
@@ -283,6 +445,33 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         return t;
     }
 
+    private JEditorPane findTextArea(Container container) {
+        for (Component component : container.getComponents()) {
+            if (component instanceof JEditorPane) {
+                return (JEditorPane) component;
+            }
+            if (component instanceof Container) {
+                JEditorPane textArea = findTextArea((Container) component);
+                if (textArea != null) return textArea;
+            }
+        }
+        return null;
+    }
+
+    Thread createModalDialogOperatorThread_WithListenerRefs(String dialogTitle, String buttonText, String listenerRefs) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            JEditorPane textArea = findTextArea((Container) jdo.getComponent(0));
+            Assert.assertNotNull(textArea);
+            Assert.assertEquals(listenerRefs, textArea.getText());
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread");
+        t.start();
+        return t;
+    }
 
     // Test that it's possible to
     // * Add a LogixNG
@@ -292,15 +481,15 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     // * Add a ExpressionSensor
     // * Add a ActionTurnout
     // After that, test that the LogixNG is executed properly
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddAndRun() throws JmriException, InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
 
         // * Add a LogixNG
-        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
@@ -316,15 +505,17 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JTextFieldOperator(addFrame, 1).setText("LogixNG 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
+        addFrame.getQueueTool().waitEmpty();
+
         LogixNG logixNG = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getLogixNG("LogixNG 105");  // NOI18N
         Assert.assertNotNull("Verify IQ105 Added", logixNG);  // NOI18N
 
 
         // Close Edit LogixNG frame by click on button "Done" on the EditLogixNG frame
         String title = String.format("Edit LogixNG %s - %s", logixNG.getSystemName(), logixNG.getUserName());
-        JFrame editLogixNGframe = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
-        JFrameOperator jf2 = new JFrameOperator(editLogixNGframe);
-        jmri.util.swing.JemmyUtil.pressButton(jf2,Bundle.getMessage("ButtonDone"));
+        JFrameOperator jf2 = new JFrameOperator(title);
+        new JButtonOperator(jf2, Bundle.getMessage("ButtonDone")).push();  // NOI18N
+        jf2.waitClosed();
 
         // Operate on the table
         JTableOperator tableOperator = new JTableOperator(logixNGFrameOperator);
@@ -351,12 +542,11 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         // Open Edit ConditionalNG  frame
         title = String.format("Edit LogixNG %s - %s", logixNG.getSystemName(), logixNG.getUserName());
-        editLogixNGframe = JFrameOperator.waitJFrame(title, true, true);  // NOI18N
+        JFrameOperator editLogixNGframeOperator = new JFrameOperator(title);
 
 
         // Click button "New ConditionalNG" on the EditLogixNG frame
-        JFrameOperator jf = new JFrameOperator(editLogixNGframe);
-        jmri.util.swing.JemmyUtil.pressButton(jf,"New ConditionalNG");
+        JemmyUtil.pressButton(editLogixNGframeOperator,"New ConditionalNG");
 
         JDialogOperator addDialog = new JDialogOperator("Add ConditionalNG");  // NOI18N
         new JTextFieldOperator(addDialog, 0).setText("IQC105");  // NOI18N
@@ -403,7 +593,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
 
 
-        Thread.sleep(100);
+        JUnitUtil.waitFor(100);
 
         // We click on the IfThenElse if-expression female socket to open the popup menu
         tp = jto.getPathForRow(1);
@@ -437,7 +627,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
                 conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket().getLongDescription());
 
 
-        Thread.sleep(100);
+        JUnitUtil.waitFor(100);
 
         // We click on the IfThenElse then-action female socket to open the popup menu
         tp = jto.getPathForRow(2);
@@ -465,7 +655,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
-        Assert.assertEquals("Expression is correct", "Set turnout IT1 to state Thrown",
+        Assert.assertEquals("Action is correct", "Set turnout IT1 to state Thrown",
                 conditionalNG.getChild(0).getConnectedSocket().getChild(1).getConnectedSocket().getLongDescription());
 
 
@@ -488,10 +678,12 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertTrue("Turnout is thrown", turnout1.getState() == Turnout.THROWN);
 
         // Close Edit LogixNG frame
-        JUnitUtil.dispose(editLogixNGframe);
+        JemmyUtil.pressButton(editLogixNGframeOperator,Bundle.getMessage("ButtonDone"));
+        editLogixNGframeOperator.waitClosed();
 
         // Close LogixNG frame
-        logixNGFrameOperator.dispose();
+        logixNGFrameOperator.requestClose();
+        logixNGFrameOperator.waitClosed();
     }
 
     @BeforeEach

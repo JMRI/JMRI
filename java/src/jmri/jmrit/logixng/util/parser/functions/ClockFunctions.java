@@ -5,17 +5,13 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.util.parser.CalculateException;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Implementation of clock functions.
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 @ServiceProvider(service = FunctionFactory.class)
@@ -25,36 +21,54 @@ public class ClockFunctions implements FunctionFactory {
     public String getModule() {
         return "Clock";
     }
-    
+
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
         functionClasses.add(new SystemClockFunction());
         functionClasses.add(new FastClockFunction());
+        functionClasses.add(new FastClockRateFunction());
+        functionClasses.add(new IsFastClockRunningFunction());
         return functionClasses;
     }
-    
-    
-    
+
+    @Override
+    public Set<Constant> getConstants() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String getConstantDescription() {
+        // This module doesn't define any constants
+        return null;
+    }
+
+
+
     public static class SystemClockFunction implements Function {
-        
+
         @Override
         public String getModule() {
             return new ClockFunctions().getModule();
         }
-        
+
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
+        }
+
         @Override
         public String getName() {
             return "systemClock";
         }
-        
+
         @Override
         @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
         public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
                 throws CalculateException, JmriException {
-            
+
             Date currentTime = Date.from(Instant.now());
-            
+
             if (parameterList.isEmpty()) {  // Num minutes since midnight
                 return (currentTime.getHours() * 60) + currentTime.getMinutes();
             } else if (parameterList.size() == 1) {
@@ -80,35 +94,40 @@ public class ClockFunctions implements FunctionFactory {
             }
             throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
         }
-        
+
         @Override
         public String getDescription() {
             return Bundle.getMessage("Clock.systemClock_Descr");
         }
-        
+
     }
-    
+
     public static class FastClockFunction implements Function {
-        
+
         private final Timebase _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
-        
+
         @Override
         public String getModule() {
             return new ClockFunctions().getModule();
         }
-        
+
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
+        }
+
         @Override
         public String getName() {
             return "fastClock";
         }
-        
+
         @Override
         @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
         public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
                 throws JmriException {
-            
+
             Date currentTime = _fastClock.getTime();
-            
+
             if (parameterList.isEmpty()) {  // Num minutes since midnight
                 return (currentTime.getHours() * 60) + currentTime.getMinutes();
             } else if (parameterList.size() == 1) {
@@ -130,12 +149,86 @@ public class ClockFunctions implements FunctionFactory {
             }
             throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
         }
-        
+
         @Override
         public String getDescription() {
             return Bundle.getMessage("Clock.fastClock_Descr");
         }
-        
+
     }
-    
+
+    public static class FastClockRateFunction implements Function {
+
+        private final Timebase _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+
+        @Override
+        public String getModule() {
+            return new ClockFunctions().getModule();
+        }
+
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
+        }
+
+        @Override
+        public String getName() {
+            return "fastClockRate";
+        }
+
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+
+            double rate = _fastClock.userGetRate();
+
+            if (parameterList.isEmpty()) return rate;
+
+            throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+        }
+
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Clock.fastClockRate_Descr");
+        }
+
+    }
+
+    public static class IsFastClockRunningFunction implements Function {
+
+        private final Timebase _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+
+        @Override
+        public String getModule() {
+            return new ClockFunctions().getModule();
+        }
+
+        @Override
+        public String getConstantDescriptions() {
+            return new ClockFunctions().getConstantDescription();
+        }
+
+        @Override
+        public String getName() {
+            return "isFastClockRunning";
+        }
+
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws JmriException {
+
+            boolean rate = _fastClock.getRun();
+
+            if (parameterList.isEmpty()) return rate;
+
+            throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+        }
+
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Clock.isFastClockRunning_Descr");
+        }
+
+    }
+
 }

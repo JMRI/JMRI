@@ -1,61 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>
- 	  JMRI: Subversion FAQ
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code SVN Subversion FAQ">
-    <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Subversion FAQ</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code SVN Subversion FAQ">
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
 
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
 
-<h1>JMRI Code: Subversion FAQ</h1>
+    <div id="mainContent">
+      <h1>JMRI Code: Subversion FAQ</h1>
 
-    <p class="important">JMRI has migrated from Subversion (SVN)
-    to Git in September 2015. For our current Version Control FAQ,
-    please see the <a href="GitFAQ.shtml">Git FAQ</a>.</p>
+      <p class="important">JMRI has migrated from Subversion (SVN) to Git in September 2015. For
+      our current Version Control FAQ, please see the <a href="GitFAQ.shtml">Git FAQ</a>.</p>
 
-  <p>This is a list of Frequently Asked Questions for Subversion,
-particularly regarding how we used it with JMRI up until 2015.</p>
+      <p>This is a list of Frequently Asked Questions for Subversion, particularly regarding how we
+      used it with JMRI up until 2015.</p>
 
-  <p>See also the <a href="index.shtml">Technical index</a>
-for more information on maintaining JMRI code.</p>
+      <p>See also the <a href="index.shtml">Technical index</a> for more information on maintaining
+      JMRI code.</p>
 
-<h3>SVN Properties</h3>
+      <h3>SVN Properties</h3>
+      In general, we keep everything in SVN revision control, so there's no need for the various
+      properties lines we used to need in CVS. These looked like
 
-In general, we keep everything in SVN revision control, so there's no
-need for the various properties lines we used to need in CVS.  These
-looked like 
-<pre>
+      <pre>
 # The next line is maintained by CVS, please don't change it
 # $Revision$
 </pre>
+      <p>But there are certain files, like decoder XML, properties files, etc, that users are
+      likely to edit and submit back for inclusion. It is very helpful if we can identify the
+      specific content that they started with.</p>
 
-<p>
-But there are certain files, like decoder XML, properties files, etc,
-that users are likely to edit and submit back for inclusion.  It is
-very helpful if we can identify the specific content that they started with.
-<p>
-Therefore, for html, XML, python and properties files, we do:
+      <p>Therefore, for html, XML, python and properties files, we do:</p>
 
-<pre>
+      <pre>
 svn propset svn:keywords "Date Revision Version Id Author" {}
-</pre>
-
-That way SVN will fill in those tags if/when they're present and the file is changed.
-
+</pre>That way SVN will fill in those tags if/when they're present and the file is changed. 
 <!--#include virtual="/Footer.shtml" -->
-
-</div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

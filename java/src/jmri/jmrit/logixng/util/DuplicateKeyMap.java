@@ -14,7 +14,7 @@ import java.util.Set;
 public class DuplicateKeyMap<K, V> implements Map<K, V> {
 
     Map<K, List<V>> _internalMap = new HashMap<>();
-    
+
     @Override
     public int size() {
         int c = 0;
@@ -34,9 +34,6 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         return _internalMap.containsKey(key);
     }
 
-    // Map.containsValue() requires that the parameter is of type Object
-    // The SuppressWarnings is because l.contains(value) expects a value of type V
-    @SuppressWarnings({"unchecked", "element-type-mismatch"})
     @Override
     public boolean containsValue(Object value) {
         for (List<V> l : _internalMap.values()) {
@@ -81,13 +78,28 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public void putAll(Map m) {
+    public void putAll(Map<? extends K,? extends V> m) {
         throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException("Not supported");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean remove(Object key, Object value) {
+        // NetBeans complains about suspicious call to Map.get(), but
+        // JMRI Static analysis doesn't allow casting to (K)key
+        List<V> l = _internalMap.get(key);
+        if (l != null) {
+            if (l.remove(value)) {
+                if (l.isEmpty()) _internalMap.remove(key);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

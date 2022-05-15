@@ -18,57 +18,54 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.StringActionMemory;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an ActionMemory object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class StringActionMemorySwing extends AbstractStringActionSwing {
 
-    private BeanSelectPanel<Memory> memoryBeanPanel;
-    
-    
+    private LogixNG_SelectNamedBeanSwing<Memory> _selectNamedBeanSwing;
+
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         StringActionMemory action = (StringActionMemory)object;
-        
+
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(MemoryManager.class), getJDialog(), this);
+
         panel = new JPanel();
-        memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        
+        JPanel _tabbedPaneNamedBean;
         if (action != null) {
-            if (action.getMemory() != null) {
-                memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
-            }
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
         }
-        
+
         panel.add(new JLabel(Bundle.getMessage("BeanNameMemory")));
-        panel.add(memoryBeanPanel);
+        panel.add(_tabbedPaneNamedBean);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        return true;
+        StringActionMemory action = new StringActionMemory("IQSA1", null);
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        return errorMessages.isEmpty();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         StringActionMemory action = new StringActionMemory(systemName, userName);
-        if (!memoryBeanPanel.isEmpty()) {
-            Memory memory = memoryBeanPanel.getNamedBean();
-            if (memory != null) {
-                NamedBeanHandle<Memory> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
-            }
-        }
+        updateObject(action);
         return InstanceManager.getDefault(StringActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -76,29 +73,21 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
             throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
         }
         StringActionMemory action = (StringActionMemory)object;
-        Memory memory = memoryBeanPanel.getNamedBean();
-        if (memory != null) {
-            NamedBeanHandle<Memory> handle
-                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                            .getNamedBeanHandle(memory.getDisplayName(), memory);
-            action.setMemory(handle);
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("StringActionMemory_Short");
     }
-    
+
     @Override
     public void dispose() {
-        if (memoryBeanPanel != null) {
-            memoryBeanPanel.dispose();
-        }
+        // Do nothing
     }
-    
-    
+
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemorySwing.class);
-    
+
 }

@@ -13,27 +13,33 @@
       <column>
         <label>
           <text>ZIMO Input Mapping</text>
+          <text xml:lang="cs">ZIMO přiřazení vstupů</text>
         </label>
         <label>
           <text>Allows any feature controlled by a function key to be moved to any other key.</text>
+          <text xml:lang="cs">Umožňuje jakoukoliv vlastnost řízenou funkčním tlačítkem přesunout na jiné tlačítko.</text>
         </label>
         <label>
           <text>   </text>
         </label>
         <label>
           <text>This is usually the "last layer" of any mapping control. A typical end-user of a decoder can use this pane to move control of sounds and lights to the </text>
+          <text xml:lang="cs">Toto je obvykle "poslední vrstva" jakéhokoliv přiřazení řízení. Běžný koncový uživatel dekodéru může tento panel použít k přesunu ovládání zvuků a světel </text>
         </label>
         <label>
           <text>function-keys of their choice, without affecting other settings within the decoder. </text>
+          <text xml:lang="cs">na funkční tlačítka dle vlastního výběru, aniž by to ovlivnilo další nastavení v dekodéru. </text>
         </label>
         <label>
           <text>   </text>
         </label>
         <label>
           <text>The "internal Fx" is the function key in the sound project or function mapping.  For example, the horn/whistle is typically on "internal F2".</text>
+          <text xml:lang="cs">"Interní Fx" je funkční tlačítko ve zvukovém projektu nebo přiřazení funkcí.  Například houkačka/píšťala je typicky na "interní F2".</text>
         </label>
         <label>
           <text>If the user wishes to move that feature to a different key, enter the key number in the box.</text>
+          <text xml:lang="cs">Pokud si uživatel přeje přesun na jiné tlačítko, tak zadá číslo tlačítka do pole.</text>
         </label>
         <label>
           <text></text>
@@ -48,27 +54,27 @@
         <display item="Input mapping for internal F0">
           <label>Internal F0</label>
           <!--label xml:lang="it">Assegnazione per F0 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F0</label-->
+          <label xml:lang="cs">Interní F0</label>
         </display>
         <display item="Input mapping for internal F1">
           <label>Internal F1</label>
           <!--label xml:lang="it">Assegnazione per F1 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F1</label-->
+          <label xml:lang="cs">Interní F1</label>
         </display>
         <display item="Input mapping for internal F2">
           <label>Internal F2</label>
           <!--label xml:lang="it">Assegnazione per F2 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F2</label-->
+          <label xml:lang="cs">Interní F2</label>
         </display>
         <display item="Input mapping for internal F3">
           <label>Internal F3</label>
           <!--label xml:lang="it">Assegnazione per F3 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F3</label-->
+          <label xml:lang="cs">Interní F3</label>
         </display>
         <display item="Input mapping for internal F4">
           <label>Internal F4</label>
           <!--label xml:lang="it">Assegnazione per F4 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F4</label-->
+          <label xml:lang="cs">Interní F4</label>
         </display>
         <label>
           <text>          </text>
@@ -76,27 +82,27 @@
         <display item="Input mapping for internal F5">
           <label>Internal F5</label>
           <!--label xml:lang="it">Assegnazione per F5 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F5</label-->
+          <label xml:lang="cs">Interní F5</label>
         </display>
         <display item="Input mapping for internal F6">
           <label>Internal F6</label>
           <!--label xml:lang="it">Assegnazione per F6 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F6</label-->
+          <label xml:lang="cs">Interní F6</label>
         </display>
         <display item="Input mapping for internal F7">
           <label>Internal F7</label>
           <!--label xml:lang="it">Assegnazione per F7 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F7</label-->
+          <label xml:lang="cs">Interní F7</label>
         </display>
         <display item="Input mapping for internal F8">
           <label>Internal F8</label>
           <!--label xml:lang="it">Assegnazione per F8 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F8</label-->
+          <label xml:lang="cs">Interní F8</label>
         </display>
         <display item="Input mapping for internal F9">
           <label>Internal F9</label>
           <!--label xml:lang="it">Assegnazione per F9 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F9</label-->
+          <label xml:lang="cs">Interní F9</label>
         </display>
         <label>
           <text>          </text>
@@ -104,27 +110,27 @@
         <display item="Input mapping for internal F10">
           <label>Internal F10</label>
           <!--label xml:lang="it">Assegnazione per F10 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F10</label-->
+          <label xml:lang="cs">Interní F10</label>
         </display>
         <display item="Input mapping for internal F11">
           <label>Internal F11</label>
           <!--label xml:lang="it">Assegnazione per F11 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F11</label-->
+          <label xml:lang="cs">Interní F11</label>
         </display>
         <display item="Input mapping for internal F12">
           <label>Internal F12</label>
           <!--label xml:lang="it">Assegnazione per F12 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F12</label-->
+          <label xml:lang="cs">Interní F12</label>
         </display>
         <display item="Input mapping for internal F13">
           <label>Internal F13</label>
           <!--label xml:lang="it">Assegnazione per F13 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F13</label-->
+          <label xml:lang="cs">Interní F13</label>
         </display>
         <display item="Input mapping for internal F14">
           <label>Internal F14</label>
           <!--label xml:lang="it">Assegnazione per F14 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F14</label-->
+          <label xml:lang="cs">Interní F14</label>
         </display>
       </column>
       <column>
@@ -136,27 +142,27 @@
         <display item="Input mapping for internal F15">
           <label>Internal F15</label>
           <!--label xml:lang="it">Assegnazione per F15 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F15</label-->
+          <label xml:lang="cs">Interní F15</label>
         </display>
         <display item="Input mapping for internal F16">
           <label>Internal F16</label>
           <!--label xml:lang="it">Assegnazione per F16 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F16</label-->
+          <label xml:lang="cs">Interní F16</label>
         </display>
         <display item="Input mapping for internal F17">
           <label>Internal F17</label>
           <!--label xml:lang="it">Assegnazione per F17 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F17</label-->
+          <label xml:lang="cs">Interní F17</label>
         </display>
         <display item="Input mapping for internal F18">
           <label>Internal F18</label>
           <!--label xml:lang="it">Assegnazione per F18 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F18</label-->
+          <label xml:lang="cs">Interní F18</label>
         </display>
         <display item="Input mapping for internal F19">
           <label>Internal F19</label>
           <!--label xml:lang="it">Assegnazione per F19 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F19</label-->
+          <label xml:lang="cs">Interní F19</label>
         </display>
         <label>
           <text>          </text>
@@ -164,27 +170,27 @@
         <display item="Input mapping for internal F20">
           <label>Internal F20</label>
           <!--label xml:lang="it">Assegnazione per F20 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F20</label-->
+          <label xml:lang="cs">Interní F20</label>
         </display>
         <display item="Input mapping for internal F21">
           <label>Internal F21</label>
           <!--label xml:lang="it">Assegnazione per F21 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F21</label-->
+          <label xml:lang="cs">Interní F21</label>
         </display>
         <display item="Input mapping for internal F22">
           <label>Internal F22</label>
           <!--label xml:lang="it">Assegnazione per F22 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F22</label-->
+          <label xml:lang="cs">Interní F22</label>
         </display>
         <display item="Input mapping for internal F23">
           <label>Internal F23</label>
           <!--label xml:lang="it">Assegnazione per F23 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F23</label-->
+          <label xml:lang="cs">Interní F23</label>
         </display>
         <display item="Input mapping for internal F24">
           <label>Internal F24</label>
           <!--label xml:lang="it">Assegnazione per F24 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F24</label-->
+          <label xml:lang="cs">Interní F24</label>
         </display>
         <label>
           <text>          </text>
@@ -192,22 +198,22 @@
         <display item="Input mapping for internal F25">
           <label>Internal F25</label>
           <!--label xml:lang="it">Assegnazione per F25 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F25</label-->
+          <label xml:lang="cs">Interní F25</label>
         </display>
         <display item="Input mapping for internal F26">
           <label>Internal F26</label>
           <!--label xml:lang="it">Assegnazione per F26 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F26</label-->
+          <label xml:lang="cs">Interní F26</label>
         </display>
         <display item="Input mapping for internal F27">
           <label>Internal F27</label>
           <!--label xml:lang="it">Assegnazione per F27 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F27</label-->
+          <label xml:lang="cs">Interní F27</label>
         </display>
         <display item="Input mapping for internal F28">
           <label>Internal F28</label>
           <!--label xml:lang="it">Assegnazione per F28 interno</label-->
-          <!--label xml:lang="cs">Přiřazení vstupu pro interní F28</label-->
+          <label xml:lang="cs">Interní F28</label>
         </display>
         <label>
           <text>          </text>

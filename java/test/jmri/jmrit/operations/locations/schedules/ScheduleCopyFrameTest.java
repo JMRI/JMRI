@@ -64,7 +64,8 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(scf, MessageFormat.format(Bundle
                 .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}),
                 Bundle.getMessage("ButtonOK"));
-
+        JemmyUtil.waitFor(scf);
+        
 //        ScheduleEditFrame editScheduleFrame =
 //                (ScheduleEditFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleEdit"));
 //        Assert.assertNotNull("Edit frame", editScheduleFrame);

@@ -1,17 +1,23 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTableOperator;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -108,41 +114,52 @@ public class SchedulesTableFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(stf);
     }
 
-//    @Test
-//    public void testFrameEdit() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//        SchedulesTableFrame stf = new SchedulesTableFrame();
-//        Assert.assertNotNull("exists", stf);
-//
-//        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
-//
-//        Schedule s1 = sm.newSchedule("b schedule");
-//        sm.newSchedule("a schedule");
-//        sm.newSchedule("c schedule");
-//
-//        SchedulesTableModel stm = stf.schedulesModel;
-//        Assert.assertEquals("Number of rows", 3, stm.getRowCount());
-//        Assert.assertEquals("Name", "a schedule", stm.getValueAt(0, SchedulesTableModel.NAME_COLUMN));
-//        Assert.assertEquals("Name", "b schedule", stm.getValueAt(1, SchedulesTableModel.NAME_COLUMN));
-//        Assert.assertEquals("Name", "c schedule", stm.getValueAt(2, SchedulesTableModel.NAME_COLUMN));
-//
-//        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
-//        Location l = lm.newLocation("new test location");
-//        Track t = l.addTrack("track 1", Track.SPUR);
-//        t.setSchedule(s1);
-//
-//        // edit b schedule
-//        stm.setValueAt(null, 1, SchedulesTableModel.EDIT_COLUMN);
-//
-//        // this doesn't work, race condition frame is delayed, SwingUtilities.invokeLater(() ->
-//        JmriJFrame es = JmriJFrame.getFrame(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
-//                new Object[]{"track 1"}));
-//        Assert.assertNotNull("Confirm frame exists", es);
-//
-//        JUnitUtil.dispose(stf);
-//    }
+    @Test
+    public void testFrameEdit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SchedulesTableFrame stf = new SchedulesTableFrame();
+        Assert.assertNotNull("exists", stf);
+        
+        // all buttons must show
+        stf.setSize(new Dimension(1200, Control.panelHeight250));
 
-    // private final static Logger log =
-    // LoggerFactory.getLogger(SchedulesTableFrameTest.class);
+        ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
+
+        Schedule sch =  sm.newSchedule("b schedule");
+        sm.newSchedule("a schedule");
+        sm.newSchedule("c schedule");
+        
+        LocationManager lm = InstanceManager.getDefault(LocationManager.class);
+        Location l = lm.newLocation("Test Location");
+        Track t = l.addTrack("Test Spur", Track.SPUR);
+        t.setSchedule(sch);
+
+        SchedulesTableModel stm = stf.schedulesModel;
+        Assert.assertEquals("Number of rows", 3, stm.getRowCount());
+        Assert.assertEquals("Name", "a schedule", stm.getValueAt(0, SchedulesTableModel.NAME_COLUMN));
+        Assert.assertEquals("Name", "b schedule", stm.getValueAt(1, SchedulesTableModel.NAME_COLUMN));
+        Assert.assertEquals("Name", "c schedule", stm.getValueAt(2, SchedulesTableModel.NAME_COLUMN));
+
+        JFrameOperator jfo = new JFrameOperator(stf);
+        JTableOperator tbl = new JTableOperator(jfo);
+
+        // test edit route location no track assignment
+        JemmyUtil.clickOnCellThreadSafe(tbl, 0, Bundle.getMessage("ButtonEdit"));
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
+                            new Object[]{Bundle.getMessage("ButtonEdit")}), Bundle.getMessage("ButtonOK"));
+        
+        tbl.clickOnCell(1, tbl.findColumn(Bundle.getMessage("ButtonEdit")));
+        // confirm edit schedule frame exists
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return JmriJFrame.getFrame(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
+                    new Object[]{t.getName()})) != null;
+        });
+
+        // dispose also closes schedule edit frame
+        JUnitUtil.dispose(stf);
+        JmriJFrame sef = JmriJFrame.getFrame(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
+                new Object[]{t.getName()}));
+        Assert.assertNull(sef);
+    }
 
 }

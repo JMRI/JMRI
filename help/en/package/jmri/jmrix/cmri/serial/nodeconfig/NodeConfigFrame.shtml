@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: C/MRI Node Configuration</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: C/MRI Node Configuration</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h2>JMRI: C/MRI Node Configuration</h2>This is the
-      cmri/serial/nodeconfig/NodeConfigFrame.shtml page
-
+      <h2>JMRI: C/MRI Node Configuration</h2>
+      This is the cmri/serial/nodeconfig/NodeConfigFrame.shtml page 
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

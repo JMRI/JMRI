@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -25,9 +24,6 @@ public class AddEntryExitPairPanelTest {
     static EntryExitTestTools tools;
     static HashMap<String, LayoutEditor> panels = new HashMap<>();
     static EntryExitPairs eep;
-
-    //@Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCTor() {
@@ -97,6 +93,11 @@ public class AddEntryExitPairPanelTest {
             panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         }
         panels = null;
+
+        JUnitUtil.clearTurnoutThreads();
+        JUnitUtil.clearRouteThreads();
+        JUnitUtil.removeMatchingThreads("Routing stabilising timer");
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();

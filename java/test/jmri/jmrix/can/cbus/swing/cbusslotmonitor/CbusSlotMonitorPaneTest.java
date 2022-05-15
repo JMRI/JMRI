@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JPopupMenu;
 
 import jmri.jmrix.can.CanReply;
@@ -12,24 +10,23 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of CbusSlotMonitorPane.
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Paul Bender Copyright (C) 2019
+ * @author Steve Young Copyright (C) 2019
  */
 public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
-    public void TestInitComponents() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testTableUpdates() {
         
-        CbusSlotMonitorPane smPanel;
-        
-        smPanel = new CbusSlotMonitorPane();
+        CbusSlotMonitorPane smPanel = new CbusSlotMonitorPane();
         smPanel.initComponents(memo);
         
         Assert.assertNotNull("exists",smPanel);
@@ -75,7 +72,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         ra.setElement(1, 0x01); // session
         ra.setElement(2, 0x00); // addr hi
         ra.setElement(3, 0x03); // addr lo
-        ra.setElement(4, 0xa7);
+        ra.setElement(4, 0xa7); // spd 38 fwds
         ra.setElement(5, 0xa2);
         ra.setElement(6, 0x7b);
         ra.setElement(7, 0x00);
@@ -83,9 +80,9 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         
         tbl.waitCell("1",0,0); // session 1 in column 1
         tbl.waitCell("3",0,1); // loco id in col 2
-        tbl.waitCell("39",0,3); // speed in col 4
+        tbl.waitCell("38",0,3); // speed in col 4
         tbl.waitCell(Bundle.getMessage("FWD"),0,4); // direction in col 5
-        tbl.waitCell("2 5 6 8",0,5); // speed in col 6
+        tbl.waitCell("2 5 6 8",0,5); // functions in col 6
         
         JMenuBarOperator mainbar = new JMenuBarOperator(jfo);
         mainbar.pushMenu(Bundle.getMessage("SessCol")); // stops at top level
@@ -95,9 +92,9 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
             new JPopupMenuOperator(jpm),Bundle.getMessage("Long")); // Long DCC Address
         jmio.push();
         
-        tbl.waitCell("39",0,4); // Now speed in col 5
+        tbl.waitCell("38",0,4); // Now speed in col 5
         
-        // JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
+        // jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
         
         smPanel.dispose();
         

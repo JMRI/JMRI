@@ -43,7 +43,7 @@ public class RouteCopyFrameTest extends OperationsTestCase {
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Assert.assertEquals("routes 1", 1, rmanager.getRoutesByNameList().size());       
         JemmyUtil.pressDialogButton(rcf, Bundle.getMessage("CopyRoute"), Bundle.getMessage("ButtonOK"));
-        
+        JemmyUtil.waitFor(rcf);
         JUnitUtil.dispose(rcf);
     }
     

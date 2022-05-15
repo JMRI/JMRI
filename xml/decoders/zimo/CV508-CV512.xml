@@ -18,18 +18,22 @@
         <enumChoice choice="normal">
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -75,18 +79,22 @@
         <enumChoice choice="normal">
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -132,18 +140,22 @@
         <enumChoice choice="normal">
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -189,18 +201,22 @@
         <enumChoice choice="normal">
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>
@@ -246,18 +262,22 @@
         <enumChoice choice="normal">
          <choice>normal</choice>
          <choice xml:lang="de">keine Auswahl</choice>
+         <choice xml:lang="cs">Normální</choice>
         </enumChoice>
         <enumChoice choice="Light effect off">
          <choice>Light effect off</choice>
          <choice xml:lang="de">unterdrückt den Lichteffekt</choice>
+         <choice xml:lang="cs">Efekty světla vypnuté</choice>
         </enumChoice>
         <enumChoice choice="Flashing">
          <choice>Flashing</choice>
          <choice xml:lang="de">Blinkeffekt</choice>
+         <choice xml:lang="cs">Blikání</choice>
         </enumChoice>
         <enumChoice choice="inverted flashing" value="4">
          <choice>inverted flashing</choice>
          <choice xml:lang="de">Inverser Blinkeffekt</choice>
+         <choice xml:lang="cs">Opačné blikání</choice>
         </enumChoice>
        </enumVal>
         <label> </label>

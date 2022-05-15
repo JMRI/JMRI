@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.8 - Ronald Kuhn - add CVs from v40+ -->
 <!-- version 1.7 - Ronald Kuhn - add CVs from v37+ -->
 <!-- version 1.6 - Ronald Kuhn - add Brake squel suppressed, Quick Select Shift key -->
 <!-- version 1.5 - Ronald Kuhn - add german translation -->
@@ -69,6 +70,7 @@
   </column>
   <column>
     <display item="Virtual cam chuff frequency"/>
+    <display item="Slower Steam Strokes"/>
     <display item="Steam chuff frequency at speed step 1"/>
     <display item="Real cam sensor chuff rate"/>
     <display item="Real cam sensor chuff rate 1"/>

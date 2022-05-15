@@ -16,7 +16,7 @@
     <div id="mainContent">
       <h1>JMRI: Logix Documentation</h1>
 
-      <p>Logix™ provide a powerful capability for JMRI to monitor one or more conditions on a
+      <p>Logix&trade; provide a powerful capability for JMRI to monitor one or more conditions on a
       layout, and take action when these conditions change in a user-specified way. Logix can be
       used to control signals, crossing gates, and other types of automation on the layout. The
       user interface is designed to be user friendly to all users with basic familiarity with JMRI.
@@ -360,6 +360,10 @@
 
         <li>if (antecedent state changes) then (do "on change" actions)</li>
       </ul>
+
+      <p> Note that the state of any antecedent is considered to have changed when a Logix is first enabled. This
+      means that any "do on change" actions will be executed when a Logix is first enabled, including those that
+      are enabled when JMRI is started</p>
 
       <h3 id="editconditional">The Edit Conditional Window</h3>
 

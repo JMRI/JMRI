@@ -40,6 +40,9 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="shutdownOperation" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 4.99.4 -->
               <xs:element name="operation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
@@ -50,6 +53,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <!-- These are for backwards compability up until JMRI 4.99.4 -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

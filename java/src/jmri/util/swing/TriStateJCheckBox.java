@@ -1,7 +1,7 @@
 package jmri.util.swing;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * JPanel containing 
  * Extension of JCheckBox allowing a partial state to be displayed.
  * 
  * The partial state is in the form of a small square, a style similar to Google Earth.
@@ -35,8 +35,14 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Steve Young Copyright (c) 2021
  */
-public class TriStateJCheckBox extends JCheckBox implements Icon  {
+public class TriStateJCheckBox extends JPanel {
    
+    private final JPanel contentContainer;
+    private final JCheckBox checkBox;
+    private final JLabel label;
+    private TriStateModel model;
+    private String text;
+    
     /**
      * Enum of TriStateJCheckBox state values.
      */
@@ -50,26 +56,81 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      * 
      */
     public TriStateJCheckBox () {
-        super();
-        initProperties();
+        this(null);
     }
     
     /**
      * Creates a check box with text.
      * Defaults to unchecked state.
      * 
-     * @param text the text of the check box.
+     * @param labelText the text of the check box.
      */
-    public TriStateJCheckBox (String text) {
-        super.setText(text);
+    public TriStateJCheckBox (String labelText) {
+        super();
+        text = labelText;
+        
+        contentContainer = new JPanel(new BorderLayout(0, 0));
+        label = new JLabel();
+        checkBox = new TriCheckBox();
         initProperties();
     }
     
     private void initProperties(){
-        setModel(new TriStateModel(State.UNCHECKED));
-        setIcon(this);
-        setRolloverEnabled( false );
-        setOpaque(true);
+        
+        log.debug("started TriStateJCheckBox");
+        
+        setLayout(new GridBagLayout());
+        
+        model = new TriStateModel(State.UNCHECKED);
+        checkBox.setModel(model);
+        
+        // INITIALIZE COMPONENTS
+        checkBox.setOpaque(false);
+        label.setOpaque(false);
+        contentContainer.setOpaque(false);
+        setOpaque(false);
+        setText(text);
+        
+        label.setLabelFor(checkBox);
+
+        // LAYOUT COMPONENTS
+        contentContainer.add(checkBox, BorderLayout.WEST);
+        contentContainer.add(label, BorderLayout.CENTER);
+        final GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        this.add(contentContainer, gbc);
+
+        final MouseListener labelAndPanelListener = new MouseAdapter() {
+
+            @Override
+            public void mousePressed(final MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    model.setPressed(true);
+                }
+            }
+
+            @Override
+            public void mouseReleased(final MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    model.setPressed(false);
+                }
+            }
+            
+            @Override
+            public void mouseEntered(final MouseEvent e) {
+                model.setRollover(true);
+            }
+
+            @Override
+            public void mouseExited(final MouseEvent e) {
+                model.setRollover(false);
+            }
+
+        };
+
+        label.addMouseListener(labelAndPanelListener);
+        
     }
  
     /**
@@ -77,7 +138,8 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      * @param state enum of new state.
      */
     public void setState(@Nonnull State state) {
-        ((TriStateModel) model).setState(state);
+        model.setState(state);
+        checkBox.repaint();
     }
     
     /**
@@ -91,11 +153,11 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      */
     public void setState(boolean[] booleanArray){
         if (arrayDoesNotContainsTrueOrFalse(booleanArray,true)){
-            ((TriStateModel) model).setState(State.UNCHECKED);
+            setState(State.UNCHECKED);
         } else if (arrayDoesNotContainsTrueOrFalse(booleanArray,false)){
-            ((TriStateModel) model).setState(State.CHECKED);
+            setState(State.CHECKED);
         } else {
-            ((TriStateModel) model).setState(State.PARTIAL);
+            setState(State.PARTIAL);
         }
     }
     
@@ -115,88 +177,67 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
      */
     @Nonnull
     public State getState() {
-        return ((TriStateModel) model).getState();
+        return model.getState();
     }
 
     /**
-     * {@inheritDoc}
+     * Set the CheckBox to Selected or Unselected.
+     * @param selected true for selected, else false.
      */
-    @Override
     public void setSelected(boolean selected) {
-        ((TriStateModel) model).setSelected(selected);    
+        checkBox.setSelected(selected);
     }
     
-    private final static Icon icon = UIManager.getIcon("CheckBox.icon");
+    /**
+     * Is the CheckBox currently fully selected?
+     * @return true if CHECKED, false for UNCHECKED and PARTIAL.
+     */
+    public boolean isSelected(){
+        return checkBox.isSelected();
+    }
     
     /**
-     * Paint the Icon dependant on state, special handling for Nimbus LAF.
-     * {@inheritDoc}
+     * Set the CheckBox enabled or disabled.
+     * @param enabled true for enabled, false disabled.
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public void paintIcon(Component c, Graphics g, int x, int y) {
-        String laf = UIManager.getLookAndFeel().getName();
-        log.debug("laf is: {}",laf);
-        if ("Nimbus".equals(laf)){
-            
-            // Nimbus handled differently in that no .icon is available.
-            // There may well be a better way of doing this?
-            
-            Painter<JComponent> painter;
-            if (getState() == TriStateJCheckBox.State.CHECKED){
-                painter = (Painter)UIManager.get("CheckBox[Selected].iconPainter");
-            } else {
-                painter = (Painter)UIManager.get("CheckBox[Enabled].iconPainter");
-            }
-            if (painter != null && g instanceof Graphics2D){
-                JComponent jc = (c instanceof JComponent) ? (JComponent)c : null;
-                Graphics2D gfx = (Graphics2D)g;
-                gfx.translate(x, y);
-                painter.paint(gfx, jc , getIconWidth(), getIconHeight());
-                gfx.translate(-x, -y);
-            }
-            
-        } else { // not Nimbus so use Default L&F Icon.
-            icon.paintIcon(c, g, x, y);
+    public void setEnabled(final boolean enabled) {
+        checkBox.setEnabled(enabled);
+    }
+
+    /**
+     * Set the CheckBox Label Text if different from constructor.
+     * @param newText New Text Label.
+     */
+    public void setText(final String newText) {
+        if (newText == null || newText.trim().isEmpty()) {
+            text = null;
+        } else {
+            text = newText;
         }
-        
-        if ((((TriStateModel) model).getState() != TriStateJCheckBox.State.PARTIAL)
-            || c == null || g == null){
-            return;
-        }
-        
-        int w = getIconWidth();
-        int h = getIconHeight();
-        g.setColor(c.isEnabled() ? new Color(51, 51, 51) : new Color(122, 138, 153));
-        g.fillRect(x+4, y+4, w-8, h-8);
-
-        if (!c.isEnabled()) return;
-        g.setColor(new Color(81, 81, 81));
-        g.drawRect(x+4, y+4, w-9, h-9);
-        
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getIconWidth() {
-        return (icon==null ? 16 : icon.getIconWidth());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getIconHeight() {
-        return (icon==null ? 16 : icon.getIconHeight());
+        label.setText(text);
     }
     
+    /**
+     * Add an ActionListener to the JCheckBox.
+     * @param al the ActionListener to add.
+     */
+    public void addActionListener(ActionListener al) {
+        checkBox.addActionListener(al);
+    }
+    
+    @Override
+    public void setToolTipText(String s){
+        checkBox.setToolTipText(s);
+        label.setToolTipText(s);
+        contentContainer.setToolTipText(s);
+        super.setToolTipText(s);
+    }
     
     /** 
      * Model for checkbox
      */
-    private static class TriStateModel extends JToggleButton.ToggleButtonModel {      
+    private class TriStateModel extends JToggleButton.ToggleButtonModel {      
     
         protected State state;
         
@@ -226,11 +267,11 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
          */
         @Override
         public void setPressed(boolean pressed) {
-            if (pressed) {
+            log.debug("setPressed {}",pressed);
+            if (pressed && isEnabled()) {
                 state = ( state==State.UNCHECKED ? State.CHECKED : State.UNCHECKED );
                 fireStateChanged();
-                fireActionPerformed(
-                    new ActionEvent(this, ActionEvent.ACTION_PERFORMED,getActionCommand()));
+                fireActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED,getActionCommand()));
             }
         }
     
@@ -238,8 +279,37 @@ public class TriStateJCheckBox extends JCheckBox implements Icon  {
          * {@inheritDoc}
          */
         @Override
-        public void setSelected(boolean selected) {       
-            this.state = ( selected ? State.CHECKED : State.UNCHECKED );    
+        public void setSelected(boolean selected) {
+            this.state = ( selected ? State.CHECKED : State.UNCHECKED );
+            super.setSelected(selected);
+        }
+    }
+
+    private static class TriCheckBox extends JCheckBox {
+    
+        private static final int DOT_SIZE = 2;
+        
+        protected TriCheckBox() {
+            super();
+        }
+        
+        @Override
+        protected void paintComponent(final Graphics g) {
+            super.paintComponent(g);
+
+            if ((((TriStateModel) model).getState() == TriStateJCheckBox.State.PARTIAL)){
+                final int w = getWidth();
+                final int h = getHeight();
+                final int wOdd = w % 2;
+                final int hOdd = h % 2;
+                final int centerX = w / 2;
+                final int centerY = h / 2;
+                final int rw = DOT_SIZE * 2 + wOdd;
+                final int rh = DOT_SIZE * 2 + hOdd;
+
+                g.setColor(isEnabled() ? new Color(51, 51, 51) : new Color(122, 138, 153));
+                g.fillRect(centerX - DOT_SIZE, centerY - DOT_SIZE, rw, rh);
+            }
         }
     }
     

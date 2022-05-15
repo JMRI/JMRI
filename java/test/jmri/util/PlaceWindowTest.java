@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Pete Cressman 2020   
+ * @author Pete Cressman 2020
  */
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PlaceWindowTest {
@@ -66,7 +66,7 @@ public class PlaceWindowTest {
 
         Point pt = pw.nextTo(w1,  null,  w2);
         // w2 position should be centered within a pixel and overlap from above
-        System.out.println(Math.abs((rect.width/2-100) - pt.x));
+        //System.out.println(Math.abs((rect.width/2-100) - pt.x));
         assertThat(Math.abs(((rect.width/2)-100) - pt.x))
                 .withFailMessage("pt.x at screen center")
                 .isLessThanOrEqualTo(tolerance);

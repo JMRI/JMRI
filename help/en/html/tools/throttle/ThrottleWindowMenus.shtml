@@ -19,14 +19,17 @@
       <h2 id="FileMenu">File menu</h2>
       <img src="images/ThrottlesMenu3.png" alt=""><br>
 
-      <h3>Load throttle</h3>
+      <h3>New throttle</h3>
+      This menu entry allows to create a new throttle window.<br>
+
+      <h3>Open throttle...</h3>
       This menu entry allows to load a Throttle window layout into the current Throttle Window; it
       will load inner windows properties, and Jynstruments if any.<br>
 
       <h3>Save current throttle</h3>
       This menu entry allows to save the current Throttle window layout; it will save inner windows
       of the current throttle properties, and Jynstruments if any.<br>
-      When a Roster entry is selected, that menu entry is automatically enabled. Using it will
+      When a Roster entry is selected, that menu entry is automatically updated. Using it will
       create (or update) a default Throttle file for that Roster entry in &lt;JMRI Preferences
       Folder&gt;/throttle/XYZ.xml where XYZ is the Roster ID.<br>
       <br>
@@ -38,6 +41,19 @@
       Allows to save the current Throttle window layout using any file name and path. If this
       filename is not the default one for a Roster Entry, then Function Buttons customizations will
       be saved in that file.<br>
+      <br>
+      It can particularly be used to create the default throttle layout (see <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>)
+
+      <h3>Open throttles layout...</h3>
+      This menu entry allows to open a throttle layout, a throttle layout is a set of throttle windows and the throttle lst window, it also contains
+      all throttles opened and adressed inside this throttle layout.
+
+      <h3>Save throttles layout...</h3>
+      Save a complete throttle layout. Note that this action will only save the layout, not the content of each throttle frame.
+
+      <h3>Open / Save default throttles layout</h3>
+      Allows to open/save a default throttle layout, it can be automatically opened on start by a startup action,
+      or opened from the main JMRI window, under Actions/Load default throttle layout.
 
       <h2 id="EditMenu">Edit menu</h2>
       <img src="images/ThrottlesMenu1.png" alt=""><br>
@@ -61,15 +77,13 @@
       Note that if you enter text, it won't be visible unless one of the middle three modes is
       selected.<br>
 
-      <h3>Reset Function Buttons</h3>
-      Reset the function buttons content to default and reset their visibility.<br>
-      If a Roster is selected, default button content will be loaded from Roster entry;
-      furthermore, if the matching preference is enabled, buttons undefined is the Roster entry
-      will be hidden.<br>
-
       <h3>Export current throttles customization to roster</h3>
       Push current Throttle window customizations to the Roster, in particular Function Buttons
       customizations. See <a href="RostersMediaPane.shtml">Roster Functions Labels Pane.</a>
+
+      <h3>Throttle preferences</h3>
+      Open the see <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a> window.
+
       <h2 id="ViewMenu">View menu</h2>
       <img src="images/ThrottlesMenu2.png" alt=""><br>
       The first part of the "<strong>View</strong>" menu displays a small menu of 3 items - by
@@ -86,12 +100,15 @@
       you could have several of these custom Throttle windows in the same area as one single
       complete Throttle window would take up.</p>
 
-      <h3>Show all function buttons</h3>
-      Note: this functionality was moved to "Reset Function Buttons" in the <a href=
-      "#EditMenu">"Edit" menu</a>
+      <h3>Reset Function Buttons</h3>
+      Reset the function buttons content to default and reset their visibility.<br>
+      If a Roster is selected, default button content will be loaded from Roster entry,
+      and, if the matching preference is enabled, buttons undefined is the Roster entry
+      will be hidden.<br>
+
       <h3>Get all current throttle components in bounds</h3>
 
-      <p>Make sure that all inner windows of the current Throttle are inside the Throttle Window
+      <p>Make sure that all inner windows of the current Throttle are inside the Throttle window
       bounds.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Send Throttle Message</title>
-  <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Send Throttle Message</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>JMRI: Send Throttle Message</h1>
-      <p>JMRI has a limited
-      ability to send messages to a hand-held throttle.</p>
 
+      <p>JMRI has a limited ability to send messages to a hand-held throttle.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

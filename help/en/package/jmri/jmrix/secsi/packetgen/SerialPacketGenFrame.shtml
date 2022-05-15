@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Send SECSI Message</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Send grapevine message packet">
+  <meta name="keywords" content="JMRI help Send grapevine message packet">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>Send SECSI Message</h1>This is the
-      help/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame help
-      page
-
+      <h1>Send SECSI Message</h1>
+      This is the help/jmri/jmrix/secsi/packetgen/SerialPacketGenFrame help page 
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

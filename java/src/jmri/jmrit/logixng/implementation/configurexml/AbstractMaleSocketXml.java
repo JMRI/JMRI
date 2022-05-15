@@ -48,7 +48,7 @@ public class AbstractMaleSocketXml
         for (SymbolTable.VariableData data : maleSocket.getLocalVariables()) {
             Element elementVariable = new Element("LocalVariable");                                     // NOI18N
             elementVariable.addContent(new Element("name").addContent(data._name));                     // NOI18N
-            elementVariable.addContent(new Element("type").addContent(data._initalValueType.name()));   // NOI18N
+            elementVariable.addContent(new Element("type").addContent(data._initialValueType.name()));   // NOI18N
             elementVariable.addContent(new Element("data").addContent(data._initialValueData));         // NOI18N
             element.addContent(elementVariable);
         }

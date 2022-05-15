@@ -6,6 +6,9 @@ import javax.swing.BoxLayout;
  * User interface frame for creating and editing "Follower" logic on USS CTC
  * machines.
  *
+ * @see jmri.jmrit.ussctc.Follower
+ * @see jmri.jmrit.ussctc.FollowerPanel
+ * @see jmri.jmrit.ussctc.FollowerAction
  * @author Bob Jacobsen Copyright (C) 2007
  */
 public class FollowerFrame extends jmri.util.JmriJFrame {

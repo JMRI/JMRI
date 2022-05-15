@@ -46,12 +46,6 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
         return Category.ITEM;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
-
     public void setType(Type type) {
         assertListenersAreNotRegistered(log, "setType");
         _type = type;

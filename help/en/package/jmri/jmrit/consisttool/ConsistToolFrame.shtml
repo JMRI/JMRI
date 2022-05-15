@@ -1,143 +1,95 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>
-  JMRI: Consist Tool
-  </title>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Consist Tool</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Consist Tool">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Consist Tool"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+      <h1>Consist Tool</h1>
 
-    <h1>Consist Tool</h1>
+      <h2>Using the Consist Tool</h2>
 
-	<h2>Using the Consist Tool</h2>
-	<p>
-	When you first open the consist tool, you will see a screen similar to the following:
-        </p>
-	<img src=images/ConsistTool.png alt="Blank Consist Tool">
-        <p>
-	   The buttons on the top row are used to select between an Advanced (or
-           Decoder Assisted) Consist and a Command Station Assisted
-           Consist.  If the Command Station Assisted Consists are not
-           supported by the tool for your system, these selections will be
-           grayed out.
-        </p>
-	<p>
-           The box Next to the label <b>Consist:</b> is used to specify the
-           consist ID.  For Decoder Assisted Consists, this should be the
-           short address used to identify the consist.  For Command
-           Station Assisted Consists, this value may automatically be
-           filled in with the lead locomotive address when you try to add
-           it to the consist.
-        </p>
-        <p>
-           Adding a typical ID for a Decoder Assisted Consist should look
-           like the following:
-        </p>
-	   <img src=images/ConsistTool-IDAdded.png alt="Consist Tool - ID Added">
-        <p>
-	   The second line of the consisting tool is used to add locomotives.
-           A locomotive may be added either by entering it's number in the
-           box next to <b>New Locomotive</b> or by selecting it's number
-           from the roster drop down box.
-        </p>
-           <img src=images/ConsistTool-LeadLoco.png alt="Lead Locomotive Selected">
-        <p>
-          Clicking the <b>add</b> button will add a locomotive to the
-          consist, and it will appear in the list below the second line.
-        </p>
-          <img src=images/ConsistTool-LeadLocoAdded.png alt="Lead Locomotive Added to Consist">
-        <p>
-          Clicking the <b>reset</b> button will clear the information for
-          this locomotive.
-        </p>
-	<p>
-           The <b>Direction Normal</b> checkbox is used to determine if
-           the locomotive is traveling in forward or reverse when the
-           consist is traveling forward.
-        </p>
-        <p>
-           You may notice from the previous screen shots that this box is
-           grayed out until a lead locomotive is selected.  With
-           subsequent locomotives, you can check this box to indicate the
-           direction of the locomotive relative to the lead locomotive.
-        </p>
-           <img src=images/ConsistTool-SecondLoco.png alt="Second LocoMotive Selected - Direction Reversed">
-        <p>
-           After adding the second locomotive to the consist, with the
-           direction reversed, you should see something like the following:
-        </p>
-           <img src=images/ConsistTool-SecondLocoAdded.png alt="Second Locomotive Added">
-        <p>
-           If you made a mistake, and add a second locomotive to the
-           consist with the wrong direction, you can change it's direction
-           simply by clicking on the checkbox in the Direction Normal column.
-	</p>
-           <img src=images/ConsistTool-SecondLocoDirChange.png alt="Second Locomotive - Direction Change">
-        <p>
-           The direction of the lead locomotive cannot be changed once
-           added.
-        </p>
-        <p>
-           To delete an individual locomotive from the consist, you can
-           select the <b>Delete</b> button in the right most column of the
-           appropriate row of the table of addresses.
-        </p>
-        <p>
-           To <b>delete an entire consist</b> you can use the <b>Delete</b>
-           button at the bottom of the screen.
-        </p>
-        <p>
-           To <b>Reverse the consist</b> you can use the <b>Reverse</b>
-           button at the bottom of the screen.  This operation will cause
-           order of the locomotives in the consist to reverse and the
-           direction of each consist to change from normal to reverse and
-           vice vera.
-        </p>
-        <p>
-           The <b>throttle button</b> at the bottom of the screen can be used to
-           bring up a JMRI throttle for this address.
-        </p>
-        <p>
-           The <b>Restore</b> button at the bottom of the screen is used to
-           force the consit tool to re-write the consist to the command station.           This option is useful if either the consist has been erased from
-           the command station and/or decoder memory.
-e       </p>
-        <p>
-           To Add a new consist, you can select the blank entry in the
-           drop-down box next to the current consist's ID.
-        </p>
-	   <img src=images/ConsistTool-NewConsist.png alt="Select New Consist">
-        <p>
-           To Recall an existing consist, you can select the appropriate
-           entry from the drop-down box next to the current consist's ID.
-        </p>
-	   <img src=images/ConsistTool-SelectConsist.png alt="Select a Consist">
-        <p>
-           Begining with JMRI version 4.17.3, an option exists in the File
-           menu to <b>Scan Roster for Consists</b>.  This option reads the
-           files of the roster and examines CV19 (The Consist Address).  If
-           a consist address is found, the locomotive is added to that consist.
-           This operation does not write consist information to the command
-           station.
-        </p>
-	   <img src=images/ConsistTool-ScanForConsists.png alt="Scan Roster for Consists">
+      <p>When you first open the consist tool, you will see a screen similar to the following:</p>
+      <img src="images/ConsistTool.png" alt="Blank Consist Tool">
+      <p>The buttons on the top row are used to select between an Advanced (or Decoder Assisted)
+      Consist and a Command Station Assisted Consist. If the Command Station Assisted Consists are
+      not supported by the tool for your system, these selections will be grayed out.</p>
 
-  <p>
-  For more information on consisting and the JMRI consist tool, please
-see the main
-<a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool">consisting page</a>.
-  </p>
+      <p>The box Next to the label <strong>Consist:</strong> is used to specify the consist ID. For
+      Decoder Assisted Consists, this should be the short address used to identify the consist. For
+      Command Station Assisted Consists, this value may automatically be filled in with the lead
+      locomotive address when you try to add it to the consist.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+      <p>Adding a typical ID for a Decoder Assisted Consist should look like the following:</p>
+      <img src="images/ConsistTool-IDAdded.png" alt="Consist Tool - ID Added">
+      <p>The second line of the consisting tool is used to add locomotives. A locomotive may be
+      added either by entering it's number in the box next to <strong>New Locomotive</strong> or by
+      selecting it's number from the roster drop down box.</p>
+      <img src="images/ConsistTool-LeadLoco.png" alt="Lead Locomotive Selected">
+      <p>Clicking the <strong>add</strong> button will add a locomotive to the consist, and it will
+      appear in the list below the second line.</p>
+      <img src="images/ConsistTool-LeadLocoAdded.png" alt="Lead Locomotive Added to Consist">
+      <p>Clicking the <strong>reset</strong> button will clear the information for this
+      locomotive.</p>
+
+      <p>The <strong>Direction Normal</strong> checkbox is used to determine if the locomotive is
+      traveling in forward or reverse when the consist is traveling forward.</p>
+
+      <p>You may notice from the previous screen shots that this box is grayed out until a lead
+      locomotive is selected. With subsequent locomotives, you can check this box to indicate the
+      direction of the locomotive relative to the lead locomotive.</p>
+      <img src="images/ConsistTool-SecondLoco.png" alt=
+      "Second LocoMotive Selected - Direction Reversed">
+      <p>After adding the second locomotive to the consist, with the direction reversed, you should
+      see something like the following:</p>
+      <img src="images/ConsistTool-SecondLocoAdded.png" alt="Second Locomotive Added">
+      <p>If you made a mistake, and add a second locomotive to the consist with the wrong
+      direction, you can change it's direction simply by clicking on the checkbox in the Direction
+      Normal column.</p>
+      <img src="images/ConsistTool-SecondLocoDirChange.png" alt=
+      "Second Locomotive - Direction Change">
+      <p>The direction of the lead locomotive cannot be changed once added.</p>
+
+      <p>To delete an individual locomotive from the consist, you can select the
+      <strong>Delete</strong> button in the right most column of the appropriate row of the table
+      of addresses.</p>
+
+      <p>To <strong>delete an entire consist</strong> you can use the <strong>Delete</strong>
+      button at the bottom of the screen.</p>
+
+      <p>To <strong>Reverse the consist</strong> you can use the <strong>Reverse</strong> button at
+      the bottom of the screen. This operation will cause order of the locomotives in the consist
+      to reverse and the direction of each consist to change from normal to reverse and vice
+      vera.</p>
+
+      <p>The <strong>throttle button</strong> at the bottom of the screen can be used to bring up a
+      JMRI throttle for this address.</p>
+
+      <p>The <strong>Restore</strong> button at the bottom of the screen is used to force the
+      consit tool to re-write the consist to the command station. This option is useful if either
+      the consist has been erased from the command station and/or decoder memory. e</p>
+
+      <p>To Add a new consist, you can select the blank entry in the drop-down box next to the
+      current consist's ID.</p>
+      <img src="images/ConsistTool-NewConsist.png" alt="Select New Consist">
+      <p>To Recall an existing consist, you can select the appropriate entry from the drop-down box
+      next to the current consist's ID.</p>
+      <img src="images/ConsistTool-SelectConsist.png" alt="Select a Consist">
+      <p>Begining with JMRI version 4.17.3, an option exists in the File menu to <strong>Scan
+      Roster for Consists</strong>. This option reads the files of the roster and examines CV19
+      (The Consist Address). If a consist address is found, the locomotive is added to that
+      consist. This operation does not write consist information to the command station.</p>
+      <img src="images/ConsistTool-ScanForConsists.png" alt="Scan Roster for Consists">
+      <p>For more information on consisting and the JMRI consist tool, please see the main <a href=
+      "../../../../html/tools/consisttool/ConsistTool.shtml#tool">consisting page</a>.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

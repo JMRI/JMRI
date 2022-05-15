@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2021"/>
+    <property name="jmri.copyright.year" value="1997-2022"/>
 
     <property environment="env"/>
 
@@ -118,11 +118,12 @@
          packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
-        <pathelement location="${libdir}/purejavacomm-1.0.1.jar"/>
-        <pathelement location="${libdir}/xercesImpl.jar"/>
-        <pathelement location="${libdir}/xml-apis-1.4.01.jar"/>
+        <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
+        <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
+        <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
+        <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
-        <pathelement location="${libdir}/commons-csv-1.7.jar"/>
+        <pathelement location="${libdir}/commons-csv-1.9.0.jar"/>
         <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
@@ -130,24 +131,23 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jsoup-1.13.1.jar"/>
-        <pathelement location="${libdir}/jsoup-1.13.1-javadoc.jar"/>
+        <pathelement location="${libdir}/jsoup-1.14.3.jar"/>
         <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
         <pathelement location="${libdir}/vecmath-1.5.2.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/jna-4.4.0.jar"/>
-        <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
+        <pathelement location="${libdir}/jna-5.9.0.jar"/>
+        <pathelement location="${libdir}/jna-platform-5.9.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-net-3.6.jar"/>
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.12.6.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.12.6.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.12.6.1.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -164,7 +164,7 @@
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
         <pathelement location="${libdir}/xbee-java-library-1.3.0.jar"/>
         <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
-        <pathelement location="${libdir}/commons-io-2.6.jar"/>
+        <pathelement location="${libdir}/commons-io-2.11.0.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
@@ -175,6 +175,7 @@
         <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-linux-x86-64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-darwin-x86-64.jar"/>
+        <pathelement location="${libdir}/libusb4java-1.3.0-darwin-aarch64.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86.jar"/>
         <pathelement location="${libdir}/libusb4java-1.3.0-win32-x86-64.jar"/>
         <pathelement location="${libdir}/usb-api-1.0.2.jar"/>
@@ -186,8 +187,8 @@
         <pathelement location="${libdir}/jinputvalidator-0.8.0.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
         <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
-        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE113.jar"/>
-        <pathelement location="${libdir}/org-openide-util-RELEASE113.jar"/>
+        <pathelement location="${libdir}/org-openide-util-lookup-RELEASE126.jar"/>
+        <pathelement location="${libdir}/org-openide-util-RELEASE126.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
         <pathelement location="${libdir}/batik-transcoder-1.14.jar"/>
         <pathelement location="${libdir}/batik-svg-dom-1.14.jar"/>
@@ -197,6 +198,7 @@
         <pathelement location="${libdir}/batik-ext-1.14.jar"/>
         <pathelement location="${libdir}/batik-xml-1.14.jar"/>
         <pathelement location="${libdir}/batik-bridge-1.14.jar"/>
+        <pathelement location="${libdir}/batik-js-1.8.jar"/>
         <pathelement location="${libdir}/batik-gvt-1.14.jar"/>
         <pathelement location="${libdir}/batik-script-1.14.jar"/>
         <pathelement location="${libdir}/batik-awt-util-1.14.jar"/>
@@ -206,8 +208,8 @@
         <pathelement location="${libdir}/batik-constants-1.14.jar"/>
         <pathelement location="${libdir}/batik-shared-resources-1.14.jar"/>
         <pathelement location="${libdir}/batik-svggen-1.14.jar"/>
-        <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
         <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
+        <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -222,7 +224,6 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
-        <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/junit-jupiter-5.6.0.jar"/>
         <pathelement location="${libdir}/junit-platform-console-standalone-1.6.0.jar"/>
         <pathelement location="${libdir}/junit-platform-commons-1.6.0.jar"/>
@@ -245,7 +246,7 @@
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-3.1.7.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -269,7 +270,7 @@
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
-        <pathelement location="${libdir}/jemmy-22-00c9f753cd0a.jar"/>
+        <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-4.3.1.jar"/>
@@ -420,13 +421,17 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
+    <target name="show-java-version"> <!-- check build system requirements, not for user use -->
+        <echo message="Ant Java version: ${ant.java.version}"/>
+        <echo message="JRE Java version: ${java.version}"/>
+    </target>
+
     <target name="check-java-version-requirement"> <!-- check build system requirements, not for user use -->
         <fail message="Unsupported Java version: ${ant.java.version}.
-          Make sure that the Java version is 9 or greater.">
+          Make sure that the Java version is 11 or greater.">
           <condition>
             <not>
               <or>
-                <matches pattern="^1\.9" string="${ant.java.version}"/>
                 <matches pattern="^1[1-9]" string="${ant.java.version}"/>
               </or>
             </not>
@@ -486,6 +491,8 @@
             <!-- .gitignore transient artifacts -->
             <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
+            <fileset file="pom.xml.back"/>
+            <fileset file="release.properties.bak"/>
             <fileset file="release.zip"/>
             <fileset file="spotbugs.html"/>
             <fileset file="spotbugs-check.html"/>
@@ -644,12 +651,14 @@
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
     <!-- Deprecated, use the java-compile macro instead -->
-    <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
+<!--
+    <target name="-java-compile-internal"> <!~~ Internal target for compiling Java source from a specified directory ~~>
         <java-compile
                 javac.source="${java.source.directory}"
                 javac.target="${target}"
             />
     </target>
+ -->
 
     <macrodef name="java-compile">
         <attribute name="javac.source"/>
@@ -721,6 +730,18 @@
         </copy>
     </target>
 
+    <target name="graal-compile"
+            description="compile GraalVM-specific source; must currently have a GraalVM JDK active"
+            depends="init">
+        <!-- Compile the java code from ${source} into ${target} -->
+        <java-compile
+                javac.source="${graalsource}"
+                javac.target="${graaltarget}"
+                javac.deprecation="on"
+            />
+    </target>
+
+
     <target name="ci-compile-deprecations"
             description="compile source, omitting tests, warning on deprecations - for Jenkins CI"
             depends="init, copyfiles, compile-generated-source">
@@ -788,7 +809,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -825,7 +846,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -858,10 +879,13 @@
 
     <target name="single-test-coveragecheck" depends="test-single-coverage, coveragecheck" description="Generate Test Coverage check from a single test" />
 
+    <!-- ============================================================================= -->
+    <!-- Compile-time check targets                                                    -->
+    <!-- ============================================================================= -->
+
     <!-- The java/ecj.warning.options and java/ecj.warning.options-ci files defines which warnings are on and off -->
-    <!-- By default, we set them explicitly, so that new ones will show up -->
-    <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
-    <!--                                        -->
+    <!-- We set the options explicitly so it's clear what we're looking for -->
+    <!-- See java/ecj.warnings.options-ci for more information -->
     <macrodef name="ecj-compile">
         <attribute name="javac.source"/>
         <attribute name="javac.target" default="${target}"/>
@@ -887,21 +911,21 @@
         </sequential>
     </macrodef>
 
-    <target name="warnings"
-            description="compile source with ECJ warning generation on, omitting tests"
+    <target name="warnings-check"
+            description="compile source with CI ECJ warnings on"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
                 javac.source="${source}"
                 javac.deprecation="on"
-            >
+            > <!-- deprecation off during initial Java 11 work -->
             <javac-options>
-                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
             </javac-options>
         </ecj-compile>
     </target>
 
-    <target name="warnings-check"
-            description="compile source with ECJ warning generation on and fail if any warnings, omitting tests"
+    <target name="warnings"
+            description="compile source with extra ECJ warnings on"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile
                 javac.source="${source}"
@@ -909,28 +933,13 @@
             >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
-            </javac-options>
-        </ecj-compile>
-    </target>
-
-    <target name="tests-warnings"
-            description="compile test sources with ECJ warning generation on"
-            depends="warnings">
-        <ecj-compile
-                javac.source="${test}"
-                javac.target="${testtarget}"
-                javac.classpath="test.class.path"
-                javac.deprecation="off"
-            >
-            <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options"/>
-                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
             </javac-options>
         </ecj-compile>
     </target>
 
     <target name="tests-warnings-check"
-            description="compile test sources with ECJ warning generation on and fail if any warnings"
+            description="compile source &amp; tests with CI ECJ warnings on"
             depends="warnings-check">
         <ecj-compile
                 javac.source="${test}"
@@ -945,7 +954,25 @@
         </ecj-compile>
     </target>
 
+    <target name="tests-warnings"
+            description="compile source &amp; tests with extra ECJ warnings on"
+            depends="warnings">
+        <ecj-compile
+                javac.source="${test}"
+                javac.target="${testtarget}"
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            >
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test-ci"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
+            </javac-options>
+        </ecj-compile>
+    </target>
+
     <!-- end of program build targets -->
+
 
     <!-- ============================================================================= -->
     <!-- Application startup targets                                                   -->
@@ -1325,7 +1352,7 @@
     <!-- check for bad line ends, e.g. not ready to go into Git -->
 
     <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
-        <property name="test.includes" value="jmri.util.FileLineEndingsTest" />
+        <property name="test.includes" value="jmri.util.FileLineEndingsCheck" />
         <antcall target="test-single" />
     </target>
 
@@ -1372,6 +1399,10 @@
         " />
     </target>
 
+    <target name="typescript" description="build TypeScript files">
+        <ant dir="web/ts" />
+    </target>
+
     <!-- ============================================================================= -->
     <!-- Test execution targets                                                        -->
     <!-- ============================================================================= -->
@@ -1402,7 +1433,33 @@
         </java>
     </target>
 
-    <target name="buildhelp" depends="buildhelpfiles" description="build help files">
+    <target name="buildsearchhelpfile" depends="tests, runtime-library-selection" description="build help search.json file">
+        <java classname="jmri.util.GenerateSearchIndexTest"
+            dir="."
+            failonerror="yes"
+            fork="yes" >
+
+              <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+              <sysproperty key="log4j.ignoreTCL" path="true/"/>
+              <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+              <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+              <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+              <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+
+              <sysproperty key="java.awt.headless" value="true"/>
+
+              <sysproperty key="user.language" value="en"/>
+              <sysproperty key="user.country" value="US"/>
+
+              <classpath refid="test.class.path"/>
+
+              <jvmarg line="${jvm.args}"/>
+              <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <target name="buildhelp" depends="buildhelpfiles, buildsearchhelpfile" description="build help files">
         <ant dir="help/en/" />
         <ant dir="help/fr/" />
     </target>
@@ -1413,7 +1470,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1438,7 +1495,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1469,7 +1526,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1560,7 +1617,7 @@
                 <fileset refid="junitfileset"/>
                 <fork>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-                    <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+                    <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1587,7 +1644,7 @@
           fork="yes" >
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1615,7 +1672,7 @@
             <sysproperty key="wdm.forceCache" value="true"/>
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1654,7 +1711,7 @@
 
                    <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
                     <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-                    <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+                    <!-- <sysproperty key="apple.laf.useScreenMenuBar" value="false"/> causes problems with Jemmy access to menus on Mac -->
                     <sysproperty key="log4j.ignoreTCL" path="true/"/>
                     <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
@@ -1830,6 +1887,30 @@
         </jar>
     </target>
 
+    <target name="native-image" depends="jar" description="create native launchers">
+        <exec executable="native-image"
+              failonerror="true">
+            <arg value="--verbose"/>
+
+            <!-- <arg value="~~no-fallback"/> --> <!-- remove on macOS for partial image build -->
+            <!-- <arg value="~~allow-incomplete-classpath"/> --><!-- remove on macOS for partial image build -->
+
+            <arg value="-cp"/><arg value="jmri.jar"/>
+            <arg value="-J-Xmx8g"/>
+            <arg value="-Djava.security.policy=${libdir}/security.policy"/>
+            <arg value="-Dapple.laf.useScreenMenuBar=true"/>
+            <arg value="-Dapple.awt.graphics.UseQuartz=true"/>
+            <arg value="-Dapple.awt.graphics.EnableQ2DX=true"/>
+            <arg value="-Dlog4j.ignoreTCL=true/"/>
+            <arg value="-Dfile.encoding=UTF-8"/>
+            <arg value="-Djava.library.path.:${arch.lib.path}:${libdir}"/>
+            <arg value="-Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/><!-- not in tests, left here for historical reasons -->
+
+            <arg value="apps.PanelPro.PanelPro"/>
+            <arg value="PanelPro"/>
+        </exec>
+    </target>
+
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
                  maxmemory="1536m"
@@ -1842,8 +1923,9 @@
                  use="true"
                  failonerror="true"
                  failonwarning="true"
-                 source="8"
+                 source="11"
                  windowtitle="JMRI API"
+                 useexternalfile="yes"
             >
 
             <packageset dir="${source}" defaultexcludes="yes">
@@ -1891,8 +1973,7 @@
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
 
-            <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" />
+            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1/" />
 
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
@@ -1906,7 +1987,7 @@
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
-            <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
@@ -1943,7 +2024,7 @@
                  use="true"
                  failonerror="true"
                  failonwarning="false"
-                 source="8"
+                 source="11"
                  windowtitle="JMRI API"
             > <!-- failonwarning="false"  because always warns on cyclic redundancy with JDK11 -->
 
@@ -1975,7 +2056,7 @@
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
                 <param name="-use"/>
-                <param name="--uml-timeout" value="1800" /> <!-- timeout passed to plantuml -->
+                <param name="--uml-timeout" value="3600" /> <!-- timeout passed to plantuml -->
                 <param name="--uml-image-format" value="svg" />
                 <param name="--uml-excluded-package-dependencies" value="java,javax,com,org,edu,net,io" />
             </doclet>
@@ -2006,7 +2087,7 @@
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
 
-            <link href="https://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
@@ -2017,10 +2098,10 @@
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
 
-            <link offline="true" href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1/" />
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
 
@@ -2561,41 +2642,30 @@
 
 
     <!-- several steps are involved in creating a new test release
-    branch from the head of the master branch.  This target intends to manage as
-    many of them as possible -->
+    branch from the head of the ${release.branch} (often master) branch.
+    This target intends to manage as  many of those as possible.
+    ${release.branch} should be set in the release.properties file.
+    See scripts/scripts/HOWTO-distribution.md for more information. -->
     <target name="make-test-release-branch"
-            description="Make a new test release branch in Git from the head of the master branch">
+            description="Make a new test release branch in Git from the head of the ${release.branch} branch">
 
-        <!-- Create a new branch test release branch from the front of the master
-        branch in our main repository, and push back to main repo -->
+        <!-- this target's contents are not consistent with current practice,
+            see scripts/scripts/HOWTO-distribution.md for more information. -->
+        <fail>This target is not currently in use by the release process.</fail>
 
+        <!-- make sure on ${release.branch} branch and
+         it's up to date-->
         <exec executable="git" failifexecutionfails="true">
             <arg value="checkout"/>
-            <arg value="master"/>
+            <arg value="${release.branch}"/>
         </exec>
         <exec executable="git" failifexecutionfails="true">
             <arg value="pull"/>
         </exec>
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="checkout"/>
-            <arg value="-b"/>
-            <arg value="${branch-name}"/>
-        </exec>
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="push"/>
-            <arg value="${jmri.repository.url}"/>
-            <arg value="${branch-name}"/>
-        </exec>
 
-        <!-- return to master -->
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="checkout"/>
-            <arg value="master"/>
-        </exec>
-
-        <!-- in the master release.properties file, increment
+        <!-- in the ${release.branch} release.properties file, increment
         the release.build value in order to point to the NEW next
-        release (the one after the one we're creating now) -->
+        release (the one we're creating next) -->
         <propertyfile file="release.properties">
             <entry key="release.build" type="int" operation="+" value="1"/>
         </propertyfile>
@@ -2613,9 +2683,37 @@
             <arg value="pull"/>
         </exec>
 
-        <echo message="new release branch ${branch-name} created"/>
+        <antcall target="-make-branch-subtarget" inheritAll="false"/>
+
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+        </exec>
+
+        <!-- return to ${release.branch} -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="${release.branch}"/>
+        </exec>
     </target>
 
+    <target name="-make-branch-subtarget"
+        description="run via antcall inheritAll=false to pick up new properties files">
+
+        <!-- re-read the properties files to get the updated branch name -->
+        <property file="${basedir}/release.properties"/>
+        <property file="${basedir}/project.properties"/>
+
+        <!-- Create a new branch test release branch from the front of the ${release.branch}
+        branch in our main repository, and push back to main repo -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="-b"/>
+            <arg value="${branch-name}"/>
+        </exec>
+
+        <echo message="new release branch ${branch-name} created"/>
+    </target>
     <!-- end of distribution build targets -->
 
     <!-- ============================================================================= -->

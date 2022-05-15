@@ -298,7 +298,7 @@ public class ThrottleSetting {
         return command;
     }
 
-    private CommandValue getValueFromString(Command command, String valueStr) throws JmriException {
+    static protected CommandValue getValueFromString(Command command, String valueStr) throws JmriException {
         if (command == null) {
             throw new jmri.JmriException(Bundle.getMessage("badCommand", "Command missing "+valueStr));
         }
@@ -412,7 +412,7 @@ public class ThrottleSetting {
         try {
             _command = getCommandFromString(cmdStr);
         } catch (JmriException je) {
-            log.error("Cannot set command for ThrottleSetting {}", je.toString());
+            log.error("Cannot set command from string \"{}\" {}", cmdStr, je.toString());
         }
     }
 
@@ -436,7 +436,8 @@ public class ThrottleSetting {
         try {
             _value = getValueFromString(_command, valueStr);
         } catch (JmriException je) {
-            log.error("Cannot set command for ThrottleSetting {}", je.toString());
+            log.error("Cannot set value for command {}. {}",
+                   (_command!=null?_command.toString():"null"), je.toString());
         }
     }
 
@@ -497,6 +498,13 @@ public class ThrottleSetting {
     // _namedHandle may be of 3 different types
     public NamedBeanHandle<? extends NamedBean> getNamedBeanHandle() {
         return _namedHandle;
+    }
+
+    public NamedBean getBean() {
+        if (_namedHandle == null) {
+            return null;
+        }
+        return _namedHandle.getBean();
     }
 
     public String getBeanDisplayName() {

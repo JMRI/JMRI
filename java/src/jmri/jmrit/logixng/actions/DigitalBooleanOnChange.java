@@ -65,12 +65,6 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         if (_socket.isConnected()) {
             switch (_trigger) {

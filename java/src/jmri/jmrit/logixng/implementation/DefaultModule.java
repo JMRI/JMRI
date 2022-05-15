@@ -169,11 +169,6 @@ public class DefaultModule extends AbstractBase
     public Category getCategory() {
         return Category.OTHER;
     }
-
-    @Override
-    public boolean isExternal() {
-        return false;
-    }
 /*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
@@ -188,7 +183,7 @@ public class DefaultModule extends AbstractBase
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, Locale.getDefault(), writer, indent, "", lineNumber);
     }
 
@@ -200,7 +195,7 @@ public class DefaultModule extends AbstractBase
             PrintWriter writer,
             String indent,
             MutableInt lineNumber) {
-        
+
         printTree(settings, locale, writer, indent, "", lineNumber);
     }
 
@@ -213,7 +208,7 @@ public class DefaultModule extends AbstractBase
             String indent,
             String currentIndent,
             MutableInt lineNumber) {
-        
+
         printTreeRow(settings, locale, writer, currentIndent, lineNumber);
 
         _femaleRootSocket.printTree(settings, locale, writer, indent, currentIndent+indent, lineNumber);
@@ -365,6 +360,8 @@ public class DefaultModule extends AbstractBase
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     @Override
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());

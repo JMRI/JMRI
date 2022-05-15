@@ -181,6 +181,12 @@ recompiled everything, you may want to do <code>ant clean</code> first)<br>
 </pre>The first line compiles all the test code, and the second runs a specific test or test
 suite.<br>
       (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
+
+      If you're running on Mac, there's a <a href="StartUpScripts.shtml#parameters"><code>-t</code> option</a>
+      to put the menu on the main-screen menu bar, which makes JMRI apps look more like a
+      Mac application.  This will interfere with
+      <a href="#jemmy">Jemmy</a> based tests of the GUI.
+
       <p>There is also a PowerShell (Core) script available to help running tests with maven,</p>
 
       <pre style="font-family: monospace;">./java/runtests.ps1</pre>. Its main features are:
@@ -245,6 +251,13 @@ suite.<br>
         <dd>If true, issues a warning if a test takes too long. The default limit is 5000 msec, but
         you can change it defining the jmri.util.JUnitUtil.checkTestDurationMax environment
         variable.</dd>
+
+        <dt>jmri.util.AccessibilityChecks.logToSystemOut
+        <dt>jmri.util.AccessibilityChecks.warnOnIssue
+        <dt>jmri.util.AccessibilityChecks.failOnIssue
+        <dt>jmri.util.AccessibilityChecks.includeLaf
+        <dd>These control accessibility checks, see
+            <a href="#access">below</a>.
       </dl>
       For more on setting these, see the <a href="StartUpScripts.shtml#prop">start-up scripts
       page</a>.
@@ -330,12 +343,12 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       If a test fails during the continuous integration execution of "alltest", an e-mail is sent
       to the jmri-build e-mail list as well as to the developers who have checked in code which was
       included in the build.
-      <p>You may visit the web site <a href=
+      <p>You may visit the website <a href=
       "https://lists.sourceforge.net/lists/listinfo/jmri-builds">to subscribe to the jmri-builds
       e-mail list</a> to get the bad news as quickly as possible, or monitor <a href=
       "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">to view the archives of
       the e-mail list</a> and see past logs. Or you can monitor the "dashboard" at the <a href=
-      "ContinuousIntegration.shtml">continuous integration</a> web site.</p>
+      "ContinuousIntegration.shtml">continuous integration</a> website.</p>
 
       <p>(When the build succeeds, nothing is mailed, to cut down on traffic)</p>
 
@@ -378,7 +391,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       </ul>
 
       <p>You can navigate using the bar along the top of the page:<br>
-      <img src="images/JenkinsByPackage.png" width="513" height="340" alt=
+      <img src="images/JenkinsByPackage.png" alt=
       "The JaCoCo coverage report for JMRI in Jenkins"></p>
 
       <h2 id="write">Writing Tests</h2>
@@ -812,7 +825,7 @@ TemporaryDir</a>.
     @Rule
     public final TemporaryFolder tempFolder = new TemporaryFolder();
 </pre>
-      <p>Some standard JUnit rules you might find useful:</p>
+      <p>Some standard JUnit4 rules you might find useful:</p>
 
       <ul>
         <li>
@@ -845,14 +858,14 @@ TemporaryDir</a>.
 </pre>will put a 2 second (2,000 milliseconds) timeout on that test. If you use both the rule and
 the option, the option will control the behavior. For a bit more info, see the <a href=
 "https://github.com/junit-team/junit4/wiki/Timeout-for-tests">JUnit Timeouts for Tests page</a>.
-      <h4 id="RetryRule">RetryRule - run test several times</h4>
+      <h4 id="RetryRule">RetryRule - run test several times ( JUnit4 Only )</h4>
       JMRI has <code><a href=
       "https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/junit/rules/RetryRule.java">jmri.util.junit.rules.RetryRule</a></code>
       which can rerun a test multiple times until it reaches a limit or finally passes. Although
       it's better to write reliable tests, this can be a way to make the CI system more reliable
       while you try to find out why a test isn't reliable.
       <p>For a working example, see <a href=
-      "https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/logix/LearnWarrantTest.java">java/test/jmri/jmrit/logix/LearnWarrantTest.java</a></p>
+      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/junit/rules/RetryRuleTest.java">java/test/jmri/util/junit/rules/RetryRuleTest.java</a></p>
 
       <p>Briefly, you just add the lines</p>
 
@@ -861,7 +874,7 @@ the option, the option will control the behavior. For a bit more info, see the <
 
     @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
-</pre>to your test class. This will modify how JUnit handles errors during all of the tests in that
+</pre>to your test class. This will modify how JUnit4 handles errors during all of the tests in that
 class.
       <h3 id="control">Tools for Controlling JUnit tests</h3>
 
@@ -1095,6 +1108,23 @@ milliseconds can improve the reliability of tests. Also, setting
           wait-for-empty value may never occur.</p>
         </li>
       </ul>
+
+        <h3 id="access">Testing GUI Accessibility</a>
+        You can enable some accessibility checks using environment variables. These
+        control test routines that are included in regular test runs over your code.
+        For an example, see
+        the jmri.jmrit.roster.RosterEntryPaneTest class.
+
+        <dl>
+            <dt>jmri.util.AccessibilityChecks.logToSystemOut
+            <dt>jmri.util.AccessibilityChecks.warnOnIssue
+            <dt>jmri.util.AccessibilityChecks.failOnIssue
+            <dd>These determine what happens when a non-accessible GUI
+                element is found, ranging from logging to failing the relevant test.
+            <dt>jmri.util.AccessibilityChecks.includeLaf
+            <dd>By default, these tests turn off messages about Java Look&Feel classes, i.e. Spinners.
+                Setting this variable true will include those in the output.
+        </dl>
 
       <h2 id="testScriptCode">Testing Script Code</h2>
       JMRI ships with sample scripts. This section discussions how you can write simple tests for

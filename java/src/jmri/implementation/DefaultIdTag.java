@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.annotation.CheckForNull;
 
@@ -45,14 +46,26 @@ public class DefaultIdTag extends AbstractIdTag {
     }
 
     @Override
+    public int compareTo(NamedBean n2) {
+        Objects.requireNonNull(n2);
+        String o1 = this.getSystemName();
+        String o2 = n2.getSystemName();
+        int p1len = Manager.getSystemPrefixLength(o1);
+        int p2len = Manager.getSystemPrefixLength(o2);
+        int comp = o1.substring(0, p1len).compareTo(o2.substring(0, p2len));
+        if (comp != 0) 
+            return comp;
+        comp = o1.compareTo(o2);
+        return comp;
+    }
+
+    @Override
     public final void setWhereLastSeen(@CheckForNull Reporter r) {
         Reporter oldWhere = this.whereLastSeen;
         Date oldWhen = this.whenLastSeen;
         this.whereLastSeen = r;
         if (r != null) {
-            this.whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
-                    ? InstanceManager.getDefault(ClockControl.class).getTime()
-                    : Calendar.getInstance().getTime();
+            this.whenLastSeen = getDateNow();
         } else {
             this.whenLastSeen = null;
         }
@@ -61,11 +74,21 @@ public class DefaultIdTag extends AbstractIdTag {
         firePropertyChange("whenLastSeen", oldWhen, this.whenLastSeen);    // NOI18N
     }
 
+    private Date getDateNow() {
+        return InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
+            ? InstanceManager.getDefault(ClockControl.class).getTime()
+            : Calendar.getInstance().getTime();
+    }
+
+    private String getDateElementText(Date date) {
+        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(date);
+    }
+
     private void setCurrentState(int state) {
         try {
             setState(state);
         } catch (JmriException ex) {
-            log.warn("Problem setting state of IdTag {}", getSystemName());
+            log.warn("Problem setting state of IdTag {} {}", getSystemName(),ex.getMessage());
         }
     }
 
@@ -98,7 +121,7 @@ public class DefaultIdTag extends AbstractIdTag {
             e.addContent(new Element("whereLastSeen").addContent(whereLast.getSystemName())); // NOI18N
         }
         if (this.getWhenLastSeen() != null && storeState) {
-            e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen()))); // NOI18N
+            e.addContent(new Element("whenLastSeen").addContent(getDateElementText(this.getWhenLastSeen()))); // NOI18N
         }
         return e;
     }
@@ -120,7 +143,7 @@ public class DefaultIdTag extends AbstractIdTag {
                     this.setWhereLastSeen(r);
                     this.whenLastSeen = null;
                 } catch (IllegalArgumentException ex) {
-                    log.warn("Failed to provide Turnout \"{}\" in load", e.getChild("whereLastSeen").getText());
+                    log.warn("Failed to provide Reporter \"{}\" in load", e.getChild("whereLastSeen").getText());
                 }
             }
             if (e.getChild("whenLastSeen") != null) { // NOI18N
@@ -128,7 +151,8 @@ public class DefaultIdTag extends AbstractIdTag {
                 try {
                     this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); // NOI18N
                 } catch (ParseException ex) {
-                    log.warn("Error parsing when last seen: {}", ex);
+                    log.warn("Error parsing when last seen: {}", ex.getMessage());
+                    log.warn("Expected format is \"{}\" ",getDateElementText(getDateNow()));
                 }
             }
         } else {

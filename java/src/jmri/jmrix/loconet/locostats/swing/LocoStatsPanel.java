@@ -47,12 +47,12 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JPanel pr2Panel;
     JPanel ms100Panel;
     boolean updateRequestPending = false;
-    
+
     LocoStatsFunc stats;
 
     /**
      * Provides a path to the help html for this tool
-     * 
+     *
      * @return path
      */
     @Override
@@ -62,10 +62,10 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
 
     /**
      * Provides the string for the title of the window
-     * 
+     *
      * This is pulled from the properties file for the LocoNet menu entry for
      * this tool, to ensure consistency between the menu and the window title.
-     * 
+     *
      * @return an internationalized string containing the tool's LocoNet menu name
      */
     @Override
@@ -99,7 +99,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         rawPanel.add(r6);
         rawPanel.add(r7);
         rawPanel.add(r8);
-        
+
         lb2Panel = new JPanel();
         lb2Panel.setLayout(new BoxLayout(lb2Panel, BoxLayout.X_AXIS));
         lb2Panel.add(new JLabel(Bundle.getMessage("LabelVersion")));
@@ -160,20 +160,20 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
 
     /**
      * Configure LocoNet connection
-     * 
+     *
      * @param memo  specifies which LocoNet connection is used by this tool
      */
     @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-        
+
         stats = new LocoStatsFunc(memo);
         stats.addLocoNetInterfaceStatsListener(this);
 
         // request interface data from interface device
         requestUpdate();
     }
-    
+
     /**
      * Destructor
      */
@@ -182,16 +182,16 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         // unregister listener
         stats.removeLocoNetInterfaceStatsListener(this);
     }
-    
+
     /**
      * Send LocoNet request for interface status.
-     * 
-     * Performs the send from the "Layout" thread, to avoid GUI-related 
+     *
+     * Performs the send from the "Layout" thread, to avoid GUI-related
      * threading problems.
      */
     public void requestUpdate() {
         // Invoke the LocoNet request send on the layout thread, not the GUI thread!
-        // Note - there is no guarantee that the LocoNet message will be sent 
+        // Note - there is no guarantee that the LocoNet message will be sent
         // before execution returns to this method (but it might).
         ThreadingUtil.runOnLayoutEventually(()->{  stats.sendLocoNetInterfaceStatusQueryMessage(); });
         updateRequestPending = true;
@@ -225,23 +225,8 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
     JButton updateButton = new JButton(Bundle.getMessage("ButtonTextUpdate"));
 
     /**
-     * Nested class to create one of these tools using old-style defaults.
-     * @deprecated since 4.19.7; use {@link LocoStatsPanelAction} instead
-     */
-    @Deprecated
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
-
-        public Default() {
-            super(Bundle.getMessage("MenuItemLocoStats"),
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    LocoStatsPanel.class.getName(),
-                    jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
-        }
-    }
-
-    /**
      * Listener for LocoNet Interface Status changes
-     * 
+     *
      * @param o a LocoNetStatus object
      */
     @Override
@@ -251,7 +236,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetInterfaceStatsList
         if (!updateRequestPending) {
             return;
         }
-        
+
         if (o.getClass() == LocoBufferIIStatus.class) {
             LocoBufferIIStatus s = (LocoBufferIIStatus) o;
             version.setText((Integer.toHexString(s.version)));

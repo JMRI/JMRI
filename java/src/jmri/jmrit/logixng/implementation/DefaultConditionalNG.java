@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static jmri.NamedBean.UNKNOWN;
 
@@ -11,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
 
@@ -152,6 +152,11 @@ public class DefaultConditionalNG extends AbstractBase
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
+            } catch (AbortConditionalNGExecutionException e) {
+//                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
+//                        conditionalNG.getSystemName(), e, e);
+                log.warn("ConditionalNG {} was aborted during execute: {}",
+                        conditionalNG.getSystemName(), e.getCause(), e.getCause());
             } catch (JmriException | RuntimeException e) {
 //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
 //                        conditionalNG.getSystemName(), e, e);
@@ -258,11 +263,6 @@ public class DefaultConditionalNG extends AbstractBase
 
     @Override
     public Category getCategory() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    @Override
-    public boolean isExternal() {
         throw new UnsupportedOperationException("Not supported.");
     }
 

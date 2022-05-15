@@ -64,5 +64,8 @@ public class SpeedometerActionTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.tearDown();
+    }
 }

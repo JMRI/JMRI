@@ -3,9 +3,9 @@ package jmri.jmrit.beantable.turnout;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
  */
 public class TurnoutOperationEditorDialogTest {
     
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCTor() {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
         Turnout testedTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IS1");
         TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(testedTurnout);
         Assert.assertNotNull("proto exists",proto);

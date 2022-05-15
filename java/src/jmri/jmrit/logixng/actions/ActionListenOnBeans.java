@@ -17,6 +17,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private final Map<String, NamedBeanReference> _namedBeanReferences = new DuplicateKeyMap<>();
+    private String _localVariableNamedBean;
+    private String _localVariableEvent;
+    private String _localVariableNewValue;
+    private String _lastNamedBean;
+    private String _lastEvent;
+    private String _lastNewValue;
+
 
     public ActionListenOnBeans(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -47,16 +54,20 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void addReference(String beanAndType) {
         assertListenersAreNotRegistered(log, "addReference");
         String[] parts = beanAndType.split(":");
-        if (parts.length != 2) {
+        if ((parts.length < 2) || (parts.length > 3)) {
             throw new IllegalArgumentException(
                     "Parameter 'beanAndType' must be on the format type:name"
-                    + " where type is turnout, sensor, memory, ...");
+                    + " where type is turnout, sensor, memory, ..., or on the"
+                    + " format type:name:all where all is yes or no");
         }
+
+        boolean listenToAll = false;
+        if (parts.length == 3) listenToAll = "yes".equals(parts[2]); // NOI18N
 
         try {
             NamedBeanType type = NamedBeanType.valueOf(parts[0]);
-            NamedBeanReference reference = new NamedBeanReference(parts[1], type);
-            _namedBeanReferences.put(reference._name, reference);
+            NamedBeanReference reference = new NamedBeanReference(parts[1], type, listenToAll);
+            addReference(reference);
         } catch (IllegalArgumentException e) {
             String types = Arrays.asList(NamedBeanType.values())
                     .stream()
@@ -70,11 +81,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void addReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "addReference");
         _namedBeanReferences.put(reference._name, reference);
+        reference._type.getManager().addVetoableChangeListener(this);
     }
 
     public void removeReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "removeReference");
-        _namedBeanReferences.remove(reference._name);
+        _namedBeanReferences.remove(reference._name, reference);
+        reference._type.getManager().removeVetoableChangeListener(this);
     }
 
     public Collection<NamedBeanReference> getReferences() {
@@ -85,23 +98,57 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         _namedBeanReferences.clear();
     }
 
+    public void setLocalVariableNamedBean(String localVariableNamedBean) {
+        if ((localVariableNamedBean != null) && (!localVariableNamedBean.isEmpty())) {
+            this._localVariableNamedBean = localVariableNamedBean;
+        } else {
+            this._localVariableNamedBean = null;
+        }
+    }
+
+    public String getLocalVariableNamedBean() {
+        return _localVariableNamedBean;
+    }
+
+    public void setLocalVariableEvent(String localVariableEvent) {
+        if ((localVariableEvent != null) && (!localVariableEvent.isEmpty())) {
+            this._localVariableEvent = localVariableEvent;
+        } else {
+            this._localVariableEvent = null;
+        }
+    }
+
+    public String getLocalVariableEvent() {
+        return _localVariableEvent;
+    }
+
+    public void setLocalVariableNewValue(String localVariableNewValue) {
+        if ((localVariableNewValue != null) && (!localVariableNewValue.isEmpty())) {
+            this._localVariableNewValue = localVariableNewValue;
+        } else {
+            this._localVariableNewValue = null;
+        }
+    }
+
+    public String getLocalVariableNewValue() {
+        return _localVariableNewValue;
+    }
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
+        var tempNamedBeanReferences = new ArrayList<NamedBeanReference>(_namedBeanReferences.values());
+        for (NamedBeanReference reference : tempNamedBeanReferences) {
+            if (reference._type.getClazz().isAssignableFrom(evt.getOldValue().getClass())) {
+                if ((reference._handle != null) && evt.getOldValue().equals(reference._handle.getBean())) {
+                    if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+                        PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                        throw new PropertyVetoException(getDisplayName(), e);
+                    } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+                        _namedBeanReferences.remove(reference._name, reference);
+                    }
                 }
             }
         }
-*/
     }
 
     /** {@inheritDoc} */
@@ -112,17 +159,26 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void execute() {
-        // Do nothing.
-        // The purpose of this action is only to listen on property changes
-        // of the registered beans and execute the ConditionalNG when it
-        // happens.
+        // The main purpose of this action is only to listen on property
+        // changes of the registered beans and execute the ConditionalNG
+        // when it happens.
+
+        synchronized(this) {
+            SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+            if (_localVariableNamedBean != null) {
+                symbolTable.setValue(_localVariableNamedBean, _lastNamedBean);
+            }
+            if (_localVariableEvent != null) {
+                symbolTable.setValue(_localVariableEvent, _lastEvent);
+            }
+            if (_localVariableNewValue != null) {
+                symbolTable.setValue(_localVariableNewValue, _lastNewValue);
+            }
+            _lastNamedBean = null;
+            _lastEvent = null;
+            _lastNewValue = null;
+        }
     }
 
     @Override
@@ -158,8 +214,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
-                namedBeanReference._handle.getBean()
-                        .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                if (!namedBeanReference._listenOnAllProperties
+                        && (namedBeanReference._type.getPropertyName() != null)) {
+                    namedBeanReference._handle.getBean()
+                            .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                } else {
+                    namedBeanReference._handle.getBean()
+                            .addPropertyChangeListener(this);
+                }
             }
         }
         _listenersAreRegistered = true;
@@ -172,8 +234,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {
-                namedBeanReference._handle.getBean()
-                        .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                if (!namedBeanReference._listenOnAllProperties
+                        && (namedBeanReference._type.getPropertyName() != null)) {
+                    namedBeanReference._handle.getBean()
+                            .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+                } else {
+                    namedBeanReference._handle.getBean()
+                            .removePropertyChangeListener(this);
+                }
             }
         }
         _listenersAreRegistered = false;
@@ -182,6 +250,12 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+//        System.out.format("Property: %s%n", evt.getPropertyName());
+        synchronized(this) {
+            _lastNamedBean = ((NamedBean)evt.getSource()).getDisplayName();
+            _lastEvent = evt.getPropertyName();
+            _lastNewValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+        }
         getConditionalNG().execute();
     }
 
@@ -196,10 +270,16 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         private String _name;
         private NamedBeanType _type;
         private NamedBeanHandle<? extends NamedBean> _handle;
+        private boolean _listenOnAllProperties = false;
 
-        public NamedBeanReference(String name, NamedBeanType type) {
+        public NamedBeanReference(NamedBeanReference ref) {
+            this(ref._name, ref._type, ref._listenOnAllProperties);
+        }
+
+        public NamedBeanReference(String name, NamedBeanType type, boolean all) {
             _name = name;
             _type = type;
+            _listenOnAllProperties = all;
 
             NamedBean bean = _type.getManager().getNamedBean(name);
             if (bean != null) {
@@ -213,6 +293,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         public void setName(String name) {
             _name = name;
+            updateHandle();
         }
 
         public NamedBeanType getType() {
@@ -220,15 +301,19 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
 
         public void setType(NamedBeanType type) {
-            if (type == null) throw new NullPointerException("type is null");
+            if (type == null) {
+                log.warn("type is null");
+                type = NamedBeanType.Turnout;
+            }
             _type = type;
+            updateHandle();
         }
 
         public NamedBeanHandle<? extends NamedBean> getHandle() {
             return _handle;
         }
 
-        public void updateHandle() {
+        private void updateHandle() {
             if (!_name.isEmpty()) {
                 NamedBean bean = _type.getManager().getNamedBean(_name);
                 if (bean != null) {
@@ -240,6 +325,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             } else {
                 _handle = null;
             }
+        }
+
+        public boolean getListenOnAllProperties() {
+            return _listenOnAllProperties;
+        }
+
+        public void setListenOnAllProperties(boolean listenOnAllProperties) {
+            _listenOnAllProperties = listenOnAllProperties;
         }
     }
 

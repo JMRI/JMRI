@@ -60,6 +60,10 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
         element.addContent(new Element("unit").addContent(p.getUnit().name()));
         element.addContent(new Element("resetIfAlreadyStarted").addContent(p.getResetIfAlreadyStarted() ? "yes" : "no"));  // NOI18N
         
+        if (p.getUseIndividualTimers()) {   // Only set this element if true, to keep backward compability if not used
+            element.addContent(new Element("useIndividualTimers").addContent(p.getUseIndividualTimers() ? "yes" : "no"));  // NOI18N
+        }
+        
         return element;
     }
     
@@ -100,6 +104,12 @@ public class ExecuteDelayedXml extends jmri.managers.configurexml.AbstractNamedB
             resetIfAlreadyStarted = shared.getChild("resetIfAlreadyStarted").getTextTrim();  // NOI18N
         }
         h.setResetIfAlreadyStarted("yes".equals(resetIfAlreadyStarted));
+        
+        String useIndividualTimers = "no";
+        if (shared.getChild("useIndividualTimers") != null) {  // NOI18N
+            useIndividualTimers = shared.getChild("useIndividualTimers").getTextTrim();  // NOI18N
+        }
+        h.setUseIndividualTimers("yes".equals(useIndividualTimers));
         
         try {
             Element elem = shared.getChild("delayAddressing");

@@ -4,9 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
-import jmri.jmrix.dccpp.DCCppSensorManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
-import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -25,7 +23,7 @@ public class ConfigBaseStationFrameTest extends jmri.util.JmriJFrameTestBase {
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new ConfigBaseStationFrame(new DCCppSensorManager(memo), new DCCppTurnoutManager(memo), tc);
+            frame = new ConfigBaseStationFrame(memo);
         }
 
     }

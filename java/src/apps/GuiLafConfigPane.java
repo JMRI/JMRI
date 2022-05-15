@@ -29,6 +29,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JComboBoxUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -73,6 +74,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox graphicStateDisplay;
     public JCheckBox tabbedOblockEditor;
     public JCheckBox editorUseOldLocSizeDisplay;
+    public JCheckBox force100percentScaling;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -88,6 +90,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doTabbedOblockEditor(p = new JPanel());
         add(p);
         doEditorUseOldLocSize(p = new JPanel());
+        add(p);
+        doForce100percentScaling(p = new JPanel());
         add(p);
         doMaxComboRows(p = new JPanel());
         add(p);
@@ -135,6 +139,19 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(editorUseOldLocSizeDisplay);
     }
 
+    void doForce100percentScaling(JPanel panel) {
+        jmri.util.EarlyInitializationPreferences eip =
+                jmri.util.EarlyInitializationPreferences.getInstance();
+
+        panel.setLayout(new FlowLayout());
+        force100percentScaling = new JCheckBox(ConfigBundle.getMessage("GUIForce100percentScaling"));
+        force100percentScaling.setSelected(eip.getGUIForce100percentScaling());
+        force100percentScaling.addItemListener((ItemEvent e) -> {
+            eip.setGUIForce100percentScaling(force100percentScaling.isSelected());
+        });
+        panel.add(force100percentScaling);
+    }
+
     void doLAF(JPanel panel) {
         // find L&F definitions
         panel.setLayout(new FlowLayout());
@@ -172,6 +189,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
         panel.add(localeBox);
+        JComboBoxUtil.setupComboBoxMaxRows(localeBox);
 
         // create object to find locales in new Thread
         Runnable r = () -> {
@@ -230,6 +248,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(fontSizeComboBox);
         panel.add(fontSizeUoM);
         panel.add(resetButton);
+
+        JComboBoxUtil.setupComboBoxMaxRows(fontSizeComboBox);
 
         fontSizeComboBox.addActionListener((ActionEvent e) -> {
             manager.setFontSize((int) fontSizeComboBox.getSelectedItem());

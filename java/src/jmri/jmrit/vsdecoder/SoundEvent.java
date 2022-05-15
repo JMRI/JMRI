@@ -16,14 +16,14 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
@@ -112,7 +112,7 @@ public class SoundEvent implements PropertyChangeListener {
 
     public JComponent getButton() {
         if ((buttontype == ButtonType.NONE) || (buttontype == ButtonType.ENGINE)) {
-            return (null);
+            return null;
         } else {
             return button;
         }
@@ -252,9 +252,9 @@ public class SoundEvent implements PropertyChangeListener {
         log.debug("Building trigger {}", t.getName());
         t.setXml(te);
         trigger_list.put(te.getAttributeValue("name"), t);
-        //log.debug("target name " + t.getTargetName() + " sound " + parent.getSound(t.getTargetName()));
+        //log.debug("target name: {}, sound: {}", t.getTargetName(), parent.getSound(t.getTargetName()));
         t.setTarget(parent.getSound(t.getTargetName()));
-        //log.debug("target " + t.getTarget());
+        //log.debug("target: {}", t.getTarget());
 
         if (t.getTarget() == null) {
             // If the target is missing, set up a do-nothing operation.

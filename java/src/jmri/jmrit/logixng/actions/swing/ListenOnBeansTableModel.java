@@ -25,15 +25,20 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     // COLUMN_DUMMY is "hidden" but used when the panel is closed to
     // ensure that the last edited cell is saved.
     public static final int COLUMN_BEAN_TYPE = 0;
-    public static final int COLUMN_BEAN_NAME = 1;
-    public static final int COLUMN_DELETE = 2;
-    public static final int COLUMN_DUMMY = 3;
+    public static final int COLUMN_BEAN_NAME = COLUMN_BEAN_TYPE + 1;
+    public static final int COLUMN_BEAN_ALL = COLUMN_BEAN_NAME + 1;
+    public static final int COLUMN_DELETE = COLUMN_BEAN_ALL + 1;
+    public static final int COLUMN_DUMMY = COLUMN_DELETE + 1;
     
     private final List<NamedBeanReference> _namedBeanReference = new ArrayList<>();
     
     
     public ListenOnBeansTableModel(Collection<NamedBeanReference> namedBeanReference) {
-        if (namedBeanReference != null) _namedBeanReference.addAll(namedBeanReference);
+        if (namedBeanReference != null) {
+            for (NamedBeanReference ref : namedBeanReference) {
+                _namedBeanReference.add(new NamedBeanReference(ref));
+            }
+        }
     }
     
     /** {@inheritDoc} */
@@ -56,6 +61,8 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 return Bundle.getMessage("ActionListenOnBeans_ColumnBeanType");
             case COLUMN_BEAN_NAME:
                 return Bundle.getMessage("ActionListenOnBeans_ColumnBeanName");
+            case COLUMN_BEAN_ALL:
+                return Bundle.getMessage("ActionListenOnBeans_ColumnBeanAll");
             case COLUMN_DELETE:
                 return "";  // no label
             case COLUMN_DUMMY:
@@ -73,6 +80,8 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 return NamedBeanType.class;
             case COLUMN_BEAN_NAME:
                 return String.class;
+            case COLUMN_BEAN_ALL:
+                return Boolean.class;
             case COLUMN_DELETE:
                 return JButton.class;
             case COLUMN_DUMMY:
@@ -102,6 +111,9 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             case COLUMN_BEAN_NAME:
                 ref.setName((String) value);
                 break;
+            case COLUMN_BEAN_ALL:
+                ref.setListenOnAllProperties((boolean) value);
+                break;
             case COLUMN_DELETE:
                 delete(rowIndex);
                 break;
@@ -122,6 +134,8 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 return _namedBeanReference.get(rowIndex).getType();
             case COLUMN_BEAN_NAME:
                 return _namedBeanReference.get(rowIndex).getName();
+            case COLUMN_BEAN_ALL:
+                return _namedBeanReference.get(rowIndex).getListenOnAllProperties();
             case COLUMN_DELETE:
                 return Bundle.getMessage("ButtonDelete");  // NOI18N
             case COLUMN_DUMMY:
@@ -140,7 +154,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     
     public void add() {
         int row = _namedBeanReference.size();
-        _namedBeanReference.add(new NamedBeanReference("", NamedBeanType.Turnout));
+        _namedBeanReference.add(new NamedBeanReference("", NamedBeanType.Turnout, false));
         fireTableRowsInserted(row, row);
     }
     

@@ -18,11 +18,13 @@ public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
+            "jmri.jmrix.loconet.locobufferng.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.locobufferusb.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.pr2.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.pr3.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.pr4.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.usb_dcs240.ConnectionConfig", // NOI18N
+            "jmri.jmrix.loconet.usb_dcs210Plus.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.usb_dcs52.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.hexfile.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.locormi.ConnectionConfig", // NOI18N

@@ -76,10 +76,10 @@
         <dt class="dtheader">Help and Web Site</dt>
         <dd>
             <ul class="navigation">
-            <li><a href="Help.shtml">Providing Help using JavaHelp</a></li>
+            <li><a href="Help.shtml">Providing Help using JmriHelp</a></li>
             <li><a href="WebSite.shtml">The JMRI Web Site</a></li>
-                        <li><a href="UpdatingDocs.shtml">Updating JMRI Web and Help</a></li>
-                        <li><a href="Help.shtml#hwhelp">Creating Help for New Hardware</a></li>
+            <li><a href="UpdatingDocs.shtml">Updating JMRI Web and Help</a></li>
+            <li><a href="Help.shtml#hwhelp">Creating Help for New Hardware</a></li>
             <li><a href="Javadoc.shtml">Program Documentation Using Javadoc</a></li>
             </ul>
         </dd>

@@ -207,8 +207,6 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         // setup buttons
         addButtonAction(resetButton);
         addButtonAction(saveButton);
-
-        initMinimumSize();
     }
 
     // Save buttons

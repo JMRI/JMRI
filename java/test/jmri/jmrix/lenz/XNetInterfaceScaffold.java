@@ -37,7 +37,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     @Override
-    public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener replyTo) {
+    public synchronized void sendHighPriorityXNetMessage(XNetMessage m, XNetListener replyTo) {
         log.debug("sendXNetMessage [{}]", m);
         // save a copy
         outbound.addElement(m);
@@ -83,7 +83,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     /**
      * This is normal, don't log at ERROR level
      */
-    @Override 
+    @Override
     protected void reportReceiveLoopException(Exception e) {
         log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
         jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);

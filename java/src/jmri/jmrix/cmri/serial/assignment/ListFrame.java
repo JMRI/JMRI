@@ -408,7 +408,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 } else {
                     return sName;
                 }
-                
+
             } else if (c == USERNAME_COLUMN) {
                 String sName = null;
                 if (curRow != r) {
@@ -428,7 +428,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     return (_memo.getUserNameFromSystemName(sName));
                 }
 
-                
+
             } else if (c == COMMENT_COLUMN) {
                 String sName = null;
                 if (curRow != r) {
@@ -445,7 +445,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 if (sName == null) {
                     return ("");
                 }
-                
+
                 if (inputSelected) {
                     jmri.Sensor s = null;
                     s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(sName);
@@ -606,7 +606,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
                     w.write("\n");
                     lineString = new StringBuilder();
                 } catch (IOException e) {
-                    log.warn("error during printing: {}", e);
+                    log.warn("error during printing", e);
                 }
             }
         }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,7 +23,6 @@ import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -665,7 +665,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     /**
      * Returns the order the train should be blocked.
-     * 
+     *
      * @return routeLocations for this train.
      */
     public List<RouteLocation> getTrainBlockingOrder() {
@@ -864,11 +864,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             case CODE_BUILD_FAILED:
                 return BUILD_FAILED;
             case CODE_BUILT:
-                // getNumberCarsWorked() is assumed to be constant if status is
-                // "built" or "partially built"
                 return Bundle.getMessage(locale, "StatusBuilt", this.getNumberCarsWorked()); // NOI18N
             case CODE_PARTIAL_BUILT:
-                // 0 should be number of cars requested to be worked
                 return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(),
                         this.getNumberCarsRequested()); // NOI18N
             case CODE_TERMINATED:
@@ -966,12 +963,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     protected void setTrainSkipsLocations(String[] locationIds) {
-        if (locationIds.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(locationIds);
-        for (String id : locationIds) {
-            _skipLocationsList.add(id);
+        if (locationIds.length > 0) {
+            Arrays.sort(locationIds);
+            for (String id : locationIds) {
+                _skipLocationsList.add(id);
+            }
         }
     }
 
@@ -1045,7 +1041,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     protected void setTypeNames(String[] types) {
         if (types.length > 0) {
-            java.util.Arrays.sort(types);
+            Arrays.sort(types);
             for (String type : types) {
                 _typeList.add(type);
             }
@@ -1130,7 +1126,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     protected void setRoadNames(String[] roads) {
         if (roads.length > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
             for (String road : roads) {
                 if (!road.isEmpty()) {
                     _roadList.add(road);
@@ -1148,7 +1144,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String[] getRoadNames() {
         String[] roads = _roadList.toArray(new String[0]);
         if (_roadList.size() > 0) {
-            java.util.Arrays.sort(roads);
+            Arrays.sort(roads);
         }
         return roads;
     }
@@ -1254,7 +1250,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     protected void setLoadNames(String[] loads) {
         if (loads.length > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
             for (String load : loads) {
                 if (!load.isEmpty()) {
                     _loadList.add(load);
@@ -1272,7 +1268,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String[] getLoadNames() {
         String[] loads = _loadList.toArray(new String[0]);
         if (_loadList.size() > 0) {
-            java.util.Arrays.sort(loads);
+            Arrays.sort(loads);
         }
         return loads;
     }
@@ -1363,13 +1359,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     List<String> _ownerList = new ArrayList<>();
 
     protected void setOwnerNames(String[] owners) {
-        if (owners.length == 0) {
-            return;
-        }
-        java.util.Arrays.sort(owners);
-        for (String owner : owners) {
-            if (!owner.isEmpty()) {
-                _ownerList.add(owner);
+        if (owners.length > 0) {
+            Arrays.sort(owners);
+            for (String owner : owners) {
+                if (!owner.isEmpty()) {
+                    _ownerList.add(owner);
+                }
             }
         }
     }
@@ -1383,7 +1378,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public String[] getOwnerNames() {
         String[] owners = _ownerList.toArray(new String[0]);
         if (_ownerList.size() > 0) {
-            java.util.Arrays.sort(owners);
+            Arrays.sort(owners);
         }
         return owners;
     }
@@ -1534,7 +1529,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Note that this code was written after TrainBuilder. It does pretty much the
      * same as TrainBuilder but with much fewer build report messages.
-     * 
+     *
      * @param buildReport PrintWriter
      * @param car         the car to be tested
      * @return true if this train can service the car.
@@ -1628,7 +1623,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Second step in determining if train can service car, check to see if car's
      * destination is serviced by this train's route.
-     * 
+     *
      * @param buildReport add messages if needed to build report
      * @param car         The test car
      * @param rLoc        Where in the train's route the car was found
@@ -1810,14 +1805,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
         if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher()) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
-                    new Object[] { car.toString(), rldest.getTrainDirectionString() }));
-            addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain2"),
-                    new Object[] { track.getName() }));
+                    new Object[] { car.toString(), rldest.getTrainDirectionString(), track.getName() }));
             return false;
         }
         if (!track.isDropTrainAccepted(this)) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
-                    new Object[] { car.toString(), getName(), track.getTrackTypeName(), track.getName() }));
+                    new Object[]{car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
+                            track.getName()}));
             return false;
         }
         return true;
@@ -1952,7 +1946,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     /**
      * Gets the number of cars pulled from a location
-     * 
+     *
      * @param routeLocation the location
      * @return number of pick ups
      */
@@ -1968,7 +1962,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     /**
      * Gets the number of cars delivered to a location
-     * 
+     *
      * @param routeLocation the location
      * @return number of set outs
      */
@@ -2131,9 +2125,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return The train's description.
      */
     public String getDescription() {
-        String description = MessageFormat.format(_description, new Object[] { getLeadEngineNumber(),
-                getTrainDepartsDirection(), getLeadEngineRoadName(), getLeadEngineDccAddress() });
-        return description;
+        try {
+            String description = MessageFormat.format(getRawDescription(), new Object[]{getLeadEngineNumber(),
+                    getTrainDepartsDirection(), getLeadEngineRoadName(), getLeadEngineDccAddress()});
+            return description;
+        } catch (IllegalArgumentException e) {
+            return "ERROR IN FORMATTING: " + getRawDescription();
+        }
     }
 
     public void setNumberEngines(String number) {
@@ -2470,8 +2468,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             setDirtyAndFirePropertyChange("trainComment", old, comment); // NOI18N
         }
     }
-
+    
     public String getComment() {
+        return TrainCommon.getTextColorString(getCommentWithColor());
+    }
+
+    public String getCommentWithColor() {
         return _comment;
     }
 
@@ -2844,8 +2846,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         runScripts(getBuildScripts());
         TrainBuilder tb = new TrainBuilder();
         boolean results = tb.build(this);
-        setPrinted(false);
-        setSwitchListStatus(UNKNOWN);
         // run after build scripts
         runScripts(getAfterBuildScripts());
         return results;
@@ -3227,7 +3227,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /*
      * The train icon is moved to route location (rl) for this train
      */
-    @SuppressWarnings("null")
     protected void moveTrainIcon(RouteLocation rl) {
         // create train icon if at departure, if program has been restarted, or removed
         if (rl == getTrainDepartsRouteLocation() || _trainIcon == null || !_trainIcon.isActive()) {
@@ -3322,7 +3321,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Returns the lead engine in a train's route. There can be up to two changes in
      * the lead engine for a train.
-     * 
+     *
      * @param routeLocation where in the train's route to find the lead engine.
      * @return lead engine
      */
@@ -3359,7 +3358,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 try {
                     _trainIcon = editor.addTrainIcon(getIconName());
                 } catch (Exception e) {
-                    log.error("Error placing train ({}) icon on panel ({}) {}", getName(), Setup.getPanelName(), e);
+                    log.error("Error placing train ({}) icon on panel ({})", getName(), Setup.getPanelName(), e);
                     return;
                 }
                 _trainIcon.setTrain(this);
@@ -3495,8 +3494,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @param e Consist XML element
      */
-    @SuppressWarnings("deprecation") // until there's a replacement for
-                                     // convertFromXmlComment()
     public Train(Element e) {
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -3815,7 +3812,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                               // wasn't saved
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
-            _comment = OperationsXml.convertFromXmlComment(a.getValue());
+            _comment = a.getValue();
         }
         if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {
@@ -3985,7 +3982,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.REQUESTED_CARS, Integer.toString(getNumberCarsRequested()));
         e.setAttribute(Xml.STATUS_CODE, Integer.toString(getStatusCode()));
         e.setAttribute(Xml.OLD_STATUS_CODE, Integer.toString(getOldStatusCode()));
-        e.setAttribute(Xml.COMMENT, getComment());
+        e.setAttribute(Xml.COMMENT, getCommentWithColor());
         e.setAttribute(Xml.SHOW_TIMES, isShowArrivalAndDepartureTimesEnabled() ? Xml.TRUE : Xml.FALSE);
         // build list of car types for this train
         String[] types = getTypeNames();

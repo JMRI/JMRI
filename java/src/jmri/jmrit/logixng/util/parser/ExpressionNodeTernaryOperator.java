@@ -48,9 +48,10 @@ public class ExpressionNodeTernaryOperator implements ExpressionNode {
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
-        return _rightSide.getDefinitionString() + " ? ("
-                + _middleSide.getDefinitionString() + ") : ("
-                + _rightSide.getDefinitionString()+")";
+        return "("
+                + _leftSide.getDefinitionString() + ")?("
+                + _middleSide.getDefinitionString() + "):("
+                + _rightSide.getDefinitionString() + ")";
     }
     
 }

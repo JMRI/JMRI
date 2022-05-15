@@ -286,31 +286,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
     }
 
     /**
-     * Get a list of all Conditional system names
-     * Overrides the bean method
-     * @since 4.7.4
-     * @deprecated 4.11.5 - use direct access via
-     *                  {@link #getNamedBeanSet}
-     * @return a list of conditional system names regardless of parent Logix
-     */
-    @Deprecated // 4.11.5
-    @Override
-    @Nonnull
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        List<String> nameList = new ArrayList<>();
-
-        jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        for (Logix lgx : logixManager.getNamedBeanSet()) {
-            for (int i = 0; i < lgx.getNumConditionals(); i++) {
-                nameList.add(lgx.getConditionalByNumberOrder(i));
-            }
-        }
-        Collections.sort(nameList);
-        return nameList;
-    }
-
-    /**
      * Create a named bean set for conditionals.  This requires special logic since conditional
      * beans are not registered.
      * @since 4.17.5
@@ -331,16 +306,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
             }
         }
         return Collections.unmodifiableSortedSet(conditionals);
-    }
-
-    /**
-     *
-     * @return the default instance of the DefaultConditionalManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public DefaultConditionalManager instance() {
-        return InstanceManager.getDefault(DefaultConditionalManager.class);
     }
 
     @Override

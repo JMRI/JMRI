@@ -1,277 +1,212 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Item Palette Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI help Item Palette">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Item Palette"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>The Item Palette</h1>
-      <b>The Item Palette</b> is used to
-      place icons and text onto <b>Control Panel Editor</b> panels.
-      The palette is a tabbed window with tabs for each item type.
-      The common method all items use to add an item to a panel is
-      "Drag and Drop". Each tab has a bordered <b>Preview</b> panel
-      containing a labeled <b>Drag to Panel</b> panel. Drag the
-      item inside this border over
-      to your Panel. In the cases where the icon represents a layout
-      device (e.g. a turnout, a sensor, etc.), tab may also contain
-      a table of elements configured for that device type.  select a
-      row from a table to associate that particular device with the
-      icon - and then drag the icon to the Panel.
-      <p>
-      The window shown when the <b>Edit XYZ</b> menu item of a panel
-      item is invoked shows the corresponding Item Palette tab pane
-      without the labeled <b>Drag to Panel</b> panel.</p>
+      <strong>The Item Palette</strong> is used to place icons and text onto <strong>Control Panel
+      Editor</strong> panels. The palette is a tabbed window with tabs for each item type. The
+      common method all items use to add an item to a panel is "Drag and Drop". Each tab has a
+      bordered <strong>Preview</strong> panel containing a labeled <strong>Drag to Panel</strong>
+      panel. Drag the item inside this border over to your Panel. In the cases where the icon
+      represents a layout device (e.g. a turnout, a sensor, etc.), tab may also contain a table of
+      elements configured for that device type. select a row from a table to associate that
+      particular device with the icon - and then drag the icon to the Panel.
+      <p>The window shown when the <strong>Edit XYZ</strong> menu item of a panel item is invoked
+      shows the corresponding Item Palette tab pane without the labeled <strong>Drag to
+      Panel</strong> panel.</p>
 
       <h2>Iconic Items</h2>
-      Some device types need a set of icons to depict each of their
-      states The Item Palette provides multiple sets of icons to
-      choose from to associate with a device. There is a radio button
-      for each icon set defined for the tab item. For
-      example, under the sensor tab you may have sets of large
-      jewels, small jewels, each size with several sets with
-      different colors for active and inactive - e.g. red-green,
-      yellow-dark, etc.
-      <p>
-      The individual icons are displayed in the preview on the
-      background of the last editor to open the Item Palette.
-      <span class="since">since 4.9.7</span>
-      Choosing a different background in the "View On:" combo box,
-      may help in determining what parts of the icon are opaque
-      and what parts are transparent.</p>
+      Some device types need a set of icons to depict each of their states The Item Palette
+      provides multiple sets of icons to choose from to associate with a device. There is a radio
+      button for each icon set defined for the tab item. For example, under the sensor tab you may
+      have sets of large jewels, small jewels, each size with several sets with different colors
+      for active and inactive - e.g. red-green, yellow-dark, etc.
+      <p>The individual icons are displayed in the preview on the background of the last editor to
+      open the Item Palette. <span class="since">since 4.9.7</span> Choosing a different background
+      in the "View On:" combo box, may help in determining what parts of the icon are opaque and
+      what parts are transparent.</p>
 
       <h3>Editing and Creating New Icon Sets</h3>
-	  <ul>
-	  		<li>The <b>Show Icons</b> button displays all the icons in the
-      		selected set.
-      		</li><li>
-            The <b>Edit Icons</b> button opens a dialog where the icons
-             may be changed by dragging new icons from the Icon Catalog.
-             Also the name may be changed with <b>Rename Icon set</b>
-      		</li><li>
-      		Additional icon sets may be added with <b>New Icon Set</b>
-            button. After giving a name to the new icon set, the edit
-            dialog is displayed with all the states of the device
-            represented with "red X" icons. Replace the red X icons with icons you
-            drag from the catalogs. There is no limit on the number of
-            additional icon sets that can be added to an item tab.
-      		</li><li>
-      		The <b>Delete Family Icon Set</b> button deletes the selected
-            icon set.</li>
-		</ul>
-      When the Item Palette is customized by editing icon sets
-      or by adding of deleting sets, exiting PanelPro
-      will open a dialog box asking whether you want to save your
-      changes. When changes are saved the Item Palette is stored in
-      the CatalogTrees.xml file in the preferences directory.
 
+      <ul>
+        <li>The <strong>Show Icons</strong> button displays all the icons in the selected set.</li>
+
+        <li>The <strong>Edit Icons</strong> button opens a dialog where the icons may be changed by
+        dragging new icons from the Icon Catalog. Also the name may be changed with <strong>Rename
+        Icon set</strong></li>
+
+        <li>Additional icon sets may be added with <strong>New Icon Set</strong> button. After
+        giving a name to the new icon set, the edit dialog is displayed with all the states of the
+        device represented with "red X" icons. Replace the red X icons with icons you drag from the
+        catalogs. There is no limit on the number of additional icon sets that can be added to an
+        item tab.</li>
+
+        <li>The <strong>Delete Family Icon Set</strong> button deletes the selected icon set.</li>
+      </ul>
+      When the Item Palette is customized by editing icon sets or by adding of deleting sets,
+      exiting PanelPro will open a dialog box asking whether you want to save your changes. When
+      changes are saved the Item Palette is stored in the CatalogTrees.xml file in the preferences
+      directory.
       <h3>Table Items</h3>
-      The items associated with a table (eg. Turnouts, Sensors,
-      Lights, Signal Heads) have a pick list of their items displayed.
-      Under the table is a <b>Add New Table Item</b>
-      button. This button opens the corresponding device table from
-      the <b>Tools</b> menu for you to create a new device item.
-      <br>Tabs with tables require a device to be selected (a
-      row in the table) before the an icon can be dragged to a
-      control panel to represent it.
-
+      The items associated with a table (eg. Turnouts, Sensors, Lights, Signal Heads) have a pick
+      list of their items displayed. Under the table is a <strong>Add New Table Item</strong>
+      button. This button opens the corresponding device table from the <strong>Tools</strong> menu
+      for you to create a new device item.<br>
+      Tabs with tables require a device to be selected (a row in the table) before the an icon can
+      be dragged to a control panel to represent it.
       <h3>Special Cases</h3>
       <span class="since">Since 4.21</span><br>
-      Should all of the icon sets of a device type be deleted, a
-      <b>Restore Defaults</b> button is displayed. This button
-      reinstalls the default icons listed in the file
-      JMRI/xml/defaultPanelIcons.xml. Holding the keys <b>Ctrl</b>
-      and <b>A</b> down while clicking the <b>New Icon Set</b>
-      button will reinstall any missing default icon sets for that
-      tab.
-      <p>
-      Before 4.21 the Indicator Turnout tab always showed buttons to
-      add and delete status icons when the <b>Edit Icons</b> button
-      was pressed. Now these (advanced) buttons are displayed only if
-      the keys <b>Ctrl</b> and <b>A</b> are held down while clicking
-      <b>Edit Icons</b>.</p>
+      Should all of the icon sets of a device type be deleted, a <strong>Restore Defaults</strong>
+      button is displayed. This button reinstalls the default icons listed in the file
+      JMRI/xml/defaultPanelIcons.xml. Holding the keys <strong>Ctrl</strong> and <strong>A</strong>
+      down while clicking the <strong>New Icon Set</strong> button will reinstall any missing
+      default icon sets for that tab.
+      <p>Before 4.21 the Indicator Turnout tab always showed buttons to add and delete status icons
+      when the <strong>Edit Icons</strong> button was pressed. Now these (advanced) buttons are
+      displayed only if the keys <strong>Ctrl</strong> and <strong>A</strong> are held down while
+      clicking <strong>Edit Icons</strong>.</p>
 
       <h2>Item Palette Tabs</h2>
 
       <ul>
-        <li><b>Turnout</b> Both left and right turnout icon sets
-        are contained in this tab. Select a turnout from the table
-        and an icon set for either Right, Left, R/L Crossover,
+        <li><strong>Turnout</strong> Both left and right turnout icon sets are contained in this
+        tab. Select a turnout from the table and an icon set for either Right, Left, R/L Crossover,
         then drag to the panel.</li>
 
-        <li><b>Sensor</b> Select a sensor from the table and an
-        icon set, then drag to the panel.</li>
-
-        <li><b>SignalHead</b> When a signal head is selected in the
-        table, the [Show Icons] button will only display the icons
-        for the valid appearances of the signal. When no row is
-        selected all possible appearance icons are shown. When
-        adding a new icon set, all possible appearance icons are
-        shown.</li>
-
-        <li><b>SignalMast</b> A signal mast must be selected from
-        the table to drag icons for it to the panel and to display
-        the icons it uses for its aspects.</li>
-
-        <li><b>Memory</b> Select a memory location from the table.
-        The four memory types each have a "Drag to Panel" area.
-        Drag the item within the bordered "Drag to Panel" to the
-        panel. Note that <b>Input</b> and <b>Spinner</b> types can
-        only be dragged from the edges of their text boxes.</li>
-
-        <li><b>Reporter</b> Select a reporter from the table and
-        drag the item within the bordered "Drag to Panel" to the
-        panel.</li>
-
-        <li><b>Light</b> Select a light from the table and an icon
-        set for either Crossed symbol, Right or Left and drag to
+        <li><strong>Sensor</strong> Select a sensor from the table and an icon set, then drag to
         the panel.</li>
 
-        <li><b>Multisensor</b> The table displays the Sensor Table
-        and the default icon set has three lever positions. For the
-        default case, three rows must be selected in order from the
-        table to place the multisensor icon in a panel.
-        The table selections
-        are labeled "first", "second", etc. and these labels
-        correspond to the labels shown when the full icon set is
-        displayed. When editing or creating a Multisensor icon set,
-        lever positions can be added and deleted. That is, you may
-        make a two sensor multisensor or a four or five sensor icon
-        set. Use the <b>Add Icon</b> or <b>Delete Icon</b> button
-        to add or delete lever positions.</li>
+        <li><strong>SignalHead</strong> When a signal head is selected in the table, the [Show
+        Icons] button will only display the icons for the valid appearances of the signal. When no
+        row is selected all possible appearance icons are shown. When adding a new icon set, all
+        possible appearance icons are shown.</li>
 
-        <li><b>Icon</b> The bordered icons displayed (labeled with
-        their names) can be dragged directly to a panel. Icons can
-        also be dragged directly from the Icon Catalog. to add icons
-        to this tab, just drop them into the preview panel from
-        the Icon Catalog.</li>
+        <li><strong>SignalMast</strong> A signal mast must be selected from the table to drag icons
+        for it to the panel and to display the icons it uses for its aspects.</li>
 
-        <li><b>Background</b> Background icons are placed in a
-        panel just as regular icons are. However, they are assigned
-        the lowest display level and cannot be selected with a
-        simple mouse click. Use "Control Click" to select a
-        background icon. Rather than an icon, a custom background
-        color can be chosen with the <b>Color Chooser</b>
-        button. This button displays a color chooser with tabs for
-        different ways to set a color.</li>
+        <li><strong>Memory</strong> Select a memory location from the table. The four memory types
+        each have a "Drag to Panel" area. Drag the item within the bordered "Drag to Panel" to the
+        panel. Note that <strong>Input</strong> and <strong>Spinner</strong> types can only be
+        dragged from the edges of their text boxes.</li>
 
-        <li><b>Text</b> The Text tab displays a text field to enter
-        the text and the attribute options that renders the text.
-        Font sizes styles, justification and border attributes can
-        be chosen. A color chooser provides custom colors for
-        fonts, background and borders.<br>
+        <li><strong>Reporter</strong> Select a reporter from the table and drag the item within the
+        bordered "Drag to Panel" to the panel.</li>
+
+        <li><strong>Light</strong> Select a light from the table and an icon set for either Crossed
+        symbol, Right or Left and drag to the panel.</li>
+
+        <li><strong>Multisensor</strong> The table displays the Sensor Table and the default icon
+        set has three lever positions. For the default case, three rows must be selected in order
+        from the table to place the multisensor icon in a panel. The table selections are labeled
+        "first", "second", etc. and these labels correspond to the labels shown when the full icon
+        set is displayed. When editing or creating a Multisensor icon set, lever positions can be
+        added and deleted. That is, you may make a two sensor multisensor or a four or five sensor
+        icon set. Use the <strong>Add Icon</strong> or <strong>Delete Icon</strong> button to add
+        or delete lever positions.</li>
+
+        <li><strong>Icon</strong> The bordered icons displayed (labeled with their names) can be
+        dragged directly to a panel. Icons can also be dragged directly from the Icon Catalog. to
+        add icons to this tab, just drop them into the preview panel from the Icon Catalog.</li>
+
+        <li><strong>Background</strong> Background icons are placed in a panel just as regular
+        icons are. However, they are assigned the lowest display level and cannot be selected with
+        a simple mouse click. Use "Control Click" to select a background icon. Rather than an icon,
+        a custom background color can be chosen with the <strong>Color Chooser</strong> button.
+        This button displays a color chooser with tabs for different ways to set a color.</li>
+
+        <li><strong>Text</strong> The Text tab displays a text field to enter the text and the
+        attribute options that renders the text. Font sizes styles, justification and border
+        attributes can be chosen. A color chooser provides custom colors for fonts, background and
+        borders.<br>
         Drag the item in the Preview Panel to the panel.</li>
 
-        <li><b>RPSReporter</b> Drag the "Drag to Panel" icon to the
-        panel and setup the RPSReporter from its pop up menu.</li>
+        <li><strong>RPSReporter</strong> Drag the "Drag to Panel" icon to the panel and setup the
+        RPSReporter from its pop up menu.</li>
 
-        <li><b>FastClock</b> Drag the clock to the panel.</li>
+        <li><strong>FastClock</strong> Drag the clock to the panel.</li>
 
-        <li><b>Indicator Track</b>
-        <span class="since">since 2.12</span> These are intended for
-        use when track circuits are configured with OBlocks. Most
-        of the items in this tab pertain to their use as
-        presentations of OBlocks and their use with warrants.
-        However, if OBlocks are not defined, but occupancy sensors
-        are installed on the layout as track circuits, the
-        <b>Occupancy Circuit</b> field will accept a sensor name.
-        When this is the case only the "Occupied" and "Clear"
-        colors can be displayed.</li>
+        <li><strong>Indicator Track</strong> <span class="since">since 2.12</span> These are
+        intended for use when track circuits are configured with OBlocks. Most of the items in this
+        tab pertain to their use as presentations of OBlocks and their use with warrants. However,
+        if OBlocks are not defined, but occupancy sensors are installed on the layout as track
+        circuits, the <strong>Occupancy Circuit</strong> field will accept a sensor name. When this
+        is the case only the "Occupied" and "Clear" colors can be displayed.</li>
 
-        <li><b>Indicator Turnout</b> The above comment also applies to
-        Indicator Turnouts.</li>
+        <li><strong>Indicator Turnout</strong> The above comment also applies to Indicator
+        Turnouts.</li>
 
-        <li><b>Portal</b> Portal icons are used in Circuit Builder to
-        define Portals and Paths. On the Control Panel they also
-        will display direction arrows along a route when Warrants
-        are allocated.</li>
+        <li><strong>Portal</strong> Portal icons are used in Circuit Builder to define Portals and
+        Paths. On the Control Panel they also will display direction arrows along a route when
+        Warrants are allocated.</li>
       </ul>
 
       <h2>More about Indicator Track</h2>
-      Indicator track (i.e. both track segments and turnouts)
-      have colors to display status of
-      the track circuit they represent. When the track circuit is
-      configured by an OBlock, and the Portals and Paths it
-      contains, the following status states will be displayed by
-      color:
-
+      Indicator track (i.e. both track segments and turnouts) have colors to display status of the
+      track circuit they represent. When the track circuit is configured by an OBlock, and the
+      Portals and Paths it contains, the following status states will be displayed by color:
       <ul>
-        <li><b>Clear</b> Indicates ready for use. More precisely,
-        the circuit is in a known state and none of the other status
-        apply.</li>
+        <li><strong>Clear</strong> Indicates ready for use. More precisely, the circuit is in a
+        known state and none of the other status apply.</li>
 
-        <li><b>Occupied</b> (Yellow) The track is occupied by an
-        unknown train or car.</li>
+        <li><strong>Occupied</strong> (Yellow) The track is occupied by an unknown train or
+        car.</li>
 
-        <li><b>Allocated</b> (Green) The track is reserved for use
-        by a warrant.</li>
+        <li><strong>Allocated</strong> (Green) The track is reserved for use by a warrant.</li>
 
-        <li><b>Train Position</b> (Blue) The track is occupied by a
-        train under warrant and this is its current position.</li>
+        <li><strong>Train Position</strong> (Blue) The track is occupied by a train under warrant
+        and this is its current position.</li>
 
-        <li><b>Not In Use</b> (Gray) The state of the track is not
-        known or it has been set to be out of service. This state
-        is also used when local control of blocks is granted from a
-        panel.</li>
+        <li><strong>Not In Use</strong> (Gray) The state of the track is not known or it has been
+        set to be out of service. This state is also used when local control of blocks is granted
+        from a panel.</li>
 
-        <li><b>Power Error</b> (Red) This is the state of another
-        sensor - not the occupancy sensor. If used, most likely it
-        would be wired to indicate a short or power failure.</li>
+        <li><strong>Power Error</strong> (Red) This is the state of another sensor - not the
+        occupancy sensor. If used, most likely it would be wired to indicate a short or power
+        failure.</li>
       </ul>
 
       <h3>Indicator Track Tab</h3>
-      Enter the name of the track
-      circuit (OBlock) this track icon represents into the
-      <b>Occupancy Circuit</b> field. The <b>Open Detector
-      Picklist</b> button opens a picklist showing the defined
-      OBlock track circuits. Drag or copy the name to the Occupancy
-      Circuit field. <i><b>Do Not use</b> the "Sensor Table" tab of
-      the picklist <b>unless</b> there are no OBlocks configured
-      and you only want to use the "Occupied/Unoccupied"
-      status.</i>
+      Enter the name of the track circuit (OBlock) this track icon represents into the
+      <strong>Occupancy Circuit</strong> field. The <strong>Open Detector Picklist</strong> button
+      opens a picklist showing the defined OBlock track circuits. Drag or copy the name to the
+      Occupancy Circuit field. <em><strong>Do Not use</strong> the "Sensor Table" tab of the
+      picklist <strong>unless</strong> there are no OBlocks configured and you only want to use the
+      "Occupied/Unoccupied" status.</em>
+      <p>When a valid OBlock name is entered in the Occupancy Circuit field and the icon dragged
+      and dropped onto the panel, after selectiing it a <strong>CircuitPath</strong> panel is added
+      to the tab showing all the paths that have been defined for the OBlock. Check the paths of
+      the track circuit that pass over this icon. When these paths are part of an allocated route
+      or are occupied by a warranted train, they show that status by color.</p>
 
-      <p>When a valid OBlock name is entered in the Occupancy
-      Circuit field and the icon dragged and dropped onto the panel,
-      after selectiing it a <b>CircuitPath</b> panel is added to the tab
-      showing all the paths that have been defined for the OBlock.
-      Check the paths of the track circuit that pass over this
-      icon. When these paths are part of an allocated route or are
-      occupied by a warranted train, they show that status by
-      color.</p>
-
-      <p>Below the Occupancy Circuit field is a checkbox labeled
-      <b>Display Train Name when occupied</b>. When a warranted
-      train occupies the track circuit, circuit icons having this
-      box checked, show a marker with the occupying train's id.
-      Most likely, you will only want one of the icons in the track
-      circuit to display the train id.</p>
+      <p>Below the Occupancy Circuit field is a checkbox labeled <strong>Display Train Name when
+      occupied</strong>. When a warranted train occupies the track circuit, circuit icons having
+      this box checked, show a marker with the occupying train's id. Most likely, you will only
+      want one of the icons in the track circuit to display the train id.</p>
 
       <h3>Indicator Turnout Tab</h3>
-      This tab has the same functions as the Indicator Track tab
-      with the addition of a turnout table. A turnout must be
-      selected from the Turnout Table to be able to drag an icon
-      to a control panel.
+      This tab has the same functions as the Indicator Track tab with the addition of a turnout
+      table. A turnout must be selected from the Turnout Table to be able to drag an icon to a
+      control panel.
+      <p>The <strong>[Show Icons]</strong> button displays the icon set in a matrix where the rows
+      show the status icons for each state of the turnout - Closed, Thrown, Inconsistent, and
+      Unknown.</p>
 
-      <p>The <b>[Show Icons]</b> button displays the icon set in
-      a matrix where the rows show the status icons for each state
-      of the turnout - Closed, Thrown, Inconsistent, and Unknown.
-      </p><p>
-      When an <b>Edit Icons</b> window is displayed all icons are shown,
-      Icons from the Icon Catalog may be dragged and dropped to any
-      icon shown.
-      </p>
-
+      <p>When an <strong>Edit Icons</strong> window is displayed all icons are shown, Icons from
+      the Icon Catalog may be dragged and dropped to any icon shown.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

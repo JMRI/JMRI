@@ -91,6 +91,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
             // do nothing
         }
         
+        JemmyUtil.waitFor(f);
         // pressing "Save" when engine has destination and train will cause dialog box to appear
         Assert.assertNotNull("engine has destination", e1.getDestination());
         Assert.assertNotNull("engine has destination track", e1.getDestinationTrack());
@@ -114,5 +115,6 @@ public class EngineSetFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(Bundle.getMessage("enginePartConsist"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 }

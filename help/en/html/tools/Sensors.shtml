@@ -79,7 +79,7 @@
         <p>To create a new Sensor, follow this procedure:</p>
 
         <ol>
-          <li>Click <strong>Tools ⇒ Tables ⇒ Sensors</strong> to display the <a href=
+          <li>Click <strong>Tools &rArr; Tables &rArr; Sensors</strong> to display the <a href=
           "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a> pane. Next, click
           the <a href=
           "../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><strong>Add...</strong></a>

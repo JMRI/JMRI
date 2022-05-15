@@ -230,6 +230,7 @@ public class DccLocoAddressSelector extends JPanel {
     public void setEnabled(boolean e) {
         text.setEditable(e);
         text.setEnabled(e);
+        text.setFocusable(e); // to not conflict with the throttle keyboad controls
         box.setEnabled(e);
         if (e) {
             text.setToolTipText(rb.getString("TooltipTextFieldEnabled"));

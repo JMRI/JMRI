@@ -266,6 +266,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         // clear dialog box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
 
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());
 

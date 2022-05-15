@@ -52,7 +52,8 @@ public class Log4JTreePaneTest extends jmri.util.swing.JmriPanelTest {
         panel = null;
         title = null;
         helpTarget = null;
-        
+
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

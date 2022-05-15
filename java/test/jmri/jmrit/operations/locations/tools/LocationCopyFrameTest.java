@@ -44,6 +44,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         // error dialog window show appear
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
         
         // enter a name for the new track
         f.loctionNameTextField.setText("Test location name");
@@ -53,7 +54,6 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         // error dialog window show appear
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
                 .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), Bundle.getMessage("ButtonOK"));
-        
         JemmyUtil.waitFor(f);
         
         // select a location to copy

@@ -81,7 +81,7 @@ public class OperationsFrame extends JmriJFrame {
 
     /**
      * Gets the number of checkboxes(+1) that can fix in one row see
-     * OperationsFrame.minCheckboxes and OperationsFrame.maxCheckboxes
+     * OperationsFrame.MIN_CHECKBOXES and OperationsFrame.MAX_CHECKBOXES
      *
      * @return the number of checkboxes, minimum is 5 (6 checkboxes)
      */
@@ -142,6 +142,10 @@ public class OperationsFrame extends JmriJFrame {
      */
     protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea) {
         this.getContentPane().adjustTextAreaColumnWidth(scrollPane, textArea, this.getPreferredSize());
+    }
+    
+    protected void adjustTextAreaColumnWidth(JScrollPane scrollPane, JTextArea textArea, Dimension size) {
+        this.getContentPane().adjustTextAreaColumnWidth(scrollPane, textArea, size);
     }
 
     /**

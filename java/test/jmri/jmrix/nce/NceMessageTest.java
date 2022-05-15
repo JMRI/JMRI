@@ -1,9 +1,11 @@
 package jmri.jmrix.nce;
 
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import jmri.util.JUnitUtil;
 
 /**
  * JUnit tests for the NceMessage class.
@@ -31,6 +33,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         }
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         m = msg = null;

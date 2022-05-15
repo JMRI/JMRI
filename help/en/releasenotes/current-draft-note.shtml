@@ -69,6 +69,11 @@
                 <li></li>
             </ul>
 
+        <h4>KPF-Zeller</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>LocoNet</h4>
             <ul>
                 <li></li>
@@ -234,6 +239,11 @@
                 <li></li>
             </ul>
 
+        <h4>MD Electronics</h4>
+             <ul>
+                <li></li>
+             </ul>
+
         <h4>MGP</h4>
              <ul>
                 <li></li>
@@ -391,6 +401,12 @@
           <li></li>
         </ul>
 
+    <h3>LogixNG</h3>
+        <a id="LogixNG" name="LogixNG"></a>
+        <ul>
+          <li></li>
+        </ul>
+
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
@@ -452,7 +468,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>The process for adding multiple Lights/Sensors/Turnouts/Reporters has been
+                improved.  Existing items are no longer skipped, so you get the
+                sequential items you asked for. Some error messages have been clarified.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -564,6 +582,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The xercesImpl library was updated to 2.12.2, which may change
+                the content of some error messages.</li>
         </ul>
 

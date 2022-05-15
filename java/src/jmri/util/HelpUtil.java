@@ -2,8 +2,7 @@ package jmri.util;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -113,40 +112,91 @@ public class HelpUtil {
         }
 
         String url;
+        boolean webError = false;
+
+        // Use jmri.org if selected.
         if (preferences.getOpenHelpOnline()) {
             url = "https://www.jmri.org/" + file;
-        } else if (preferences.getOpenHelpOnJMRIWebServer()) {
+            if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
+            webError = true;
+        }
+
+        // Use the local JMRI web server if selected.
+        if (preferences.getOpenHelpOnJMRIWebServer()) {
             WebServerPreferences webServerPreferences = InstanceManager.getDefault(WebServerPreferences.class);
             String port = Integer.toString(webServerPreferences.getPort());
             url = "http://localhost:" + port + "/" + file;
-        } else { // Assume open help on file if no other option is selected
-            String fileName = FileUtil.getProgramPath().replace("\\",
-                    "/") + "help/" + localeStr + "/local/stub/" + ref + ".html";
-            File f = new File(fileName);
-            if (!f.exists()) {
-                log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_ReferenceNotFound", ref),
-                        Bundle.getMessage("HelpError_Title"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (SystemType.isWindows()) {
-                try {
-                    openWindowsFile(f);
-                } catch (JmriException e) {
-                    log.error("unable to show help page {} in Windows due to:", ref, e);
-                }
-                return;
-            }
-
-            url = "file://" + fileName;
+            if (jmri.util.HelpUtil.showWebPage(ref, url)) return;
+            webError = true;
         }
 
+        if (webError) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("HelpWeb_ServerError"),
+                    Bundle.getMessage("HelpWeb_Title"),
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Open a local help file by default or a failure of jmri.org or the local JMRI web server.
+        String fileName = "";
         try {
-            jmri.util.HelpUtil.openWebPage(url);
-        } catch (JmriException e) {
-            log.error("unable to show help page {} due to:", ref, e);
+            fileName = HelpUtil.createStubFile(ref, localeStr);
+        } catch (IOException iox) {
+            log.error("Unable to create the stub file for \"{}\" ", ref);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_StubFile", ref),
+                    Bundle.getMessage("HelpStub_Title"), JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        File f = new File(fileName);
+        if (!f.exists()) {
+            log.error("The help reference \"{}\" is not found. File is not found: {}", ref, fileName);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("HelpError_ReferenceNotFound", ref),
+                    Bundle.getMessage("HelpError_Title"), JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (SystemType.isWindows()) {
+            try {
+                openWindowsFile(f);
+            } catch (JmriException e) {
+                log.error("unable to show help page {} in Windows due to:", ref, e);
+            }
+            return;
+        }
+
+        url = "file://" + fileName;
+        jmri.util.HelpUtil.showWebPage(ref, url);
+    }
+
+    public static String createStubFile(String helpKey, String locale) throws IOException {
+        String stubLocation = FileUtil.getPreferencesPath() + "jmrihelp/";
+        FileUtil.createDirectory(stubLocation);
+        log.debug("---- stub location: {}", stubLocation);
+
+        StringBuilder sb = new StringBuilder(FileUtil.getProgramPath());
+        sb.append("help/");
+        sb.append(locale);
+        sb.append("/local/");
+        String htmlLocation = sb.toString();
+        log.debug("---- html location: {}", htmlLocation);
+
+        String template = FileUtil.readFile(new File(htmlLocation + "stub_template.html"));
+        String expandedHelpKey = helpKey.replace(".", "/");
+        int pos = expandedHelpKey.indexOf('_');
+        if (pos == -1) {
+            expandedHelpKey = expandedHelpKey + ".shtml";
+        } else {
+            expandedHelpKey = expandedHelpKey.substring(0, pos) + ".shtml"
+                    + "#" + expandedHelpKey.substring(pos+1);
+        }
+        String contents = template.replace("<!--HELP_KEY-->", htmlLocation + "index.html#" + helpKey);
+        contents = contents.replace("<!--URL_HELP_KEY-->", expandedHelpKey);
+
+        PrintWriter printWriter = new PrintWriter(stubLocation + "stub.html");
+        printWriter.print(contents);
+        printWriter.close();
+        return stubLocation + "stub.html";
     }
 
     public static void openWindowsFile(File file) throws JmriException {
@@ -161,6 +211,17 @@ public class HelpUtil {
             throw new JmriException(
                     String.format("Failed to connect to browser. Error loading help file %s", file.getName()), ex);
         }
+    }
+
+    public static boolean showWebPage(String ref, String url) {
+        boolean result = false;
+        try {
+            jmri.util.HelpUtil.openWebPage(url);
+            result = true;
+        } catch (JmriException e) {
+            log.warn("unable to show help page {} due to:", ref, e);
+        }
+        return result;
     }
 
     public static void openWebPage(String url) throws JmriException {

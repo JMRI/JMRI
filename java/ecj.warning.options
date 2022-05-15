@@ -1,180 +1,23 @@
-# These are the normal settings used for the warnings and tests-warnings Ant targets
-# See the java/ecj.warning.options-ci file for those used during CI operations
-# The two files should be the same _except_ for warn vs err at start of lines with + signs
-
-# for compiling the test directory, the java/ecj.warning.options-test file overrides this
-
+# Control files for the warnings and tests-warnings Ant targets
 #
-# Group (macro) checks - some still need to be sorted out
+# "warnings-check" does the absolutely required checks;
+# "warnings" adds some extra checks we're trying to drive out of existance.
+# "warnings-tests-check" and "warnings-tests" are similar for the tests/ directory
 #
--warn:+hiding
-  # about 200 cases of members hiding superclass members
--warn:-fieldHiding
-  # very large number of places where parameters are named for members
--warn:-localHiding 
--warn:+typeHiding
-
--warn:-allJavadoc
--warn:-javadoc
-
--warn:+invalidJavadoc
--warn:+invalidJavadocTag
--warn:+invalidJavadocTagDep
--warn:+invalidJavadocTagNotVisible
-
--warn:-missingJavadocTags
--warn:+missingJavadocTagsMethod
--warn:+missingJavadocTagsOverriding
-
--warn:-missingJavadocComments
--warn:-missingJavadocCommentsOverriding
-
--warn:+static-access
-  # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
--warn:-indirectStatic 
--warn:+staticReceiver
-
--warn:+unused
-  # This tags valid "new jmri.util.WaitHandler(this);" constructs
--warn:-unusedAllocation
--warn:-unusedImport
--warn:+unusedLabel
--warn:+unusedLocal
--warn:-unusedParam
--warn:+unusedParamImplementing
--warn:+unusedParamIncludeDoc
--warn:+unusedParamOverriding
--warn:+unusedPrivate
--warn:-unusedThrown 
--warn:+unusedThrownIncludeDocComment
--warn:+unusedThrownExemptExceptionThrowable
--warn:+unusedThrownWhenOverriding
-  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>(); 
--warn:-unusedTypeArgs
--warn:+unusedTypeParameter
-
-
+# warnings-check:               java/ecj.warning.options-ci
+# warnings adds                 java/ecj.warning.options
+# tests-warnings-check adds:    java/ecj.warning.options-test-ci
+# tests-warnings adds:          java/ecj.warning.options-test
 #
-# Checks we choose to enforce
+#
+# For more information, see
+#   https://www.ibm.com/docs/en/wdfrhcw/1.4.0?topic=code-using-batch-compiler
+#   https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Ftasks%2Ftask-using_batch_compiler.htm&anchor=warn
+#   http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm
 #
 
--warn:+allDeprecation
--warn:+allOver-ann
--warn:+assertIdentifier
--warn:+charConcat
--warn:+conditionAssign
--warn:+constructorName
--warn:+compareIdentical
--warn:+dep-ann
--warn:+deprecation
--warn:+discouraged
--warn:+enumIdentifier
--warn:+enumSwitch
--warn:+fallthrough
--warn:+finalBound
--warn:+finally 
--warn:+forbidden
--warn:+hashCode
--warn:+includeAssertNull
--warn:+inheritNullAnnot
--warn:+intfAnnotation
-  # redundant super-interfaces
--warn:+intfRedundant
-
--warn:+intfNonInherited
--warn:+maskedCatchBlocks
--warn:+noEffectAssign
--warn:+nonnullNotRepeated
--warn:+null
--warn:+nullAnnot
--warn:+nullAnnotConflict
--warn:+nullAnnotRedundant
--warn:+nullDereference
--warn:+nullUncheckedConversion
--warn:+over-ann
--warn:+pkgDefaultMethod
--warn:+semicolon
--warn:+specialParamHiding
--warn:+suppress
--warn:+switchDefault
--warn:+unavoidableGenericProblems
--warn:+unchecked
--warn:+uselessTypeCheck
--warn:+varargsCast
-
 #
-# Checks we choose not to enforce as our common style
+# Case counts here are as of 12/15/2021
 #
-
-  # no real cost to using implicit boxing/unboxing, and it's just easier
--warn:-boxing
-
-  # non-NLS string literals (mostly missing // $ NON-NLS)
--warn:-nls
-
-  # many of these in the code, and "final" for parameters is a matter of style
--warn:-paramAssign
-
-  # JMRI doesn't anticipate use of Java serialization
--warn:-serial
-
-  # maybe a good idea, but too expensive now
--warn:-super
-
-  # many of these aleady in the code, and the value is not clear
--warn:-syntheticAccess
-
-  # we don't require "this." in every variable access to reduce verbosity
--warn:-unqualifiedField
--warn:-unqualified-field-access
-
-  # our APIs routinely have "may need in future" parameters
--warn:-unusedArgument
-
-  # missing enum switch cases even when default case is present; `default` can be convenient
--warn:-enumSwitchPedantic
-
-
-#
-# Checks we're warning on, working to reduce, but not enforcing
-#
-
-
-#
-# Checks we will eventually put in place, but would be burdensome now
-#
-
-  # the common "if (debugFlag)" metaphor is flagged by these
--warn:-deadCode
--warn:-allDeadCode
-
-  # missing synch in synchronized method override
-  # 22 outstanding items
--warn:-syncOverride
-
-  # raw type instead of parameterized type 
-  # 159 outstanding items (some likely to be in APIs)
--warn:-raw
-
-  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings  
-  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
--warn:-warningToken
-
-
-#
-# Checks still to be characterized
-#
-
--warn:-all-static-method
--warn:-emptyBlock
-
-  # flags methods that can be made static because they don't access data member
-  # but that just seems distracting somehow
--warn:-static-method
-
-  # We often seem to _prefer_ the terminal else instead of bottom return
--warn:-unnecessaryElse
-
-#-warn:-tasks(<task1>|...|<taskN>)
 
 

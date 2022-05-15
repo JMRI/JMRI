@@ -34,20 +34,25 @@
             <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionMemoryXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-        
+
             <xs:sequence>
 
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="otherMemoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
+              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="otherMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
 
               <xs:element name="memoryOperation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
@@ -56,6 +61,7 @@
                     <xs:enumeration value="SetToString"/>
                     <xs:enumeration value="CopyVariableToMemory"/>
                     <xs:enumeration value="CopyMemoryToMemory"/>
+                    <xs:enumeration value="CopyTableCellToMemory"/>
                     <xs:enumeration value="CalculateFormula"/>
                   </xs:restriction>
                 </xs:simpleType>
@@ -67,15 +73,18 @@
               <!-- Keep these for backward compability for now. Remove for 4.24 -->
 
               <xs:element name="otherConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="otherFormula" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
-			<xs:attribute name="class" type="classType" use="required"/>
-        
+
+            <xs:attribute name="class" type="classType" use="required"/>
+
     </xs:complexType>
 
 </xs:schema>

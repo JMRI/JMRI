@@ -43,7 +43,7 @@
         <dd>File out fields as desired and press Add/Update to create a new follower or modify an
         existing one.</dd>
       </dl>
-      page <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->

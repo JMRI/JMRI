@@ -1,47 +1,41 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Automat Table Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Automat Thread Table">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>The Automat (Thread) Table</h1>
+      The Thread Table lets you see the threads used by scripts that are implementing the
+      "AbstractAutomat" class.
+      <p>Each time the class execute's it's "handle" routine, the count will be incremented. You
+      can stop the thread with the button.</p>
 
-      The Thread Table lets you see the threads used by
-      scripts that are implementing the "AbstractAutomat" class.
-      <p>
-      Each time the class execute's it's "handle" routine,
-      the count will be incremented.  You can stop the thread
-      with the button.
+      <p>Note that the name column won't be particularly useful unless your script sets a distinct
+      name:</p>
 
-      <p>
-      Note that the name column won't be particularly
-      useful unless your script sets a distinct name:
-<pre><code>
+      <pre><code>
 # create one of these
 a = AutomatExample()
 
 # set the name
 a.setName("Automat example script")
 </code></pre>
-      <p>
-      See the
-      <a href="../../../../../html/tools/automation/viaJava.shtml">scripting pages</a>
-      for more information on writing scripts.
+      <p>See the <a href="../../../../../html/tools/automation/viaJava.shtml">scripting pages</a>
+      for more information on writing scripts.</p>
 
-      <p>This is the
-      help/jmri/jmrit/automat/monitor/AutomatTable help page
-      <!--#include virtual="/Footer.shtml" -->
+      <p>This is the help/jmri/jmrit/automat/monitor/AutomatTable help page 
+      <!--#include virtual="/Footer.shtml" --></p>
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

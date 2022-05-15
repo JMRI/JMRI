@@ -14,8 +14,8 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrix.AbstractThrottle;
 import jmri.util.FileUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
@@ -75,9 +75,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 mainPanel.add(newFunctionButtons[i]);
                 resetFnButton(newFunctionButtons[i],i);
                 // Copy mouse and keyboard controls to new components
-                for (KeyListener kl:getKeyListeners()) {
-                    newFunctionButtons[i].addKeyListener(kl);
-                }
                 for (MouseWheelListener mwl:getMouseWheelListeners()) {
                    newFunctionButtons[i].addMouseWheelListener(mwl);
                 }
@@ -158,10 +155,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     rosterEntry.setFunctionLabel(functionNumber, text);
                 }
                 String fontSizeKey = "function"+functionNumber+"_ThrottleFontSize";
-                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == FunctionButton.DEFAULT_FONT_SIZE) {
+                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()) {
                     rosterEntry.deleteAttribute(fontSizeKey);
                 }
-                if (functionButton.getFont().getSize() != FunctionButton.DEFAULT_FONT_SIZE) {
+                if (functionButton.getFont().getSize() != InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()) {
                     rosterEntry.putAttribute(fontSizeKey, ""+functionButton.getFont().getSize());
                 }
                 String imgButtonSizeKey = "function"+functionNumber+"_ThrottleImageButtonSize";
@@ -273,9 +270,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             resetFnButton(functionButtons[i],i);
             mainPanel.add(functionButtons[i]);
             // Copy mouse and keyboard controls to new components
-            for (KeyListener kl:getKeyListeners()) {
-                functionButtons[i].addKeyListener(kl);
-            }
             for (MouseWheelListener mwl:getMouseWheelListeners()) {
                 functionButtons[i].addMouseWheelListener(mwl);
             }
@@ -345,7 +339,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     if (needUpdate) {
                         functionButtons[i].updateLnF();
                     }
-                }                
+                }
             }
         }
     }
@@ -533,7 +527,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     @Override
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
 
+    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
 }

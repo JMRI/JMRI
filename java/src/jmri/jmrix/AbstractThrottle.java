@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
@@ -38,7 +38,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
-    
+
     /**
      * Array of Function values.
      * <p>
@@ -56,7 +56,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Needs to be same length as FUNCTION_BOOLEAN_ARRAY.
      */
     private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
-    
+
     /**
      * Is this object still usable? Set false after dispose, this variable is
      * used to check for incorrect usage.
@@ -75,7 +75,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY = new boolean[29];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[29];
     }
-    
+
     /**
      * Create a new AbstractThrottle with custom number of functions.
      * <p>
@@ -194,14 +194,14 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
             FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean getFunction(int fN) {
         if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
-            log.warn("Unhandled get function: {}",fN);
+            log.warn("Unhandled get function: {} {}", fN, this.getClass().getName());
             return false;
         }
         return FUNCTION_BOOLEAN_ARRAY[fN];
@@ -213,13 +213,13 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public boolean getFunctionMomentary(int fN) {
         if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
-            log.warn("Unhandled get momentary function: {}",fN);
+            log.warn("Unhandled get momentary function: {} {}", fN, this.getClass().getName());
             return false;
         }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
-    
+
     }
-    
+
     /**
      * Notify listeners that a Throttle has disconnected and is no longer
      * available for use.
@@ -268,7 +268,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
     /**
      * Temporary behaviour only allowing unique PCLs.
-     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the 
+     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the
      * previous behaviour of only allowing 1 unique PCL instance.
      * To be removed when WiThrottle Server has been updated.
      * {@inheritDoc}
@@ -276,12 +276,12 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL", l);
+            log.warn("Preventing {} adding duplicate PCL to {}", l, this.getClass().getName());
             return;
         }
         super.addPropertyChangeListener(l);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -309,31 +309,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * Trigger the notification of all PropertyChangeListeners. Will only notify
-     * if oldValue and newValue are not equal and non-null.
-     *
-     * @param property the name of the property to send notifications for
-     * @param oldValue the old value of the property
-     * @param newValue the new value of the property
-     * @deprecated since 4.19.5; use
-     * {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
-     * instead
-     */
-    @Deprecated
-    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        firePropertyChange(property, oldValue, newValue);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public List<PropertyChangeListener> getListeners() {
-        return Arrays.asList(getPropertyChangeListeners());
-    }
-
-    /**
      * Call from a ThrottleListener to dispose of the throttle instance
      *
      * @param l the listener requesting the dispose
@@ -342,7 +317,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
-            log.error("Dispose called when not active");
+            log.error("Dispose called when not active {}", this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
@@ -353,7 +328,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
-            log.warn("dispatch called when not active");
+            log.warn("dispatch called when not active {}", this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
     }
@@ -364,7 +339,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void release(ThrottleListener l) {
         if (!active) {
-            log.warn("release called when not active");
+            log.warn("release called when not active {}",this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().releaseThrottle(this, l);
     }
@@ -390,7 +365,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * functions - note that we use the naming for DCC, though that's not the
      * implication; see also DccThrottle interface
      */
-    
+
     /**
      * Send whole (DCC) Function Group for a particular function number.
      * @param functionNum Function Number
@@ -417,7 +392,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
                 break;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -449,10 +424,10 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY[fn] = state;
         firePropertyChange(Throttle.getFunctionString(fn), old, state);
     }
-    
+
     /**
-     * Update the Momentary state of a single function. 
-     * Updates function value and ChangeListener. 
+     * Update the Momentary state of a single function.
+     * Updates function value and ChangeListener.
      * Does not send outward message TO hardware.
      *
      * @param fn    Momentary Function Number 0-28
@@ -460,7 +435,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     public void updateFunctionMomentary(int fn, boolean state) {
         if (fn < 0 || fn > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
-            log.warn("Unhandled update momentary function number: {}", fn);
+            log.warn("Unhandled update momentary function number: {} {}", fn, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fn];
@@ -570,7 +545,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void setFunctionMomentary(int momFuncNum, boolean state){
         if (momFuncNum < 0 || momFuncNum > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
-            log.warn("Unhandled set momentary function number: {}", momFuncNum);
+            log.warn("Unhandled set momentary function number: {} {}", momFuncNum, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum];
@@ -766,7 +741,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
         // Only return stop if value is actually 0, jump to first speed
         // step for small positive inputs.
-        // speeds (at this point) larger than 0.5f are already handled 
+        // speeds (at this point) larger than 0.5f are already handled
         // by the rounding above.
         if (speed > 0.0f && speed <= 0.5f) {
             value = 1;

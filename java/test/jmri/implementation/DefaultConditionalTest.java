@@ -153,7 +153,6 @@ public class DefaultConditionalTest {
     }
 
     @Test
-    @SuppressWarnings("unused") // test building in progress
     public void testCalculate() {
         ConditionalVariable[] conditionalVariables_Empty = { };
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
@@ -395,7 +394,7 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = null;
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
         Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
-        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith(" error: IXIC 1 - invalid memory name in action - ");
 
         // Test trigger event with system name.
         // This action wants to trigger the event.

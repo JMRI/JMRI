@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  */
 public class EditorFrameTest extends jmri.util.JmriJFrameTestBase {
-           
+
     private SdfBuffer b;
 
     @BeforeEach
@@ -35,6 +35,7 @@ public class EditorFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         b = null;
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 

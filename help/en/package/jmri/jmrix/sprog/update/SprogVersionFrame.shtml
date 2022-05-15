@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <title>JMRI: SPROG Version Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: SPROG Version Tool</title><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>JMRI: SPROG Version Tool</h1>
+
       <p>The SPROG Version Tool displays the version reply from the SPROG.<br>
       Example:</p>
-
-      <img src="../images/SprogVersionTool.png" width="344" height="168" alt="sprog version window">
-
-      <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <img src="../images/SprogVersionTool.png" width="344" height="168" alt=
+      "sprog version window"> <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

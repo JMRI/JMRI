@@ -486,10 +486,10 @@ final public class LayoutEditorChecks {
             if (pp.getType() == PositionablePoint.PointType.ANCHOR) {
                 // adjacent track segments must be defined...
                 TrackSegment ts1 = pp.getConnect1();
-                TrackSegmentView ts1v = layoutEditor.getTrackSegmentView(ts1);
                 TrackSegment ts2 = pp.getConnect2();
-                TrackSegmentView ts2v = layoutEditor.getTrackSegmentView(ts2);
                 if ((ts1 != null) && (ts2 != null)) {
+                    TrackSegmentView ts1v = layoutEditor.getTrackSegmentView(ts1);
+                    TrackSegmentView ts2v = layoutEditor.getTrackSegmentView(ts2);
                     // can't be an arc, circle or bezier...
                     if (!ts1v.isArc() && !ts1v.isCircle() && !ts1v.isBezier()
                             && !ts2v.isArc() && !ts2v.isCircle() && !ts2v.isBezier()) {
@@ -659,7 +659,7 @@ final public class LayoutEditorChecks {
         log.debug("doCheckLinearBezierTrackSegmentsMenuItem({})", trackSegmentName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
-        
+
         if (layoutTrack != null) {
             LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
             layoutEditor.setSelectionRect(layoutTrackView.getBounds());
@@ -783,7 +783,7 @@ final public class LayoutEditorChecks {
         log.debug("doCheckFixedRadiusBezierTrackSegmentsMenuItem({})", trackSegmentName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
-        
+
         if (layoutTrack != null) {
             LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
             layoutEditor.setSelectionRect(layoutTrackView.getBounds());

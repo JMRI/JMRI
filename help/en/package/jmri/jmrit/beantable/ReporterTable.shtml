@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Reporter Table Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI Help Reporter Table">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help Reporter Table"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>The Reporter Table</h1>
 
-      <p>JMRI "Reporters" show status information received from
-      your layout. For example, <a href=
-      "http://www.digitrax.com/menu_transponding.php">Digitrax
-      transponding</a> provides information via JMRI Reporter
-      objects. The Reporter Table shows all the existing Reporters
+      <p>JMRI "Reporters" show status information received from your layout. For example, <a href=
+      "http://www.digitrax.com/menu_transponding.php">Digitrax transponding</a> provides
+      information via JMRI Reporter objects. The Reporter Table shows all the existing Reporters
       and their most recent status information.</p>
 
-      <p>For more information on Reporters and their use, see the
-      <a href="../../../../html/tools/Reporters.shtml">main
-      Reporter Help page</a>.</p>
-
+      <p>For more information on Reporters and their use, see the <a href=
+      "../../../../html/tools/Reporters.shtml">main Reporter Help page</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

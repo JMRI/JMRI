@@ -63,12 +63,6 @@ public class IfThenElse extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         boolean result = _ifExpressionSocket.evaluate();
         TriState _expressionResult = TriState.getValue(result);

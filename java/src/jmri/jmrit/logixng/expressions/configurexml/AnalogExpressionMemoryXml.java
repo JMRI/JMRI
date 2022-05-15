@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -17,7 +18,7 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
     public AnalogExpressionMemoryXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -34,14 +35,12 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
-        if (memory != null) {
-            element.addContent(new Element("memory").addContent(memory.getName()));
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
@@ -51,19 +50,13 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
         loadCommon(h, shared);
 
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (m != null) h.setMemory(m);
-            else h.removeMemory();
-        }
-
-        // this.checkedNamedBeanReference()
-        // <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "memory", null, null, null, null);
 
         InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
 }

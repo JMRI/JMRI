@@ -792,6 +792,16 @@
         <label xml:lang="de">PowerPack Überbrückungszeit</label>
         <label xml:lang="ca">Temps de mantinguda del PowerPack</label>
     </variable>
+    <variable CV="114" default="92" tooltip="Unit is 0.008 seconds" item="ESU V4 Function Settings General Slider 3">
+        <decVal max="127"/>
+        <label>Fade-In time of light effects</label>
+        <tooltip xml:lang="de">Einheit ist 0.008 s</tooltip>
+    </variable>
+    <variable CV="115" default="92" tooltip="Unit is 0.008 seconds" item="ESU V4 Function Settings General Slider 4">
+        <decVal max="127"/>
+        <label>Fade-Out time of light effects</label>
+        <tooltip xml:lang="de">Einheit ist 0.008 s</tooltip>
+    </variable>
     <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Memory Settings Functions">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Remember Current Function States</label>
@@ -850,6 +860,11 @@
         <label>Analog Mode Motor Hysteresis</label>
         <label xml:lang="de">Analog Motor „Hysterese”</label>
         <label xml:lang="ca">Histerèsis del motor en Analògic</label>
+    </variable>
+    <variable CV="131" default="64" tooltip="Unit is 0.78%" item="ESU V4 Function Settings General Slider-percent 5">
+        <decVal max="128"/>
+        <label>Logical Function Dimmer Brightness</label>
+        <tooltip xml:lang="de">Einheit ist 0.78%</tooltip>
     </variable>
     <variable CV="132" default="80" tooltip="Unit is 0.0625 seconds" item="ESU V4 Function Settings General Slider 2">
         <decVal/>

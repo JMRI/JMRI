@@ -151,29 +151,6 @@ public abstract class OperationsXml extends XmlFile {
 
     private static String fileLocation = FileUtil.getUserFilesPath();
 
-
-    /**
-     * Convert xml string comment to standard string format one character at a
-     * time, except when {@literal <?p?>} is found. In that case, insert a \n
-     * and skip over those characters.
-     *
-     * @param comment input xml comment string
-     * @return output string converted to standard format
-     */
-    @Deprecated
-    public static String convertFromXmlComment(String comment) {
-        StringBuilder buf = new StringBuilder();
-        for (int k = 0; k < comment.length(); k++) {
-            if (comment.startsWith("<?p?>", k)) { // NOI18N
-                buf.append("\n"); // NOI18N
-                k = k + 4;
-            } else {
-                buf.append(comment.substring(k, k + 1));
-            }
-        }
-        return buf.toString();
-    }
-
     /**
      * Checks name for the file control characters:
      *

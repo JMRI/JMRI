@@ -5,8 +5,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -14,9 +16,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A class to store JMRI throttles preferences
- * 
+ *
  * @author Lionel Jeanson - 2009-2021
- * 
+ *
  */
 public class ThrottlesPreferences {
 
@@ -24,7 +26,6 @@ public class ThrottlesPreferences {
     private boolean _useToolBar = true;
     private boolean _useFunctionIcon = false;
     private boolean _useLargeSpeedSlider = false;
-    private boolean _hideSpeedStepSelector = false;
     private boolean _resizeWinImg = false;
     private boolean _useRosterImage = true;
     private boolean _enableRosterSearch = true;
@@ -34,6 +35,7 @@ public class ThrottlesPreferences {
     private boolean _saveThrottleOnLayoutSave = true;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
+    private String _defaultThrottleFilePath = null;
     private ThrottlesPreferencesWindowKeyboardControls _tpwkc = new ThrottlesPreferencesWindowKeyboardControls();
     protected boolean dirty = false;
 
@@ -54,7 +56,7 @@ public class ThrottlesPreferences {
             log.info("Did not find throttle preferences file.  This is normal if you haven't save the preferences before");
             root = null;
         } catch (Exception e) {
-            log.error("Exception while loading throttles preferences: {}", e);
+            log.error("Exception while loading throttles preferences", e);
             root = null;
         }
         if (root != null) {
@@ -110,12 +112,13 @@ public class ThrottlesPreferences {
         if ((a = e.getAttribute("isUsingLargeSpeedSlider")) != null) {
             setUseLargeSpeedSlider(a.getValue().compareTo("true") == 0);
         }
-        if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
-            setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
-        }
         if (e.getChild("throttlesControls") != null) {
             this._tpwkc.load(e.getChild("throttlesControls"));
         }
+        if ((a = e.getAttribute("defaultThrottleFilePath")) != null) {
+            setDefaultThrottleFilePath(a.getValue());
+        }
+
         this.dirty = false;
     }
 
@@ -150,7 +153,7 @@ public class ThrottlesPreferences {
         e.setAttribute("isSilentSteal", "" + isSilentSteal());
         e.setAttribute("isSilentShare", "" + isSilentShare());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
-        e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
+        e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(this._tpwkc.store());
         e.setContent(children);
@@ -172,9 +175,9 @@ public class ThrottlesPreferences {
         setSilentSteal(tp.isSilentSteal());
         setSilentShare(tp.isSilentShare());
         setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
-        setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
         setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
-        
+        setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
+
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
                 PropertyChangeListener l = listeners.get(i);
@@ -206,7 +209,7 @@ public class ThrottlesPreferences {
                 log.error("createNewFile failed");
             }
         } catch (Exception exp) {
-            log.error("Exception while writing the new throttles preferences file, may not be complete: {}", exp);
+            log.error("Exception while writing the new throttles preferences file, may not be complete", exp);
         }
 
         try {
@@ -222,7 +225,7 @@ public class ThrottlesPreferences {
             root.setContent(store());
             xf.writeXML(file, doc);
         } catch (java.io.IOException ex) {
-            log.warn("Exception in storing throttles preferences xml: {}", ex);
+            log.warn("Exception in storing throttles preferences xml", ex);
         }
         this.dirty = false;
     }
@@ -256,7 +259,7 @@ public class ThrottlesPreferences {
 
     /**
      * Check if function icons are in use.
-     * 
+     *
      * @return user preference to use function icons.
      */
     public boolean isUsingFunctionIcon() {
@@ -334,49 +337,47 @@ public class ThrottlesPreferences {
     public boolean isSilentSteal() {
         return _isSilentSteal;
     }
-    
+
     public boolean isSilentShare() {
         return _isSilentShare;
     }
-    
+
     public void setSilentSteal(boolean b) {
         _isSilentSteal = b;
         this.dirty = true;
     }
-    
+
     public void setSilentShare(boolean b) {
         _isSilentShare = b;
         this.dirty = true;
     }
 
-    
+
     public void setUseLargeSpeedSlider(boolean b) {
         _useLargeSpeedSlider = b;
         this.dirty = true;
     }
-    
+
     public boolean isUsingLargeSpeedSlider() {
         return _useLargeSpeedSlider;
     }
-    
-    
-    public void setHideSpeedStepSelector(boolean b) {
-        _hideSpeedStepSelector = b;
+
+    public void setDefaultThrottleFilePath(String p) {
+        _defaultThrottleFilePath = p;
         this.dirty = true;
     }
-    
-    public boolean isHidingSpeedStepSelector() {
-        return _hideSpeedStepSelector;
+
+    public String getDefaultThrottleFilePath() {
+        return _defaultThrottleFilePath;
     }
-    
-    
+
     /**
      * @return the throttles keyboard controls preferences
      */
     public ThrottlesPreferencesWindowKeyboardControls getThrottlesKeyboardControls() {
         return _tpwkc;
     }
-    
+
     /**
      * Set the throttles keyboard controls preferences
      * @param tpwkc the new keyboard preferences
@@ -384,9 +385,9 @@ public class ThrottlesPreferences {
     public void setThrottlesKeyboardControls(ThrottlesPreferencesWindowKeyboardControls tpwkc) {
         _tpwkc = tpwkc;
     }
-         
+
     /**
-     * Add an AddressListener. 
+     * Add an AddressListener.
      * AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address.
      * @param l listener to add.

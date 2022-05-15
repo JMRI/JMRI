@@ -28,6 +28,7 @@ public class ThrottleWindowTest extends jmri.util.JmriJFrameTestBase {
     @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 }

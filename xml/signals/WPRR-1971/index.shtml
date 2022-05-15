@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Western Pacific Railroad 1971 Signal Definitions</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+<h1>
+JMRI: Western Pacific Railroad 1971 Signal Definitions
+</h1>
+
+<p>This directory contains signal definitions corresponding to rules listed on pages 132-135 from the 1971
+"Western Pacific Railroad Company - Operating Rules".</p>
+
+<p>Note:  Not all signal rules or mast permutations listed or implied in the Operating Rules are shown,
+but rather only those typically used by WP in the 1970's.</p>
+<p>
+See the
+<a href="aspects.xml">aspect page</a>.</p>
+
+<p>
+Signal Mast definitions:</p>
+<ul>
+<li><a href="appearance-WP71-SL-1-high-A.xml">Single head searchlight, high absolute signal</a></li>
+<li><a href="appearance-WP71-SL-2-high-A.xml">Double head searchlight, high absolute signal</a></li>
+<li><a href="appearance-WP71-SL-1-low-A.xml">Single head searchlight, dwarf absolute signal</a></li>
+<li><a href="appearance-WP71-SL-1-high-P.xml">Single head searchlight, high permissive signal</a></li>
+<li><a href="appearance-WP71-SL-1-with-Yel-marker-high-P.xml">Single head searchlight, high permissive signal with yellow marker</a></li>
+</ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

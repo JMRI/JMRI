@@ -123,17 +123,33 @@
 
         <dd>
           <a href="images/DCCPanelBasicCreate.png"><img src="images/DCCPanelBasicCreate.png" width=
-          "200" height="252" alt="DCC Decoder panel"></a><br>
-          This Driver type is for an accessory decoder that can drive the Signal Masts natively and
-          supports the <a href=
+          "20%" height="20%" alt="DCC Decoder panel"></a><br>
+
+          <p>This Driver type is for an accessory decoder that can drive the Signal Masts natively
+          and supports the <a href=
           "https://www.nmra.org/index-nmra-standards-and-recommended-practices">NMRA Extended
-          Accessory Protocol S-9.2.1</a>.<br>
-          Enter the Aspect numbers configured in your decoder against each Aspect. The default
+          Accessory Protocol S-9.2.1</a>.</p>
+
+          <p>Enter the Aspect numbers configured in your decoder for each Aspect. The default
           values for the ID of each Aspect as defined in the Signaling System definition can be
-          over-written.<br>
-          Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have Signal Mast
+          over-written. If the signaling system does not have predefined IDs, enter values
+          from 0 to 31.  Use 0 for Stop or its equivalent. The <strong>Copy Aspects IDs from Mast
+          </strong> option at
+          the bottom can be used to populate the IDs for subsequent masts that are the same type.</p>
+
+          <p>Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have Signal Mast
           types preconfigured and you just select the correct table with a CV and get the Aspect
-          numbers from the manual.
+          numbers from the manual.</p>
+
+          <p><span class="since">since 4.25.4</span>Some DCC Signal decoders, such as the
+          <strong>NCE Light-It</strong>, use an alternate addressing scheme. The <strong>OffSet
+          Address</strong> checkbox is used to enable alternate addressing.</p>
+
+          <p>When the Unlit option is selected, an aspect ID has to be selected that has been
+          configured to set the mast lights off.  The default value is 31. If the signal system
+          includes a Dark or Unlit aspect and it sets the lights off, that ID could be selected
+          for the Unlit option.  Note:  Unlit is a separate process but it can use the same ID.</p>
+
         </dd>
 
         <dt id="lncpsmd">LNCP Signal Mast Decoder</dt>

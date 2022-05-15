@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import java.util.Vector;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +40,8 @@ public class NceTrafficControlScaffold extends NceTrafficController {
     // test control member functions
     /**
      * forward a message to the listeners, e.g. test receipt
+     * @param m NceMessage
+     * @param l NceListener
      */
     protected void sendTestMessage(NceMessage m, NceListener l) {
         // forward a test message to NceListeners

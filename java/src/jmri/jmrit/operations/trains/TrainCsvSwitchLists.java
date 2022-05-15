@@ -72,12 +72,12 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 printRailroadName(fileOut, Setup.getRailroadName());
                 printLocationName(fileOut, splitString(location.getName()));
                 printPrinterName(fileOut, location.getDefaultPrinterName());
-                fileOut.printRecord("SWLC", Bundle.getMessage("csvSwitchListComment"), location.getSwitchListComment());
+                fileOut.printRecord("SWLC", Bundle.getMessage("csvSwitchListComment"), location.getSwitchListCommentWithColor());
                 // add location comment
 
-                if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(Location.NONE)) {
+                if (Setup.isPrintLocationCommentsEnabled() && !location.getCommentWithColor().equals(Location.NONE)) {
                     // location comment can have multiple lines
-                    String[] comments = location.getComment().split(NEW_LINE); // NOI18N
+                    String[] comments = location.getCommentWithColor().split(NEW_LINE); // NOI18N
                     for (String comment : comments) {
                         printLocationComment(fileOut, comment);
                     }

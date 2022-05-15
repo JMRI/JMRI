@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI All rights reserved -->
+<!-- $Id: 0NMRA_SUSI_Output_Mapping_Range1.xml ,v 1.0 2022/04/24 Alain CARASSO $       -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain CARASSO" version="1.0" lastUpdated="20220424"/>
+  <!--  Based on MASSOTH_eMotion SUSI Settings, who was published by Jeff Schmaltz -->
+  <decoder>
+    <family name="SUSI Output Mapping definitions" mfg="NMRA">
+      <model model="SUSI Output Mapping definition Range 1"/>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable item="SUSI-range" CV="897" readOnly="yes" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
+        <enumVal>
+          <enumChoice choice="Not used"/>
+          <enumChoice choice="Range I (CVs 900-939)"/>
+          <enumChoice choice="Range II (CVs 940-979)"/>
+          <enumChoice choice="Range III (CVs 980-1019)"/>
+        </enumVal>
+        <label>SUSI-range</label>
+      </variable>
+      <variable CV="900" readOnly="yes" default="238" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+        <decVal/>
+       <label>Manufacturer ID</label>
+      </variable>
+      <variable CV="901" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only)">
+        <decVal/>
+        <label>Software Version Number</label>
+      </variable>
+      <variable item="Output A" CV="902" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output A</label>
+      </variable>
+      <variable item="Output B" CV="903" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output B</label>
+      </variable>
+      <variable item="Output C" CV="904" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output C</label>
+      </variable>
+      <variable item="Output D" CV="905" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output D</label>
+      </variable>
+      <variable item="Output E" CV="906" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output E</label>
+      </variable>
+      <variable item="Output F" CV="907" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output F</label>
+      </variable>
+      <variable item="Output G" CV="908" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output G</label>
+      </variable>
+      <variable item="Output H" CV="909" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output H</label>
+      </variable>
+      <variable item="Output I" CV="910" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output I</label>
+      </variable>
+      <variable item="Output J" CV="911" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output J</label>
+      </variable>
+      <variable item="Output K" CV="912" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output K</label>
+      </variable>
+     <variable item="Output L" CV="913" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output L</label>
+      </variable>
+     <variable item="Output M" CV="914" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output M</label>
+      </variable>
+     <variable item="Output N" CV="915" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output N</label>
+      </variable>
+     <variable item="Output O" CV="916" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output O</label>
+      </variable>
+     <variable item="Output P" CV="917" tooltip="1=F0, 128=F16">
+        <decVal min="1" max="255"/>
+        <label> Output P</label>
+      </variable>
+
+     <variable item="Settings for Output A" CV="918" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output A</label>
+     </variable>
+     <variable item="Settings for Output B" CV="919" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output B</label>
+     </variable>
+     <variable item="Settings for Output C" CV="920" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output C</label>
+     </variable>
+     <variable item="Settings for Output D" CV="921" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output D</label>
+     </variable>
+     <variable item="Settings for Output E" CV="922" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output E</label>
+     </variable>
+     <variable item="Settings for Output F" CV="923" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output F</label>
+     </variable>
+     <variable item="Settings for Output G" CV="924" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output G</label>
+     </variable>
+     <variable item="Settings for Output H" CV="925" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output H</label>
+     </variable>
+     <variable item="Settings for Output I" CV="926" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output I</label>
+     </variable>
+     <variable item="Settings for Output J" CV="927" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output J</label>
+     </variable>
+     <variable item="Settings for Output K" CV="928" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output K</label>
+     </variable>
+     <variable item="Settings for Output L" CV="929" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output L</label>
+     </variable>
+     <variable item="Settings for Output M" CV="930" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output M</label>
+     </variable>
+     <variable item="Settings for Output N" CV="931" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output N</label>
+     </variable>
+     <variable item="Settings for Output O" CV="932" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output O</label>
+     </variable>
+     <variable item="Settings for Output P" CV="933" >
+        <decVal min="1" max="255"/>
+        <label>Setting of Output P</label>
+     </variable>
+     <variable item="Settings for DCC and SUSI Detection" CV="937" default="0" tooltip="0=Autodetect, 1=DCC SUSI On, 2=Analog Modef">
+        <decVal min="0" max="2"/>
+        <label>Detection setting for range 1</label>
+     </variable>
+   </variables>
+  </decoder>
+
+  <pane>
+    <name>Selected SUSI info</name>
+    <column>
+       <label>
+        <text> ================================================================================================ </text>
+      </label>      <label>
+         <text> SUSI Range 1 definitions, if different range found, then use correct range of SUSI definition</text>
+      </label>
+      <label>
+        <text> As SUSI is an addition to an existing decoder, without knowledge of the decoder Brand, Reset is not defined nor provided</text>
+      </label>
+        <label>
+        <text> ================================================================================================ </text>
+      </label>
+     <label>
+        <text> </text>
+      </label>
+        <display item="SUSI-range"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Decoder Version"/>
+    </column>
+  </pane>
+
+  <pane>
+    <name>CVs</name>
+    <column>
+      <cvtable/>
+    </column>
+  </pane>
+  <pane>
+    <name>SUSI Defined Outputs to Fkey mapping</name>
+    <column>
+      <label>
+        <text> select the F key you want to use for each available SUSI Output</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> 0 for F0, 1 for F1, 2 for F2, 3 for F3, 4 for F4, 5 for F5, 6 for F6, 7 for F7                           </text>
+      </label>
+      <label>
+        <text> 8 for F8, 9 for F9, 10 for F10, 11 for F11, 12 for F12, 14 for F14, 15 for F15, 16 for F16</text>
+      </label>
+      <label>
+        <text> if you want an Fkey to perform multiple Outputs, simply add the F# in each of the output row    </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Output A"/>
+      <display item="Output B"/>
+      <display item="Output C"/>
+      <display item="Output D"/>
+      <display item="Output E"/>
+      <display item="Output F"/>
+      <display item="Output G"/>
+      <display item="Output H"/>
+      <display item="Output I"/>
+      <display item="Output J"/>
+      <display item="Output K"/>
+      <display item="Output L"/>
+      <display item="Output M"/>
+      <display item="Output N"/>
+      <display item="Output O"/>
+      <display item="Output P"/>
+    </column>
+  </pane>
+
+
+  <pane>
+    <name>SUSI customized features for each defined Outputs</name>
+    <column>
+      <label>
+        <text>Define the customized features (dimming, timer, Light effects) for each available SUSI Output</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Settings for Output A"/>
+      <display item="Settings for Output B"/>
+      <display item="Settings for Output C"/>
+      <display item="Settings for Output D"/>
+      <display item="Settings for Output E"/>
+      <display item="Settings for Output F"/>
+      <display item="Settings for Output G"/>
+      <display item="Settings for Output H"/>
+      <display item="Settings for Output I"/>
+      <display item="Settings for Output J"/>
+      <display item="Settings for Output K"/>
+      <display item="Settings for Output L"/>
+      <display item="Settings for Output M"/>
+      <display item="Settings for Output N"/>
+      <display item="Settings for Output O"/>
+      <display item="Settings for Output P"/>
+      <display item="Settings for DCC and SUSI Detection"/>
+    </column>
+  </pane>
+</decoder-config>

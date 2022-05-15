@@ -50,16 +50,6 @@ public abstract class MaleSocketTestBase {
     }
     
     @Test
-    public void testIsExternal() throws JmriException {
-        Assert.assertEquals("isExternal() is correct",
-                maleSocketA.getObject().isExternal(), maleSocketA.isExternal());
-        Assert.assertEquals("isExternal() is correct",
-                maleSocketB.getObject().isExternal(), maleSocketB.isExternal());
-//        Assert.assertNotEquals("isExternal() are different",
-//                maleSocketA.isExternal(), maleSocketB.isExternal());
-    }
-    
-    @Test
     public void testShortDescription() throws JmriException {
         Assert.assertEquals("getShortDescription() is correct",
                 maleSocketA.getObject().getShortDescription(), maleSocketA.getShortDescription());

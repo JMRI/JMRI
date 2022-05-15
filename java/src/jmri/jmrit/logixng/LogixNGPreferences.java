@@ -81,4 +81,16 @@ public interface LogixNGPreferences {
      */
     public ErrorHandlingType getErrorHandlingType();
 
+    /**
+     * Set whether row in tree editor should be highlighted or not.
+     * @param value true if the row should be highlighted, false not
+     */
+    public void setTreeEditorHighlightRow(boolean value);
+
+    /**
+     * Get whether row in tree editor should be highlighted or not.
+     * @return true if the row should be highlighted, false not
+     */
+    public boolean getTreeEditorHighlightRow();
+
 }

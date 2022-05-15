@@ -37,9 +37,9 @@ import java.nio.file.StandardCopyOption;
 
         // Only one aat at a time
         private AutoActiveTrain aat = null;
-        
+
         // Adjust this if timeouts on the server
-        private int waitInterval = 100;
+        private int waitInterval = 200;
 
         @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
         @Test
@@ -64,8 +64,8 @@ import java.nio.file.StandardCopyOption;
             // running with no signals
             checkAndSetSpeedsSML();
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-            
-            // trains fills one block 
+
+            // trains fills one block
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
 
             // *******************************************************************************
@@ -77,7 +77,7 @@ import java.nio.file.StandardCopyOption;
 
             ActiveTrain at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
-            
+
             // trains loads and runs, 3 as we are allocating as far as we can
             JUnitUtil.waitFor(() -> {
                 return(d.getAllocatedSectionsList().size()==3);
@@ -127,10 +127,12 @@ import java.nio.file.StandardCopyOption;
 
             // now return.
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
-            
+
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
-         
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
+
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
@@ -186,7 +188,7 @@ import java.nio.file.StandardCopyOption;
             // *******************************************************************************
             //  Here start left to right train fits in 2 deepest blocks
             // *******************************************************************************
-            
+
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.ACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.ACTIVE);
 
@@ -196,7 +198,7 @@ import java.nio.file.StandardCopyOption;
 
             at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
-            
+
             // trains loads and runs, 3 as we are allocating as far as we can
             JUnitUtil.waitFor(() -> {
                 return(d.getAllocatedSectionsList().size()==3);
@@ -245,10 +247,12 @@ import java.nio.file.StandardCopyOption;
 
             // now return.
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
-            
+
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
-         
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
+
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
@@ -297,7 +301,7 @@ import java.nio.file.StandardCopyOption;
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
             resetSensors(sm);
-            
+
             // *******************************************************************************
             //  Here start left to right train fits in all three blocks
             // *******************************************************************************
@@ -311,7 +315,7 @@ import java.nio.file.StandardCopyOption;
 
             at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
-            
+
             // trains loads and runs, 3 as we are allocating as far as we can
             JUnitUtil.waitFor(() -> {
                 return(d.getAllocatedSectionsList().size()==3);
@@ -358,10 +362,12 @@ import java.nio.file.StandardCopyOption;
 
             // now return.
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
-            
+
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
-         
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
+
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
@@ -421,7 +427,7 @@ import java.nio.file.StandardCopyOption;
 
             at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
-            
+
             // trains loads and runs, 3 as we are allocating as far as we can
             JUnitUtil.waitFor(() -> {
                 return(d.getAllocatedSectionsList().size()==3);
@@ -471,10 +477,12 @@ import java.nio.file.StandardCopyOption;
 
             // now return.
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
-            
+
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
-         
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
+
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
@@ -522,7 +530,7 @@ import java.nio.file.StandardCopyOption;
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
             resetSensors(sm);
-            
+
             // *******************************************************************************
             //  Here start right to left train fits in deepest 2 blocks
             // *******************************************************************************
@@ -584,10 +592,12 @@ import java.nio.file.StandardCopyOption;
 
             // now return.
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
-            
+
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
-         
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
+
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
@@ -634,7 +644,7 @@ import java.nio.file.StandardCopyOption;
 
             assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
             resetSensors(sm);
-            
+
             // *******************************************************************************
             //  Here start right to left train fits in entire section
             // *******************************************************************************
@@ -648,7 +658,7 @@ import java.nio.file.StandardCopyOption;
 
             at = d.getActiveTrainsList().get(0);
             aat = at.getAutoActiveTrain();
-            
+
 
             // trains loads and runs, 3 as we are allocating as far as we can
             JUnitUtil.waitFor(() -> {
@@ -695,10 +705,12 @@ import java.nio.file.StandardCopyOption;
 
             // now return.
             JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
-            
+
             // and reverses
-            assertEquals(false, aat.getThrottle().getIsForward(),"Throttle should be in reverse");
-         
+            JUnitUtil.waitFor(() -> {
+                return aat.getThrottle().getIsForward() == false;
+                },"Throttle should be in reverse");
+
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == speedNormal;
                 }, "Speed goes to medium in reverse");
@@ -717,7 +729,7 @@ import java.nio.file.StandardCopyOption;
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 2"), Sensor.INACTIVE);
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 3"), Sensor.INACTIVE);
-            // fully in block 4 
+            // fully in block 4
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 5"), Sensor.ACTIVE);
             JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
@@ -752,7 +764,7 @@ import java.nio.file.StandardCopyOption;
             // cleanup window
             JUnitUtil.dispose(d);
         }
-        
+
         // reset to inactive all sensors except clock.
         private void resetSensors(SensorManager sm) {
             for (Sensor sensor:sm.getNamedBeanSet()) {
@@ -761,7 +773,7 @@ import java.nio.file.StandardCopyOption;
                 }
             }
         }
-        
+
         private float speedMedium = 0.0f;
         private float speedStopping = 0.0f;
         private float speedSlow = 0.0f;
@@ -803,7 +815,6 @@ import java.nio.file.StandardCopyOption;
 
         @BeforeAll
         public static void doOnce() throws Exception {
-            JUnitUtil.setUp();
             JUnitUtil.resetFileUtilSupport();
             // set up users files in temp tst area
             outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");

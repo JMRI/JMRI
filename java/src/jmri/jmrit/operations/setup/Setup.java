@@ -1391,30 +1391,30 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * @return Utility car format
      */
     public static String[] getPickupUtilityManifestMessageFormat() {
-        return getDefault().createUitlityCarMessageFormat(getPickupManifestMessageFormat());
+        return createUitlityCarMessageFormat(getPickupManifestMessageFormat());
     }
 
     public static String[] getDropUtilityManifestMessageFormat() {
-        return getDefault().createUitlityCarMessageFormat(getDropManifestMessageFormat());
+        return createUitlityCarMessageFormat(getDropManifestMessageFormat());
     }
 
     public static String[] getLocalUtilityManifestMessageFormat() {
-        return getDefault().createUitlityCarMessageFormat(getLocalManifestMessageFormat());
+        return createUitlityCarMessageFormat(getLocalManifestMessageFormat());
     }
 
     public static String[] getPickupUtilitySwitchListMessageFormat() {
-        return getDefault().createUitlityCarMessageFormat(getPickupSwitchListMessageFormat());
+        return createUitlityCarMessageFormat(getPickupSwitchListMessageFormat());
     }
 
     public static String[] getDropUtilitySwitchListMessageFormat() {
-        return getDefault().createUitlityCarMessageFormat(getDropSwitchListMessageFormat());
+        return createUitlityCarMessageFormat(getDropSwitchListMessageFormat());
     }
 
     public static String[] getLocalUtilitySwitchListMessageFormat() {
-        return getDefault().createUitlityCarMessageFormat(getLocalSwitchListMessageFormat());
+        return createUitlityCarMessageFormat(getLocalSwitchListMessageFormat());
     }
 
-    private String[] createUitlityCarMessageFormat(String[] format) {
+    private static String[] createUitlityCarMessageFormat(String[] format) {
         // remove car's road, number, color
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(ROAD)) {
@@ -1429,14 +1429,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     public static String[] getPickupTruncatedManifestMessageFormat() {
-        return getDefault().createTruncatedManifestMessageFormat(getPickupManifestMessageFormat());
+        return createTruncatedManifestMessageFormat(getPickupManifestMessageFormat());
     }
 
     public static String[] getDropTruncatedManifestMessageFormat() {
-        return getDefault().createTruncatedManifestMessageFormat(getDropManifestMessageFormat());
+        return createTruncatedManifestMessageFormat(getDropManifestMessageFormat());
     }
 
-    private String[] createTruncatedManifestMessageFormat(String[] format) {
+    public static String[] createTruncatedManifestMessageFormat(String[] format) {
         // remove car's destination and location
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(DESTINATION)) {
@@ -1453,22 +1453,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
-        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
+        return createTwoColumnByTrackPickupMessageFormat(getPickupManifestMessageFormat());
     }
 
     public static String[] getPickupTwoColumnByTrackSwitchListMessageFormat() {
-        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupSwitchListMessageFormat());
+        return createTwoColumnByTrackPickupMessageFormat(getPickupSwitchListMessageFormat());
     }
 
     public static String[] getPickupTwoColumnByTrackUtilityManifestMessageFormat() {
-        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupUtilityManifestMessageFormat());
+        return createTwoColumnByTrackPickupMessageFormat(getPickupUtilityManifestMessageFormat());
     }
 
     public static String[] getPickupTwoColumnByTrackUtilitySwitchListMessageFormat() {
-        return getDefault().createTwoColumnByTrackPickupMessageFormat(getPickupUtilitySwitchListMessageFormat());
+        return createTwoColumnByTrackPickupMessageFormat(getPickupUtilitySwitchListMessageFormat());
     }
 
-    private String[] createTwoColumnByTrackPickupMessageFormat(String[] format) {
+    private static String[] createTwoColumnByTrackPickupMessageFormat(String[] format) {
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(LOCATION)) {
                 format[i] = BLANK;
@@ -1480,22 +1480,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
-        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropManifestMessageFormat());
+        return createTwoColumnByTrackDropMessageFormat(getDropManifestMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackSwitchListMessageFormat() {
-        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropSwitchListMessageFormat());
+        return createTwoColumnByTrackDropMessageFormat(getDropSwitchListMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackUtilityManifestMessageFormat() {
-        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropUtilityManifestMessageFormat());
+        return createTwoColumnByTrackDropMessageFormat(getDropUtilityManifestMessageFormat());
     }
 
     public static String[] getDropTwoColumnByTrackUtilitySwitchListMessageFormat() {
-        return getDefault().createTwoColumnByTrackDropMessageFormat(getDropUtilitySwitchListMessageFormat());
+        return createTwoColumnByTrackDropMessageFormat(getDropUtilitySwitchListMessageFormat());
     }
 
-    private String[] createTwoColumnByTrackDropMessageFormat(String[] format) {
+    private static String[] createTwoColumnByTrackDropMessageFormat(String[] format) {
         for (int i = 0; i < format.length; i++) {
             if (format[i].equals(DESTINATION)) {
                 format[i] = BLANK;

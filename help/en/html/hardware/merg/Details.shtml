@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI help CBUS Connecting connection canusb4 network">
-  <title>JMRI Hardware Support - CBUS® - Tech Details</title>
+  <title>JMRI Hardware Support - CBUS&reg; - Tech Details</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -328,7 +328,7 @@
       <p><a href="index.shtml#thirdparty">CBUS 3rd Party Links</a> See link for the CBUS Developers
       Guide</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

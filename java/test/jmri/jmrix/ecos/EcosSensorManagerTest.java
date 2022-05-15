@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -18,7 +20,7 @@ public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         return "US" + i;
     }
 
-    EcosTrafficController tc = null;
+    private EcosTrafficController tc;
 
     @BeforeEach
     @Override
@@ -30,14 +32,16 @@ public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         tc = new EcosInterfaceScaffold();
         EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc);
         l = new EcosSensorManager(memo);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(memo.getPreferenceManager().ecosPreferencesShutDownTask);
     }
 
     @AfterEach
     public void tearDown() {
+        l.dispose();
+        tc.terminateThreads();
+        l = null;
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
-
 
 }

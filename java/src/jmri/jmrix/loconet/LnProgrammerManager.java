@@ -53,7 +53,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     /**
      * Programming in Ops mode via the LocoNet cable.
      */
-    static final ProgrammingMode LOCONETOPSBOARD    = new ProgrammingMode("LOCONETOPSBOARD", Bundle.getMessage("LOCONETOPSBOARD"));
+    public static final ProgrammingMode LOCONETOPSBOARD    = new ProgrammingMode("LOCONETOPSBOARD", Bundle.getMessage("LOCONETOPSBOARD"));
 
     /**
      * Programming for LocoNet System Variables using version 1 of the protocol.

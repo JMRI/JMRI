@@ -240,11 +240,6 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public boolean isExternal() {
-            return false;
-        }
-
-        @Override
         public void setup() {
             throw new UnsupportedOperationException("Not supported.");
         }

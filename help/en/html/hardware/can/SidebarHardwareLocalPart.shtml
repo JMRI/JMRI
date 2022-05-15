@@ -7,7 +7,7 @@
 					<li><a href="scripting.shtml">CAN Scripting</a>
 				    <li><a href="cbus/index.shtml">CBUS&reg;</a>
 				    <li><a href="cbus/Names.shtml">CBUS Naming</a>
-				    <li><a href="cbus/Details.shtml">CBUS Connection Details</a>
+				    <li><a href="../merg/Details.shtml">CBUS Connection Details</a>
 			 </ul>
 		  </dd>
 

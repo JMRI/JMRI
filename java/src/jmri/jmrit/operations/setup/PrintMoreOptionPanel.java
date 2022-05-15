@@ -1,16 +1,14 @@
 package jmri.jmrit.operations.setup;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
+
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Frame for user edit of additional manifest print options
@@ -77,8 +75,6 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
         // setup buttons
         addButtonAction(saveButton);
-
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight400));
     }
 
     // Save buttons

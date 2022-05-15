@@ -38,7 +38,7 @@ public class LocationTest extends OperationsTestCase {
         l.setName("New Test Name");
         Assert.assertEquals("New Location Name", "New Test Name", l.getName());
         l.setComment("Test Location Comment");
-        Assert.assertEquals("Location Comment", "Test Location Comment", l.getComment());
+        Assert.assertEquals("Location Comment", "Test Location Comment", l.getCommentWithColor());
     }
 
     // test Location public constants

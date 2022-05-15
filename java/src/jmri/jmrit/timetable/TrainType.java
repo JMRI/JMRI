@@ -34,7 +34,7 @@ public class TrainType {
 
     private final int _typeId;
     private final int _layoutId;
-    private String _typeName = "New Type";  // NOI18N
+    private String _typeName = Bundle.getMessage("NewTypeName");  // NOI18N
     private String _typeColor = "#000000";  // NOI18N
 
     public int getTypeId() {

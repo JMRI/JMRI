@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -453,21 +452,6 @@ public final class XMLUtil extends Object {
             throw new NullPointerException("You must set an encoding; use \"UTF-8\" unless you have a good reason not to!"); // NOI18N
         }
         Document doc2 = normalize(doc);
-        ClassLoader orig = Thread.currentThread().getContextClassLoader();
-        Thread.currentThread().setContextClassLoader(AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() { // #195921
-            @Override
-            public ClassLoader run() {
-                return new ClassLoader(ClassLoader.getSystemClassLoader().getParent()) {
-                    @Override
-                    public InputStream getResourceAsStream(String name) {
-                        if (name.startsWith("META-INF/services/")) {
-                            return new ByteArrayInputStream(new byte[0]); // JAXP #6723276
-                        }
-                        return super.getResourceAsStream(name);
-                    }
-                };
-            }
-        }));
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer(
@@ -506,8 +490,6 @@ public final class XMLUtil extends Object {
             t.transform(source, result);
         } catch (javax.xml.transform.TransformerException | RuntimeException e) { // catch anything that happens
             throw new IOException(e);
-        } finally {
-            Thread.currentThread().setContextClassLoader(orig);
         }
     }
 

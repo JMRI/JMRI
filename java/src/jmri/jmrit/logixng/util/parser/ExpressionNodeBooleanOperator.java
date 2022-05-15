@@ -45,7 +45,20 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     @Override
     public Object calculate(SymbolTable symbolTable) throws JmriException {
         
+        Object leftValue = null;
+        if (_tokenType != TokenType.BOOLEAN_NOT) {
+            // Left value must be calculated _before_ right value is calculated.
+            // When a value is calculated, a method might be called, and the
+            // order of these calls must be correct.
+            // For example, if myArray is an array, the formula might be:
+            //   myArray.add("Hello") || myArray.add(" ") || myArray.add("World!")
+            leftValue = _leftSide.calculate(symbolTable);
+        }
+        if (leftValue == null) leftValue = false;
+        
         Object rightValue = _rightSide.calculate(symbolTable);
+        if (rightValue == null) rightValue = false;
+        
         if (!(rightValue instanceof Boolean)) {
             if (TypeConversionUtil.isIntegerNumber(rightValue)) {
                 // Convert to true or false
@@ -60,7 +73,6 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
             return ! right;
         }
         
-        Object leftValue = _leftSide.calculate(symbolTable);
         if (!(leftValue instanceof Boolean)) {
             if (TypeConversionUtil.isIntegerNumber(leftValue)) {
                 // Convert to true or false

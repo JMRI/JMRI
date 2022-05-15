@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: LocoNet Statistics</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help digitrax downloader">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>LocoNet Statistics</h1>
-      <p>Advanced LocoNet interfaces like
-      the LocoBuffer series from RR-CirKits or the PRn series from
-      DIgitrax collect statistics on the operation of the attached
-      LocoNet. This window displays those.</p>
 
-      <p>The "Update" button requests information from the
-      interface for display.</p>
+      <p>Advanced LocoNet interfaces like the LocoBuffer series from RR-CirKits or the PRn series
+      from DIgitrax collect statistics on the operation of the attached LocoNet. This window
+      displays those.</p>
+
+      <p>The "Update" button requests information from the interface for display.</p>
 
       <h2>LocoBuffer Values</h2>
 
@@ -31,25 +29,19 @@
 
         <dt>Breaks</dt>
 
-        <dd>The number of LocoNet breaks seen since the last time
-        the interface was powered on. This is the number of times
-        that the locobuffer sees a problem with its output message
-        to the loconet and issues a break, that tells the devices
-        that are receiving the data to throw that packet away and
-        the locobuffer then resends the packet.</dd>
+        <dd>The number of LocoNet breaks seen since the last time the interface was powered on.
+        This is the number of times that the locobuffer sees a problem with its output message to
+        the loconet and issues a break, that tells the devices that are receiving the data to throw
+        that packet away and the locobuffer then resends the packet.</dd>
 
         <dt>Errors</dt>
 
-        <dd>The number of LocoNet errors seen since the last time
-        the interface was powered on. This happens when the
-        Locobuffer detects a problem on a packet it is receiving
-        off the loconet. This should be a result of the sending
-        device seeing a problem with the packet it is sending and
-        issuing a break. The data is not lost when this happens,
-        the sending device then sends the packet again. The worst
-        case is if the Locobuffer seeing a problem with a packet it
-        is receving and the transfitting device does not. The
-        packet is then lost.</dd>
+        <dd>The number of LocoNet errors seen since the last time the interface was powered on.
+        This happens when the Locobuffer detects a problem on a packet it is receiving off the
+        loconet. This should be a result of the sending device seeing a problem with the packet it
+        is sending and issuing a break. The data is not lost when this happens, the sending device
+        then sends the packet again. The worst case is if the Locobuffer seeing a problem with a
+        packet it is receving and the transfitting device does not. The packet is then lost.</dd>
       </dl>
 
       <h2>Digitrax PRn</h2>
@@ -61,13 +53,11 @@
 
         <dt>PR2 Status</dt>
 
-        <dd>The status bits from an interface in PR2 (programmer)
-        mode.</dd>
+        <dd>The status bits from an interface in PR2 (programmer) mode.</dd>
 
         <dt>Current</dt>
 
-        <dd>The current being drawn by the track, in some arbitrary
-        units.</dd>
+        <dd>The current being drawn by the track, in some arbitrary units.</dd>
 
         <dt>Hardware Version</dt>
 
@@ -79,26 +69,25 @@
 
         <dt>Good Message Count</dt>
 
-        <dd>The number of good LocoNet messages seen since the last
-        time the interface was powered on.</dd>
+        <dd>The number of good LocoNet messages seen since the last time the interface was powered
+        on.</dd>
 
         <dt>Bad Message Count</dt>
 
-        <dd>The number of bad LocoNet messages seen since the last
-        time the interface was powered on.</dd>
+        <dd>The number of bad LocoNet messages seen since the last time the interface was powered
+        on.</dd>
 
         <dt>MS100 Status</dt>
 
-        <dd>The status bits from an interface in MS100 (LocoNet
-        adapter) mode.</dd>
+        <dd>The status bits from an interface in MS100 (LocoNet adapter) mode.</dd>
       </dl>
-      <p>Some of these are displayed when the interface is acting
-      as a programmer (PR2 mode), and others when it's acting as an
-      interface (MS100 mode).</p>
 
+      <p>Some of these are displayed when the interface is acting as a programmer (PR2 mode), and
+      others when it's acting as an interface (MS100 mode).</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

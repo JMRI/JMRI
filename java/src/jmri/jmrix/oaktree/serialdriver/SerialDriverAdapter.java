@@ -60,7 +60,7 @@ public class SerialDriverAdapter extends SerialPortController {
             // set timeout; framing should work before this anyway
             try {
                 activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: {] {}", activeSerialPort.getReceiveTimeout(),
+                log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
                 log.info("failed to set serial timeout: ", et);
@@ -147,7 +147,7 @@ public class SerialDriverAdapter extends SerialPortController {
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: ", e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -199,11 +199,6 @@ public class SerialDriverAdapter extends SerialPortController {
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    @Deprecated
-    static public SerialDriverAdapter instance() {
-        return null;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

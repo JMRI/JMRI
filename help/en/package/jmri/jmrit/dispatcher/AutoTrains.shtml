@@ -1,109 +1,89 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Dispatcher AutoTrains Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content=
-  "JMRI help Dispatcher Auto Active Trains">
+  <meta name="keywords" content="JMRI help Dispatcher Auto Active Trains">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>JMRI Dispatcher: AutoTrains</h1>
 
       <h2>Introduction</h2>
 
-      <p>The <strong>AutoTrains</strong> pane allows the dispatcher to take
-      control of an Auto Active Train (an automatically running
-      Active Train) from the <em>virtual dispatcher</em> when
-      required to solve a problem, and to restore automatic
-      operation after the problem is solved. Example problems
-      requiring the dispatcher to intervene are derailment of the
-      train, or unexpected uncoupling of cars in a train. This
-      window is also used to restart automatic operation after
-      suspending it for a human engineer to switch train cars or
-      perform other work.</p>
+      <p>The <strong>AutoTrains</strong> pane allows the dispatcher to take control of an Auto
+      Active Train (an automatically running Active Train) from the <em>virtual dispatcher</em>
+      when required to solve a problem, and to restore automatic operation after the problem is
+      solved. Example problems requiring the dispatcher to intervene are derailment of the train,
+      or unexpected uncoupling of cars in a train. This window is also used to restart automatic
+      operation after suspending it for a human engineer to switch train cars or perform other
+      work.</p>
 
       <p>When the first Auto Active Train is created in <strong><a href=
-      "Dispatcher.shtml">Dispatcher</a></strong>, an <strong>AutoTrains</strong>
-      pane is opened immediately to the right of the Dispatcher
-      window. The pane may be moved to another location if
-      desired. An entry is added for each additional Auto Active
-      Train as it is created. When an Auto Active Train is
-      terminated, its entry is removed from the <strong>AutoTrains</strong>
+      "Dispatcher.shtml">Dispatcher</a></strong>, an <strong>AutoTrains</strong> pane is opened
+      immediately to the right of the Dispatcher window. The pane may be moved to another location
+      if desired. An entry is added for each additional Auto Active Train as it is created. When an
+      Auto Active Train is terminated, its entry is removed from the <strong>AutoTrains</strong>
       pane.</p>
 
       <h2>Using the AutoTrains Window</h2>
 
-      <p>Below is an <strong>AutoTrains</strong> pane showing two Auto
-      Active Trains, Amtrak 139 and GTW 6418. Entries are separated
-      by a horizontal line.</p><img src="images/AutoTrainsA.png" alt="Auto train status"
-      width="337" height="177">
-
-      <p>Each entry has a <strong>Stop</strong> button and a <strong>To Manual</strong>
-      button. If the dispatcher presses the <strong>Stop</strong> button, the
-      Auto Active Train is immediately stopped. The stopping is an
-      emergency stop--no gradual reduction of speed. Clicking the
-      <strong>Stop All AutoTrains</strong> button at the bottom of the
-      pane will issue an emergency stop to all Auto Active Trains
-      shown in the <strong>AutoTrains</strong> pane. <strong>Stop</strong> buttons
-      change to <strong>Resume</strong> buttons when trains are stopped. Each
-      stopped train must be restarted individually by clicking its
+      <p>Below is an <strong>AutoTrains</strong> pane showing two Auto Active Trains, Amtrak 139
+      and GTW 6418. Entries are separated by a horizontal line.</p>
+      <img src="images/AutoTrainsA.png" alt="Auto train status" width="337" height="177">
+      <p>Each entry has a <strong>Stop</strong> button and a <strong>To Manual</strong> button. If
+      the dispatcher presses the <strong>Stop</strong> button, the Auto Active Train is immediately
+      stopped. The stopping is an emergency stop--no gradual reduction of speed. Clicking the
+      <strong>Stop All AutoTrains</strong> button at the bottom of the pane will issue an emergency
+      stop to all Auto Active Trains shown in the <strong>AutoTrains</strong> pane.
+      <strong>Stop</strong> buttons change to <strong>Resume</strong> buttons when trains are
+      stopped. Each stopped train must be restarted individually by clicking its
       <strong>Resume</strong> button.</p>
 
-      <p>Once an AutoTrain has completed its run, the <strong>Stop</strong>
-      button changes to <strong>Restart</strong>. Pressing this causes the
-      AutoTrain to begin running again.</p>
+      <p>Once an AutoTrain has completed its run, the <strong>Stop</strong> button changes to
+      <strong>Restart</strong>. Pressing this causes the AutoTrain to begin running again.</p>
 
-      <p>If the dispatcher clicks the <strong>To Manual</strong> button for
-      Amtrak 139, its line in the pane changes to:</p><img src=
-      "images/AutoTrainsB.png" width="576" height="176" alt="Auto train manual mode">
-
-      <p>The <strong>Fw</strong> (Forward) and <strong>Rev</strong> (Reverse) radio
-      buttons control the train direction and the slider controls
-      the train speed. The dispatcher can use these controls to
-      run the train and fix whatever problem is present. When the
-      problem is remedied, clicking the <strong>To Auto</strong> button will
-      restore automatic operation of the train.<br>
-      Note: Prior to clicking its <strong>To Auto</strong>
-      button, the dispatcher should run the train to the same
-      location where it was when <strong>To Manual</strong> was clicked. This
+      <p>If the dispatcher clicks the <strong>To Manual</strong> button for Amtrak 139, its line in
+      the pane changes to:</p>
+      <img src="images/AutoTrainsB.png" width="576" height="176" alt="Auto train manual mode">
+      <p>The <strong>Fw</strong> (Forward) and <strong>Rev</strong> (Reverse) radio buttons control
+      the train direction and the slider controls the train speed. The dispatcher can use these
+      controls to run the train and fix whatever problem is present. When the problem is remedied,
+      clicking the <strong>To Auto</strong> button will restore automatic operation of the
+      train.<br>
+      Note: Prior to clicking its <strong>To Auto</strong> button, the dispatcher should run the
+      train to the same location where it was when <strong>To Manual</strong> was clicked. This
       assures smooth resumption of automatic operation.</p>
 
       <h3>AutoTrains - Go to Manual Mode Action</h3>
 
-      <p>One of the user-selectable Transit
-      <a href="../beantable/ViewSpecialActions.shtml">Actions</a>
-      is <strong>Go to Manual Mode</strong>.<br>
-      This Action supports running an Auto Active
-      Train automatically to a work site, where a human engineer
-      takes over to perform operations (perhaps switching cars),
-      after which automatic running is continued following the same
-      Transit. When the <strong>Go to Manual Mode</strong> action is
-      initiated, the <strong>Stop</strong> and <strong>To Manual</strong> buttons are
-      replaced by one <strong>Resume Auto Running</strong> button, and the
-      computer throttle being used by the <em>virtual engineer</em>
-      is released. A human engineer can then plug in a manual
-      throttle and acquire the train for manual running. After the
-      human engineer has completed his/her work, the human engineer
-      releases the manual throttle, and informs the dispatcher that
-      automatic operation may be resumed. The dispatcher resumes
-      automatic operation by clicking the <strong>Resume Auto
-      Running</strong> button. Prior to releasing the manual throttle,
-      the human engineer should run the train to the same position
-      it was in when manual mode operation was initiated. This
-      ensures smooth resumption of automatic operation.</p>
+      <p>One of the user-selectable Transit <a href=
+      "../beantable/ViewSpecialActions.shtml">Actions</a> is <strong>Go to Manual
+      Mode</strong>.<br>
+      This Action supports running an Auto Active Train automatically to a work site, where a human
+      engineer takes over to perform operations (perhaps switching cars), after which automatic
+      running is continued following the same Transit. When the <strong>Go to Manual Mode</strong>
+      action is initiated, the <strong>Stop</strong> and <strong>To Manual</strong> buttons are
+      replaced by one <strong>Resume Auto Running</strong> button, and the computer throttle being
+      used by the <em>virtual engineer</em> is released. A human engineer can then plug in a manual
+      throttle and acquire the train for manual running. After the human engineer has completed
+      his/her work, the human engineer releases the manual throttle, and informs the dispatcher
+      that automatic operation may be resumed. The dispatcher resumes automatic operation by
+      clicking the <strong>Resume Auto Running</strong> button. Prior to releasing the manual
+      throttle, the human engineer should run the train to the same position it was in when manual
+      mode operation was initiated. This ensures smooth resumption of automatic operation.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

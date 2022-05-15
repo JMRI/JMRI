@@ -29,6 +29,8 @@ import jmri.jmrit.operations.trains.TrainManager;
  */
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
+    protected static final String POINTER = "    -->";
+    
     // train
     Train _train;
 
@@ -211,7 +213,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 addItemLeft(pRoute, trk, 1, y);
                 // is the car at this location and track?
                 if (_car != null && location.equals(_car.getLocation()) && track.equals(_car.getTrack())) {
-                    JLabel here = new JLabel("  -->"); // NOI18N
+                    JLabel here = new JLabel(POINTER); // NOI18N
                     addItemLeft(pRoute, here, 0, y);
                 }
                 JLabel op = new JLabel();

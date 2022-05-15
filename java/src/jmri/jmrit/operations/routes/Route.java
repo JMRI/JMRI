@@ -177,7 +177,6 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     public void deleteLocation(RouteLocation rl) {
         if (rl != null) {
             rl.removePropertyChangeListener(this);
-            // subtract from the locations's available track length
             String id = rl.getId();
             rl.dispose();
             Integer old = Integer.valueOf(_routeHashTable.size());

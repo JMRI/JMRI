@@ -21,7 +21,10 @@ import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 import jmri.util.*;
 
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Creates a LogixNG with all actions and expressions to test store and load.
@@ -38,10 +41,9 @@ public class StoreAndLoadTest {
     private LocoNetSystemConnectionMemo memo1;
     private LocoNetSystemConnectionMemo memo2;
 
-
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -238,8 +240,7 @@ public class StoreAndLoadTest {
             results = cm.load(secondFile);
             log.debug(results ? "load was successful" : "store failed");
             if (results) {
-                if (! logixNG_Manager.resolveAllTrees(new ArrayList<>())) throw new RuntimeException();
-                if (! logixNG_Manager.setupAllLogixNGs(new ArrayList<>())) throw new RuntimeException();
+                logixNG_Manager.setupAllLogixNGs();
 
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
@@ -304,7 +305,7 @@ public class StoreAndLoadTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -326,7 +327,7 @@ public class StoreAndLoadTest {
         memo1 = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis1 = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo1);
         memo1.setLnTrafficController(lnis1);
-        memo1.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo1.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         memo1.configureManagers();
         jmri.InstanceManager.store(memo1, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
@@ -334,14 +335,19 @@ public class StoreAndLoadTest {
         memo2 = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo("L2", "LocoNet");
         lnis2 = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo2);
         memo2.setLnTrafficController(lnis2);
-        memo2.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo2.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         memo2.configureManagers();
         jmri.InstanceManager.store(memo2, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+
+        JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
+        JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
+        JUnitUtil.removeMatchingThreads("LocoNetThrottledTransmitter");
+
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

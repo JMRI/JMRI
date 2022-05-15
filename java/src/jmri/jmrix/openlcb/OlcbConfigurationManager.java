@@ -159,7 +159,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());
-        
+
         InstanceManager.setLightManager(
                 getLightManager()
         );
@@ -215,11 +215,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return olcbCanInterface.getInterface();
     }
 
-    // These components are internal implementation details of the OpenLCB library
-    // and should not be exposed here.
-    @Deprecated
+    // internal to OpenLCB library, should not be exposed
     AliasMap aliasMap;
-    @Deprecated
+    // internal to OpenLCB library, should not be exposed
     MessageBuilder messageBuilder;
 
     /**
@@ -403,7 +401,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     protected OlcbLightManager lightManager;
-    
+
     public OlcbLightManager getLightManager() {
         if (adapterMemo.getDisabled()) {
             return null;
@@ -596,7 +594,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     Thread t = jmri.util.ThreadingUtil.newThread(
-                                    () -> { 
+                                    () -> {
                                         // N.B. during JUnit testing, the following call tends to hang
                                         // on semaphore acquisition in org.openlcb.can.CanInterface.initialize()
                                         // near line 109 in openlcb lib 0.7.22, which leaves

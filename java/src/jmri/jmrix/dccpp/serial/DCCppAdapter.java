@@ -62,7 +62,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: {}", et);
+                log.info("failed to set serial timeout", et);
             }
 
             // get and save stream
@@ -204,15 +204,6 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    @Deprecated
-    static public DCCppAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new DCCppAdapter();
-        }
-        return mInstance;
-    }
-    static volatile DCCppAdapter mInstance = null; // TODO: Rename this?
 
     private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class);
 

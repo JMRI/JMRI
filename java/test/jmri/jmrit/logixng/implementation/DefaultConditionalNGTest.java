@@ -148,11 +148,6 @@ public class DefaultConditionalNGTest {
         }
 
         @Override
-        public boolean isExternal() {
-            throw new UnsupportedOperationException("Not supported8");
-        }
-
-        @Override
         public void setup() {
             throw new UnsupportedOperationException("Not supported9");
         }

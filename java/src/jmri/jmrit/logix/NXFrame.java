@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NXFrame extends WarrantRoute {
 
-    private float _maxThrottle = 0.75f;
+    private float _maxThrottle = 0.0f;
     private float _startDist;   // mm start distance to portal
     private float _stopDist;    // mm stop distance from portal
 
@@ -109,9 +109,11 @@ public class NXFrame extends WarrantRoute {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.add(_routePanel);
         getContentPane().add(mainPanel);
-        
-        float prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale()*100;
-        _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
+
+        if (_maxThrottle <= 0.1f) {
+            _maxThrottle = WarrantPreferences.getDefault().getThrottleScale()*100;
+        }
+        _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(_maxThrottle));
         maxThrottleEventAction();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -450,8 +452,8 @@ public class NXFrame extends WarrantRoute {
     }
     
     private void updateAutoRunPanel() {
-        _startDist = getPathLength(_orders.get(0)) / 2;
-        _stopDist = getPathLength(_orders.get(_orders.size()-1)) / 2;
+        _startDist = getPathLength(_orders.get(0)) * 0.4f;
+        _stopDist = getPathLength(_orders.get(_orders.size()-1)) * 0.6f;
         NumberFormat formatter = NumberFormat.getNumberInstance(); 
         if (_units.equals(Display.IN)) {
             // convert millimeters to inches
@@ -504,9 +506,6 @@ public class NXFrame extends WarrantRoute {
     }
 
     private void makeAndRunWarrant() {
-        if (log.isDebugEnabled()) {
-            log.debug("NXFrame selectedRoute()");
-        }
         String msg = getBoxData();
         if (msg == null) {
             msg = checkLocoAddress();
@@ -523,8 +522,6 @@ public class NXFrame extends WarrantRoute {
         warrant.setTrainName(getTrainName());
         warrant.setNoRamp(_noRamp.isSelected());
         _speedUtil.setIsForward(_forward.isSelected());
-        // position distance from start of path
-        _speedUtil.setDistanceTravelled(getPathLength(_orders.get(0)) - _startDist);
         warrant.setSpeedUtil(_speedUtil);   // transfer SpeedUtil to warrant
         log.debug("Warrant {}. Route and loco set.", warrant.getDisplayName());
         int mode;
@@ -532,51 +529,23 @@ public class NXFrame extends WarrantRoute {
             mode = Warrant.MODE_RUN;
             warrant.setShareRoute(_shareRouteBox.isSelected());
             warrant.setAddTracker(_addTracker.isSelected());
+            warrant.setHaltStart(_haltStartBox.isSelected());
             msg = makeCommands(warrant);
         } else {
             mode = Warrant.MODE_MANUAL;
         }
-        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
+            WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+            tableFrame.setVisible(true);
             warrant.setNXWarrant(true);
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
             }
             msg = tableFrame.runTrain(warrant, mode);
-            tableFrame.scrollTable();
-        }
-        if (msg != null) {
-            log.debug("WarrantTableFrame run warrant. msg= {} Remove warrant {}",msg,warrant.getDisplayName());
-            tableFrame.getModel().removeWarrant(warrant, false);
-        }
-
-        if (msg == null && mode == Warrant.MODE_RUN) {
-            if (_haltStartBox.isSelected()) {
-                class Halter implements Runnable {
-
-                    Warrant war;
-
-                    Halter(Warrant w) {
-                        war = w;
-                    }
-
-                    @Override
-                    public void run() {
-                        int limit = 0;
-                        try {
-                            // wait until _engineer is assigned so HALT can take effect
-                            while (!war.controlRunTrain(Warrant.HALT) && limit < 3000) {
-                                Thread.sleep(200);
-                                limit += 200;
-                            }
-                        } catch (InterruptedException e) {
-                            war.controlRunTrain(Warrant.HALT);
-                        }
-                    }
-                }
-                Halter h = new Halter(warrant);
-                jmri.util.ThreadingUtil.newThread(h).start();
+            if (msg != null) {
+                log.debug("WarrantTableFrame run warrant. msg= {} Remove warrant {}",msg,warrant.getDisplayName());
+                tableFrame.getModel().removeWarrant(warrant, false);
             }
         }
         if (msg != null) {
@@ -643,8 +612,6 @@ public class NXFrame extends WarrantRoute {
         } catch (java.text.ParseException pe) {
             return Bundle.getMessage("MustBeFloat", text);
         }
-        
-        _speedUtil.resetSpeedProfile();
         return null;
     }
 
@@ -680,9 +647,9 @@ public class NXFrame extends WarrantRoute {
     }
 
     private float getPathLength(BlockOrder bo) {
-        float len = bo.getPath().getLengthMm();
+        float len = bo.getPathLength();
         if (len <= 0) {
-            len = bo.getTempPathLen();
+            len = bo.getPathLength();
             if ( len <= 0) {
                 String sLen = JOptionPane.showInputDialog(this, 
                         Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
@@ -693,7 +660,7 @@ public class NXFrame extends WarrantRoute {
                 } catch (java.text.ParseException | java.lang.NullPointerException pe) {
                     len = 0.0f;
                 }
-                bo.setTempPathLen(len);
+                bo.setPathLength(len);
             }
         }
        return len;

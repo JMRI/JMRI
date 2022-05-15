@@ -24,7 +24,7 @@ public class TrafficRelayTest {
 
         TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(!lock.isLockClear());
+        Assert.assertTrue(!lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class TrafficRelayTest {
 
         TrafficRelay lock = new TrafficRelay(s, SignalHeadSection.CODE_LEFT);
 
-        Assert.assertTrue(lock.isLockClear());
+        Assert.assertTrue(lock.isLockClear(Lock.turnoutLockLogger));
     }
 
     @BeforeEach

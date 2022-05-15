@@ -32,6 +32,8 @@ import jmri.util.table.ButtonRenderer;
  */
 public class AutomationTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
+    protected static final String POINTER = "    -->";
+    
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int CURRENT_COLUMN = ID_COLUMN + 1;
@@ -352,7 +354,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private String getCurrentPointer(int row, AutomationItem item) {
         if (_automation.getCurrentAutomationItem() == item) {
-            return "    -->"; // NOI18N
+            return POINTER;
         } else {
             return "";
         }

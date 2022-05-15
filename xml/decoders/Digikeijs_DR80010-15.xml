@@ -17,21 +17,43 @@
         <family name="Locomotive lighting" mfg="Digikeijs">
             <model model="DR80010" productID="80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
                 <versionCV lowVersionID="10" highVersionID="10"/>
-                <output name="1" label="Head|Light" connection="solder" maxcurrent="500 mA" />
-                <output name="2" label="Tail|Light" connection="solder" maxcurrent="500 mA" />
-                <output name="3" label="AUX|  1  " connection="solder" maxcurrent="500 mA" />
-                <output name="4" label="AUX|  2  " connection="solder" maxcurrent="500 mA" />
-                <output name="5" label="LED|Grp 1" connection="other"/>
-                <output name="6" label="LED|Grp 2" connection="other"/>
-                <output name="7" label="LED|Grp 3" connection="other"/>
-                <output name="8" label="LED|Grp 4" connection="other"/>
+                <output name="1" label="Head|Light" connection="solder" maxcurrent="500 mA">
+                    <label xml:lang="cs">Přední|Světla</label> 
+                </output> 
+                <output name="2" label="Tail|Light" connection="solder" maxcurrent="500 mA">
+                    <label xml:lang="cs">Zadní|Světla</label> 
+                </output> 
+                <output name="3" label="AUX|  1  " connection="solder" maxcurrent="500 mA">
+                    <label xml:lang="cs">AUX| 1 </label> 
+                </output> 
+                <output name="4" label="AUX|  2  " connection="solder" maxcurrent="500 mA">
+                    <label xml:lang="cs">AUX| 2 </label> 
+                </output> 
+                <output name="5" label="LED|Grp 1" connection="other">
+                    <label xml:lang="cs">   LED   |Skupina 1</label> 
+                </output> 
+                <output name="6" label="LED|Grp 2" connection="other">
+                    <label xml:lang="cs">   LED   |Skupina 2</label> 
+                </output> 
+                <output name="7" label="LED|Grp 3" connection="other">
+                    <label xml:lang="cs">   LED   |Skupina 3</label> 
+                </output> 
+                <output name="8" label="LED|Grp 4" connection="other">
+                    <label xml:lang="cs">   LED   |Skupina 4</label> 
+                </output> 
                 <size length="280" width="6" height="1.5" units="mm" />
             </model>
             <model model="DR80015" numOuts="3" numFns="18" maxTotalCurrent="900A" productID="80015" formFactor="N" comment="Locomotive function NANO V2.0 - 3 functions">
                 <versionCV lowVersionID="10" highVersionID="10"/>
-                <output name="1" label="Head|Light" connection="wire" maxcurrent="500 mA" />
-                <output name="2" label="Tail|Light" connection="wire" maxcurrent="500 mA" />
-                <output name="3" label="AUX|  1  " connection="wire" maxcurrent="500 mA" />
+                <output name="1" label="Head|Light" connection="wire" maxcurrent="500 mA">
+                    <label xml:lang="cs">Přední|Světla</label> 
+                </output> 
+                <output name="2" label="Tail|Light" connection="wire" maxcurrent="500 mA">
+                    <label xml:lang="cs">Zadní|Světla</label> 
+                </output> 
+                <output name="3" label="AUX|  1  " connection="wire" maxcurrent="500 mA">
+                    <label xml:lang="cs">AUX| 1 </label> 
+                </output> 
                 <size length="10" width="6" height="3" units="mm" />
             </model>
         </family>
@@ -44,6 +66,7 @@
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van de decoder: </label>
+                <label xml:lang="cs">Verze dekodéru: </label>
                 <label>Decoder Version ID: </label>
             </variable>
             <variable CV="8" readOnly="yes" item="Manufacturer" default="42">
@@ -52,8 +75,10 @@
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
+                <label xml:lang="cs">ID výrobce: </label>
                 <label>Manufacturer ID: </label>
                 <tooltip>Read-Only, 42 = Digikeijs/Digirails</tooltip>
+                <tooltip xml:lang="cs">Pouze pro čtení, 42 = Digikeijs/Digirails</tooltip>
             </variable>
             <!-- CV=19 -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
@@ -65,6 +90,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F1</label>
                 <label xml:lang="de">Verbundadresse aktiv für F1</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F1</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F1</label>
                 <label>Consist Address Active For F1</label>
             </variable>
             <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
@@ -73,6 +99,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F2</label>
                 <label xml:lang="de">Verbundadresse aktiv für F2</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F2</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F2</label>
                 <label>Consist Address Active For F2</label>
             </variable>
             <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
@@ -81,6 +108,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F3</label>
                 <label xml:lang="de">Verbundadresse aktiv für F3</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F3</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F3</label>
                 <label>Consist Address Active For F3</label>
             </variable>
             <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="1" minFn="4">
@@ -89,6 +117,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F4</label>
                 <label xml:lang="de">Verbundadresse aktiv für F4</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F4</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F4</label>
                 <label>Consist Address Active For F4</label>
             </variable>
             <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="1" minFn="5">
@@ -97,6 +126,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F5</label>
                 <label xml:lang="de">Verbundadresse aktiv für F5</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F5</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F5</label>
                 <label>Consist Address Active For F5</label>
             </variable>
             <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="1" minFn="6">
@@ -105,6 +135,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F6</label>
                 <label xml:lang="de">Verbundadresse aktiv für F6</label>
                 <label xml:lang="nl">Consist-adres actief voor F6</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F6</label>
                 <label>Consist Address Active For F6</label>
             </variable>
             <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="1" minFn="7">
@@ -113,6 +144,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F7</label>
                 <label xml:lang="de">Verbundadresse aktiv für F7</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F7</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F7</label>
                 <label>Consist Address Active For F7</label>
             </variable>
             <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="1" minFn="8">
@@ -121,6 +153,7 @@
                 <label xml:lang="fr">Adresse d'Unité Multiple active pour F8</label>
                 <label xml:lang="de">Verbundadresse aktiv für F8</label>
                 <label xml:lang="nl">Multitractie-adres actief voor F8</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F8</label>
                 <label>Consist Address Active For F8</label>
             </variable>
             <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="1">
@@ -129,6 +162,7 @@
                 <label xml:lang="fr">Adresse UM active pour FL en avant</label>
                 <label xml:lang="de">Verbundadresse aktiv für FL vorwärts</label>
                 <label xml:lang="nl">Multitractie-adres actief voor FL Vooruit</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F0 pro Vpřed</label>
                 <label>Consist Address Active For FL in Forward</label>
             </variable>
             <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="1">
@@ -137,6 +171,7 @@
                 <label xml:lang="fr">Adresse UM active pour FL en arr</label>
                 <label xml:lang="de">Verbundadresse aktiv für FL rückwärts</label>
                 <label xml:lang="nl">Multitractie-adres actief voor FL Achteruit</label>
+                <label xml:lang="cs">Adresa soupravy aktivní pro F0 pro Vzad</label>
                 <label>Consist Address Active For FL in Reverse</label>
             </variable>
 
@@ -151,33 +186,39 @@
                         <choice xml:lang="fr">Ampoule</choice>
                         <choice xml:lang="de">Glühbirne</choice>
                         <choice xml:lang="nl">Gloeilamp</choice>
+                        <choice xml:lang="cs">Žárovka</choice>
                     </enumChoice>
                     <enumChoice choice="Fluorescent light">
                         <choice xml:lang="fr">Lumière fluorescente</choice>
                         <choice xml:lang="de">Leuchtstofflampe</choice>
                         <choice xml:lang="nl">TL Verlichting</choice>
+                        <choice xml:lang="cs">Zářivka</choice>
                         <choice>Fluorescent light</choice>
                     </enumChoice>
                     <enumChoice choice="Gas lamp">
                         <choice xml:lang="fr">Lampe à gaz</choice>
                         <choice xml:lang="de">Gaslampe</choice>
                         <choice xml:lang="nl">Gaslamp</choice>
+                        <choice xml:lang="cs">Plynová lampa</choice>
                         <choice>Gas lamp</choice>
                     </enumChoice>
                     <enumChoice choice="On - Off">
                         <choice xml:lang="fr">On - Off</choice>
                         <choice xml:lang="de">Ein - Aus</choice>
                         <choice xml:lang="nl">Aan - Uit</choice>
+                        <choice xml:lang="cs">Zap - Vyp</choice>
                         <choice>On - Off</choice>
                     </enumChoice>
                 </enumVal>
                 <label xml:lang="fr">Préréglages</label>
                 <label xml:lang="de">Voreinstellungen</label>
                 <label xml:lang="nl">Voorinstellingen</label>
+                <label xml:lang="cs">Předvolby</label>
                 <label>Presets</label>
                 <tooltip xml:lang="fr">&lt;html&gt;Ce CV en écriture seule règle automatiquement un certain nombre d’effets standards.&lt;br&gt; AMPOULE: toutes les LED vont s’allumer et s’éteindre en douceur.&lt;br&gt; LUMIERE FLUORESCENTE: la bande LED simule la manière de s’allumer d’une lumière fluorescente.&lt;br&gt; LAMPE GAZ: provoque l’allumage des LED en un flash, puis leur allumage et extinction en douceur.&lt;br&gt; ON/OFF: entraîne un allumage et une extinction des LED sans aucun effet particulier.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="de">&lt;html&gt;Diese nur-schreibbare CV legt automatisch eine Reihe an Standardeffekten fest.&lt;br&gt; GLÜHBIRNE: Alle LEDs schalten sich mit dieser Voreinstellung gleichmäßig tin und aus.&lt;br&gt; LEUCHTSTOFFLAMPEN: simuliert der LED-Streifen das EInschalten einer Leucht-stofflampe.&lt;br&gt; GASLAMPE: euchten die LEDsbeim Einschalten hell auf und schalten dann gleichmäßig ein und aus.&lt;br&gt; EIN/AUS: schalten die LEDs ohne besondere Effekte EIN und AUS.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip xml:lang="nl">&lt;html&gt;Deze alleen schrijfbare CV stelt automatisch een aantal standaard effecten in.&lt;br&gt; GLOEILAMP: Alle leds zullen met een vloeiend effect aan of uit gaan na het instellen van deze preset.&lt;br&gt; TL-LICHT: zal de ledstrip het opstarten van TL lampen nabootsen.&lt;br&gt; GASLAMP: zullen de leds met een flits inschakelen om vervolgens vloeiend aan en uit te gaan.&lt;br&gt; AAN/UIT: stelt u de leds in om zonder speciaal effect AAN en UIT te schakelen.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Toto CV je pouze pro zápis a automaticky nastavuje několik standardních efektů.&lt;br&gt; ŽÁROVKA: S touto předvolbou se všechny LED se rozsvěcí a zhasínají plynule.&lt;br&gt; ZÁŘIVKA: Způsobí, že LED pásek simuluje způsob jakým se zářivkové světlo rozsvěcí.&lt;br&gt; PLYNOVÁ LAMPA: Způsobí, že zapnuté LED blikají a plynule se rozsvěcí a zhasíná.&lt;br&gt; ZAP/VYP: Způsobí, že se LED zapnou a vypnou bez jakéhokoliv zvláštního efektu.&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;This write-only CV automatically sets a number of standard effects.&lt;br&gt; BULB: All LEDs will turn on and off smoothly with this preset.&lt;br&gt; FLUORESCENT LIGHT: causes the LED strip to simulate the way a fluorescent light turns on.&lt;br&gt; GAS LAMP: causes the LEDs to turn on with a flash and then turn on and off smoothly.&lt;br&gt; ON/OFF: causes the LEDs to turn ON and OFF without any special effects.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
 
@@ -186,14 +227,17 @@
                 <label xml:lang="fr">Intensité lumineuse LEDgroup 1-4</label>
                 <label xml:lang="de">Lichtintensität LEDgroup 1-4</label>
                 <label xml:lang="nl">Licht intensiteit LEDgroup 1-4</label>
+                <label xml:lang="cs">Intenzita osvětlení pro skupinu LED 1-4</label>
                 <label>Light intensity LEDgroup 1-4</label>
                 <tooltip>Controls how much LEDgroup 1-4 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc skupina LED 1-4 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable CV="48" mask="XXXVXXXX" item="Fade in fade out effect LEDgroup 1-4" default="0" writeOnly="yes" include="80010">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 1-4</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 1-4</label>
                 <label xml:lang="nl">Fade in and Fade out effect LEDgroup 1-4</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání skupiny LED 1-4</label>
                 <label>Fade in fade out effect LEDgroup 1-4</label>
             </variable>
             <variable CV="48" mask="XXVXXXXX" item="Flicker effect LEDgroup 1-4" default="0" writeOnly="yes" include="80010">
@@ -201,6 +245,7 @@
                 <label xml:lang="fr">Effet oscillation LEDgroup 1-4</label>
                 <label xml:lang="de">Flackereffekt LEDgroup 1-4</label>
                 <label xml:lang="nl">Knipper effect LEDgroup 1-4</label>
+                <label xml:lang="cs">Efekt blikání skupiny LED 1-4</label>
                 <label>Flicker effect LEDgroup 1-4</label>
             </variable>
             <variable CV="48" mask="XVXXXXXX" item="Random light effect LEDgroup 1-4" default="0" writeOnly="yes" include="80010">
@@ -208,6 +253,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire LEDgroup 1-4</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen LEDgroup 1-4</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen LEDgroup 1-4</label>
+                <label xml:lang="cs">Efekt náhodného svícení skupina LED 1-4</label>
                 <label>Random light effect LEDgroup 1-4</label>
             </variable>
             <variable CV="48" mask="VXXXXXXX" item="Broken light effect LEDgroup 1-4" default="0" include="80010">
@@ -215,6 +261,7 @@
                 <label xml:lang="fr">Effet lampe brisée LEDgroup 1-4</label>
                 <label xml:lang="de">Effekt der kaputten Lampe LEDgroup 1-4</label>
                 <label xml:lang="nl">Kapotte lamp effect LEDgroup 1-4</label>
+                <label xml:lang="cs">Efekt rozbitého světla skupina LED 1-4</label>
                 <label>Broken light effect LEDgroup 1-4</label>
             </variable>
 
@@ -223,10 +270,12 @@
                 <label xml:lang="fr">MLI-période</label>
                 <label xml:lang="de">PWM Periode</label>
                 <label xml:lang="nl">PWM-periode</label>
+                <label xml:lang="cs">Perioda PWM</label>
                 <label>PWM period</label>
                 <tooltip xml:lang="fr">Résolution utilisée par le MLI interne pour gérer les effets et valeurs de gradation</tooltip>
                 <tooltip xml:lang="de">Die Resolution, die vom internen PWM verwendet wird, um die Effekte und Dimmer-Werte zu bestimmen</tooltip>
                 <tooltip xml:lang="nl">De resolutie die door de interne PWM wordt gehanteerd voor het realiseren van effecten en dim-waarden</tooltip>
+                <tooltip xml:lang="cs">Rozlišení použité interním PWM pro řízení efektů a hodnot stmívání.</tooltip>
                 <tooltip>The resolution used by the internal PWM to manage effect and dimming values</tooltip>
             </variable>
 
@@ -235,10 +284,12 @@
                 <label xml:lang="fr">Vitesse de fondu</label>
                 <label xml:lang="de">Fade-Geschwindigkeit</label>
                 <label xml:lang="nl">Fade-snelheid</label>
+                <label xml:lang="cs">Rychlost stmívání</label>
                 <label>Fade speed</label>
                 <tooltip xml:lang="fr">Vitesse à laquelle les sorties configurées auront une fonction fondu, fondu en ouverture ou fermeture</tooltip>
                 <tooltip xml:lang="de">Die Geschwindigkeit, mit der die Ausgänge mit Fade-Konfiguration ein- und aus-faden</tooltip>
                 <tooltip xml:lang="nl">De snelheid waarmee de uitgangen die voor de fade-functie zijn geconfigureerd, infaden en uitfaden</tooltip>
+                <tooltip xml:lang="cs">Rychlost stmívání pro výstupy konfigurované s funkcí rozsvěcení a zhasínání.</tooltip>
                 <tooltip>The speed with which the outputs configured to have a fade function fade in and fade out</tooltip>
             </variable>
 
@@ -247,10 +298,12 @@
                 <label xml:lang="fr">Vitesse d’oscillation</label>
                 <label xml:lang="de">Flackergeschwindigkeit</label>
                 <label xml:lang="nl">Knippersnelheid</label>
+                <label xml:lang="cs">Rychlost blikání</label>
                 <label>Flicker speed</label>
                 <tooltip xml:lang="fr">Vitesse à laquelle les sorties configurées pour osciller oscilleront</tooltip>
                 <tooltip xml:lang="de">Die Geschwindigkeit, mit der die Ausgänge mit Flackerfunktion flackern</tooltip>
                 <tooltip xml:lang="nl">De snelheid waarmee de uitgangen knipperen die voor knipperen zijn geconfigureerd</tooltip>
+                <tooltip xml:lang="cs">Rychlost blikání pro výstupy konfigurované s funkcí blikání.</tooltip>
                 <tooltip>The speed with which the outputs configured to flicker do so</tooltip>
             </variable>
 
@@ -259,14 +312,17 @@
                 <label xml:lang="fr">Intensité lumineuse (f)</label>
                 <label xml:lang="de">Lichtintensität (f)</label>
                 <label xml:lang="nl">Licht intensiteit (f)</label>
+                <label xml:lang="cs">Intenzita osvětlení (P)</label>
                 <label>Light intensity (f)</label>
                 <tooltip>Controls how much headlights dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc přední světla pohasnou (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect(f)" CV="113" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 1-4</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 1-4</label>
                 <label xml:lang="nl">Fade in and Fade out effect LEDgroup 1-4</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro (P)</label>
                 <label>Fade in fade out effect(f)</label>
             </variable>
             <variable item="Flicker effect(f)" CV="113" mask="XXVXXXXX" default="0">
@@ -274,6 +330,7 @@
                 <label xml:lang="fr">Effet oscillation (f)</label>
                 <label xml:lang="de">Flackereffekt (f)</label>
                 <label xml:lang="nl">Knipper effect (f)</label>
+                <label xml:lang="cs">Efekt blikání (P)</label>
                 <label>Flicker effect(f)</label>
             </variable>
             <variable item="Random light effect(f)" CV="113" mask="XVXXXXXX" default="0">
@@ -281,6 +338,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire (f)</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen (f)</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen (f)</label>
+                <label xml:lang="cs">Efekt náhodného svícení (P)</label>
                 <label>Random light effect(f)</label>
             </variable>
             <variable item="Broken light effect(f)" CV="113" mask="VXXXXXXX" default="0">
@@ -288,6 +346,7 @@
                 <label xml:lang="fr">Effet lampe brisée (f)</label>
                 <label xml:lang="de">Effekt der kaputten Lampe (f)</label>
                 <label xml:lang="nl">Kapotte lamp effect (f)</label>
+                <label xml:lang="cs">Efekt rozbitého světla (P)</label>
                 <label>Broken light effect(f)</label>
             </variable>
 
@@ -296,14 +355,17 @@
                 <label xml:lang="fr">Intensité lumineuse (r)</label>
                 <label xml:lang="de">Lichtintensität (r)</label>
                 <label xml:lang="nl">Licht intensiteit (r)</label>
+                <label xml:lang="cs">Intenzita osvětlení (Z)</label>
                 <label>Light intensity (r)</label>
                 <tooltip>Controls how much headlights dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc zadní světla pohasnou (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect(r)" CV="114" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. (r)</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt (r)</label>
                 <label xml:lang="nl">Fade in and Fade out effect (r)</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro (Z)</label>
                 <label>Fade in fade out effect(r)</label>
             </variable>
             <variable item="Flicker effect(r)" CV="114" mask="XXVXXXXX" default="0">
@@ -311,6 +373,7 @@
                 <label xml:lang="fr">Effet oscillation (r)</label>
                 <label xml:lang="de">Flackereffekt (r)</label>
                 <label xml:lang="nl">Knipper effect (r)</label>
+                <label xml:lang="cs">Efekt blikání (Z)</label>
                 <label>Flicker effect(r)</label>
             </variable>
             <variable item="Random light effect(r)" CV="114" mask="XVXXXXXX" default="0">
@@ -318,6 +381,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire (r)</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen (r)</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen (r)</label>
+                <label xml:lang="cs">Efekt náhodného svícení (Z)</label>
                 <label>Random light effect(r)</label>
             </variable>
             <variable item="Broken light effect(r)" CV="114" mask="VXXXXXXX" default="0">
@@ -325,6 +389,7 @@
                 <label xml:lang="fr">Effet lampe brisée (r)</label>
                 <label xml:lang="de">Effekt der kaputten Lampe (r)</label>
                 <label xml:lang="nl">Kapotte lamp effect (r)</label>
+                <label xml:lang="cs">Efekt rozbitého světla (Z)</label>
                 <label>Broken light effect(r)</label>
             </variable>
 
@@ -333,14 +398,17 @@
                 <label xml:lang="fr">Intensité lumineuse AUX1</label>
                 <label xml:lang="de">Lichtintensität AUX1</label>
                 <label xml:lang="nl">Licht intensiteit AUX1</label>
+                <label xml:lang="cs">Intenzita osvětlení AUX1</label>
                 <label>Light intensity AUX1</label>
                 <tooltip>Controls how much AUX1 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc AUX1 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect AUX1" CV="115" mask="XXXVXXXX" default="1" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. AUX1</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt AUX1</label>
                 <label xml:lang="nl">Fade in and Fade out effect AUX1</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro AUX1</label>
                 <label>Fade in fade out effect AUX1</label>
             </variable>
             <variable item="Flicker effect AUX1" CV="115" mask="XXVXXXXX" default="0" minOut="3">
@@ -348,6 +416,7 @@
                 <label xml:lang="fr">Effet oscillation AUX1</label>
                 <label xml:lang="de">Flackereffekt AUX1</label>
                 <label xml:lang="nl">Knipper effect AUX1</label>
+                <label xml:lang="cs">Efekt blikání AUX1</label>
                 <label>Flicker effect AUX1</label>
             </variable>
             <variable item="Random light effect AUX1" CV="115" mask="XVXXXXXX" default="0" minOut="3">
@@ -355,6 +424,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire AUX1</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen AUX1</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen AUX1</label>
+                <label xml:lang="cs">Efekt náhodného svícení AUX1</label>
                 <label>Random light effect AUX1</label>
             </variable>
             <variable item="Broken light effect AUX1" CV="115" mask="VXXXXXXX" default="0" minOut="3">
@@ -362,6 +432,7 @@
                 <label xml:lang="fr">Effet lampe brisée AUX1</label>
                 <label xml:lang="de">Effekt der kaputten Lampe AUX1</label>
                 <label xml:lang="nl">Kapotte lamp effect AUX1</label>
+                <label xml:lang="cs">Efekt rozbitého světla AUX1</label>
                 <label>Broken light effect AUX1</label>
             </variable>
 
@@ -370,14 +441,17 @@
                 <label xml:lang="fr">Intensité lumineuse AUX2</label>
                 <label xml:lang="de">Lichtintensität AUX2</label>
                 <label xml:lang="nl">Licht intensiteit AUX2</label>
+                <label xml:lang="cs">Intenzita osvětlení AUX2</label>
                 <label>Light intensity AUX2</label>
                 <tooltip>Controls how much AUX2 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc AUX2 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect AUX2" CV="116" mask="XXXVXXXX" default="1" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. AUX2</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt AUX2</label>
                 <label xml:lang="nl">Fade in and Fade out effect AUX2</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro AUX2</label>
                 <label>Fade in fade out effect AUX2</label>
             </variable>
             <variable item="Flicker effect AUX2" CV="116" mask="XXVXXXXX" default="0" minOut="4">
@@ -385,6 +459,7 @@
                 <label xml:lang="fr">Effet oscillation AUX2</label>
                 <label xml:lang="de">Flackereffekt AUX2</label>
                 <label xml:lang="nl">Knipper effect AUX2</label>
+                <label xml:lang="cs">Efekt blikání AUX2</label>
                 <label>Flicker effect AUX2</label>
             </variable>
             <variable item="Random light effect AUX2" CV="116" mask="XVXXXXXX" default="0" minOut="4">
@@ -392,6 +467,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire AUX2</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen AUX2</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen AUX2</label>
+                <label xml:lang="cs">Efekt náhodného svícení AUX2</label>
                 <label>Random light effect AUX2</label>
             </variable>
             <variable item="Broken light effect AUX2" CV="116" mask="VXXXXXXX" default="0" minOut="4">
@@ -399,6 +475,7 @@
                 <label xml:lang="fr">Effet lampe brisée AUX2</label>
                 <label xml:lang="de">Effekt der kaputten Lampe AUX2</label>
                 <label xml:lang="nl">Kapotte lamp effect AUX2</label>
+                <label xml:lang="cs">Efekt rozbitého světla AUX2</label>
                 <label>Broken light effect AUX2</label>
             </variable>
 
@@ -407,14 +484,17 @@
                 <label xml:lang="fr">Intensité lumineuse LEDgroup 1</label>
                 <label xml:lang="de">Lichtintensität LEDgroup 1</label>
                 <label xml:lang="nl">Licht intensiteit LEDgroup 1</label>
+                <label xml:lang="cs">Intenzita osvětlení skupina LED 1</label>
                 <label>Light intensity LEDgroup 1</label>
                 <tooltip>Controls how much LEDgroup 1 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc skupina LED 1 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect LEDgroup 1" CV="117" mask="XXXVXXXX" default="1" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 1</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 1</label>
                 <label xml:lang="nl">Fade in and Fade out effect LEDgroup 1</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro skupina LED 1</label>
                 <label>Fade in fade out effect LEDgroup 1</label>
             </variable>
             <variable item="Flicker effect LEDgroup 1" CV="117" mask="XXVXXXXX" default="0" minOut="5">
@@ -422,6 +502,7 @@
                 <label xml:lang="fr">Effet oscillation LEDgroup 1</label>
                 <label xml:lang="de">Flackereffekt LEDgroup 1</label>
                 <label xml:lang="nl">Knipper effect LEDgroup 1</label>
+                <label xml:lang="cs">Efekt blikání skupina LED 1</label>
                 <label>Flicker effect LEDgroup 1</label>
             </variable>
             <variable item="Random light effect LEDgroup 1" CV="117" mask="XVXXXXXX" default="0" minOut="5">
@@ -429,6 +510,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire LEDgroup 1</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen LEDgroup 1</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen LEDgroup 1</label>
+                <label xml:lang="cs">Efekt náhodného svícení skupina LED 1</label>
                 <label>Random light effect LEDgroup 1</label>
             </variable>
             <variable item="Broken light effect LEDgroup 1" CV="117" mask="VXXXXXXX" default="0" minOut="5">
@@ -436,6 +518,7 @@
                 <label xml:lang="fr">Effet lampe brisée LEDgroup 1</label>
                 <label xml:lang="de">Effekt der kaputten Lampe LEDgroup 1</label>
                 <label xml:lang="nl">Kapotte lamp effect LEDgroup 1</label>
+                <label xml:lang="cs">Efekt rozbitého světla skupina LED 1</label>
                 <label>Broken light effect LEDgroup 1</label>
             </variable>
 
@@ -444,14 +527,17 @@
                 <label xml:lang="fr">Intensité lumineuse LEDgroup 2</label>
                 <label xml:lang="de">Lichtintensität LEDgroup 2</label>
                 <label xml:lang="nl">Licht intensiteit LEDgroup 2</label>
+                <label xml:lang="cs">Intenzita osvětlení skupina LED 2</label>
                 <label>Light intensity LEDgroup 2</label>
                 <tooltip>Controls how much LEDgroup 2 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc skupina LED 2 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect LEDgroup 2" CV="118" mask="XXXVXXXX" default="1" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 2</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 2</label>
                 <label xml:lang="nl">Fade in and Fade out effect LEDgroup 2</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro skupina LED 2</label>
                 <label>Fade in fade out effect LEDgroup 2</label>
             </variable>
             <variable item="Flicker effect LEDgroup 2" CV="118" mask="XXVXXXXX" default="0" minOut="6">
@@ -459,6 +545,7 @@
                 <label xml:lang="fr">Effet oscillation LEDgroup 2</label>
                 <label xml:lang="de">Flackereffekt LEDgroup 2</label>
                 <label xml:lang="nl">Knipper effect LEDgroup 2</label>
+                <label xml:lang="cs">Efekt blikání skupina LED 2</label>
                 <label>Flicker effect LEDgroup 2</label>
             </variable>
             <variable item="Random light effect LEDgroup 2" CV="118" mask="XVXXXXXX" default="0" minOut="6">
@@ -466,6 +553,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire LEDgroup 2</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen LEDgroup 2</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen LEDgroup 2</label>
+                <label xml:lang="cs">Efekt náhodného svícení skupina LED 2</label>
                 <label>Random light effect LEDgroup 2</label>
             </variable>
             <variable item="Broken light effect LEDgroup 2" CV="118" mask="VXXXXXXX" default="0" minOut="6">
@@ -473,6 +561,7 @@
                 <label xml:lang="fr">Effet lampe brisée LEDgroup 2</label>
                 <label xml:lang="de">Effekt der kaputten Lampe LEDgroup 2</label>
                 <label xml:lang="nl">Kapotte lamp effect LEDgroup 2</label>
+                <label xml:lang="cs">Efekt rozbitého světla skupina LED 2</label>
                 <label>Broken light effect LEDgroup 2</label>
             </variable>
 
@@ -481,14 +570,17 @@
                 <label xml:lang="fr">Intensité lumineuse LEDgroup 3</label>
                 <label xml:lang="de">Lichtintensität LEDgroup 3</label>
                 <label xml:lang="nl">Licht intensiteit LEDgroup 3</label>
+                <label xml:lang="cs">Intenzita osvětlení skupina LED 3</label>
                 <label>Light intensity LEDgroup 3</label>
                 <tooltip>Controls how much LEDgroup 3 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc skupina LED 3 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect LEDgroup 3" CV="119" mask="XXXVXXXX" default="1" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 3</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 3</label>
                 <label xml:lang="nl">Fade in and Fade out effect LEDgroup 3</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro skupina LED 3</label>
                 <label>Fade in fade out effect LEDgroup 3</label>
             </variable>
             <variable item="Flicker effect LEDgroup 3" CV="119" mask="XXVXXXXX" default="0" minOut="7">
@@ -496,6 +588,7 @@
                 <label xml:lang="fr">Effet oscillation LEDgroup 3</label>
                 <label xml:lang="de">Flackereffekt LEDgroup 3</label>
                 <label xml:lang="nl">Knipper effect LEDgroup 3</label>
+                <label xml:lang="cs">Efekt blikání skupina LED 3</label>
                 <label>Flicker effect LEDgroup 3</label>
             </variable>
             <variable item="Random light effect LEDgroup 3" CV="119" mask="XVXXXXXX" default="0" minOut="7">
@@ -503,6 +596,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire LEDgroup 3</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen LEDgroup 3</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen LEDgroup 3</label>
+                <label xml:lang="cs">Efekt náhodného svícení skupina LED 3</label>
                 <label>Random light effect LEDgroup 3</label>
             </variable>
             <variable item="Broken light effect LEDgroup 3" CV="119" mask="VXXXXXXX" default="0" minOut="7">
@@ -510,6 +604,7 @@
                 <label xml:lang="fr">Effet lampe brisée LEDgroup 3</label>
                 <label xml:lang="de">Effekt der kaputten Lampe LEDgroup 3</label>
                 <label xml:lang="nl">Kapotte lamp effect LEDgroup 3</label>
+                <label xml:lang="cs">Efekt rozbitého světla skupina LED 3</label>
                 <label>Broken light effect LEDgroup 3</label>
             </variable>
 
@@ -518,14 +613,17 @@
                 <label xml:lang="fr">Intensité lumineuse LEDgroup 4</label>
                 <label xml:lang="de">Lichtintensität LEDgroup 4</label>
                 <label xml:lang="nl">Licht intensiteit LEDgroup 4</label>
+                <label xml:lang="cs">Intenzita osvětlení skupina LED 4</label>
                 <label>Light intensity LEDgroup 4</label>
                 <tooltip>Controls how much LEDgroup 4 dim (0-dark to 15-max bright)</tooltip>
+                <tooltip xml:lang="cs">Řídí jak moc skupina LED 4 pohasne (0-tma – 15-maximální jas)</tooltip>
             </variable>
             <variable item="Fade in fade out effect LEDgroup 4" CV="120" mask="XXXVXXXX"  default="1" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 4</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 4</label>
                 <label xml:lang="nl">Fade in and Fade out effect LEDgroup 4</label>
+                <label xml:lang="cs">Efekt rozsvěcení a zhasínání pro skupina LED 4</label>
                 <label>Fade in fade out effect LEDgroup 4</label>
             </variable>
             <variable item="Flicker effect LEDgroup 4" CV="120" mask="XXVXXXXX" default="0" minOut="8">
@@ -533,6 +631,7 @@
                 <label xml:lang="fr">Effet oscillation LEDgroup 4</label>
                 <label xml:lang="de">Flackereffekt LEDgroup 4</label>
                 <label xml:lang="nl">Knipper effect LEDgroup 4</label>
+                <label xml:lang="cs">Efekt blikání skupina LED 4</label>
                 <label>Flicker effect LEDgroup 4</label>
             </variable>
             <variable item="Random light effect LEDgroup 4" CV="120" mask="XVXXXXXX" default="0" minOut="8">
@@ -540,6 +639,7 @@
                 <label xml:lang="fr">Allumage lumière aléatoire LEDgroup 4</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen LEDgroup 4</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen LEDgroup 4</label>
+                <label xml:lang="cs">Efekt náhodného svícení skupina LED 4</label>
                 <label>Random light effect LEDgroup 4</label>
             </variable>
             <variable item="Broken light effect LEDgroup 4" CV="120" mask="VXXXXXXX" default="0" minOut="8">
@@ -547,6 +647,7 @@
                 <label xml:lang="fr">Effet lampe brisée LEDgroup 4</label>
                 <label xml:lang="de">Effekt der kaputten Lampe LEDgroup 4</label>
                 <label xml:lang="nl">Kapotte lamp effect LEDgroup 4</label>
+                <label xml:lang="cs">Efekt rozbitého světla skupina LED 4</label>
                 <label>Broken light effect LEDgroup 4</label>
             </variable>
 
@@ -1159,6 +1260,7 @@
                 <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
                 <label xml:lang="de">Zurückstellung auf Werkseinstellungen alle CVs</label>
                 <label xml:lang="nl">Zet terug naar standaard fabrieksinstellingen</label>
+                <label xml:lang="cs">Obnovit všechna CV do továrního nastavení</label>
             </factReset>
         </resets>
     </decoder>
@@ -1733,6 +1835,7 @@
         <name>Output Configuration</name>
         <name xml:lang="de">Ausgangskonfiguration</name>
         <name xml:lang="nl">Uitgangen instellen</name>
+        <name xml:lang="cs">Konfigurace výstupů</name>
         <row>
             <column>
                 <display item="PWM period" tooltip=""/>
@@ -1771,6 +1874,7 @@
                             <text>Output Configuration LEDgroup 1-4</text>
                             <text xml:lang="de">Ausgangskonfiguration LED-Gruppe 1-4</text>
                             <text xml:lang="nl">Instelling uitgangen LED-groep 1-4</text>
+                            <text xml:lang="cs">Konfigurace výstupů skupina LED 1-4</text>
                         </label>
                         <separator/>
                         <row>
@@ -1791,6 +1895,7 @@
         <name>Headlight Configuration</name>
         <name xml:lang="de">Frontlichtkonfiguration</name>
         <name xml:lang="nl">Frontseinen instellen</name>
+        <name xml:lang="cs">Konfigurace světel</name>
         <column>
             <row>
                 <column>
@@ -1798,6 +1903,7 @@
                         <text>Output Configuration Headlight(f)</text>
                         <text xml:lang="de">Konfiguration Frontlicht (v)</text>
                         <text xml:lang="nl">Instelling frontsein (v)</text>
+                        <text xml:lang="cs">Konfigurace výstupů světla (P)</text>
                     </label>
                     <separator/>
                     <row>
@@ -1819,6 +1925,7 @@
                         <text>Output Configuration Headlight(r)</text>
                         <text xml:lang="de">Konfiguration Frontlicht (r)</text>
                         <text xml:lang="nl">Instelling frontsein (a)</text>
+                        <text xml:lang="cs">Konfigurace výstupů světla (Z)</text>
                     </label>
                     <separator/>
                     <row>
@@ -1841,6 +1948,7 @@
                             <text>Output Configuration AUX1</text>
                             <text xml:lang="de">Konfiguration Ausgang AUX1</text>
                             <text xml:lang="nl">Instelling uitgang AUX1</text>
+                            <text xml:lang="cs">Konfigurace výstupů AUX1</text>
                         </label>
                         <separator/>
                         <row>
@@ -1860,6 +1968,7 @@
         <name>Auxilary Ports Configuration</name>
         <name xml:lang="de">Konfiguration übr. Ausgänge</name>
         <name xml:lang="nl">Instelling ov. uitgangen</name>
+        <name xml:lang="cs">Konfigurace pomocných portů</name>
         <column>
             <row>
                 <column>
@@ -1867,6 +1976,7 @@
                         <text>Output Configuration AUX1</text>
                         <text xml:lang="de">Konfiguration Ausgang AUX1</text>
                         <text xml:lang="nl">Instelling uitgang AUX1</text>
+                        <text xml:lang="cs">Konfigurace výstupů AUX1</text>
                     </label>
                     <separator/>
                     <row>
@@ -1889,6 +1999,7 @@
                             <text>Output Configuration AUX2</text>
                             <text xml:lang="de">Konfiguration Ausgang AUX2</text>
                             <text xml:lang="nl">Instelling uitgang AUX2</text>
+                            <text xml:lang="cs">Konfigurace výstupů AUX2</text>
                         </label>
                         <separator/>
                         <row>
@@ -1908,6 +2019,7 @@
         <name>LED Groups Configuration</name>
         <name xml:lang="de">LED-Gruppenkonfiguration</name>
         <name xml:lang="nl">LED-groepen instellen</name>
+        <name xml:lang="cs">Konfigurace skupiny LED</name>
         <column>
             <row>
                 <column>
@@ -1915,6 +2027,7 @@
                         <text>Output Configuration LEDgroup 1</text>
                         <text xml:lang="de">Konfiguration LED-Gruppe 1</text>
                         <text xml:lang="nl">Instelling LED-groep 1</text>
+                        <text xml:lang="cs">Konfigurace výstup skupina LED 1</text>
                     </label>
                     <separator/>
                     <row>
@@ -1936,6 +2049,7 @@
                         <text>Output Configuration LEDgroup 2</text>
                         <text xml:lang="de">Konfiguration LED-Gruppe 2</text>
                         <text xml:lang="nl">Instelling LED-groep 2</text>
+                        <text xml:lang="cs">Konfigurace výstup skupina LED 2</text>
                     </label>
                     <separator/>
                     <row>
@@ -1957,6 +2071,7 @@
                         <text>Output Configuration LEDgroup 3</text>
                         <text xml:lang="de">Konfiguration LED-Gruppe 3</text>
                         <text xml:lang="nl">Instelling LED-groep 3</text>
+                        <text xml:lang="cs">Konfigurace výstup skupina LED 3</text>
                     </label>
                     <separator/>
                     <row>
@@ -1978,6 +2093,7 @@
                         <text>Output Configuration LEDgroup 4</text>
                         <text xml:lang="de">Konfiguration LED-Gruppe 4</text>
                         <text xml:lang="nl">Instelling LED-groep 4</text>
+                        <text xml:lang="cs">Konfigurace výstup skupina LED 4</text>
                     </label>
                     <separator/>
                     <row>

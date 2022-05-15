@@ -35,6 +35,7 @@ public class DecoderPro3WindowTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

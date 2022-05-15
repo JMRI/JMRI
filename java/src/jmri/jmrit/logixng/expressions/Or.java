@@ -70,12 +70,6 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean evaluate() throws JmriException {
         boolean result = false;
         for (ExpressionEntry e : _expressionEntries) {

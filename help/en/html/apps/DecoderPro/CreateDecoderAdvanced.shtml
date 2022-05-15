@@ -87,12 +87,12 @@
       &lt;model model="Model B" lowVersionID="21" highVersionID="27" productID="401" /&gt;
       &lt;/model&gt;
     &lt;/family&gt;
-    …
+    &hellip;
   &lt;/decoder&gt;</pre>
           <p>Some decoders can have multiple possible stored Product IDs for otherwise-identical
           decoders. In this case multiple comma-separated values can be specified in the Product ID
           field and a match to any value in the list will identify the decoder uniquely. For
-          example, the ESU series usesthe RailCom® Product ID CVs, but the Product ID is updated
+          example, the ESU series usesthe RailCom&reg; Product ID CVs, but the Product ID is updated
           for various production batches of the same model:</p>
 
           <pre style="font-family: monospace;">
@@ -103,7 +103,7 @@
       &lt;model model="LokSound V4.0 M4" numOuts="92" numFns="40" extFnsESU="yes" productID="33554500,33554536"&gt;
       &lt;/model&gt;
     &lt;/family&gt;
-    …
+    &hellip;
   &lt;/decoder&gt;</pre>
           <p id="idwarn"><strong>Warning:</strong> Do not use multiple possible stored Product IDs
           for similar decoders that need different <a href="#conditional">conditional
@@ -185,9 +185,9 @@
       <pre style="font-family: monospace;">
   &lt;decoder&gt;
     &lt;family name="dccdoma.cz" mfg="Public-domain and DIY" &gt;
-      &lt;model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" …  /&gt;
+      &lt;model model="UNI16ARD-NAV" lowVersionID="41" productID="16843010" &hellip;  /&gt;
     &lt;/family&gt;
-    …
+    &hellip;
   &lt;/decoder&gt;</pre>
       <p>The individual attributes of this element must be filled in as follows:</p>
 
@@ -625,13 +625,13 @@ here.
       Note an element:
 
       <pre style="font-family: monospace;">
-        &lt;variable … item="Short Address" …&gt;
-            …
+        &lt;variable &hellip; item="Short Address" &hellip;&gt;
+            &hellip;
         &lt;/variable&gt;</pre>or:
 
       <pre style="font-family: monospace;">
-        &lt;variable … item="Long Address" …&gt;
-            …
+        &lt;variable &hellip; item="Long Address" &hellip;&gt;
+            &hellip;
         &lt;/variable&gt;</pre>is required so the Ops Mode programmer has an address to use. Either
 form functions identically. The "Address Type" parameter is the only way to specify whether the
 address is 9-bit or 11-bit.
@@ -818,7 +818,7 @@ alternative more concise methods of specifying in the "CV" variable parameter:
         "_blank">decoder fragment file</a>.
         </li>
 
-        <li>The following example reads the RailCom® Production Date as per <a href=
+        <li>The following example reads the RailCom&reg; Production Date as per <a href=
         "http://www.nmra.org/sites/default/files/s-9.3.2_2012_12_10.pdf">NMRA standard 9.3.2</a>
         from 4 contiguous indexed CVs.
         </li>
@@ -983,13 +983,13 @@ CVs are specified, the last mask will apply to the remaining CVs.
       &lt;model model="My Model" productID="400,401" /&gt;
       &lt;/model&gt;
     &lt;/family&gt;
-    …
+    &hellip;
   &lt;/decoder&gt;
   &lt;pane label="My 400 Pane" include="400"&gt;
-    …
+    &hellip;
   &lt;/pane&gt;
   &lt;pane label="My 401 Pane" include="401"&gt;
-    …
+    &hellip;
   &lt;/pane&gt;</pre>Both panes will always be created. If the definitions need to differ between
 product IDs, you will need to create two models, as per <a href="#id">the first example under
 Identification</a>.

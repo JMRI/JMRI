@@ -68,12 +68,13 @@
 
       <h2 id="selectActions">Select Actions</h2>
 
-      <p>The dropdown combo box has 4 actions that can be applied to the current LogixNG Module
+      <p>The dropdown combo box has 3 actions that can be applied to the current LogixNG Module
       row.</p>
 
       <div style="margin-left: 2em">
-        <a href="../logixng/images/SelectActions.png"><img src=
-        "../logixng/images/SelectActions.png" alt="Select Actions" width="167" height="123"></a>
+        <a href="../logixng/images/SelectActionsNoCopy.png"><img src=
+        "../logixng/images/SelectActionsNoCopy.png" alt="Select Actions No Copy" width="147"
+        height="80"></a>
       </div>
 
       <dl>
@@ -91,11 +92,6 @@
           definitions within the LogixNG Module. See <a href=
           "../logixng/LogixNGBrowser.shtml">LogixNG Browser</a> for details about the browser.
         </dd>
-
-        <dt>Copy</dt>
-
-        <dd>The <strong>Copy</strong> action is used to create a duplicate of the current LogixNG
-        Module. <strong><em>Note: This feature is not available yet.</em></strong></dd>
 
         <dt>Delete</dt>
 
@@ -115,10 +111,11 @@
       <dl>
         <dt>Tools</dt>
 
-        <dd>The tools menu has one item: <strong>Open PickList Tables</strong>. The PickList was
-        designed for dragging names, such as sensor names, to a text field. Due to the
-        implementation of ConditionalNG edit dialogs, the drag and drop capability does not
-        function. It can still be used as a reference.</dd>
+        <dd>The tools menu has two items: <strong>Open clipboard</strong> and <strong>Open PickList
+        Tables</strong>.  See <a href="../../../../html/tools/logixng/reference/chapter2.shtml">
+        LogixNG Reference - Chapter 2</a> for details on the using the clipboard. The PickList was
+        designed for dragging names, such as sensor names, to a text field. Most LogixNG name fields
+        use drop down combo boxes, but this could be used when building Formulas.</dd>
       </dl>
 
       <h2 id="addModule">Add a LogixNG Module</h2>

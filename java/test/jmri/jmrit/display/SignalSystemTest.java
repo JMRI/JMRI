@@ -94,6 +94,7 @@ public class SignalSystemTest {
 
         EditorFrameOperator efo = new EditorFrameOperator("DB1969 Control Panel Editor");
         efo.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
 
     }
 
@@ -160,7 +161,7 @@ public class SignalSystemTest {
 
         EditorFrameOperator efo = new EditorFrameOperator("AA1UPtest Layout");
         efo.closeFrameWithConfirmations();
-
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     void checkAspect(String mastName, String aspect) {

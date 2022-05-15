@@ -1,50 +1,53 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author: bobm $) 2019 -->
-<title>JMRI: Danish Simplified signal definition</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author: bobm $) 2019 -->
 
-<!-- Style -->
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" >
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	MEDIA="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	MEDIA="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Danish Simplified signal definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1>JMRI: Danish Simplified signal definition</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
+      <h1>JMRI: Danish Simplified signal definition</h1>
 
-<p>
-B and I signals from Togdillen or Banestyrelsen - not exactly prototypical.
-<br>
-</p>
-<p>
-See the 
-<a href="aspects.xml">aspect page</a>.
-</p>
+      <p>B and I signals from Togdillen or Banestyrelsen - not exactly prototypical.<br></p>
 
-<p>
-Signal Mast definitions:
-</p>
-<ul>
-    <li><a href="appearance-B.xml">B</a>
-    <li><a href="appearance-B2.xml">B2</a>
-    <li><a href="appearance-I.xml">I</a>
-    <li><a href="appearance-buffer-stop.xml">Buffer stop</a>
-    <li><a href="appearance-feather.xml">Feather</a>
-</ul>
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>Signal Mast definitions:</p>
+
+      <ul>
+        <li>
+          <a href="appearance-B.xml">B</a>
+        </li>
+
+        <li>
+          <a href="appearance-B2.xml">B2</a>
+        </li>
+
+        <li>
+          <a href="appearance-I.xml">I</a>
+        </li>
+
+        <li>
+          <a href="appearance-buffer-stop.xml">Buffer stop</a>
+        </li>
+
+        <li>
+          <a href="appearance-feather.xml">Feather</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
-

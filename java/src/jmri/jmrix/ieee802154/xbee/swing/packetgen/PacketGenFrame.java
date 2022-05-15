@@ -23,7 +23,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     public void initComponents() {
         super.initComponents();
 
-        // all we need to do is set the title 
+        // all we need to do is set the title
         setTitle(rb.getString("jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction"));
 
         // pack to cause display
@@ -41,7 +41,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         try {
             tc.getXBee().sendPacketAsync(packet);
         } catch (XBeeException xbe) {
-            log.error("Error Sending message to XBee: {}", xbe);
+            log.error("Error Sending message to XBee", xbe);
         }
     }
 

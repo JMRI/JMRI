@@ -20,7 +20,7 @@
 
       <p class="im"><img src="images/SensorTableColumnList.jpg" alt=
       "Sensor Table Columns (Rel 4.20)" class="floatRight" height="260" width="180"> Contents of
-      the Sensor Table are displayed by selecting it under <strong>Tools⇒Tables</strong>. As with
+      the Sensor Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>. As with
       all JMRI tool tables, you can add or remove columns from the display by right-clicking
       anywhere in the column header and selecting or deselecting the desired columns from the menu
       that appears (see picture at right; some columns can also be selected by checkboxes at bottom
@@ -200,7 +200,7 @@
       </dl>
 
       <p>There is another sensor table display default available from the
-      <strong>Edit⇒Preferences⇒Display</strong> available on the main window. Check to display
+      <strong>Edit&rArr;Preferences&rArr;Display</strong> available on the main window. Check to display
       icons for sensor state instead of text.</p>
 
       <h2 id="Debounce">Sensor Debounce Delays</h2>

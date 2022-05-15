@@ -4,6 +4,8 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionClock;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectIntegerXml;
 
 import org.jdom2.Element;
 
@@ -29,17 +31,17 @@ public class ActionClockXml extends jmri.managers.configurexml.AbstractNamedBean
     public Element store(Object o) {
         ActionClock p = (ActionClock) o;
 
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionClock.ClockState>();
+        var selectTimeXml = new LogixNG_SelectIntegerXml();
+
         Element element = new Element("ActionClock");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-        element.addContent(new Element("clockState").addContent(p.getBeanState().name()));
-
-        if (p.getBeanState() == ActionClock.ClockState.SetClock) {
-            element.addContent(new Element("setTime").addContent(Integer.toString(p.getClockTime())));
-        }
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
+        element.addContent(selectTimeXml.store(p.getSelectTime(), "time"));
 
         return element;
     }
@@ -50,23 +52,28 @@ public class ActionClockXml extends jmri.managers.configurexml.AbstractNamedBean
         String uname = getUserName(shared);
         ActionClock h = new ActionClock(sys, uname);
 
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionClock.ClockState>();
+        var selectTimeXml = new LogixNG_SelectIntegerXml();
+
         loadCommon(h, shared);
 
-        Element clockState = shared.getChild("clockState");
-        if (clockState != null) {
-            h.setBeanState(ActionClock.ClockState.valueOf(clockState.getTextTrim()));
-        }
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                null,
+                "clockState",
+                null,
+                null,
+                null);
 
-        Element setTime = shared.getChild("setTime");
-        if (setTime != null) {
-            int time;
-            try {
-                time = Integer.parseInt(setTime.getTextTrim());
-            } catch (NumberFormatException ex) {
-                time = 0;
-            }
-            h.setClockTime(time);
-        }
+        selectTimeXml.load(shared.getChild("time"), h.getSelectTime());
+        selectTimeXml.loadLegacy(
+                shared, h.getSelectTime(),
+                null,
+                "setTime",
+                null,
+                null,
+                null);
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

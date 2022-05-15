@@ -30,13 +30,16 @@
         <li><strong>Route</strong> - The route of the Warrant is listed in a drop down combo box by
         clicking the table cell.</li>
 
-        <li><strong>Train Name</strong> - The Train ID, as stated in the Roster. This cell can be
+        <li><strong>Train Name</strong> - The Train Id, as stated in the Roster. This cell can be
         edited and its content is displayed next to the Indicator Track Icons when the train
         occupies their OBlock (the Edit popup of Indicator Track Icons have a checkbox to enable
         this function).</li>
 
-        <li><strong>DCC Address</strong> - The Address of the locomotive or Consist. This cell can
-        be edited to correspond to the current motive power of the Train.</li>
+        <li><strong>Roster ID/Address</strong> - The Roster Id or Address of the locomotive or Consist.
+        <span class="since">since 4.25.1</span>
+        This cell can be edited to correspond to the current motive power of the Train. If the DCC
+        address is entered, the entry will show the corresponding Roster Id. If the address is not
+        found in the roster, the address is bracketed with the $ sign.</li>
 
         <li><strong>Allocate</strong> - A button that reserves the route for the Warrant. The
         Indicator Track Icons of the blocks of the route display green but the turnouts are not
@@ -67,15 +70,19 @@
           When running, the Warrant will post a status message here; e.g. its current location and
           speed, error messages, etc.<br>
           When clicked the following commands can be sent:
+          <span class="since">since 4.17.8</span>
           <ul>
-            <li><strong>Halt</strong> - Set the throttle to stop and suspend execution of the
-            throttle command script</li>
+            <li><strong>Halt</strong> - Ramp the train down to throttle speed 0 and suspend
+            execution of the throttle command script</li>
 
             <li><strong>Resume</strong> - Ramp the speed of the train up to its former setting and
-            restart the throttle command script</li>
+            restart the throttle command script. Should obstacles be ahead, the a warning is posted.</li>
 
-            <li><strong>Ramp to Stop</strong> - Ramp the train down to a stop and suspend execution
-            of the throttle command script</li>
+            <li><strong>Increase Speed</strong> - The throttle setting is increased by one Ramp Step
+            Throttle Increment (See Warrant Preferences).</li>
+
+            <li><strong>Stop</strong> - Set the throttle to 0% and suspend execution of the
+            throttle command script</li>
 
             <li><strong>Move into Next Block</strong> - Repeats the test for whether a signal
             aspect has changed or an occupied block ahead has cleared. If the train has overrun a
@@ -195,9 +202,10 @@
 
       <h3>When the Starting block is Unoccupied</h3>
       If a Warrant is started and the starting block is not occupied, the Warrant will wait until
-      the block is occupied. When occupation occurs the Warrant will set to the "Halt" and wait for
-      the user to set the "Resume" control. Note it is vital that the correct train occupies the
-      starting block. The address specified in the Warrant, is the train that will begin moving.
+      the block is occupied. When occupation occurs the Warrant will is set to to wait for
+      the user to use the "Resume" control to start the train. Note it is vital that the correct 
+      train occupies the starting block. The address specified in the Warrant, 
+      is the train that will begin moving.
       <p>Back to <a href="Warrant.shtml">Warrants Help</a>.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

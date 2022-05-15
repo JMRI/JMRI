@@ -47,7 +47,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  * @author Andrew Crosland (C) 2021
  */
-public interface Programmer {
+public interface Programmer extends jmri.Disposable {
 
     /**
      * Perform a CV write in the system-specific manner, and using the specified
@@ -260,5 +260,14 @@ public interface Programmer {
     // results are returned via the ProgListener callback
     @Nonnull
     String decodeErrorCode(int i);
+
+    /**
+     * Free up system resources.
+     * Overriding classes should be capable of this being called
+     * multiple times as per the {@link jmri.Disposable} interface.
+     * {@inheritDoc}
+     */
+    @Override
+    default void dispose() {}
 
 }

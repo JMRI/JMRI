@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Monitor SPROG Slots</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help monitor sprog slots">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Monitor SPROG Slots</h1>
 
-      <p>This is the
-      help/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame help
-      page.</p>
-
+      <p>This is the help/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame help page.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

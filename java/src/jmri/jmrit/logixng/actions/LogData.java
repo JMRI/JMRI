@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 
 /**
  * This action logs some data.
@@ -109,12 +109,6 @@ public class LogData extends AbstractDigitalAction
         return Category.OTHER;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return true;
-    }
-
     private List<Object> getDataValues() throws JmriException {
         List<Object> values = new ArrayList<>();
         for (Data _data : _dataList) {
@@ -139,7 +133,7 @@ public class LogData extends AbstractDigitalAction
                     if (_data._expressionNode != null) {
                         values.add(_data._expressionNode.calculate(getConditionalNG().getSymbolTable()));
                     }
-                    
+
                     break;
 
                 default:
@@ -198,7 +192,21 @@ public class LogData extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "LogData_Long");
+        String bundleKey;
+        switch (_formatType) {
+            case OnlyText:
+                bundleKey = "LogData_Long_TextOnly";
+                break;
+            case CommaSeparatedList:
+                bundleKey = "LogData_Long_CommaSeparatedList";
+                break;
+            case StringFormat:
+                bundleKey = "LogData_Long_StringFormat";
+                break;
+            default:
+                throw new RuntimeException("_formatType has unknown value: "+_formatType.name());
+        }
+        return Bundle.getMessage(locale, bundleKey, _format);
     }
 
     /** {@inheritDoc} */
@@ -234,7 +242,7 @@ public class LogData extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-/*        
+/*
         log.debug("getUsageReport :: LogData: bean = {}, report = {}", cdl, report);
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
             if (namedBeanReference._handle != null) {

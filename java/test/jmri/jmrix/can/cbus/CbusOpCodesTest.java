@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -66,11 +67,36 @@ public class CbusOpCodesTest {
         m.setElement(3, 0x09);
         Assert.assertEquals("CBUS_ERR 9","",CbusOpCodes.decode(m));
     }
+
+    @Test
+    public void testLocoSessionSpeedDirMsg() {
+        CanMessage m = new CanMessage( 3, 0x12 );
+        m.setElement(0, CbusConstants.CBUS_DSPD);
+        m.setElement(1, 0x01);
+        m.setElement(2, 0x02);
+        Assert.assertEquals("CBUS_DSPD Translate","Session: 1 Speed 1 Reverse ",CbusOpCodes.decode(m));
+    }
+
+    @Test
+    public void testTimeFromClock() {
+        CanReply send = new CanReply(1);
+        send.setNumDataElements(7);
+        send.setElement(0, CbusConstants.CBUS_FCLK);
+        send.setElement(1, 41 ); // mins
+        send.setElement(2, 13 ); // hrs
+        send.setElement(3, 0b001010000 ); // month 5
+        send.setElement(4,  2); // time divider, 0 is stpeed, 1 is real time, 2 twice real, 3 thrice real
+        send.setElement(5, 27); // day of month, 0-31
+        send.setElement(6, 0xDB ); // Temperature as twos complement -127 to +127
+        
+        String testStr = CbusOpCodes.decode(send);
+        Assertions.assertTrue(testStr.startsWith("Speed: x2 13:41"),"CBUS_FCLK Translate");
+    }
     
     @Test
     public void testNodeEventMessage() {
     
-        CanMessage m = new CanMessage( 0x12 );
+        CanMessage m = new CanMessage( 1 );
         m.setElement(0, CbusConstants.CBUS_ACON);
         m.setElement(1, 0x01);
         m.setElement(2, 0x02);
@@ -122,7 +148,7 @@ public class CbusOpCodesTest {
     
     @Test
     public void testextendedFrameTranslation(){
-    
+        // Outgoing control messages
         CanMessage m = new CanMessage( new int[]{5,1,2,3,0x0d,0,6,7},0x04  );
         m.setExtended(true);
         Assert.assertEquals("extended 4  0","Bootloader: Do nothing",CbusOpCodes.decode(m));
@@ -131,7 +157,7 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 4  1","Bootloader: Issue soft reset, leave boot mode",CbusOpCodes.decode(m));
         
         m.setElement(5, 2);
-        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum to 131,333 and verify",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 4  2","Bootloader: Reset checksum and set address to 131,333",CbusOpCodes.decode(m));
         
         m.setElement(5, 3);
         Assert.assertEquals("extended 4  3","Bootloader: Boot Check with checksum 1,798",CbusOpCodes.decode(m));
@@ -140,24 +166,62 @@ public class CbusOpCodesTest {
         Assert.assertEquals("extended 4  4","Bootloader: Verify boot mode",CbusOpCodes.decode(m));
     
         m.setElement(5, 5);
-        Assert.assertEquals("extended 4  5","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 4  5","Bootloader: Request device ID",CbusOpCodes.decode(m));
         
+        m.setElement(5, 6);
+        Assert.assertEquals("extended 4  6","Bootloader: Request bootloader ID",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 7);
+        Assert.assertEquals("extended 4  7","Bootloader: Memory write enables",CbusOpCodes.decode(m));
+        
+        m.setElement(5, 8);
+        Assert.assertEquals("extended 4  8","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        // Outgoing dat amessages
         m.setHeader(5);
-        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 05 06 07",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 5 data","Bootloader: Data : 05 01 02 03 0D 08 06 07",CbusOpCodes.decode(m));
         
-        
+        // Incoming control replies
         m = new CanMessage( new int[]{0},0x10000004 );
         m.setExtended(true);
-        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Error",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 0","Bootloader: Boot Command Error",CbusOpCodes.decode(m));
         
         m.setElement(0, 1);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot OK",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Command OK",CbusOpCodes.decode(m));
         
         m.setElement(0, 2);
-        Assert.assertEquals("extended 10000004 1","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 2","Bootloader: Boot Confirm",CbusOpCodes.decode(m));
         
         m.setElement(0, 3);
-        Assert.assertEquals("extended 10000004 1","Unknown Extended Frame",CbusOpCodes.decode(m));
+        Assert.assertEquals("extended 10000004 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 4);
+        Assert.assertEquals("extended 10000004 4","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m = new CanMessage( new int[]{5,4,3,2,1,0,0},0x10000004  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 5","Bootloader: Device ID",CbusOpCodes.decode(m));
+
+        m = new CanMessage( new int[]{6,5,4,3,2},0x10000004  );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000004 6","Bootloader: Bootloader ID",CbusOpCodes.decode(m));
+
+        // Incoming data replies
+        m = new CanMessage( new int[]{0},0x10000005 );
+        m.setExtended(true);
+        Assert.assertEquals("extended 10000005 0","Bootloader: Boot Data Error",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 1);
+        Assert.assertEquals("extended 10000005 1","Bootloader: Boot Data OK",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 2);
+        Assert.assertEquals("extended 10000005 2","Unknown Extended Frame",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 3);
+        Assert.assertEquals("extended 10000005 3","Bootloader: Boot Address Out of Range",CbusOpCodes.decode(m));
+        
+        m.setElement(0, 4);
+        Assert.assertEquals("extended 10000005 4","Unknown Extended Frame",CbusOpCodes.decode(m));
         
     }
     
@@ -400,7 +464,40 @@ public class CbusOpCodesTest {
             }
         }
     }
-    
+
+    @Test
+    public void testGetSpeedFromInt(){
+        Assert.assertEquals("speed 0","0",CbusOpCodes.getSpeedFromByte(0) );
+        Assert.assertEquals("speed 1","0 E Stop ",CbusOpCodes.getSpeedFromByte(1) );
+        Assert.assertEquals("speed 2","1",CbusOpCodes.getSpeedFromByte(2) );
+        Assert.assertEquals("speed 10","9",CbusOpCodes.getSpeedFromByte(10) );
+        Assert.assertEquals("speed 126","125",CbusOpCodes.getSpeedFromByte(126) );
+        Assert.assertEquals("speed 127","126",CbusOpCodes.getSpeedFromByte(127) );
+        Assert.assertEquals("speed 128","0",CbusOpCodes.getSpeedFromByte(128) );
+        Assert.assertEquals("speed 129","0 E Stop ",CbusOpCodes.getSpeedFromByte(129) );
+        Assert.assertEquals("speed 130","1",CbusOpCodes.getSpeedFromByte(130) );
+        Assert.assertEquals("speed 131","2",CbusOpCodes.getSpeedFromByte(131) );
+        Assert.assertEquals("speed 182","53",CbusOpCodes.getSpeedFromByte(182) );
+        Assert.assertEquals("speed 255","126",CbusOpCodes.getSpeedFromByte(255) );
+    }
+
+    @Test
+    public void testGetDirectionFromByte() {
+        Assert.assertTrue("0 rev",CbusOpCodes.getDirectionFromByte(0).contains("Rev"));
+        Assert.assertTrue("1 rev",CbusOpCodes.getDirectionFromByte(1).contains("Rev"));
+        Assert.assertTrue("77 rev",CbusOpCodes.getDirectionFromByte(77).contains("Rev"));
+        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(127).contains("Rev"));
+        Assert.assertTrue("128 rev",CbusOpCodes.getDirectionFromByte(128).contains("For"));
+        Assert.assertTrue("129 rev",CbusOpCodes.getDirectionFromByte(129).contains("For"));
+        Assert.assertTrue("211 rev",CbusOpCodes.getDirectionFromByte(211).contains("For"));
+        Assert.assertTrue("255 rev",CbusOpCodes.getDirectionFromByte(255).contains("For"));
+    }
+
+    @Test
+    public void testSpeedDirFromByte() {
+        Assert.assertEquals("speed 0"," Speed 0 Reverse ",CbusOpCodes.speedDirFromByte(0) );
+        Assert.assertEquals("speed 131"," Speed 2 Forward ",CbusOpCodes.speedDirFromByte(131) );
+    }
     
     private static final Set<Integer> eventOpcodes = createEventOPC();
     

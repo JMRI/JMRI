@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
@@ -92,13 +93,13 @@ public class PrintEngineRosterAction extends AbstractAction {
         try {
             // create header
             writer.write(createHeader());
-            
+
             // Loop through the Roster, printing as needed
             String number;
             String road;
             String model;
             String type;
-            String length;   
+            String length;
             String train = "";
             String consist = "";
             String moves = "";
@@ -158,15 +159,15 @@ public class PrintEngineRosterAction extends AbstractAction {
                 writer.write(s + NEW_LINE);
             }
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry: {}", we);
+            log.error("Error printing ConsistRosterEntry", we);
         }
         // and force completion of the printing
         writer.close();
     }
-    
+
     private String createHeader() {
         StringBuffer header = new StringBuffer();
-        
+
         header.append(padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number) +
                         padAttribute(Bundle.getMessage("Road"),
                                 InstanceManager.getDefault(CarRoads.class).getMaxNameLength()) +
@@ -175,7 +176,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                         padAttribute(Bundle.getMessage("Type"),
                                 InstanceManager.getDefault(EngineTypes.class).getMaxNameLength()) +
                         padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name));
-        
+
         if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_TRAIN) {
             header.append(padAttribute(Bundle.getMessage("Train"), Control.max_len_string_train_name / 2));
         } else {
@@ -239,11 +240,7 @@ public class PrintEngineRosterAction extends AbstractAction {
             pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
             pFontSize.add(fontSizeComboBox);
 
-            // load font sizes 5 through 14
-            for (int i = 5; i < 15; i++) {
-                fontSizeComboBox.addItem(i);
-            }
-
+            OperationsPanel.loadFontSizeComboBox(fontSizeComboBox);
             fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
             JPanel pButtons = new JPanel();
@@ -260,7 +257,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 
             initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
         }
-        
+
         @Override
         public void initComponents() {
             if (_isPreview) {

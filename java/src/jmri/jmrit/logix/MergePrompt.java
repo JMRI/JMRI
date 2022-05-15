@@ -38,7 +38,6 @@ public class MergePrompt extends JDialog {
 
     Map<String, Boolean> _candidates;   // merge candidate choices
     HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
-    HashMap<String, RosterSpeedProfile> _sessionProfiles;  // candidate's speedprofile
     Map<String, Map<Integer, Boolean>> _anomalyMap;
     JPanel _viewPanel;
     JmriJFrame _anomolyFrame;
@@ -50,7 +49,6 @@ public class MergePrompt extends JDialog {
         _anomalyMap = anomalies;
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         _mergeProfiles = manager.getMergeProfiles();
-        _sessionProfiles = manager.getSessionProfiles();
         setTitle(name);
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -185,9 +183,6 @@ public class MergePrompt extends JDialog {
         spPanel.add(makeSpeedProfilePanel("mergedSpeedProfile", mergeProfile, true, anomaly));
         spPanel.add(Box.createGlue());
 
-        spPanel.add(makeSpeedProfilePanel("sessionSpeedProfile", manager.getSessionProfile(id), false, null));
-        spPanel.add(Box.createGlue());
-
         viewPanel.add(spPanel);
         return viewPanel;
     }
@@ -243,6 +238,9 @@ public class MergePrompt extends JDialog {
     public static Map<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile) {
         // do forward speeds, then reverse
         HashMap<Integer, Boolean> anomalies = new HashMap<>();
+        if (speedProfile == null) {
+            return anomalies;
+        }
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
         float lastForward = 0;
         Integer lastKey = Integer.valueOf(0);

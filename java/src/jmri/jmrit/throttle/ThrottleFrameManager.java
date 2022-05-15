@@ -2,9 +2,13 @@ package jmri.jmrit.throttle;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import javax.swing.JFrame;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.util.JmriJFrame;
+
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +45,33 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleWindow
      */
     public ThrottleWindow createThrottleWindow() {
-        ThrottleWindow tw = new ThrottleWindow();
+        return createThrottleWindow((jmri.jmrix.ConnectionConfig) null);
+    }
+
+    /**
+     * Tell this manager that a new ThrottleWindow was created.
+     *
+     * @param connectionConfig the connection config
+     * @return The newly created ThrottleWindow
+     */
+    public ThrottleWindow createThrottleWindow(jmri.jmrix.ConnectionConfig connectionConfig) {
+        ThrottleWindow tw = new ThrottleWindow(connectionConfig);
+        tw.pack();
+        synchronized (this) {
+            throttleWindows.add(tw);
+            activeFrame = throttleWindows.indexOf(tw);
+        }
+        return tw;
+    }
+
+    /**
+     * Tell this manager that a new ThrottleWindow was created.
+     *
+     * @param e the xml element for the throttle window
+     * @return The newly created ThrottleWindow
+     */
+    public ThrottleWindow createThrottleWindow(Element e) {
+        ThrottleWindow tw = ThrottleWindow.createThrottleWindow(e);
         tw.pack();
         synchronized (this) {
             throttleWindows.add(tw);
@@ -56,7 +86,17 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      * @return The newly created ThrottleFrame
      */
     public ThrottleFrame createThrottleFrame() {
-        return createThrottleWindow().getCurrentThrottleFrame();
+        return createThrottleFrame(null);
+    }
+
+    /**
+     * Tell this manager that a new ThrottleFrame was created.
+     *
+     * @param connectionConfig the connection config
+     * @return The newly created ThrottleFrame
+     */
+    public ThrottleFrame createThrottleFrame(jmri.jmrix.ConnectionConfig connectionConfig) {
+        return createThrottleWindow(connectionConfig).getCurrentThrottleFrame();
     }
 
     /**
@@ -147,7 +187,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlesListFrame.setContentPane(throttlesListPanel);
         throttlesListFrame.pack();
     }
-    
+
     /*
      * Show JMRI native throttle list window
      *
@@ -171,7 +211,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         } else {
             throttlePreferencesFrame.resetComponents();
             throttlePreferencesFrame.revalidate();
-        }                
+        }
         throttlePreferencesFrame.setVisible(true);
         throttlePreferencesFrame.requestFocus();
     }
@@ -184,7 +224,8 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttleWindows.forEach(frame -> {
             frame.applyPreferences();
         });
+        throttlesListPanel.applyPreferences();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }

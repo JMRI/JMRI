@@ -99,7 +99,7 @@
           <dt class="left">Create light objcts</dt>
 
           <dd>
-            <p>Create as many <a href="../../tools//Lights.shtml">JMRI lights</a> as you need to
+            <p>Create as many <a href="../../tools/Lights.shtml">JMRI lights</a> as you need to
             tell the arduino to perform some task. Controlling whether a motor is on or off can be
             done with a single light (INACTIVE (which sends a 0) for OFF, ACTIVE (which sends a 1)
             for ON). Controlling its speed requires two lights - one to tell it to increase, one to

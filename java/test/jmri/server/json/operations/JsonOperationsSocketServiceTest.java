@@ -11,11 +11,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
-
-import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -23,6 +25,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
+import jmri.jmrit.operations.rollingstock.cars.KernelManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -566,14 +569,13 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.initIdTagManager();
         JUnitOperationsUtil.setupOperationsTests();
         JUnitOperationsUtil.initOperationsData();
-        Kernel kernel = InstanceManager.getDefault(CarManager.class).newKernel("test1");
+        Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel("test1");
         InstanceManager.getDefault(CarManager.class).getById("CP99").setKernel(kernel);
         mapper = new ObjectMapper();
         connection = new JsonMockConnection((DataOutputStream) null);
         service = new JsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
     }
 
-    @SuppressWarnings("deprecation")
     @AfterEach
     public void tearDown() {
         service.onClose();
@@ -583,9 +585,9 @@ public class JsonOperationsSocketServiceTest {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
-    
+
     protected class InvalidJsonOperationsSocketService extends JsonOperationsSocketService {
-        
+
         protected final HashMap<String, BeanListener<Train>> invalidBeanListeners = new HashMap<>();
         protected final InvalidBeansListener invalidBeansListener = new InvalidBeansListener();
 
@@ -609,13 +611,13 @@ public class JsonOperationsSocketServiceTest {
             }
 
         }
-        
+
         protected InvalidBeanListener addInvalidBeanListener(Train bean) {
             InvalidBeanListener l = new InvalidBeanListener(bean);
             invalidBeanListeners.put(bean.getId(), l);
             return l;
         }
-        
+
         protected class InvalidBeansListener extends ManagerListener<TrainManager> {
 
             protected InvalidBeansListener() {
@@ -626,7 +628,7 @@ public class JsonOperationsSocketServiceTest {
             public void propertyChange(PropertyChangeEvent evt) {
                 // do nothing, use #propertyChange(String) directly in tests
             }
-            
+
         }
     }
 

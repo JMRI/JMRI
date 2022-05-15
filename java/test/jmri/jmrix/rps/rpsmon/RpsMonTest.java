@@ -44,6 +44,7 @@ public class RpsMonTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

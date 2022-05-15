@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>
-    JMRI: ... Title ...
-  </title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: ... Title ...</title>
   <meta name="author" content="YOUR NAME HERE">
-  <meta name="keywords" content="JMRI SOME KEYWORDS"> <!-- make these specific, always include JMRI -->
+  <meta name="keywords" content="JMRI SOME KEYWORDS">
+  <!-- make these specific, always include JMRI -->
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
-      <h1>JMRI: Page Title???</h1>Content???? This file shows the
-      top and bottom matter for a plain page, without a side menu
+      <h1>JMRI: Page Title???</h1>
+      Content???? This file shows the top and bottom matter for a plain page, without a side menu
       (on the web).
-
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

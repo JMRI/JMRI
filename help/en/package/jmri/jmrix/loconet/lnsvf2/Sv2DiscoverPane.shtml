@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <!-- Copyright Bob Jacobsen 2008 -->
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Discover LocoNet SV2 Devices</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help send loconet svf2">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>Discover LocoNet SV2 Devices</h1>
-      <p>The "Send Discover SV2 Devices" tool lets you list all connected
-      LocoNet devices that respond to the SV version 2 protocol.<br>
+
+      <p>The "Send Discover SV2 Devices" tool lets you list all connected LocoNet devices that
+      respond to the SV version 2 protocol.<br>
       You find the tool in the LocoNet menu as long as a LocoNet connection is available.</p>
 
-      <p>As the tool is still under development, we advice to use it in combination with the "Show Raw Data"
-        option in the <a href="../locomon/LocoMonFrame.shtml">LocoNet
-          Monitor</a> to check for any additional responses rejected by the SV2 filters.</p>
+      <p>As the tool is still under development, we advice to use it in combination with the "Show
+      Raw Data" option in the <a href="../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check
+      for any additional responses rejected by the SV2 filters.</p>
 
       <p>Simply click "Discover" to start the discovery sequence.</p>
 
       <p>After a maximum of 3 seconds all SV2 responses will be listed in the table.</p>
-
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

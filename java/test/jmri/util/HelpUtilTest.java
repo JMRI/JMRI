@@ -16,7 +16,7 @@ public class HelpUtilTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
-        
+
         JMenuBar menuBar = new JMenuBar();
         int initialMenuCount = menuBar.getMenuCount();
         HelpUtil.helpMenu(menuBar,"test",true);
@@ -32,6 +32,7 @@ public class HelpUtilTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

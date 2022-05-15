@@ -173,6 +173,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                     fireTableCellUpdated(row, col);
                 }); break;
             case NODE_RESYNC_BUTTON_COLUMN:
+                _mainArray.get(row).saveForResync();
                 _mainArray.get(row).resetNodeAll();
                 if (this instanceof CbusNodeTableDataModel) {
                     ((CbusNodeTableDataModel)this).setUrgentNode( _mainArray.get(row).getNodeNumber() );

@@ -4,11 +4,13 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ActionLightXml objects.
+ * Handle XML configuration for ExpressionMemory objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -17,68 +19,65 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
     public ExpressionMemoryXml() {
     }
-    
+
     /**
-     * Default implementation for storing the contents of a SE8cSignalHead
+     * Default implementation for storing the contents of a ExpressionMemory
      *
-     * @param o Object to store, of type TripleTurnoutSignalHead
+     * @param o Object to store, of type ExpressionMemory
      * @return Element containing the complete info
      */
     @Override
     public Element store(Object o) {
         ExpressionMemory p = (ExpressionMemory) o;
 
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
         Element element = new Element("ExpressionMemory");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getMemory();
-        if (memory != null) {
-            element.addContent(new Element("memory").addContent(memory.getName()));
-        }
-        NamedBeanHandle otherMemory = p.getOtherMemory();
-        if (otherMemory != null) {
-            element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
+        var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectOtherMemoryNamedBeanXml.store(p.getSelectOtherMemoryNamedBean(), "otherMemoryNamedBean"));
+
         String variableName = p.getLocalVariable();
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));
         }
-        
+
         element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
         element.addContent(new Element("memoryOperation").addContent(p.getMemoryOperation().name()));
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
-        
+
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
         element.addContent(new Element("regEx").addContent(p.getRegEx()));
 
+        element.addContent(selectTableXml.store(p.getSelectTable(), "table"));
+
         return element;
     }
-    
+
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ExpressionMemory h = new ExpressionMemory(sys, uname);
 
+        LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
+
         loadCommon(h, shared);
 
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (m != null) h.setMemory(m);
-            else h.removeMemory();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "memory", null, null, null, null);
 
-        Element otherMemoryName = shared.getChild("otherMemory");
-        if (otherMemoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
-            if (m != null) h.setOtherMemory(m);
-            else h.removeOtherMemory();
-        }
+        var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectOtherMemoryNamedBeanXml.load(shared.getChild("otherMemoryNamedBean"), h.getSelectOtherMemoryNamedBean());
+        selectOtherMemoryNamedBeanXml.loadLegacy(shared, h.getSelectOtherMemoryNamedBean(), "otherMemory", null, null, null, null);
 
         Element variableName = shared.getChild("variable");
         if (variableName != null) {
@@ -112,9 +111,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             h.setCaseInsensitive(false);
         }
 
+        selectTableXml.load(shared.getChild("table"), h.getSelectTable());
+
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnoutXml.class);
 }

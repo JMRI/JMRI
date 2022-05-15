@@ -1,59 +1,74 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<title>JMRI: Southern Pacific 1960 Signaling Definition</title>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <!-- Copyright ($Author$) 2009 -->
 
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
+  <title>JMRI: Southern Pacific 1960 Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
 
-<h1> 
-JMRI: Southern Pacific 1960 Signaling Definition
-</h1>
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-This directory contains signaling definitions corresponding to the 
-1960 Southern Pacific Transportation Company rules as 
-described in the "Rules and Regulations of the Transportation Department" booklet.
+      <h1>JMRI: Southern Pacific 1960 Signaling Definition</h1>
+      This directory contains signaling definitions corresponding to the 1960 Southern Pacific
+      Transportation Company rules as described in the "Rules and Regulations of the Transportation
+      Department" booklet.
+      <p>The Southern Pacific Historical And Technical Society (<a href=
+      "http://www.sphts.org">SPHTS</a>) has put a copy of this <a href=
+      "http://www.sphts.org/resources/rulebook/">rulebook online</a>.</p>
 
-<p>
-The Southern Pacific Historical And Technical Society
-(<a href="http://www.sphts.org">SPHTS</a>) has put a copy of this
-<a href="http://www.sphts.org/resources/rulebook/">rulebook online</a>.
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
 
-<p>
-See the 
-<a href="aspects.xml">aspect page</a>.
+      <p>Signal Mast definitions:</p>
 
-<p>
-Signal Mast definitions:
-<ul>
-<li><a href="appearance-SL-3-high-pbs.xml">Double searchlight high with flashing marker</a>
-<li><a href="appearance-SL-2-high-abs.xml">Double searchlight high absolute signal</a>
-<li><a href="appearance-SL-2-high-pbs.xml">Single searchlight high with flashing marker</a>
-<li><a href="appearance-SL-1-high-abs.xml">Single searchlight high absolute signal</a>
-<li><a href="appearance-SL-1-high-pbs.xml">Single searchlight high permissive signal</a>
-<li><a href="appearance-SL-2-low.xml">Double searchlight dwarf absolute signal</a>
-<li><a href="appearance-SL-1-low.xml">Single searchlight dwarf signal</a>
-<li><a href="appearance-SL-1-low-D.xml">Single searchlight dwarf signal with plate D</a>
-<li><a href="appearance-SL-1-low-P.xml">Single searchlight dwarf signal with triangular plate</a>
+      <ul>
+        <li>
+          <a href="appearance-SL-3-high-pbs.xml">Double searchlight high with flashing marker</a>
+        </li>
 
-</ul>
+        <li>
+          <a href="appearance-SL-2-high-abs.xml">Double searchlight high absolute signal</a>
+        </li>
 
+        <li>
+          <a href="appearance-SL-2-high-pbs.xml">Single searchlight high with flashing marker</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-high-abs.xml">Single searchlight high absolute signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-high-pbs.xml">Single searchlight high permissive signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-2-low.xml">Double searchlight dwarf absolute signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-low.xml">Single searchlight dwarf signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-low-D.xml">Single searchlight dwarf signal with plate D</a>
+        </li>
+
+        <li>
+          <a href="appearance-SL-1-low-P.xml">Single searchlight dwarf signal with triangular
+          plate</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
-</div>
-<!--#include virtual="/Footer.shtml" -->
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

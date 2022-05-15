@@ -1,86 +1,71 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Fast Clock - LocoNet Capability</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help Setup LocoNet Fast Clock">
+  <meta name="keywords" content="JMRI help Setup LocoNet Fast Clock">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-    <div id="mainContent">
 
+    <div id="mainContent">
       <h1>JMRI Fast Clocks - LocoNet Capability</h1>
-      <p>A Digitrax LocoNet can
-          contain it's own fast clock, driven by the DCS100,
-          DCS200, or DCS50 command stations. A separate LocoNet
-          fast clock is available from Logic Rail Technologies.
-          JMRI can work with any of these, or with any clock that
-          uses the standard Digitrax method to control fast clocks.</p>
-      
-      <p>This page discusses how JMRI can either use or
-      control the LocoNet fast clock.</p>
+
+      <p>A Digitrax LocoNet can contain it's own fast clock, driven by the DCS100, DCS200, or DCS50
+      command stations. A separate LocoNet fast clock is available from Logic Rail Technologies.
+      JMRI can work with any of these, or with any clock that uses the standard Digitrax method to
+      control fast clocks.</p>
+
+      <p>This page discusses how JMRI can either use or control the LocoNet fast clock.</p>
 
       <h2>Controlling the LocoNet clock</h2>
 
-      <p>The "Clock Monitor" tool in the "LocoNet" menu provides
-      a convenient way to:</p>
+      <p>The "Clock Monitor" tool in the "LocoNet" menu provides a convenient way to:</p>
 
       <ul>
-        <li>Read the current contents of the LocoNet fast
-        clock</li>
+        <li>Read the current contents of the LocoNet fast clock</li>
+
         <li>Set the date and time</li>
-        <li>Set the rate. Note that you can't explicitly pause a
-        LocoNet clock, but you can stop it by setting the rate to
-        zero.</li>
+
+        <li>Set the rate. Note that you can't explicitly pause a LocoNet clock, but you can stop it
+        by setting the rate to zero.</li>
       </ul>
-      <p>If you are using a DCS100 or DCS200 command station to
-      create your LocoNet fast clock, you may have noticed that it
-      doesn't keep particularly good time. If you select the
-      "Correct LocoNet Fast Clock Master", JMRI will adjust the
-      rate of the LocoNet clock so that it keeps better time.</p>
+
+      <p>If you are using a DCS100 or DCS200 command station to create your LocoNet fast clock, you
+      may have noticed that it doesn't keep particularly good time. If you select the "Correct
+      LocoNet Fast Clock Master", JMRI will adjust the rate of the LocoNet clock so that it keeps
+      better time.</p>
 
       <h2>Using the LocoNet clock</h2>
 
-        <p>The recommended settings for running with LocoNet Fast Clock
-          is: set <b>Time Source</b> to <b>Internal Computer
-          Clock</b>, and check both the <b>Synchronize...</b> and
-          <b>Correct...</b> options. However you can try other
-          settings. If you use the internal computer clock as the
-          time source, you will not be able to change the fast
-          clock rate or the fast clock time from a throttle.</p>
+      <p>The recommended settings for running with LocoNet Fast Clock is: set <strong>Time
+      Source</strong> to <strong>Internal Computer Clock</strong>, and check both the
+      <strong>Synchronize...</strong> and <strong>Correct...</strong> options. However you can try
+      other settings. If you use the internal computer clock as the time source, you will not be
+      able to change the fast clock rate or the fast clock time from a throttle.</p>
 
-      <p>You can also have JMRI use
-      the LocoNet clock for it's own, internal timebase. This keeps
-      the clocks that JMRI displays on the screen synchronized with
-      the LocoNet clock, hence the displays on DT400 throttles,
-      etc.</p>
+      <p>You can also have JMRI use the LocoNet clock for it's own, internal timebase. This keeps
+      the clocks that JMRI displays on the screen synchronized with the LocoNet clock, hence the
+      displays on DT400 throttles, etc.</p>
 
-      <p>To do this, select the "LocoNet Fast Clock sets Internal
-      Clock" option on the LocoNet clock monitor window. Note that
-      you should do this <em>before</em> opening the clock windows
-      so that when you open the clock windows they connect to the
-      correct timebase.</p>
-      
-          <p>If you use a Logic Rail Technologies fast clock, it
-          should be set up as a slave clock, not as a master. You
-          may notice that the Logic Rail Technologies fast clock
-          lags behind by one fast clock minute. Be assured that the
-          correct commands are being sent by JMRI. This lag, if
-          present, is just an artifact of the Logic Rail clock's
-          internal programming.</p>
+      <p>To do this, select the "LocoNet Fast Clock sets Internal Clock" option on the LocoNet
+      clock monitor window. Note that you should do this <em>before</em> opening the clock windows
+      so that when you open the clock windows they connect to the correct timebase.</p>
 
+      <p>If you use a Logic Rail Technologies fast clock, it should be set up as a slave clock, not
+      as a master. You may notice that the Logic Rail Technologies fast clock lags behind by one
+      fast clock minute. Be assured that the correct commands are being sent by JMRI. This lag, if
+      present, is just an artifact of the Logic Rail clock's internal programming.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

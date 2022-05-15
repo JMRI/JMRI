@@ -15,17 +15,22 @@ import static org.junit.Assert.assertEquals;
  * @author Steve Young (C) 2021
  */
 public class MemoryTableDataModelTest extends AbstractBeanTableDataModelBase<Memory>{
-    
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",t);
     }
-    
+
+    @Test
+    public void testPrefsCTor() {
+        Assert.assertNotNull("exists",new MemoryTableDataModel());
+    }
+
     @Override
     public int getModelColumnCount(){
         return 5;
     }
-    
+
     @Test
     @Override
     public void testGetBaseColumnNames() {
@@ -34,7 +39,7 @@ public class MemoryTableDataModelTest extends AbstractBeanTableDataModelBase<Mem
         assertEquals("Column2 - Bean value",Bundle.getMessage("BlockValue"), t.getColumnName(2));
         assertEquals("Column3 - User Comment",Bundle.getMessage("ColumnComment"), t.getColumnName(3));
         assertEquals("Column4 - Delete button","", t.getColumnName(4));
-        
+
     }
 
     @BeforeEach
@@ -54,5 +59,5 @@ public class MemoryTableDataModelTest extends AbstractBeanTableDataModelBase<Mem
         t = null;
         JUnitUtil.tearDown();
     }
-    
+
 }

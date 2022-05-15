@@ -49,14 +49,14 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         if (getDisabled()) {
             return null;
         }
-        return (LnPr2PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> new LnPr2PowerManager(this));
+        return (LnPr2PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> new LnPr2PowerManager(this));
     }
 
     public LnPr2ThrottleManager getPr2ThrottleManager() {
         if (getDisabled()) {
             return null;
         }
-        return (LnPr2ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class c) -> new LnPr2ThrottleManager(this));
+        return (LnPr2ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class, (Class<?> c) -> new LnPr2ThrottleManager(this));
     }
 
     @Override

@@ -8,12 +8,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.Function;
-import jmri.jmrit.logixng.util.parser.FunctionFactory;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
-import jmri.jmrit.logixng.util.parser.Variable;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -38,6 +33,17 @@ public class NamedBeanFunctions implements FunctionFactory {
         functionClasses.add(new EvaluateMemoryFunction());
         return functionClasses;
     }
+
+    @Override
+    public Set<Constant> getConstants() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String getConstantDescription() {
+        // This module doesn't define any constants
+        return null;
+    }
     
     
     
@@ -51,6 +57,11 @@ public class NamedBeanFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new NamedBeanFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new NamedBeanFunctions().getConstantDescription();
         }
         
         @Override
@@ -97,6 +108,11 @@ public class NamedBeanFunctions implements FunctionFactory {
         @Override
         public String getModule() {
             return new NamedBeanFunctions().getModule();
+        }
+        
+        @Override
+        public String getConstantDescriptions() {
+            return new NamedBeanFunctions().getConstantDescription();
         }
         
         @Override

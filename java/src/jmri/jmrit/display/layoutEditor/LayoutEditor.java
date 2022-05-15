@@ -371,7 +371,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         setupMenuBar();
 
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
-                Color.black, new Color(215, 225, 255), Color.black));
+                Color.black, new Color(215, 225, 255), Color.black, null));
 
         // setup help bar
         helpBar.setLayout(new BoxLayout(helpBar, BoxLayout.PAGE_AXIS));
@@ -480,6 +480,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
     }
 
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private void setupMenuBar() {
         // initialize menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -489,7 +490,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore"));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
         fileMenu.add(store);
@@ -773,11 +774,43 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * The Java run times for 11 and 12 running on macOS have a bug that causes double events for
+     * JCheckBoxMenuItem when invoked by an accelerator key combination.
+     * <p>
+     * The java.version property is parsed to determine the run time version.  If the event occurs
+     * on macOS and Java 11 or 12 and a modifier key was active, true is returned.  The five affected
+     * action events will drop the event and process the second occurrence.
+     * @aparam event The action event.
+     * @return true if the event is affected, otherwise return false.
+     */
+    private boolean fixMacBugOn11(ActionEvent event) {
+        boolean result = false;
+        if (SystemType.isMacOSX()) {
+            if (event.getModifiers() != 0) {
+                // MacOSX and modifier key, test Java version
+                String version = System.getProperty("java.version");
+                if (version.startsWith("1.")) {
+                    version = version.substring(2, 3);
+                } else {
+                    int dot = version.indexOf(".");
+                    if (dot != -1) {
+                        version = version.substring(0, dot);
+                    }
+                }
+                int vers = Integer.parseInt(version);
+                result = (vers == 11 || vers == 12);
+            }
+        }
+        return result;
+     }
+
+    /**
      * Set up the Option menu.
      *
      * @param menuBar to add the option menu to
      * @return option menu that was added
      */
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
         assert menuBar != null;
 
@@ -792,10 +825,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
         editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                editModeCheckBoxMenuItem.setSelected(!editModeCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             setAllEditable(editModeCheckBoxMenuItem.isSelected());
 
             // show/hide the help bar
@@ -1026,6 +1065,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
         drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(!drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             setDrawLayoutTracksLabel(drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
@@ -1222,6 +1267,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                showGridCheckBoxMenuItem.setSelected(!showGridCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             drawGrid = showGridCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1234,6 +1285,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                snapToGridOnAddCheckBoxMenuItem.setSelected(!snapToGridOnAddCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1246,6 +1303,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 primary_modifier | ActionEvent.SHIFT_MASK));
         gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+
+            if (fixMacBugOn11(event)) {
+                snapToGridOnMoveCheckBoxMenuItem.setSelected(!snapToGridOnMoveCheckBoxMenuItem.isSelected());
+                return;
+            }
+
             snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
@@ -1771,12 +1834,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     //
     //
     //
+    @SuppressWarnings("deprecation")  // getMenuShortcutKeyMask()
     private void setupZoomMenu(@Nonnull JMenuBar menuBar) {
         zoomMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
 
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
 
         // add zoom choices to menu
         JMenuItem zoomInItem = new JMenuItem(Bundle.getMessage("ZoomIn"));
@@ -2349,7 +2413,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     boolean openDispatcherOnLoad = false;
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isOpenDispatcherOnLoad()"
+    // TODO: Java standard pattern for boolean getters is "isOpenDispatcherOnLoad()"
     public boolean getOpenDispatcherOnLoad() {
         return openDispatcherOnLoad;
     }
@@ -6791,17 +6855,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             System.getProperty("user.dir"),
                             File.separator,
                             File.separator));
-            if (false) {
-                // TODO: Discuss with jmri-developers
-                // this filter will allow any images supported by the current
-                // operating system. This may not be desirable because it will
-                // allow images that may not be supported by operating systems
-                // other than the current one.
-                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
-            } else {
-                // TODO: discuss with jmri-developers - support png image files?
-                inputFileChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", "gif", "jpg", "png"));
-            }
+
+            inputFileChooser.setFileFilter(new FileNameExtensionFilter("Graphics Files", "gif", "jpg", "png"));
         }
         inputFileChooser.rescanCurrentDirectory();
 
@@ -7152,27 +7207,27 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return layoutName;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getShowHelpBar() {
         return showHelpBar;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDrawGrid() {
         return drawGrid;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getSnapOnAdd() {
         return snapToGridOnAdd;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getSnapOnMove() {
         return snapToGridOnMove;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getAntialiasingOn() {
         return antialiasingOn;
     }
@@ -7181,27 +7236,27 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return drawLayoutTracksLabel;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getHighlightSelectedBlock() {
         return highlightSelectedBlockFlag;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getTurnoutCircles() {
         return turnoutCirclesWithoutEditMode;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getTooltipsNotEdit() {
         return tooltipsWithoutEditMode;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getTooltipsInEdit() {
         return tooltipsInEditMode;
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getAutoBlockAssignment() {
         return autoAssignBlocks;
     }
@@ -7671,7 +7726,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
     }
 
-    // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
+    // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDirectTurnoutControl() {
         return useDirectTurnoutControl;
     }
@@ -8152,11 +8207,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             @Nonnull Positionable selection,
             @Nonnull MouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        String txt = tip.getText();
-        if ((txt != null) && !txt.isEmpty()) {
-            tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
-            setToolTip(tip);
-        }
+        tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
+        setToolTip(tip);
     }
 
     @Override
@@ -8168,7 +8220,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             return;
         }
 
-        List theList = null;
+        List<?> theList = null;
 
         if (nb instanceof Sensor) {
             theList = sensorList;

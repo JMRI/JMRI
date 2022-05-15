@@ -1,37 +1,32 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: NCE Cab Monitor</title>
   <meta name="author" content="Ken Cameron">
-  <meta name="keywords" content="JMRI Help NCE Cab Monitor">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Help NCE Cab Monitor"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-
       <h1>NCE Cab Monitor</h1>
 
-      <p>This tool will show what each cab device is doing. It can
-      identify the type of cab, AIU, and other device.</p>
+      <p>This tool will show what each cab device is doing. It can identify the type of cab, AIU,
+      and other device.</p>
 
-      <p>You must press the refresh button for it to pull the
-      status from the command station. It takes about 10 seconds to
-      poll all 64 addresses in the CS02, this lower speed is to
-      insure it doesn't interfere with other commands being
-      processed.</p>
+      <p>You must press the refresh button for it to pull the status from the command station. It
+      takes about 10 seconds to poll all 64 addresses in the CS02, this lower speed is to insure it
+      doesn't interfere with other commands being processed.</p>
 
-      <p>The purge button will remove a cab id from the 'active'
-      polling list. This will reduce the frequency that the cab is
-      polled which will improve the response speed of the other
-      active cabs. Generally this only helps larger club type
-      layouts with many active cabs.</p>
+      <p>The purge button will remove a cab id from the 'active' polling list. This will reduce the
+      frequency that the cab is polled which will improve the response speed of the other active
+      cabs. Generally this only helps larger club type layouts with many active cabs.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div><!-- close #mBody -->
+  </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

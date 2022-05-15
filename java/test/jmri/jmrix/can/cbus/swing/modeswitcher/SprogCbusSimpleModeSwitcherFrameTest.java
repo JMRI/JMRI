@@ -26,14 +26,14 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
     jmri.jmrix.can.TrafficController tc;
     CbusPreferences preferences;
     CbusDccProgrammerManager pm;
-    
+
     @Test
     public void testInitComponents () throws Exception{
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // for now, just makes ure there isn't an exception.
         ((SprogCbusSimpleModeSwitcherFrame) frame).initComponents();
     }
-    
+
     @Test
     public void testPrefProg () throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -43,13 +43,13 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
         pm.setGlobalProgrammerAvailable(true);
         pm.setAddressedModePossible(false);
         preferences.setProgrammersAvailable(true, false);
-        
+
         SprogCbusSimpleModeSwitcherFrame f = ((SprogCbusSimpleModeSwitcherFrame) frame);
 
         f.initComponents();
         Assert.assertEquals(f.mode, SprogCbusSimpleModeSwitcherFrame.PROG_MODE);
     }
-    
+
     @Test
     public void testPrefCmd () throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -59,30 +59,30 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
         pm.setGlobalProgrammerAvailable(false);
         pm.setAddressedModePossible(true);
         preferences.setProgrammersAvailable(false, true);
-        
+
         SprogCbusSimpleModeSwitcherFrame f = ((SprogCbusSimpleModeSwitcherFrame) frame);
 
         f.initComponents();
         Assert.assertEquals(f.mode, SprogCbusSimpleModeSwitcherFrame.CMD_MODE);
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        
+
         jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
 
         tc = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         prog = new CbusDccProgrammer(tc);
-        
+
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
-         
+
         jmri.InstanceManager.setDefault(GlobalProgrammerManager.class,new CbusDccProgrammerManager(prog, memo) );
         jmri.InstanceManager.setDefault(AddressedProgrammerManager.class,new CbusDccProgrammerManager(prog, memo) );
-        
+
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new SprogCbusSimpleModeSwitcherFrame(memo);
         }
@@ -98,6 +98,7 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
         memo.dispose();
         tc = null;
         memo = null;
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 }

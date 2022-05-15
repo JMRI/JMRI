@@ -1,13 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Rule;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -15,21 +9,18 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@Timeout(60)
 public class ImportCarsTest extends OperationsTestCase {
-
-    // Unexpected test behavior when globalTimeout is used with this test
-//    @Rule
-//    public Timeout globalTimeout = Timeout.seconds(60); // 60 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCTor() {
@@ -37,9 +28,9 @@ public class ImportCarsTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
     }
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testReadFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarManager cm = InstanceManager.getDefault(CarManager.class);
         JUnitOperationsUtil.initOperationsData();
@@ -52,12 +43,7 @@ public class ImportCarsTest extends OperationsTestCase {
         Assert.assertNotNull("exists", exportCars);
 
         // should cause export complete dialog to appear
-        Thread exportThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exportCars.writeOperationsCarFile();
-            }
-        });
+        Thread exportThread = new Thread(exportCars::writeOperationsCarFile);
         exportThread.setName("Export Cars"); // NOI18N
         exportThread.start();
 
@@ -73,7 +59,7 @@ public class ImportCarsTest extends OperationsTestCase {
             // do nothing
         }
 
-        java.io.File file = new java.io.File(ExportCars.defaultOperationsFilename());
+        File file = new File(ExportCars.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
 
         // delete all cars
@@ -112,7 +98,6 @@ public class ImportCarsTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log =
-    // LoggerFactory.getLogger(ImportCarsTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class);
 
 }

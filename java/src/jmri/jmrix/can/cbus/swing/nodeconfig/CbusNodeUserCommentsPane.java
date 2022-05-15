@@ -33,7 +33,6 @@ public class CbusNodeUserCommentsPane extends CbusNodeConfigTab implements KeyLi
     protected CbusNodeUserCommentsPane( NodeConfigToolPane main ) {
         super(main);
         initPane();
-        
     }
     
     /**
@@ -41,14 +40,8 @@ public class CbusNodeUserCommentsPane extends CbusNodeConfigTab implements KeyLi
      */
     @Override
     public String getTitle(){
-        return "Node Comments";
+        return Bundle.getMessage("NodeComments"); // NOI18N
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void disposeOfNode(CbusNode node){}
 
     private void initPane() {
         
@@ -70,10 +63,10 @@ public class CbusNodeUserCommentsPane extends CbusNodeConfigTab implements KeyLi
     
     private void initButtons(){
     
-        saveTextButton = new JButton(Bundle.getMessage("SaveCommentsButton"));
+        saveTextButton = new JButton(Bundle.getMessage("SaveCommentsButton")); // NOI18N
         saveTextButton.setEnabled(false);
         
-        resetTextButton = new JButton(Bundle.getMessage("ResetCommentButton"));
+        resetTextButton = new JButton(Bundle.getMessage("ResetCommentButton")); // NOI18N
         resetTextButton.setEnabled(false);
         
         setNameListener = ae -> {
@@ -105,8 +98,6 @@ public class CbusNodeUserCommentsPane extends CbusNodeConfigTab implements KeyLi
         nodeOfInterest.setUserComment(textFieldName.getText());
         resetCommentButtons();
     }
-    
-    //typingArea.setFocusTraversalKeysEnabled(false);
 
     /** 
      * Handle the key typed event from the text field.

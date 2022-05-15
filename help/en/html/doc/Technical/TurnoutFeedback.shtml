@@ -1,86 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Turnout Feedback</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI Turnout feedback">
-  <!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Turnout feedback"><!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
-
       <h1>JMRI: Turnout Feedback</h1>
-      Model railroaders want
-      different things when it comes to knowing the status of the
-      turnouts on their layout. Some are quite happy to say "I told
-      it to move, that's good enough for me". These people don't
-      worry about whether a turnout on their layout actually moved
-      when they told it to. Those people can just ignore this page,
-      and leave the JMRI settings at their default.
+      Model railroaders want different things when it comes to knowing the status of the turnouts
+      on their layout. Some are quite happy to say "I told it to move, that's good enough for me".
+      These people don't worry about whether a turnout on their layout actually moved when they
+      told it to. Those people can just ignore this page, and leave the JMRI settings at their
+      default.
+      <p>But some modelers want to have better information about the status of the turnouts on
+      their layout, and so use some form of "feedback" to indicate turnout position. This could be
+      as complicated as two microswitches, adjusted to only close when the turnout is properly
+      seated in either position. Or it could be something simpler.</p>
 
-      <p>But some modelers want to have better information about
-      the status of the turnouts on their layout, and so use some
-      form of "feedback" to indicate turnout position. This could
-      be as complicated as two microswitches, adjusted to only
-      close when the turnout is properly seated in either position.
-      Or it could be something simpler.</p>
+      <p>In the code, Turnout objects actually know about two different states: "Commanded" state
+      and "Known" state. The commanded state is "This is what was asked for last". The known state
+      is "This is what's actually correct on the layout as far as I know".</p>
 
-      <p>In the code, Turnout objects actually know about two
-      different states: "Commanded" state and "Known" state. The
-      commanded state is "This is what was asked for last". The
-      known state is "This is what's actually correct on the layout
-      as far as I know".</p>
+      <p>Built into into LocoNet and XPressNet are limited abilities to monitor what is happening
+      on their networks and adapt to messages about Turnout state changes. The NCE Powerhouse Pro
+      (only) can monitor the last known state of any turnout that it changed (on request from a
+      cab, macro, JMRI or Mini Panel). All the other protocols normally use a "you told it to
+      change, so it did" logic. In other words, when something in the code (the Turnout Tool or a
+      script) commands a state change from closed to thrown, the default is for both both the
+      commanded state and the known state to change to "thrown".</p>
 
-      <p>Built into into LocoNet and XPressNet are limited
-      abilities to monitor what is happening on their networks and
-      adapt to messages about Turnout state changes.
-      The NCE Powerhouse Pro (only) can monitor the last known state
-      of any turnout that it changed (on request from a cab, macro,
-      JMRI or Mini Panel). All the other protocols
-      normally use a "you told it to change, so it did" logic. In
-      other words, when something in the code (the Turnout Tool or
-      a script) commands a state change from closed to thrown, the
-      default is for both both the commanded state and the known
-      state to change to "thrown".</p>
+      <p>But it is also possible to control this in more detail if you have wired your layout to
+      allow it.</p>
 
-      <p>But it is also possible to control this in more detail if
-      you have wired your layout to allow it.</p>
-
-      <p>The whole question of turnout feedback is then "How do we
-      configure the program to understand the known state properly,
-      given my layout hardware?"</p>
+      <p>The whole question of turnout feedback is then "How do we configure the program to
+      understand the known state properly, given my layout hardware?"</p>
 
       <p>If you go to the <a href=
-      "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout
-      Table</a> tool, you'll find it has four columns associated
-      with feedback:</p>
+      "../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a> tool, you'll
+      find it has four columns associated with feedback:</p>
 
       <dl>
         <dt>"Feedback"</dt>
 
-        <dd>This is the "known state". You can't change it, but
-        this column will show you what the program thinks it
-        is.</dd>
+        <dd>This is the "known state". You can't change it, but this column will show you what the
+        program thinks it is.</dd>
 
         <dt>"Mode"</dt>
 
-        <dd>This is the feedback method used by this turnout. (You
-        can change it for each turnout individually, but note the
-        change doesn't take effect until you click somewhere else,
-        and you might need to add some sensor names in the next
-        column(s))</dd>
+        <dd>This is the feedback method used by this turnout. (You can change it for each turnout
+        individually, but note the change doesn't take effect until you click somewhere else, and
+        you might need to add some sensor names in the next column(s))</dd>
 
         <dt>"Sensor 1", "Sensor 2"</dt>
 
-        <dd>These define the sensors needed by certain types of
-        feedback. You can type a sensor number, system name or user
-        name here; the program will change it to the system name
-        that it needs.</dd>
+        <dd>These define the sensors needed by certain types of feedback. You can type a sensor
+        number, system name or user name here; the program will change it to the system name that
+        it needs.</dd>
       </dl>
 
       <p>Available feedback modes are:</p>
@@ -88,221 +70,177 @@
       <dl>
         <dt>DIRECT</dt>
 
-        <dd>The default in many cases, and also the original
-        behavior of the program. When something tells the turnout
-        to change, it's just immediately assumed that it actually
-        did it.</dd>
+        <dd>The default in many cases, and also the original behavior of the program. When
+        something tells the turnout to change, it's just immediately assumed that it actually did
+        it.</dd>
 
         <dt>ONESENSOR</dt>
 
-        <dd>The turnout watches the sensor defined by the "Sensor
-        1" column, which is probably hooked to a microswitch on the
-        turnout or similar. When the sensor is Active, the turnout
-        is known to be in the "Thrown" position. When it's
-        Inactive, the turnout is known to be in the "Closed"
-        position.</dd>
+        <dd>The turnout watches the sensor defined by the "Sensor 1" column, which is probably
+        hooked to a microswitch on the turnout or similar. When the sensor is Active, the turnout
+        is known to be in the "Thrown" position. When it's Inactive, the turnout is known to be in
+        the "Closed" position.</dd>
 
         <dt>TWOSENSOR</dt>
 
-        <dd>The turnout watches two sensors defined by the "Sensor
-        1" and "Sensor 2" columns, which are probably hooked to
-        microswitches at either end of the turnout's throw bar.
-        When Sensor 1 is active, the turnout is known to be thrown.
-        When Sensor 2 is active, the turnout is known to be closed
-        (normal).</dd>
+        <dd>The turnout watches two sensors defined by the "Sensor 1" and "Sensor 2" columns, which
+        are probably hooked to microswitches at either end of the turnout's throw bar. When Sensor
+        1 is active, the turnout is known to be thrown. When Sensor 2 is active, the turnout is
+        known to be closed (normal).</dd>
 
         <dt>DELAYED</dt>
 
-        <dd>When something tells the Turnout to change, 
-        it immediately starts the operation and goes to
-        the INCONSISTENT state to reflect that the points
-        are moving.  After a few seconds delay, the
-        operation completes and the final state is reported.</dd>
+        <dd>When something tells the Turnout to change, it immediately starts the operation and
+        goes to the INCONSISTENT state to reflect that the points are moving. After a few seconds
+        delay, the operation completes and the final state is reported.</dd>
 
         <dt>MONITORING</dt>
 
-        <dd>Default for LocoNet and XPressNet turnouts, this means the
-        network is monitored for
-        messages about the status of the turnout. This mode is only
-        available for certain protocols, i.e. some protocols can't
-        do the monitoring properly, and don't have this
-        choice.
-        <br>If selected for the NCE Powerhouse Pro (only), it will monitor
-        the last known state change of this turnout made by the command station
-        (on request from a cab, macro, JMRI or Mini Panel).</dd>
+        <dd>Default for LocoNet and XPressNet turnouts, this means the network is monitored for
+        messages about the status of the turnout. This mode is only available for certain
+        protocols, i.e. some protocols can't do the monitoring properly, and don't have this
+        choice.<br>
+        If selected for the NCE Powerhouse Pro (only), it will monitor the last known state change
+        of this turnout made by the command station (on request from a cab, macro, JMRI or Mini
+        Panel).</dd>
 
         <dt>INDIRECT</dt>
 
-        <dd>Currently only available for LocoNet turnouts, this
-        informs the program that the turnout is being driven by a
-        Digitrax DS54 with a microswitch attached to the switch
-        lead. For more information, see the <a href=
-        "../../hardware/loconet/DS54.shtml">DS54 page</a>.</dd>
+        <dd>
+          Currently only available for LocoNet turnouts, this informs the program that the turnout
+          is being driven by a Digitrax DS54 with a microswitch attached to the switch lead. For
+          more information, see the <a href="../../hardware/loconet/DS54.shtml">DS54 page</a>.
+        </dd>
 
         <dt>EXACT</dt>
 
-        <dd>Currently only available for LocoNet and XPressNet
-        turnouts. For LocoNet turnouts, this informs the program
-        that the turnout is being driven by a Digitrax DS54 with
-        two microswitches attached to the switch and aux leads. For
-        more information, see the <a href=
-        "../../hardware/loconet/DS54.shtml">DS54 page</a>. For
-        XPressNet turnouts, this informs the program that the
-        turnout is being driven by an LS100 and the feedback inputs
-        have been connected as described in the <a href=
-        "http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">
-        LS100 manual (external link, PDF)</a>.</dd>
-        
+        <dd>
+          Currently only available for LocoNet and XPressNet turnouts. For LocoNet turnouts, this
+          informs the program that the turnout is being driven by a Digitrax DS54 with two
+          microswitches attached to the switch and aux leads. For more information, see the
+          <a href="../../hardware/loconet/DS54.shtml">DS54 page</a>. For XPressNet turnouts, this
+          informs the program that the turnout is being driven by an LS100 and the feedback inputs
+          have been connected as described in the <a href=
+          "http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">LS100 manual (external link,
+          PDF)</a>.
+        </dd>
+
         <dt>SIGNAL</dt>
 
-        <dd>Recommended setting for Signal Mast controled by driver
-        Matrix output with XpressNet. The program does not wait
-        for turnout feedback and sends matrix commands as soon
-        as possible.</dd>
-
+        <dd>Recommended setting for Signal Mast controled by driver Matrix output with XpressNet.
+        The program does not wait for turnout feedback and sends matrix commands as soon as
+        possible.</dd>
       </dl>
 
-      <p>Most people will (and probably should!!!) stick with the
-      default feedback type that the software selects for them.</p>
+      <p>Most people will (and probably should!!!) stick with the default feedback type that the
+      software selects for them.</p>
 
-      <h2>Operation</h2>When feedback is used, Turnouts can start
-      to behave in complicated ways.
-
-      <h3>Simplest Case</h3>The most common case is JMRI commanding
-      turnouts to move, and they move properly. The sequence is
-      then:
-
+      <h2>Operation</h2>
+      When feedback is used, Turnouts can start to behave in complicated ways.
+      <h3>Simplest Case</h3>
+      The most common case is JMRI commanding turnouts to move, and they move properly. The
+      sequence is then:
       <ol>
-        <li>JMRI commands the Turnout to move by setting the
-        commanded state to e.g. THROWN.</li>
+        <li>JMRI commands the Turnout to move by setting the commanded state to e.g. THROWN.</li>
 
-        <li>The Turnout object figures out the right commands to
-        send to the layout hardware, and works with the rest of the
-        program to do that.</li>
+        <li>The Turnout object figures out the right commands to send to the layout hardware, and
+        works with the rest of the program to do that.</li>
 
         <li>The position changes on the layout.</li>
-      </ol>If no feedback (really, DIRECT feedback) is in use, the
-      known state of the turnout will also change in step 1. At
-      that point, icons on panels, signal logic, etc will all be
-      notified of the change and react.
-
-      <h3>Simple Layout Feedback</h3>The simplest case for using
-      feedback from a microswitch on the layout is similar:
-
+      </ol>
+      If no feedback (really, DIRECT feedback) is in use, the known state of the turnout will also
+      change in step 1. At that point, icons on panels, signal logic, etc will all be notified of
+      the change and react.
+      <h3>Simple Layout Feedback</h3>
+      The simplest case for using feedback from a microswitch on the layout is similar:
       <ol>
-        <li>JMRI commands the Turnout to move by setting the
-        commanded state to e.g. THROWN.</li>
+        <li>JMRI commands the Turnout to move by setting the commanded state to e.g. THROWN.</li>
 
-        <li>The Turnout object figures out the right commands to
-        send to the layout hardware, and works with the rest of the
-        program to do that.</li>
+        <li>The Turnout object figures out the right commands to send to the layout hardware, and
+        works with the rest of the program to do that.</li>
 
         <li>The position changes on the layout.</li>
 
-        <li>A microswitch detects that position change, and informs
-        the layout electronics, which in turn changes an input to
-        JMRI.</li>
+        <li>A microswitch detects that position change, and informs the layout electronics, which
+        in turn changes an input to JMRI.</li>
 
-        <li>That input is connected to a JMRI Sensor object, which
-        changes its state e.g. from INACTIVE to ACTIVE.</li>
+        <li>That input is connected to a JMRI Sensor object, which changes its state e.g. from
+        INACTIVE to ACTIVE.</li>
 
-        <li>Because the Turnout is watching that Sensor for
-        ONESENSOR feedback, when the change occurs it sets the
-        known state of the turnout to THROWN.</li>
-      </ol>This sequence takes a little time, but the known state
-      of the Turnout isn't changed until the points have actually
-      moved on the layout. Then, icons on panels, signal logic, etc
-      will all be notified of the change in known state and react.
-
-      <h3>Uncommanded changes on the layout</h3>Feedback allows
-      JMRI to detect that something has changed due to action on
-      the layout, instead of a command from the program. For
-      example, if you're using feedback from a turnout, you might
-      see something like this sequence:
-
+        <li>Because the Turnout is watching that Sensor for ONESENSOR feedback, when the change
+        occurs it sets the known state of the turnout to THROWN.</li>
+      </ol>
+      This sequence takes a little time, but the known state of the Turnout isn't changed until the
+      points have actually moved on the layout. Then, icons on panels, signal logic, etc will all
+      be notified of the change in known state and react.
+      <h3>Uncommanded changes on the layout</h3>
+      Feedback allows JMRI to detect that something has changed due to action on the layout,
+      instead of a command from the program. For example, if you're using feedback from a turnout,
+      you might see something like this sequence:
       <ol>
-        <li>The program sets the commanded state to THROWN, and
-        instructions go out to the turnout telling it to move to
-        that position.</li>
+        <li>The program sets the commanded state to THROWN, and instructions go out to the turnout
+        telling it to move to that position.</li>
 
-        <li>Later, the feedback information comes back to indicate
-        that the movement has taken place. This sets the known
-        state in JMRI to THROWN.</li>
+        <li>Later, the feedback information comes back to indicate that the movement has taken
+        place. This sets the known state in JMRI to THROWN.</li>
 
-        <li>Later, and independently, you move the turnout on the
-        layout to the CLOSED position, perhaps with a ground throw
-        or local pushbutton.</li>
+        <li>Later, and independently, you move the turnout on the layout to the CLOSED position,
+        perhaps with a ground throw or local pushbutton.</li>
 
-        <li>This causes the feedback information sent to JMRI to
-        change.</li>
+        <li>This causes the feedback information sent to JMRI to change.</li>
 
-        <li>Because of this, the known state is changed to
-        CLOSED.</li>
+        <li>Because of this, the known state is changed to CLOSED.</li>
 
-        <li>At this point, JMRI makes the assumption that you
-        wanted this to happen; in effect, a command was given on
-        the layout (not in the program) to move the turnout. So
-        JMRI changes the commanded state to CLOSED also.</li>
-      </ol>Note that this last transition in commanded state does
-      not send commands to the layout; it's just a change within
-      the program.
-
-      <h3>TWOSENSOR feedback and inconsistent state</h3>TWOSENSOR
-      feedback uses two separate sensors to indicate when the
-      turnout has successfully gone to CLOSED and THROWN state.
-      During the transition between those two, it's in neither
-      state, so the turnout state appears as INCONSISTENT. For
-      example:
-
+        <li>At this point, JMRI makes the assumption that you wanted this to happen; in effect, a
+        command was given on the layout (not in the program) to move the turnout. So JMRI changes
+        the commanded state to CLOSED also.</li>
+      </ol>
+      Note that this last transition in commanded state does not send commands to the layout; it's
+      just a change within the program.
+      <h3>TWOSENSOR feedback and inconsistent state</h3>
+      TWOSENSOR feedback uses two separate sensors to indicate when the turnout has successfully
+      gone to CLOSED and THROWN state. During the transition between those two, it's in neither
+      state, so the turnout state appears as INCONSISTENT. For example:
       <ol>
-        <li>The turnout is currently showing CLOSED, with the
-        closed-sensing Sensor showing active and the thrown-sensing
-        Sensor showing inactive.</li>
+        <li>The turnout is currently showing CLOSED, with the closed-sensing Sensor showing active
+        and the thrown-sensing Sensor showing inactive.</li>
 
-        <li>You command the turnout to move, and it starts
-        moving.</li>
+        <li>You command the turnout to move, and it starts moving.</li>
 
-        <li>The closed-sensing Sensor going inactive as the points
-        lift off, and the turnout starts to show INCONSISTENT.</li>
+        <li>The closed-sensing Sensor going inactive as the points lift off, and the turnout starts
+        to show INCONSISTENT.</li>
 
-        <li>The thrown-sensing Sensor goes Active as the points
-        settle on closed, and the Turnout will start to show
-        Closed.</li>
-      </ol>The same happens if you remotely start the turnout
-      moving, for example with a local push-button.
-
+        <li>The thrown-sensing Sensor goes Active as the points settle on closed, and the Turnout
+        will start to show Closed.</li>
+      </ol>
+      The same happens if you remotely start the turnout moving, for example with a local
+      push-button.
       <ol>
         <li>The turnout starts to move</li>
 
-        <li>The sensor indicates that by going inactive, and the
-        turnout shows INCONSISTENT</li>
+        <li>The sensor indicates that by going inactive, and the turnout shows INCONSISTENT</li>
 
-        <li>The other sensor sees the turnout settle into place,
-        and the final state is shown.</li>
+        <li>The other sensor sees the turnout settle into place, and the final state is shown.</li>
 
-        <li>JMRI thinks you must have done that intentionally, and
-        sets the commanded state equal to the feedback state.</li>
-      </ol>(N.b.: Sometimes the mechanical linkages are not
-      perfect, and the "to" sensor will go Active before the "from
-      sensor goes Inactive. The program handles this the same way:
-      It will show INCONSISTENT if either both sensors are Active,
-      or both Inactive)
-
-      <h3>Bus-based systems and input messages</h3>Some DCC
-      systems, e.g. LocoNet, XPressNet and NCE systems, can handle
-      commands to turnouts from multiple sources. When set to
-      MONITORING feedback, JMRI looks for those for confirmation of
-      the proper state of the turnout: Seeing the message sent is
-      considered confirmation that the turnout has changed.
-
-      <p>With MONITORING set, when something outside of JMRI (e.g.
-      another program; a handheld throttle) changes the turnout
-      state, JMRI will accept that and change its internal state
-      for the turnout.</p>
-
+        <li>JMRI thinks you must have done that intentionally, and sets the commanded state equal
+        to the feedback state.</li>
+      </ol>
+      (N.b.: Sometimes the mechanical linkages are not perfect, and the "to" sensor will go Active
+      before the "from sensor goes Inactive. The program handles this the same way: It will show
+      INCONSISTENT if either both sensors are Active, or both Inactive)
+      <h3>Bus-based systems and input messages</h3>
+      Some DCC systems, e.g. LocoNet, XPressNet and NCE systems, can handle commands to turnouts
+      from multiple sources. When set to MONITORING feedback, JMRI looks for those for confirmation
+      of the proper state of the turnout: Seeing the message sent is considered confirmation that
+      the turnout has changed.
+      <p>With MONITORING set, when something outside of JMRI (e.g. another program; a handheld
+      throttle) changes the turnout state, JMRI will accept that and change its internal state for
+      the turnout.</p>
       <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

@@ -53,7 +53,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
 
     public void setNames(String[] names) {
         if (names.length > 0) {
-            java.util.Arrays.sort(names);
+            Arrays.sort(names);
             for (String name : names) {
                 if (!list.contains(name)) {
                     list.add(name);

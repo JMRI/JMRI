@@ -42,9 +42,14 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
             Element elementParameter = new Element("Reference");
             elementParameter.addContent(new Element("name").addContent(ref.getName()));
             elementParameter.addContent(new Element("type").addContent(ref.getType().name()));
+            elementParameter.addContent(new Element("all").addContent(ref.getListenOnAllProperties() ? "yes" : "no"));  // NOI18N
             parameters.addContent(elementParameter);
         }
         element.addContent(parameters);
+        
+        element.addContent(new Element("localVariableNamedBean").addContent(p.getLocalVariableNamedBean()));
+        element.addContent(new Element("localVariableEvent").addContent(p.getLocalVariableEvent()));
+        element.addContent(new Element("localVariableNewValue").addContent(p.getLocalVariableNewValue()));
         
         return element;
     }
@@ -72,7 +77,28 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
             if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
             if (type == null) throw new IllegalArgumentException("Element 'type' does not exists");
             
-            h.addReference(new NamedBeanReference(elementName.getTextTrim(), type));
+            String all = "no";  // NOI18N
+            if (e.getChild("all") != null) {  // NOI18N
+                all = e.getChild("all").getValue();  // NOI18N
+            }
+            boolean listenToAll = "yes".equals(all); // NOI18N
+            
+            h.addReference(new NamedBeanReference(elementName.getTextTrim(), type, listenToAll));
+        }
+        
+        Element variableName = shared.getChild("localVariableNamedBean");
+        if (variableName != null) {
+            h.setLocalVariableNamedBean(variableName.getTextTrim());
+        }
+        
+        variableName = shared.getChild("localVariableEvent");
+        if (variableName != null) {
+            h.setLocalVariableEvent(variableName.getTextTrim());
+        }
+        
+        variableName = shared.getChild("localVariableNewValue");
+        if (variableName != null) {
+            h.setLocalVariableNewValue(variableName.getTextTrim());
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

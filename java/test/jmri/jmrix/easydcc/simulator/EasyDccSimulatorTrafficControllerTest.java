@@ -14,7 +14,6 @@ import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import jmri.util.junit.rules.RetryRule;
 
 /**
  * JUnit tests for the EasyDccSimulatorTrafficController class
@@ -23,8 +22,6 @@ import jmri.util.junit.rules.RetryRule;
  */
 @Timeout(90)
 public class EasyDccSimulatorTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
-
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     public void testSendThenRcvReply() throws Exception {

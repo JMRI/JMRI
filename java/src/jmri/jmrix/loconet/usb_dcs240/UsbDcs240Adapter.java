@@ -68,10 +68,10 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
             // connect to a packetizing traffic controller
             // that does echoing
             //
-            // Note - already created a LocoNetSystemConnectionMemo, so re-use 
+            // Note - already created a LocoNetSystemConnectionMemo, so re-use
             // it when creating a PR2 Packetizer.  (If create a new one, will
             // end up with two "LocoNet" menus...)
-            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = 
+            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets =
                     new jmri.jmrix.loconet.pr2.LnPr2Packetizer(this.getSystemConnectionMemo());
             packets.connectPort(this);
 
@@ -79,7 +79,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);  // never transponding!
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);  // never transponding!
             this.getSystemConnectionMemo().configureManagersPR2();
 
             // start operation
@@ -98,6 +98,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
             // MS100 modes - connecting to a separate command station
             // get transponding option
             setTranspondingAvailable(getOptionState("TranspondingPresent"));
+            setInterrogateOnStart(getOptionState("InterrogateOnStart"));
             // connect to a packetizing traffic controller
             LnPacketizer packets = getPacketizer(getOptionState(option4Name));
             packets.connectPort(this);
@@ -106,7 +107,7 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
 
             this.getSystemConnectionMemo().configureManagersMS100();
 
@@ -161,12 +162,12 @@ public class UsbDcs240Adapter extends LocoBufferAdapter {
      */
     public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length + 1];
-        retval[0] = LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE.getName();
-        retval[1] = LnCommandStationType.COMMAND_STATION_DCS240.getName();
+        retval[0] = LnCommandStationType.COMMAND_STATION_DCS240.getName();
+        retval[1] = LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE.getName();
         int count = 2;
         for (String commandStationName : commandStationNames) {
             if (!commandStationName.equals(LnCommandStationType.COMMAND_STATION_DCS240.getName())) {
-                // include all but COMMAND_STATION_DCS240, which was forced  to 
+                // include all but COMMAND_STATION_DCS240, which was forced  to
                 // the front of the list (above)
                 retval[count++] = commandStationName;
             }

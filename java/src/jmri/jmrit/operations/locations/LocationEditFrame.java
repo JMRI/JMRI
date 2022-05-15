@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
@@ -40,10 +42,32 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTable yardTable = new JTable(yardModel);
     JScrollPane yardPane;
     SpurTableModel spurModel = new SpurTableModel();
-    JTable spurTable = new JTable(spurModel);
+    JTable spurTable = new JTable(spurModel) {
+        // create tool tip for Hold column
+        @Override
+        public String getToolTipText(MouseEvent e) {
+            int colIndex = columnAtPoint(e.getPoint());
+            int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.HOLD_COLUMN) {
+                return Bundle.getMessage("HoldCarsWithCustomLoads");
+            }
+            return null;
+        }
+    };
     JScrollPane spurPane;
     InterchangeTableModel interchangeModel = new InterchangeTableModel();
-    JTable interchangeTable = new JTable(interchangeModel);
+    JTable interchangeTable = new JTable(interchangeModel) {
+        // create tool tip for Routed column
+        @Override
+        public String getToolTipText(MouseEvent e) {
+            int colIndex = columnAtPoint(e.getPoint());
+            int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.ROUTED_COLUMN) {
+                return Bundle.getMessage("TipOnlyCarsWithFD");
+            }
+            return null;
+        }
+    };
     JScrollPane interchangePane;
     StagingTableModel stagingModel = new StagingTableModel();
     JTable stagingTable = new JTable(stagingModel);
@@ -89,6 +113,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTextArea commentTextArea = new JTextArea(2, 60);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    JColorChooser commentColorChooser = new JColorChooser();
 
     // combo boxes
     protected JComboBox<Division> divisionComboBox = InstanceManager.getDefault(DivisionManager.class).getComboBox();
@@ -223,9 +248,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pC.setLayout(new GridBagLayout());
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
         addItem(pC, commentScroller, 0, 0);
+        if (_location != null) {
+            addItem(pC, OperationsPanel.getColorChooserPanel(_location.getCommentWithColor(), commentColorChooser), 2, 0);
+        } else {
+            addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
+        }
 
-        // adjust text area width based on window size
-        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
+        // adjust text area width based on window size less color chooser
+        Dimension d = new Dimension(getPreferredSize().width - 100, getPreferredSize().height);
+        adjustTextAreaColumnWidth(commentScroller, commentTextArea, d);
 
         JPanel readerPanel = new JPanel();
         readerPanel.setVisible(false);
@@ -307,9 +338,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_AddLocation", true); // NOI18N
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
     }
 
     private void loadToolMenu() {
@@ -325,12 +354,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
-        toolMenu.addSeparator();
-        toolMenu.add(new PrintLocationsAction(false, _location));
-        toolMenu.add(new PrintLocationsAction(true, _location));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
     }
 
     // frames
@@ -491,7 +520,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             stagingTable.getCellEditor().stopCellEditing();
         }
         _location.setName(locationNameTextField.getText());
-        _location.setComment(commentTextArea.getText());
+        _location.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()));
         _location.setDivision((Division) divisionComboBox.getSelectedItem());
         if (Setup.isRfidEnabled() && readerSelector != null) {
             _location.setReporter(readerSelector.getSelectedItem());

@@ -139,7 +139,7 @@
       DecoderPro, PanelPro, etc. These are all identical except for application name and main Java
       class.</p>
 
-      <h3>Parameters</h3>
+      <h3 id="parameters">Parameters</h3>
 
       <p>The JMRI shell scripts take the following parameters:</p>
 
@@ -222,6 +222,19 @@
             </dd>
           </dl>
         </dd>
+
+        <dt><code>-T</code>
+        </dt>
+
+        <dt><code>-t</code>
+        </dt>
+
+        <dd>JMRI applications normally (-t case) configures itself to use the
+            main menu bar on Apple Mac systems.  This interferes with
+            Jemmy screen-based tests.  The -T option forces standard
+            (on window) Java menus which allows Jemmy tests to run properly.
+            -T is the default when running tests with
+            <code>./runtest.csh</code> or from <code>ant</code>.</dd>
 
         <dt><code>--help</code>
         </dt>
@@ -589,7 +602,6 @@
         different fixed buttons on the main window, PanelPro has an identical user interface to the
         legacy DecoderPro.</li>
 
-        <li style="list-style: none">
           <ul>
             <li>You can add the 3 fixed buttons (Open Roster, Service Mode, Operations Mode) that
             used to be on the legacy DecoderPro by adding a script at start-up.</li>
@@ -599,11 +611,9 @@
 
             <li>Then, save and restart.</li>
           </ul>
-        </li>
 
         <li><strong>Using PanelPro with buttons</strong>:</li>
 
-        <li style="list-style: none">
           <ul>
             <li>You can add several fixed buttons of your choice on the PanelPro interface.</li>
 
@@ -615,11 +625,9 @@
 
             <li>Then, save and restart.</li>
           </ul>
-        </li>
 
         <li><strong>Adding a custom shortcut to legacy DecoderPro</strong>:</li>
 
-        <li style="list-style: none">
           <ul>
             <li>Copy and Paste the "DecoderPro" shortcut (on your desktop or in the start
             menu)</li>
@@ -634,7 +642,6 @@
 
             <li>This will launch the legacy DecoderPro interface.</li>
           </ul>
-        </li>
       </ol>
       <!--#include virtual="/Footer.shtml" -->
     </div>

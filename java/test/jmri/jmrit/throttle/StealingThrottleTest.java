@@ -23,6 +23,7 @@ public class StealingThrottleTest {
     private ThrottleFrame panel = null;
     private ThrottleOperator to = null;
 
+    @Disabled("Jemmy has trouble locating internal frame")
     @Test
     public void testSetAndReleaseWithSteal() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -44,6 +45,7 @@ public class StealingThrottleTest {
         to.pushReleaseButton();
     }
 
+    @Disabled("Jemmy has trouble locating internal frame")
     @Test
     public void testSetAndRefuseSteal() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -63,6 +65,7 @@ public class StealingThrottleTest {
         Assert.assertTrue("set button enabled", to.setButtonEnabled());
     }
 
+    @Disabled("Jemmy has trouble locating internal frame")
     @Test
     public void testRefuseOneStealOne() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -84,7 +87,7 @@ public class StealingThrottleTest {
 
         /* Removing bellow test, focus issue on address text field for the bellow typeAddressValue
          * testing for addressFieldEnabled above is already good enough
-        
+
         to.typeAddressValue(45);
         to.getQueueTool().waitEmpty(100);  //pause
 

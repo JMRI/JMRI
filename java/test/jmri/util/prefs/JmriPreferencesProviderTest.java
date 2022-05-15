@@ -106,8 +106,11 @@ public class JmriPreferencesProviderTest {
      * Test of findCNBForPackage method, of class JmriPreferencesProvider.
      */
     @Test
+    @SuppressWarnings("deprecated") // Package.getPackage()
     public void testFindCNBForPackage() {
-        assertEquals("jmri-server-json", JmriPreferencesProvider.findCNBForPackage(Package.getPackage("jmri.server.json")));
+        ClassLoader cl = getClass().getClassLoader();
+        assertEquals("jmri-util", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.util")));
+        assertEquals("jmri-jmrit-logixng", JmriPreferencesProvider.findCNBForPackage(cl.getDefinedPackage("jmri.jmrit.logixng")));
     }
 
     /**

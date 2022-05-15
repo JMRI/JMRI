@@ -1,39 +1,46 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyVetoException;
-
-import jmri.jmrit.logixng.TableRowOrColumn;
-
-import java.beans.VetoableChangeListener;
-import java.util.Locale;
-import java.util.Map;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
+import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.util.TypeConversionUtil;
 
 /**
  * Executes an action when the expression is True.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class TableForEach extends AbstractDigitalAction
-        implements FemaleSocketListener, VetoableChangeListener {
+        implements FemaleSocketListener, PropertyChangeListener {
 
-    private NamedBeanHandle<NamedTable> _tableHandle;
+    private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class), this);
+    private NamedBeanAddressing _rowOrColumnAddressing = NamedBeanAddressing.Direct;
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnName = "";
+    private String _rowOrColumnReference = "";
+    private String _rowOrColumnLocalVariable = "";
+    private String _rowOrColumnFormula = "";
+    private ExpressionNode _rowOrColumnExpressionNode;
     private String _variableName = "";
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
-    
+
     public TableForEach(String sys, String user) {
         super(sys, user);
         _socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A1");
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -42,36 +49,68 @@ public class TableForEach extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         TableForEach copy = new TableForEach(sysName, userName);
         copy.setComment(getComment());
-        copy.setTable(_tableHandle);
-        copy.setTableRowOrColumn(_tableRowOrColumn);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        copy.setRowOrColumnAddressing(_rowOrColumnAddressing);
+        copy.setRowOrColumn(_tableRowOrColumn);
         copy.setRowOrColumnName(_rowOrColumnName);
         copy.setLocalVariableName(_variableName);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
+    public LogixNG_SelectNamedBean<NamedTable> getSelectNamedBean() {
+        return _selectNamedBean;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.COMMON;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExternal() {
-        return false;
+    private String getNewRowOrColumnName() throws JmriException {
+
+        switch (_rowOrColumnAddressing) {
+            case Direct:
+                return _rowOrColumnName;
+
+            case Reference:
+                return ReferenceUtil.getReference(
+                        getConditionalNG().getSymbolTable(), _rowOrColumnReference);
+
+            case LocalVariable:
+                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_rowOrColumnLocalVariable), false);
+
+            case Formula:
+                return _rowOrColumnExpressionNode != null
+                        ? TypeConversionUtil.convertToString(
+                                _rowOrColumnExpressionNode.calculate(
+                                        getConditionalNG().getSymbolTable()), false)
+                        : null;
+
+            default:
+                throw new IllegalArgumentException("invalid _rowOrColumnAddressing state: " + _rowOrColumnAddressing.name());
+        }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        
-//        System.out.format("TableForEach.execute: %s%n", getLongDescription());
-        
-        if (_tableHandle == null) {
-            log.error("tableHandle is null");
+        Table table = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+
+        if (table == null) {
+//            log.error("turnout is null");
             return;
         }
-        if (_rowOrColumnName.isEmpty()) {
+
+        String rowOrColumnName = getNewRowOrColumnName();
+
+        if (rowOrColumnName == null) {
+            log.error("rowOrColumnName is null");
+            return;
+        }
+        if (rowOrColumnName.isEmpty()) {
             log.error("rowOrColumnName is empty string");
             return;
         }
@@ -83,13 +122,11 @@ public class TableForEach extends AbstractDigitalAction
             log.error("socket is not connected");
             return;
         }
-        
+
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-        
-        NamedTable table = _tableHandle.getBean();
-        
+
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
-            int row = table.getRowNumber(_rowOrColumnName);
+            int row = table.getRowNumber(rowOrColumnName);
             for (int column=1; column <= table.numColumns(); column++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(0, column);
@@ -101,7 +138,7 @@ public class TableForEach extends AbstractDigitalAction
                 }
             }
         } else {
-            int column = table.getColumnNumber(_rowOrColumnName);
+            int column = table.getColumnNumber(rowOrColumnName);
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(row, 0);
@@ -115,57 +152,31 @@ public class TableForEach extends AbstractDigitalAction
         }
     }
 
-    public void setTable(@Nonnull String tableName) {
-        assertListenersAreNotRegistered(log, "setTable");
-        NamedTable table = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(tableName);
-        if (table != null) {
-            setTable(table);
-        } else {
-            removeTable();
-            log.error("turnout \"{}\" is not found", tableName);
-        }
-    }
-    
-    public void setTable(@Nonnull NamedBeanHandle<NamedTable> handle) {
-        assertListenersAreNotRegistered(log, "setTable");
-        _tableHandle = handle;
-        InstanceManager.getDefault(NamedTableManager.class).addVetoableChangeListener(this);
-    }
-    
-    public void setTable(@Nonnull NamedTable turnout) {
-        assertListenersAreNotRegistered(log, "setTable");
-        setTable(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
-    }
-    
-    public void removeTable() {
-        assertListenersAreNotRegistered(log, "setTable");
-        if (_tableHandle != null) {
-            InstanceManager.getDefault(NamedTableManager.class).removeVetoableChangeListener(this);
-            _tableHandle = null;
-        }
-    }
-    
-    public NamedBeanHandle<NamedTable> getTable() {
-        return _tableHandle;
-    }
-    
     /**
      * Get tableRowOrColumn.
      * @return tableRowOrColumn
      */
-    public TableRowOrColumn getTableRowOrColumn() {
+    public TableRowOrColumn getRowOrColumn() {
         return _tableRowOrColumn;
     }
-    
+
     /**
      * Set tableRowOrColumn.
      * @param tableRowOrColumn tableRowOrColumn
      */
-    public void setTableRowOrColumn(@Nonnull TableRowOrColumn tableRowOrColumn) {
+    public void setRowOrColumn(@Nonnull TableRowOrColumn tableRowOrColumn) {
         _tableRowOrColumn = tableRowOrColumn;
     }
-    
+
+    public void setRowOrColumnAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _rowOrColumnAddressing = addressing;
+        parseRowOrColumnFormula();
+    }
+
+    public NamedBeanAddressing getRowOrColumnAddressing() {
+        return _rowOrColumnAddressing;
+    }
+
     /**
      * Get name of row or column
      * @return name of row or column
@@ -173,7 +184,7 @@ public class TableForEach extends AbstractDigitalAction
     public String getRowOrColumnName() {
         return _rowOrColumnName;
     }
-    
+
     /**
      * Set name of row or column
      * @param rowOrColumnName name of row or column
@@ -182,7 +193,46 @@ public class TableForEach extends AbstractDigitalAction
         if (rowOrColumnName == null) throw new RuntimeException("Daniel");
         _rowOrColumnName = rowOrColumnName;
     }
-    
+
+    public void setRowOrColumnReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _rowOrColumnReference = reference;
+    }
+
+    public String getRowOrColumnReference() {
+        return _rowOrColumnReference;
+    }
+
+    public void setRowOrColumnLocalVariable(@Nonnull String localVariable) {
+        _rowOrColumnLocalVariable = localVariable;
+    }
+
+    public String getRowOrColumnLocalVariable() {
+        return _rowOrColumnLocalVariable;
+    }
+
+    public void setRowOrColumnFormula(@Nonnull String formula) throws ParserException {
+        _rowOrColumnFormula = formula;
+        parseRowOrColumnFormula();
+    }
+
+    public String getRowOrColumnFormula() {
+        return _rowOrColumnFormula;
+    }
+
+    private void parseRowOrColumnFormula() throws ParserException {
+        if (_rowOrColumnAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _rowOrColumnExpressionNode = parser.parseExpression(_rowOrColumnFormula);
+        } else {
+            _rowOrColumnExpressionNode = null;
+        }
+    }
+
     /**
      * Get name of local variable
      * @return name of local variable
@@ -190,7 +240,7 @@ public class TableForEach extends AbstractDigitalAction
     public String getLocalVariableName() {
         return _variableName;
     }
-    
+
     /**
      * Set name of local variable
      * @param localVariableName name of local variable
@@ -198,30 +248,13 @@ public class TableForEach extends AbstractDigitalAction
     public void setLocalVariableName(String localVariableName) {
         _variableName = localVariableName;
     }
-    
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof NamedTable) {
-                if (evt.getOldValue().equals(getTable().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof NamedTable) {
-                if (evt.getOldValue().equals(getTable().getBean())) {
-                    removeTable();
-                }
-            }
-        }
-    }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
                 return _socket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -258,11 +291,35 @@ public class TableForEach extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
+        String namedBean = _selectNamedBean.getDescription(locale);
+        String rowOrColumnName;
+
+        switch (_rowOrColumnAddressing) {
+            case Direct:
+                rowOrColumnName = Bundle.getMessage(locale, "AddressByDirect", _rowOrColumnName);
+                break;
+
+            case Reference:
+                rowOrColumnName = Bundle.getMessage(locale, "AddressByReference", _rowOrColumnReference);
+                break;
+
+            case LocalVariable:
+                rowOrColumnName = Bundle.getMessage(locale, "AddressByLocalVariable", _rowOrColumnLocalVariable);
+                break;
+
+            case Formula:
+                rowOrColumnName = Bundle.getMessage(locale, "AddressByFormula", _rowOrColumnFormula);
+                break;
+
+            default:
+                throw new IllegalArgumentException("invalid _rowOrColumnAddressing state: " + _rowOrColumnAddressing.name());
+        }
+
         return Bundle.getMessage(locale, "TableForEach_Long",
                 _tableRowOrColumn.getOpposite().toStringLowerCase(),
                 _tableRowOrColumn.toStringLowerCase(),
-                _rowOrColumnName,
-                getTable() != null ? getTable().getName() : "",
+                rowOrColumnName,
+                namedBean,
                 _variableName,
                 _socket.getName());
     }
@@ -286,7 +343,7 @@ public class TableForEach extends AbstractDigitalAction
             if ( !_socket.isConnected()
                     || !_socket.getConnectedSocket().getSystemName()
                             .equals(_socketSystemName)) {
-                
+
                 String socketSystemName = _socketSystemName;
                 _socket.disconnect();
                 if (socketSystemName != null) {
@@ -309,22 +366,29 @@ public class TableForEach extends AbstractDigitalAction
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEach.class);
 

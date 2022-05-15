@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -211,8 +209,8 @@ public class NXFrameTest {
         assertThat(warrant.getThrottleCommands().size()>5).withFailMessage("Num Comands").isTrue();
 
         String name = block.getDisplayName();
-        jmri.util.JUnitUtil.waitFor(
-            ()->{return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
+        jmri.util.JUnitUtil.waitFor(()->{
+            return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
             "Waiting message");
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
         assertThat(sensor0).withFailMessage("Senor IS0 not found").isNotNull();
@@ -225,10 +223,9 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
+            JUnitUtil.waitFor(200);
+            return Bundle.getMessage("RampHalt", warrant.getTrainName(), testblock.getDisplayName()).equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
-
-        assertThat(Bundle.getMessage("Halted", block.getDisplayName(), "1")).withFailMessage("Halted/Resume message").isEqualTo(warrant.getRunningMessage());
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
@@ -285,6 +282,7 @@ public class NXFrameTest {
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
+            if (m == null) return false;
             return m.endsWith("Cmd #3.");
         }, "Train is moving at 3rd command");
 
@@ -335,38 +333,36 @@ public class NXFrameTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
+            if (m == null) return false;
             return m.endsWith("Cmd #8.");
         }, "Train starts to move at 8th command");
 
        // OBlock sensor names
         String[] route1 = {"OB1", "OB6", "OB3"};
-        OBlock block = _OBlockMgr.getOBlock("OB3");
+        final OBlock block3 = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block.getSensor().getDisplayName());
+        assertThat(runtimes(route1,_OBlockMgr).getDisplayName()).withFailMessage("Train in block OB3").isEqualTo(block3.getSensor().getDisplayName());
 
         warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
         JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
-//        new QueueTool().waitEmpty(10);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return (m.startsWith("Halted in block"));
+            return (m.equals(Bundle.getMessage("RampHalt", warrant.getTrainName(), block3.getDisplayName())));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
-        JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
-//        new QueueTool().waitEmpty(10);
-
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.startsWith("Running in Block OB3") ||
+            if (m == null) return false;
+            return m.startsWith("At speed Normal") ||
                     m.startsWith("Overdue for arrival at block");
         }, "Train Resumed");
 
         String[] route2 = {"OB3", "OB7", "OB5"};
-        block = _OBlockMgr.getOBlock("OB5");
+        OBlock block5 = _OBlockMgr.getOBlock("OB5");
         // runtimes() in next line runs the train, then checks location
-        assertThat(runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block.getSensor().getDisplayName());
+        assertThat(runtimes(route2, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block5.getSensor().getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -386,38 +382,34 @@ public class NXFrameTest {
      * @return active end sensor
      * @throws Exception exception thrown
      */
-    protected static  Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
-        OBlock block = mgr.getOBlock(route[0]);
-        Sensor sensor = block.getSensor();
+    protected static Sensor runtimes(String[] route, OBlockManager mgr) throws Exception {
+        Sensor sensor = null;
         for (int i = 1; i < route.length; i++) {
-            JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//            new org.netbeans.jemmy.QueueTool().waitEmpty(150);
-
-            OBlock nextBlock = mgr.getOBlock(route[i]);
-            Sensor nextSensor;
-            boolean dark = (block.getState() & OBlock.UNDETECTED) != 0;
-            if (!dark) {
-                nextSensor = nextBlock.getSensor();
-                nextSensor.setState(Sensor.ACTIVE);
-                NXFrameTest.setAndConfirmSensorAction(nextSensor, Sensor.ACTIVE, nextBlock);
-            } else {
-                nextSensor = null;
-            }
-            if (sensor != null) {
-                JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//                new org.netbeans.jemmy.QueueTool().waitEmpty(150);
-                sensor.setState(Sensor.INACTIVE);
-                NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
-            }
-            if (!dark) {
-                sensor = nextSensor;
-                block = nextBlock;
-            }
+            sensor = moveToNextBlock(i, route, mgr);
         }
-        JUnitUtil.waitFor(150);     // waitEmpty(150) causes a lot of failures on Travis GUI
-//        new org.netbeans.jemmy.QueueTool().waitEmpty(150);
         return sensor;
     }
+
+    protected static Sensor moveToNextBlock(int idx, String[] route, OBlockManager mgr) {
+        assertThat(idx > 0 && idx < route.length).withFailMessage("Index "+ idx + " invalid ").isTrue();
+
+        OBlock fromBlock = mgr.getOBlock(route[idx - 1]);
+        Sensor fromSensor = fromBlock.getSensor();
+        assertThat(fromSensor).withFailMessage("fromSensor not found").isNotNull();
+
+        OBlock toBlock = mgr.getOBlock(route[idx]);
+        Sensor toSensor = toBlock.getSensor();
+        assertThat(toSensor).withFailMessage("toSensor not found").isNotNull();
+
+        JUnitUtil.waitFor(300);
+        NXFrameTest.setAndConfirmSensorAction(toSensor, Sensor.ACTIVE, toBlock);
+
+        JUnitUtil.waitFor(200);
+        NXFrameTest.setAndConfirmSensorAction(fromSensor, Sensor.INACTIVE, fromBlock);
+
+        return toSensor;
+    }
+
 
     protected static void setAndConfirmSensorAction(Sensor sensor, int state, OBlock block)  {
         if (state == Sensor.ACTIVE) {
@@ -464,6 +456,7 @@ public class NXFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.removeMatchingThreads("Engineer(");
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();

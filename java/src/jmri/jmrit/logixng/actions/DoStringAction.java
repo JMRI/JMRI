@@ -48,12 +48,6 @@ public class DoStringAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         String result = _stringExpressionSocket.evaluate();
         

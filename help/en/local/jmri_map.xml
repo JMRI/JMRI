@@ -72,7 +72,6 @@
 <mapID target="html.hardware.arduino.index_using" url="html/hardware/arduino/index.shtml#using"/>
 <mapID target="html.hardware.bachrus.index" url="html/hardware/bachrus/index.shtml"/>
 <mapID target="html.hardware.can.cbus.CbusMeters" url="html/hardware/can/cbus/CbusMeters.shtml"/>
-<mapID target="html.hardware.can.cbus.Details" url="html/hardware/can/cbus/Details.shtml"/>
 <mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml"/>
 <mapID target="html.hardware.can.cbus.index" url="html/hardware/can/cbus/index.shtml"/>
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
@@ -99,6 +98,7 @@
 <mapID target="html.hardware.loconet.Uhlenbrock" url="html/hardware/loconet/Uhlenbrock.shtml"/>
 <mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
 <mapID target="html.hardware.marklin.index" url="html/hardware/marklin/index.shtml"/>
+<mapID target="html.hardware.merg.Details" url="html/hardware/merg/Details.shtml"/>
 <mapID target="html.hardware.merg.index" url="html/hardware/merg/index.shtml"/>
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 <mapID target="html.hardware.modbus.index" url="html/hardware/modbus/index.shtml"/>
@@ -167,6 +167,7 @@
 <mapID target="html.tools.scripting.Jynstruments" url="html/tools/scripting/Jynstruments.shtml"/>
 <mapID target="html.tools.scripting.JythonApps" url="html/tools/scripting/JythonApps.shtml"/>
 <mapID target="html.tools.scripting.Python" url="html/tools/scripting/Python.shtml"/>
+<mapID target="html.tools.scripting.Python3" url="html/tools/scripting/Python3.shtml"/>
 <mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml"/>
 <mapID target="html.tools.scripting.WhatWhere" url="html/tools/scripting/WhatWhere.shtml"/>
 <mapID target="html.tools.scripting.ex_set_turnouts" url="html/tools/scripting/ex_set_turnouts.shtml"/>
@@ -186,6 +187,7 @@
 <mapID target="html.tools.throttle.ThrottleMain" url="html/tools/throttle/ThrottleMain.shtml"/>
 <mapID target="html.tools.tracker.index" url="html/tools/tracker/index.shtml"/>
 <mapID target="html.tools.uss.index" url="html/tools/uss/index.shtml"/>
+<mapID target="html.tools.vsd.index" url="html/tools/vsd/index.shtml"/>
 <mapID target="html.web.index" url="html/web/index.shtml"/>
 <mapID target="index" url="index.shtml"/>
 <mapID target="manual.DecoderPro.Basic_Start" url="manual/DecoderPro/Basic_Start.shtml"/>
@@ -362,7 +364,6 @@
 <mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml"/>
 <mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.shtml"/>
 <mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"/>
-<mapID target="package.jmri.jmrit.vsdecoder.VSDecoderFrame" url="package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml"/>
 <mapID target="package.jmri.jmrit.webThrottle.webThrottle" url="package/jmri/jmrit/webThrottle/webThrottle.shtml"/>
 <mapID target="package.jmri.jmrit.whereused.WhereUsed" url="package/jmri/jmrit/whereused/WhereUsed.shtml"/>
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>

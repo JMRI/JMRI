@@ -1,29 +1,18 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
+import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.UserPreferencesManager;
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-
 
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
@@ -125,7 +114,12 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
 
     @Override
     protected void deleteBean(Module bean) {
-        InstanceManager.getDefault(ModuleManager.class).deleteModule(bean);
+        try {
+            InstanceManager.getDefault(ModuleManager.class).deleteBean(bean, "DoDelete");
+        } catch (PropertyVetoException e) {
+            //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+            log.error(e.getMessage());
+        }
     }
 
     @Override
@@ -253,5 +247,17 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         });
         return panel5;
     }
+
+    @Override
+    protected void getListenerRefsIncludingChildren(Module module, java.util.List<String> list) {
+        module.getListenerRefsIncludingChildren(list);
+    }
+
+    @Override
+    protected boolean hasChildren(Module module) {
+        return module.getRootSocket().isConnected();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGModuleTableAction.class);
 
 }

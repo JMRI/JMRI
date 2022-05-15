@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
@@ -140,7 +138,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         });
 
-        for (Map.Entry<String, Option> entry : options.entrySet()) {
+        options.entrySet().forEach(entry -> {
             final String item = entry.getKey();
             if (entry.getValue().getComponent() instanceof JComboBox) {
                 ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
@@ -169,7 +167,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                     }
                 });
             }
-        }
+        });
 
         addNameEntryCheckers(adapter);
 
@@ -183,15 +181,15 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public void updateAdapter() {
         if (adapter.getMdnsConfigure()) {
             // set the hostname if it is not blank
-            if (!(hostNameField.getText().equals(""))) {
+            if (!(hostNameField.getText().isEmpty())) {
                 adapter.setHostName(hostNameField.getText());
             }
             // set the advertisement name if it is not blank
-            if (!(adNameField.getText().equals(""))) {
+            if (!(adNameField.getText().isEmpty())) {
                 adapter.setAdvertisementName(adNameField.getText());
             }
             // set the Service Type if it is not blank.
-            if (!(serviceTypeField.getText().equals(""))) {
+            if (!(serviceTypeField.getText().isEmpty())) {
                 adapter.setServiceType(serviceTypeField.getText());
             }
             // and get the host IP and port number
@@ -201,9 +199,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             adapter.setHostName(hostNameField.getText());
             adapter.setPort(Integer.parseInt(portField.getText()));
         }
-        for (Map.Entry<String, Option> entry : options.entrySet()) {
+        options.entrySet().forEach(entry -> {
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
-        }
+        });
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
@@ -302,7 +300,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         hostNameField.setText(adapter.getHostName());
         hostNameFieldLabel = new JLabel(Bundle.getMessage("HostFieldLabel"));
         hostNameField.setToolTipText(Bundle.getMessage("HostFieldToolTip"));
-        if (adapter.getHostName() == null || adapter.getHostName().equals("")) {
+        if (adapter.getHostName() == null || adapter.getHostName().isEmpty()) {
             hostNameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName() + ".hostname"));
             adapter.setHostName(hostNameField.getText());
         }
@@ -499,6 +497,12 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         return false;
     }
 
+    /**
+     * Determine whether to display port in Advanced options.
+     * <p>
+     * Default in Abstract Net Conn Config. Abstract True.
+     * @return true to display port in advanced options.
+     */
     public boolean isPortAdvanced() {
         return true;
     }

@@ -34,8 +34,7 @@ public class SpeedUtilTest {
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-    }
+     }
 
     @AfterEach
     public void tearDown() {

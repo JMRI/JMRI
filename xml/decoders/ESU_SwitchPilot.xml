@@ -360,19 +360,19 @@
                                 <label>
                                     <text> </text>
                                 </label>
-                                <display item="Primary_Address_1">
+                                <display item="Primary_Address_1" viewOnly="yes">
                                     <label>Output 1 Address</label>
                                     <label xml:lang="de">Ausgang 1 Adresse</label>
                                 </display>
-                                <display item="Primary_Address_2">
+                                <display item="Primary_Address_2" viewOnly="yes">
                                     <label>Output 2 Address</label>
                                     <label xml:lang="de">Ausgang 2 Adresse</label>
                                 </display>
-                                <display item="Primary_Address_3">
+                                <display item="Primary_Address_3" viewOnly="yes">
                                     <label>Output 3 Address</label>
                                     <label xml:lang="de">Ausgang 3 Adresse</label>
                                 </display>
-                                <display item="Primary_Address_4">
+                                <display item="Primary_Address_4" viewOnly="yes">
                                     <label>Output 4 Address</label>
                                     <label xml:lang="de">Ausgang 4 Adresse</label>
                                 </display>
@@ -387,19 +387,19 @@
                                 <label>
                                     <text> </text>
                                 </label>
-                                <display item="Primary_Address_1">
+                                <display item="Primary_Address_1" viewOnly="yes">
                                     <label>Servo 1 Address</label>
                                     <label xml:lang="de">Servo 1 Adresse</label>
                                 </display>
-                                <display item="Primary_Address_2">
+                                <display item="Primary_Address_2" viewOnly="yes">
                                     <label>Servo 2 Address</label>
                                     <label xml:lang="de">Servo 2 Adresse</label>
                                 </display>
-                                <display item="Primary_Address_3">
+                                <display item="Primary_Address_3" viewOnly="yes">
                                     <label>Servo 3 Address</label>
                                     <label xml:lang="de">Servo 3 Adresse</label>
                                 </display>
-                                <display item="Primary_Address_4">
+                                <display item="Primary_Address_4" viewOnly="yes">
                                     <label>Servo 4 Address</label>
                                     <label xml:lang="de">Servo 4 Adresse</label>
                                 </display>
@@ -420,19 +420,19 @@
                                 <label>
                                     <text> </text>
                                 </label>
-                                <display item="Secondary_Address_1">
+                                <display item="Secondary_Address_1" viewOnly="yes">
                                     <label>Servo 1 Address</label>
                                     <label xml:lang="de">Servo 1 Adresse</label>
                                 </display>
-                                <display item="Secondary_Address_2">
+                                <display item="Secondary_Address_2" viewOnly="yes">
                                     <label>Servo 2 Address</label>
                                     <label xml:lang="de">Servo 2 Adresse</label>
                                 </display>
-                                <display item="Secondary_Address_3">
+                                <display item="Secondary_Address_3" viewOnly="yes">
                                     <label>Servo 3 Address</label>
                                     <label xml:lang="de">Servo 3 Adresse</label>
                                 </display>
-                                <display item="Secondary_Address_4">
+                                <display item="Secondary_Address_4" viewOnly="yes">
                                     <label>Servo 4 Address</label>
                                     <label xml:lang="de">Servo 4 Adresse</label>
                                 </display>
@@ -448,19 +448,19 @@
                                 <label>
                                     <text> </text>
                                 </label>
-                                <display item="Secondary_Address_1">
+                                <display item="Secondary_Address_1" viewOnly="yes">
                                     <label>Servo 1 Address for position C and D</label>
                                     <label xml:lang="de">Servo 1 Adresse für Position C und D</label>
                                 </display>
-                                <display item="Secondary_Address_2">
+                                <display item="Secondary_Address_2" viewOnly="yes">
                                     <label>Servo 2 Address for position C and D</label>
                                     <label xml:lang="de">Servo 2 Adresse für Position C und D</label>
                                 </display>
-                                <display item="Secondary_Address_3">
+                                <display item="Secondary_Address_3" viewOnly="yes">
                                     <label>Servo 3 Address for position C and D</label>
                                     <label xml:lang="de">Servo 3 Adresse für Position C und D</label>
                                 </display>
-                                <display item="Secondary_Address_4">
+                                <display item="Secondary_Address_4" viewOnly="yes">
                                     <label>Servo 4 Address for position C and D</label>
                                     <label xml:lang="de">Servo 4 Adresse für Position C und D</label>
                                 </display>

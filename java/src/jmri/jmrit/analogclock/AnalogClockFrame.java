@@ -269,7 +269,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();
@@ -299,7 +299,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         updateButtonText();
     }
-    
+
     /**
      * Update clock button text.
      */

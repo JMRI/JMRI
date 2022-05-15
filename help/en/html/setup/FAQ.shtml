@@ -1,55 +1,48 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI Setup - FAQ</title>
-
-  <!--#include virtual="/Style.shtml" -->
-
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI Setup - FAQ</title><!--#include virtual="/Style.shtml" -->
   <!-- FAQ-Head -->
+
   <script type="text/javascript">
     /*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/
   </script>
-  <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
-  media="screen">
-  <!-- /FAQ-Head -->
-  
+  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen"><!-- /FAQ-Head -->
 </head>
-
 <body>
   <!--#include virtual="/Header.shtml" -->
+
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
+
     <div id="mainContent">
       <!-- Page Body -->
 
       <h1>JMRI Setup: Frequently Asked Questions</h1>
-      <p>
-      This is the JMRI Setup "frequently asked
-      questions" list. Items get listed here if they're asked a
-      lot, even if they're also available somewhere else. 
-      <br>See also the <a href="../FAQ.shtml">JMRI general FAQ.</a>
-      </p>
+
+      <p>This is the JMRI Setup "frequently asked questions" list. Items get listed here if they're
+      asked a lot, even if they're also available somewhere else.<br>
+      See also the <a href="../FAQ.shtml">JMRI general FAQ.</a></p>
+
       <dl class="faq">
         <dt id="suggest" class="on">Suggestions appreciated</dt>
 
-        <dd>Please edit this file on 
-        <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/setup/FAQ.shtml" target="_blank">Github</a>
-        or make your suggestions on the
-        <a href="https://groups.io/g/jmriusers" target="_blank">JMRI User Forum.</a>        
+        <dd>
+          Please edit this file on <a href=
+          "https://github.com/JMRI/JMRI/blob/master/help/en/html/setup/FAQ.shtml" target=
+          "_blank">Github</a> or make your suggestions on the <a href=
+          "https://groups.io/g/jmriusers" target="_blank">JMRI User Forum.</a>
         </dd>
-        
       </dl>
-
-        <!--#include virtual="/Footer.shtml" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <!-- FAQ-Tail -->
-  <script type="text/javascript" src="/web/js/faq.js">
-  </script><!-- /FAQ-Tail -->
+  <script type="text/javascript" src="/web/js/faq.js"></script><!-- /FAQ-Tail -->
+   
   <script src="/js/main.js"></script>
 </body>
 </html>

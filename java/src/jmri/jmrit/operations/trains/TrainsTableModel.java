@@ -35,7 +35,10 @@ import jmri.util.table.ButtonRenderer;
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class); // There is only one manager
-
+    volatile List<Train> sysList = trainManager.getTrainsByTimeList();
+    JTable _table = null;
+    TrainsTableFrame _frame = null;
+    
     // Defines the columns
     private static final int ID_COLUMN = 0;
     private static final int TIME_COLUMN = ID_COLUMN + 1;
@@ -91,34 +94,30 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
-        synchronized (this) {
-            if (_sort == SORTBYID) {
-                sysList = trainManager.getTrainsByIdList();
-            } else {
-                sysList = trainManager.getTrainsByTimeList();
-            }
+        List<Train> tempList;
+        if (_sort == SORTBYID) {
+            tempList = trainManager.getTrainsByIdList();
+        } else {
+            tempList = trainManager.getTrainsByTimeList();
+        }
 
-            if (!isShowAll()) {
-                // filter out trains not checked
-                for (int i = sysList.size() - 1; i >= 0; i--) {
-                    if (!sysList.get(i).isBuildEnabled()) {
-                        sysList.remove(i);
-                    }
+        if (!isShowAll()) {
+            // filter out trains not checked
+            for (int i = tempList.size() - 1; i >= 0; i--) {
+                if (!tempList.get(i).isBuildEnabled()) {
+                    tempList.remove(i);
                 }
             }
         }
+        sysList = tempList;
 
         // and add listeners back in
         addPropertyChangeTrains();
     }
 
-    private synchronized Train getTrainByRow(int row) {
+    private Train getTrainByRow(int row) {
         return sysList.get(row);
     }
-
-    List<Train> sysList = trainManager.getTrainsByTimeList();
-    JTable _table = null;
-    TrainsTableFrame _frame = null;
 
     void initTable(JTable table, TrainsTableFrame frame) {
         _table = table;
@@ -171,7 +170,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
-    public synchronized int getRowCount() {
+    public int getRowCount() {
         return sysList.size();
     }
 
@@ -426,7 +425,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public Color getRowColor(int row) {
         Train train = getTrainByRow(row);
-//          log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
 
@@ -592,16 +590,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             });
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
-            synchronized (this) {
-                SwingUtilities.invokeLater(() -> {
-                    int row = sysList.indexOf(train);
-                    if (row >= 0  && _table != null) {
-                        fireTableRowsUpdated(row, row);
-                        int viewRow = _table.convertRowIndexToView(row);
-                        _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
-                    }
-                });
-            }
+            SwingUtilities.invokeLater(() -> {
+                int row = sysList.indexOf(train);
+                if (row >= 0 && _table != null) {
+                    fireTableRowsUpdated(row, row);
+                    int viewRow = _table.convertRowIndexToView(row);
+                    _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
+                }
+            });
         }
     }
 

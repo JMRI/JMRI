@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import jmri.util.junit.rules.RetryRule;
 
 /**
  * Test for the jmri.jmrix.lenz.XNetThrottle class
@@ -13,8 +12,6 @@ import jmri.util.junit.rules.RetryRule;
  */
 @Timeout(1)
 public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
-
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     protected XNetInterfaceScaffold tc = null;
     protected XNetSystemConnectionMemo memo = null;
@@ -78,7 +75,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         // now we're going to wait and verify the throttle eventually has
         // its status set to idle.
-        jmri.util.JUnitUtil.releaseThread(this);  // give the messages
+        JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);  // give the messages
         // some time to process;
 
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");

@@ -21,7 +21,7 @@ public class ExpressionNodeString implements ExpressionNode {
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
-        return "String:"+_token.getString();
+        return "String:\""+_token.getString()+"\"";
     }
     
 }

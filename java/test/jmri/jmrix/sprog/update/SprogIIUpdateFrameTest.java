@@ -33,15 +33,17 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
     @AfterEach
     @Override
     public void tearDown() {
-        if (frame!=null) ((SprogIIUpdateFrame)frame).stopTimer();
-        // frame.dispose() called in super class
+        // we need to close window before the Traffic Controller.
+        if(frame!=null) {
+           JUnitUtil.dispose(frame); // frame dispose stops Update timer.
+        }
+        frame = null;
         m.getSlotThread().interrupt();
         JUnitUtil.waitFor(() -> {return m.getSlotThread().getState() == Thread.State.TERMINATED;}, "Slot thread failed to stop");
         m.dispose();
         stcs.dispose();
         m = null;
         stcs = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

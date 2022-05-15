@@ -64,12 +64,6 @@ public class For extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public boolean isExternal() {
-        return false;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         _initActionSocket.execute();
         while (_whileExpressionSocket.evaluate()) {
@@ -148,7 +142,7 @@ public class For extends AbstractDigitalAction
                 _doActionSocket.getName());
     }
 
-    public FemaleDigitalActionSocket getThenActionSocket() {
+    public FemaleDigitalActionSocket getInitActionSocket() {
         return _initActionSocket;
     }
 

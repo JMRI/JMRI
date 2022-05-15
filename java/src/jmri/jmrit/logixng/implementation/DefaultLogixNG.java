@@ -33,6 +33,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _enabled = false;
+    private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
 
 
@@ -99,11 +100,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    @Override
-    public boolean isExternal() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
     /** {@inheritDoc} */
     @Override
     final public void setup() {
@@ -139,6 +135,12 @@ public class DefaultLogixNG extends AbstractNamedBean
         } else {
             unregisterListeners();
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void activate() {
+        _isActive = true;
     }
 
     /** {@inheritDoc} */
@@ -258,14 +260,13 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         if (!found) {
             log.error("attempt to delete ConditionalNG not in LogixNG: {}", conditionalNG.getSystemName());  // NOI18N
-            return;
         }
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
-        return _enabled && _manager.isActive();
+        return _enabled && _isActive && _manager.isActive();
     }
 
     /** {@inheritDoc} */
@@ -436,6 +437,8 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
 
@@ -448,6 +451,15 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void getListenerRefsIncludingChildren(List<String> list) {
+        list.addAll(getListenerRefs());
+        for (int i=0; i < getNumConditionalNGs(); i++) {
+            getConditionalNG(i).getListenerRefsIncludingChildren(list);
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNG.class);

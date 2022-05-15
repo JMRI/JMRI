@@ -176,6 +176,8 @@ public class ColorDialogTest {
     public void tearDown() {
         EditorFrameOperator efo = new EditorFrameOperator(_cpe.getTargetFrame());
         efo.closeFrameWithConfirmations();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();

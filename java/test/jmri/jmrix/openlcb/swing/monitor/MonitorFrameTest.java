@@ -10,6 +10,7 @@ import jmri.util.ThreadingUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.openlcb.can.AliasMap;
 
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
@@ -85,6 +86,7 @@ public class MonitorFrameTest {
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
+        memo.store(new AliasMap(), org.openlcb.can.AliasMap.class);
         jmri.InstanceManager.setDefault(CanSystemConnectionMemo.class, memo);
     }
 

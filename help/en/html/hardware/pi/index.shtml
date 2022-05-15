@@ -24,7 +24,7 @@
       ports.</p>
       <img src="images/Pi2ModB1GB_-comp.jpg" alt=
       "Raspberry Pi2 model B (courtesy www.raspberrypi.org" width="528" height="300" class=
-      "floatRight" title="Pi2 model B (© www.raspberrypi.org)"> <a id="hardware"></a>
+      "floatRight" title="Pi2 model B (&copy; www.raspberrypi.org)"> <a id="hardware"></a>
       <p class="noted">See <a href="../../../../../install/Raspbian.shtml">here for information</a>
       on how to install JMRI on a Raspberry Pi under the Raspian operating system. This must be
       done before using Raspberry Pi GPIO pins with JMRI objects.</p>

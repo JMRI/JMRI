@@ -152,6 +152,7 @@ public class JsonRouteSocketServiceTest {
 
     @AfterEach
     public void tearDown() throws Exception {
+        JUnitUtil.clearTurnoutThreads();
         JUnitUtil.tearDown();
     }
 

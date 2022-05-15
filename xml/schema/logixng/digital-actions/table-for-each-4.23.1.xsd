@@ -42,8 +42,22 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
               <xs:element name="localVariable" type="xs:string" />
+
+              <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
               <xs:element name="table" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="tableFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <!-- These are for backwards compability up until JMRI 4.99.5 -->
+
+              <xs:element name="rowOrColumnAddressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
               <xs:element name="rowOrColumnName" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnLocalVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="rowOrColumnFormula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="tableRowOrColumn" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
@@ -67,7 +81,7 @@
 
             </xs:sequence>
             
-			<xs:attribute name="class" type="classType" use="required"/>
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

@@ -616,37 +616,6 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertFalse("e2 not in engine list on track", engineList.contains(e2));
         Assert.assertFalse("e3 not in engine list on track", engineList.contains(e3));
     }
-    
-    @Test
-    public void testConsist() {
-        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
-        Consist c = manager.newConsist(EngineManager.NONE);
-        Assert.assertNull(c);
-
-        c = manager.newConsist("A");
-        Assert.assertNotNull(c);
-
-        Consist ct = manager.newConsist("A");
-        Assert.assertNotNull(ct);
-        Assert.assertEquals("Same consist", c, ct);
-
-        manager.replaceConsistName("A", "B");
-        ct = manager.getConsistByName("B");
-        Assert.assertNotNull(ct);
-        // Replace when test was created doesn't delete the old consist
-        // GUI does a replace followed by a delete
-        c = manager.getConsistByName("A");
-        Assert.assertNotNull(c);
-        
-        // test delete consist
-        Engine e = manager.newRS("SP", "1");
-        e.setConsist(ct);
-
-        manager.deleteConsist("B");
-        ct = manager.getConsistByName("B");
-        Assert.assertNull(ct);
-        Assert.assertNull(e.getConsist());
-    }
 
     private void resetEngineManager() {
         InstanceManager.getDefault(EngineManager.class).dispose();

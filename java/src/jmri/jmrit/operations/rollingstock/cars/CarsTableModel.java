@@ -90,7 +90,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
-    String locationName = null; // only show cars with this location
+    public String locationName = null; // only show cars with this location
     public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
@@ -129,8 +129,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
         }
-        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE || sort == SORTBY_RWL
-                || sort == SORTBY_DIVISION) {
+        if (sort == SORTBY_DESTINATION ||
+                sort == SORTBY_FINALDESTINATION ||
+                sort == SORTBY_RWE ||
+                sort == SORTBY_RWL ||
+                sort == SORTBY_DIVISION) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), sort == SORTBY_RWE);
@@ -256,25 +259,32 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int getIndex(int start, String roadNumber) {
         for (int index = start; index < carList.size(); index++) {
-            Car c = carList.get(index);
-            if (c != null) {
-                String[] number = c.getNumber().split(TrainCommon.HYPHEN);
+            Car car = carList.get(index);
+            if (car != null) {
+                String[] number = car.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
-                if (roadNumber.startsWith("*")) {
+                if (roadNumber.startsWith("*") && roadNumber.endsWith("*")) {
+                    String rN = roadNumber.substring(1, roadNumber.length() - 1);
+                    if (car.getNumber().contains(rN)) {
+                        _roadNumber = roadNumber;
+                        _index = index + 1;
+                        return index;
+                    }
+                } else if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);
-                    if (c.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
+                    if (car.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
                         _roadNumber = roadNumber;
                         _index = index + 1;
                         return index;
                     }
                 } else if (roadNumber.endsWith("*")) {
                     String rN = roadNumber.substring(0, roadNumber.length() - 1);
-                    if (c.getNumber().startsWith(rN)) {
+                    if (car.getNumber().startsWith(rN)) {
                         _roadNumber = roadNumber;
                         _index = index + 1;
                         return index;
                     }
-                } else if (c.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
+                } else if (car.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
                     _roadNumber = roadNumber;
                     _index = index + 1;
                     return index;
@@ -584,6 +594,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case LOAD_COLUMN:
                 if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
                     return car.getLoadName() + " " + Bundle.getMessage("(P)");
+                } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+                    return car.getLoadName() + " " + Bundle.getMessage("(M)");
                 } else {
                     return car.getLoadName();
                 }
