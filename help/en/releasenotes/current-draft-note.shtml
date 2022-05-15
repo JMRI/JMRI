@@ -584,5 +584,9 @@
         <ul>
             <li>The xercesImpl library was updated to 2.12.2, which may change
                 the content of some error messages.</li>
+            <li>The macOS and Linux startup scripts how will use a JVM
+                found within a "jre" directory within the JMRI program directory.
+                This lets you install a JVM (JRE or JDK) locally just for
+                JMRI's use.
         </ul>
 

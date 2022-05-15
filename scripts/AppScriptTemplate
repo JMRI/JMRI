@@ -5,6 +5,10 @@
 # This script is used for both all POSIX operating systems including Linux
 # and macOS / OS X application bundles.
 #
+# If a "jre" directory is found in the current working directory,
+# it's assumed that contains a correct JRE or JDK which will be used
+# regardless of the setting of ${JAVA_HOME}
+#
 # If you need to specify an option with spaces in it, escape the spaces with a
 # leading backslash like "\ ".
 #
@@ -292,6 +296,13 @@ parse_args "${all_options[@]:-}"
 
 # define JAVA_HOME if needed
 [ -n "${DEBUG}" ] && echo "initial JAVA_HOME: '${JAVA_HOME}' OS: '${OS}'" | tee -a ${launcher_log}
+# First, select local java version, if present; this overrides ${JAVA_HOME} passed in
+if [ -d "${PWD}/jre" ]; then
+    JAVA_HOME=${PWD}/jre
+    PATH=$JAVA_HOME/bin:$PATH
+    JAVACMD=java
+fi
+# Otherwise, try to find an installed JRE
 if [ -z "${JAVA_HOME}" ] ; then
     #
     # macOS / OS X get special treatment
@@ -338,14 +349,14 @@ if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
             try
-                display alert "To use JMRI you need to install a JRE." \
-                    message "Click \"More Info...\" to visit the Java Runtime Environment download website." \
+                display alert "To use JMRI you need to install Java 11." \
+                    message "Click \"More Info...\" to learn more about installing Java 11." \
                     buttons {"More Info...", "OK"} \
                     default button "OK" \
                     cancel button "More Info..."
             on error number -128
                 -- user pressed cancel button
-                open location "https://www.java.com/en/download/mac_download.jsp"
+                open location "https://www.jmri.org/java"
             end try
 EOT
             exit 1
@@ -555,7 +566,7 @@ if [ "$OS" = "macosx" ] ; then
     [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'" | tee -a ${launcher_log}
 fi
 
-# check java version
+# check java version >= 11 and inform user if not
 "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp lib/JavaVersionCheckWindow.jar apps.JavaVersionCheckWindow
 EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ] ; then
