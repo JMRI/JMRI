@@ -401,6 +401,8 @@ else
 fi
 # make JAVA_HOME available to spawned processes
 export JAVA_HOME
+[ -n "${DEBUG}" ] && echo "JAVA_HOME: '${JAVA_HOME}'" | tee -a ${launcher_log}
+[ -n "${DEBUG}" ] && echo "JAVACMD: '${JAVACMD}'" | tee -a ${launcher_log}
 
 # set if -J-Xmx=... is not in options or arguments
 if [ -z "${jmri_xmx:-}" ] ; then
