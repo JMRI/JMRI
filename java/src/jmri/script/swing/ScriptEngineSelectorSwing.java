@@ -25,7 +25,6 @@ public class ScriptEngineSelectorSwing {
     }
 
     public final void updateSetComboBoxSelection() {
-        System.out.format("Set selected engine: %s%n", _selector.getSelectedEngine());
         comboBox.setSelectedItem(_selector.getSelectedEngine());
     }
 
@@ -34,9 +33,7 @@ public class ScriptEngineSelectorSwing {
     }
 
     public void update() {
-        System.out.format("Update selected engine: %s%n", comboBox.getItemAt(comboBox.getSelectedIndex()));
         _selector.setSelectedEngine(comboBox.getItemAt(comboBox.getSelectedIndex()));
-        System.out.format("Selected engine: %s%n", _selector.getSelectedEngine());
     }
 
 }
