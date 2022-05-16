@@ -176,8 +176,10 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             viewButtons.add(iddecoder);
         }
         showAll = new JRadioButton(Bundle.getMessage("LabelAll"));
+        showAll.getAccessibleContext().setAccessibleName(Bundle.getMessage("LabelAll"));
         showAll.setSelected(true);
         showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
+        showMatched.getAccessibleContext().setAccessibleName(Bundle.getMessage("LabelMatched"));
 
         if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null
                 && InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
