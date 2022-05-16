@@ -44,8 +44,13 @@ public class ScriptEngineSelector {
      * @param languageName the engine
      */
     public void setSelectedEngine(@Nonnull String languageName) {
-        _selectedEngine = InstanceManager.getDefault(
+        Engine engine = InstanceManager.getDefault(
                 InternalScriptEngineSelector.class).getEngineFromLanguage(languageName);
+        if (engine != null) {
+            _selectedEngine = engine;
+        } else {
+            log.warn("Cannot select engine for the language {}", languageName);
+        }
     }
 
     /**
