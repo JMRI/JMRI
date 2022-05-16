@@ -166,7 +166,7 @@ public class MergePrompt extends JDialog {
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
         spPanel.add(Box.createGlue());
 
-        RosterSpeedProfile speedProfile = entry.getSpeedProfile();;
+        RosterSpeedProfile speedProfile = entry.getSpeedProfile();
         if (speedProfile != null ){
             spPanel.add(makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
             spPanel.add(Box.createGlue());
