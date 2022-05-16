@@ -862,7 +862,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             newMode = MODE_NONE;
         }
         if (turnOffFunctions && _idxCurrentOrder == _orders.size()-1) { // run was complete to end
-            _speedUtil.stopRun(true);   // write speed profile measurements
+            _speedUtil.mergeSpeedProfile();   // write speed profile measurements
             if (_addTracker) {
                 startTracker();
                 _runMode = MODE_MANUAL;
@@ -1376,7 +1376,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _engineer = new Engineer(this, throttle);
 
             if (!_noRamp) { // _noRamp makes immediate speed changes
-                _speedUtil.getBlockSpeedTimes(_commands, this);   // initialize SpeedUtil
+                _speedUtil.getBlockSpeedTimes(_commands, _orders);   // initialize SpeedUtil
             }
             if (_tempRunBlind) {
                 _engineer.setRunOnET(true);
@@ -1984,6 +1984,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _overrun = false;
         _overBlkOccupied = true;   // for safety, assume somebody else is ahead
         _curSignalAspect = null;
+        setPathAt(_idxCurrentOrder);    // show ownership and train Id
         _engineer.clearWaitForSync(block);
         if (log.isDebugEnabled()) {
             log.debug("{}: restoreRunning(): rampSpeedTo to \"{}\"",
@@ -2199,14 +2200,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 log.debug("{}: Train moving from UNDETECTED block \"{}\" now entering block\"{}\"",
                         getDisplayName(), prevBlock.getDisplayName(), block.getDisplayName());
             }
-            // Since we are moving we assume it is our train entering the block
-            // continue on.
         } else if (_idxCurrentOrder > activeIdx) {
             // unusual occurrence.  dirty track, sensor glitch, too fast for goingInactive() for complete?
             log.info("Tail of Train {} regained detection behind Block= {} at block= {}",
                     getTrainName(), block.getDisplayName(), getBlockAt(activeIdx).getDisplayName());
             return;
         }
+        // Since we are moving we assume it is our train entering the block
+        // continue on.
         setHeadOfTrain(block);
         if (_engineer != null) {
             _engineer.clearWaitForSync(block); // Sync commands if train is faster than ET
@@ -2243,21 +2244,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         block.setState(block.getState() | OBlock.RUNNING);
         block._entryTime = System.currentTimeMillis();
         if (_runMode == MODE_RUN) {
-            float length = 0;
-            // Just left _idxCurrentOrder-1 and entered _idxCurrentOrder
-            if (_idxCurrentOrder == 1 || _idxCurrentOrder == _orders.size() - 1) {
-                // Starting and ending position of the train is not known
-                // estimate distance to be mid-block
-                BlockOrder bo = getBlockOrderAt(_idxCurrentOrder-1);
-                length = bo.getPathLength() / 2;
-            } else {
-                for (int i = _idxLastOrder; i < _idxCurrentOrder; i++) {
-                    // add length of possible dark block
-                    BlockOrder bo = getBlockOrderAt(i);
-                    length += bo.getPathLength();
-                }
-            }
-            _speedUtil.leavingBlock(getBlockAt(_idxCurrentOrder-1), length);
+            _speedUtil.leavingBlock(_idxCurrentOrder - 1);
         }
     }
 
@@ -2345,61 +2332,30 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
          * Thus we must deallocate backward until we reach inactive detectable blocks
          * or blocks we no longer own.
          */
-/*        OBlock prevBlock =null;
-        if (idx > 0) {
-            prevBlock = getBlockAt(idx - 1);
-        }*/
-        if (_shareRoute) { // shared route
-            OBlock nextBlock = getBlockAt(_idxCurrentOrder + 1);
-            for (int i = idx; i > -1; i--) {
-                OBlock curBlock = getBlockAt(i);
-                if (!curBlock.equals(nextBlock)) {
-                    if (deAllocateBlock(curBlock)) {
-                        curBlock.setValue(null);
-                        _totalAllocated = false;
-                    }
+        for (int i = idx; i > -1; i--) {
+            boolean neededLater = false;
+            OBlock curBlock = getBlockAt(i);
+            for (int j = i + 1; j < _orders.size(); j++) {
+                if (curBlock.equals(getBlockAt(j))) {
+                    neededLater = true;
                 }
-                /*
-                if (prevBlock != null && 
-                        ((!prevBlock.isDark() && !prevBlock.isOccupied()) || !this.equals(prevBlock.getWarrant()))) {
-                    break;
-                }
-                prevBlock = curBlock;
-                */
             }
-        } else {
-            for (int i = idx; i > -1; i--) {
-                boolean neededLater = false;
-                OBlock curBlock = getBlockAt(i);
-                for (int j = i + 1; j < _orders.size(); j++) {
-                    if (curBlock.equals(getBlockAt(j))) {
-                        neededLater = true;
-                    }
+            if (!neededLater) {
+                if (deAllocateBlock(curBlock)) {
+                    curBlock.setValue(null);
+                    _totalAllocated = false;
                 }
-                if (!neededLater) {
-                    if (deAllocateBlock(curBlock)) {
+            } else {
+                if (curBlock.isAllocatedTo(this)) {
+                    // Can't deallocate, but must listen for followers
+                    // who may be occupying the block
+                    if (_idxCurrentOrder != idx + 1) {
                         curBlock.setValue(null);
-                        _totalAllocated = false;
                     }
-                } else {
-                    if (curBlock.isAllocatedTo(this)) {
-                        // Can't deallocate, but must listen for followers
-                        // who may be occupying the block
-                        if (_idxCurrentOrder != idx + 1) {
-                            curBlock.setValue(null);
-                        }
-                        if (curBlock.equals(_stoppingBlock)){
-                            doStoppingBlockClear();
-                        }
+                    if (curBlock.equals(_stoppingBlock)){
+                        doStoppingBlockClear();
                     }
                 }
-                /*
-                if (prevBlock != null &&
-                        ((!prevBlock.isDark() && !prevBlock.isOccupied()) || !this.equals(prevBlock.getWarrant()))) {
-                    break;
-                }
-                prevBlock = curBlock;
-                */
             }
         }
     }
@@ -2539,7 +2495,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         float pathLength = blkOrder.getPathLength();
         if (idxBlockOrder == 0 || pathLength <= 20.0f) {
             // Position in block is unknown. use calculated distances instead
-            float blkDist = _speedUtil.getBlockSpeedInfo(idxBlockOrder).getDistance();
+            float blkDist = _speedUtil.getBlockSpeedInfo(idxBlockOrder).getCalcLen();
             if (log.isDebugEnabled()) {
                 log.debug("{}: getAvailableDistanceAt: block \"{}\" using calculated blkDist= {}, pathLength= {}",
                         getDisplayName(), blkOrder.getBlock().getDisplayName(), blkDist, pathLength);
