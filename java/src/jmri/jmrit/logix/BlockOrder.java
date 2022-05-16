@@ -215,12 +215,16 @@ public class BlockOrder {
                 if (bs1.getBean().equals(bs2.getBean())) {
                     // TO is shared (same bean)
                     if (bs1.equals(bs2)) {
-//                        if (log.isDebugEnabled()) {
-//                            log.debug("Path \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
-//                                    path1.getName(), path2.getName(), bo2._block.getDisplayName(), 
-//                                    bs1.getBean().getDisplayName());
-//                        }
-                        return null;
+                        if (log.isDebugEnabled()) {
+                            log.debug("Path \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
+                                    path1.getName(), path2.getName(), bo2._block.getDisplayName(), 
+                                    bs1.getBean().getDisplayName());
+                        }
+                        return  Bundle.getMessage("SharedTurnoutSet", bs1.getBean().getDisplayName());
+//                      When only 1 train is waiting on the restriction ahead, it is safe to return null.
+//                      However if 2 or more trains are waiting, depending on who get the clear first may change
+//                      the setting for the other. so we should not change the nature of this restriction.
+//                        return null;
                     } else {
                         if (log.isDebugEnabled()) {
                             log.debug("Path \"{}\" and \"{}\" in block \"{}\" have opposed settings of shared turnout \"{}\"",

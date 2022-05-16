@@ -15,7 +15,6 @@ class BlockSpeedInfo {
     float entranceSpeed;
     float exitSpeed;
     long time;
-    int length;
     float pathDist;
     float calcDist;
     int firstIdx;

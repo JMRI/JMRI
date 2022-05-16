@@ -1025,7 +1025,7 @@ public class SpeedUtil {
         }
         if (log.isDebugEnabled()) {
             log.debug("Put measuredThrottle={} and measuredTrkSpd={} for isForward= {} curThrottle={}.",
-                    throttle, measuredSpeed, isForward);
+                    throttle, measuredSpeed, isForward, throttle);
         }
     }
 
@@ -1070,7 +1070,7 @@ public class SpeedUtil {
      * Calculate the distance traveled since the last speed change.
      */
     synchronized protected void speedChange(float throttleSetting) {
-        if (_intEndSpeed == throttleSetting) {
+        if (Math.abs(_intEndSpeed - throttleSetting) < 0.00001f) {
             return;
         }
         _numchanges++;
