@@ -72,7 +72,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 setEStopDelay(Integer.parseInt(a.getValue()));
                 this.asLoadedEStopDelay = this.getEStopDelay();
             } catch (NumberFormatException e) {
-                log.debug("getEStopDelay Exception: {}",e.getLocalizedMessage(), e);
+                log.debug("EStop Delay \"{}\" is invalid.", a.getValue(), e);
             }
         }
         if ((a = child.getAttribute("isUseMomF2")) != null) {
