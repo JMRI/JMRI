@@ -164,6 +164,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         pKernel.setLayout(new GridBagLayout());
         pKernel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(KERNEL)));
         addItemLeft(pKernel, ignoreKernelCheckBox, 1, 0);
+        kernelComboBox.setName("kernelComboBox"); // NOI18N for UI Test
         addItem(pKernel, kernelComboBox, 2, 0);
         addItem(pKernel, editKernelButton, 3, 0);
         pOptional.add(pKernel);
