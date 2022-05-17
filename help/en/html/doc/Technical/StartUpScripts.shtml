@@ -71,11 +71,11 @@
             <ul>
                 <li>If a JRE is present in a
                 directory called "jre" within the JMRI program directory,
-                it will be used regardless of the JAVA_HOME setting.
+                it will be used regardless of the JAVA_HOME setting.</li>
                 <li>If JAVA_HOME is undefined and there is no local "jre"
                 directory, the script will go through several steps to
                 try to locate a usable JVM.  If that fails, the
-                user will be prompted to install Java.
+                user will be prompted to install Java.</li>
             </ul>
         </dd>
 
@@ -612,9 +612,9 @@
       <ol>
         <li><strong>Using PanelPro with script</strong>: With the exception of a different icon and
         different fixed buttons on the main window, PanelPro has an identical user interface to the
-        legacy DecoderPro.</li>
+        legacy DecoderPro.
 
-          <ul>
+        <ul>
             <li>You can add the 3 fixed buttons (Open Roster, Service Mode, Operations Mode) that
             used to be on the legacy DecoderPro by adding a script at start-up.</li>
 
@@ -622,9 +622,9 @@
             "C:\Program Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
 
             <li>Then, save and restart.</li>
-          </ul>
+          </ul></li>
 
-        <li><strong>Using PanelPro with buttons</strong>:</li>
+        <li><strong>Using PanelPro with buttons</strong>:
 
           <ul>
             <li>You can add several fixed buttons of your choice on the PanelPro interface.</li>
@@ -636,9 +636,9 @@
             programmer" and "DecoderPro ops-mode programmer"</li>
 
             <li>Then, save and restart.</li>
-          </ul>
+          </ul></li>
 
-        <li><strong>Adding a custom shortcut to legacy DecoderPro</strong>:</li>
+        <li><strong>Adding a custom shortcut to legacy DecoderPro</strong>:
 
           <ul>
             <li>Copy and Paste the "DecoderPro" shortcut (on your desktop or in the start
@@ -653,7 +653,7 @@
             apps.DecoderPro.DecoderPro</li>
 
             <li>This will launch the legacy DecoderPro interface.</li>
-          </ul>
+          </ul></li>
       </ol>
       <!--#include virtual="/Footer.shtml" -->
     </div>
