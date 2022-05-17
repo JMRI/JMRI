@@ -222,7 +222,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             log.warn("Error initialising JOAL", jmri.util.LoggingUtil.shortenStacktrace(e));
             return false;
         } catch (UnsatisfiedLinkError | NoClassDefFoundError e) {
-            log.warn("Error loading OpenAL libraries", jmri.util.LoggingUtil.shortenStacktrace(e));
+            log.warn("Error loading OpenAL libraries: {}", e.getMessage());
             return false;
         } catch (RuntimeException e) {
             log.warn("Error initialising OpenAL", jmri.util.LoggingUtil.shortenStacktrace(e));
