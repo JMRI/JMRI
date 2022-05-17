@@ -1656,18 +1656,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     javax.swing.Timer mPowerTimer = null;
 
+    ReadAllSlots_Helper _rAS = null;
+
     /**
      * Start the process of checking each slot for contents.
      * <p>
      * This is not invoked by this class, but can be invoked from elsewhere to
      * start the process of scanning all slots to update their contents.
      *
+     * If an instance is already running then the request is ignored
+     *
      * @param inputSlotMap array of from to pairs
      * @param interval ms between slt rds
      */
     synchronized public void update(List<SlotMapEntry> inputSlotMap, int interval) {
-        ReadAllSlots_Helper _rAS = new ReadAllSlots_Helper(  inputSlotMap, interval);
-        jmri.util.ThreadingUtil.newThread(_rAS, "Read All Slots ").start();
+        if (_rAS == null) {
+            _rAS = new ReadAllSlots_Helper(  inputSlotMap, interval);
+            jmri.util.ThreadingUtil.newThread(_rAS, "Read All Slots ").start();
+        } else {
+            if (!_rAS.isRunning()) {
+                jmri.util.ThreadingUtil.newThread(_rAS, "Read All Slots ").start();
+            }
+        }
     }
 
     /**
@@ -1829,35 +1839,46 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     class ReadAllSlots_Helper implements Runnable {
 
         ReadAllSlots_Helper(List<SlotMapEntry> inputSlotMap, int interval) {
-//            this.slotMap = inputSlotMap;
             this.interval = interval;
         }
 
-//        private List<SlotMapEntry> slotMap;
         private int interval;
+        private boolean abort = false;
+        private boolean isRunning = false;
+
+        /**
+         * Aborts current run
+         */
+        public void setAbort() {
+            abort = true;
+        }
+
+        /**
+         * Gets the current stae of the run.
+         * @return true if running
+         */
+        public boolean isRunning() {
+            return isRunning;
+        }
 
         @Override
         public void run() {
-            boolean abort = false;
-//            for (SlotMapEntry item : slotMap) {
-//                if (abort) {
-//                    break;
-//                }
-//                for (int slot = item.getFrom(); slot < (item.getTo() + 1) && !abort; slot++) {
+            abort = false;
+            isRunning = true;
             // read all slots that are not of unknown type
-                for (int slot = 0; slot < getNumSlots() && !abort; slot++) {
-                    if (_slots[slot].getSlotType() != SlotType.UNKNOWN) {
-                        sendReadSlot(slot);
-                        try {
-                            Thread.sleep(this.interval);
-                        } catch (Exception ex) {
-                            // just abort
-                            abort = true;
-                            break;
-                        }
+            for (int slot = 0; slot < getNumSlots() && !abort; slot++) {
+                if (_slots[slot].getSlotType() != SlotType.UNKNOWN) {
+                    sendReadSlot(slot);
+                    try {
+                        Thread.sleep(this.interval);
+                    } catch (Exception ex) {
+                        // just abort
+                        abort = true;
+                        break;
                     }
                 }
-//            }
+            }
+            isRunning = false;
         }
     }
 
