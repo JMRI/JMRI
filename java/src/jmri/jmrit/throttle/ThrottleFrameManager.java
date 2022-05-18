@@ -108,12 +108,8 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         if (frame != null) {
             destroyThrottleWindow(frame);
             synchronized (this) {
-                try {
-                    throttleWindows.remove(throttleWindows.indexOf(frame));
-                } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
-                    log.debug(ex.toString());
-                }
-                if (throttleWindows.size() > 0) {
+                throttleWindows.remove((frame));
+                if (!throttleWindows.isEmpty()) {
                     requestFocusForNextThrottleWindow();
                 }
             }
