@@ -714,8 +714,10 @@ public class MemoryContents {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="pass Error String directly.")
     private void logError(String errorToLog) {
-        log.error("MemoryContents: {}",errorToLog);
+        log.error(errorToLog);
     }
     
     /**
