@@ -33,6 +33,8 @@ import jmri.util.FileUtil;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created and
@@ -74,6 +76,82 @@ public class NamedIcon extends ImageIcon {
         setRotation(pOld.mRotation, comp);
     }
 
+    private static String lastMetaDataTreeString = null;
+
+    private String getNodeType(int type) {
+        switch (type) {
+            case Node.ELEMENT_NODE: return "Element";
+            case Node.ATTRIBUTE_NODE: return "Attribute";
+            case Node.ENTITY_NODE: return "Entity";
+            case Node.ENTITY_REFERENCE_NODE: return "Entity reference";
+            case Node.DOCUMENT_FRAGMENT_NODE: return "Document fragment";
+            case Node.TEXT_NODE: return "Text";
+            case Node.CDATA_SECTION_NODE: return "CDATA section";
+            case Node.COMMENT_NODE: return "Comment";
+            case Node.PROCESSING_INSTRUCTION_NODE: return "Processing instruction";
+            case Node.DOCUMENT_NODE: return "Document";
+            case Node.DOCUMENT_TYPE_NODE: return "Document type";
+            case Node.NOTATION_NODE: return "Notation";
+            default: return "Unknown type";
+        }
+    }
+
+    private void printMetaDataTree(String pad, Node node) {
+        String s = String.format("%sName: %s, type: %s, value: %s%n", pad, node.getNodeName(), getNodeType(node.getNodeType()), node.getNodeValue());
+        if (!s.equals(lastMetaDataTreeString)) {
+            System.out.print(s);
+            lastMetaDataTreeString = s;
+            org.w3c.dom.NamedNodeMap map = node.getAttributes();
+            for (int i=0; i < map.getLength(); i++) {
+                Node n = map.item(i);
+                System.out.format("   %sAttribute: Name: %s, type: %s, value: %s%n", pad, n.getNodeName(), getNodeType(n.getNodeType()), n.getNodeValue());
+            }
+        }
+        NodeList nodeList = node.getChildNodes();
+        for (int i=0; i < nodeList.getLength(); i++) {
+            printMetaDataTree(pad+"   ", nodeList.item(i));
+        }
+    }
+
+    private void printMetaDataTree(String name, ImageReader gifReader) throws IOException {
+        IIOMetadata metaData = gifReader.getImageMetadata(0);
+
+        for (String metaDataFormat : metaData.getMetadataFormatNames()) {
+            System.out.format("%n------------------------------------%nprintMetaDataTree for %s with format %s:%n", name, metaDataFormat);
+            printMetaDataTree("", metaData.getAsTree(metaDataFormat));
+            System.out.format("------------------------------------%n%n");
+        }
+    }
+
+    private boolean hasNetscapeExtension(ImageReader gifReader) throws IOException {
+        IIOMetadata metaData = gifReader.getImageMetadata(0);
+        Node tree = metaData.getAsTree("javax_imageio_gif_image_1.0");
+        Node applicationExtensions = null;
+
+        NodeList nodeList = tree.getChildNodes();
+        for (int child=0; child < nodeList.getLength(); child++) {
+            if (nodeList.item(child).getNodeName().equals("ApplicationExtensions")) {
+                applicationExtensions = nodeList.item(child);
+            }
+        }
+        if (applicationExtensions == null) return false;
+
+
+        nodeList = applicationExtensions.getChildNodes();
+        for (int child=0; child < nodeList.getLength(); child++) {
+            if (nodeList.item(child).getNodeName().equals("ApplicationExtension")) {
+                org.w3c.dom.NamedNodeMap map = nodeList.item(child).getAttributes();
+                for (int i=0; i < map.getLength(); i++) {
+                    if (map.item(i).getNodeName().equals("NETSCAPE")) return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean printMetaDataTree = true;
+
     /**
      * Create a named icon that includes an image to be loaded from a URL.
      * <p>
@@ -109,9 +187,11 @@ public class NamedIcon extends ImageIcon {
 
                 int numFrames = gifReader.getNumImages(true);
 
+                if (printMetaDataTree) printMetaDataTree(pName, gifReader);
+
                 // Treat all icons as animated since some might be tagged as animated even
                 // though they only have 1 frame.
-                if (numFrames > 0) {
+                if (numFrames > 1 || hasNetscapeExtension(gifReader)) {
                     gifState.mStreamMd = gifReader.getStreamMetadata();
                     gifState.mFrames = new IIOImage[numFrames];
                     gifState.mWidth = 0;
