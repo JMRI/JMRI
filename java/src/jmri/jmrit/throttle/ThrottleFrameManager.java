@@ -9,8 +9,8 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.util.JmriJFrame;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Interface for allocating and deallocating throttles frames. Not to be
@@ -223,5 +223,5 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         throttlesListPanel.applyPreferences();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
+    // private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class);
 }
