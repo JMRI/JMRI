@@ -98,8 +98,24 @@ public class InputWindow extends JPanel {
         add(js, BorderLayout.CENTER);
 
         // set the preferred language
-        if (pref.getComboBoxLastSelection(languageSelection) != null) {
-            scriptEngineSelector.setSelectedEngine(pref.getComboBoxLastSelection(languageSelection));
+        String preferredLanguage = pref.getComboBoxLastSelection(languageSelection);
+        if (preferredLanguage != null) {
+            // Backwards compability pre 4.99.9
+            boolean updatePreferredLanguage = false;
+            if (preferredLanguage.equals(Bundle.getMessage("jython_python"))) {
+                scriptEngineSelector.setSelectedEngine(ScriptEngineSelector.JYTHON);
+                updatePreferredLanguage = true;
+            } else if (preferredLanguage.equals(Bundle.getMessage("Oracle_Nashorn_ECMAScript"))) {
+                scriptEngineSelector.setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+                updatePreferredLanguage = true;
+            } else {
+                scriptEngineSelector.setSelectedEngine(preferredLanguage);
+            }
+
+            Engine engine = scriptEngineSelector.getSelectedEngine();
+            if (updatePreferredLanguage && engine != null) {
+                pref.setComboBoxLastSelection(languageSelection, engine.getLanguageName());
+            }
         }
 
         scriptEngineSelectorSwing = new ScriptEngineSelectorSwing(scriptEngineSelector);
