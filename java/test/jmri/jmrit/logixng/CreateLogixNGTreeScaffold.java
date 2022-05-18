@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
+import jmri.script.ScriptEngineSelector;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -1186,65 +1187,67 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        ActionScript simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(simpleScript);
+        ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionScript);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        simpleScript.setComment("A comment");
-        simpleScript.setScript("import java\n");
-        simpleScript.setOperationAddressing(NamedBeanAddressing.Direct);
-        simpleScript.setOperationFormula("a+b");
-        simpleScript.setOperationLocalVariable("myVar");
-        simpleScript.setOperationReference("{M1}");
-        simpleScript.setScriptAddressing(NamedBeanAddressing.Formula);
-        simpleScript.setScriptFormula("c+d");
-        simpleScript.setScriptLocalVariable("myOtherVar");
-        simpleScript.setScriptReference("{M2}");
-        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        actionScript.setComment("A comment");
+        actionScript.setScript("import java\n");
+        actionScript.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionScript.setOperationFormula("a+b");
+        actionScript.setOperationLocalVariable("myVar");
+        actionScript.setOperationReference("{M1}");
+        actionScript.setScriptAddressing(NamedBeanAddressing.Formula);
+        actionScript.setScriptFormula("c+d");
+        actionScript.setScriptLocalVariable("myOtherVar");
+        actionScript.setScriptReference("{M2}");
+        actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.JYTHON);
+        maleSocket = digitalActionManager.registerAction(actionScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        simpleScript.setComment("A comment");
-        simpleScript.setScript("myFile.py");
-        simpleScript.setOperationAddressing(NamedBeanAddressing.Formula);
-        simpleScript.setOperationFormula("a+b");
-        simpleScript.setOperationLocalVariable("myVar");
-        simpleScript.setOperationReference("{M1}");
-        simpleScript.setScriptAddressing(NamedBeanAddressing.LocalVariable);
-        simpleScript.setScriptFormula("c+d");
-        simpleScript.setScriptLocalVariable("myOtherVar");
-        simpleScript.setScriptReference("{M2}");
-        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        actionScript.setComment("A comment");
+        actionScript.setScript("myFile.py");
+        actionScript.setOperationAddressing(NamedBeanAddressing.Formula);
+        actionScript.setOperationFormula("a+b");
+        actionScript.setOperationLocalVariable("myVar");
+        actionScript.setOperationReference("{M1}");
+        actionScript.setScriptAddressing(NamedBeanAddressing.LocalVariable);
+        actionScript.setScriptFormula("c+d");
+        actionScript.setScriptLocalVariable("myOtherVar");
+        actionScript.setScriptReference("{M2}");
+        actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+        maleSocket = digitalActionManager.registerAction(actionScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        simpleScript.setComment("A comment");
-        simpleScript.setScript("import java\n");
-        simpleScript.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-        simpleScript.setOperationFormula("a+b");
-        simpleScript.setOperationLocalVariable("myVar");
-        simpleScript.setOperationReference("{M1}");
-        simpleScript.setScriptAddressing(NamedBeanAddressing.Reference);
-        simpleScript.setScriptFormula("c+d");
-        simpleScript.setScriptLocalVariable("myOtherVar");
-        simpleScript.setScriptReference("{M2}");
-        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        actionScript.setComment("A comment");
+        actionScript.setScript("import java\n");
+        actionScript.setOperationAddressing(NamedBeanAddressing.LocalVariable);
+        actionScript.setOperationFormula("a+b");
+        actionScript.setOperationLocalVariable("myVar");
+        actionScript.setOperationReference("{M1}");
+        actionScript.setScriptAddressing(NamedBeanAddressing.Reference);
+        actionScript.setScriptFormula("c+d");
+        actionScript.setScriptLocalVariable("myOtherVar");
+        actionScript.setScriptReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(actionScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        simpleScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
-        simpleScript.setComment("A comment");
-        simpleScript.setScript("import java\n");
-        simpleScript.setOperationAddressing(NamedBeanAddressing.Reference);
-        simpleScript.setOperationFormula("a+b");
-        simpleScript.setOperationLocalVariable("myVar");
-        simpleScript.setOperationReference("{M1}");
-        simpleScript.setScriptAddressing(NamedBeanAddressing.Direct);
-        simpleScript.setScriptFormula("c+d");
-        simpleScript.setScriptLocalVariable("myOtherVar");
-        simpleScript.setScriptReference("{M2}");
-        maleSocket = digitalActionManager.registerAction(simpleScript);
+        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        actionScript.setComment("A comment");
+        actionScript.setScript("import java\n");
+        actionScript.setOperationAddressing(NamedBeanAddressing.Reference);
+        actionScript.setOperationFormula("a+b");
+        actionScript.setOperationLocalVariable("myVar");
+        actionScript.setOperationReference("{M1}");
+        actionScript.setScriptAddressing(NamedBeanAddressing.Direct);
+        actionScript.setScriptFormula("c+d");
+        actionScript.setScriptLocalVariable("myOtherVar");
+        actionScript.setScriptReference("{M2}");
+        maleSocket = digitalActionManager.registerAction(actionScript);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -3330,9 +3333,21 @@ public class CreateLogixNGTreeScaffold {
 
         expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
         expressionScript.setComment("A comment");
-        expressionScript.setScript("result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )");
+        expressionScript.setScript("myFile.py");
+        expressionScript.setOperationType(ExpressionScript.OperationType.RunScript);
         expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
         expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
+        expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionScript);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
+        expressionScript.setComment("A comment");
+        expressionScript.setScript("result.setValue( sensors.provideSensor(\"IS1\").getState() == ACTIVE )");
+        expressionScript.setOperationType(ExpressionScript.OperationType.SingleLineCommand);
+        expressionScript.setRegisterListenerScript("sensors.provideSensor(\"IS1\").addPropertyChangeListener(self)");
+        expressionScript.setUnregisterListenerScript("sensors.provideSensor(\"IS1\").removePropertyChangeListener(self)");
+        expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         maleSocket = digitalExpressionManager.registerExpression(expressionScript);
         and.getChild(indexExpr++).connect(maleSocket);
 

@@ -15,7 +15,7 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptEngineSelector;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -33,7 +33,7 @@ public class ExpressionScript extends AbstractDigitalExpression
         implements PropertyChangeListener {
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private OperationType _operationType = OperationType.JythonCommand;
+    private OperationType _operationType = OperationType.SingleLineCommand;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
@@ -48,6 +48,8 @@ public class ExpressionScript extends AbstractDigitalExpression
 
     private String _registerScript = "";
     private String _unregisterScript = "";
+
+    private final ScriptEngineSelector _scriptEngineSelector = new ScriptEngineSelector();
 
 
     public ExpressionScript(String sys, String user)
@@ -76,6 +78,10 @@ public class ExpressionScript extends AbstractDigitalExpression
         copy.setRegisterListenerScript(_registerScript);
         copy.setUnregisterListenerScript(_unregisterScript);
         return manager.registerExpression(copy);
+    }
+
+    public ScriptEngineSelector getScriptEngineSelector() {
+        return _scriptEngineSelector;
     }
 
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -284,8 +290,6 @@ public class ExpressionScript extends AbstractDigitalExpression
         OperationType operation = getOperation();
         String script = getTheScript();
 
-        JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-
         Bindings bindings = new SimpleBindings();
         MutableBoolean result = new MutableBoolean(false);
 
@@ -297,23 +301,31 @@ public class ExpressionScript extends AbstractDigitalExpression
         bindings.put("result", result);     // Give the script access to the local variable 'result'
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
+            ScriptEngineSelector.Engine engine =
+                    _scriptEngineSelector.getSelectedEngine();
+
+            if (engine == null) throw new JmriException("Script engine is null");
+
             switch (operation) {
                 case RunScript:
                     try (InputStreamReader reader = new InputStreamReader(
                             new FileInputStream(jmri.util.FileUtil.getExternalFilename(script)),
                             StandardCharsets.UTF_8)) {
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                                .eval(reader, bindings);
+                        engine.getScriptEngine().eval(reader, bindings);
                     } catch (IOException | ScriptException e) {
                         log.warn("cannot execute script", e);
                     }
                     break;
 
-                case JythonCommand:
+                case SingleLineCommand:
                     try {
-                        String theScript = String.format("import jmri%n") + script;
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                                .eval(theScript, bindings);
+                        String theScript;
+                        if (engine.isJython()) {
+                            theScript = String.format("import jmri%n") + script;
+                        } else {
+                            theScript = script;
+                        }
+                        engine.getScriptEngine().eval(theScript, bindings);
                     } catch (ScriptException e) {
                         log.warn("cannot execute script", e);
                     }
@@ -409,8 +421,6 @@ public class ExpressionScript extends AbstractDigitalExpression
             _listenersAreRegistered = true;
 
             if (!_registerScript.trim().isEmpty()) {
-                JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-
                 Bindings bindings = new SimpleBindings();
                 MutableBoolean result = new MutableBoolean(false);
 
@@ -421,10 +431,21 @@ public class ExpressionScript extends AbstractDigitalExpression
                 bindings.put("self", this);         // Give the script access to myself with the local variable 'self'
 
                 ThreadingUtil.runOnLayout(() -> {
+                    ScriptEngineSelector.Engine engine =
+                            _scriptEngineSelector.getSelectedEngine();
+                    if (engine == null) {
+                        log.error("Script engine is null", new JmriException());
+                        return;
+                    }
+
                     try {
-                        String theScript = String.format("import jmri%n") + _registerScript;
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                                .eval(theScript, bindings);
+                        String theScript;
+                        if (engine.isJython()) {
+                            theScript = String.format("import jmri%n") + _registerScript;
+                        } else {
+                            theScript = _registerScript;
+                        }
+                        engine.getScriptEngine().eval(theScript, bindings);
                     } catch (RuntimeException | ScriptException e) {
                         log.warn("cannot execute script during registerListeners", e);
                     }
@@ -440,8 +461,6 @@ public class ExpressionScript extends AbstractDigitalExpression
             _listenersAreRegistered = false;
 
             if (!_unregisterScript.trim().isEmpty()) {
-                JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-
                 Bindings bindings = new SimpleBindings();
                 MutableBoolean result = new MutableBoolean(false);
 
@@ -452,10 +471,21 @@ public class ExpressionScript extends AbstractDigitalExpression
                 bindings.put("self", this);         // Give the script access to myself with the local variable 'self'
 
                 ThreadingUtil.runOnLayout(() -> {
+                    ScriptEngineSelector.Engine engine =
+                            _scriptEngineSelector.getSelectedEngine();
+                    if (engine == null) {
+                        log.error("Script engine is null", new JmriException());
+                        return;
+                    }
+
                     try {
-                        String theScript = String.format("import jmri%n") + _unregisterScript;
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                                .eval(theScript, bindings);
+                        String theScript;
+                        if (engine.isJython()) {
+                            theScript = String.format("import jmri%n") + _unregisterScript;
+                        } else {
+                            theScript = _unregisterScript;
+                        }
+                        engine.getScriptEngine().eval(theScript, bindings);
                     } catch (RuntimeException | ScriptException e) {
                         log.warn("cannot execute script during unregisterListeners", e);
                     }
@@ -479,7 +509,7 @@ public class ExpressionScript extends AbstractDigitalExpression
 
     public enum OperationType {
         RunScript(Bundle.getMessage("ExpressionScript_RunScript")),
-        JythonCommand(Bundle.getMessage("ExpressionScript_JythonCommand"));
+        SingleLineCommand(Bundle.getMessage("ExpressionScript_SingleLineCommand"));
 
         private final String _text;
 

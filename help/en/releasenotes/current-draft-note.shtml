@@ -405,7 +405,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action Script and the expression Script
+          now supports both Jython and ECMA Script (JavaScript).
+          As a result, the option <i>Jython command</i> is now
+          renamed to <i>Single line command</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
