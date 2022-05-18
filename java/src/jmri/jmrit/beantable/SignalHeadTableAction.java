@@ -240,7 +240,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 try {
                     val = s.getAppearanceName();
                 } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                    log.error("Could not get Appearance Name for {}, {}", s.getDisplayName() , e.getLocalizedMessage(), e);
+                    log.error("Could not get Appearance Name for {}", s.getDisplayName(), e);
                 }
                 if (val != null) {
                     return val;
