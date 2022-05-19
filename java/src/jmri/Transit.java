@@ -5,7 +5,7 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
