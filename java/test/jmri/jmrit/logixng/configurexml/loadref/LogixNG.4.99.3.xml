@@ -4,8 +4,8 @@
   <jmriversion>
     <major>4</major>
     <minor>99</minor>
-    <test>7</test>
-    <modifier>dev</modifier>
+    <test>8</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -5629,7 +5629,7 @@
     <ExpressionScript class="jmri.jmrit.logixng.expressions.configurexml.ExpressionScriptXml">
       <systemName>IQDE:AUTO:0068</systemName>
       <operationAddressing>Direct</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference />
       <operationLocalVariable />
       <operationFormula />
@@ -5640,6 +5640,9 @@
       <scriptFormula />
       <registerListenerScript />
       <unregisterListenerScript />
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5701,7 +5704,7 @@
       <systemName>IQDE:AUTO:0069</systemName>
       <comment>A comment</comment>
       <operationAddressing>Direct</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference />
       <operationLocalVariable />
       <operationFormula />
@@ -5712,6 +5715,9 @@
       <scriptFormula />
       <registerListenerScript>sensors.provideSensor("IS1").addPropertyChangeListener(self)</registerListenerScript>
       <unregisterListenerScript>sensors.provideSensor("IS1").removePropertyChangeListener(self)</unregisterListenerScript>
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -15784,7 +15790,7 @@
     <ActionScript class="jmri.jmrit.logixng.actions.configurexml.ActionScriptXml">
       <systemName>IQDA:AUTO:0084</systemName>
       <operationAddressing>Direct</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference />
       <operationLocalVariable />
       <operationFormula />
@@ -15793,6 +15799,9 @@
       <scriptReference />
       <scriptLocalVariable />
       <scriptFormula />
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -15854,7 +15863,7 @@
       <systemName>IQDA:AUTO:0085</systemName>
       <comment>A comment</comment>
       <operationAddressing>Direct</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference>{M1}</operationReference>
       <operationLocalVariable>myVar</operationLocalVariable>
       <operationFormula>a+b</operationFormula>
@@ -15864,6 +15873,9 @@
       <scriptReference>{M2}</scriptReference>
       <scriptLocalVariable>myOtherVar</scriptLocalVariable>
       <scriptFormula>c+d</scriptFormula>
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -15925,7 +15937,7 @@
       <systemName>IQDA:AUTO:0086</systemName>
       <comment>A comment</comment>
       <operationAddressing>Formula</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference>{M1}</operationReference>
       <operationLocalVariable>myVar</operationLocalVariable>
       <operationFormula>a+b</operationFormula>
@@ -15934,6 +15946,9 @@
       <scriptReference>{M2}</scriptReference>
       <scriptLocalVariable>myOtherVar</scriptLocalVariable>
       <scriptFormula>c+d</scriptFormula>
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -15995,7 +16010,7 @@
       <systemName>IQDA:AUTO:0087</systemName>
       <comment>A comment</comment>
       <operationAddressing>LocalVariable</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference>{M1}</operationReference>
       <operationLocalVariable>myVar</operationLocalVariable>
       <operationFormula>a+b</operationFormula>
@@ -16005,6 +16020,9 @@
       <scriptReference>{M2}</scriptReference>
       <scriptLocalVariable>myOtherVar</scriptLocalVariable>
       <scriptFormula>c+d</scriptFormula>
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -16066,7 +16084,7 @@
       <systemName>IQDA:AUTO:0088</systemName>
       <comment>A comment</comment>
       <operationAddressing>Reference</operationAddressing>
-      <operationType>JythonCommand</operationType>
+      <operationType>SingleLineCommand</operationType>
       <operationReference>{M1}</operationReference>
       <operationLocalVariable>myVar</operationLocalVariable>
       <operationFormula>a+b</operationFormula>
@@ -16076,6 +16094,9 @@
       <scriptReference>{M2}</scriptReference>
       <scriptLocalVariable>myOtherVar</scriptLocalVariable>
       <scriptFormula>c+d</scriptFormula>
+      <scriptLanguage>
+        <language>python</language>
+      </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -27144,14 +27165,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sun May 08 19:41:49 CEST 2022</date>
+      <date>Sat May 14 15:55:12 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun May 08 19:41:50 CEST 2022</date>
+      <date>Sat May 14 15:55:12 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-08T17:41:26Z+R64b1ff2 on Sun May 08 19:41:50 CEST 2022-->
+  <!--Written by JMRI version 4.99.8plus+daniel+2022-05-14T13:54:26Z+Rf741a24 on Sat May 14 15:55:12 CEST 2022-->
 </layout-config>
