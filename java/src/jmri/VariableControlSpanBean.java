@@ -13,21 +13,21 @@ import javax.annotation.CheckReturnValue;
 public interface VariableControlSpanBean extends NamedBean {
 
     /**
-     * Provide the number of outputs this bean controls.
+     * Provide the number of input/output bits this bean controls.
      * <p>
      * Typically just one, some systems provide outputs that control two outputs, e.g. C/MRI.
      *
-     * @return true if possible; false otherwise
+     * @return the number of bits
      */
     @CheckReturnValue
-    public int getNumberOutputBits();
+    public int getNumberControlBits();
 
     /**
-     * Set number of output bits.
+     * Set number of input/output bits this bean controls.
      *
-     * @param num the size of the output, currently 1 or 2
+     * @param num the size of the input/output, currently 1 or 2
      */
     @InvokeOnLayoutThread
-    public void setNumberOutputBits(int num);
+    public void setNumberControlBits(int num);
 
 }

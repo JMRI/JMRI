@@ -376,15 +376,15 @@ public class SerialAddressTwoSystemTest {
         // create a new turnout, controlled by two output bits
         jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
         jmri.Turnout t1 = tMgr.newTurnout("CT18034", "userT34");
-        t1.setNumberOutputBits(2);
+        t1.setNumberControlBits(2);
         // check that turnout was created correctly
         Assert.assertEquals("create CT18034 check 1", "CT18034", t1.getSystemName());
-        Assert.assertEquals("create CT18034 check 2", 2, t1.getNumberOutputBits());
+        Assert.assertEquals("create CT18034 check 2", 2, t1.getNumberControlBits());
         // create a new turnout, controlled by one output bit
         jmri.Turnout t2 = tMgr.newTurnout("CT18032", "userT32");
         // check that turnout was created correctly
         Assert.assertEquals("create CT18032 check 1", "CT18032", t2.getSystemName());
-        Assert.assertEquals("create CT18032 check 2", 1, t2.getNumberOutputBits());
+        Assert.assertEquals("create CT18032 check 2", 1, t2.getNumberControlBits());
         // create two new lights
         jmri.LightManager lMgr = jmri.InstanceManager.lightManagerInstance();
         jmri.Light lgt1 = lMgr.newLight("CL18036", "userL36");

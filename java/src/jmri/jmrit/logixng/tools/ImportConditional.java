@@ -1565,7 +1565,7 @@ public class ImportConditional {
                 break;
 
             case JYTHON_COMMAND:
-                action.setOperationType(ActionScript.OperationType.JythonCommand);
+                action.setOperationType(ActionScript.OperationType.SingleLineCommand);
                 break;
 
             default:

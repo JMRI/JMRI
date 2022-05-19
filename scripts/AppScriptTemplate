@@ -5,6 +5,10 @@
 # This script is used for both all POSIX operating systems including Linux
 # and macOS / OS X application bundles.
 #
+# If a "jre" directory is found in the current working directory,
+# it's assumed that contains a correct JRE or JDK which will be used
+# regardless of the setting of ${JAVA_HOME}
+#
 # If you need to specify an option with spaces in it, escape the spaces with a
 # leading backslash like "\ ".
 #
@@ -290,8 +294,39 @@ if [ $# -gt 0 ] ; then
 fi
 parse_args "${all_options[@]:-}"
 
+# define JMRI_HOME if it is not defined
+if [ -z "${JMRI_HOME}" ] ; then
+    JMRI_HOME="${SCRIPTDIR}"
+    if [ "$OS" = "macosx" ] ; then
+        # on OS X, the default JMRI_HOME is the directory containing the .app bundle
+        BUNDLEDIR=$(cd "${SCRIPTDIR}/../.." && pwd)
+        if [ -f "${BUNDLEDIR}/Contents/MacOS/StartJMRI" ] ; then
+            JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
+            DEBUG="yes" # default to on, so always available in Console.app
+        else
+            BUNDLEDIR=""
+        fi
+    fi
+fi
+
+cd "${JMRI_HOME}"
+[ -n "${DEBUG}" ] && echo "PWD: '${PWD}'" | tee -a ${launcher_log}
+
 # define JAVA_HOME if needed
 [ -n "${DEBUG}" ] && echo "initial JAVA_HOME: '${JAVA_HOME}' OS: '${OS}'" | tee -a ${launcher_log}
+# First, select local java version, if present; this overrides ${JAVA_HOME} passed in
+if [ -d "${JMRI_HOME}/jre" ]; then
+    JAVA_HOME=${JMRI_HOME}/jre
+    PATH=${JAVA_HOME}/bin:$PATH
+    JAVACMD=java
+    if [ "$OS" = "macosx" ] ; then
+        # if macosx and xattr exists, use it
+        if type "xattr" > /dev/null ; then
+            xattr -r -d com.apple.quarantine ${JAVA_HOME}/bin/java || true
+        fi
+    fi
+fi
+# Otherwise, try to find an installed JRE
 if [ -z "${JAVA_HOME}" ] ; then
     #
     # macOS / OS X get special treatment
@@ -338,14 +373,14 @@ if [ -z "${JAVA_HOME}" ] ; then
             # JAVA_HOME is still not defined, so prompt to install Java for OS X
             /usr/bin/osascript << EOT
             try
-                display alert "To use JMRI you need to install a JRE." \
-                    message "Click \"More Info...\" to visit the Java Runtime Environment download website." \
+                display alert "To use JMRI you need to install Java 11." \
+                    message "Click \"More Info...\" to learn more about installing Java 11." \
                     buttons {"More Info...", "OK"} \
                     default button "OK" \
                     cancel button "More Info..."
             on error number -128
                 -- user pressed cancel button
-                open location "https://www.java.com/en/download/mac_download.jsp"
+                open location "https://www.jmri.org/java"
             end try
 EOT
             exit 1
@@ -366,6 +401,8 @@ else
 fi
 # make JAVA_HOME available to spawned processes
 export JAVA_HOME
+[ -n "${DEBUG}" ] && echo "JAVA_HOME: '${JAVA_HOME}'" | tee -a ${launcher_log}
+[ -n "${DEBUG}" ] && echo "JAVACMD: '${JAVACMD}'" | tee -a ${launcher_log}
 
 # set if -J-Xmx=... is not in options or arguments
 if [ -z "${jmri_xmx:-}" ] ; then
@@ -381,25 +418,6 @@ fi
 if [[ $( "${JAVACMD}" -version 2>&1 | grep version ) =~ \"9 ]] ; then
     jmri_options="${jmri_options} --illegal-access=warn"
 fi
-
-# define JMRI_HOME if it is not defined
-if [ -z "${JMRI_HOME}" ] ; then
-    JMRI_HOME="${SCRIPTDIR}"
-    if [ "$OS" = "macosx" ] ; then
-        # on OS X, the .app bundle is assumed to reside in the default JMRI_HOME
-        BUNDLEDIR=$(cd "${SCRIPTDIR}/../.." && pwd)
-        if [ -f "${BUNDLEDIR}/Contents/MacOS/StartJMRI" ] ; then
-            JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
-            DEBUG="yes" # default to on, so always available in Console.app
-        else
-            BUNDLEDIR=""
-        fi
-    fi
-fi
-
-cd "${JMRI_HOME}"
-[ -n "${DEBUG}" ] && echo "PWD: '${PWD}'" | tee -a ${launcher_log}
-
 
 # build library path
 SYSLIBPATH=
@@ -555,7 +573,7 @@ if [ "$OS" = "macosx" ] ; then
     [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'" | tee -a ${launcher_log}
 fi
 
-# check java version
+# check java version >= 11 and inform user if not
 "${JAVACMD}" ${OPTIONS} ${ALTPORTS} ${CONFIGFILE} -cp lib/JavaVersionCheckWindow.jar apps.JavaVersionCheckWindow
 EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ] ; then
