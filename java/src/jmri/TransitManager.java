@@ -36,10 +36,10 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         super();
         addVetoListener();
     }
-    
+
     final void addVetoListener(){
         InstanceManager.getDefault(SectionManager.class).addVetoableChangeListener(this);
-    } 
+    }
 
     @Override
     public int getXMLOrder() {
@@ -88,7 +88,7 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
                 Bundle.getMessage("InvalidSytemNameAlreadyExists",getBeanTypeHandled(false),sysName));
         }
         // Transit does not exist, create a new Transit
-        z = new Transit(sysName, userName);
+        z = new jmri.implementation.DefaultTransit(sysName, userName);
         // save in the maps
         register(z);
 
@@ -184,7 +184,7 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         }
         return list;
     }
-    
+
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
@@ -198,7 +198,7 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
     public Class<Transit> getNamedBeanClass() {
         return Transit.class;
     }
-    
+
     @Override
     public void dispose() {
         InstanceManager.getDefault(SectionManager.class).removeVetoableChangeListener(this);
