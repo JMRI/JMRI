@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.stream.Stream;
 
 import jmri.util.*;
+import jmri.jmrit.display.Editor;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -69,8 +70,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         int index = 0;
         for (JmriJFrame frame : JmriJFrame.getFrameList()) {
             index++;
-            if (frame instanceof PanelEditor) {
-                PanelEditor le = (PanelEditor) frame;
+            if (frame instanceof Editor) {
+                Editor le = (Editor) frame;
 
                 String name = inFile.getName();
                 FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
