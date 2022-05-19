@@ -92,6 +92,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultRouteManager(memo);
         }
 
+        if (type == SectionManager.class) {
+            return new DefaultSectionManager();
+        }
+
         if (type == SensorManager.class) {
             return new ProxySensorManager();
         }
@@ -161,6 +165,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,
+                SectionManager.class,
                 SensorManager.class,
                 SignalGroupManager.class,
                 SignalHeadManager.class,

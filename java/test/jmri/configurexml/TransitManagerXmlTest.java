@@ -33,7 +33,7 @@ public class TransitManagerXmlTest {
       TransitManager tm = new TransitManager();
       Transit t = tm.createNewTransit("TS1", "user");
 
-      Section s = new Section("SS1");
+      Section s = new jmri.implementation.DefaultSection("SS1");
       TransitSection ts = new TransitSection(s,0,0,false);
 
       TransitSectionAction ta = new TransitSectionAction(0,0);
