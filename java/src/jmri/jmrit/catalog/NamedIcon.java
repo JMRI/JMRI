@@ -123,11 +123,13 @@ public class NamedIcon extends ImageIcon {
         }
     }
 
+    // Does this image has the Netscape extension?
     private boolean hasNetscapeExtension(ImageReader gifReader) throws IOException {
         IIOMetadata metaData = gifReader.getImageMetadata(0);
         Node tree = metaData.getAsTree("javax_imageio_gif_image_1.0");
-        Node applicationExtensions = null;
 
+        // Try to find the node "ApplicationExtensions"
+        Node applicationExtensions = null;
         NodeList nodeList = tree.getChildNodes();
         for (int child=0; child < nodeList.getLength(); child++) {
             if (nodeList.item(child).getNodeName().equals("ApplicationExtensions")) {
@@ -136,21 +138,25 @@ public class NamedIcon extends ImageIcon {
         }
         if (applicationExtensions == null) return false;
 
-
+        // Loop thru the extensions to try to find the "NETSCAPE" extension
         nodeList = applicationExtensions.getChildNodes();
         for (int child=0; child < nodeList.getLength(); child++) {
             if (nodeList.item(child).getNodeName().equals("ApplicationExtension")) {
                 org.w3c.dom.NamedNodeMap map = nodeList.item(child).getAttributes();
                 for (int i=0; i < map.getLength(); i++) {
-                    if (map.item(i).getNodeName().equals("NETSCAPE")) return true;
+                    if (map.item(i).getNodeName().equals("applicationID")
+                            && map.item(i).getNodeValue().equals("NETSCAPE")) {
+                        return true;
+                    }
                 }
             }
         }
 
+        // The Netscape extension is not found
         return false;
     }
 
-    private boolean printMetaDataTree = true;
+    private boolean printMetaDataTree = false;
 
     /**
      * Create a named icon that includes an image to be loaded from a URL.
@@ -188,6 +194,8 @@ public class NamedIcon extends ImageIcon {
                 int numFrames = gifReader.getNumImages(true);
 
                 if (printMetaDataTree) printMetaDataTree(pName, gifReader);
+
+                System.out.format("Image %s has %d frames. Has Netscape: %b%n", pName, numFrames, hasNetscapeExtension(gifReader));
 
                 // Treat all icons as animated since some might be tagged as animated even
                 // though they only have 1 frame.
