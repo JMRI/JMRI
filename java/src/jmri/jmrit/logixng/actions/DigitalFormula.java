@@ -360,7 +360,7 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital expression " + socketSystemName);
+                            log.error("cannot load digital expression {}", socketSystemName);
                         }
                     }
                 } else {
