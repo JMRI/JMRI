@@ -157,9 +157,12 @@ public class LockedRoutesManager {
      * CTCMain when the debug sensor goes active.
      */
     void dumpAllRoutes() {
+        if ( !log.isInfoEnabled() ) {
+            return;
+        }
         log.info("Locked Routes:");
         for (LockedRoute lockedRoute : _mArrayListOfLockedRoutes) {
-            log.info(lockedRoute.dumpRoute());
+            log.info("Route: {}", lockedRoute.dumpRoute());
         }
     }
 }
