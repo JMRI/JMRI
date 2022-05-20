@@ -138,6 +138,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new ProxyTurnoutManager();
         }
 
+        if (type == TransitManager.class) {
+            return new DefaultTransitManager();
+        }
+
         if (type == VSDecoderManager.class) {
             return VSDecoderManager.instance();
         }
@@ -174,6 +178,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 SignalSystemManager.class,
                 StringIOManager.class,
                 Timebase.class,
+                TransitManager.class,
                 TurnoutManager.class,
                 VariableLightManager.class,
                 VSDecoderManager.class
