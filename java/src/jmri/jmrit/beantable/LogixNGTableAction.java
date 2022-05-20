@@ -140,7 +140,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
                                     .getDeepCopy(systemNames, userNames));
                 }
             } catch (JmriException ex) {
-                log.error("Could not Copy Conditional.", ex);
+                log.error("Could not Copy ConditionalNG.", ex);
             }
             sourceConditionalNG.getFemaleSocket().registerListeners();
             targetConditionalNG.getFemaleSocket().registerListeners();
