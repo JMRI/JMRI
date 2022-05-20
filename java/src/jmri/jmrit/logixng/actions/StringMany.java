@@ -86,7 +86,7 @@ public class StringMany extends AbstractStringAction
                             ae._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load string action " + socketSystemName);
+                            log.error("cannot load string action {}", socketSystemName);
                         }
                     }
                 } else {
