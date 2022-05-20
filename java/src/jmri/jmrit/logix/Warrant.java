@@ -1305,8 +1305,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if ( !log.isInfoEnabled() ) {
             return true;
         }
-        StringBuilder info = new StringBuilder("Warrant: \"");
-        info.append(getDisplayName());
+        StringBuilder info = new StringBuilder("\""); info.append(getDisplayName());
         info.append("\" Train \""); info.append(getTrainName()); info.append("\" - Current Block \"");
         info.append(getBlockAt(_idxCurrentOrder).getDisplayName());
         info.append("\" BlockOrder idx= "); info.append(_idxCurrentOrder);
@@ -1353,7 +1352,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
          } else {
             info.append("No engineer.");
         }
-        log.info("\n {}", info.toString());
+        log.info("\n Warrant: {}", info.toString());
         return true;
     }
 
