@@ -874,7 +874,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 log.info("{} block {}", Bundle.getMessage("warrantAbort", getTrainName(), getDisplayName()), 
                         getBlockAt(_idxCurrentOrder).getDisplayName());
             } else {
-                log.info(Bundle.getMessage("warrantComplete",
+                log.info("{} : Warrant Complete", Bundle.getMessage("warrantComplete",
                         getTrainName(), getDisplayName(), getBlockAt(_idxCurrentOrder).getDisplayName()));
             }
         }
@@ -1021,7 +1021,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         _speedUtil.setThrottle(throttle);
         if (_trace) {
-        log.info(Bundle.getMessage("warrantStart", getTrainName(), getDisplayName(),
+            log.info("{} : Warrant Start", Bundle.getMessage("warrantStart", getTrainName(), getDisplayName(),
                         getBlockAt(0).getDisplayName()));
         }
         startupWarrant();
@@ -1111,7 +1111,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         if (_trace || log.isDebugEnabled()) {
-            log.info(Bundle.getMessage("controlChange",
+            log.info("{} : Control Change", Bundle.getMessage("controlChange",
                     getTrainName(), Bundle.getMessage(Warrant.CNTRL_CMDS[idx]),
                     getCurrentBlockName()));
         }
@@ -1221,7 +1221,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             fireRunStatus("controlChange", runState, idx);
         } else {
             if (_trace || log.isDebugEnabled()) {
-                log.info(Bundle.getMessage("controlFailed",
+                log.info("{} : Control Failed", Bundle.getMessage("controlFailed",
                         getTrainName(), _message,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[idx])));
             }
@@ -1302,7 +1302,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     protected boolean debugInfo() {
-        StringBuffer info = new StringBuffer("\nWarrant: \""); info.append(getDisplayName());
+        if ( !log.isInfoEnabled() ) {
+            return true;
+        }
+        StringBuilder info = new StringBuilder("Warrant: \"");
+        info.append(getDisplayName());
         info.append("\" Train \""); info.append(getTrainName()); info.append("\" - Current Block \"");
         info.append(getBlockAt(_idxCurrentOrder).getDisplayName());
         info.append("\" BlockOrder idx= "); info.append(_idxCurrentOrder);
@@ -1349,7 +1353,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
          } else {
             info.append("No engineer.");
         }
-        log.info(info.toString());
+        log.info("\n {}", info.toString());
         return true;
     }
 
@@ -1748,7 +1752,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 _curSignalAspect = speedType;
                 _waitForSignal = false;
                 if (_trace || log.isDebugEnabled()) {
-                    log.info(Bundle.getMessage("SignalCleared", _protectSignal.getDisplayName(), speedType, _trainName));
+                    log.info("{} : Signal Cleared", Bundle.getMessage("SignalCleared", _protectSignal.getDisplayName(), speedType, _trainName));
                 }
                 /* redundant, restoreRunning takes care of this
                  * 
@@ -1845,7 +1849,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             } else {
                 reason = Bundle.getMessage("Warrant");
             }
-            log.info(Bundle.getMessage("StopBlockCleared",
+            log.info("{} : Stop Block Cleared", Bundle.getMessage("StopBlockCleared",
                     getTrainName(), getDisplayName(), reason, name));
         }
         cancelDelayRamp(true);
@@ -1928,7 +1932,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             TrainOrder to = bo.allocatePaths(this, true);
             OBlock block = bo.getBlock();
             if (log.isDebugEnabled()) {
-                log.debug(getDisplayName()+": "+to.toString());   // so try I'll this
+                log.debug("OK to run {}: {}", getDisplayName(), to.toString());   // so try I'll this
             }
             switch (to._cause) {    // to._cause - precedence of checks is WARRANT, OCCUPY, SIGNAL
                 case NONE:
@@ -1973,7 +1977,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         String blockName = getBlockAt(_idxCurrentOrder).getDisplayName();
         if (_trace || log.isDebugEnabled()) {
-            log.info(Bundle.getMessage("trainWaiting",
+            log.info("{} : train Waiting", Bundle.getMessage("trainWaiting",
                     getTrainName(), _message, blockName));
         }
         fireRunStatus("cannotRun", blockName, _message);
@@ -2039,7 +2043,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             } else {
                 reason = Bundle.getMessage("Occupancy");                
             }
-            log.info(Bundle.getMessage("StopBlockSet", _stoppingBlock.getDisplayName(), getTrainName(), reason));
+            log.info("{} : StopBlock Set", Bundle.getMessage("StopBlockSet", _stoppingBlock.getDisplayName(), getTrainName(), reason));
         }
     }
 
@@ -2079,7 +2083,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (signalIndex == _idxProtectSignal) {
             return true;
         }
-        StringBuffer sb = new StringBuffer(getDisplayName());
+        StringBuilder sb = new StringBuilder(getDisplayName());
         if (_protectSignal != null) {
             _protectSignal.removePropertyChangeListener(this);
             if (log.isDebugEnabled()) {
@@ -2098,8 +2102,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _idxProtectSignal = signalIndex;
             _protectSignal.addPropertyChangeListener(this);
             if (_trace || log.isDebugEnabled()) {
-                log.info(Bundle.getMessage("ProtectSignalSet", getTrainName(),
-                        _protectSignal.getDisplayName(), getBlockAt(_idxProtectSignal).getDisplayName()));
+                log.info("{} : Protect Signal Set : {}", Bundle.getMessage("ProtectSignalSet", getTrainName(),
+                        _protectSignal.getDisplayName(), getBlockAt(_idxProtectSignal).getDisplayName()), sb);
             }
             ret = true;
         }
@@ -2159,7 +2163,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (activeIdx == _idxCurrentOrder) {
             // unusual occurrence.  dirty track? sensor glitch?
             if (_trace || log.isDebugEnabled()) {
-                log.info(Bundle.getMessage("RegainDetection", getTrainName(), block.getDisplayName()));
+                log.info("{} : Regain Detection", Bundle.getMessage("RegainDetection", getTrainName(), block.getDisplayName()));
             }
         } else if (activeIdx == _idxCurrentOrder + 1) {
             if (_delayStart) {
@@ -2212,7 +2216,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _engineer.clearWaitForSync(block); // Sync commands if train is faster than ET
         }
         if (_trace) {
-            log.info(Bundle.getMessage("TrackerBlockEnter", getTrainName(),  block.getDisplayName()));
+            log.info("{} : TrackerBlock Enter", Bundle.getMessage("TrackerBlockEnter", getTrainName(),  block.getDisplayName()));
         }
         fireRunStatus("blockChange", getBlockAt(activeIdx - 1), block);
         if (_runMode == MODE_LEARN) {
@@ -2322,7 +2326,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 setStoppingBlock(0);
             }
             if (_trace) {
-                log.info(Bundle.getMessage("ChangedRoute", _trainName, block.getDisplayName(), getDisplayName()));
+                log.info("{} : Changed Route", Bundle.getMessage("ChangedRoute", _trainName, block.getDisplayName(), getDisplayName()));
             }
             fireRunStatus("blockChange", block, null);  // train is lost
         }
@@ -3042,7 +3046,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             _overrun = true;
             String entrySpeedType = BlockOrder.getPermissibleSpeedAt(curBlkOrder); // expected speed type for this block
-            log.info(Bundle.getMessage("SignalOverrun", getTrainName(), entrySpeedType, name));
+            log.info("{} : Signal Over run", Bundle.getMessage("SignalOverrun", getTrainName(), entrySpeedType, name));
             fireRunStatus("SignalOverrun", name, entrySpeedType); // message of speed violation
             return;
         }
@@ -3062,7 +3066,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         if (bundleKey != null) {
             _overrun = true;
-            log.info(Bundle.getMessage(bundleKey, getTrainName(), curBlock.getDisplayName(), name));
+            log.info("{} : Over run", Bundle.getMessage(bundleKey, getTrainName(), curBlock.getDisplayName(), name));
             fireRunStatus(bundleKey, curBlock.getDisplayName(), name); // message of speed violation
         } else {
             log.error("Train \"{}\" entered stopping block \"{}\" for unknown reason on warrant {}!",
