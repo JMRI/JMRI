@@ -5,12 +5,10 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SerialTrafficController class.
@@ -18,6 +16,19 @@ import org.junit.jupiter.api.*;
  * @author Bob Jacobsen Copyright 2007
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
+
+    private boolean waitForReply() {
+        // wait for reply (normally, done by callback; will check that later)
+        int i = 0;
+        while (rcvdReply == null && i++ < 100) {
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+            }
+        }
+        log.debug("past loop, i={} reply={}", i, rcvdReply);
+        return i < 100;
+    }
 
     @Test
     public void testAddListener() {
@@ -114,9 +125,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         // drive the mechanism
         c.handleOneIncomingReply();
-        JUnitUtil.waitFor(() -> {
-            return rcvdReply != null;
-        }, "reply received");
+        Assert.assertTrue("reply received ", waitForReply());
         Assert.assertEquals("first char of reply ", 0xFE, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 3, rcvdReply.getNumDataElements());
     }
@@ -165,18 +174,16 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         // drive the mechanism
         c.handleOneIncomingReply();
-        JUnitUtil.waitFor(() -> {
-            return rcvdReply != null;
-        }, "reply received");
+        Assert.assertTrue("reply received ", waitForReply());
         Assert.assertEquals("first char of reply ", 0xF0, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 1, rcvdReply.getNumDataElements());
         jmri.util.JUnitAppender.assertWarnMessage("return short message as 1st byte is 240");
     }
 
     // internal class to simulate a Listener
-    private class SerialListenerScaffold implements jmri.jmrix.tmcc.SerialListener {
+    class SerialListenerScaffold implements jmri.jmrix.tmcc.SerialListener {
 
-        protected SerialListenerScaffold() {
+        public SerialListenerScaffold() {
             rcvdReply = null;
             rcvdMsg = null;
         }
@@ -195,7 +202,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     SerialMessage rcvdMsg;
 
     // internal class to simulate a PortController
-    private class SerialPortControllerScaffold extends SerialPortController {
+    class SerialPortControllerScaffold extends SerialPortController {
 
         @Override
         public java.util.Vector<String> getPortNames() {
@@ -260,7 +267,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @BeforeEach
     @Override
     public void setUp() {
-        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.setUp();
         scm = new TmccSystemConnectionMemo("T", "TMCC Test"); // use a common memo to prevent T2, T3 unconnected instances
         tc = new SerialTrafficController(scm); // TrafficController for tests in super (AbstractMRTrafficControllerTest)
         c = null;
@@ -272,14 +279,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @AfterEach
     @Override
     public void tearDown() {
-        if (c != null) { 
-            c.terminateThreads();
-        }
-        scm.dispose();
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
+        if (c != null) c.terminateThreads();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

@@ -355,7 +355,7 @@ public class TableForEach extends AbstractDigitalAction
                         _socket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action {}", socketSystemName);
+                        log.error("cannot load digital action " + socketSystemName);
                     }
                 }
             } else {

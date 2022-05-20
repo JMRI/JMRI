@@ -319,7 +319,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 if (bean != null) {
                     _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
                 } else {
-                    log.warn("Cannot find named bean {} in manager for {}", _name, _type.getManager().getBeanTypeHandled());
+                    log.warn("Cannot find named bean "+_name+" in manager for "+_type.getManager().getBeanTypeHandled());
                     _handle = null;
                 }
             } else {
