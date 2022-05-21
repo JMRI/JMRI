@@ -52,15 +52,6 @@ import jmri.TransitSectionAction;
  */
 public class DefaultTransit extends AbstractNamedBean implements Transit {
 
-    /**
-     * The idle, or available for assignment to an ActiveTrain state.
-     */
-    public static final int IDLE = 0x02;
-    /**
-     * The assigned to an ActiveTrain state.
-     */
-    public static final int ASSIGNED = 0x04;
-
     /*
      * Instance variables (not saved between runs)
      */

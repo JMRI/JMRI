@@ -95,23 +95,6 @@ public class DefaultSection extends AbstractNamedBean implements Section {
 
     private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
 
-    /**
-     * The value of {@link #getState()} if section is available for allocation.
-     */
-    public static final int FREE = 0x02;
-
-    /**
-     * The value of {@link #getState()} if section is allocated for travel in
-     * the forward direction.
-     */
-    public static final int FORWARD = 0x04;
-
-    /**
-     * The value of {@link #getState()} if section is allocated for travel in
-     * the reverse direction.
-     */
-    public static final int REVERSE = 0X08;
-
     public DefaultSection(String systemName, String userName) {
         super(systemName, userName);
     }
@@ -119,16 +102,6 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     public DefaultSection(String systemName) {
         super(systemName);
     }
-
-    /**
-     * Value representing an occupied section.
-     */
-    public static final int OCCUPIED = Block.OCCUPIED;
-
-    /**
-     * Value representing an unoccupied section.
-     */
-    public static final int UNOCCUPIED = Block.UNOCCUPIED;
 
     /**
      * Persistent instance variables (saved between runs)
@@ -2675,10 +2648,6 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             }
         }
     }
-
-    final public static int USERDEFINED = 0x01; //Default Save all the information
-    final public static int SIGNALMASTLOGIC = 0x02; //Save only the name, blocks will be added by the signalmast logic
-    final public static int DYNAMICADHOC = 0x00;  //created on an as required basis, not to be saved.
 
     private int sectionType = USERDEFINED;
 
