@@ -240,7 +240,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 try {
                     val = s.getAppearanceName();
                 } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                    log.error(e.getLocalizedMessage(), e);
+                    log.error("Could not get Appearance Name for {}", s.getDisplayName(), e);
                 }
                 if (val != null) {
                     return val;
@@ -2521,7 +2521,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         ((DccSignalHead) curS).setOutputForAppearance(curS.getValidStates()[i], number);
                     } catch (Exception ex) {
                         //in theory JSpinner should already have caught a number conversion error.
-                        log.error(ex.toString());
+                        log.error("JSpinner for {} did not catch number conversion error", className, ex);
                     }
                 }
                 ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());

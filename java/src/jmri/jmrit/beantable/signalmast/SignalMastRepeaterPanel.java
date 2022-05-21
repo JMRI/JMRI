@@ -110,10 +110,11 @@ public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChange
             try {
                 dsmm.addRepeater(rp);
             } catch (JmriException ex) {
-                log.error(ex.toString());
-                JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage("MessageAddFailed"),
-                        new Object[]{_MasterBox.getSelectedItemDisplayName(), _SlaveBox.getSelectedItemDisplayName()}),
-                        Bundle.getMessage("TitleAddFailed"), JOptionPane.ERROR_MESSAGE);
+                String error = java.text.MessageFormat.format(Bundle.getMessage("MessageAddFailed"),
+                    new Object[]{_MasterBox.getSelectedItemDisplayName(), _SlaveBox.getSelectedItemDisplayName()});
+                log.error("Failed to add Repeater. {} {}", error, ex.getMessage());
+                JOptionPane.showMessageDialog(this, error,
+                    Bundle.getMessage("TitleAddFailed"), JOptionPane.ERROR_MESSAGE);
             }
         });
         footer.add(_addRepeater);
