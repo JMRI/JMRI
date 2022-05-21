@@ -63,6 +63,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private ThrottleRamp _ramp;
     private boolean _holdRamp = false;
     private boolean _isRamping = false;
+    private long _enterTimeOffset = 0;
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -110,6 +111,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                     (command.equals(Command.NOOP) && (cmdBlockIdx <= _warrant.getCurrentOrderIndex()))) {
                 // Train advancing too fast, need to process commands more quickly,
                 // allow some time for whistle toots etc.
+                _enterTimeOffset -= cmdWaitTime;
                 cmdWaitTime = Math.min(cmdWaitTime, 200); // 200ms per command should be enough for toots etc.
                 if (log.isDebugEnabled())
                     log.debug("{}: Train reached block \"{}\" before script et={}ms",
@@ -171,11 +173,16 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         _abort = true;
                     }
                 }
+                _enterTimeOffset = System.currentTimeMillis() - cmdStart;   // too slow, wait time offset
                 if (_abort) {
                     break;
                 }
             }
 
+            if (command.equals(Command.NOOP)) {
+                _speedUtil.enterTimeOffset(_enterTimeOffset);   // too slow, wait time offset
+                _enterTimeOffset = 0;
+            }
             synchronized (_clearLockObject) {
                 // block position and elapsed time are as expected, but track conditions
                 // such as signals or rogue occupancy requires waiting
@@ -265,9 +272,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 if (_normalSpeed > speedMod) {
                     float trackSpeed = _speedUtil.getTrackSpeed(speedMod);
                     _timeRatio = _speedUtil.getTrackSpeed(_normalSpeed) / trackSpeed;
+                    _speedUtil.speedChange(speedMod);  // call before this setting to compute travel of last setting
                     setSpeed(speedMod);
                 } else {
                     _timeRatio = 1.0f;
+                    _speedUtil.speedChange(_normalSpeed);  // call before this setting to compute travel of last setting
                     setSpeed(_normalSpeed);
                 }
                 break;
@@ -507,7 +516,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * UnModified if from ThrottleRamp or stop speeds.
      */
      protected void setSpeed(float speed) {
-        _speedUtil.speedChange(speed);  // call before this setting to compute travel of last setting
         _throttle.setSpeedSetting(speed);
         // Late update to GUI is OK, this is just an informational status display
         if (!_abort) {
@@ -978,7 +986,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 ThrottleSetting cmd = _commands.get(i);
                 time += cmd.getTime();
             }
-            _warrant.deAllocate();
             // same address so this warrant (_warrant) must release the throttle before (warrant) can acquire it
             _checker = new CheckForTermination(_warrant, warrant, num, time);
             _checker.start();
