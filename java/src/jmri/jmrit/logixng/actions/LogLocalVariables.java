@@ -56,6 +56,8 @@ public class LogLocalVariables extends AbstractDigitalAction {
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N in Warning strings.")
     @Override
     public void execute() {
         ConditionalNG c = getConditionalNG();

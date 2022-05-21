@@ -151,7 +151,7 @@ public class WebBrowser
                         _urlExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load string expression " + socketSystemName);
+                        log.error("cannot load string expression {}", socketSystemName);
                     }
                 }
             } else {
