@@ -370,13 +370,18 @@ public class SpeedUtil {
     synchronized private void makeSpeedTree() {
         if (log.isTraceEnabled()) log.debug("makeSpeedTree for {}.", _rosterId);
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        if (_rosterEntry == null) {
-            _noProfile =  true;
-            _sessionProfile = new RosterSpeedProfile(makeRosterEntry(_rosterId));
-        } else {
-            _sessionProfile = manager.getMergeProfile(_rosterEntry);
-            _noProfile =  false;
-        }        
+        _sessionProfile = manager.getMergeProfile(_rosterId);
+        if (_sessionProfile == null) {
+            _rosterEntry = Roster.getDefault().getEntryForId(_rosterId);
+            if (_rosterEntry == null) {
+                _noProfile =  true;
+                _rosterEntry = makeRosterEntry(_rosterId);
+            } else {
+                _noProfile =  false;
+                _sessionProfile = _rosterEntry.getSpeedProfile();
+            }        
+        }
+        manager.makeProfileCopy(_sessionProfile, _rosterEntry);
 
         if (log.isTraceEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to mm/s= {}",
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
@@ -496,7 +501,7 @@ public class SpeedUtil {
         }
         return (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds());
     }
-
+/*
     private void mergeEntries(Entry<Integer, SpeedStep> sEntry, Entry<Integer, SpeedStep> mEntry) {
         SpeedStep sStep = sEntry.getValue();
         SpeedStep mStep = mEntry.getValue();
@@ -522,52 +527,11 @@ public class SpeedUtil {
             }
             mStep.setReverseSpeed(mTrackSpeed);
         }
-    }
+    }*/
 
     synchronized protected void mergeSpeedProfile() {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        if (_rosterEntry == null) {
-            Roster.getDefault().addEntry(_sessionProfile.getRosterEntry());
-            manager.setMergeProfile(_rosterId, _sessionProfile);
-            return;
-        }
-        int keyIncrement = Math.round(getThrottleSpeedStepIncrement() * 1000);
-        TreeMap<Integer, SpeedStep> sSpeeds = _sessionProfile.getProfileSpeeds();
-        RosterSpeedProfile mergeProfile = manager.getMergeProfile(_rosterEntry);
-        TreeMap<Integer, SpeedStep> mSpeeds = mergeProfile.getProfileSpeeds();
-        Entry<Integer, SpeedStep> sEntry = sSpeeds.firstEntry();
-        boolean merged;
-        while (sEntry != null) {
-            merged = false;
-            Integer sKey = sEntry.getKey();
-            Entry<Integer, SpeedStep> mEntry = mSpeeds.floorEntry(sKey);
-            if (mEntry != null) {
-                Integer mKey = mEntry.getKey();
-                if (mKey != null) {
-                    if (Math.abs(sKey - mKey) < keyIncrement) {
-                        mergeEntries(sEntry, mEntry);
-                        merged = true;
-                    }
-                }
-            }
-            if (!merged) {
-                mEntry = mSpeeds.ceilingEntry(sKey);
-                if (mEntry != null) {
-                    Integer mKey = mEntry.getKey();
-                    if (Math.abs(sKey - mKey) < keyIncrement) {
-                        mergeEntries(sEntry, mEntry);
-                        merged = true;
-                    }
-                }
-            }
-            if (!merged) {
-                SpeedStep sStep = sEntry.getValue();
-                mergeProfile.setSpeed(sKey, sStep.getForwardSpeed(), sStep.getReverseSpeed());
-            }
-            sEntry = mSpeeds.higherEntry(sKey);
-        }
-
-        manager.setMergeProfile(_rosterId, mergeProfile);
+        manager.setMergeProfile(_rosterId, _sessionProfile);
     }
 
     protected void setIsForward(boolean direction) {

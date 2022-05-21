@@ -173,7 +173,7 @@ public class MergePrompt extends JDialog {
         }
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        RosterSpeedProfile mergeProfile =  manager.getMergeProfile(entry);
+        RosterSpeedProfile mergeProfile =  manager.getMergeProfile(id);
         Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(mergeProfile);
         spPanel.add(makeSpeedProfilePanel("mergedSpeedProfile", mergeProfile, true, anomaly));
         spPanel.add(Box.createGlue());

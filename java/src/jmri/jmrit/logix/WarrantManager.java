@@ -357,6 +357,7 @@ public class WarrantManager extends AbstractManager<Warrant>
                 jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
             }
         }
+        log.debug("setMergeProfile id = {}", id);
         if (id != null && merge != null) {
             _mergeProfiles.remove(id);
             _mergeProfiles.put(id, merge);
@@ -365,22 +366,18 @@ public class WarrantManager extends AbstractManager<Warrant>
 
     /**
      * Return a copy of the RosterSpeedProfile for Roster entry
-     * @param entry Roster entry
+     * @param id roster id
      * @return RosterSpeedProfile
      */
-    @Nonnull
-    protected RosterSpeedProfile getMergeProfile(RosterEntry entry) {
-        RosterSpeedProfile mergeProfile = _mergeProfiles.get(entry.getId());
-        if (mergeProfile == null || mergeProfile.getProfileSize() == 0 ) {
-            mergeProfile = entry.getSpeedProfile();
-        }
-        return makeProfileCopy(mergeProfile, entry);
+    protected RosterSpeedProfile getMergeProfile(String id) {
+        log.debug("getMergeProfile id = {}", id);
+        return _mergeProfiles.get(id);
     }
 
-    private RosterSpeedProfile makeProfileCopy(RosterSpeedProfile mergeProfile, RosterEntry re) {
+    protected RosterSpeedProfile makeProfileCopy(RosterSpeedProfile mergeProfile, @Nonnull RosterEntry re) {
         RosterSpeedProfile profile = new RosterSpeedProfile(re);
         if (mergeProfile == null) {
-            return profile;
+            mergeProfile = re.getSpeedProfile();
         }
         // make copy of mergeProfile
         TreeMap<Integer, SpeedStep> rosterTree = mergeProfile.getProfileSpeeds();
