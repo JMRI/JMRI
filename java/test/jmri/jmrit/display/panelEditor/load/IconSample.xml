@@ -4,8 +4,8 @@
   <jmriversion>
     <major>4</major>
     <minor>99</minor>
-    <test>6</test>
-    <modifier>dev</modifier>
+    <test>8</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -28,7 +28,7 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="756" y="311" height="289" width="400" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Panel" x="561" y="325" height="363" width="565" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
     <sensoricon sensor="IS1" x="147" y="18" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="90" scale="1.0">
         <rotation>0</rotation>
@@ -46,6 +46,21 @@
     </sensoricon>
     <sensoricon sensor="IS3" x="76" y="20" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS1" x="208" y="19" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
       <inactive url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
@@ -78,108 +93,140 @@
     <positionablelabel x="33" y="85" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Icon" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="120" y="142" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Rotate..." size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="196" y="141" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Ortho" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="90" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="206" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="146" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="0" scale="1.0">
+        <rotation>1</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="271" y="229" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="BN-1989/SL-2-high/rule-238.gif" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="85" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/RGB-animated-once-Square.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="145" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/RGB-animated-once-Square2.gif" degrees="90" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="205" y="182" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/RGB-animated-once-Square2.gif" degrees="0" scale="1.0">
+        <rotation>1</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="269" y="182" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="RGB-animated-once-Square" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Wed May 18 10:07:27 EDT 2022</date>
+      <date>Sat May 21 08:30:57 PDT 2022</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Wed May 18 10:07:28 EDT 2022</date>
+      <date>Sat May 21 08:30:58 PDT 2022</date>
       <filename>/Users/jake/Library/Preferences/JMRI/InternalOnly.jmri/IconSample.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Wed May 18 10:05:49 EDT 2022</date>
+          <date>Sat May 21 08:25:10 PDT 2022</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Wed May 18 10:05:50 EDT 2022</date>
+          <date>Sat May 21 08:25:11 PDT 2022</date>
           <filename>/Users/jake/Library/Preferences/JMRI/InternalOnly.jmri/IconSample.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Wed May 18 10:04:26 EDT 2022</date>
+              <date>Sat May 21 08:01:04 PDT 2022</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Wed May 18 10:04:27 EDT 2022</date>
+              <date>Sat May 21 08:01:05 PDT 2022</date>
               <filename>/Users/jake/Library/Preferences/JMRI/InternalOnly.jmri/IconSample.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Wed May 18 10:01:08 EDT 2022</date>
+                  <date>Wed May 18 17:01:20 EDT 2022</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Wed May 18 10:01:09 EDT 2022</date>
+                  <date>Wed May 18 17:01:23 EDT 2022</date>
                   <filename>/Users/jake/Library/Preferences/JMRI/InternalOnly.jmri/IconSample.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Wed May 18 09:57:29 EDT 2022</date>
+                      <date>Wed May 18 11:28:48 EDT 2022</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Wed May 18 09:57:30 EDT 2022</date>
+                      <date>Wed May 18 11:28:49 EDT 2022</date>
                       <filename>/Users/jake/Library/Preferences/JMRI/InternalOnly.jmri/IconSample.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Wed May 18 08:49:51 EDT 2022</date>
+                          <date>Wed May 18 10:07:27 EDT 2022</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Wed May 18 08:49:52 EDT 2022</date>
+                          <date>Wed May 18 10:07:28 EDT 2022</date>
                           <filename>/Users/jake/Library/Preferences/JMRI/InternalOnly.jmri/IconSample.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Wed May 18 08:50:37 EDT 2022</date>
+                          <date>Wed May 18 10:07:51 EDT 2022</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Wed May 18 10:00:51 EDT 2022</date>
+                      <date>Wed May 18 11:31:35 EDT 2022</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Wed May 18 10:01:31 EDT 2022</date>
+                  <date>Wed May 18 17:03:15 EDT 2022</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Wed May 18 10:04:51 EDT 2022</date>
+              <date>Sat May 21 08:04:46 PDT 2022</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Wed May 18 10:06:45 EDT 2022</date>
+          <date>Sat May 21 08:27:31 PDT 2022</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed May 18 10:07:51 EDT 2022</date>
+      <date>Sat May 21 08:31:32 PDT 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.6dev+jake+20220518T1407Z+R7578dc0c9b on Wed May 18 10:07:51 EDT 2022-->
+  <!--Written by JMRI version 4.99.8plus+jake+20220521T1530Z+R75d1479cd7 on Sat May 21 08:31:32 PDT 2022-->
 </layout-config>
