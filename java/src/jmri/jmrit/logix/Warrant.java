@@ -2828,7 +2828,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param cmdStartIdx   command index of delay  
      */
     private long makespeedChange(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
-
         int cmdEndIdx = _speedUtil.getBlockSpeedInfo(idxSpeedChange - 1).getLastIndex();
         float scriptSpeed = _engineer.getScriptSpeed();  // script throttle setting
         float speedSetting = _engineer.getSpeedSetting();       // current speed
@@ -2896,7 +2895,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
                 break;
             }
-            log.debug("{}: cmd#{} accumTime= {} accumDist= {} changeDist= {}", getDisplayName(), i+1, accumTime, accumDist, changeDist);
         }
 
         if (accumTime == 0 && beginTrackSpeed > 0) {
