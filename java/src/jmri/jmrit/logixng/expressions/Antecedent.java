@@ -122,7 +122,8 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
             result = dp.result;
         } catch (NumberFormatException | IndexOutOfBoundsException | JmriException nfe) {
             result = false;
-            log.error(getDisplayName() + " parseCalculation error antecedent= " + _antecedent + ", ex= " + nfe);  // NOI18N
+            log.error("{} parseCalculation error {} ",
+                getDisplayName(), _antecedent, nfe);  // NOI18N
         }
         
         return result;
@@ -342,7 +343,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital expression " + socketSystemName);
+                            log.error("cannot load digital expression {}", socketSystemName);
                         }
                     }
                 } else {
