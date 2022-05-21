@@ -137,7 +137,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);  // NOI18N
+        log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {  // NOI18N
@@ -487,7 +487,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             E x = getManager().getBySystemName(sName);
             if (x == null) {
                 // bean does not exist, so cannot be edited
-                log.error("No bean with system name: " + sName);
+                log.error("No bean with system name: {}", sName);
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LogixNGError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -665,7 +665,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             getManager().deleteBean(x, "CanDelete");  // NOI18N
         } catch (PropertyVetoException e) {
             if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                log.warn(e.getMessage());
+                log.warn("{} : Do Not Delete", e.getMessage());
                 message.append(Bundle.getMessage("VetoDeleteBean", x.getBeanType(), x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                 JOptionPane.showMessageDialog(null, message.toString(),
                         Bundle.getMessage("QuestionTitle"),
