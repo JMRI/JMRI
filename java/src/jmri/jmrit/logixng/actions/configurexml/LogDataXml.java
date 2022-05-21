@@ -74,7 +74,7 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         h.setFormat((elem != null) ? elem.getValue() : "");
         
         List<Element> dataList = shared.getChild("DataList").getChildren();  // NOI18N
-        log.debug("Found " + dataList.size() + " dataList");  // NOI18N
+        log.debug("Found {} dataList", dataList.size() );  // NOI18N
         
         for (Element e : dataList) {
             LogData.DataType type = LogData.DataType.LocalVariable;
@@ -90,7 +90,7 @@ public class LogDataXml extends jmri.managers.configurexml.AbstractNamedBeanMana
             try {
                 h.getDataList().add(new LogData.Data(type, elementName.getTextTrim()));
             } catch (ParserException ex) {
-                log.warn(ex.getMessage());
+                log.warn("Could not load {} to data list : {}", elementName.getTextTrim(), ex.getMessage());
             }
         }
         
