@@ -26,6 +26,8 @@ import org.w3c.dom.NodeList;
  */
 public class CheckNetscapeExtensionTest {
 
+    private static final Set<String> IMAGES_TO_IGNORE = new HashSet<>();
+
     // Does this image has the Netscape extension?
     private boolean hasNetscapeExtension(ImageReader gifReader) throws IOException {
         IIOMetadata metaData = gifReader.getImageMetadata(0);
@@ -94,7 +96,11 @@ public class CheckNetscapeExtensionTest {
                 .forEach(p -> { files.add(p.toFile()); });
 
         for (File file : files) {
-            checkFileForNetscapeExtension(file);
+            if (! IMAGES_TO_IGNORE.contains(file.getAbsolutePath())) {
+                checkFileForNetscapeExtension(file);
+            } else {
+                log.info("Ignore image {}", file.getAbsolutePath());
+            }
         }
     }
 
@@ -105,6 +111,9 @@ public class CheckNetscapeExtensionTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+
+        IMAGES_TO_IGNORE.add(FileSystems.getDefault().getPath("resources/icons/RGB-animated-once-Square.gif").toFile().getAbsolutePath());
+        IMAGES_TO_IGNORE.add(FileSystems.getDefault().getPath("resources/icons/RGB-animated-once-Square2.gif").toFile().getAbsolutePath());
     }
 
     @AfterEach
