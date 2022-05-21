@@ -58,7 +58,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super.loadLoadStoreFileCheck(file);
 
         done = false;
-        ThreadingUtil.runOnGUIDelayed(() -> done = true, 1000);
+        ThreadingUtil.runOnGUIDelayed(() -> done = true, 2000);
         JUnitUtil.waitFor(() -> done);
 
         storeAndCompareImage(file);
