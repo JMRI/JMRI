@@ -95,19 +95,13 @@ log4j.category.org.jdom2.transform=SEVERE
 # Turn off logging for Java JMDNS; if logs SEVERE and WARNING excessively
 # log4j.category.javax.jmdns=OFF
 
-# log4j.category.jmri.jmrit.display.IndicatorTurnoutIcon=DEBUG
-# log4j.category.jmri.jmrit.logix.OBlock=DEBUG
-# log4j.category.jmri.jmrit.logix.BlockOrder=DEBUG
-# log4j.category.jmri.jmrit.logix.Warrant=DEBUG
-# log4j.category.jmri.jmrit.logix.WarrantTableModel=DEBUG
-# log4j.category.jmri.jmrit.logix.Engineer=DEBUG
-
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
 # log4j.category.jmri.jmrit.beantable.LogixTableAction=DEBUG
 # log4j.category.jmri.jmrit.display=DEBUG
 # log4j.category.jmri.jmrit.display.IndicatorTrackPaths=DEBUG
+# log4j.category.jmri.jmrit.logix.Warrant=DEBUG
 # log4j.category.jmri.jmrit.progsupport=TRACE
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
