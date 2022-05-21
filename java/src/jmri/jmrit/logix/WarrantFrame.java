@@ -997,6 +997,7 @@ public class WarrantFrame extends WarrantRoute {
             msg = routeIsValid();
         }
         if (msg == null) {
+            _warrant.setBlockOrders(getOrders());
             msg = _warrant.checkforTrackers();
         }
         if (msg == null) {

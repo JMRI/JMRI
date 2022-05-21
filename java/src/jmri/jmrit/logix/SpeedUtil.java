@@ -378,8 +378,8 @@ public class SpeedUtil {
                 _rosterEntry = makeRosterEntry(_rosterId);
             } else {
                 _noProfile =  false;
-                _sessionProfile = _rosterEntry.getSpeedProfile();
-            }        
+            }
+            _sessionProfile = new RosterSpeedProfile(_rosterEntry);
         }
         manager.makeProfileCopy(_sessionProfile, _rosterEntry);
 
