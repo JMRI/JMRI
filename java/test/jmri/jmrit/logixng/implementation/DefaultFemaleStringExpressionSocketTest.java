@@ -20,7 +20,7 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Test DefaultFemaleStringExpressionSocket
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBase {
@@ -29,7 +29,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     private String _memorySystemName;
     private Memory _memory;
     private MyStringExpressionMemory _expression;
-    
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -37,18 +37,18 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(StringExpressionManager.class);
     }
-    
+
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
-    
+
     @Test
     public void testGetDescription() {
         Assert.assertTrue("String matches", "?s".equals(_femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "?s E1".equals(_femaleSocket.getLongDescription()));
     }
-    
+
     @Override
     protected FemaleSocket getFemaleSocket(String name) {
         return new DefaultFemaleStringExpressionSocket(null, new FemaleSocketListener() {
@@ -61,12 +61,12 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
             }
         }, name);
     }
-    
+
     @Override
     protected boolean hasSocketBeenSetup() {
         return _expression._hasBeenSetup;
     }
-    
+
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
@@ -81,27 +81,27 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         _memory.setValue("Test");
         Assert.assertEquals("strings are equals", "Test", ((DefaultFemaleStringExpressionSocket)_femaleSocket).evaluate());
     }
-    
+
     @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
-        
+
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.StringExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.expressions.StringExpressionMemory.class);
         map.put(Category.ITEM, classes);
-        
+
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.StringFormula.class);
         map.put(Category.COMMON, classes);
-        
+
         classes = new ArrayList<>();
         map.put(Category.OTHER, classes);
-        
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -112,14 +112,14 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _expression = new MyStringExpressionMemory("IQSE321");
-        _expression.setMemory(_memory);
+        _expression.getSelectNamedBean().setNamedBean(_memory);
         StringExpressionMemory otherExpression = new StringExpressionMemory("IQSE322", null);
         manager = InstanceManager.getDefault(StringExpressionManager.class);
         maleSocket = ((StringExpressionManager)manager).registerExpression(_expression);
@@ -142,22 +142,22 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyStringExpressionMemory extends StringExpressionMemory {
-        
+
         private boolean _hasBeenSetup = false;
-        
+
         public MyStringExpressionMemory(String systemName) {
             super(systemName, null);
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public void setup() {
             _hasBeenSetup = true;
         }
     }
-    
+
 }

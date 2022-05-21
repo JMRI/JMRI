@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.loconet.messageinterp;
 
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.Reporter;
@@ -21,9 +17,12 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.util.StringUtil;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrix.loconet.alm.Alm;
 
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
@@ -64,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * used with permission.
  *
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
- * @author B. Milhaupt Copyright 2015, 2016, 2018
+ * @author B. Milhaupt Copyright 2015, 2016, 2018, 2022
  * @author Randall Wood Copyright 2016
  * @author Michael Richardson Copyright (C) 2021
  */
@@ -655,6 +654,9 @@ public class LocoNetMessageInterpret {
 
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
+            // case OPC_EXP_RD_SL_DATA: // NOTE: Duplicate of definition of OPC_ALM_WRITE!
+            // case OPC_EXP_WR_SL_DATA: // NOTE: Duplicate of definition of OPC_ALM_READ!
+
                 result = interpretAlm(l);
                 if (result.length() > 0) {
                     return result;
@@ -4321,7 +4323,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Create a string representation of the loco address in
-     * addressLow & addressHigh in a form appropriate for the type of address (2
+     * addressLow and addressHigh in a form appropriate for the type of address (2
      * or 4 digit) using the Digitrax 'mixed mode' if necessary.
      * <p>
      * "Mixed mode" is used by DT100 and DT200 throttles to display loco
@@ -4335,7 +4337,7 @@ public class LocoNetMessageInterpret {
      * @return a String containing the address, using Digitrax 'mixed mode'
      *         representation of the loco address, if appropriate
      */
-    private static String convertToMixed(int addressLow, int addressHigh) {
+    public static String convertToMixed(int addressLow, int addressHigh) {
         // if we have a 2 digit decoder address, proceed accordingly
         switch (addressHigh) {
             case 0x7d:
@@ -4528,19 +4530,6 @@ public class LocoNetMessageInterpret {
         }
     }
 
-    private static String getAlmTaskType(int taskTypeByte) {
-        if (taskTypeByte == 2) {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_RD");
-        } else if (taskTypeByte == 3) {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_WR");
-        } else if (taskTypeByte == 0) {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_ID");
-        } else {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_UNKONWN",
-                    taskTypeByte);
-        }
-    }
-
     public static String getDeviceNameFromIPLInfo(int manuf, int type) {
         if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
             return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
@@ -4553,6 +4542,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNRP");
             case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT4");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UT6:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT6");
             case LnConstants.RE_IPL_DIGITRAX_HOST_WTL12:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_WTL12");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
@@ -4587,6 +4578,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BXPA1");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DS74:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DS74");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DS78V:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DS78V");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB210");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO:
@@ -4615,158 +4608,22 @@ public class LocoNetMessageInterpret {
     }
 
     /**
-     * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
+     * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE.
      *
      * @param l LocoNet Message to interpret
      * @return String containing interpreted message or empty string if
      *      message is not interpretable.
      */
     public static String interpretAlm(LocoNetMessage l) {
-        if ((l.getOpCode() != LnConstants.OPC_ALM_READ) &&
-                (l.getOpCode() != LnConstants.OPC_ALM_WRITE)) {
-            return "";
-        }
         if (l.getElement(1) == 0x10) {
-            switch (l.getElement(2)) {
-                case 0:
-                    if ((l.getElement(3) == 0)
-                            && (l.getElement(6) == 0)) {
-                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS_INFO");
-                    } else if ((l.getElement(3) == 0)
-                            && (l.getElement(6) == 0x0b)) {
-                        return Bundle.getMessage("LN_MSG_ALIAS_INFO_REPORT", l.getElement(4) * 2);
-                    } else if ((l.getElement(6) == 0xf)
-                            && (l.getElement(14) == 0)) {
-                        // Alias read and write messages
-                        String message;
-                        if (l.getElement(3) == 0x2) {
-                            if (l.getOpCode() == LnConstants.OPC_ALM_WRITE) {
-                                return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
-                            } else {
-                                message = "LN_MSG_REPORT_ALIAS_2_ALIASES";
-                            }
-                        } else {
-                            break;
-                        }
-                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
-                        int shortAddr = l.getElement(9);
-                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
-                        int shortAddr2 = l.getElement(13);
-                        int pair = l.getElement(4);
-
-                        return Bundle.getMessage(message, pair,
-                                longAddr, shortAddr, longAddr2, shortAddr2);
-                    } else if ((l.getElement(3) == 0x43)) {
-                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
-                        int shortAddr = l.getElement(9);
-                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
-                        int shortAddr2 = l.getElement(13);
-                        int pair = l.getElement(4);
-                        return Bundle.getMessage("LN_MSG_SET_ALIAS_2_ALIASES",
-                                pair, longAddr, shortAddr, longAddr2, shortAddr2);
-                    } else if ((l.getElement(6) == 0)
-                            && (l.getElement(14) == 0)) {
-                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
-                    }
-                    break;
-                case 1:
-                    if ((l.getElement(2) == 1) &&
-                            ((l.getElement(3) & 0x7E) == 0x2)
-                            // ((l.getElement(6) & 0x7E) == 0x2) &&  // sometimes 0x00, sometimes 0x0F, not sure why
-                            ) {
-                            // appears to be related to command-station routes
-                            int turnoutGroup;
-                            int altTurnoutGroup;
-                            int routeNum;
-                            int altRouteNum;
-                            routeNum = 1 + (((l.getElement(4) + l.getElement(5)*128)/2) & 0x1f);
-                            turnoutGroup = 1 + ((l.getElement(4) & 0x1)<< 2);
-                            altRouteNum = 1 + (((l.getElement(4) + l.getElement(5)*128)/4) & 0x3F);
-                            altTurnoutGroup = 1 + ((l.getElement(4) & 0x3) << 2);
-                            if ((l.getOpCode() == LnConstants.OPC_ALM_WRITE) &&
-                                    ((l.getElement(3) & 0x1) == 0)) {
-                                return Bundle.getMessage("LN_MSG_CMD_STN_ROUTE_QUERY",
-                                        routeNum,
-                                        turnoutGroup, turnoutGroup + 3,
-                                        altRouteNum,
-                                        altTurnoutGroup, altTurnoutGroup + 3);
-                            }
-                            String turnA, turnB, turnC, turnD;
-                            String statA, statB, statC, statD;
-                            if ((l.getElement(7) == 0x7f) && (l.getElement(8) == 0x7f)) {
-                                turnA = "Unused";
-                                statA = "";
-                            } else {
-                                turnA = Integer.toString(1 + l.getElement(7) + ((l.getElement(8) & 0x0f) << 7));
-                                statA = (l.getElement(8) & 0x20) == 0x20 ?"c":"t";
-                            }
-
-                            if ((l.getElement(9) == 0x7f) && (l.getElement(10) == 0x7f)) {
-                                turnB = "Unused";
-                                statB = "";
-                            } else {
-                                turnB = Integer.toString(1 + l.getElement(9) + ((l.getElement(10) & 0x0f) << 7));
-                                statB = (l.getElement(10) & 0x20) == 0x20 ?"c":"t";
-                            }
-
-                            if ((l.getElement(11) == 0x7f) && (l.getElement(12) == 0x7f)) {
-                                turnC = "Unused";
-                                statC = "";
-                            } else {
-                                turnC = Integer.toString(1 + l.getElement(11) + ((l.getElement(12) & 0x0f) << 7));
-                                statC = (l.getElement(12) & 0x20) == 0x20 ?"c":"t";
-                            }
-
-                            if ((l.getElement(13) == 0x7f) && (l.getElement(14) == 0x7f)) {
-                                turnD = "Unused";
-                                statD = "";
-                            } else {
-                                turnD = Integer.toString(1 + l.getElement(13) + ((l.getElement(14) & 0x0f) << 7));
-                                statD = (l.getElement(14) & 0x20) == 0x20 ?"c":"t";
-                            }
-
-                            return Bundle.getMessage((l.getOpCode() ==
-                                        LnConstants.OPC_ALM_WRITE)?
-                                            "LN_MSG_CMD_STN_ROUTE_WRITE":
-                                            "LN_MSG_CMD_STN_ROUTE_REPORT",
-                                    routeNum ,
-                                    turnoutGroup, turnoutGroup+3,
-                                    altRouteNum, altTurnoutGroup, altTurnoutGroup+3,
-                                    turnA, statA, turnB, statB,
-                                    turnC, statC, turnD, statD);
-
-                    }
-
-                    return "routes unknown\n";
-                default:
-                    return Bundle.getMessage(
-                            ((l.getOpCode() == LnConstants.OPC_ALM_WRITE)
-                            ? "LN_MSG_ALM_WRITE"
-                            : "LN_MSG_ALM_WRITE_REPLY"),
-                            l.getElement(2),
-                            l.getElement(3),
-                            getAlmTaskType(l.getElement(3)),
-                            l.getElement(4),
-                            l.getElement(5),
-                            l.getElement(6),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(7))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(8))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(9))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(10))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(11))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(12))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(13))),
-                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(l.getElement(14))));
+        String ret;
+            ret = jmri.jmrix.loconet.alm.almi.Almi.interpretAlm(l);
+            if (ret.length() > 1) {
+                return ret;
             }
-        } else if (l.getElement(1) == 0x15) {
+        }
+
+        if (l.getElement(1) == 0x15) {
             int slot = ( (l.getElement(2) & 0x07 ) *128) + l.getElement(3); // slot number for this request
 
             String result = interpretExtendedSlotRdWr(l, slot) ;

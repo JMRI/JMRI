@@ -61,6 +61,8 @@ public class LockLogger {
      * Log a copy of the status. Intended to be overridden by specific LockLogger implementations.
      * @param message The status message, all filled out
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="overridden by specific LockLogger implementations")
     void log(String message) {
         log.debug(message);
     }

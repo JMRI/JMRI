@@ -1,20 +1,22 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Boolean trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
@@ -40,7 +42,7 @@ class BoolTrigger extends Trigger {
     }
 
     public boolean getMatchValue() {
-        return (match_value);
+        return match_value;
     }
 
     @Override
@@ -53,8 +55,8 @@ class BoolTrigger extends Trigger {
             //log.debug("Quit.  No target.");
             return;
         }
-        if (event.getPropertyName().equals(this.getEventName()) != true) {
-            //log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+        if (!event.getPropertyName().equals(this.getEventName())) {
+            //log.debug("Quit. Event name mismatch event: {}, this: {}", event.getPropertyName(), this.getEventName());
             return;
         }
         if (this.getTriggerType() == TriggerType.NONE) {
@@ -90,7 +92,7 @@ class BoolTrigger extends Trigger {
         me.addContent(new Element("match").addContent(Boolean.valueOf(match_value).toString()));
         me.addContent(new Element("action").addContent(this.getTriggerType().toString()));
 
-        return (me);
+        return me;
     }
 
     @Override

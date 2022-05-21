@@ -1,20 +1,22 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Toggle Sound Event.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
@@ -47,9 +49,9 @@ public class ToggleSoundEvent extends SoundEvent {
     @Override
     public boolean hasButton() {
         if ((buttontype == ButtonType.NONE) || (buttontype == ButtonType.ENGINE) || (button == null)) {
-            return (false);
+            return false;
         } else {
-            return (true);
+            return true;
         }
     }
 
@@ -59,7 +61,7 @@ public class ToggleSoundEvent extends SoundEvent {
 
     @Override
     public JComponent getButton() {
-        return (button);
+        return button;
     }
 
     @Override
@@ -69,23 +71,23 @@ public class ToggleSoundEvent extends SoundEvent {
 
     @Override
     public String getButtonLabel() {
-        return (button.getText());
+        return button.getText();
     }
 
     @Override
     protected ButtonTrigger setupButtonAction(Element te) {
         bt = new ButtonTrigger(te.getAttributeValue("name"));
         button_trigger_list.put(bt.getName(), bt);
-        log.debug("new ButtonTrigger {} name {} type {}", bt, bt.getName(), this.getButtonType());
+        log.debug("new ButtonTrigger: {}, name: {}, type: {}", bt, bt.getName(), this.getButtonType());
         if (bt != null) {
-            log.debug("name {} type {}", bt.getName(), this.getButtonType().toString());
+            log.debug("name: {}, type: {}", bt.getName(), this.getButtonType().toString());
         }
         if (button == null) {
             log.error("BUTTON SHOULD NOT BE NULL");
             return bt;
         }
         button.addActionListener(bt);
-        return (bt);
+        return bt;
     }
 
     @Override
@@ -97,7 +99,7 @@ public class ToggleSoundEvent extends SoundEvent {
             me.addContent(t.getXml());
         }
 
-        return (me);
+        return me;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.*;
 
 import jmri.*;
@@ -15,13 +15,14 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionTurnout extends AbstractDigitalAction
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
     private final LogixNG_SelectEnum<TurnoutState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, TurnoutState.values(), TurnoutState.Thrown);
+            new LogixNG_SelectEnum<>(this, TurnoutState.values(), TurnoutState.Thrown, this);
 
 
     public ActionTurnout(String sys, String user)
@@ -151,10 +152,27 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionTurnout: bean = {}, report = {}", cdl, report);
-        NamedBeanHandle<Turnout> handle = _selectNamedBean.getNamedBean();
-        if (handle != null && bean.equals(handle.getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
+        _selectEnum.registerListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
+        _selectEnum.unregisterListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnout.class);

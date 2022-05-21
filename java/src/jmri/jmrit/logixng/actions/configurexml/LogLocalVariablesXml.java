@@ -16,7 +16,7 @@ public class LogLocalVariablesXml extends jmri.managers.configurexml.AbstractNam
 
     public LogLocalVariablesXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -26,28 +26,45 @@ public class LogLocalVariablesXml extends jmri.managers.configurexml.AbstractNam
     @Override
     public Element store(Object o) {
         LogLocalVariables p = (LogLocalVariables) o;
-        
+
         Element element = new Element("LogLocalVariables");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
-        
+
+        element.addContent(new Element("includeGlobalVariables").addContent(p.isIncludeGlobalVariables()? "yes" : "no"));
+        element.addContent(new Element("expandArraysAndMaps").addContent(p.isExpandArraysAndMaps()? "yes" : "no"));
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        
+
         LogLocalVariables h = new LogLocalVariables(sys, uname);
-        
+
         loadCommon(h, shared);
-        
+
+        Element includeGlobalVariables = shared.getChild("includeGlobalVariables");
+        if (includeGlobalVariables != null) {
+            h.setIncludeGlobalVariables("yes".equals(includeGlobalVariables.getTextTrim()));
+        } else {
+            h.setIncludeGlobalVariables(true);
+        }
+
+        Element _expand = shared.getChild("expandArraysAndMaps");
+        if (_expand != null) {
+            h.setExpandArraysAndMaps("yes".equals(_expand.getTextTrim()));
+        } else {
+            h.setExpandArraysAndMaps(false);
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogLocalVariablesXml.class);
 }

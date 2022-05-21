@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>25</minor>
-    <test>10</test>
-    <modifier>ish</modifier>
+    <minor>99</minor>
+    <test>7</test>
+    <modifier>dev</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -70,6 +70,10 @@
       <systemName>IQDE:AUTO:0001</systemName>
       <variable>MyVar</variable>
       <otherVariable />
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
       <caseInsensitive>no</caseInsensitive>
@@ -78,23 +82,12 @@
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -106,7 +99,15 @@
     </ExpressionLocalVariable>
     <ExpressionMemory class="jmri.jmrit.logixng.expressions.configurexml.ExpressionMemoryXml">
       <systemName>IQDE:AUTO:0003</systemName>
-      <memory>MyMemory</memory>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>MyMemory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
@@ -116,23 +117,12 @@
       <table>
         <tableName>
           <addressing>Direct</addressing>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
-          <name />
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -182,6 +172,21 @@
     <ActionLocalVariable class="jmri.jmrit.logixng.actions.configurexml.ActionLocalVariableXml">
       <systemName>IQDA:AUTO:0002</systemName>
       <variable>MyVar</variable>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
+      <listenToMemory>no</listenToMemory>
+      <blockNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </blockNamedBean>
+      <listenToBlock>no</listenToBlock>
+      <reporterNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </reporterNamedBean>
+      <listenToReporter>no</listenToReporter>
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant />
       <otherVariable />
@@ -190,23 +195,14 @@
         <tableName>
           <addressing>Direct</addressing>
           <name>IQT:AUTO:0001</name>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
           <name>Row 4</name>
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
           <name>Column C</name>
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -218,11 +214,15 @@
     </ActionLocalVariable>
     <ActionMemory class="jmri.jmrit.logixng.actions.configurexml.ActionMemoryXml">
       <systemName>IQDA:AUTO:0004</systemName>
-      <memory>MyMemory</memory>
-      <addressing>Direct</addressing>
-      <reference />
-      <localVariable />
-      <formula />
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>MyMemory</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <otherMemoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </otherMemoryNamedBean>
       <memoryOperation>CopyTableCellToMemory</memoryOperation>
       <otherConstant />
       <otherVariable />
@@ -231,23 +231,14 @@
         <tableName>
           <addressing>Direct</addressing>
           <name>IQT:AUTO:0001</name>
-          <reference />
-          <localVariable />
-          <formula />
         </tableName>
         <row>
           <addressing>Direct</addressing>
           <name>Row 1</name>
-          <reference />
-          <localVariable />
-          <formula />
         </row>
         <column>
           <addressing>Direct</addressing>
           <name>Column D</name>
-          <reference />
-          <localVariable />
-          <formula />
         </column>
       </table>
       <MaleSocket>
@@ -403,14 +394,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <date>Mon May 02 01:43:20 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG_ActionMemory_ActionLocalVariable%20-%204.99.2.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Feb 12 02:18:50 CET 2022</date>
+      <date>Mon May 02 01:43:20 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.25.10ish+daniel+2022-02-12T01:18:23Z+R62d39d4 on Sat Feb 12 02:18:50 CET 2022-->
+  <!--Written by JMRI version 4.99.7dev+daniel+2022-05-01T23:42:50Z+R003832a on Mon May 02 01:43:20 CEST 2022-->
 </layout-config>

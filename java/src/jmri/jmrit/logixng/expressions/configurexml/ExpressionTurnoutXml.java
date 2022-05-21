@@ -4,12 +4,13 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ExpressionLightXml objects.
+ * Handle XML configuration for ExpressionTurnoutXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -35,15 +36,8 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
 
         storeCommon(p, element);
 
-        var turnout = p.getTurnout();
-        if (turnout != null) {
-            element.addContent(new Element("turnout").addContent(turnout.getName()));
-        }
-
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
 
@@ -64,36 +58,17 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
 
         loadCommon(h, shared);
 
-        Element turnoutName = shared.getChild("turnout");
-        if (turnoutName != null) {
-            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim());
-            if (t != null) h.setTurnout(t);
-            else h.removeTurnout();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Turnout>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "turnout");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
             Element is_IsNot = shared.getChild("is_isNot");
             if (is_IsNot != null) {
                 h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
             }
 
-
-            elem = shared.getChild("stateAddressing");
+            Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Virtual Sound Decoder</title><!--#include virtual="/Style.shtml" -->
+  <!-- DecoderPro Styles -->
+
+  <style>
+    .dp-center {text-align: center;}
+    .dp-middle {text-align: middle;}
+    .dp-right {text-align: right;}
+    .dp-none {list-style-type: none;}
+    .dp-square {list-style-type: square;}
+    .dp-upper-alpha {ist-style-type: upper-alpha;}
+    .dp-lower-alpha {list-style-type: lower-alpha;}
+    .dp-border-2 {border: 2px solid;}
+  </style>
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>Virtual Sound Decoder</h1>
+
+      <div class="dp-right">
+        <p><a href="index.shtml">Back</a>
+        </p>
+      </div>
+
+      <hr>
+
+      <p><span id="product_desc">The Virtual Sound Decoder provides a way for those who do not have
+      sound-equipped locomotives (or who are not satisfied with the hardware sound decoder options
+      in smaller scales) to enjoy throttle-controlled locomotive sounds from their computer
+      speakers.</span>
+      </p>
+
+      <h4>How it works</h4>
+
+      <p>Locomotive sound "Profiles" are stored in a file called a "VSD File". When the Virtual
+      Sound Decoder ("VSDecoder" or "VSD") is launched, the user chooses the desired Profile, and
+      then assigns the VSDecoder an address. When the operator then controls the engine by pressing
+      function buttons or changing the speed, the Virtual Sound Decoder responds just like a
+      hardware sound decoder installed in the locomotive would by playing sounds through the
+      computer speakers.</p>
+
+      <p>An example VSD file is included with the package, more examples are available for download
+      <a href="https://github.com/JMRI/vsdecoder">on the web</a> and you can make (and share!) your
+      own.</p>
+
+      <p>See <a href="VSDFileAndConfig.shtml">more details</a> on the VSD File and its
+      Configuration.</p>
+
+      <h4>OpenAL Required</h4>
+
+      <p>Virtual Sound Decoder requires that your system have the OpenAL audio library installed.
+      OpenAL is included by default on the Mac, but must be installed on Windows.</p>
+
+      <p>OpenAL is available free from Creative Labs. You can <a target="_blank" href=
+      "http://www.openal.org/downloads/">download the installer for your operating system</a> from
+      the OpenAL site.</p>
+
+      <p>If you do not have OpenAL installed, Virtual Sound Decoder will <em>seem</em> to work,
+      except you will get no sound output.</p>
+
+      <p>Please NOTE: OpenAL is a separate project from JMRI and is neither maintained nor
+      controlled by the JMRI team.</p>
+
+      <h4 id="quickstart">Quick Start - How to use Virtual Sound Decoder</h4>
+
+      <p>To get started with Virtual Sound Decoder, follow these steps.</p>
+
+      <ol>
+        <li>Make sure your sound system is working, and (if needed) you have installed OpenAL</li>
+
+        <li>Select <strong>Tools &rArr; Virtual Sound Decoder &rArr; VSDecoder Manager</strong></li>
+
+        <li>With the VSDecoder Manager window selected, click the <em>Add Decoder</em> button.</li>
+
+        <li>Configure the new VSDecoder
+          <ul>
+            <li>Select a locomotive from the Roster or enter an address manually</li>
+
+            <li>Click <em>Load VSD File</em> and load the "example.vsd" file</li>
+
+            <li>Choose a Profile from the Profile combo-box.</li>
+
+            <li>Click <em>OK</em></li>
+          </ul>
+        </li>
+
+        <li>Press the "Engine Start" button.</li>
+
+        <li>Run your train!!</li>
+      </ol>
+
+      <p>Each time you <em>Add Decoder</em> a new control panel will be added to the Manager
+      window. The buttons on the control panel are specific to that VSDecoder.</p>
+
+      <p>In the Configure Dialog, you can save a VSDecoder File and Profile selection to a Roster
+      Entry, so that the VSDecoder is automatically loaded when the locomotive is selected from the
+      Roster. Select the Roster entry, load a VSD File, choose a Profile and click "Save to
+      Roster".</p>
+
+      <p>For more detailed information on the VSDecoder Manager, see the <a href=
+      "VSDManager.shtml">VSDecoder Manager</a> User's Guide page.</p>
+
+      <h4 id="compatibility">Throttle Compatibility</h4>
+      Virtual Sound Decoder requires a throttle that will report speed changes and function button
+      presses to JMRI. Currently compatible throttles include:
+      <ul>
+        <li>JMRI software and web throttles**</li>
+
+        <li>Digitrax</li>
+
+        <li>WiThrottle</li>
+
+        <li>EngineDriver</li>
+
+        <li>OpenLCB*</li>
+
+        <li>Lenz XpressNet*</li>
+
+        <li>ESU ECoS*</li>
+
+        <li>NCE : PowerHouse PRO*</li>
+      </ul>
+
+      <p>*Support for these systems is expected but not confirmed. If you have one of these systems
+      and can confirm that VSD responds to throttle changes, please mention this on the <a href=
+      "https://groups.io/g/jmriusers">JMRI users Groups.io group</a></p>
+
+      <p>Notably missing from this list is the popular NCE PowerCab system.</p>
+
+      <p>VSD is <strong>not</strong> compatible with the following systems because they do not send
+      throttle information to JMRI.</p>
+
+      <ul>
+        <li>EasyDCC</li>
+
+        <li>TMCC</li>
+
+        <li>Lenz XPA (phone adapter)</li>
+      </ul>
+
+      <p>The buttons on the Sounds tab can be used to trigger sounds if you are using an
+      incompatible throttle system.</p>
+
+      <p>**VSD could also be setup to run in a so called "headless" mode. See <a href=
+      "VSDHeadless.shtml">more details</a> on this.</p>
+
+      <h4>Location Following</h4>
+
+      <p>With input from locomotive tracking hardware, Virtual Sound Decoder is able to move the
+      apparent source of the locomotive sound to follow the locomotive's position on the
+      layout.</p>
+
+      <h5>Location Following Setup</h5>
+      To enable location following you will need a hardware method of tracking the locomotive's
+      position on the layout. VSD currently supports the following tracking systems:
+      <ul>
+        <li>Digitrax Transponding (tested)</li>
+
+        <li>Occupancy Sensors and JMRI Blocks (tested)</li>
+
+        <li>ESU ECoS (not tested)</li>
+
+        <li>RFID (not tested)</li>
+
+        <li>RPS (not tested)</li>
+
+        <li>RailCom / DCC4PC (not tested)</li>
+      </ul>
+
+      <p>If you have one of the systems noted as "not tested", and would like to help with testing
+      and debug of this feature, please contact me on the <a href=
+      "https://groups.io/g/jmriusers">JMRI users Groups.io group</a>. More systems will be added in
+      the future.</p>
+
+      <p>When you have setup the location following, launch a VSDecoder window, assign a locomotive
+      and run it. As your locomotive moves around the layout, the sound will follow the
+      locomotive's reported position.</p>
+
+      <p><em>Note:</em> The sound will appear to "jump" from location to location as the
+      locomotive's reported location changes. This effect will be smaller with additional and more
+      closely spaced reporters or sensors.</p>
+
+      <h5>Location Following using Occupancy Sensors and JMRI Blocks</h5>
+
+      <p>Since JMRI Test Release 4.21.1 the "Location Following" with JMRI Blocks and occupancy
+      sensors is available.<br>
+      When you provide a locomotive address as a numeric Block value, then the sound follows the
+      locations as the locomotive moves from block to block.<br>
+      For more details, see the <a href="VSDLocationsMgr.shtml">Manage VSD Locations</a>
+      instructions.</p>
+
+      <h5>Location Following using JMRI Operations</h5>
+
+      <p>If you do not have a hardware tracking system, you can use the JMRI Operations feature to
+      enable a rudimentary form of location following.</p>
+
+      <p>To set the Operations locations:</p>
+
+      <ol>
+        <li>Select <strong>Tools &rArr; Operations &rArr; Locations</strong></li>
+
+        <li>Create Operations Locations within JMRI Operations</li>
+
+        <li>Follow the directions in <a href="VSDLocationsMgr.shtml">Manage VSD Locations</a> to
+        assign locations.
+        </li>
+      </ol>
+
+      <p>To use Operations for location following, assign the specific locomotive to the train,
+      then select the train in the locomotive's VSDecoder Options pane. When you <em>MOVE</em> the
+      train in Operations, the sound will move to the next location on the Route.</p>
+
+      <p>For more information on Operations, see the JMRI&reg; Operating User's Guide.</p>
+
+      <h4 id="advanced_location_following">Advanced Location Following</h4>
+
+      <p>Since JMRI Test Release 4.13.2 the "Advanced Location Following" is available. The
+      Advanced Location Following calculates the position of a locomotive within a location and
+      sets the sound position continuously. This lets the sound following the locomotive smoothly
+      without a "jump".</p>
+
+      <p>For details on setting up Advanced Location Following, see the <a href=
+      "VSDLocationsMgr.shtml#advanced_location_following">Manage VSD Locations</a>
+      instructions.</p>
+
+      <h5>Menu Items</h5>
+
+      <h6><strong>File &rArr; Load VSD File</strong></h6>
+
+      <p>Load the Sound Profiles from a VSD File. Profiles loaded will be available to any
+      currently running or newly launched VSDecoder.</p>
+
+      <h6><strong>Edit &rArr; VSDecoder Preferences</strong></h6>
+
+      <p>Set preferences for VSDecoder operation. See below for details.</p>
+
+      <h4 id="preferences">VSDecoder Preferences</h4>
+
+      <p>The VSDecoder Preferences pane allows the user to change various preferences in how the
+      VSDecoder works.</p>
+
+      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="773" height="248">
+      </p>
+
+      <h5>Auto Start Engine</h5>
+
+      <p>If checked, the Engine sounds will react immediately to Throttle changes, without the
+      Engine Start button first having to be pressed.</p>
+
+      <p><em>Note:</em> Diesel engines normally have a starting-sound. Throttle changes will not be
+      processed until the starting-sound has finished.</p>
+
+      <h5>Auto-Load VSD File(s)</h5>
+      <a id="auto_load"></a>
+      <p>If checked, the VSDecoder(s) referenced by a Roster Entry in the Roster Group "VSD" will
+      be automatically loaded on start-up.</p>
+
+      <p>To reference a VSDecoder perform the following steps:</p>
+
+      <ol>
+        <li>Make sure that the Roster Group "VSD" exists and at least one Roster Entry is
+        associated.</li>
+
+        <li>Navigate to <strong>Tools &rArr; Virtual Sound Decoder &rArr; VSDecoder
+        Manager</strong></li>
+
+        <li>Add Decoder</li>
+
+        <li>Select a Roster Entry</li>
+
+        <li>Load a VSD File</li>
+
+        <li>Select the Profile</li>
+
+        <li>Click the "Save to Roster" button and confirm with "Yes"</li>
+      </ol>
+
+      <p>Another prerequisite is to add the Action "Start Virtual Sound Decoder Manager" to your
+      JMRI Preferences Start Up.</p>
+
+      <p>The number of Roster Entries for Auto-Loading is limited to four.</p>
+
+      <p><em>Note:</em> A change of the Auto-Load mode only becomes effective after a restart of
+      the VSDecoder Manager.</p>
+      <a id="throttle_auto_launch"></a>
+      <p>JMRI Throttle Auto-Launch Option:<br>
+      In addition to or independent to the Auto-Load option for a VSDecoder, you can configure a
+      Roster Entry to launch a JMRI Throttle automatically.<br>
+      Therefore the attribute "VSDecoder_LaunchThrottle" must be set to "yes" in the Roster Entry
+      Media.<br>
+      If the attribute does not yet exist, it will be saved with the value "no" when you click on
+      "Save to Roster".<br>
+      The attribute can be changed manually or by a Jython script:</p>
+
+      <pre>
+      import jmri
+      import jmri.jmrit.roster
+
+      # Roster Entry to update must be accociated to the Roster Group "VSD"
+      rosterlist = jmri.jmrit.roster.Roster.getDefault().getEntriesInGroup("VSD")
+      print "Roster Group VSD, found", rosterlist.size(), "entries"
+
+      # now loop through the matched entries, printing things
+      if (rosterlist.size() > 0) :
+          for entry in rosterlist.toArray() :
+              entry.putAttribute("VSDecoder_LaunchThrottle", "yes")
+              entry.updateFile()
+              print "- Updated Roster Entry", entry.getId(), "- VSDecoder_LaunchThrottle:", entry.getAttribute("VSDecoder_LaunchThrottle")
+      else :
+          print "No VSD Group found or VSD Group is empty"
+
+      print "ready"
+      </pre>
+
+      <h5>Use Blocks</h5>
+      <a id="use-blocks"></a>
+      <p>If unchecked, Blocks are ignored. This may be helpful on <a href=
+      "VSDLocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>
+      in Simulator Mode. Default: checked.</p>
+
+      <h5>Default VSD File Path</h5>
+
+      <p>This path is the default path for the "Load VSD File" chooser box.</p>
+
+      <h5>Default VSD File Name</h5>
+
+      <p>Was required for the first version of Auto-Load. Is no longer used.</p>
+
+      <h5>Cancel / Apply / Save Buttons</h5>
+
+      <p>Choose Cancel to cancel changes to the Preferences</p>
+
+      <p>Choose Apply to apply changes to the Preferences</p>
+
+      <p>Choose Save to save changes to the Preferences</p>
+
+      <div class="dp-right">
+        <p><a href="index.shtml">Back</a>
+        </p>
+      </div>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -51,7 +51,7 @@ public class ConfigXmlManagerTest {
 
         // this will fail before reaching file
         try {
-            configxmlmanager.storeAll(new File(FileUtil.getUserFilesPath(), "none"));
+            configxmlmanager.storeUser(new File(FileUtil.getUserFilesPath(), "none"));
         } catch (Exception e) {
             // check that the handler was invoked
             Assert.assertTrue(innerFlag);

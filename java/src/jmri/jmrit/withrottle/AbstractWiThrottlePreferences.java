@@ -31,11 +31,16 @@ abstract public class AbstractWiThrottlePreferences {
             root = null;
         }
         if (root != null) {
-            load(root.getChild("WiThrottlePreferences"));
+            Element child = root.getChild("WiThrottlePreferences"); // NOI18N
+            if ( child == null ) {
+                log.error("WiThrottle Preferences not loaded, no WiThrottlePreferences element in {}", fileName );
+                return;
+            }
+            load(child);
         }
     }
 
-    abstract void load(Element child);
+    abstract void load( @javax.annotation.Nonnull Element child);
 
     abstract Element store();
 

@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions.swing;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -122,11 +123,11 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
 
 
         if (expression != null) {
-            if (expression.getReporter() != null) {
-                _reporterBeanPanel.setDefaultNamedBean(expression.getReporter().getBean());
+            if (expression.getSelectNamedBean().getNamedBean() != null) {
+                _reporterBeanPanel.setDefaultNamedBean(expression.getSelectNamedBean().getNamedBean().getBean());
             }
-            if (expression.getMemory() != null) {
-                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
+            if (expression.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getSelectMemoryNamedBean().getNamedBean().getBean());
             }
             switch (expression.getCompareTo()) {
                 case RegEx:
@@ -188,9 +189,9 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
             NamedBeanHandle<Reporter> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
                             .getNamedBeanHandle(reporter.getDisplayName(), reporter);
-            expression.setReporter(handle);
+            expression.getSelectNamedBean().setNamedBean(handle);
         } else {
-            expression.removeReporter();
+            expression.getSelectNamedBean().removeNamedBean();
         }
 
         expression.setReporterValue(_reporterValueComboBox.getItemAt(_reporterValueComboBox.getSelectedIndex()));
@@ -206,12 +207,12 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(memory.getDisplayName(), memory);
-                expression.setMemory(handle);
+                expression.getSelectMemoryNamedBean().setNamedBean(handle);
             } else {
-                expression.removeMemory();
+                expression.getSelectMemoryNamedBean().removeNamedBean();
             }
         } else {
-            expression.removeMemory();
+            expression.getSelectMemoryNamedBean().removeNamedBean();
         }
 
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {
@@ -242,10 +243,23 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
     }
 
     @Override
+    public void setDefaultValues() {
+        if (_reporterBeanPanel.getNamedBean() == null) {
+            SortedSet<Reporter> set = InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet();
+            if (!set.isEmpty()) {
+                Reporter r = set.first();
+                _reporterBeanPanel.setDefaultNamedBean(r);
+            } else {
+                log.error("Reporter manager has no reporters. Can't set default values");
+            }
+        }
+    }
+
+    @Override
     public void dispose() {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionReporterSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionReporterSwing.class);
 
 }

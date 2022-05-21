@@ -9,6 +9,7 @@ import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -21,14 +22,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ExpressionOBlock extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<OBlock> _oblockHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private OBlock.OBlockStatus _oblockState = OBlock.OBlockStatus.Unoccupied;
@@ -50,12 +48,8 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionOBlock copy = new ExpressionOBlock(sysName, userName);
         copy.setComment(getComment());
-        if (_oblockHandle != null) copy.setOBlock(_oblockHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         copy.setBeanState(_oblockState);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
         copy.set_Is_IsNot(_is_IsNot);
         copy.setStateAddressing(_stateAddressing);
         copy.setStateFormula(_stateFormula);
@@ -64,87 +58,8 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         return manager.registerExpression(copy);
     }
 
-    public void setOBlock(@Nonnull String oblockName) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock(oblockName);
-        if (oblock != null) {
-            setOBlock(oblock);
-        } else {
-            removeOBlock();
-            log.error("oblock \"{}\" is not found", oblockName);
-        }
-    }
-
-    public void setOBlock(@Nonnull NamedBeanHandle<OBlock> handle) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        _oblockHandle = handle;
-        InstanceManager.getDefault(OBlockManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setOBlock(@Nonnull OBlock oblock) {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        setOBlock(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(oblock.getDisplayName(), oblock));
-    }
-
-    public void removeOBlock() {
-        assertListenersAreNotRegistered(log, "setOBlock");
-        if (_oblockHandle != null) {
-            InstanceManager.getDefault(OBlockManager.class).removeVetoableChangeListener(this);
-            _oblockHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<OBlock> getOBlock() {
-        return _oblockHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
+    public LogixNG_SelectNamedBean<OBlock> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
@@ -211,24 +126,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         }
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof OBlock) {
-                if (evt.getOldValue().equals(getOBlock().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("OBlock_OBlockInUseOBlockExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof OBlock) {
-                if (evt.getOldValue().equals(getOBlock().getBean())) {
-                    removeOBlock();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -262,44 +159,9 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        OBlock oblock;
+        OBlock oblock = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        switch (_addressing) {
-            case Direct:
-                oblock = _oblockHandle != null ? _oblockHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                oblock = InstanceManager.getDefault(OBlockManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                oblock = InstanceManager.getDefault(OBlockManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                oblock = _expressionNode != null ?
-                        InstanceManager.getDefault(OBlockManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        if (oblock == null) {
-//            log.warn("oblock is null");
-            return false;
-        }
+        if (oblock == null) return false;
 
         OBlock.OBlockStatus checkOBlockState;
 
@@ -334,35 +196,8 @@ public class ExpressionOBlock extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state;
-
-        switch (_addressing) {
-            case Direct:
-                String oblockName;
-                if (_oblockHandle != null) {
-                    oblockName = _oblockHandle.getBean().getDisplayName();
-                } else {
-                    oblockName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", oblockName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_stateAddressing) {
             case Direct:
@@ -397,8 +232,9 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_oblockHandle != null)) {
-            _oblockHandle.getBean().addPropertyChangeListener("state", this);
+        if (!_listenersAreRegistered) {
+            _selectNamedBean.addPropertyChangeListener("state", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -407,7 +243,8 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _oblockHandle.getBean().removePropertyChangeListener("state", this);
+            _selectNamedBean.removePropertyChangeListener("state", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -427,9 +264,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionOBlock: bean = {}, report = {}", cdl, report);
-        if (getOBlock() != null && bean.equals(getOBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionOBlock.class);

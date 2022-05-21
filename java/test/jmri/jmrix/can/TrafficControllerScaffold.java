@@ -1,9 +1,12 @@
 package jmri.jmrix.can;
 
+import java.util.List;
 import java.util.Vector;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +24,7 @@ public class TrafficControllerScaffold extends TrafficController {
 
     static public TrafficControllerScaffold instance() {
         if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new TrafficControllerScaffold object");
-            }
+            log.debug("creating a new TrafficControllerScaffold object");
             self = new TrafficControllerScaffold();
         }
         return self;
@@ -80,9 +81,7 @@ public class TrafficControllerScaffold extends TrafficController {
 
     @Override
     public void sendCanMessage(CanMessage m, CanListener l) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendCanMessage [{}]", m);
-        }
+        log.debug("sendCanMessage [{}]", m);
         // save a copy
         outbound.addElement(m);
         mLastSender = l;
@@ -90,9 +89,7 @@ public class TrafficControllerScaffold extends TrafficController {
 
     @Override
     public void sendCanReply(CanReply r, CanListener l) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendCanReply [{}]", r);
-        }
+        log.debug("sendCanReply [{}]", r);
         // save a copy
         inbound.addElement(r);
     }
@@ -102,6 +99,14 @@ public class TrafficControllerScaffold extends TrafficController {
      */
     public int numListeners() {
         return cmdListeners.size();
+    }
+
+    /**
+     * Get List of Listeners.
+     * @return List of CAN Listeners.
+     */
+    public List<AbstractMRListener> getListeners() {
+        return cmdListeners;
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class);

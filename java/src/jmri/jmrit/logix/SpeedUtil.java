@@ -597,6 +597,9 @@ public class SpeedUtil {
         if (speed1 == null) {
             return true;
         }
+        if (speed1.equals(speed2)) {
+            return false;
+        }
         float s1 = _signalSpeedMap.getSpeed(speed1);
         float s2 = _signalSpeedMap.getSpeed(speed2);
         return (s1 < s2);
@@ -762,70 +765,75 @@ public class SpeedUtil {
     /*************** Block Speed Info *****************/
     /**
      * build map of BlockSpeedInfo's for the route. Map corresponds to list
-     * of BlockOrders
+     * of BlockOrders of a Warrant
      * @param commands list of script commands
+     * @param warrant caller
      */
-    protected void getBlockSpeedTimes(List<ThrottleSetting> commands) {
+    protected void getBlockSpeedTimes(List<ThrottleSetting> commands, Warrant warrant) {
         _distanceTravelled = 0;
         _speedInfo = new ArrayList<BlockSpeedInfo>();
-        String blkName = null;
         float firstSpeed = 0.0f; // used for entrance
         float maxSpeed = 0.0f;
-        float lastSpeed = 0.0f;
+        float speed = 0.0f;
         float prevSpeed = 0.0f;
         long blkTime = 0;
-        float blkDist = 0;
+        float calcDist = 0;
         int firstIdx = 0; // for all blocks except first, this is index of NOOP command
+        int blkOrderIdx = 0;
         ThrottleSetting ts = commands.get(0);
-        blkName = ts.getBeanDisplayName();
-        if (log.isDebugEnabled()) {
-            OBlock blk = (OBlock)ts.getNamedBeanHandle().getBean();
-            log.debug("block: {} Measured dist= {}", blkName, blk.getLengthMm());
-        }
+        OBlock blk = (OBlock)ts.getNamedBeanHandle().getBean();
+        String blkName = blk.getDisplayName();
         for (int i = 0; i < commands.size(); i++) {
             ts = commands.get(i);
             ThrottleSetting.CommandValue cmdVal = ts.getValue();
             long time = ts.getTime();
             blkTime += time;
-            blkDist += getDistanceOfSpeedChange(prevSpeed, lastSpeed, time);
+            calcDist += getDistanceOfSpeedChange(prevSpeed, speed, time);
             if (cmdVal.getType() == ThrottleSetting.ValueType.VAL_FLOAT) {
-                prevSpeed = lastSpeed;
-                lastSpeed = cmdVal.getFloat();
-                if (lastSpeed > maxSpeed) {
-                    maxSpeed = lastSpeed;
+                prevSpeed = speed;
+                speed = cmdVal.getFloat();
+                if (speed > maxSpeed) {
+                    maxSpeed = speed;
                 }
             } else {
-                prevSpeed = lastSpeed;
+                prevSpeed = speed;
             }
             if (ts.getCommand().equals(Command.NOOP)) {
                 // make map entry
-                _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, maxSpeed, lastSpeed, blkTime, blkDist, firstIdx, i));
-                if (log.isDebugEnabled()) {
-                    log.debug("block: {} speeds: entrance= {} max= {} exit= {} time: {}ms distance= {}. index {} to {}",
-                            blkName, firstSpeed, maxSpeed, lastSpeed, blkTime, blkDist, firstIdx, i);
+                boolean trace = false;
+                if (calcDist<= 0) {
+                    log.error("block: {} Path distances unreliable! calcDist={}!", blkName, calcDist);
+                    trace = true;
+                } else if (blkOrderIdx > 0) {
+                    float pathDist = warrant.getBlockOrderAt(blkOrderIdx++).getPathLength();
+                    float ratio = pathDist / calcDist;
+                    if (Math.abs(ratio) > 2.0f || Math.abs(ratio) < 0.5f) {
+                        log.warn("block: {} Path distances unreliable! calcDist={} pathDist= {}", blkName, calcDist, pathDist);
+                        trace = true;
+                    }
                 }
-                blkName = ts.getBeanDisplayName();
-                if (log.isDebugEnabled()) {
-                    OBlock blk = (OBlock)ts.getNamedBeanHandle().getBean();
-                    log.debug("block: {} Measured dist= {}", blkName, blk.getLengthMm());
+                _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, maxSpeed, speed, blkTime, calcDist, firstIdx, i));
+                if (trace || log.isDebugEnabled()) {
+                    log.debug("block: {} speeds: entrance= {} max= {} exit= {} time: {}ms calcDist= {}. index {} to {}",
+                            blkName, firstSpeed, maxSpeed, speed, blkTime, calcDist, firstIdx, i);
                 }
+                blk = (OBlock)ts.getNamedBeanHandle().getBean();
+                blkName = blk.getDisplayName();
                 blkTime = 0;
-                blkDist = 0;
-                firstSpeed = lastSpeed;
-                maxSpeed = lastSpeed;
-                prevSpeed = lastSpeed;
+                calcDist = 0;
+                firstSpeed = speed;
+                maxSpeed = speed;
+                prevSpeed = speed;
                 firstIdx = i + 1; // first in next block is next index
             }
             // set up recording track speeds
             clearStats();
             _prevSpeed = 0;
         }
-
-        _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, maxSpeed, lastSpeed, blkTime, blkDist, firstIdx, commands.size() - 1));
+        _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, maxSpeed, speed, blkTime, calcDist, firstIdx, commands.size() - 1));
         if (log.isDebugEnabled()) {
-            log.debug("block: {} speeds: entrance= {} max= {} exit= {} time: {}ms distance= {}. index {} to {}",
-                    blkName, Math.round(firstSpeed*100)/100, Math.round(maxSpeed*100)/100, Math.round(lastSpeed*100)/100,
-                    blkTime, blkDist, firstIdx, (commands.size() - 1));
+            log.debug("block: {} speeds: entrance= {} max= {} exit= {} time: {}ms calcDist= {}. index {} to {}",
+                    blkName, firstSpeed, maxSpeed, speed, blkTime, calcDist, firstIdx, (commands.size() - 1));
         }
     }
 
@@ -842,6 +850,16 @@ public class SpeedUtil {
     protected RampData getRampForSpeedChange(float fromSpeed, float toSpeed) {
         RampData ramp = new RampData(this, getRampThrottleIncrement(), getRampTimeIncrement(), fromSpeed, toSpeed);
         return ramp;
+    }
+
+    protected float getRampLengthForEntry(float currentSpeed, float endSpeed) {
+        RampData ramp = getRampForSpeedChange(currentSpeed, endSpeed);
+        float enterLen = ramp.getRampLength();
+        if (log.isTraceEnabled()) {
+            log.debug("getRampLengthForEntry: from speed={} to speed={}. rampLen={}",
+                    currentSpeed, endSpeed, enterLen);
+        }
+        return enterLen;
     }
 
     /**

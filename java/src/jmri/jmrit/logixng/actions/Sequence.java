@@ -178,7 +178,13 @@ public class Sequence extends AbstractDigitalAction
 
             FemaleDigitalActionSocket actionSocket =
                     _actionEntries.get(_currentStep)._socket;
-            if (exprSocket.isConnected()) actionSocket.execute();
+            if (actionSocket.isConnected()) actionSocket.execute();
+
+            if (!_runContinuously && _currentStep == _actionEntries.size() - 1) {
+                // Sequence is done, stop and reset the sequence so that it can be started again later
+                _isRunning = false;
+                _currentStep = -1;
+            }
         }
     }
 
@@ -509,7 +515,7 @@ public class Sequence extends AbstractDigitalAction
                         _startExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -531,7 +537,7 @@ public class Sequence extends AbstractDigitalAction
                         _stopExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -553,7 +559,7 @@ public class Sequence extends AbstractDigitalAction
                         _resetExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -576,7 +582,7 @@ public class Sequence extends AbstractDigitalAction
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital expression " + socketSystemName);
+                            log.error("cannot load digital expression {}", socketSystemName);
                         }
                     }
                 } else {
@@ -600,7 +606,7 @@ public class Sequence extends AbstractDigitalAction
                             ae._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital action " + socketSystemName);
+                            log.error("cannot load digital action {}", socketSystemName);
                         }
                     }
                 } else {

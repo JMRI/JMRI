@@ -25,6 +25,7 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -224,7 +225,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (dtf == null || dtf.isEmpty()) {
             return;
         }
-        log.debug("Loading default throttle file : "+dtf);
+        log.debug("Loading default throttle file : {}", dtf);
         loadThrottle(dtf);
     }
 
@@ -244,7 +245,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             loadThrottle();
             return;
         }
-        log.debug("Loading throttle file : "+sfile);
+        log.debug("Loading throttle file : {}", sfile);
         boolean switchAfter = false;
         if (!isEditMode) {
             setEditMode(true);
@@ -283,11 +284,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         } catch (FileNotFoundException ex) {
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
-            log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");
+            log.info("Couldn't load throttle file \"{}\" , reverting to default one, if any", sfile);
             loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
-            log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");
+            log.info("Couldn't load throttle file \"{}\" , reverting to default one, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);
@@ -382,7 +383,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         addressPanel.addAddressListener(functionPanel);
         addressPanel.addAddressListener(speedPanel);
         addressPanel.addAddressListener(this);
-        addressPanel.addAddressListener(InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel());
+        addressPanel.addAddressListener(new ThrottleAdressListener());
 
         add(controlPanel, PANEL_LAYER_FRAME);
         add(functionPanel, PANEL_LAYER_FRAME);
@@ -1066,6 +1067,45 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             } catch (Exception e) {
                 // Do nothing, just go on
             }
+        }
+    }
+
+
+    private class ThrottleAdressListener implements jmri.jmrit.throttle.AddressListener {
+
+        private final ThrottlesTableModel tableModel =
+                InstanceManager.getDefault(ThrottleFrameManager.class)
+                        .getThrottlesListPanel().getTableModel();
+
+        @Override
+        public void notifyAddressChosen(LocoAddress la) {
+        }
+
+        @Override
+        public void notifyAddressReleased(LocoAddress addr) {
+            if (addr instanceof DccLocoAddress ) {
+               DccLocoAddress la = (DccLocoAddress) addr;
+               tableModel.fireTableDataChanged();
+               throttleManager.removeListener(la, tableModel);
+            }
+        }
+
+        @Override
+        public void notifyAddressThrottleFound(DccThrottle throttle) {
+            tableModel.fireTableDataChanged();
+            throttle.addPropertyChangeListener(tableModel);
+        }
+
+        @Override
+        public void notifyConsistAddressChosen(int newAddress, boolean isLong) {
+        }
+
+        @Override
+        public void notifyConsistAddressReleased(int address, boolean isLong) {
+        }
+
+        @Override
+        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
         }
     }
 

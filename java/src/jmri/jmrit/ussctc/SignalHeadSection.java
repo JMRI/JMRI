@@ -433,7 +433,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         } else if ((!leftClear) && (!rightClear)) {
             // check for a signal dropping while cleared
             if (lastIndication != CODE_STOP) {
-                log.debug("CurrentIndication stop due to right and left not clear with "+lastIndication);
+                log.debug("CurrentIndication stop due to right and left not clear with {}", lastIndication);
                 Lock.signalLockLogger.setStatus(this, "Show stop due to right and left not clear");
             } else {
                 Lock.signalLockLogger.clear();

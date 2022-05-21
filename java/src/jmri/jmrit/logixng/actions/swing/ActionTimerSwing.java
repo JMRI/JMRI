@@ -9,20 +9,19 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.actions.ActionTimer;
 import jmri.jmrit.logixng.util.TimerUnit;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ActionTimerSwing extends AbstractDigitalActionSwing {
 
     public static final int MAX_NUM_TIMERS = 10;
-    
+
     private JCheckBox _startImmediately;
     private JCheckBox _runContinuously;
     private JComboBox<TimerUnit> _unitComboBox;
@@ -32,7 +31,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     private JTextField[] _timerSocketNames;
     private JTextField[] _timerDelays;
     private int numActions = 1;
-    
+
     private String getNewSocketName(ActionTimer action) {
         int size = ActionTimer.NUM_STATIC_EXPRESSIONS + MAX_NUM_TIMERS;
         String[] names = new String[size];
@@ -43,40 +42,40 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         }
         return action.getNewSocketName(names);
     }
-    
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && !(object instanceof ActionTimer)) {
             throw new IllegalArgumentException("object must be an ActionTimer but is a: "+object.getClass().getName());
         }
-        
+
         // Create a temporary action in case we don't have one.
         ActionTimer action = object != null ? (ActionTimer)object : new ActionTimer("IQDA1", null);
-        
+
         numActions = action.getNumActions();
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _startImmediately = new JCheckBox(Bundle.getMessage("ActionTimerSwing_StartImmediately"));
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
-        
+
         _unitComboBox = new JComboBox<>();
         for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);
         JComboBoxUtil.setupComboBoxMaxRows(_unitComboBox);
         _unitComboBox.setSelectedItem(action.getUnit());
-        
+
         panel.add(_startImmediately);
         panel.add(_runContinuously);
-        
+
         JPanel unitPanel = new JPanel();
         unitPanel.add(_unitComboBox);
         panel.add(unitPanel);
-        
+
         JPanel numActionsPanel = new JPanel();
         _numTimers = new JTextField(Integer.toString(numActions));
         _numTimers.setColumns(2);
         _numTimers.setEnabled(false);
-        
+
         _addTimer = new JButton(Bundle.getMessage("ActionTimerSwing_AddTimer"));
         _addTimer.addActionListener((ActionEvent e) -> {
             numActions++;
@@ -90,7 +89,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
             _removeTimer.setEnabled(true);
         });
         if (numActions >= MAX_NUM_TIMERS) _addTimer.setEnabled(false);
-        
+
         _removeTimer = new JButton(Bundle.getMessage("ActionTimerSwing_RemoveTimer"));
         _removeTimer.addActionListener((ActionEvent e) -> {
             _timerSocketNames[numActions-1].setEnabled(false);
@@ -107,20 +106,20 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         if ((numActions <= 1) || (action.getActionSocket(numActions-1).isConnected())) {
             _removeTimer.setEnabled(false);
         }
-        
+
         numActionsPanel.add(new JLabel(Bundle.getMessage("ActionTimerSwing_NumTimers")));
         numActionsPanel.add(_numTimers);
         numActionsPanel.add(_addTimer);
         numActionsPanel.add(_removeTimer);
         panel.add(numActionsPanel);
-        
+
         JPanel timerDelaysPanel = new JPanel();
         timerDelaysPanel.setLayout(new BoxLayout(timerDelaysPanel, BoxLayout.Y_AXIS));
         timerDelaysPanel.add(new JLabel(Bundle.getMessage("ActionTimerSwing_TimerDelays")));
         JPanel timerDelaysSubPanel = new JPanel();
         _timerSocketNames = new JTextField[MAX_NUM_TIMERS];
         _timerDelays = new JTextField[MAX_NUM_TIMERS];
-        
+
         for (int i=0; i < MAX_NUM_TIMERS; i++) {
             JPanel delayPanel = new JPanel();
             delayPanel.setLayout(new BoxLayout(delayPanel, BoxLayout.Y_AXIS));
@@ -142,17 +141,17 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         }
         timerDelaysPanel.add(timerDelaysSubPanel);
         panel.add(timerDelaysPanel);
-        
+
         _startImmediately.setSelected(action.getStartImmediately());
         _runContinuously.setSelected(action.getRunContinuously());
         _numTimers.setText(Integer.toString(action.getNumActions()));
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         ActionTimer tempAction = new ActionTimer("IQDA1", null);
-        
+
         boolean hasErrors = false;
         for (int i=0; i < numActions; i++) {
             if (! tempAction.getActionSocket(0).validateName(_timerSocketNames[i].getText())) {
@@ -162,7 +161,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         }
         return !hasErrors;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -170,35 +169,35 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
         if (!(object instanceof ActionTimer)) {
             throw new IllegalArgumentException("object must be an ActionTimer but is a: "+object.getClass().getName());
         }
-        
+
         ActionTimer action = (ActionTimer)object;
-        
+
         action.setStartImmediately(_startImmediately.isSelected());
         action.setRunContinuously(_runContinuously.isSelected());
         action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
         action.setNumActions(numActions);
-        
+
         for (int i=0; i < numActions; i++) {
             action.getActionSocket(i).setName(_timerSocketNames[i].getText());
             action.setDelay(i, Integer.parseInt(_timerDelays[i].getText()));
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("ActionTimer_Short");
     }
-    
+
     @Override
     public void dispose() {
     }
-    
+
 }

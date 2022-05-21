@@ -93,7 +93,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                     + sName + ", refers to an unconfigured input bit.", "Configuration Warning",
                     javax.swing.JOptionPane.INFORMATION_MESSAGE, null);
         }
-        // register this sensor 
+        // register this sensor
         getMemo().getTrafficController().inputBits().registerSensor(s, bit - 1);
         return s;
     }
@@ -190,27 +190,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     private int sysNode = 0;
     private int address = 0;
     private int iName = 0;
-
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
-        } else {
-            return Integer.toString(iName);
-        }
-    }
 
     private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 

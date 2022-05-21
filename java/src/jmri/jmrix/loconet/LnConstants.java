@@ -504,6 +504,7 @@ public final class LnConstants {
     public final static int RE_IPL_MFR_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_HOST_LNRP = 0x01;
     public final static int RE_IPL_DIGITRAX_HOST_UT4 = 0x04;
+    public final static int RE_IPL_DIGITRAX_HOST_UT6 = 0x06;
     public final static int RE_IPL_DIGITRAX_HOST_WTL12 = 0x0c;
     public final static int RE_IPL_DIGITRAX_HOST_DB210OPTO = 0x14;
     public final static int RE_IPL_DIGITRAX_HOST_DB210 = 0x15;
@@ -523,6 +524,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_UR93 = 0x5D;
     public final static int RE_IPL_DIGITRAX_HOST_BXP88 = 0x58;
     public final static int RE_IPL_DIGITRAX_HOST_DS74 = 0x74;
+    public final static int RE_IPL_DIGITRAX_HOST_DS78V = 0x7C;
     public final static int RE_IPL_DIGITRAX_HOST_LNWI = 0x63;
     public final static int RE_IPL_DIGITRAX_HOST_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_SLAVE_RF24 = 0x18;
@@ -679,7 +681,7 @@ public final class LnConstants {
     public final static int RE_IB2_SPECIAL_F12_MASK = 0x10; //F12 is also controlled with the special F20-F28 command
     public final static int RE_IB2_SPECIAL_F20_MASK = 0x20;
     public final static int RE_IB2_SPECIAL_F28_MASK = 0x40;
-    
+
     public final static String DIGITRAX_STRING = "Digitrax"; // NOI18N
     public final static String RR_CIRKITS_STRING = "RR-CirKits"; // NOI18N
 

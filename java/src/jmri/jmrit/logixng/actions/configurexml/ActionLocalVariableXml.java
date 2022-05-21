@@ -7,6 +7,7 @@ import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -41,31 +42,23 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         storeCommon(p, element);
 
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        var selectBlockNamedBeanXml = new LogixNG_SelectNamedBeanXml<Block>();
+        var selectReporterNamedBeanXml = new LogixNG_SelectNamedBeanXml<Reporter>();
+
         String variableName = p.getLocalVariable();
         if (variableName != null) {
             element.addContent(new Element("variable").addContent(variableName));   // NOI18N
         }
 
-        NamedBeanHandle<Memory> memoryName = p.getMemory();
-        if (memoryName != null) {
-            Element e = new Element("memory").addContent(memoryName.getName()); // NOI18N
-            e.setAttribute("listen", p.getListenToMemory() ? "yes" : "no");  // NOI18N
-            element.addContent(e);
-        }
+        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
+        element.addContent(new Element("listenToMemory").addContent(p.getListenToMemory() ? "yes" : "no"));
 
-        NamedBeanHandle<Block> blockName = p.getBlock();
-        if (blockName != null) {
-            Element e = new Element("block").addContent(blockName.getName());   // NOI18N
-            e.setAttribute("listen", p.getListenToBlock() ? "yes" : "no");  // NOI18N
-            element.addContent(e);
-        }
+        element.addContent(selectBlockNamedBeanXml.store(p.getSelectBlockNamedBean(), "blockNamedBean"));
+        element.addContent(new Element("listenToBlock").addContent(p.getListenToBlock() ? "yes" : "no"));
 
-        NamedBeanHandle<Reporter> reporterName = p.getReporter();
-        if (reporterName != null) {
-            Element e = new Element("reporter").addContent(reporterName.getName()); // NOI18N
-            e.setAttribute("listen", p.getListenToReporter() ? "yes" : "no");  // NOI18N
-            element.addContent(e);
-        }
+        element.addContent(selectReporterNamedBeanXml.store(p.getSelectReporterNamedBean(), "reporterNamedBean"));
+        element.addContent(new Element("listenToReporter").addContent(p.getListenToReporter() ? "yes" : "no"));
 
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));   // NOI18N
 
@@ -88,16 +81,41 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
 
         loadCommon(h, shared);
 
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        var selectBlockNamedBeanXml = new LogixNG_SelectNamedBeanXml<Block>();
+        var selectReporterNamedBeanXml = new LogixNG_SelectNamedBeanXml<Reporter>();
+
         Element variableName = shared.getChild("variable"); // NOI18N
         if (variableName != null) {
             h.setLocalVariable(variableName.getTextTrim());
         }
 
+        selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
+        selectBlockNamedBeanXml.load(shared.getChild("blockNamedBean"), h.getSelectBlockNamedBean());
+        selectReporterNamedBeanXml.load(shared.getChild("reporterNamedBean"), h.getSelectReporterNamedBean());
+
+        Element listenToMemoryElem = shared.getChild("listenToMemory");
+        if (listenToMemoryElem != null) {
+            h.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
+        }
+
+        Element listenToBlockElem = shared.getChild("listenToBlock");
+        if (listenToBlockElem != null) {
+            h.setListenToBlock("yes".equals(listenToBlockElem.getTextTrim()));
+        }
+
+        Element listenToReporterElem = shared.getChild("listenToReporter");
+        if (listenToReporterElem != null) {
+            h.setListenToReporter("yes".equals(listenToReporterElem.getTextTrim()));
+        }
+
+        //********************************************************
+        // For backwards compability for 4.99.7 and earlier
         Element memoryName = shared.getChild("memory"); // NOI18N
         if (memoryName != null) {
             Memory t = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (t != null) h.setMemory(t);
-            else h.removeMemory();
+            if (t != null) h.getSelectMemoryNamedBean().setNamedBean(t);
+            else h.getSelectMemoryNamedBean().removeNamedBean();
 
             String yesno = "yes";   // Default is "yes" since this attribute is not in panel files before 4.99.3
             if (memoryName.getAttribute("listen") != null) {  // NOI18N
@@ -105,12 +123,11 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             }
             h.setListenToMemory(yesno.equals("yes"));   // NOI18N
         }
-
         Element blockName = shared.getChild("block");   // NOI18N
         if (blockName != null) {
             Block t = InstanceManager.getDefault(BlockManager.class).getBlock(blockName.getTextTrim());
-            if (t != null) h.setBlock(t);
-            else h.removeBlock();
+            if (t != null) h.getSelectBlockNamedBean().setNamedBean(t);
+            else h.getSelectBlockNamedBean().removeNamedBean();
 
             String yesno = "yes";   // Default is "yes" since this attribute is not in panel files before 4.99.3
             if (blockName.getAttribute("listen") != null) {  // NOI18N
@@ -118,12 +135,11 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             }
             h.setListenToBlock(yesno.equals("yes"));   // NOI18N
         }
-
         Element reporterName = shared.getChild("reporter"); // NOI18N
         if (reporterName != null) {
             Reporter t = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterName.getTextTrim());
-            if (t != null) h.setReporter(t);
-            else h.removeReporter();
+            if (t != null) h.getSelectReporterNamedBean().setNamedBean(t);
+            else h.getSelectReporterNamedBean().removeNamedBean();
 
             String yesno = "yes";   // Default is "yes" since this attribute is not in panel files before 4.99.3
             if (reporterName.getAttribute("listen") != null) {  // NOI18N
@@ -131,6 +147,8 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             }
             h.setListenToReporter(yesno.equals("yes"));   // NOI18N
         }
+        // For backwards compability for 4.99.7 and earlier
+        //********************************************************
 
         Element queryType = shared.getChild("variableOperation");   // NOI18N
         if (queryType != null) {

@@ -75,6 +75,7 @@ abstract public class KnownLocoSelPane extends LocoSelPane {
         addProgrammerBox();
 
         JButton go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
+        go2.getAccessibleContext().setAccessibleName(Bundle.getMessage("OpenProgrammer"));
         go2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -189,7 +190,7 @@ abstract public class KnownLocoSelPane extends LocoSelPane {
         }
     }
 
- 
+
     /*
      * Start the programming operation(s).
      * @param decoderFile contains decoder definition

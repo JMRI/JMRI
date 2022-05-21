@@ -1010,10 +1010,6 @@ public class WarrantFrame extends WarrantRoute {
             msg = routeIsValid();
         }
         if (msg == null) {
-            List<BlockOrder> orders = getOrders();
-            msg = _warrant.setRoute(false, orders);     // calls allocateRoute
-        }
-        if (msg == null) {
             msg = _warrant.checkforTrackers();
         }
         if (msg == null) {
@@ -1152,6 +1148,7 @@ public class WarrantFrame extends WarrantRoute {
                     Bundle.getMessage("TrainRunning", _warrant.getTrainName()));
         }
         if (msg == null) {
+            _warrant.setBlockOrders(getOrders());
             msg = checkTrainId();
         }
         if (msg == null) {
@@ -1159,6 +1156,9 @@ public class WarrantFrame extends WarrantRoute {
         }
         if (msg == null) {
             msg = WarrantTableFrame.getDefault().getModel().checkAddressInUse(_warrant);
+        }
+        if (msg == null) {
+            msg = _warrant.allocateRoute(false, getOrders());
         }
         toFront();
 
@@ -1494,18 +1494,11 @@ public class WarrantFrame extends WarrantRoute {
                             }
                         }
                     } else if (e.getPropertyName().equals("controlChange")) {
-                        int runState = ((Integer) e.getOldValue()).intValue();
                         int newCntrl = ((Integer) e.getNewValue()).intValue();
-                        String stateStr = null;
-                        if (runState < 0) {
-                            stateStr = Bundle.getMessage(Warrant.MODES[-runState]);
-                        } else {
-                            stateStr = Bundle.getMessage(Warrant.RUN_STATE[runState],
-                                    _warrant.getCurrentBlockName());
-                        }
                         msg = Bundle.getMessage("controlChange",
-                                _warrant.getTrainName(), stateStr,
-                                Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl]));
+                                _warrant.getTrainName(), 
+                                Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl]),
+                                _warrant.getCurrentBlockName());
                                 color = Color.black;
                     } else if (e.getPropertyName().equals("throttleFail")) {
                         msg = Bundle.getMessage("ThrottleFail",

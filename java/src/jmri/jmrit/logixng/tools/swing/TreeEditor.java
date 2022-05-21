@@ -759,6 +759,12 @@ public class TreeEditor extends TreeViewer {
                 _editSwingConfiguratorInterface.setJDialog(dialog);
                 panels.add(_editSwingConfiguratorInterface.getConfigPanel(object, panel5));
                 _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(_editSwingConfiguratorInterface, object));
+
+                dialog.setTitle(Bundle.getMessage(
+                        addOrEdit ? "AddMaleSocketDialogTitleWithType" : "EditMaleSocketDialogTitleWithType",
+                        femaleSocket.getLongDescription(),
+                        _editSwingConfiguratorInterface.toString())
+                );
             } else {
                 // 'object' should be an action or expression but is null
                 JPanel panel = new JPanel();
@@ -777,6 +783,12 @@ public class TreeEditor extends TreeViewer {
 
             _addSwingConfiguratorInterface.setJDialog(dialog);
             panels.add(_addSwingConfiguratorInterface.getConfigPanel(panel5));
+
+            dialog.setTitle(Bundle.getMessage(
+                    addOrEdit ? "AddMaleSocketDialogTitleWithType" : "EditMaleSocketDialogTitleWithType",
+                    femaleSocket.getLongDescription(),
+                    _addSwingConfiguratorInterface.toString())
+            );
         }
         JPanel panel34 = new JPanel();
         panel34.setLayout(new BoxLayout(panel34, BoxLayout.Y_AXIS));
@@ -942,7 +954,6 @@ public class TreeEditor extends TreeViewer {
             Container contentPanel = _editLocalVariablesDialog.getContentPane();
             contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-            JPanel tablePanel = new JPanel();
             JTable table = new JTable();
             _localVariableTableModel = new LocalVariableTableModel(maleSocket);
             table.setModel(_localVariableTableModel);
@@ -957,8 +968,7 @@ public class TreeEditor extends TreeViewer {
             _localVariableTableModel.setColumnForMenu(table);
             JScrollPane scrollpane = new JScrollPane(table);
             scrollpane.setPreferredSize(new Dimension(400, 200));
-            tablePanel.add(scrollpane, BorderLayout.CENTER);
-            contentPanel.add(tablePanel);
+            contentPanel.add(scrollpane);
 
             // set up create and cancel buttons
             JPanel buttonPanel = new JPanel();

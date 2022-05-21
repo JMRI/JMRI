@@ -28,6 +28,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private NamedBeanAddressing _tableNameAddressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<NamedTable> _tableHandle;
     private String _tableNameReference = "";
+    private NamedBeanHandle<Memory> _tableNameMemoryHandle;
     private String _tableNameLocalVariable = "";
     private String _tableNameFormula = "";
     private ExpressionNode _tableNameExpressionNode;
@@ -36,6 +37,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private NamedBeanAddressing _tableRowAddressing = NamedBeanAddressing.Direct;
     private String _tableRowName = "";
     private String _tableRowReference = "";
+    private NamedBeanHandle<Memory> _tableRowMemoryHandle;
     private String _tableRowLocalVariable = "";
     private String _tableRowFormula = "";
     private ExpressionNode _tableRowExpressionNode;
@@ -44,6 +46,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
     private NamedBeanAddressing _tableColumnAddressing = NamedBeanAddressing.Direct;
     private String _tableColumnName = "";
     private String _tableColumnReference = "";
+    private NamedBeanHandle<Memory> _tableColumnMemoryHandle;
     private String _tableColumnLocalVariable = "";
     private String _tableColumnFormula = "";
     private ExpressionNode _tableColumnExpressionNode;
@@ -61,6 +64,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         if (_tableHandle != null) copy.setTable(_tableHandle);
         copy.setTableNameLocalVariable(_tableNameLocalVariable);
         copy.setTableNameReference(_tableNameReference);
+        copy.setTableNameMemory(_tableNameMemoryHandle);
         copy.setTableNameFormula(_tableNameFormula);
         if (_tableNameSelectTable != null) {
             _tableNameSelectTable.copy(copy._tableNameSelectTable);
@@ -70,6 +74,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         copy.setTableRowName(_tableRowName);
         copy.setTableRowLocalVariable(_tableRowLocalVariable);
         copy.setTableRowReference(_tableRowReference);
+        copy.setTableRowMemory(_tableRowMemoryHandle);
         copy.setTableRowFormula(_tableRowFormula);
         if (_tableRowSelectTable != null) {
             _tableRowSelectTable.copy(copy._tableRowSelectTable);
@@ -79,6 +84,7 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         copy.setTableColumnName(_tableColumnName);
         copy.setTableColumnLocalVariable(_tableColumnLocalVariable);
         copy.setTableColumnReference(_tableColumnReference);
+        copy.setTableColumnMemory(_tableColumnMemoryHandle);
         copy.setTableColumnFormula(_tableColumnFormula);
         if (_tableColumnSelectTable != null) {
             _tableColumnSelectTable.copy(copy._tableColumnSelectTable);
@@ -131,6 +137,37 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
     public String getTableNameReference() {
         return _tableNameReference;
+    }
+
+    public void setTableNameMemory(@Nonnull String memoryName) {
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setTableNameMemory(memory);
+        } else {
+            removeTableNameMemory();
+            log.warn("memory \"{}\" is not found", memoryName);
+        }
+    }
+
+    public void setTableNameMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        _tableNameMemoryHandle = handle;
+        addRemoveVetoListener();
+    }
+
+    public void setTableNameMemory(@Nonnull Memory memory) {
+        setTableNameMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+
+    public void removeTableNameMemory() {
+        if (_tableNameMemoryHandle != null) {
+            _tableNameMemoryHandle = null;
+            addRemoveVetoListener();
+        }
+    }
+
+    public NamedBeanHandle<Memory> getTableNameMemory() {
+        return _tableNameMemoryHandle;
     }
 
     public void setTableNameLocalVariable(@Nonnull String localVariable) {
@@ -210,6 +247,37 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         return _tableRowReference;
     }
 
+    public void setTableRowMemory(@Nonnull String memoryName) {
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setTableRowMemory(memory);
+        } else {
+            removeTableRowMemory();
+            log.warn("memory \"{}\" is not found", memoryName);
+        }
+    }
+
+    public void setTableRowMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        _tableRowMemoryHandle = handle;
+        addRemoveVetoListener();
+    }
+
+    public void setTableRowMemory(@Nonnull Memory memory) {
+        setTableRowMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+
+    public void removeTableRowMemory() {
+        if (_tableRowMemoryHandle != null) {
+            _tableRowMemoryHandle = null;
+            addRemoveVetoListener();
+        }
+    }
+
+    public NamedBeanHandle<Memory> getTableRowMemory() {
+        return _tableRowMemoryHandle;
+    }
+
     public void setTableRowLocalVariable(@Nonnull String localVariable) {
         _tableRowLocalVariable = localVariable;
     }
@@ -271,6 +339,37 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         return _tableColumnReference;
     }
 
+    public void setTableColumnMemory(@Nonnull String memoryName) {
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setTableColumnMemory(memory);
+        } else {
+            removeTableColumnMemory();
+            log.warn("memory \"{}\" is not found", memoryName);
+        }
+    }
+
+    public void setTableColumnMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        _tableColumnMemoryHandle = handle;
+        addRemoveVetoListener();
+    }
+
+    public void setTableColumnMemory(@Nonnull Memory memory) {
+        setTableColumnMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+
+    public void removeTableColumnMemory() {
+        if (_tableColumnMemoryHandle != null) {
+            _tableColumnMemoryHandle = null;
+            addRemoveVetoListener();
+        }
+    }
+
+    public NamedBeanHandle<Memory> getTableColumnMemory() {
+        return _tableColumnMemoryHandle;
+    }
+
     public void setTableColumnLocalVariable(@Nonnull String localVariable) {
         _tableColumnLocalVariable = localVariable;
     }
@@ -324,6 +423,58 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
         return _tableColumnSelectTable;
     }
 
+    private void addRemoveVetoListener() {
+        if ((_tableNameMemoryHandle != null) || (_tableRowMemoryHandle != null) || (_tableColumnMemoryHandle != null)) {
+            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
+        } else {
+            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
+    @Override
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    throw new PropertyVetoException(_base.getDisplayName(), evt);
+                }
+            }
+            if (evt.getOldValue() instanceof Memory) {
+                boolean doVeto = false;
+                if ((_tableNameAddressing == NamedBeanAddressing.Memory) && (_tableNameMemoryHandle != null) && evt.getOldValue().equals(_tableNameMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if ((_tableRowAddressing == NamedBeanAddressing.Memory) && (_tableRowMemoryHandle != null) && evt.getOldValue().equals(_tableRowMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if ((_tableColumnAddressing == NamedBeanAddressing.Memory) && (_tableColumnMemoryHandle != null) && evt.getOldValue().equals(_tableColumnMemoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if (doVeto) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("MemoryInUseMemoryExpressionVeto", _base.getDisplayName()), e); // NOI18N
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof NamedTable) {
+                if (evt.getOldValue().equals(getTable().getBean())) {
+                    removeTable();
+                }
+            }
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(_tableNameMemoryHandle.getBean())) {
+                    removeTableNameMemory();
+                }
+                if (evt.getOldValue().equals(_tableRowMemoryHandle.getBean())) {
+                    removeTableRowMemory();
+                }
+                if (evt.getOldValue().equals(_tableColumnMemoryHandle.getBean())) {
+                    removeTableColumnMemory();
+                }
+            }
+        }
+    }
+
     private NamedTable evaluateTableBean(ConditionalNG conditionalNG) throws JmriException {
 
         if (_tableNameAddressing == NamedBeanAddressing.Direct) {
@@ -335,6 +486,11 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 case Reference:
                     name = ReferenceUtil.getReference(
                             conditionalNG.getSymbolTable(), _tableNameReference);
+                    break;
+
+                case Memory:
+                    name = TypeConversionUtil
+                            .convertToString(_tableNameMemoryHandle.getBean().getValue(), false);
                     break;
 
                 case LocalVariable:
@@ -379,6 +535,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 return ReferenceUtil.getReference(
                         conditionalNG.getSymbolTable(), _tableRowReference);
 
+            case Memory:
+                return TypeConversionUtil
+                        .convertToString(_tableRowMemoryHandle.getBean().getValue(), false);
+
             case LocalVariable:
                 SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
@@ -410,6 +570,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 return ReferenceUtil.getReference(
                         conditionalNG.getSymbolTable(), _tableColumnReference);
 
+            case Memory:
+                return TypeConversionUtil
+                        .convertToString(_tableColumnMemoryHandle.getBean().getValue(), false);
+
             case LocalVariable:
                 SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return TypeConversionUtil
@@ -438,6 +602,14 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
     public String getTableNameDescription(Locale locale) {
         String namedBean;
+
+        String memoryName;
+        if (_tableNameMemoryHandle != null) {
+            memoryName = _tableNameMemoryHandle.getName();
+        } else {
+            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         switch (_tableNameAddressing) {
             case Direct:
                 String tableName;
@@ -451,6 +623,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
             case Reference:
                 namedBean = Bundle.getMessage(locale, "AddressByReference", _tableNameReference);
+                break;
+
+            case Memory:
+                namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -478,6 +654,14 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
     public String getTableRowDescription(Locale locale) {
         String row;
+
+        String memoryName;
+        if (_tableRowMemoryHandle != null) {
+            memoryName = _tableRowMemoryHandle.getName();
+        } else {
+            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         switch (_tableRowAddressing) {
             case Direct:
                 row = Bundle.getMessage(locale, "AddressByDirect", _tableRowName);
@@ -485,6 +669,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
             case Reference:
                 row = Bundle.getMessage(locale, "AddressByReference", _tableRowReference);
+                break;
+
+            case Memory:
+                row = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -512,6 +700,14 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
     public String getTableColumnDescription(Locale locale) {
         String column;
+
+        String memoryName;
+        if (_tableColumnMemoryHandle != null) {
+            memoryName = _tableColumnMemoryHandle.getName();
+        } else {
+            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         switch (_tableColumnAddressing) {
             case Direct:
                 column = Bundle.getMessage(locale, "AddressByDirect", _tableColumnName);
@@ -519,6 +715,10 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
 
             case Reference:
                 column = Bundle.getMessage(locale, "AddressByReference", _tableColumnReference);
+                break;
+
+            case Memory:
+                column = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -542,23 +742,6 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableColumnAddressing.name());
         }
         return column;
-    }
-
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (_inUse.isInUse() && (evt.getOldValue() instanceof NamedTable)) {
-                if (evt.getOldValue().equals(getTable().getBean())) {
-                    throw new PropertyVetoException(_base.getDisplayName(), evt);
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof NamedTable) {
-                if (evt.getOldValue().equals(getTable().getBean())) {
-                    removeTable();
-                }
-            }
-        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectTable.class);

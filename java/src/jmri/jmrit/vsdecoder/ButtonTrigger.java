@@ -1,20 +1,22 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Button trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,7 +51,7 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
     }
 
     public boolean getMatchValue() {
-        return (match_value);
+        return match_value;
     }
 
     // Button action functions called directly from the enclosing SoundEvent.
@@ -68,7 +70,7 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
     }
 
     public void click(boolean v) {
-        log.debug("buttonTrigger {} click( {}) called.", getName(), v);
+        log.debug("buttonTrigger {} click({}) called.", getName(), v);
         if (v == match_value) {
             this.callback.takeAction();
         }
@@ -131,7 +133,7 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
         me.addContent(new Element("match").addContent(Boolean.valueOf(match_value).toString()));
         me.addContent(new Element("action").addContent(this.getTriggerType().toString()));
 
-        return (me);
+        return me;
     }
 
     @Override

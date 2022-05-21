@@ -35,6 +35,10 @@
             </li>
 
             <li>
+              <a href="#digital_action_mqtt">MQTT <span class="since">since 4.99.7</span></a>
+            </li>
+
+            <li>
               <a href="#digital_action_loconet">LocoNet</a>
             </li>
 
@@ -213,13 +217,18 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Clock</h4>
+      <h4>Clock<span class="since">updated 4.99.7</span></h4>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_action.png"><img src="images/chapter5/clock_action.png"
+        alt="Chapter 5 clock action"></a>
+      </div>
 
       <ul>
         <li><strong>Set Fast Clock:</strong> Sets the time on the fast clock to the entered time.
-        The time is entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock. This
-        action sets the fast clock to the specified time regardless of whether the fast clock is
-        running or stopped.</li>
+        The time can be entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock or
+        as the number of minutes since midnight, such as 720 for noon. This action sets the fast
+        clock to the specified time regardless of whether the fast clock is running or stopped.</li>
 
         <li><strong>Start Fast Clock:</strong> Starts the JMRI fast clock running. If the fast
         clock is already running, this action has no effect.</li>
@@ -227,6 +236,44 @@
         <li><strong>Stop Fast Clock:</strong> Pauses the JMRI fast clock. If the fast clock is not
         running, this action has no effect.</li>
       </ul>
+
+      <p>In addition to setting the time using a constant value, the other LogixNG modes can be
+      used.   For example, the new time can be in a memory variable which will be used to set the
+      fast clock time.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_memory.png"><img src="images/chapter5/clock_memory.png"
+        alt="Chapter 5 clock memory source"></a>
+      </div>
+
+      <p>The Memory <strong><em>listen</em></strong> option can used to automatically update the
+      fast clock time when the memory variable changes.  This eliminates the need to have a separate
+      expression to invoke the <strong>Set Fast Clock</strong> action.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Clock Rate<span class="since">since 4.99.7</span></h4>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_rate_action.png"><img src="images/chapter5/clock_rate_action.png"
+        alt="Chapter 5 clock rate action"></a>
+      </div>
+
+      <ul>
+        <li><strong>Set Clock Rate:</strong> Sets the rate for the fast clock to the entered value.
+        For example, a value of 4 will set the fast clock rate to 4:1, which is 15 real minutes for
+        a fast clock hour.</li>
+
+        <li><strong>Increase Clock Rate:</strong> Increase the fast clock speed by the entered
+        value.</li>
+
+        <li><strong>Decrease Clock Rate:</strong> Decrease the fast clock speed by the entered
+        value.</li>
+      </ul>
+
+      <p>The rate values can be whole numbers or decimals, such as .5.  The rate values can also
+      be supplied from the other LogixNG modes, such as a memory variable.</p>
+
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -462,7 +509,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Script</h4>
+      <h4 id="script">Script</h4>
 
       <ul>
         <li><strong>Run script:</strong> Starts the specified script. Specify the script to start
@@ -788,25 +835,43 @@
 
       <p>The Sequence action executes a series of action/expression pairs. For each pair, the
       action will be performed and then the expression will wait until it becomes true. When it is
-      true, the next action/expression pair will be started. The sequence will repeat forever or
-      until stopped.</p>
+      true, the next action/expression pair will be started.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/action_sequence_options.png"><img src=
+        "images/chapter5/action_sequence_options.png" alt="Chapter 5 sequence options"></a>
+      </div>
+
+      <p>Options:</p>
+
+      <ul>
+        <li><strong>Start sequence immediately on load</strong> &mdash; Run the sequence when the
+        data file loading is done.</li>
+
+        <li><strong>Run sequence continuously</strong> &mdash; The sequence will repeat forever or
+        until stopped.  If this option is not selected, the sequence will run one time and the
+        sequence can be started again later.</li>
+      </ul>
+
+      <p>When a sequence action is added, it has connections for <strong>Start</strong>, <strong>
+      Stop</strong> and <strong>Reset</strong> expressions.
+
+      <ul>
+        <li><strong>Start:</strong> When the <strong>Start</strong> expression is true, the sequence
+        will start with the first action/expression pair or resume if a stop occurred during the
+        sequence.</li>
+
+        <li><strong>Stop:</strong> When the <strong>Stop</strong> expression is true, the sequence
+        will stop running.</li>
+
+        <li><strong>Reset:</strong> When the <strong>Reset</strong> expression is true, the sequence
+        will be interrupted if running, and return to the first action/expresson pair.</li>
+      </ul>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence.png"><img src=
-        "images/chapter5/action_sequence.png" alt="Chapter 5 display action" width="614" height=
-        "447"></a>
+        "images/chapter5/action_sequence.png" alt="Chapter 5 sequence action"></a>
       </div>
-
-      <ul>
-        <li><strong>Start:</strong> When the start expression is true, the sequence will start with
-        the first action/expression pair.</li>
-
-        <li><strong>Stop:</strong> When the stop expression is true, the sequence will stop
-        running.</li>
-
-        <li><strong>Reset:</strong> When the reset expression is true, the sequence will be
-        interrupted and return to the first action/expresson pair.</li>
-      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -869,6 +934,40 @@
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_mqtt.png"><img src=
+        "images/chapter5/digital_action_mqtt.png" alt="Chapter 5 digital action mqtt list"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Publish</h4>
+
+      <p>This action publishes a message. Both the topic and the message can be entered directly in
+      the action or indirectly using a local variable or a memory.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/mqtt_publish.png"><img src=
+        "images/chapter5/mqtt_publish.png" alt="Chapter 5 digital action mqtt publish"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Subscribe</h4>
+
+      <p>This action subscribes to a topic. When someone publishes a message, this action triggers
+      the execution of the CondtionalNG. It can also optionally put the topic and the message into
+      local variables. The topic can use wildcard, like loco/# where # is the wildcard.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/mqtt_subscribe.png"><img src=
+        "images/chapter5/mqtt_subscribe.png" alt="Chapter 5 digital action mqtt subscribe"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

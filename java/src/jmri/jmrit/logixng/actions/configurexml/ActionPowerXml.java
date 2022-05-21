@@ -4,6 +4,8 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionPower;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 
 import org.jdom2.Element;
 
@@ -17,7 +19,7 @@ public class ActionPowerXml extends jmri.managers.configurexml.AbstractNamedBean
 
     public ActionPowerXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -31,14 +33,15 @@ public class ActionPowerXml extends jmri.managers.configurexml.AbstractNamedBean
         Element element = new Element("ActionPower");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        element.addContent(new Element("powerState").addContent(p.getBeanState().name()));
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionPower.PowerState>();
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
@@ -47,14 +50,20 @@ public class ActionPowerXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element powerState = shared.getChild("powerState");
-        if (powerState != null) {
-            h.setBeanState(ActionPower.PowerState.valueOf(powerState.getTextTrim()));
-        }
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionPower.PowerState>();
+
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                null,
+                "powerState",
+                null,
+                null,
+                null);
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionPowerXml.class);
 }

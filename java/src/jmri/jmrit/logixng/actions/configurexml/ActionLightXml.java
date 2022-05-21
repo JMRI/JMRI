@@ -5,6 +5,8 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionLight;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -36,21 +38,11 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
 
         storeCommon(p, element);
 
-        var light = p.getLight();
-        if (light != null) {
-            element.addContent(new Element("light").addContent(light.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Light>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionLight.LightState>();
 
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
-
-        element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
-        element.addContent(new Element("lightState").addContent(p.getBeanState().name()));
-        element.addContent(new Element("stateReference").addContent(p.getStateReference()));
-        element.addContent(new Element("stateLocalVariable").addContent(p.getStateLocalVariable()));
-        element.addContent(new Element("stateFormula").addContent(p.getStateFormula()));
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+        element.addContent(selectEnumXml.store(p.getSelectEnum(), "state"));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
         element.addContent(new Element("dataReference").addContent(p.getDataReference()));
@@ -72,50 +64,23 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
 
         loadCommon(h, shared);
 
-        Element lightName = shared.getChild("light");
-        if (lightName != null) {
-            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-            if (t != null) h.setLight(t);
-            else h.removeLight();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Light>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionLight.LightState>();
+
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "light");
+
+        selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
+        selectEnumXml.loadLegacy(
+                shared, h.getSelectEnum(),
+                "stateAddressing",
+                "lightState",
+                "stateReference",
+                "stateLocalVariable",
+                "stateFormula");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("stateAddressing");
-            if (elem != null) {
-                h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-
-            Element lightState = shared.getChild("lightState");
-            if (lightState != null) {
-                h.setBeanState(ActionLight.LightState.valueOf(lightState.getTextTrim()));
-            }
-
-            elem = shared.getChild("stateReference");
-            if (elem != null) h.setStateReference(elem.getTextTrim());
-
-            elem = shared.getChild("stateLocalVariable");
-            if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-
-            elem = shared.getChild("stateFormula");
-            if (elem != null) h.setStateFormula(elem.getTextTrim());
-
-
-            elem = shared.getChild("dataAddressing");
+            Element elem = shared.getChild("dataAddressing");
             if (elem != null) {
                 h.setDataAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }

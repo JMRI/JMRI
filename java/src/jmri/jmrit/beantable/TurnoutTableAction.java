@@ -480,7 +480,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the TurnoutManager
         StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout")));
-        String lastSuccessfulAddress;
+
+        // Compose the proposed system name from parts:
+        sName = prefix + InstanceManager.getDefault(TurnoutManager.class).typeLetter() + curAddress;
 
         int iType = 0;
         int iNum = 1;
@@ -488,22 +490,17 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         boolean useLastType = false;
 
         for (int x = 0; x < numberOfTurnouts; x++) {
-            try {
-                curAddress = InstanceManager.getDefault(TurnoutManager.class).getNextValidAddress(curAddress, prefix, false);
-            } catch (jmri.JmriException ex) {
-                displayHwError(curAddress, ex);
-                // directly add to statusBarLabel (but never called?)
-                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
-                statusBarLabel.setForeground(Color.red);
-                return;
-            }
 
-            lastSuccessfulAddress = curAddress;
-            // Compose the proposed system name from parts:
-            sName = prefix + InstanceManager.getDefault(TurnoutManager.class).typeLetter() + curAddress;
+            Turnout t;
 
             // test for a Light by the same hardware address (number):
-            String testSN = prefix + "L" + curAddress;
+            // String testSN = prefix + "L" + curAddress;  <========= from sName instead
+            StringBuilder sb = new StringBuilder(sName);
+            int prefixLength = Manager.getSystemPrefixLength(sName);
+            sb.replace(prefixLength, prefixLength+1, "L");
+            String testSN = new String(sb);
+            log.trace("{} maps to {}", sName, testSN);
+
             jmri.Light testLight = InstanceManager.lightManagerInstance().
                     getBySystemName(testSN);
             if (testLight != null) {
@@ -547,13 +544,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             if (iNum == 0) {
                 // User specified more bits, but bits are not available - return without creating
                 // Display message in statusBarLabel
-                statusBarLabel.setText(Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress));
+                statusBarLabel.setText(Bundle.getMessage("WarningBitsNotSupported", sName));
                 statusBarLabel.setForeground(Color.red);
                 return;
             } else {
 
                 // Create the new turnout
-                Turnout t;
                 try {
                     t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
@@ -572,7 +568,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     }
                 }
 
-                t.setNumberOutputBits(iNum);
+                t.setNumberControlBits(iNum);
                 // Ask about the type of turnout control if appropriate
                 if (!useLastType) {
                     iType = InstanceManager.getDefault(TurnoutManager.class).askControlType(sName);
@@ -596,6 +592,19 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 }
                 // only mention first and last of rangeBox added
             }
+
+            // bump system name
+            try {
+                sName = InstanceManager.getDefault(TurnoutManager.class).getNextValidSystemName(t);
+            } catch (jmri.JmriException ex) {
+                displayHwError(curAddress, ex);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
+                return;
+            }
+
+            // bump user name
             if ((uName != null) && !uName.isEmpty()) {
                 uName = nextName(uName);
             }

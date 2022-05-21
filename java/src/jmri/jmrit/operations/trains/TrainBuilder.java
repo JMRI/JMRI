@@ -886,14 +886,8 @@ public class TrainBuilder extends TrainBuilderBase {
     private void placeCars(int pass, boolean normal) throws BuildFailedException {
         addLine(_buildReport, THREE, BLANK_LINE);
         if (!normal) {
-            if (pass == 1) {
-                addLine(_buildReport, THREE, Bundle.getMessage("buildFirstPass"));
-            } else if (pass == Setup.getNumberPasses()) {
-                addLine(_buildReport, THREE, Bundle.getMessage("buildFinalPass"));
-            } else {
-                addLine(_buildReport, THREE,
-                        MessageFormat.format(Bundle.getMessage("buildMultiplePass"), new Object[]{pass}));
-            }
+            addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildMultiplePass"),
+                    new Object[]{pass, Setup.getNumberPasses()}));
         }
         // now go through each location starting at departure and place cars as
         // requested
@@ -1685,11 +1679,19 @@ public class TrainBuilder extends TrainBuilderBase {
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
             track.setScheduleItemId(id); // restore id
-            addLine(_buildReport, SEVEN,
-                    MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
-                            new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
-                                    track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
-                                    Setup.getLengthUnit().toLowerCase(), track.getReservationFactor() }));
+            if (car.getTrack().isStaging()) {
+                addLine(_buildReport, SEVEN,
+                        MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
+                                new Object[]{car.toString(), track.getLocation().getName(), track.getName(),
+                                        track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+                                        Setup.getLengthUnit().toLowerCase(), track.getReservationFactor()}));
+            } else {
+                addLine(_buildReport, SEVEN,
+                        MessageFormat.format(Bundle.getMessage("buildNoDestSpace"),
+                                new Object[]{car.toString(), track.getTrackTypeName(), track.getLocation().getName(),
+                                        track.getName(), track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+                                        Setup.getLengthUnit().toLowerCase()}));
+            }
             return false;
         }
         // try to send car to this spur

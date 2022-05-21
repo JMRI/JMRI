@@ -8,17 +8,20 @@ import jmri.jmrit.logixng.*;
 
 /**
  * This action prints the local variables to the log.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class LogLocalVariables extends AbstractDigitalAction {
 
-    
+    private boolean _includeGlobalVariables = true;
+    private boolean _expandArraysAndMaps = false;
+
+
     public LogLocalVariables(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -29,7 +32,23 @@ public class LogLocalVariables extends AbstractDigitalAction {
         copy.setComment(getComment());
         return manager.registerAction(copy);
     }
-    
+
+    public void setIncludeGlobalVariables(boolean value) {
+        _includeGlobalVariables = value;
+    }
+
+    public boolean isIncludeGlobalVariables() {
+        return _includeGlobalVariables;
+    }
+
+    public void setExpandArraysAndMaps(boolean value) {
+        _expandArraysAndMaps = value;
+    }
+
+    public boolean isExpandArraysAndMaps() {
+        return _expandArraysAndMaps;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -37,16 +56,38 @@ public class LogLocalVariables extends AbstractDigitalAction {
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N in Warning strings.")
     @Override
     public void execute() {
         ConditionalNG c = getConditionalNG();
         log.warn(Bundle.getMessage("LogLocalVariables_Start"));
         for (SymbolTable.Symbol s : c.getSymbolTable().getSymbols().values()) {
-            log.warn("    "+Bundle.getMessage("LogLocalVariables_Variable", s.getName(), c.getSymbolTable().getValue(s.getName())));
+            SymbolTable.printVariable(
+                    log,
+                    "    ",
+                    s.getName(),
+                    c.getSymbolTable().getValue(s.getName()),
+                    _expandArraysAndMaps,
+                    Bundle.getMessage("LogLocalVariables_VariableName"),
+                    Bundle.getMessage("LogLocalVariables_VariableValue"));
+        }
+        if (_includeGlobalVariables) {
+            log.warn(Bundle.getMessage("LogLocalVariables_GlobalVariables_Start"));
+            for (GlobalVariable gv : InstanceManager.getDefault(GlobalVariableManager.class).getNamedBeanSet()) {
+                SymbolTable.printVariable(
+                        log,
+                        "    ",
+                        gv.getUserName(),
+                        gv.getValue(),
+                        _expandArraysAndMaps,
+                        Bundle.getMessage("LogLocalVariables_GlobalVariableName"),
+                        Bundle.getMessage("LogLocalVariables_GlobalVariableValue"));
+            }
         }
         log.warn(Bundle.getMessage("LogLocalVariables_End"));
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");
@@ -66,27 +107,27 @@ public class LogLocalVariables extends AbstractDigitalAction {
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "LogLocalVariables_Long");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogLocalVariables.class);
 }

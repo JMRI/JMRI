@@ -163,9 +163,7 @@ public class CbusPowerManagerTest extends AbstractPowerManagerTestBase {
     @AfterEach
     public void tearDown() {
         
-        try {
-            pwr.dispose();
-        } catch (jmri.JmriException ex) {}
+        pwr.dispose();
         
         memo.dispose();
         controller.terminateThreads();

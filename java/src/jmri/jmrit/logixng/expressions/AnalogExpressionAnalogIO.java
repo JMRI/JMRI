@@ -2,14 +2,11 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
-
-import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 
 /**
  * Reads a AnalogIO.
@@ -17,9 +14,11 @@ import jmri.jmrit.logixng.*;
  * @author Daniel Bergqvist Copyright 2021
  */
 public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanHandle<AnalogIO> _analogIOHandle;
+    private final LogixNG_SelectNamedBean<AnalogIO> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, AnalogIO.class, InstanceManager.getDefault(AnalogIOManager.class), this);
 
     public AnalogExpressionAnalogIO(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -35,27 +34,12 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogExpressionAnalogIO copy = new AnalogExpressionAnalogIO(sysName, userName);
         copy.setComment(getComment());
-        if (_analogIOHandle != null) copy.setAnalogIO(_analogIOHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof AnalogIO) {
-                if (evt.getOldValue().equals(getAnalogIO().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("AnalogIO_AnalogIOInUseAnalogIOExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof AnalogIO) {
-                if (evt.getOldValue().equals(getAnalogIO().getBean())) {
-                    removeAnalogIO();
-                }
-            }
-        }
+    public LogixNG_SelectNamedBean<AnalogIO> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     /** {@inheritDoc} */
@@ -64,46 +48,12 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
         return Category.ITEM;
     }
 
-    public void setAnalogIO(@Nonnull String analogIOName) {
-        assertListenersAreNotRegistered(log, "setAnalogIO");
-        AnalogIO analogIO = InstanceManager.getDefault(AnalogIOManager.class).getNamedBean(analogIOName);
-        if (analogIO != null) {
-            setAnalogIO(analogIO);
-        } else {
-            removeAnalogIO();
-            log.error("analogIO \"{}\" is not found", analogIOName);
-        }
-    }
-
-    public void setAnalogIO(@Nonnull NamedBeanHandle<AnalogIO> handle) {
-        assertListenersAreNotRegistered(log, "setAnalogIO");
-        _analogIOHandle = handle;
-        InstanceManager.getDefault(AnalogIOManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setAnalogIO(@Nonnull AnalogIO analogIO) {
-        assertListenersAreNotRegistered(log, "setAnalogIO");
-        setAnalogIO(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(analogIO.getDisplayName(), analogIO));
-    }
-
-    public void removeAnalogIO() {
-        assertListenersAreNotRegistered(log, "setAnalogIO");
-        if (_analogIOHandle != null) {
-            InstanceManager.getDefault(AnalogIOManager.class).removeVetoableChangeListener(this);
-            _analogIOHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<AnalogIO> getAnalogIO() {
-        return _analogIOHandle;
-    }
-
     /** {@inheritDoc} */
     @Override
-    public double evaluate() {
-        if (_analogIOHandle != null) {
-            return jmri.util.TypeConversionUtil.convertToDouble(_analogIOHandle.getBean().getKnownAnalogValue(), false);
+    public double evaluate() throws JmriException {
+        AnalogIO analogIO = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+        if (analogIO != null) {
+            return jmri.util.TypeConversionUtil.convertToDouble(analogIO.getKnownAnalogValue(), false);
         } else {
             return 0.0;
         }
@@ -131,11 +81,7 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        if (_analogIOHandle != null) {
-            return Bundle.getMessage(locale, "AnalogExpressionAnalogIO_Long", _analogIOHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "AnalogExpressionAnalogIO_Long", "none");
-        }
+        return Bundle.getMessage(locale, "AnalogExpressionAnalogIO_Long", _selectNamedBean.getDescription(locale));
     }
 
     /** {@inheritDoc} */
@@ -147,8 +93,9 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if ((! _listenersAreRegistered) && (_analogIOHandle != null)) {
-            _analogIOHandle.getBean().addPropertyChangeListener("value", this);
+        if (!_listenersAreRegistered) {
+            _selectNamedBean.addPropertyChangeListener("value", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -157,7 +104,8 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _analogIOHandle.getBean().removePropertyChangeListener("value", this);
+            _selectNamedBean.removePropertyChangeListener("value", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -179,9 +127,7 @@ public class AnalogExpressionAnalogIO extends AbstractAnalogExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: AnalogExpressionAnalogIO: bean = {}, report = {}", cdl, report);
-        if (getAnalogIO() != null && bean.equals(getAnalogIO().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionAnalogIO.class);

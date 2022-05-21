@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.actions.ActionMemory.MemoryOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
@@ -24,15 +25,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectTableSwing selectTableSwing;
 
-    private JTabbedPane _tabbedPaneMemory;
-    private BeanSelectPanel<Memory> _memoryBeanPanel;
-    private JPanel _panelMemoryDirect;
-    private JPanel _panelMemoryReference;
-    private JPanel _panelMemoryLocalVariable;
-    private JPanel _panelMemoryFormula;
-    private JTextField _memoryReferenceTextField;
-    private JTextField _memoryLocalVariableTextField;
-    private JTextField _memoryFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<Memory> _selectNamedBeanSwing;
 
     private JTabbedPane _tabbedPaneMemoryOperation;
     private BeanSelectPanel<Memory> _copyMemoryBeanPanel;
@@ -51,35 +44,19 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionMemory action = (ActionMemory)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(MemoryManager.class), getJDialog(), this);
+
         selectTableSwing = new LogixNG_SelectTableSwing(getJDialog(), this);
 
         panel = new JPanel();
 
-        _tabbedPaneMemory = new JTabbedPane();
-        _panelMemoryDirect = new javax.swing.JPanel();
-        _panelMemoryReference = new javax.swing.JPanel();
-        _panelMemoryLocalVariable = new javax.swing.JPanel();
-        _panelMemoryFormula = new javax.swing.JPanel();
-
-        _tabbedPaneMemory.addTab(NamedBeanAddressing.Direct.toString(), _panelMemoryDirect);
-        _tabbedPaneMemory.addTab(NamedBeanAddressing.Reference.toString(), _panelMemoryReference);
-        _tabbedPaneMemory.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelMemoryLocalVariable);
-        _tabbedPaneMemory.addTab(NamedBeanAddressing.Formula.toString(), _panelMemoryFormula);
-
-        _memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _panelMemoryDirect.add(_memoryBeanPanel);
-
-        _memoryReferenceTextField = new JTextField();
-        _memoryReferenceTextField.setColumns(30);
-        _panelMemoryReference.add(_memoryReferenceTextField);
-
-        _memoryLocalVariableTextField = new JTextField();
-        _memoryLocalVariableTextField.setColumns(30);
-        _panelMemoryLocalVariable.add(_memoryLocalVariableTextField);
-
-        _memoryFormulaTextField = new JTextField();
-        _memoryFormulaTextField.setColumns(30);
-        _panelMemoryFormula.add(_memoryFormulaTextField);
+        JPanel _tabbedPaneNamedBean;
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+        }
 
         _tabbedPaneMemoryOperation = new JTabbedPane();
 
@@ -117,22 +94,8 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneMemory.setSelectedComponent(_panelMemoryDirect); break;
-                case Reference: _tabbedPaneMemory.setSelectedComponent(_panelMemoryReference); break;
-                case LocalVariable: _tabbedPaneMemory.setSelectedComponent(_panelMemoryLocalVariable); break;
-                case Formula: _tabbedPaneMemory.setSelectedComponent(_panelMemoryFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getMemory() != null) {
-                _memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
-            }
-            _memoryReferenceTextField.setText(action.getReference());
-            _memoryLocalVariableTextField.setText(action.getLocalVariable());
-            _memoryFormulaTextField.setText(action.getFormula());
-
-            if (action.getOtherMemory() != null) {
-                _copyMemoryBeanPanel.setDefaultNamedBean(action.getOtherMemory().getBean());
+            if (action.getSelectOtherMemoryNamedBean().getNamedBean() != null) {
+                _copyMemoryBeanPanel.setDefaultNamedBean(action.getSelectOtherMemoryNamedBean().getNamedBean().getBean());
             }
             switch (action.getMemoryOperation()) {
                 case SetToNull: _tabbedPaneMemoryOperation.setSelectedComponent(_setToNull); break;
@@ -149,7 +112,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         }
 
         JComponent[] components = new JComponent[]{
-            _tabbedPaneMemory,
+            _tabbedPaneNamedBean,
             _tabbedPaneMemoryOperation
         };
 
@@ -165,47 +128,17 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ActionMemory action = new ActionMemory("IQDA2", null);
 
-        validateMemorySection(action, errorMessages);
-        validateDataSection(action, errorMessages);
-
-        return errorMessages.isEmpty();
-    }
-
-    private void validateMemorySection(@Nonnull ActionMemory action, @Nonnull List<String> errorMessages) {
-
-        // If using the Direct tab, validate the memory variable selection.
-        if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryDirect) {
-            if (_memoryBeanPanel.getNamedBean() == null) {
-                errorMessages.add(Bundle.getMessage("ActionMemory_ErrorMemory"));
-            }
-        }
-
-        // If using the Reference tab, validate the reference content via setReference.
         try {
-            if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryReference) {
-                action.setReference(_memoryReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
+            action.setMemoryOperation(MemoryOperation.CalculateFormula);
+            action.setOtherFormula(_calculateFormulaTextField.getText());
+        } catch (ParserException e) {
             errorMessages.add(e.getMessage());
         }
 
-        // Validate formula parsing via setFormula and tab selections.
-        try {
-            action.setFormula(_memoryFormulaTextField.getText());
-            if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        validateDataSection(action, errorMessages);
+
+        return errorMessages.isEmpty();
     }
 
     public void validateDataSection(@Nonnull ActionMemory action, @Nonnull List<String> errorMessages) {
@@ -244,16 +177,7 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
         }
         ActionMemory action = (ActionMemory)object;
-
-        Memory memory = _memoryBeanPanel.getNamedBean();
-        if (memory != null) {
-            NamedBeanHandle<Memory> handle
-                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                            .getNamedBeanHandle(memory.getDisplayName(), memory);
-            action.setMemory(handle);
-        } else {
-            action.removeMemory();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
 
         if (_tabbedPaneMemoryOperation.getSelectedComponent() == _copyMemory) {
             Memory otherMemory = _copyMemoryBeanPanel.getNamedBean();
@@ -261,30 +185,15 @@ public class ActionMemorySwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-                action.setOtherMemory(handle);
+                action.getSelectOtherMemoryNamedBean().setNamedBean(handle);
             } else {
-                action.removeOtherMemory();
+                action.getSelectOtherMemoryNamedBean().removeNamedBean();
             }
         } else {
-            action.removeOtherMemory();
+            action.getSelectOtherMemoryNamedBean().removeNamedBean();
         }
 
         try {
-            if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_memoryReferenceTextField.getText());
-            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_memoryLocalVariableTextField.getText());
-            } else if (_tabbedPaneMemory.getSelectedComponent() == _panelMemoryFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_memoryFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneMemory has unknown selection");
-            }
-
             if (_tabbedPaneMemoryOperation.getSelectedComponent() == _setToNull) {
                 action.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
             } else if (_tabbedPaneMemoryOperation.getSelectedComponent() == _setToConstant) {

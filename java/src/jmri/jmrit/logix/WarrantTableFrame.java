@@ -57,8 +57,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     static final String resume = Bundle.getMessage("Resume");
     static final String speedup = Bundle.getMessage("SpeedUp");
     static final String abort = Bundle.getMessage("Abort");
-    static final String retry = Bundle.getMessage("MoveToNext");
-    static final String[] controls = {" ", ramp, resume, halt, speedup, retry, stop, abort,
+    static final String retryfwd = Bundle.getMessage("MoveToNext");
+    static final String retrybkwd = Bundle.getMessage("MoveToPrevious");    // removed from drop down
+    static final String[] controls = {" ", ramp, resume, halt, speedup, retryfwd, stop, abort,
                             (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;
@@ -112,7 +113,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     @Override
     public void initComponents() {
 
-        if (log.isDebugEnabled()) log.debug("initComponents");
+        log.debug("initComponents");
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??
         JTable table = new JTable(_model);
         TableRowSorter<WarrantTableModel> sorter = new TableRowSorter<>(_model);
@@ -138,8 +139,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         table.getColumnModel().getColumn(WarrantTableModel.ALLOCATE_COLUMN).setCellRenderer(new ButtonRenderer());
         table.getColumnModel().getColumn(WarrantTableModel.DEALLOC_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
         table.getColumnModel().getColumn(WarrantTableModel.DEALLOC_COLUMN).setCellRenderer(new ButtonRenderer());
-        table.getColumnModel().getColumn(WarrantTableModel.SET_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        table.getColumnModel().getColumn(WarrantTableModel.SET_COLUMN).setCellRenderer(new ButtonRenderer());
         table.getColumnModel().getColumn(WarrantTableModel.AUTO_RUN_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
         table.getColumnModel().getColumn(WarrantTableModel.AUTO_RUN_COLUMN).setCellRenderer(new ButtonRenderer());
         table.getColumnModel().getColumn(WarrantTableModel.MANUAL_RUN_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
@@ -342,7 +341,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 model = (WarrantTableModel) m;
             }
             if (model == null) {
-                log.error("Unexpected table model of class: {}", m.getClass().getName());
+                log.error("Unexpected table model: {}", m );
             }
 
             // If table has been sorted, table row no longer is the same as array index
@@ -370,7 +369,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                     comboBox.addItem(order.getBlock().getDisplayName() + ": - " + order.getPath().getName());
                 }
             } else {
-                log.error("Unexpected editor component of class: {}", component.getClass().getName());
+                log.error("Unexpected editor component: {}", component );
             }
             return component;
         }
@@ -406,7 +405,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                             warrant.getDisplayName(), comboBox.getSelectedItem());
                 }
             } else {
-                log.error("Unexpected editor component of class: {}", component.getClass().getName());
+                log.error("Unexpected editor component: {}", component );
             }
             return component;
         }
@@ -426,10 +425,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
 
         if (msg == null) {
-            msg = w.setRoute(false, null);
-            if (msg == null) {
-                msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
-            }
+            msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
             if (msg != null) {
                 w.deAllocate();
             }

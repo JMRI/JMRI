@@ -91,7 +91,7 @@ public class BeanUtil {
                     IllegalArgumentException |
                     InvocationTargetException |
                     IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Exception: ", ex);
             }
         }
     }
@@ -145,13 +145,13 @@ public class BeanUtil {
                 if (tex instanceof RuntimeException) {
                     throw (RuntimeException) tex;
                 } else {
-                    log.error(ex.getMessage(), ex);
+                    log.error("RuntimeException: ", ex);
                 }
             } catch (
                     IllegalAccessException |
                     IllegalArgumentException |
                     IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Exception: ", ex);
             }
         }
         return null;
@@ -214,7 +214,7 @@ public class BeanUtil {
                     IllegalArgumentException |
                     InvocationTargetException |
                     IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Exception: ", ex);
             }
         }
     }
@@ -277,7 +277,7 @@ public class BeanUtil {
                     IllegalArgumentException |
                     InvocationTargetException |
                     IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Exception: ", ex);
             }
         }
         return null;
@@ -352,7 +352,7 @@ public class BeanUtil {
                 // catch only introspection-related exceptions, and allow all
                 // other to pass through
             } catch (IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Exception: ", ex);
             }
         }
         return false;
@@ -387,7 +387,7 @@ public class BeanUtil {
                 // catch only introspection-related exceptions, and allow all
                 // other to pass through
             } catch (IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Introspection Exception: ", ex);
             }
         }
         return false;
@@ -426,7 +426,7 @@ public class BeanUtil {
                 // catch only introspection-related exceptions, and allow all
                 // other to pass through
             } catch (IntrospectionException ex) {
-                log.warn(ex.getMessage(), ex);
+                log.warn("Introspection Exception: ", ex);
             }
         }
         return names;

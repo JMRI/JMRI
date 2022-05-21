@@ -40,6 +40,12 @@
       <revremark>Revision in original 0NMRA.xml file</revremark>
     </revision>
   </revhistory>
+  <!-- The following variable definition may not be  -->
+  <!-- appropriate for all decoders.  In particular, -->
+  <!-- some decoders need to have different default  -->
+  <!-- values. In that case, you should not include  -->
+  <!-- this fragment file, and instead define CV16   -->
+  <!-- directly within the main definition file.     -->
   <variable item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
     <decVal/>
     <label>Decoder Lock ID number</label>

@@ -459,7 +459,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             getManager().deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("doDelete should not fail after canDelete. {}", e.getMessage());
         }
     }
 
@@ -760,6 +760,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Is a bean allowed to have the user name cleared?
+     * @return true if clear is allowed, false otherwise
+     */
+    protected boolean isClearUserNameAllowed() {
+        return true;
+    }
+
+    /**
      * Display popup menu when right clicked on table cell.
      * <p>
      * Copy UserName
@@ -788,9 +796,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
-        menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
-        popupMenu.add(menuItem);
+        if (isClearUserNameAllowed()) {
+            menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
+            menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
+            popupMenu.add(menuItem);
+        }
 
         menuItem = new JMenuItem(Bundle.getMessage("MoveName"));
         menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));
@@ -847,7 +857,15 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             return;  // NOI18N
         }
 
-        nBean.setUserName(newName);
+        try {
+            nBean.setUserName(newName);
+        } catch (NamedBean.BadSystemNameException | NamedBean.BadUserNameException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         fireTableRowsUpdated(row, row);
         if (!newName.isEmpty()) {
             if (oldName == null || oldName.isEmpty()) {
@@ -1183,7 +1201,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 getManager().deleteBean(t, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                    log.warn(e.getMessage());
+                    log.warn("Should not delete {}, {}", t.getDisplayName((DisplayOptions.USERNAME_SYSTEMNAME)), e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),

@@ -90,6 +90,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         LogixNG logixNG =
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         .createLogixNG(userName);
+        logixNG.activate();
         logixNG.setEnabled(true);
         return logixNG;
     }
@@ -99,6 +100,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         LogixNG logixNG =
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         .createLogixNG(systemName, userName);
+        logixNG.activate();
         logixNG.setEnabled(true);
         return logixNG;
     }
@@ -110,7 +112,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
             InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("{} : Could not Delete.", e.getMessage());
         }
     }
 
@@ -138,7 +140,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
                                     .getDeepCopy(systemNames, userNames));
                 }
             } catch (JmriException ex) {
-                log.error(ex.getMessage(), ex);
+                log.error("Could not Copy ConditionalNG.", ex);
             }
             sourceConditionalNG.getFemaleSocket().registerListeners();
             targetConditionalNG.getFemaleSocket().registerListeners();

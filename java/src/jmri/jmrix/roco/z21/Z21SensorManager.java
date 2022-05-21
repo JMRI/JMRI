@@ -30,7 +30,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
         super(memo);
         // register for messages
         memo.getTrafficController().addz21Listener(this);
-        // make sure we are going to get can detector and RMBus data from 
+        // make sure we are going to get can detector and RMBus data from
         // the command station
         // set the broadcast flags so we get messages we may want to hear
         memo.getRocoZ21CommandStation().setCanDetectorFlag(true);
@@ -113,7 +113,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                     r = (Z21CanSensor) getBySystemName(systemName);
                     if (null == r) {
                         log.debug("Creating reporter {}", systemName);
-                        // need to create a new one, and send the message on 
+                        // need to create a new one, and send the message on
                         // to the newly created object.
                         ((Z21CanSensor) provideSensor(systemName)).reply(msg);
                     }
@@ -121,7 +121,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
             }
         } else if (msg.isRMBusDataChangedReply()) {
             log.debug("Received RM Bus Data Changed message");
-            // we could create sensors here automatically, but the 
+            // we could create sensors here automatically, but the
             // feed response contains data for 80 sensors, with no way
             // to tell which of the 80 are actually connected.
         }
@@ -199,31 +199,6 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     int iName; // must synchronize to avoid race conditions.
-
-    /**
-     * Does not enforce any rules on the encoder or input values.
-     */
-    @Override
-    public synchronized String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException{
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            log.warn(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
-        } else {
-            return Integer.toString(iName);
-        }
-    }
 
     /**
      * {@inheritDoc}

@@ -76,37 +76,7 @@ public class ImportConditional {
     }
 
     public void doImport() throws SocketAlreadyConnectedException, JmriException {
-/*
-        // This is only to remember to test everything Logix and Conditional supports
-        String systemName = "";
-        jmri.Logix l = null;
 
-        java.beans.PropertyChangeEvent evt = null;
-        jmri.Conditional c = null;
-
-        l.getConditional(systemName);
-        l.getConditionalByNumberOrder(0);
-        l.getEnabled();
-
-        c.cancelSensorTimer(systemName);
-        c.cancelTurnoutTimer(systemName);
-        c.getAntecedentExpression();        // Tested
-        c.getCopyOfActions();
-        c.getCopyOfStateVariables();
-        c.getLogicType();                   // Tested
-        c.getTriggerOnChange();             // Tested
-*/
-
-
-
-
-
-
-
-//        boolean triggerOnChange = _conditional.getTriggerOnChange();
-//        IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
-
-//        IfThenElse ifThen = new IfThenElse(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null, type);
         Logix logix = new Logix(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
 
         logix.setExecuteOnChange(_conditional.getTriggerOnChange());
@@ -394,7 +364,7 @@ public class ImportConditional {
 
 //        System.err.format("Sensor: %s%n", sn == null ? null : sn.getSystemName());
 
-        expression.setSensor(sn);
+        expression.getSelectNamedBean().setNamedBean(sn);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -427,7 +397,7 @@ public class ImportConditional {
                 new ExpressionTurnout(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setTurnout(tn);
+        expression.getSelectNamedBean().setNamedBean(tn);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -458,7 +428,7 @@ public class ImportConditional {
                 new ExpressionMemory(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setMemory(my);
+        expression.getSelectNamedBean().setNamedBean(my);
 
         switch (cv.getNum1()) {
             case ConditionalVariable.EQUAL:
@@ -496,21 +466,21 @@ public class ImportConditional {
             case MEMORY_COMPARE:
                 expression.setCompareTo(ExpressionMemory.CompareTo.Memory);
                 expression.setCaseInsensitive(false);
-                expression.setOtherMemory(cv.getDataString());
+                expression.getSelectOtherMemoryNamedBean().setNamedBean(cv.getDataString());
                 memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
                 if (memory == null) {   // Logix allows the memory name in cv.getDataString() to be a system name without system prefix
                     memory = InstanceManager.getDefault(MemoryManager.class).provide(cv.getDataString());
-                    expression.setOtherMemory(memory.getSystemName());
+                    expression.getSelectOtherMemoryNamedBean().setNamedBean(memory.getSystemName());
                 }
                 break;
             case MEMORY_COMPARE_INSENSITIVE:
                 expression.setCompareTo(ExpressionMemory.CompareTo.Memory);
                 expression.setCaseInsensitive(true);
-                expression.setOtherMemory(cv.getDataString());
+                expression.getSelectOtherMemoryNamedBean().setNamedBean(cv.getDataString());
                 memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
                 if (memory == null) {   // Logix allows the memory name in cv.getDataString() to be a system name without system prefix
                     memory = InstanceManager.getDefault(MemoryManager.class).provide(cv.getDataString());
-                    expression.setOtherMemory(memory.getSystemName());
+                    expression.getSelectOtherMemoryNamedBean().setNamedBean(memory.getSystemName());
                 }
                 break;
             default:
@@ -534,7 +504,7 @@ public class ImportConditional {
                 new ExpressionLight(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setLight(ln);
+        expression.getSelectNamedBean().setNamedBean(ln);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -567,7 +537,7 @@ public class ImportConditional {
                 new ExpressionSignalHead(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setSignalHead(s);
+        expression.getSelectNamedBean().setNamedBean(s);
 
         ExpressionSignalHead.QueryType appearence =
                 isNegated.get() ? ExpressionSignalHead.QueryType.NotAppearance
@@ -637,7 +607,7 @@ public class ImportConditional {
                 new ExpressionSignalMast(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setSignalMast(sm);
+        expression.getSelectNamedBean().setNamedBean(sm);
 
         ExpressionSignalMast.QueryType aspect =
                 isNegated.get() ? ExpressionSignalMast.QueryType.NotAspect
@@ -675,7 +645,7 @@ public class ImportConditional {
                 new ExpressionEntryExit(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setDestinationPoints(dp);
+        expression.getSelectNamedBean().setNamedBean(dp);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -708,7 +678,7 @@ public class ImportConditional {
                 new ExpressionConditional(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setConditional(cn);
+        expression.getSelectNamedBean().setNamedBean(cn);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -768,7 +738,7 @@ public class ImportConditional {
                 new ExpressionWarrant(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
 
-        expression.setWarrant(w);
+        expression.getSelectNamedBean().setNamedBean(w);
 
         if (isNegated.get()) {
             expression.set_Is_IsNot(Is_IsNot_Enum.IsNot);
@@ -822,7 +792,7 @@ public class ImportConditional {
                     Bundle.getMessage("ConditionalBadOBlockDataString", cv.getDataString()));
         }
 
-        expression.setOBlock(b);
+        expression.getSelectNamedBean().setNamedBean(b);
         expression.setBeanState(oblockStatus);
 
         return expression;
@@ -838,24 +808,24 @@ public class ImportConditional {
                                 .getAutoSystemName(), null);
 
                 if (reference != null) {
-                    action.setAddressing(NamedBeanAddressing.Reference);
-                    action.setReference(reference);
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action.getSelectNamedBean().setReference(reference);
                 } else {
-                    action.setAddressing(NamedBeanAddressing.Direct);
-                    action.setSensor(sn);
+                    action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    action.getSelectNamedBean().setNamedBean(sn);
                 }
 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setBeanState(ActionSensor.SensorState.Toggle);
+                        action.getSelectEnum().setEnum(ActionSensor.SensorState.Toggle);
                         break;
 
                     case Sensor.INACTIVE:
-                        action.setBeanState(ActionSensor.SensorState.Inactive);
+                        action.getSelectEnum().setEnum(ActionSensor.SensorState.Inactive);
                         break;
 
                     case Sensor.ACTIVE:
-                        action.setBeanState(ActionSensor.SensorState.Active);
+                        action.getSelectEnum().setEnum(ActionSensor.SensorState.Active);
                         break;
 
                     default:
@@ -914,14 +884,8 @@ public class ImportConditional {
 
 
     private DigitalActionBean getTurnoutAction(@Nonnull ConditionalAction ca, Turnout tn, String reference) throws JmriException {
-//        System.err.format("Turnout: %s%n", tn == null ? null : tn.getSystemName());
 
         ActionTurnout action;
-
-//        cv.getDataString();     // SignalMast, Memory, OBlock
-//        cv.getNamedBeanData();  // Only for memory
-//        cv.getNum1();   // Clock, Memory
-//        cv.getNum2();   // Clock, Memory
 
         switch (ca.getType()) {
             case SET_TURNOUT:
@@ -1001,24 +965,24 @@ public class ImportConditional {
                                 .getAutoSystemName(), null);
 
                 if (reference != null) {
-                    action2.setAddressing(NamedBeanAddressing.Reference);
-                    action2.setReference(reference);
+                    action2.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+                    action2.getSelectNamedBean().setReference(reference);
                 } else {
-                    action2.setAddressing(NamedBeanAddressing.Direct);
-                    action2.setTurnout(tn);
+                    action2.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+                    action2.getSelectNamedBean().setNamedBean(tn);
                 }
 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action2.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Toggle);
+                        action2.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Toggle);
                         break;
 
                     case Turnout.LOCKED:
-                        action2.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Lock);
+                        action2.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Lock);
                         break;
 
                     case Turnout.UNLOCKED:
-                        action2.setTurnoutLock(ActionTurnoutLock.TurnoutLock.Unlock);
+                        action2.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Unlock);
                         break;
 
                     default:
@@ -1045,11 +1009,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setMemory(my);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(my);
         }
 
         switch (ca.getType()) {
@@ -1060,7 +1024,7 @@ public class ImportConditional {
 
             case COPY_MEMORY:
                 action.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
-                action.setOtherMemory(ca.getActionString());
+                action.getSelectOtherMemoryNamedBean().setNamedBean(ca.getActionString());
                 break;
 
             default:
@@ -1078,26 +1042,26 @@ public class ImportConditional {
                 .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setLight(l);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(l);
         }
 
         switch (ca.getType()) {
             case SET_LIGHT:
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setBeanState(ActionLight.LightState.Toggle);
+                        action.getSelectEnum().setEnum(ActionLight.LightState.Toggle);
                         break;
 
                     case Light.OFF:
-                        action.setBeanState(ActionLight.LightState.Off);
+                        action.getSelectEnum().setEnum(ActionLight.LightState.Off);
                         break;
 
                     case Light.ON:
-                        action.setBeanState(ActionLight.LightState.On);
+                        action.getSelectEnum().setEnum(ActionLight.LightState.On);
                         break;
 
                     default:
@@ -1117,7 +1081,7 @@ public class ImportConditional {
                     intensity = 0;
                 }
                 action.setLightValue(intensity);
-                action.setBeanState(ActionLight.LightState.Intensity);
+                action.getSelectEnum().setEnum(ActionLight.LightState.Intensity);
                 break;
 
             case SET_LIGHT_TRANSITION_TIME:
@@ -1131,7 +1095,7 @@ public class ImportConditional {
                     interval = 0;
                 }
                 action.setLightValue(interval);
-                action.setBeanState(ActionLight.LightState.Interval);
+                action.getSelectEnum().setEnum(ActionLight.LightState.Interval);
                 break;
 
             default:
@@ -1149,16 +1113,16 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setSignalHead(sh);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(sh);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
         action.setAppearanceAddressing(NamedBeanAddressing.Direct);
 
-        action.setSignalHead(sh);
+        action.getSelectNamedBean().setNamedBean(sh);
 
         switch (ca.getType()) {
             case SET_SIGNAL_APPEARANCE:
@@ -1197,11 +1161,11 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setSignalMast(sm);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(sm);
         }
         action.setOperationAddressing(NamedBeanAddressing.Direct);
         action.setAspectAddressing(NamedBeanAddressing.Direct);
@@ -1250,23 +1214,23 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setDestinationPoints(dp);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(dp);
         }
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
         switch (ca.getType()) {
             case SET_NXPAIR_ENABLED:
-                action.setOperationDirect(ActionEntryExit.Operation.SetNXPairEnabled);
+                action.getSelectEnum().setEnum(ActionEntryExit.Operation.SetNXPairEnabled);
                 break;
             case SET_NXPAIR_DISABLED:
-                action.setOperationDirect(ActionEntryExit.Operation.SetNXPairDisabled);
+                action.getSelectEnum().setEnum(ActionEntryExit.Operation.SetNXPairDisabled);
                 break;
             case SET_NXPAIR_SEGMENT:
-                action.setOperationDirect(ActionEntryExit.Operation.SetNXPairSegment);
+                action.getSelectEnum().setEnum(ActionEntryExit.Operation.SetNXPairSegment);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -1283,42 +1247,42 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setWarrant(w);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(w);
         }
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
         switch (ca.getType()) {
             case ALLOCATE_WARRANT_ROUTE:
-                action.setOperationDirect(ActionWarrant.DirectOperation.AllocateWarrantRoute);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.AllocateWarrantRoute);
                 break;
 
             case DEALLOCATE_WARRANT_ROUTE:
-                action.setOperationDirect(ActionWarrant.DirectOperation.DeallocateWarrant);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.DeallocateWarrant);
                 break;
 
             case SET_ROUTE_TURNOUTS:
-                action.setOperationDirect(ActionWarrant.DirectOperation.SetRouteTurnouts);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetRouteTurnouts);
                 break;
 
             case AUTO_RUN_WARRANT:
-                action.setOperationDirect(ActionWarrant.DirectOperation.AutoRunTrain);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.AutoRunTrain);
                 break;
 
             case MANUAL_RUN_WARRANT:
-                action.setOperationDirect(ActionWarrant.DirectOperation.ManuallyRunTrain);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.ManuallyRunTrain);
                 break;
 
             case CONTROL_TRAIN:
-                action.setOperationDirect(ActionWarrant.DirectOperation.ControlAutoTrain);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.ControlAutoTrain);
                 action.setControlAutoTrain(ActionWarrant.ControlAutoTrain.values()[ca.getActionData() - 1]);
                 break;
 
             case SET_TRAIN_ID:
-                action.setOperationDirect(ActionWarrant.DirectOperation.SetTrainId);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetTrainId);
                 String idData = ca.getActionString();
                 if (idData == null || idData.isEmpty()) {
                     throw new InvalidConditionalActionException(
@@ -1336,7 +1300,7 @@ public class ImportConditional {
                 break;
 
             case SET_TRAIN_NAME:
-                action.setOperationDirect(ActionWarrant.DirectOperation.SetTrainName);
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetTrainName);
                 String nameData = ca.getActionString();
                 if (nameData == null || nameData.isEmpty()) {
                     throw new InvalidConditionalActionException(
@@ -1369,21 +1333,21 @@ public class ImportConditional {
                         .getAutoSystemName(), null);
 
         if (reference != null) {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(reference);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(reference);
         } else {
-            action.setAddressing(NamedBeanAddressing.Direct);
-            action.setOBlock(b);
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+            action.getSelectNamedBean().setNamedBean(b);
         }
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
         switch (ca.getType()) {
             case DEALLOCATE_BLOCK:
-                action.setOperationDirect(ActionOBlock.DirectOperation.Deallocate);
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.Deallocate);
                 break;
 
             case SET_BLOCK_VALUE:
-                action.setOperationDirect(ActionOBlock.DirectOperation.SetValue);
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.SetValue);
                 String oblockData = ca.getActionString();
                 if (oblockData == null || oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
@@ -1401,19 +1365,19 @@ public class ImportConditional {
                 break;
 
             case SET_BLOCK_ERROR:
-                action.setOperationDirect(ActionOBlock.DirectOperation.SetError);
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.SetError);
                 break;
 
             case CLEAR_BLOCK_ERROR:
-                action.setOperationDirect(ActionOBlock.DirectOperation.ClearError);
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.ClearError);
                 break;
 
             case SET_BLOCK_OUT_OF_SERVICE:
-                action.setOperationDirect(ActionOBlock.DirectOperation.SetOutOfService);
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.SetOutOfService);
                 break;
 
             case SET_BLOCK_IN_SERVICE:
-                action.setOperationDirect(ActionOBlock.DirectOperation.ClearOutOfService);
+                action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.ClearOutOfService);
                 break;
 
             default:
@@ -1430,27 +1394,27 @@ public class ImportConditional {
                 new EnableLogix(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
 
-        action.setAddressing(NamedBeanAddressing.Direct);
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
         String devName = ca.getDeviceName();
         if (devName != null) {
             if (devName.length() > 0 && devName.charAt(0) == '@') {
                 String memName = devName.substring(1);
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference("{" + memName + "}");
+                action.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+                action.getSelectEnum().setReference("{" + memName + "}");
             } else {
-                action.setLogix(devName);
+                action.getSelectNamedBean().setNamedBean(devName);
             }
         }
 
         switch (ca.getType()) {
             case ENABLE_LOGIX:
-                action.setOperationDirect(EnableLogix.Operation.Enable);
+                action.getSelectEnum().setEnum(EnableLogix.Operation.Enable);
                 break;
 
             case DISABLE_LOGIX:
-                action.setOperationDirect(EnableLogix.Operation.Disable);
+                action.getSelectEnum().setEnum(EnableLogix.Operation.Disable);
                 break;
 
             default:
@@ -1469,16 +1433,16 @@ public class ImportConditional {
 
         switch (ca.getType()) {
             case START_FAST_CLOCK:
-                action.setBeanState(ActionClock.ClockState.StartClock);
+                action.getSelectEnum().setEnum(ActionClock.ClockState.StartClock);
                 break;
 
             case STOP_FAST_CLOCK:
-                action.setBeanState(ActionClock.ClockState.StopClock);
+                action.getSelectEnum().setEnum(ActionClock.ClockState.StopClock);
                 break;
 
             case SET_FAST_CLOCK_TIME:
-                action.setBeanState(ActionClock.ClockState.SetClock);
-                action.setClockTime(ca.getActionData());
+                action.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
+                action.getSelectTime().setValue(ca.getActionData());
                 break;
 
             default:
@@ -1495,48 +1459,48 @@ public class ImportConditional {
                 new ActionAudio(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
 
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
-        action.setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
 
         String sound = ca.getActionString();
         if (sound != null && sound.length() > 0 && sound.charAt(0) == '@') {
-            action.setAddressing(NamedBeanAddressing.Reference);
-            action.setReference(sound.substring(1));
+            action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+            action.getSelectNamedBean().setReference(sound.substring(1));
         } else {
             Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(ca.getDeviceName());
-            if (audio != null) action.setAudio(audio);
+            if (audio != null) action.getSelectNamedBean().setNamedBean(audio);
         }
 
         switch (ca.getActionData()) {
             case Audio.CMD_PLAY:
-                action.setOperation(ActionAudio.Operation.Play);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.Play);
                 break;
             case Audio.CMD_STOP:
-                action.setOperation(ActionAudio.Operation.Stop);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.Stop);
                 break;
             case Audio.CMD_PLAY_TOGGLE:
-                action.setOperation(ActionAudio.Operation.PlayToggle);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.PlayToggle);
                 break;
             case Audio.CMD_PAUSE:
-                action.setOperation(ActionAudio.Operation.Pause);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.Pause);
                 break;
             case Audio.CMD_RESUME:
-                action.setOperation(ActionAudio.Operation.Resume);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.Resume);
                 break;
             case Audio.CMD_PAUSE_TOGGLE:
-                action.setOperation(ActionAudio.Operation.PauseToggle);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.PauseToggle);
                 break;
             case Audio.CMD_REWIND:
-                action.setOperation(ActionAudio.Operation.Rewind);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.Rewind);
                 break;
             case Audio.CMD_FADE_IN:
-                action.setOperation(ActionAudio.Operation.FadeIn);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.FadeIn);
                 break;
             case Audio.CMD_FADE_OUT:
-                action.setOperation(ActionAudio.Operation.FadeOut);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.FadeOut);
                 break;
             case Audio.CMD_RESET_POSITION:
-                action.setOperation(ActionAudio.Operation.ResetPosition);
+                action.getSelectEnum().setEnum(ActionAudio.Operation.ResetPosition);
                 break;
             default:
                 break;
@@ -1550,7 +1514,7 @@ public class ImportConditional {
                 new ActionSound(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
 
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         action.setSoundAddressing(NamedBeanAddressing.Direct);
 
         String sound = ca.getActionString();
@@ -1601,7 +1565,7 @@ public class ImportConditional {
                 break;
 
             case JYTHON_COMMAND:
-                action.setOperationType(ActionScript.OperationType.JythonCommand);
+                action.setOperationType(ActionScript.OperationType.SingleLineCommand);
                 break;
 
             default:
@@ -1618,23 +1582,23 @@ public class ImportConditional {
                 new TriggerRoute(InstanceManager.getDefault(DigitalActionManager.class)
                         .getAutoSystemName(), null);
 
-        action.setAddressing(NamedBeanAddressing.Direct);
-        action.setOperationAddressing(NamedBeanAddressing.Direct);
+        action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        action.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
 
         String devName = ca.getDeviceName();
         if (devName != null) {
             if (devName.length() > 0 && devName.charAt(0) == '@') {
                 String memName = devName.substring(1);
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference("{" + memName + "}");
+                action.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+                action.getSelectEnum().setReference("{" + memName + "}");
             } else {
-                action.setRoute(devName);
+                action.getSelectNamedBean().setNamedBean(devName);
             }
         }
 
         switch (ca.getType()) {
             case TRIGGER_ROUTE:
-                action.setOperationDirect(TriggerRoute.Operation.TriggerRoute);
+                action.getSelectEnum().setEnum(TriggerRoute.Operation.TriggerRoute);
                 break;
 
             default:

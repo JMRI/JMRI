@@ -35,7 +35,7 @@ public class SampleMinimalProgram {
     public static void main(String args[]) {
 
         initLog4J();
-        log.info(Log4JUtil.startupInfo(name));
+        log.info("Startup: {}", Log4JUtil.startupInfo(name));
 
         new SampleMinimalProgram(args);   // start the application class itself
 

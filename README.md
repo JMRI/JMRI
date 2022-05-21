@@ -8,8 +8,6 @@ For development information, see [Technical Info](https://www.jmri.org/help/en/h
 
 User discussions are on the [JMRI users Groups.io group](https://groups.io/g/jmriusers)
 
-Infrastructure status available at [status.jmri.org](https://status.jmri.org)
-
 Test:
 [![Test release](https://img.shields.io/github/release/JMRI/JMRI.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 [![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/latest/total.svg)](https://www.jmri.org/download/index.shtml#test-rel)

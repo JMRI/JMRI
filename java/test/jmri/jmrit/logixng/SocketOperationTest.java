@@ -20,18 +20,21 @@ public class SocketOperationTest {
 
     @Test
     public void testAddRemoveChildren() throws PropertyVetoException, Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(true, false);
     }
 
     @Test
     public void testFemaleSockets() throws PropertyVetoException, Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(false, true);
     }
 
     @Test
     public void testAddRemoveChildrenAndFemaleSockets() throws PropertyVetoException, Exception {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runTest(true, true);
     }
@@ -41,7 +44,7 @@ public class SocketOperationTest {
     Set<Base> listOfSockets = new HashSet<>();
     Map<Class<? extends Base>, SwingConfiguratorInterface> sciSet = new HashMap<>();
 
-    public void runTest(boolean addRemoveChildren, boolean testSocketOperations)
+    private void runTest(boolean addRemoveChildren, boolean testSocketOperations)
             throws PropertyVetoException, Exception {
 
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
@@ -146,6 +149,8 @@ public class SocketOperationTest {
             sciSet.put(clazz, sci);
         }
 
+        sci.setDefaultValues();
+
         MaleSocket maleSocket = sci.createNewObject(sci.getAutoSystemName(), null);
         child.connect(maleSocket);
 
@@ -168,31 +173,13 @@ public class SocketOperationTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initConfigureManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initDebugPowerManager();
-
-        JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initDefaultSignalMastManager();
-//        JUnitUtil.initSignalMastLogicManager();
-        JUnitUtil.initOBlockManager();
-        JUnitUtil.initWarrantManager();
-
-//        JUnitUtil.initLogixNGManager();
+        CreateLogixNGTreeScaffold.setUp();
     }
 
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
-        JUnitUtil.tearDown();
+        CreateLogixNGTreeScaffold.tearDown();
     }
 
 
