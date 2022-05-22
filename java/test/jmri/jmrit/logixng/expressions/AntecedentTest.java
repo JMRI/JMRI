@@ -587,11 +587,11 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
 
         // Test illegal number
         testCalculate(Antecedent.FALSE, "R#", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R# ");
+                "IXIC 1 parseCalculation error antecedent= R#, ex= java.lang.NumberFormatException");
         testCalculate(Antecedent.FALSE, "R-", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R- ");
+                "IXIC 1 parseCalculation error antecedent= R-, ex= java.lang.NumberFormatException");
         testCalculate(Antecedent.FALSE, "Ra", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= Ra ");
+                "IXIC 1 parseCalculation error antecedent= Ra, ex= java.lang.NumberFormatException");
 
         // Test single condition
         testCalculate(Antecedent.TRUE, "R1", conditionalVariablesList_True, "");
@@ -622,7 +622,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
 
         // Test several items
         testCalculate(Antecedent.FALSE, "R1 and R2 and R3", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R1 and R2 and R3 ");
+                "IXIC 1 parseCalculation error antecedent= R1 and R2 and R3, ex= java.lang.IndexOutOfBoundsException");
         testCalculate(Antecedent.TRUE, "R1", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Antecedent.TRUE, "R2", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Antecedent.TRUE, "R3", conditionalVariablesList_TrueTrueTrue, "");
@@ -647,11 +647,11 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         testCalculate(Antecedent.TRUE, "(R1 and R3) and R2", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Antecedent.FALSE, "(R1 and R3) and not R2", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Antecedent.FALSE, "(R1 and) R3 and not R2", conditionalVariablesList_TrueTrueTrue,
-                "IXIC 1 parseCalculation error antecedent= (R1 and) R3 and not R2 ");
+                "IXIC 1 parseCalculation error antecedent= (R1 and) R3 and not R2, ex= jmri.JmriException: Unexpected operator or characters < )R3ANDNOTR2 >");
         testCalculate(Antecedent.FALSE, "R1( and R3) and not R2", conditionalVariablesList_TrueTrueTrue,
-                "IXIC 1 parseCalculation error antecedent= R1( and R3) and not R2 ");
+                "IXIC 1 parseCalculation error antecedent= R1( and R3) and not R2, ex= jmri.JmriException: Could not find expected operator < (ANDR3)ANDNOTR2 >");
         testCalculate(Antecedent.FALSE, "R1 (and R3 and) not R2", conditionalVariablesList_TrueTrueTrue,
-                "IXIC 1 parseCalculation error antecedent= R1 (and R3 and) not R2 ");
+                "IXIC 1 parseCalculation error antecedent= R1 (and R3 and) not R2, ex= jmri.JmriException: Could not find expected operator < (ANDR3AND)NOTR2 >");
         testCalculate(Antecedent.FALSE, "(R1 and R3) and not R2)", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Antecedent.TRUE, "(R1 and (R3) and R2)", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Antecedent.FALSE, "(R1 and (R3) and not R2)", conditionalVariablesList_TrueTrueTrue, "");
