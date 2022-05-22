@@ -122,7 +122,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
             result = dp.result;
         } catch (NumberFormatException | IndexOutOfBoundsException | JmriException nfe) {
             result = false;
-            log.error("{} parseCalculation error {} ",
+            log.error("{} parseCalculation error antecedent= {} ",
                 getDisplayName(), _antecedent, nfe);  // NOI18N
         }
         
