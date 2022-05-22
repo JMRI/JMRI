@@ -108,7 +108,7 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
         if (frame != null) {
             destroyThrottleWindow(frame);
             synchronized (this) {
-                throttleWindows.remove((frame));
+                throttleWindows.remove(frame);
                 if (!throttleWindows.isEmpty()) {
                     requestFocusForNextThrottleWindow();
                 }

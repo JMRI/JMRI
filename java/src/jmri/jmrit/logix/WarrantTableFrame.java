@@ -113,7 +113,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     @Override
     public void initComponents() {
 
-        if (log.isDebugEnabled()) log.debug("initComponents");
+        log.debug("initComponents");
         //Casts at getTableCellEditorComponent() now fails with 3.0 ??
         JTable table = new JTable(_model);
         TableRowSorter<WarrantTableModel> sorter = new TableRowSorter<>(_model);
@@ -341,7 +341,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 model = (WarrantTableModel) m;
             }
             if (model == null) {
-                log.error("Unexpected table model of class: {}", m.getClass().getName());
+                log.error("Unexpected table model: {}", m );
             }
 
             // If table has been sorted, table row no longer is the same as array index
@@ -369,7 +369,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                     comboBox.addItem(order.getBlock().getDisplayName() + ": - " + order.getPath().getName());
                 }
             } else {
-                log.error("Unexpected editor component of class: {}", component.getClass().getName());
+                log.error("Unexpected editor component: {}", component );
             }
             return component;
         }
@@ -405,7 +405,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                             warrant.getDisplayName(), comboBox.getSelectedItem());
                 }
             } else {
-                log.error("Unexpected editor component of class: {}", component.getClass().getName());
+                log.error("Unexpected editor component: {}", component );
             }
             return component;
         }

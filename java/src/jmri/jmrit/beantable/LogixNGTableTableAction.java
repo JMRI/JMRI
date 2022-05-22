@@ -132,7 +132,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             InstanceManager.getDefault(NamedTableManager.class).deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("{} : Could not Delete.", e.getMessage());
         }
     }
 
