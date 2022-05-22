@@ -164,7 +164,7 @@ public class RosterServlet extends HttpServlet {
             if (!fm.getFileType().equals("text/xml")
                     && !fm.getFileType().startsWith("image")) {
                 String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidFileType"), fm.getFileName(), fm.getFileType());
-                log.error(m);
+                log.error("{} : Invalid File Type", m);
                 msgList.add(m);
                 break; //stop processing this one
             }
@@ -181,7 +181,7 @@ public class RosterServlet extends HttpServlet {
                 log.debug("file '{}' of type '{}' temp saved to {}", fm.getFileType(), fm.getFileName(), tempFolder);
             } catch (IOException e) {
                 String m = String.format(rl, Bundle.getMessage(rl, "ErrorSavingFile"), fm.getFileName());
-                log.error(m);
+                log.error("{} : Error Saving File", m);
                 msgList.add(m);
                 break; //stop processing this one
             } finally {
@@ -201,7 +201,7 @@ public class RosterServlet extends HttpServlet {
                 if (fileNew.exists()) {
                     if (!fm.getFileReplace()) {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
-                        log.error(m);
+                        log.error("{} : File Already Exists", m);
                         msgList.add(m);
                         if (!fileTemp.delete()) { //get rid of temp file
                             log.error("Unable to delete {}", fileTemp);
@@ -209,16 +209,16 @@ public class RosterServlet extends HttpServlet {
                     } else {
                         if (!fileNew.delete()) { //delete the old file
                             String m = String.format(rl, Bundle.getMessage(rl, "ErrorDeletingFile"), fileNew.getName());
-                            log.debug(m);
+                            log.debug("{} : Error Deleting File", m);
                             msgList.add(m);
                         }
                         if (fileTemp.renameTo(fileNew)) {
                             String m = String.format(rl, Bundle.getMessage(rl, "FileReplaced"), fm.getFileName());
-                            log.debug(m);
+                            log.debug("{} : File Replaced", m);
                             msgList.add(m);
                         } else {
                             String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
-                            log.error(m);
+                            log.error("{} : Rename Failed", m);
                             msgList.add(m);
                             if (!fileTemp.delete()) { //get rid of temp file
                                 log.error("Unable to delete {}", fileTemp);
@@ -228,11 +228,11 @@ public class RosterServlet extends HttpServlet {
                 } else {
                     if (fileTemp.renameTo(fileNew)) {
                         String m = String.format(rl, Bundle.getMessage(rl, "FileAdded"), fm.getFileName());
-                        log.debug(m);
+                        log.debug("{} : File Added", m);
                         msgList.add(m);
                     } else {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorRenameFailed"), fm.getFileName());
-                        log.error(m);
+                        log.error("{} : Rename Failed", m);
                         msgList.add(m);
                         if (!fileTemp.delete()) { //get rid of temp file
                             log.error("Unable to delete {}", fileTemp);
@@ -246,7 +246,7 @@ public class RosterServlet extends HttpServlet {
                     reTemp = RosterEntry.fromFile(new File(tempFolder, fm.getFileName()));
                 } catch (JDOMException e) { //handle XML failures
                     String m = String.format(rl, Bundle.getMessage(rl, "ErrorInvalidXML"), fm.getFileName(), e.getMessage());
-                    log.error(m);
+                    log.error("{} : Invalid XML", m);
                     msgList.add(m);
                     if (!fileTemp.delete()) { //get rid of temp file
                         log.error("Unable to delete {}", fileTemp);
@@ -257,7 +257,7 @@ public class RosterServlet extends HttpServlet {
                 if (reOld != null) {
                     if (!fm.getFileReplace()) {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorFileExists"), fm.getFileName());
-                        log.error(m);
+                        log.error("{} : File Already Exists", m);
                         msgList.add(m);
                         if (!fileTemp.delete()) { //get rid of temp file
                             log.error("Unable to delete {}", fileTemp);
@@ -268,7 +268,7 @@ public class RosterServlet extends HttpServlet {
                         Roster.getDefault().addEntry(reTemp); //add the new entry to roster
                         Roster.getDefault().writeRoster(); //save modified roster.xml file
                         String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryReplaced"), fm.getFileName(), reTemp.getDisplayName());
-                        log.debug(m);
+                        log.debug("{} : Roster Entry Replaced", m);
                         msgList.add(m);
                         if (!fileTemp.delete()) { //get rid of temp file
                             log.error("Unable to delete {}", fileTemp);
@@ -279,11 +279,11 @@ public class RosterServlet extends HttpServlet {
                         Roster.getDefault().addEntry(reTemp);
                         Roster.getDefault().writeRoster();
                         String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryAdded"), fm.getFileName(), reTemp.getId());
-                        log.debug(m);
+                        log.debug("{} : Roster Entry Added", m);
                         msgList.add(m);
                     } else {
                         String m = String.format(rl, Bundle.getMessage(rl, "ErrorMoveFailed"), fm.getFileName(), reTemp.getPathName());
-                        log.error(m);
+                        log.error("{} : File Move Failed", m);
                         msgList.add(m);                        
                     }
                 }
