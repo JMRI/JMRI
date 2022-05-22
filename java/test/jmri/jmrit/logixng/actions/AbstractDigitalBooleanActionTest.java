@@ -15,16 +15,18 @@ import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test AbstractDigitalBooleanAction
- * 
+ *
  * @author Daniel Bergqvist 2020
  */
 public class AbstractDigitalBooleanActionTest {
 
     // This method is CPU intensive so we don't want to run it for every action.
+    @Ignore
     @Test
     public void testGetNewSocketName() {
         MyAction action = new MyAction();
@@ -39,8 +41,8 @@ public class AbstractDigitalBooleanActionTest {
             hasThrown = true;
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
-        
-        
+
+
         DigitalBooleanOnChange action2 = new DigitalBooleanOnChange("IQDB1", null, DigitalBooleanOnChange.Trigger.CHANGE);
         Assert.assertEquals("New socket name is correct", "A1", action2.getNewSocketName());
     }
@@ -60,8 +62,8 @@ public class AbstractDigitalBooleanActionTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     // The purpose of this class is to test the method
     // AbstractDigitalAction.getNewSocketName(). We want
     // to test that the method throws an exception if no
@@ -74,11 +76,11 @@ public class AbstractDigitalBooleanActionTest {
     private static class MyAction extends AbstractDigitalBooleanAction implements FemaleSocketListener {
 
         private final MyFemaleSocket child = new MyFemaleSocket(this, this, "A1");
-        
+
         public MyAction() {
             super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null);
         }
-        
+
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported.");
@@ -160,16 +162,16 @@ public class AbstractDigitalBooleanActionTest {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
-    
+
+
     private static class MyFemaleSocket extends AbstractFemaleSocket {
-    
+
         public MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
-        
+
         @Override
         public void disposeMe() {
             throw new UnsupportedOperationException("Not supported.");
@@ -194,7 +196,7 @@ public class AbstractDigitalBooleanActionTest {
         public String getLongDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }
-    
+
     }
-    
+
 }

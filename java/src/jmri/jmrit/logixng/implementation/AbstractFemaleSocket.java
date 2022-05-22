@@ -51,14 +51,14 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     /** {@inheritDoc} */
     @Override
-    public Base getParent() {
+    public final Base getParent() {
         return _parent;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void setParent(@Nonnull Base parent) {
-        _parent = parent;
+    public final void setParent(@Nonnull Base parent) {
+        throw new UnsupportedOperationException("FemaleSocket cannot change parent");
     }
 
     /** {@inheritDoc} */

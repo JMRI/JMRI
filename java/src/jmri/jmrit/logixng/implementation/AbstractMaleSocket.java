@@ -307,7 +307,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
-            femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 connectedSocket.setParent(femaleSocket);
