@@ -375,7 +375,15 @@ public class LoadAndStoreTestBase {
         // kill the fast clock and set to a consistent time
         jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);
-        clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+
+        try {
+            clock.setTime(
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse("2021-12-02 00:00:00.0")
+            );
+        } catch (Exception e) {
+            log.warn("Unexpected Exception in test setup", e);
+        }
+
     }
 
     @AfterEach
