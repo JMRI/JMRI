@@ -402,9 +402,14 @@ public interface Section extends NamedBean {
      */
     public void suppressNameUpdate(boolean set);
 
-    final public static int USERDEFINED = 0x01; //Default Save all the information
-    final public static int SIGNALMASTLOGIC = 0x02; //Save only the name, blocks will be added by the signalmast logic
-    final public static int DYNAMICADHOC = 0x00;  //created on an as required basis, not to be saved.
+    enum SectionType {
+        DYNAMICADHOC,   // Created on an as required basis, not to be saved.
+        USERDEFINED,    // Default Save all the information
+        SIGNALMASTLOGIC // Save only the name, blocks will be added by the signalmast logic
+    }
+    final public static SectionType USERDEFINED     = SectionType.USERDEFINED;
+    final public static SectionType SIGNALMASTLOGIC = SectionType.SIGNALMASTLOGIC;
+    final public static SectionType DYNAMICADHOC    = SectionType.DYNAMICADHOC;
 
     /**
      * Set Section Type.
@@ -415,13 +420,13 @@ public interface Section extends NamedBean {
      * </ul>
      * @param type constant of section type.
      */
-    public void setSectionType(int type);
+    public void setSectionType(SectionType SectionType);
 
     /**
      * Get Section Type.
      * Defaults to USERDEFINED.
      * @return constant of section type.
      */
-    public int getSectionType();
+    public SectionType getSectionType();
 
 }

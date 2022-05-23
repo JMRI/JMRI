@@ -598,6 +598,7 @@
                 TransitManager and SectionManager. None of the production code
                 nor distributed scripts needed changes, as you still create
                 and access Transits and Sections via their managers obtained
-                from the InstanceManager.
+                from the InstanceManager. The SectionType constants in Section
+                has also been converted to an enum.
         </ul>
 

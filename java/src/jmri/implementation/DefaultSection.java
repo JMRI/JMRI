@@ -2649,7 +2649,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         }
     }
 
-    private int sectionType = USERDEFINED;
+    private SectionType sectionType = USERDEFINED;
 
     /**
      * Set Section Type.
@@ -2660,7 +2660,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * </ul>
      * @param type constant of section type.
      */
-    public void setSectionType(int type) {
+    public void setSectionType(SectionType type) {
         sectionType = type;
     }
 
@@ -2669,7 +2669,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * Defaults to USERDEFINED.
      * @return constant of section type.
      */
-    public int getSectionType() {
+    public SectionType getSectionType() {
         return sectionType;
     }
 
