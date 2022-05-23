@@ -3,9 +3,9 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>19</minor>
-    <test>7</test>
-    <modifier>ish</modifier>
+    <minor>99</minor>
+    <test>8</test>
+    <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
@@ -1909,7 +1909,7 @@
       <systemName>IM:AUTO:0077</systemName>
       <userName>HliSt3SpustenoOdkudKam</userName>
     </memory>
-    <memory value="4:17 PM">
+    <memory value="2:12 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -4289,7 +4289,7 @@
       </source>
     </layoutPanel>
   </entryexitpairs>
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Dubová" x="0" y="33" windowheight="851" windowwidth="1312" panelheight="760" panelwidth="1285" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="no" turnoutbx="40.0" turnoutcx="40.0" turnoutwid="20.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Dubová" x="0" y="38" windowheight="851" windowwidth="1312" panelheight="760" panelwidth="1285" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="no" turnoutbx="40.0" turnoutcx="40.0" turnoutwid="20.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Dubová" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -5786,7 +5786,7 @@
     <positionablepoint ident="A4" type="ANCHOR" x="50.0" y="250.0" connect1name="T16" connect2name="T17" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="EB3" type="END_BUMPER" x="50.0" y="0.0" connect1name="T17" westboundsensor="TNX-Odb-P-Trat-S" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Rozsochatec" x="0" y="33" windowheight="618" windowwidth="1047" panelheight="550" panelwidth="952" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="no" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Rozsochatec" x="0" y="38" windowheight="618" windowwidth="1047" panelheight="550" panelwidth="952" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="no" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Rozsochatec" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -6719,7 +6719,7 @@
     <positionablepoint ident="A9" type="ANCHOR" x="100.0" y="200.0" connect1name="T3" connect2name="T4" eastboundsensor="Roz-St1-TNX-Zahl-Z" westboundsensor="Roz-St1-TNX-Trat-K" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A3" type="ANCHOR" x="100.0" y="300.0" connect1name="T3" eastboundsensor="Roz-St1-TNX-Trat-Z" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Návěstidla Dubová" x="813" y="33" height="439" width="467" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="102" greenBackground="127" blueBackground="108">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Návěstidla Dubová" x="813" y="40" height="439" width="467" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="102" greenBackground="127" blueBackground="108">
     <signalmasticon signalmast="Dub-PrL" x="0" y="0" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="prototype" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
     <signalmasticon signalmast="Dub-L" x="20" y="0" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="prototype" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
     <signalmasticon signalmast="Dub-PrLP" x="40" y="0" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="prototype" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
@@ -6739,7 +6739,7 @@
     <signalmasticon signalmast="Dub-L3" x="260" y="0" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="prototype" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
     <signalmasticon signalmast="Dub-L1" x="240" y="0" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" degrees="0" scale="1.0" imageset="prototype" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
   </paneleditor>
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Hlinsko" x="0" y="33" windowheight="647" windowwidth="1441" panelheight="550" panelwidth="1248" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="no" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="20.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Hlinsko" x="0" y="38" windowheight="647" windowwidth="1441" panelheight="550" panelwidth="1248" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="no" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="20.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Hlinsko" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -7914,7 +7914,7 @@
     <positionablepoint ident="A6" type="ANCHOR" x="100.0" y="300.0" connect1name="T4" eastboundsensor="Hli-St1-TNX-Trat-Z" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="A10" type="ANCHOR" x="650.0" y="200.0" connect1name="T14" connect2name="T13" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Vítanov" x="0" y="33" windowheight="436" windowwidth="813" panelheight="350" panelwidth="750" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="20.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Vítanov" x="0" y="38" windowheight="436" windowwidth="813" panelheight="350" panelwidth="750" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="6" xscale="1.0" yscale="1.0" sidetrackwidth="6" defaulttrackcolor="#606060" defaultoccupiedtrackcolor="#E00000" defaultalternativetrackcolor="#FFFFE0" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="20.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Vítanov" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -8560,89 +8560,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Tue May 26 16:17:18 PDT 2020</date>
+      <date>Sun May 22 06:28:23 PDT 2022</date>
       <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Sidlo-2020-04-Chotebor.xml</filename>
-      <filehistory>
-        <operation>
-          <type>Load OK</type>
-          <date>Tue May 26 14:12:14 PDT 2020</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Sidlo-2020-04-Chotebor.xml</filename>
-          <filehistory>
-            <operation>
-              <type>Load OK</type>
-              <date>Tue May 26 14:02:41 PDT 2020</date>
-              <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrit/display/layoutEditor/load/Sidlo-2020-04-Chotebor.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Sat Mar 07 18:51:02 CET 2020</date>
-                  <filename>JMRI program</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Sat Mar 07 18:51:49 CET 2020</date>
-                  <filename>/home/tata/.jmri/2020_04_Chotebor.jmri/2020-04-Chotebor.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Wed Feb 12 14:06:15 CET 2020</date>
-                      <filename>JMRI program</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Wed Feb 12 14:06:21 CET 2020</date>
-                      <filename>/home/tata/.jmri/2020_04_Chotebor.jmri/2020-04-Chotebor.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>app</type>
-                          <date>Wed Feb 12 12:41:24 CET 2020</date>
-                          <filename>JMRI program</filename>
-                        </operation>
-                        <operation>
-                          <type>Load OK</type>
-                          <date>Wed Feb 12 12:41:47 CET 2020</date>
-                          <filename>/home/tata/.jmri/2020_04_Chotebor.jmri/2020-04-Chotebor.xml</filename>
-                        </operation>
-                        <operation>
-                          <type>Store</type>
-                          <date>Wed Feb 12 13:53:26 CET 2020</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Wed Feb 12 14:19:18 CET 2020</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Sat Mar 07 19:29:25 CET 2020</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Tue May 26 14:02:45 PDT 2020</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Tue May 26 14:12:18 PDT 2020</date>
-          <filename />
-        </operation>
-      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue May 26 16:17:22 PDT 2020</date>
+      <date>Sun May 22 06:28:29 PDT 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.7ish+jake+20200526T2211Z+R86df4f27ba on Tue May 26 16:17:22 PDT 2020-->
+  <!--Written by JMRI version 4.99.8plus+jake+20220521T2236Z+R3af528d80d on Sun May 22 06:28:29 PDT 2022-->
 </layout-config>
