@@ -192,7 +192,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 }
             }
         } catch (jmri.JmriException ex) {
-            log.error("TuroutManager {} {}", tm, ex.getMessage());
+            log.error("JmriException {}", ex.getMessage() );
         }
 
         try {
@@ -203,7 +203,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 }
             }
         } catch (jmri.JmriException ex) {
-            log.error("TuroutManager {} {}", tm, ex.getMessage());
+            log.error("JmriException {}", ex.getMessage() );
         }
 
         for (Element elem : turnoutList) {

@@ -205,7 +205,7 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
             try {
                 ((TurnoutManager) m).setDefaultClosedSpeed(speed);
             } catch (jmri.JmriException ex) {
-                log.error("Manager {} {}", m, ex.getMessage() );
+                log.error("JmriException {}", ex.getMessage() );
                 throw ex;
             }
         }
@@ -220,7 +220,7 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
             try {
                 ((TurnoutManager) m).setDefaultThrownSpeed(speed);
             } catch (jmri.JmriException ex) {
-                log.error("Manager {} {}", m, ex.getMessage() );
+                log.error("JmriException {}", ex.getMessage() );
                 throw ex;
             }
         }
