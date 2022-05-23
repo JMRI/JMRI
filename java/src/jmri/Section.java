@@ -420,7 +420,7 @@ public interface Section extends NamedBean {
      * </ul>
      * @param type constant of section type.
      */
-    public void setSectionType(SectionType SectionType);
+    public void setSectionType(SectionType type);
 
     /**
      * Get Section Type.
