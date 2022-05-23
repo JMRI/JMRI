@@ -380,7 +380,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         Turnout t = turnoutManager.getBySystemName(name);
         if (t == null) {
             NullPointerException ex = new NullPointerException("Unexpected null turnout in turnout table");
-            log.error(ex.getMessage(), ex); // log with stack trace
+            log.error("No Turnout with system name \"{}\" exists ", name , ex); // log with stack trace
             throw ex;
         }
         if (col == INVERTCOL) {

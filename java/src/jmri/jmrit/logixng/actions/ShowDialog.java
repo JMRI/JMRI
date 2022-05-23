@@ -405,7 +405,7 @@ public class ShowDialog extends AbstractDigitalAction
                         _validateSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -428,7 +428,7 @@ public class ShowDialog extends AbstractDigitalAction
                         _executeSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {

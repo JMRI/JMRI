@@ -1128,7 +1128,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException
                     | jmri.configurexml.JmriConfigureXmlException
                     | RuntimeException ex) {
-                        log.debug(ex.getLocalizedMessage(), ex);
+                        log.debug("Could not paste.", ex);
                 }
                 /*We remove the original item from the list, so we end up with
                  just the new items selected and allow the items to be moved around */
