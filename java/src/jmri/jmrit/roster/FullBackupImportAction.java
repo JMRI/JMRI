@@ -97,13 +97,13 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             acceptAllDup = false;  // skip prompting for dups and accept all
             
             while ((entry = zipper.getNextEntry()) != null) {
-                log.debug(String.format("Entry: %s len %d (%d) added %TD content: %s",
+                log.debug("Entry: {} len {} ({}) added {} content: {}",
                                         entry.getName(), 
                                         entry.getSize(), 
                                         entry.getCompressedSize(), 
                                         new Date(entry.getTime()),
                                         entry.getComment()
-                        ));
+                        );
 
                 // Once we get the entry from the stream, the stream is
                 // positioned read to read the raw data, and we keep

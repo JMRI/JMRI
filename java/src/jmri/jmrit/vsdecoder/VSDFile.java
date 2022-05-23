@@ -75,6 +75,8 @@ public class VSDFile extends ZipFile {
         return _statusMsg;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="error text in _statusMsg kept for later use")
     protected boolean init() {
         VSDXmlFile xmlfile = new VSDXmlFile();
         initialized = false;
@@ -461,6 +463,8 @@ public class VSDFile extends ZipFile {
         return true;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="error text in _statusMsg kept for later use")
     protected boolean validateFilesNumbers(Element el, String name, String[] fnames, Boolean required) {
         List<Element> elist = el.getChildren(name);
 
