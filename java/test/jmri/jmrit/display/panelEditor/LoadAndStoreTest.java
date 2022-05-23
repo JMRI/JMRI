@@ -1,4 +1,4 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.panelEditor;
 
 import java.io.*;
 import java.util.stream.Stream;
@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     public static Stream<Arguments> data() {
-        return getFiles(new File("java/test/jmri/jmrit/display/layoutEditor"), false, true);
+        return getFiles(new File("java/test/jmri/jmrit/display/panelEditor"), false, true);
     }
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
@@ -46,51 +46,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     static boolean done;
 
     /**
-     * Wait for the layout editor block processing to take place. This is quite
-     * layoutEditor-specific.
-     */
-    @Override
-    protected void postLoadProcessing() {
-
-        done = false;
-        ThreadingUtil.runOnGUIDelayed(() -> done = true, 2500);
-        JUnitUtil.waitFor(() -> {
-            return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
-        });
-
-        // need to do two separate ones because of waitFor limit
-        done = false;
-        ThreadingUtil.runOnGUIDelayed(() -> done = true, 2500);
-        JUnitUtil.waitFor(() -> {
-            return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
-        });
-        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
-            log.debug("not stabilized after check");
-        }
-
-        // and wait yet another 2 sec before writing out
-        done = false;
-        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{
-                done = true;
-            }, 2000);
-        jmri.util.JUnitUtil.waitFor(()->{return done;});
-
-        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
-            log.debug(" still not stabilized");
-        }
-
-        done = false;
-        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{
-                done = true;
-            }, 2000);
-        jmri.util.JUnitUtil.waitFor(()->{return done;});
-
-        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
-            log.debug(" nor now");
-        }
-    }
-
-    /**
      * Also writes out image files from these for later offline checking.This
      * can't be (easily) automated, as the images vary from platform to
      * platform.
@@ -103,7 +58,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super.loadLoadStoreFileCheck(file);
 
         done = false;
-        ThreadingUtil.runOnGUIDelayed(() -> done = true, 1000);
+        ThreadingUtil.runOnGUIDelayed(() -> done = true, 2000);
         JUnitUtil.waitFor(() -> done);
 
         storeAndCompareImage(file);
@@ -142,7 +97,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
                     } else {
                         // skip test that does match from one linux (Jenkins) to another (Travis), but remind about it
                         if (first) {
-                            log.info("Skipping tricky comparison of LayoutEditor graphics because jmri.migrationtests not set true");
+                            log.info("Skipping tricky comparison of panelEditor graphics because jmri.migrationtests not set true");
                         }
                         first = false;
                     }
