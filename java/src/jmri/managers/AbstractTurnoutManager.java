@@ -128,13 +128,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         try {
             t.setStraightSpeed("Global");
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("Turnout : {} : {}", t, ex.getMessage());
         }
 
         try {
             t.setDivergingSpeed("Global");
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("Turnout : {} : {}", t, ex.getMessage());
         }
         return t;
     }
@@ -267,7 +267,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (IllegalArgumentException ex) {
-                    throw new JmriException("Value of requested turnout default closed speed is not valid");
+                    throw new JmriException("Value of requested turnout default closed speed is not valid. " + ex.getMessage());
                 }
             }
         }
@@ -297,7 +297,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (IllegalArgumentException ex) {
-                    throw new JmriException("Value of requested turnout default thrown speed is not valid");
+                    throw new JmriException("Value of requested turnout default thrown speed is not valid. " + ex.getMessage());
                 }
             }
         }
