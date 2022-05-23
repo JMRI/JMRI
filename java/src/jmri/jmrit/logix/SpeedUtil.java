@@ -373,15 +373,18 @@ public class SpeedUtil {
         _sessionProfile = manager.getMergeProfile(_rosterId);
         if (_sessionProfile == null) {
             _rosterEntry = Roster.getDefault().getEntryForId(_rosterId);
+            RosterSpeedProfile profile;
             if (_rosterEntry == null) {
                 _noProfile =  true;
                 _rosterEntry = makeRosterEntry(_rosterId);
+                profile = new RosterSpeedProfile(_rosterEntry);
             } else {
                 _noProfile =  false;
+                profile = _rosterEntry.getSpeedProfile();
             }
-            _sessionProfile = new RosterSpeedProfile(_rosterEntry);
+            _sessionProfile = manager.makeProfileCopy(profile, _rosterEntry);
+            manager.setMergeProfile(_rosterId, _sessionProfile);
         }
-        manager.makeProfileCopy(_sessionProfile, _rosterEntry);
 
         if (log.isTraceEnabled()) log.debug("SignalSpeedMap: throttle factor= {}, layout scale= {} convesion to mm/s= {}",
                 _signalSpeedMap.getDefaultThrottleFactor(), _signalSpeedMap.getLayoutScale(),
@@ -530,8 +533,8 @@ public class SpeedUtil {
     }*/
 
     synchronized protected void mergeSpeedProfile() {
-        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        manager.setMergeProfile(_rosterId, _sessionProfile);
+//        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+//        manager.setMergeProfile(_rosterId, _sessionProfile);
     }
 
     protected void setIsForward(boolean direction) {

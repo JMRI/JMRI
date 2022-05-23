@@ -1580,7 +1580,7 @@ public class WarrantFrame extends WarrantRoute {
     private boolean save() {
         boolean fatal = false;
         if (isRunning()) {
-            fatal = true;
+            return false;
         }
         String msg = routeIsValid();
         if (msg != null) {

@@ -369,16 +369,14 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         log.debug("{}: clearWaitForSync from block \"{}\". notifyAll() called.  isRamping()={}",
                                 _warrant.getDisplayName(), block.getDisplayName(), isRamping());
                     }
-                } else {
-                    log.warn("{}: clearWaitForSync called from block \"{}\", but _synchBlock = \"{}\"!",
-                                _warrant.getDisplayName(), block.getDisplayName(), _synchBlock.getDisplayName());
+                    return;
                 }
             }
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("{}: clearWaitForSync from block \"{}\". _synchBlock= null SpeedState={} _atClear={} _atHalt={}",
-                        _warrant.getDisplayName(), block.getDisplayName(), getSpeedState(), _atClear, _atHalt);
-            }
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("{}: clearWaitForSync from block \"{}\". _synchBlock= {} SpeedState={} _atClear={} _atHalt={}",
+                    _warrant.getDisplayName(), block.getDisplayName(), 
+                    (_synchBlock==null?"null":_synchBlock.getDisplayName()), getSpeedState(), _atClear, _atHalt);
         }
     }
 
