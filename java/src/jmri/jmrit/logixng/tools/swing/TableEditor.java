@@ -372,8 +372,7 @@ import jmri.util.JmriJFrame;
                 NamedTable p = _tableManager.getByUserName(uName);
                 if (p != null) {
                     // NamedTable with this user name already exists
-                    log.error("Failure to update NamedTable with Duplicate User Name: " // NOI18N
-                            + uName);
+                    log.error("Failure to update NamedTable with Duplicate User Name: {}", uName); // NOI18N
                     JOptionPane.showMessageDialog(_editLogixNGFrame,
                             Bundle.getMessage("Error6"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
