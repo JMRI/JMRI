@@ -29,7 +29,8 @@ public class LoggingUtil {
      * @param args   message arguments
      * @return true if the log was emitted this time
      */
-    @SuppressFBWarnings(value = "SLF4J_UNKNOWN_ARRAY", justification = "Passing varargs array through")
+    @SuppressFBWarnings({ "SLF4J_UNKNOWN_ARRAY","SLF4J_FORMAT_SHOULD_BE_CONST"})
+        // justification = "Passing varargs array through")
     public static boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
         Set<String> loggerSet = warnedOnce.computeIfAbsent(logger, l -> new HashSet<>());
         // if it exists, there was a prior warning given
