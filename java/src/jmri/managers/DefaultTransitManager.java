@@ -14,8 +14,6 @@ import jmri.SectionManager;
 import jmri.Transit;
 import jmri.TransitManager;
 
-import jmri.managers.AbstractManager;
-
 /**
  * Implementation of a Transit Manager
  * <p>

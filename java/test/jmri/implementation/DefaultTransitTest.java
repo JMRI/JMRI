@@ -6,8 +6,6 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
-import jmri.implementation.DefaultTransit;
-
 /**
  * Tests for Transit class.
  *

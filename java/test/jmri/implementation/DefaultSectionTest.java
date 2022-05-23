@@ -3,8 +3,6 @@ package jmri.implementation;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import jmri.implementation.DefaultSection;
-
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
