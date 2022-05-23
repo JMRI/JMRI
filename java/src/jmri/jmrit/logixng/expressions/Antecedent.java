@@ -92,8 +92,6 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     }
     
     /** {@inheritDoc} */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="Unit testing for correct exception")
     @Override
     public boolean evaluate() throws JmriException {
         
@@ -124,8 +122,8 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
             result = dp.result;
         } catch (NumberFormatException | IndexOutOfBoundsException | JmriException nfe) {
             result = false;
-            log.error("{} parseCalculation error antecedent= {}, ex= " + nfe ,
-                getDisplayName(), _antecedent );  // NOI18N
+            log.error("{} parseCalculation error antecedent= {}, ex= {}: {}",
+                getDisplayName(), _antecedent, nfe.getClass().getName(), nfe.getMessage());  // NOI18N
         }
         
         return result;
