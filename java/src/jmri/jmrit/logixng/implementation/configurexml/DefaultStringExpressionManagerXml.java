@@ -43,7 +43,7 @@ public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
         if (tm != null) {
             if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleStringExpressionSocket expression : tm.getNamedBeanSet()) {
-                log.debug("expression system name is " + expression.getSystemName());  // NOI18N
+                log.debug("expression system name is {}", expression.getSystemName());  // NOI18N
 //                log.error("expression system name is " + expression.getSystemName() + ", " + expression.getLongDescription());  // NOI18N
                 try {
                     List<Element> elements = new ArrayList<>();
@@ -107,7 +107,7 @@ public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
     public void loadExpressions(Element expressions) {
         
         List<Element> expressionList = expressions.getChildren();  // NOI18N
-        log.debug("Found " + expressionList.size() + " actions");  // NOI18N
+        log.debug("Found {} actions", expressionList.size() );  // NOI18N
 
         for (int i = 0; i < expressionList.size(); i++) {
             
@@ -121,7 +121,7 @@ public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
-                    log.error("cannot load class " + className, ex);
+                    log.error("cannot load class {}", className, ex);
                 }
             }
             
