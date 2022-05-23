@@ -58,16 +58,242 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="cs">LocoNet Report of Direction</label>
               <label>LocoNet Report of Direction</label>
             </variable>
-            <variable CV="5088.4" item="Configuration">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">Configuration</label>
-              <label xml:lang="fr">Configuration</label>
-              <label xml:lang="nl">Configuratie</label>
-              <label xml:lang="cs">Configuration</label>
+            <variable CV="5088.4" item="Configuration" readOnly="yes">
+              <decVal min="0" max="9999"/>
+              <label xml:lang="de">Configuration:</label>
+              <label xml:lang="fr">Configuration:</label>
+              <label xml:lang="nl">Configuratie:</label>
+              <label xml:lang="cs">Configuration:</label>
               <label>Configuration:</label>
             </variable>
 
-          <!--  TODO add CV 5088.5 to .10 -->
+          <variable CV="5088.5" item="Power-on delay" default="6">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">Power-on delay (ms)</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Power-on delay (ms)</label>
+          </variable>
+          <variable CV="5088.6" item="Occupancy detection count" default="15">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">Power-on delay (ms)</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Occupancy detection count</label>
+          </variable>
+          <variable CV="5088.7" item="Polarity detection count" default="8">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">Polarity detection count</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Polarity detection count</label>
+          </variable>
+          <variable CV="5088.8" item="Polarity detection delay" default="250">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Polarity detection delay (ms)</label>
+          </variable>
+          <variable CV="5088.9" item="Multiplexer switch time" default="10">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Multiplexer switch time (ms)</label>
+          </variable>
+          <variable CV="5088.10" item="QoS Suppress" default="10">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>QoS Suppress</label>
+          </variable>
+          <variable CV="5088.11" item="QoS Delta" default="12">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>QoS Delta</label>
+          </variable>
+          <variable CV="5088.12" item="Speed Delta" default="3">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Speed Delta</label>
+          </variable>
+
+          <!-- CV 5088.100 to .117 feedback addresses per output-->
+          <variable CV="5088.100" item="Quick setup feedback addresses" default="1">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Quick setup feedback start address</label>
+            <tooltip>Quick setup for feedback addresses with autonumbering</tooltip>
+            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
+          </variable>
+          <variable CV="5088.101" item="Feedback address input 1" default="1">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 1 Feedback address</label>
+          </variable>
+          <variable CV="5088.102" item="Feedback address input 2" default="2">
+            <decVal min="0" max="9999"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 2 Feedback address</label>
+          </variable>
+          <variable CV="5088.103" item="Feedback address input 3" default="3">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 3 Feedback address</label>
+          </variable>
+          <variable CV="5088.104" item="Feedback address input 4" default="4">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 4 Feedback address</label>
+          </variable>
+          <variable CV="5088.105" item="Feedback address input 5" default="5">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 5 Feedback address</label>
+          </variable>
+          <variable CV="5088.106" item="Feedback address input 6" default="6">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 6 Feedback address</label>
+          </variable>
+          <variable CV="5088.107" item="Feedback address input 7" default="7">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 7 Feedback address</label>
+          </variable>
+          <variable CV="5088.108" item="Feedback address input 8" default="8">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 8 Feedback address</label>
+          </variable>
+          <variable CV="5088.109" item="Feedback address input 9" default="9">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 9 Feedback address</label>
+          </variable>
+          <variable CV="5088.110" item="Feedback address input 10" default="10">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 10 Feedback address</label>
+          </variable>
+          <variable CV="5088.111" item="Feedback address input 11" default="11">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 11 Feedback address</label>
+          </variable>
+          <variable CV="5088.112" item="Feedback address input 12" default="12">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 12 Feedback address</label>
+          </variable>
+          <variable CV="5088.113" item="Feedback address input 13" default="13">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 13 Feedback address</label>
+          </variable>
+          <variable CV="5088.114" item="Feedback address input 14" default="14">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 14 Feedback address</label>
+          </variable>
+          <variable CV="5088.115" item="Feedback address input 15" default="15">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 15 Feedback address</label>
+          </variable>
+          <variable CV="5088.116" item="Feedback address input 16" default="16">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Input 16 Feedback address</label>
+          </variable>
+          <variable CV="5088.117" item="Feedback address global" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Use global Feedback address</label>
+          </variable>
+
+          <!-- CV 5088.200 to .217 block addresses per output-->
+          <variable CV="5088.200" item="Quick setup block addresses" default="1">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Quick setup feedback start address</label>
+            <tooltip>Quick setup for block addresses with autonumbering</tooltip>
+            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
+          </variable>
+          <!--  TODO add CV 5088.200 to .216 -->
+          <variable CV="5088.217" item="Block address global" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Use global Block address</label>
+          </variable>
+
+          <!-- CV 5088.300 to .317 block addresses per output-->
+          <variable CV="5088.300" item="Quick setup exit delay" default="750">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Quick setup for exit delay</label>
+            <tooltip>Quick setup for exit delay (sets all detectors )</tooltip>
+            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
+          </variable>
+          <!--  TODO add CV 5088.300 to .316 -->
+          <variable CV="5088.317" item="Exit delay global" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Use global Exit delay setting</label>
+          </variable>
+
+          <!-- CV 5088.400 to .417 block addresses per output-->
+          <variable CV="5088.400" item="Quick setup direction invert" default="0">
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Quick setup for Direction Invert</label>
+            <tooltip>Quick setup for Direction Invert (sets all detectors)</tooltip>
+            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
+          </variable>
+          <!--  TODO add CV 5088.400 to .416 -->
+          <variable CV="5088.417" item="Direction invert global" default="1">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">LocoNet Richtung Berichten</label>
+            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
+            <label xml:lang="cs">LocoNet Report of Direction</label>
+            <label>Use global Direction Invert setting</label>
+          </variable>
+
         </variables>
     </decoder>
 
@@ -95,17 +321,104 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               </label>
 
               <label>
-                <text>LNCV3 Configuration</text>
-                <text xml:lang="nl">Instelling LNCV3</text>
-                <text xml:lang="de">LNCV3 Konfiguration</text>
-                <text xml:lang="fr">Configuration LNCV3</text>
-                  <text xml:lang="cs">Konfigurace LNCV</text>
+                <text>LNCV4 Configuration</text>
+                <text xml:lang="nl">Instelling LNCV4</text>
+                <text xml:lang="de">LNCV4 Konfiguration</text>
+                <text xml:lang="fr">Configuration LNCV4</text>
+                  <text xml:lang="cs">Konfigurace LNCV4</text>
               </label>
               <separator/>
-                <display item="Send GPON" format="checkbox"/>
-                <display item="Send Short" format="checkbox"/>
-                <display item="Configuration"/>
-            </column>
+              <display item="Configuration"/>
+
+              <display item="Report Direction" format="checkbox"/>
+              <display item="Power-on delay"/>
+              <display item="Occupancy detection count"/>
+              <display item="Polarity detection count"/>
+              <display item="Polarity detection delay"/>
+              <display item="Multiplexer switch time"/>
+              <display item="QoS Suppress"/>
+              <display item="QoS Delta"/>
+              <display item="Speed Delta"/>
+          </column>
+
+          <column>
+              <display item="Quick setup feedback addresses"/>
+              <display item="Feedback address global" format="checkbox"/>
+              <display item="Feedback address input 1"/>
+              <display item="Feedback address input 2"/>
+              <display item="Feedback address input 3"/>
+              <display item="Feedback address input 4"/>
+              <display item="Feedback address input 5"/>
+              <display item="Feedback address input 6"/>
+              <display item="Feedback address input 7"/>
+              <display item="Feedback address input 8"/>
+              <display item="Feedback address input 9"/>
+              <display item="Feedback address input 10"/>
+              <display item="Feedback address input 11"/>
+              <display item="Feedback address input 12"/>
+              <display item="Feedback address input 13"/>
+              <display item="Feedback address input 14"/>
+              <display item="Feedback address input 15"/>
+              <display item="Feedback address input 16"/>
+
+              <display item="Quick setup block addresses"/>
+              <display item="Block address global" format="checkbox"/>
+              <display item="Block address input 1"/>
+              <display item="Block address input 2"/>
+              <display item="Block address input 3"/>
+              <display item="Block address input 4"/>
+              <display item="Block address input 5"/>
+              <display item="Block address input 6"/>
+              <display item="Block address input 7"/>
+              <display item="Block address input 8"/>
+              <display item="Block address input 9"/>
+              <display item="Block address input 10"/>
+              <display item="Block address input 11"/>
+              <display item="Block address input 12"/>
+              <display item="Block address input 13"/>
+              <display item="Block address input 14"/>
+              <display item="Block address input 15"/>
+              <display item="Block address input 16"/>
+
+              <display item="Quick setup exit delay"/>
+              <display item="Exit delay global" format="checkbox"/>
+              <display item="Exit delay input 1"/>
+              <display item="Exit delay input 2"/>
+              <display item="Exit delay input 3"/>
+              <display item="Exit delay input 4"/>
+              <display item="Exit delay input 5"/>
+              <display item="Exit delay input 6"/>
+              <display item="Exit delay input 7"/>
+              <display item="Exit delay input 8"/>
+              <display item="Exit delay input 9"/>
+              <display item="Exit delay input 10"/>
+              <display item="Exit delay input 11"/>
+              <display item="Exit delay input 12"/>
+              <display item="Exit delay input 13"/>
+              <display item="Exit delay input 14"/>
+              <display item="Exit delay input 15"/>
+              <display item="Exit delay input 16"/>
+
+              <display item="Quick setup direction invert" format="checkbox"/>
+              <display item="Direction invert global" format="checkbox"/>
+              <display item="Direction invert input 1" format="checkbox"/>
+              <display item="Direction invert input 2" format="checkbox"/>
+              <display item="Direction invert input 3" format="checkbox"/>
+              <display item="Direction invert input 4" format="checkbox"/>
+              <display item="Direction invert input 5" format="checkbox"/>
+              <display item="Direction invert input 6" format="checkbox"/>
+              <display item="Direction invert input 7" format="checkbox"/>
+              <display item="Direction invert input 8" format="checkbox"/>
+              <display item="Direction invert input 9" format="checkbox"/>
+              <display item="Direction invert input 10" format="checkbox"/>
+              <display item="Direction invert input 11" format="checkbox"/>
+              <display item="Direction invert input 12" format="checkbox"/>
+              <display item="Direction invert input 13" format="checkbox"/>
+              <display item="Direction invert input 14" format="checkbox"/>
+              <display item="Direction invert input 15" format="checkbox"/>
+              <display item="Direction invert input 16" format="checkbox"/>
+
+          </column>
         </row>
     </pane>
 
