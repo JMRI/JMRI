@@ -378,6 +378,10 @@ public class WarrantManager extends AbstractManager<Warrant>
         RosterSpeedProfile profile = new RosterSpeedProfile(re);
         if (mergeProfile == null) {
             mergeProfile = re.getSpeedProfile();
+            if (mergeProfile == null) {
+                mergeProfile = new RosterSpeedProfile(re);
+                re.setSpeedProfile(mergeProfile);
+            }
         }
         // make copy of mergeProfile
         TreeMap<Integer, SpeedStep> rosterTree = mergeProfile.getProfileSpeeds();

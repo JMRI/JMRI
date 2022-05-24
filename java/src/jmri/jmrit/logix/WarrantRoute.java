@@ -362,6 +362,10 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         RosterSpeedProfile rosterSpeedProfile;
         if (re != null) {
             rosterSpeedProfile = re.getSpeedProfile();
+            if (rosterSpeedProfile == null) {
+                rosterSpeedProfile = new RosterSpeedProfile(re);
+                re.setSpeedProfile(rosterSpeedProfile);
+            }
         } else {
             rosterSpeedProfile = null;
         }

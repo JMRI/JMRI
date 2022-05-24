@@ -381,6 +381,10 @@ public class SpeedUtil {
             } else {
                 _noProfile =  false;
                 profile = _rosterEntry.getSpeedProfile();
+                if (profile == null) {
+                    profile = new RosterSpeedProfile(_rosterEntry);
+                    _rosterEntry.setSpeedProfile(profile);
+                }
             }
             _sessionProfile = manager.makeProfileCopy(profile, _rosterEntry);
             manager.setMergeProfile(_rosterId, _sessionProfile);
