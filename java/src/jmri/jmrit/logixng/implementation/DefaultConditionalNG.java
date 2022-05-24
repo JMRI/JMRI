@@ -295,7 +295,7 @@ public class DefaultConditionalNG extends AbstractBase
                         _femaleSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("digital action is not found: " + _socketSystemName);
+                        log.error("digital action is not found: {}", _socketSystemName);
                     }
                 } catch (SocketAlreadyConnectedException ex) {
                     // This shouldn't happen and is a runtime error if it does.
