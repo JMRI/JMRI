@@ -254,7 +254,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital expression " + socketSystemName);
+                            log.error("cannot load digital expression {}", socketSystemName);
                         }
                     }
                 } else {

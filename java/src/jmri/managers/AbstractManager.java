@@ -174,6 +174,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="String already built for use in exception text")
     @Override
     @OverridingMethodsMustInvokeSuper
     public void register(@Nonnull E s) {
@@ -381,7 +383,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
                     vc.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
                     if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                        log.info(e.getMessage());
+                        log.info("Do Not Delete : {}", e.getMessage());
                         throw e;
                     }
                     message.append(e.getMessage()).append("<hr>"); // NOI18N

@@ -122,28 +122,27 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         log.debug("Found {} sensors", sensorList.size());
         SensorManager tm = InstanceManager.sensorManagerInstance();
         tm.setPropertyChangesSilenced("beans", true);
-        long goingActive = 0L;
-        long goingInActive = 0L;
+
         if (sensors.getChild("globalDebounceTimers") != null) {
             Element timer = sensors.getChild("globalDebounceTimers");
             try {
                 if (timer.getChild("goingActive") != null) {
                     String active = timer.getChild("goingActive").getText();
-                    goingActive = Long.parseLong(active);
+                    long goingActive = Long.parseLong(active);
                     tm.setDefaultSensorDebounceGoingActive(goingActive);
                 }
             } catch (NumberFormatException ex) {
-                log.error(ex.toString());
+                log.error("Could not set DefaultSensor Debounce GoingActive : {}", ex.getMessage() );
             }
 
             try {
                 if (timer.getChild("goingInActive") != null) {
                     String inActive = timer.getChild("goingInActive").getText();
-                    goingInActive = Long.parseLong(inActive);
+                    long goingInActive = Long.parseLong(inActive);
                     tm.setDefaultSensorDebounceGoingInActive(goingInActive);
                 }
             } catch (NumberFormatException ex) {
-                log.error(ex.toString());
+                log.error("Could not set DefaultSensor Debounce GoingInActive : {}", ex.getMessage() );
             }
         }
 
@@ -190,7 +189,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                         s.setSensorDebounceGoingActiveTimer(Long.parseLong(active));
                     }
                 } catch (NumberFormatException ex) {
-                    log.error(ex.toString());
+                    log.error("Could not set Sensor {} Debounce GoingActive : {}", s, ex.getMessage() );
                 }
 
                 try {
@@ -199,7 +198,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                         s.setSensorDebounceGoingInActiveTimer(Long.parseLong(inActive));
                     }
                 } catch (NumberFormatException ex) {
-                    log.error(ex.toString());
+                    log.error("Could not set Sensor {} Debounce GoingInActive : {}", s, ex.getMessage() );
                 }
             }
 

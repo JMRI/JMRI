@@ -101,7 +101,7 @@ public class ActionSignalMastXml extends jmri.managers.configurexml.AbstractName
                 try {
                     h.setAspect(aspectElement.getTextTrim());
                 } catch (NumberFormatException e) {
-                    log.error("cannot parse aspect: " + aspectElement.getTextTrim(), e);
+                    log.error("cannot parse aspect: {}", aspectElement.getTextTrim(), e);
                 }
             }
 

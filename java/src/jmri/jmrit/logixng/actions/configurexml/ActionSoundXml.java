@@ -80,7 +80,7 @@ public class ActionSoundXml extends jmri.managers.configurexml.AbstractNamedBean
                 try {
                     h.setSound(soundElement.getText());
                 } catch (NumberFormatException e) {
-                    log.error("cannot parse sound: " + soundElement.getTextTrim(), e);
+                    log.error("cannot parse sound: {}", soundElement.getTextTrim(), e);
                 }
             }
 
