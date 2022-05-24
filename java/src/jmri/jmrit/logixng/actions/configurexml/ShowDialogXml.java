@@ -166,7 +166,7 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         h.setMultiLine((elem != null) ? elem.getTextTrim().equals("yes") : false);  // NOI18N
         
         List<Element> dataList = shared.getChild("DataList").getChildren();  // NOI18N
-        log.debug("Found " + dataList.size() + " dataList");  // NOI18N
+        log.debug("Found {} dataList", dataList.size() );  // NOI18N
         
         for (Element e : dataList) {
             ShowDialog.DataType type = ShowDialog.DataType.LocalVariable;
@@ -182,7 +182,7 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
             try {
                 h.getDataList().add(new ShowDialog.Data(type, elementName.getTextTrim()));
             } catch (ParserException ex) {
-                log.warn(ex.getMessage());
+                log.warn("Could not add {} to data list : {}", elementName.getTextTrim(), ex.getMessage());
             }
         }
         

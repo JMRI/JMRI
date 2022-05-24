@@ -153,6 +153,8 @@ public class LogData extends AbstractDigitalExpression
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Logging Strings also used by _logToScriptOutput")
     @Override
     public boolean evaluate() throws JmriException {
 

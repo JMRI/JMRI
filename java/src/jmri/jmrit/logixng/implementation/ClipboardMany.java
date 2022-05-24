@@ -73,10 +73,10 @@ public class ClipboardMany extends AbstractBase
                                 ae._socket.connect(maleSocket);
                                 maleSocket.setup();
                             } else {
-                                log.error("item " + socketSystemName + " is not a male socket");
+                                log.error("item {} is not a male socket", socketSystemName);
                             }
                         } else {
-                            log.error("cannot load item " + socketSystemName);
+                            log.error("cannot load item {}", socketSystemName);
                         }
                     }
                 } else {
