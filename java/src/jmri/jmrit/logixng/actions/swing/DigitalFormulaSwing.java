@@ -43,7 +43,7 @@ public class DigitalFormulaSwing extends AbstractDigitalActionSwing {
             parser.parseExpression(_formula.getText());
         } catch (ParserException ex) {
             errorMessages.add(Bundle.getMessage("DigitalFormula_InvalidFormula", _formula.getText()));
-            log.error("Invalid formula '"+_formula.getText()+"'. Error: "+ex.getMessage(), ex);
+            log.error("Invalid formula '{}'. Error: ", _formula.getText(), ex);
             return false;
         }
         return true;

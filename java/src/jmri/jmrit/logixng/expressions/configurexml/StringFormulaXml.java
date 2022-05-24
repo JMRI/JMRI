@@ -102,7 +102,7 @@ public class StringFormulaXml extends jmri.managers.configurexml.AbstractNamedBe
             try {
                 h.setFormula(formula.getTextTrim());
             } catch (ParserException e) {
-                log.error("cannot set formula: " + formula.getTextTrim(), e);
+                log.error("cannot set formula: {}", formula.getTextTrim(), e);
             }
         }
 

@@ -102,7 +102,7 @@ public class ActionSignalHeadXml extends jmri.managers.configurexml.AbstractName
                     int appearance = Integer.parseInt(appearanceElement.getTextTrim());
                     h.setAppearance(appearance);
                 } catch (NumberFormatException e) {
-                    log.error("cannot parse apperance: " + appearanceElement.getTextTrim(), e);
+                    log.error("cannot parse apperance: {}", appearanceElement.getTextTrim(), e);
                 }
             }
 

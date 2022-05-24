@@ -437,7 +437,7 @@ public class ExpressionDispatcher extends AbstractDigitalExpression
                 break;
 
             default:
-                log.debug("Other property changes are ignored: name = " + evt.getPropertyName());
+                log.debug("Other property changes are ignored: name = {}", evt.getPropertyName());
         }
     }
 

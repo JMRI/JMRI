@@ -161,7 +161,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                         _triggerExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -182,7 +182,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                         _holdExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
