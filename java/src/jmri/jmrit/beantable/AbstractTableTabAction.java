@@ -359,7 +359,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
                 bottomBox.add(comp, bottomBoxIndex);
                 ++bottomBoxIndex;
             } catch (java.lang.IllegalArgumentException ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("Could not add to bottom box.", ex);
             }
         }
 

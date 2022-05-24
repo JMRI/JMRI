@@ -496,7 +496,7 @@ public class URIDrop {
                 log.debug("URIDrop: no data flavors.");
             }
             for (i = 0; i < flavors.length; i++) {
-                log.debug(flavors[i].toString());
+                log.debug("flavor {} {}", i, flavors[i].toString());
             }
         }
 

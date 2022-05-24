@@ -36,7 +36,7 @@ public class PointDetails {
     static int nxButtonTimeout = 10;
 
     Source sourceRoute;
-    transient Hashtable<DestinationPoints, Source> destinations = new Hashtable<DestinationPoints, Source>(5);
+    transient Hashtable<DestinationPoints, Source> destinations = new Hashtable<>(5);
 
     public PointDetails(LayoutBlock facing, List<LayoutBlock> protecting) {
         this.facing = facing;
@@ -111,8 +111,8 @@ public class PointDetails {
         if (!e.getPropertyName().equals("KnownState")) {  // NOI18N
             return;
         }
-        int now = ((Integer) e.getNewValue()).intValue();
-        int old = ((Integer) e.getOldValue()).intValue();
+        int now = ((Integer) e.getNewValue());
+        int old = ((Integer) e.getOldValue());
 
         if ((old == Sensor.UNKNOWN) || (old == Sensor.INCONSISTENT)) {
             setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
@@ -193,7 +193,7 @@ public class PointDetails {
 
     void removeDestination(DestinationPoints srcdp) {
         destinations.remove(srcdp);
-        if (sourceRoute == null && destinations.size() == 0) {
+        if (sourceRoute == null && destinations.isEmpty()) {
             stopFlashSensor();
             sensor.removePropertyChangeListener(nxButtonListener);
             setSensor(null);
@@ -202,7 +202,7 @@ public class PointDetails {
 
     void removeSource(Source src) {
         sourceRoute = null;
-        if (destinations.size() == 0) {
+        if (destinations.isEmpty()) {
             stopFlashSensor();
             setSensor(null);
         }
@@ -404,7 +404,7 @@ public class PointDetails {
             }
         }
         setNXState(state);
-        int sensorState = Sensor.UNKNOWN;
+        int sensorState;
         switch (state) {
             case EntryExitPairs.NXBUTTONINACTIVE:
                 sensorState = Sensor.INACTIVE;
@@ -426,7 +426,7 @@ public class PointDetails {
             try {
                 getSensor().setKnownState(sensorState);
             } catch (jmri.JmriException ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("Could not set Sensor known state.", ex);
             }
             addSensorList();
         }
@@ -603,13 +603,13 @@ public class PointDetails {
             if (p.getEastBoundSensor() == sen) {
                 if (p.getEastBoundSignalMast() != null) {
                     signal = p.getEastBoundSignalMast();
-                } else if (!p.getEastBoundSignal().equals("")) {
+                } else if (!p.getEastBoundSignal().isEmpty()) {
                     signal = sh.getSignalHead(p.getEastBoundSignal());
                 }
             } else if (p.getWestBoundSensor() == sen) {
                 if (p.getWestBoundSignalMast() != null) {
                     signal = p.getWestBoundSignalMast();
-                } else if (!p.getWestBoundSignal().equals("")) {
+                } else if (!p.getWestBoundSignal().isEmpty()) {
                     signal = sh.getSignalHead(p.getWestBoundSignal());
                 }
             }
@@ -618,25 +618,25 @@ public class PointDetails {
             if (t.getSensorA() == sen) {
                 if (t.getSignalAMast() != null) {
                     signal = t.getSignalAMast();
-                } else if (!t.getSignalA1Name().equals("")) {
+                } else if (!t.getSignalA1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalA1Name());
                 }
             } else if (t.getSensorB() == sen) {
                 if (t.getSignalBMast() != null) {
                     signal = t.getSignalBMast();
-                } else if (!t.getSignalB1Name().equals("")) {
+                } else if (!t.getSignalB1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalB1Name());
                 }
             } else if (t.getSensorC() == sen) {
                 if (t.getSignalCMast() != null) {
                     signal = t.getSignalCMast();
-                } else if (!t.getSignalC1Name().equals("")) {
+                } else if (!t.getSignalC1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalC1Name());
                 }
             } else if (t.getSensorD() == sen) {
                 if (t.getSignalDMast() != null) {
                     signal = t.getSignalDMast();
-                } else if (!t.getSignalD1Name().equals("")) {
+                } else if (!t.getSignalD1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalD1Name());
                 }
             }
@@ -648,25 +648,25 @@ public class PointDetails {
             if (t.getSensorA() == sen) {
                 if (t.getSignalAMast() != null) {
                     signal = t.getSignalAMast();
-                } else if (!t.getSignalA1Name().equals("")) {
+                } else if (!t.getSignalA1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalA1Name());
                 }
             } else if (t.getSensorB() == sen) {
                 if (t.getSignalBMast() != null) {
                     signal = t.getSignalBMast();
-                } else if (!t.getSignalB1Name().equals("")) {
+                } else if (!t.getSignalB1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalB1Name());
                 }
             } else if (t.getSensorC() == sen) {
                 if (t.getSignalCMast() != null) {
                     signal = t.getSignalCMast();
-                } else if (!t.getSignalC1Name().equals("")) {
+                } else if (!t.getSignalC1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalC1Name());
                 }
             } else if (t.getSensorD() == sen) {
                 if (t.getSignalDMast() != null) {
                     signal = t.getSignalDMast();
-                } else if (!t.getSignalD1Name().equals("")) {
+                } else if (!t.getSignalD1Name().isEmpty()) {
                     signal = sh.getSignalHead(t.getSignalD1Name());
                 }
             }
@@ -675,25 +675,25 @@ public class PointDetails {
             if (x.getSensorA() == sen) {
                 if (x.getSignalAMast() != null) {
                     signal = x.getSignalAMast();
-                } else if (!x.getSignalAName().equals("")) {
+                } else if (!x.getSignalAName().isEmpty()) {
                     signal = sh.getSignalHead(x.getSignalAName());
                 }
             } else if (x.getSensorB() == sen) {
                 if (x.getSignalBMast() != null) {
                     signal = x.getSignalBMast();
-                } else if (!x.getSignalBName().equals("")) {
+                } else if (!x.getSignalBName().isEmpty()) {
                     signal = sh.getSignalHead(x.getSignalBName());
                 }
             } else if (x.getSensorC() == sen) {
                 if (x.getSignalCMast() != null) {
                     signal = x.getSignalCMast();
-                } else if (!x.getSignalCName().equals("")) {
+                } else if (!x.getSignalCName().isEmpty()) {
                     signal = sh.getSignalHead(x.getSignalCName());
                 }
             } else if (x.getSensorD() == sen) {
                 if (x.getSignalDMast() != null) {
                     signal = x.getSignalDMast();
-                } else if (!x.getSignalDName().equals("")) {
+                } else if (!x.getSignalDName().isEmpty()) {
                     signal = sh.getSignalHead(x.getSignalDName());
                 }
             }

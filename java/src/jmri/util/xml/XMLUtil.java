@@ -1138,8 +1138,8 @@ public final class XMLUtil extends Object {
         ErrHandler() {
         }
 
-        private void annotate(SAXParseException exception) throws SAXException {
-            log.error(null, exception);
+        private void annotate(SAXParseException exception) {
+            log.error("SAXParseException", exception);
         }
 
         @Override
@@ -1156,7 +1156,7 @@ public final class XMLUtil extends Object {
 
         @Override
         public void warning(SAXParseException exception) throws SAXException {
-            log.warn(null, exception);
+            log.warn("SAXParseException", exception);
         }
 
     }

@@ -225,7 +225,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         if (dtf == null || dtf.isEmpty()) {
             return;
         }
-        log.debug("Loading default throttle file : "+dtf);
+        log.debug("Loading default throttle file : {}", dtf);
         loadThrottle(dtf);
     }
 
@@ -245,7 +245,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             loadThrottle();
             return;
         }
-        log.debug("Loading throttle file : "+sfile);
+        log.debug("Loading throttle file : {}", sfile);
         boolean switchAfter = false;
         if (!isEditMode) {
             setEditMode(true);
@@ -284,11 +284,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         } catch (FileNotFoundException ex) {
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
-            log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");
+            log.info("Couldn't load throttle file \"{}\" , reverting to default one, if any", sfile);
             loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
-            log.info("Couldn't load throttle file "+sfile+" , reverting to default one, if any");
+            log.info("Couldn't load throttle file \"{}\" , reverting to default one, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);

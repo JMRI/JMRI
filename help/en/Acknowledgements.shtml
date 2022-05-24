@@ -804,6 +804,8 @@
         <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable the use of
         CBus attached RFID readers.</li>
 
+        <li>Peter Riley, who helped debug a graphics display issue.</li>
+
         <li>Bill Robinson of Team Digital, who provided a schematic of their MS100-equivalent level
         shifter, contributed the LnSendTool.py script and decoder definitions for Team Digital
         products, helped fix a problem with overrunning LocoNet command stations, and provided

@@ -273,7 +273,7 @@ public class InputWindow extends JPanel {
         userFileChooser.setDialogTitle(Bundle.getMessage("MenuItemLoad"));
 
         boolean results = loadFile(userFileChooser);
-        log.debug(results ? "load was successful" : "load failed");
+        log.debug("load {}", results ? "was successful" : "failed");
         if (!results) {
             log.warn("Not loading file: {}", userFileChooser.getSelectedFile().getPath());
         }
@@ -285,7 +285,7 @@ public class InputWindow extends JPanel {
         userFileChooser.setDialogTitle(Bundle.getMessage("MenuItemStore"));
 
         boolean results = storeFile(userFileChooser);
-        log.debug(results ? "store was successful" : "store failed");
+        log.debug("store {}", results ? "was successful" : "failed");
         if (!results) {
             log.warn("Not storing file: {}", userFileChooser.getSelectedFile().getPath());
         }
