@@ -131,7 +131,7 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
                         _socket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
