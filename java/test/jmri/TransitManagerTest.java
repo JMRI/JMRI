@@ -13,7 +13,7 @@ public class TransitManagerTest {
 
     @Test
     public void testCTor() {
-        TransitManager t = new TransitManager();
+        TransitManager t = new jmri.managers.DefaultTransitManager();
         Assert.assertNotNull("exists",t);
     }
 

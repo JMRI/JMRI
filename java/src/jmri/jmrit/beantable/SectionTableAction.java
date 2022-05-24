@@ -196,7 +196,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
                     case VALUECOL: // not a button
                     case BEGINBLOCKCOL: // not a button
                     case ENDBLOCKCOL: // not a button
-                        return String.class; 
+                        return String.class;
                     case EDITCOL:
                         return JButton.class;
                     default:
@@ -583,13 +583,13 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     private void initializeEditInformation() {
         userName.setText(curSection.getUserName());
         switch (curSection.getSectionType()) {
-            case Section.SIGNALMASTLOGIC:
+            case SIGNALMASTLOGIC:
                 generationStateLabel.setText(rbx.getString("SectionTypeSMLLabel"));
                 break;
-            case Section.DYNAMICADHOC:
+            case DYNAMICADHOC:
                 generationStateLabel.setText(rbx.getString("SectionTypeDynLabel"));
                 break;
-            case Section.USERDEFINED:
+            case USERDEFINED:
             default:
                 generationStateLabel.setText("");
                 break;
@@ -1211,11 +1211,11 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             super();
             init();
         }
-        
+
         final void init(){
             blockManager.addPropertyChangeListener(this);
         }
-        
+
         public void dispose(){
             blockManager.removePropertyChangeListener(this);
         }
