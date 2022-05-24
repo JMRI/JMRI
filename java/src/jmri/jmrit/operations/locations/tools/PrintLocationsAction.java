@@ -488,7 +488,7 @@ public class PrintLocationsAction extends AbstractAction {
         }
     }
 
-    private final boolean showStaging = false;
+    private final boolean showStaging = true;
 
     private void printAnalysisSelected() throws IOException {
         CarManager carManager = InstanceManager.getDefault(CarManager.class);

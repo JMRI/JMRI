@@ -389,8 +389,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 LogixNG p = _logixNG_Manager.getByUserName(uName);
                 if (p != null) {
                     // LogixNG with this user name already exists
-                    log.error("Failure to update LogixNG with Duplicate User Name: " // NOI18N
-                            + uName);
+                    log.error("Failure to update LogixNG with Duplicate User Name: {}", uName); // NOI18N
                     JOptionPane.showMessageDialog(_editLogixNGFrame,
                             Bundle.getMessage("Error6"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -714,8 +713,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 ConditionalNG p = logixNG.getConditionalNG(i);
                 if (uName.equals(p.getUserName())) {
                     // ConditionalNG with this user name already exists
-                    log.error("Failure to update ConditionalNG with Duplicate User Name: " // NOI18N
-                            + uName);
+                    log.error("Failure to update ConditionalNG with Duplicate User Name: {}", uName); // NOI18N
                     JOptionPane.showMessageDialog(_editConditionalNGFrame,
                             Bundle.getMessage("Error10"),    // NOI18N
                             Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -1218,7 +1216,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 _hasDeleted = true;
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-                log.error(e.getMessage());
+                log.error("Unexpected doDelete failure for {}, {}", _conditionalNG, e.getMessage() );
             }
         }
 
@@ -1234,7 +1232,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                    log.warn(e.getMessage());
+                    log.warn("Do not Delete {}, {}", _conditionalNG, e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", _conditionalNG.getBeanType(), _conditionalNG.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),

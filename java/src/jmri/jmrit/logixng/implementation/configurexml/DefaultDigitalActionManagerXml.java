@@ -43,7 +43,7 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
         if (tm != null) {
             if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleDigitalActionSocket action : tm.getNamedBeanSet()) {
-                log.debug("action system name is " + action.getSystemName());  // NOI18N
+                log.debug("action system name is {}", action.getSystemName() );  // NOI18N
                 try {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
@@ -105,7 +105,7 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
     public void loadActions(Element actions) {
         
         List<Element> actionList = actions.getChildren();  // NOI18N
-        log.debug("Found " + actionList.size() + " actions");  // NOI18N
+        log.debug("Found {} actions", actionList.size() );  // NOI18N
 
         for (int i = 0; i < actionList.size(); i++) {
             
@@ -119,7 +119,7 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
-                    log.error("cannot load class " + className, ex);
+                    log.error("cannot load class {}", className, ex);
                 }
             }
             

@@ -101,7 +101,7 @@ public class ActionScriptXml extends jmri.managers.configurexml.AbstractNamedBea
                 try {
                     h.setScript(scriptElement.getText());
                 } catch (NumberFormatException e) {
-                    log.error("cannot parse script: " + scriptElement.getTextTrim(), e);
+                    log.error("cannot parse script: {}", scriptElement.getTextTrim(), e);
                 }
             }
 

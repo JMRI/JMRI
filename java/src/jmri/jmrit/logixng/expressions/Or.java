@@ -253,7 +253,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital expression " + socketSystemName);
+                            log.error("cannot load digital expression {}", socketSystemName);
                         }
                     }
                 } else {

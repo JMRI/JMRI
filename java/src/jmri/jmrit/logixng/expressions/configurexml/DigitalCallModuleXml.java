@@ -70,7 +70,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "module", null, null, null, null);
 
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
-        log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
+        log.debug("Found {} parameters", parameterList.size() );  // NOI18N
 
         for (Element e : parameterList) {
             Element elementName = e.getChild("name");

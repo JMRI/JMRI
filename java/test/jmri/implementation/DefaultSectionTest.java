@@ -1,8 +1,7 @@
-package jmri;
+package jmri.implementation;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
-
-import jmri.implementation.DefaultSection;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -14,7 +13,7 @@ import org.junit.Assert;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class SectionTest {
+public class DefaultSectionTest {
 
    @Test
    public void SysNameConstructorTest(){

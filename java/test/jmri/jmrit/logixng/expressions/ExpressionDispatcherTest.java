@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
+import jmri.implementation.DefaultSection;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -225,13 +226,13 @@ public class ExpressionDispatcherTest extends AbstractDigitalExpressionTestBase 
 
     private void setupActiveTrain() throws IOException, JDOMException {
         Transit transit = InstanceManager.getDefault(jmri.TransitManager.class).createNewTransit("MyTransit");
-        Section section1 = new Section("Section1");
+        Section section1 = new DefaultSection("Section1");
         section1.addBlock(InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("StartBlock"));
-        Section section2 = new Section("Section2");
+        Section section2 = new DefaultSection("Section2");
         section2.addBlock(InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("Block2"));
-        Section section3 = new Section("Section3");
+        Section section3 = new DefaultSection("Section3");
         section3.addBlock(InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("Block3"));
-        Section section4 = new Section("Section4");
+        Section section4 = new DefaultSection("Section4");
         section4.addBlock(InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("EndBlock"));
 
 

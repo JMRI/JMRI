@@ -1,4 +1,4 @@
-package jmri.configurexml;
+package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2008
  */
-public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DefaultSectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public SectionManagerXml() {
+    public DefaultSectionManagerXml() {
     }
 
     /**
@@ -178,7 +178,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         log.debug("Found {} Sections", sectionList.size());
         SectionManager sctm = InstanceManager.getDefault(jmri.SectionManager.class);
         sctm.setPropertyChangesSilenced("beans", true);
-        
+
         for (Element s : sectionList) {
             String sysName = getSystemName(s);
             String userName = getUserName(s);
@@ -260,6 +260,6 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.getDefault(jmri.SectionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultSectionManagerXml.class);
 
 }

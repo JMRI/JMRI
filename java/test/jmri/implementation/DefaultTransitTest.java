@@ -1,11 +1,10 @@
-package jmri;
+package jmri.implementation;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-
-import jmri.implementation.DefaultTransit;
 
 /**
  * Tests for Transit class.
@@ -14,7 +13,7 @@ import jmri.implementation.DefaultTransit;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class TransitTest {
+public class DefaultTransitTest {
 
    @Test
    public void SysNameConstructorTest(){
