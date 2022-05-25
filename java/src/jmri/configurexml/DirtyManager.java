@@ -34,7 +34,7 @@ import jmri.*;
 public class DirtyManager {
 
     boolean _dirty = false;
-    boolean _loading = false;
+    boolean _loading = true;
 
     final private PropertyChangeListener _mgrListen = new ManagerListener();
     final private PropertyChangeListener _beanListen = new BeanListener();
@@ -79,8 +79,10 @@ public class DirtyManager {
      * @param dirty Either true or false.
      */
     public void setDirty(boolean dirty) {
-        log.info("## dirty flag = {}", dirty);
-        _dirty = dirty;
+        log.info("## dirty flag = {}, loading = {}", dirty, _loading);
+        if (!_loading) {
+            _dirty = dirty;
+        }
     }
 
     /**
@@ -165,13 +167,11 @@ public class DirtyManager {
     class ManagerListener implements PropertyChangeListener {
 
         public void propertyChange(PropertyChangeEvent evt) {
-            if (!isLoading()) {
-                log.info("== mgr evt {}", evt);
-                if (evt.getPropertyName().equals("length")) {
-                    log.info("== 0 mgr evt {}", evt.getSource());
-                    setDirty(true);
-                    loadBeans(evt.getSource());
-                }
+            log.info("== mgr evt {}", evt);
+            if (evt.getPropertyName().equals("length")) {
+                log.info("== 0 mgr evt {}", evt.getSource());
+                setDirty(true);
+                loadBeans(evt.getSource());
             }
         }
     }
@@ -182,10 +182,11 @@ public class DirtyManager {
     class BeanListener implements PropertyChangeListener {
 
         public void propertyChange(PropertyChangeEvent evt) {
-            if (!isLoading()) {
-                log.info("-- bean evt {}", evt);
-                setDirty(true);
-            }
+            log.info("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
+            log.info(")) {}", evt.toString());
+            if (evt.getPropertyName().equals("KnownState")) return;
+            if (evt.getPropertyName().equals("value")) return;
+            setDirty(true);
         }
     }
 

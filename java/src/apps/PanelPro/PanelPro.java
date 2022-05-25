@@ -125,6 +125,7 @@ public class PanelPro extends Apps {
         createFrame(p, f);
 
         log.info("Main initialization done");
+        jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setLoading(false);
         splash(false);
     }
 
