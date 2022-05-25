@@ -14,7 +14,7 @@ Broadcast mode, but you have to be sure only one such device is powered, as they
 programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20220520"/>
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220525"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 or later -->
 
     <decoder>
@@ -774,7 +774,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <text>Before writing, open a Programming</text>
                 <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                 <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
-                <text xml:lang="fr">Avant qu'on peut  écrire des valuers, demarrez</text>
+                <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
                 <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
               </label>
               <label>
