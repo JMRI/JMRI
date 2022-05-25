@@ -95,7 +95,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
     public void loadTables(Element expressions) {
 
         List<Element> expressionList = expressions.getChildren();  // NOI18N
-        log.debug("Found " + expressionList.size() + " tables");  // NOI18N
+        log.debug("Found {} tables", expressionList.size() );  // NOI18N
 
         for (int i = 0; i < expressionList.size(); i++) {
 
@@ -109,7 +109,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
-                    log.error("cannot load class " + className, ex);
+                    log.error("cannot load class {}", className, ex);
                 }
             }
 

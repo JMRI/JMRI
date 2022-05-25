@@ -4,15 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -167,7 +159,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                                     car.toString(), car
                                             .getRouteLocation().getName(),
                                     car.getTrackName(), car.getRouteDestination().getName());
-                            JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.getRoadName()) +
+                            JCheckBox checkBox = new JCheckBox(car.getRoadName().split(TrainCommon.HYPHEN)[0] +
                                     " " +
                                     TrainCommon.splitString(car.getNumber()));
                             if (car.getRouteDestination() == rl) {
