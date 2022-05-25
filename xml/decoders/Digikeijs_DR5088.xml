@@ -112,7 +112,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <decVal min="1" max="7"/>
             <label xml:lang="de">Polaritätszähler:</label>
             <label xml:lang="nl">Aantal richtingsherkenningen:</label>
-            <label xml:lang="fr">Nombre de Détections de la polarité:</label>
+            <label xml:lang="fr">Nombre de détections de la polarité:</label>
             <label xml:lang="cs">Polarity detection count:</label>
             <label>Polarity detection count:</label>
           </variable>
