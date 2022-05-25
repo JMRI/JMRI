@@ -272,6 +272,8 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
      *
      * @param chooser chooser to select the file to read from
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "Passing I18N exception text through to log")
     protected void doRead(JFileChooser chooser) {
         if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),

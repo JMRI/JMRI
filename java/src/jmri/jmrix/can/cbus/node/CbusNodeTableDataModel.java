@@ -130,7 +130,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
             case CbusConstants.CBUS_NNREL:
                 // from node advising releasing node number
                 if ( getNodeRowFromNodeNum(nodenum) >-1 ) {
-                    log.info( Bundle.getMessage("NdRelease", getNodeName(nodenum), nodenum ) );
+                    log.info("{} : NNREL",Bundle.getMessage("NdRelease", getNodeName(nodenum), nodenum ) );
                     removeRow( getNodeRowFromNodeNum(nodenum),false );
                 }
                 break;
