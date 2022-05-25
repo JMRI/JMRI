@@ -35,8 +35,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * discussion</a>. Also controls the stylesheet file version.
      */
     static final public String schemaVersion = "-4-19-2";
+    final DirtyManager dirtyManager;
 
     public ConfigXmlManager() {
+        dirtyManager = new DirtyManager();
+        InstanceManager.store(dirtyManager, DirtyManager.class);
     }
 
     /** {@inheritDoc} */
@@ -145,6 +148,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         confirmAdapterAvailable(o);
         // and add to list
         clist.put(o, x);
+        dirtyManager.addManager(o);
     }
 
     /** {@inheritDoc} */
