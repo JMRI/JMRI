@@ -3,17 +3,22 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.KernelManager;
-import jmri.util.*;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the Operations CarAttributeEditFrame class
@@ -51,7 +56,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         // need to also push the "Yes" button in the dialog window
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced Pink with Pinker", "Pinker", comboBox.getItemAt(6));
 
@@ -105,7 +110,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced TestKernel with TestKernel2", "TestKernel2", comboBox.getItemAt(1));
 
@@ -150,7 +155,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced 12 with 13", "13", comboBox.getItemAt(0));
 
@@ -192,7 +197,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // need to also push the "Yes" button in the dialog window
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         jfo.getQueueTool().waitEmpty();
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced 72 with 73", "73", comboBox.getItemAt(12));
 
@@ -208,6 +213,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -245,7 +251,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         jfo.getQueueTool().waitEmpty();
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -274,6 +280,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
 
         jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         Assert.assertEquals("1st number before bogus add", "32", comboBox.getItemAt(0));
@@ -292,6 +299,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         Assert.assertEquals("1st number before bogus add", "32", comboBox.getItemAt(0));
 
@@ -311,6 +319,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         Assert.assertEquals("1st number before bogus add", "32", comboBox.getItemAt(0));
 
         jfo.requestClose();
@@ -343,7 +352,8 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
+        
         // new type should appear at start of list
         Assert.assertEquals("new type name", "ABC-TEST_TEST_TEST", comboBox.getItemAt(0));
 
@@ -356,6 +366,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         
         JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", comboBox.getItemAt(0));
 
@@ -371,7 +382,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t4.isAlive());}, "dialog4 finished");
         jfo.getQueueTool().waitEmpty();
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -407,6 +418,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
 
         // again try a new type name with the reserved characters
         addTextBox.setText("TEST" + CarLoad.SPLIT_CHAR + "TEST");
@@ -417,7 +429,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
         jfo.getQueueTool().waitEmpty();
-        
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         Assert.assertEquals(33, comboBox.getItemCount());
         jfo.requestClose();
         jfo.waitClosed();
@@ -454,6 +466,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", comboBox.getItemAt(1));
 
@@ -471,6 +484,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         
         // enter a road name that has a reserved character
         addTextBox.setText("A.B");
@@ -482,6 +496,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -516,7 +531,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         jfo.getQueueTool().waitEmpty();
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         Assert.assertEquals("replaced John with Bob", "Bob", comboBox.getItemAt(1));
 
