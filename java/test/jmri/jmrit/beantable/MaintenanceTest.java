@@ -44,26 +44,26 @@ public class MaintenanceTest {
         // hit on sensor via system name with user name
         InstanceManager.getDefault(SensorManager.class).provideSensor("IS2").setUserName("foo");
         result = Maintenance.getTypeAndNames("IS2");
-        checkReturnString(result, "Sensor", "foo", "IS2", "1");  //num listeners is empirical
+        checkReturnString(result, "Sensor", "foo", "IS2", "2");  //num listeners is empirical
 
         // hit on sensor via user name
         InstanceManager.getDefault(SensorManager.class).provideSensor("IS3").setUserName("bar");
         result = Maintenance.getTypeAndNames("bar");
-        checkReturnString(result, "Sensor", "bar", "IS3", "1");  //num listeners is empirical
+        checkReturnString(result, "Sensor", "bar", "IS3", "2");  //num listeners is empirical
 
         // hit on turnout via system name
         InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         result = Maintenance.getTypeAndNames("IT1");
-        checkReturnString(result, "Turnout", null, "IT1", "1");  //num listeners is empirical
+        checkReturnString(result, "Turnout", null, "IT1", "2");  //num listeners is empirical
 
         // hit on sensor via system name with user name
         InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT3").setUserName("bar");
         result = Maintenance.getTypeAndNames("IT3");
-        checkReturnString(result, "Turnout", "bar", "IT3", "1");  //num listeners is empirical
+        checkReturnString(result, "Turnout", "bar", "IT3", "2");  //num listeners is empirical
 
         // hit sensors before turnouts with same user name
         result = Maintenance.getTypeAndNames("bar");
-        checkReturnString(result, "Sensor", "bar", "IS3", "1");  //num listeners is empirical
+        checkReturnString(result, "Sensor", "bar", "IS3", "2");  //num listeners is empirical
     }
 
     @Test

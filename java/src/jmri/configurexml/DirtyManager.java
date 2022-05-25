@@ -36,12 +36,6 @@ public class DirtyManager {
     boolean _dirty = false;
     boolean _loading = false;
 
-    /**
-     * During JMRI startup, the InstanceManager might not have default classes ready in time.
-     * The process that assigns listeners to the beans uses the queue to handle the potential delays.
-     */
-    final private Deque<Object> queue = new ArrayDeque<>();
-
     final private PropertyChangeListener _mgrListen = new ManagerListener();
     final private PropertyChangeListener _beanListen = new BeanListener();
 
@@ -55,12 +49,12 @@ public class DirtyManager {
      */
     protected void addManager(Object o) {
         log.info("++ 1 dm add manager :: {}", o.getClass().getName());
+        var cname = o.getClass().getName();
+        if (cname.contains("DefaultConditionalManager")) return;  // Special handling required.
         if (o instanceof jmri.managers.AbstractManager) {
-            var mgr = (jmri.managers.AbstractManager) o;
-            mgr.removePropertyChangeListener(_mgrListen);
-            mgr.addPropertyChangeListener(_mgrListen);
-            queue.push(o);
-            loadBeans();
+            Manager<?> m = (Manager<?>) o;
+            m.addPropertyChangeListener(_mgrListen);
+            loadBeans(o);
         } else {
             log.info("!! Unable to identify class:  {}", o);
         }
@@ -68,81 +62,14 @@ public class DirtyManager {
 
     /**
      * Attach a listener to all of the children of a manager to listen for bean changes.
-     * The manager objects are placed in a queue which is supplies the managers to be used.
-     * If the InstanceManager has not finished processing a new manager, the name is place
-     * back on the queue to be processed later.
+     * @param o The bean manager object.
      */
-    private void loadBeans() {
-        log.info(".. 2 Start loadBeans");
-        queue.forEach((q) -> {
-            log.info(">> 3  {}", q);
+    private void loadBeans(Object o) {
+        Manager<?> m = (Manager<?>) o;
+        m.getNamedBeanSet().forEach((bean) -> {
+            bean.removePropertyChangeListener(_beanListen);
+            bean.addPropertyChangeListener(_beanListen);
         });
-
-        while (!queue.isEmpty()) {
-            var o = queue.pop();
-            log.info("~~ 4 Load beans for {}", o);
-
-            if (o instanceof BlockManager) {
-                if (InstanceManager.containsDefault(BlockManager.class)) {
-                    var mgr = InstanceManager.getDefault(BlockManager.class);
-                    mgr.getNamedBeanSet().forEach((bean) -> {
-                        bean.removePropertyChangeListener(_beanListen);
-                        bean.addPropertyChangeListener(_beanListen);
-                    });
-                } else {
-                    log.info("ee  retry {}", o);
-                    queue.push(o);
-                    return;
-                }
-                continue;
-            }
-
-            if (o instanceof MemoryManager) {
-                if (InstanceManager.containsDefault(MemoryManager.class)) {
-                    var mgr = InstanceManager.getDefault(MemoryManager.class);
-                    mgr.getNamedBeanSet().forEach((bean) -> {
-                        bean.removePropertyChangeListener(_beanListen);
-                        bean.addPropertyChangeListener(_beanListen);
-                    });
-                } else {
-                    log.info("ee  retry {}", o);
-                    queue.push(o);
-                    return;
-                }
-                continue;
-            }
-
-            if (o instanceof SensorManager) {
-                if (InstanceManager.containsDefault(SensorManager.class)) {
-                    var mgr = InstanceManager.getDefault(SensorManager.class);
-                    mgr.getNamedBeanSet().forEach((bean) -> {
-                        bean.removePropertyChangeListener(_beanListen);
-                        bean.addPropertyChangeListener(_beanListen);
-                    });
-                } else {
-                    log.info("ee  retry {}", o);
-                    queue.push(o);
-                    return;
-                }
-                continue;
-            }
-
-            if (o instanceof TurnoutManager) {
-                if (InstanceManager.containsDefault(TurnoutManager.class)) {
-                    var mgr = InstanceManager.getDefault(TurnoutManager.class);
-                    mgr.getNamedBeanSet().forEach((bean) -> {
-                        bean.removePropertyChangeListener(_beanListen);
-                        bean.addPropertyChangeListener(_beanListen);
-                    });
-                } else {
-                    log.info("ee  retry {}", o);
-                    queue.push(o);
-                    return;
-                }
-                continue;
-            }
-        }
-        log.info(".. 5 Finish loadBeans");
     }
 
     /**
@@ -243,8 +170,7 @@ public class DirtyManager {
                 if (evt.getPropertyName().equals("length")) {
                     log.info("== 0 mgr evt {}", evt.getSource());
                     setDirty(true);
-                    queue.push(evt.getSource());
-                    loadBeans();
+                    loadBeans(evt.getSource());
                 }
             }
         }
