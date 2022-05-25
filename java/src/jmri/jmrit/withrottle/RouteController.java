@@ -66,6 +66,8 @@ public class RouteController extends AbstractController implements PropertyChang
      * @param message Command string to be parsed
      * @param deviceServer client to send responses (error messages) back to
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of warn Message also sent to deviceServer")
     @Override
     void handleMessage(String message, DeviceServer deviceServer) {
         String rName = message.substring(2);                
