@@ -625,6 +625,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 1:</label>
             <label xml:lang="nl">Ingang 1:</label>
+            <label xml:lang="fr">Entrée 1:</label>
             <label xml:lang="cs">Input 1:</label>
             <label>Input 1:</label>
           </variable>
@@ -632,6 +633,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 2:</label>
             <label xml:lang="nl">Ingang 2:</label>
+            <label xml:lang="fr">Entrée 2:</label>
             <label xml:lang="cs">Input 2:</label>
             <label>Input 2:</label>
           </variable>
@@ -639,6 +641,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 3:</label>
             <label xml:lang="nl">Ingang 3:</label>
+            <label xml:lang="fr">Entrée 3:</label>
             <label xml:lang="cs">Input 3:</label>
             <label>Input 3:</label>
           </variable>
@@ -646,6 +649,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 4:</label>
             <label xml:lang="nl">Ingang 4:</label>
+            <label xml:lang="fr">Entrée 4:</label>
             <label xml:lang="cs">Input 4:</label>
             <label>Input 4:</label>
           </variable>
@@ -653,6 +657,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 5:</label>
             <label xml:lang="nl">Ingang 5:</label>
+            <label xml:lang="fr">Entrée 5:</label>
             <label xml:lang="cs">Input 5:</label>
             <label>Input 5:</label>
           </variable>
@@ -660,6 +665,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 6:</label>
             <label xml:lang="nl">Ingang 6:</label>
+            <label xml:lang="fr">Entrée 6:</label>
             <label xml:lang="cs">Input 6:</label>
             <label>Input 6:</label>
           </variable>
@@ -667,6 +673,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 7:</label>
             <label xml:lang="nl">Ingang 7:</label>
+            <label xml:lang="fr">Entrée 7:</label>
             <label xml:lang="cs">Input 7:</label>
             <label>Input 7:</label>
           </variable>
@@ -674,6 +681,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 8:</label>
             <label xml:lang="nl">Ingang 8:</label>
+            <label xml:lang="fr">Entrée 8:</label>
             <label xml:lang="cs">Input 8:</label>
             <label>Input 8:</label>
           </variable>
@@ -681,6 +689,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 9:</label>
             <label xml:lang="nl">Ingang 9:</label>
+            <label xml:lang="fr">Entrée 9:</label>
             <label xml:lang="cs">Input 9:</label>
             <label>Input 9:</label>
           </variable>
@@ -688,6 +697,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>
+            <label xml:lang="fr">Entrée 10:</label>
             <label xml:lang="cs">Input 10:</label>
             <label>Input 10:</label>
           </variable>
@@ -695,6 +705,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 11:</label>
             <label xml:lang="nl">Ingang 11:</label>
+            <label xml:lang="fr">Entrée 11:</label>
             <label xml:lang="cs">Input 11:</label>
             <label>Input 11:</label>
           </variable>
@@ -702,6 +713,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 12:</label>
             <label xml:lang="nl">Ingang 12:</label>
+            <label xml:lang="fr">Entrée 12:</label>
             <label xml:lang="cs">Input 12:</label>
             <label>Input 12:</label>
           </variable>
@@ -709,6 +721,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 13:</label>
             <label xml:lang="nl">Ingang 13:</label>
+            <label xml:lang="fr">Entrée 13:</label>
             <label xml:lang="cs">Input 13:</label>
             <label>Input 13:</label>
           </variable>
@@ -716,6 +729,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 14:</label>
             <label xml:lang="nl">Ingang 14:</label>
+            <label xml:lang="fr">Entrée 14:</label>
             <label xml:lang="cs">Input 14:</label>
             <label>Input 14:</label>
           </variable>
@@ -723,6 +737,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 15:</label>
             <label xml:lang="nl">Ingang 15:</label>
+            <label xml:lang="fr">Entrée 15:</label>
             <label xml:lang="cs">Input 15:</label>
             <label>Input 15:</label>
           </variable>
@@ -730,6 +745,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label xml:lang="de">Detektor 16:</label>
             <label xml:lang="nl">Ingang 16:</label>
+            <label xml:lang="fr">Entrée 16:</label>
             <label xml:lang="cs">Input 16:</label>
             <label>Input 16:</label>
           </variable>
@@ -748,7 +764,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     <pane>
         <name>LNCV Configuration</name>
         <name xml:lang="de">LNCV Konfiguration</name>
-        <name xml:lang="nl">LNCV Confuguratie</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <name xml:lang="fr">Configuration LNCV</name>
         <name xml:lang="cs">Konfigurace LNCV</name>
         <row>
 
@@ -757,15 +774,15 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <text>Before writing, open a Programming</text>
                 <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                 <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                <text xml:lang="fr">Avant qu'on peut  écrire des valuers, demarrez</text>
                 <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
-                <text xml:lang="fr">D'après écrire des valuers, demarrez</text>
               </label>
               <label>
                 <text>session using the LocoNet LNCV Tool.</text>
                 <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                 <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
-                <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
                 <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+                <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
               </label>
               <label>
                 <text> </text>
