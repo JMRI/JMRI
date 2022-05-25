@@ -62,7 +62,7 @@ public class DirtyManager {
             queue.push(o);
             loadBeans();
         } else {
-            log.warn("!! Unable to identify class:  {}", o);
+            log.info("!! Unable to identify class:  {}", o);
         }
     }
 

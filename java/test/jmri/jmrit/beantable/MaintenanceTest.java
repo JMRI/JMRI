@@ -39,7 +39,7 @@ public class MaintenanceTest {
         // hit on sensor via system name
         InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
         result = Maintenance.getTypeAndNames("IS1");
-        checkReturnString(result, "Sensor", null, "IS1", "1");  //num listeners is empirical
+        checkReturnString(result, "Sensor", null, "IS1", "2");  //num listeners is empirical
 
         // hit on sensor via system name with user name
         InstanceManager.getDefault(SensorManager.class).provideSensor("IS2").setUserName("foo");
@@ -77,7 +77,7 @@ public class MaintenanceTest {
         result = Maintenance.getTypeAndNames("IS1");
         checkReturnString(result, "", "IS1", "IS1", "0"); // Sensor "IS1" not found
         result = Maintenance.getTypeAndNames("ISis1"); // because "is" is invalid prefix, system name is "ISis1"
-        checkReturnString(result, "Sensor", null, "ISis1", "1"); // num listeners is empirical
+        checkReturnString(result, "Sensor", null, "ISis1", "2"); // num listeners is empirical
     }
 
     void checkReturnString(String[] result, String compare, String username, String systemname, String listeners) {
