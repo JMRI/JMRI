@@ -51,247 +51,666 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label>Firmware Version: </label>
             </variable>
 
-            <variable CV="5088.3" item="Report Direction" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">LocoNet Richtung Berichten</label>
-              <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-              <label xml:lang="cs">LocoNet Report of Direction</label>
-              <label>LocoNet Report of Direction</label>
+            <variable CV="5088.3" item="RailCom Report Direction" default="0">
+              <!-- enum 0=Off / 1=In Block Address / 2=In Loco Address -->
+              <enumVal>
+                <enumChoice choice="Off">
+                  <choice>Off</choice>
+                </enumChoice>
+                <enumChoice choice="In Block Address">
+                  <choice>In Block Address</choice>
+                </enumChoice>
+                <enumChoice choice="In Loco Address">
+                  <choice>In Loco Address</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">LocoNet Richtung Bericht:</label>
+              <label xml:lang="nl">LocoNet Richting rapport:</label>
+              <label xml:lang="cs">LocoNet Report of Direction:</label>
+              <label>RailCom Report of Direction:</label>
             </variable>
             <variable CV="5088.4" item="Configuration" readOnly="yes">
               <decVal min="0" max="9999"/>
-              <label xml:lang="de">Configuration:</label>
-              <label xml:lang="fr">Configuration:</label>
-              <label xml:lang="nl">Configuratie:</label>
-              <label xml:lang="cs">Configuration:</label>
-              <label>Configuration:</label>
+              <label xml:lang="de">Zusätzl. Konfiguration:</label>
+              <label xml:lang="fr">Configuration additionelle:</label>
+              <label xml:lang="nl">Extra configuratie:</label>
+              <label xml:lang="cs">Additional Configuration:</label>
+              <label>Additional Configuration:</label>
+              <tooltip>Compound LNCV 4 value, needs hardware to analyse meaning of bits. For now:</tooltip>
             </variable>
 
-          <variable CV="5088.5" item="Power-on delay" default="6">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">Power-on delay (ms)</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Power-on delay (ms)</label>
+          <variable CV="5088.5" item="Power-on delay" default="1000">
+            <decVal min="0" max="8000"/>
+            <label xml:lang="de">Wartezeit nach dem Einschalten (ms):</label>
+            <label xml:lang="nl">Vertraging na aanzetten (ms):</label>
+            <label xml:lang="cs">Power-on delay (ms):</label>
+            <label>Power-on delay (ms):</label>
           </variable>
           <variable CV="5088.6" item="Occupancy detection count" default="15">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">Power-on delay (ms)</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Occupancy detection count</label>
+            <decVal min="5" max="31"/>
+            <label xml:lang="de">Anzahl der Anwesenheitserkennungen:</label>
+            <label xml:lang="nl">Aantal bezetmeldingen:</label>
+            <label xml:lang="cs">Occupancy detection count:</label>
+            <label>Occupancy detection count:</label>
           </variable>
-          <variable CV="5088.7" item="Polarity detection count" default="8">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">Polarity detection count</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Polarity detection count</label>
+          <variable CV="5088.7" item="Polarity detection count" default="2">
+            <decVal min="1" max="7"/>
+            <label xml:lang="de">Polaritätszähler:</label>
+            <label xml:lang="nl">Aantal richtingsherkenningen:</label>
+            <label xml:lang="cs">Polarity detection count:</label>
+            <label>Polarity detection count:</label>
           </variable>
           <variable CV="5088.8" item="Polarity detection delay" default="250">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Polarity detection delay (ms)</label>
+            <decVal min="15" max="2000"/>
+            <label xml:lang="de">Verzögerung der Polaritätserkennung (ms):</label>
+            <label xml:lang="nl">Vertraging Richtingsherkenning (ms):</label>
+            <label xml:lang="cs">Polarity detection delay (ms):</label>
+            <label>Polarity detection delay (ms):</label>
           </variable>
-          <variable CV="5088.9" item="Multiplexer switch time" default="10">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Multiplexer switch time (ms)</label>
+          <variable CV="5088.9" item="Multiplexer switch time" default="33">
+            <decVal min="5" max="100"/>
+            <label xml:lang="de">Multiplexerschaltzeit (ms):</label>
+            <label xml:lang="nl">Multiplexer schakeltijd (ms):</label>
+            <label xml:lang="cs">Multiplexer switch time (ms):</label>
+            <label>Multiplexer switch time (ms):</label>
           </variable>
           <variable CV="5088.10" item="QoS Suppress" default="10">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>QoS Suppress</label>
+            <decVal min="0" max="100"/>
+            <label xml:lang="de">QoS Suppress:</label>
+            <label xml:lang="nl">QoS Suppress:</label>
+            <label xml:lang="cs">QoS Suppress:</label>
+            <label>QoS Suppress:</label>
           </variable>
-          <variable CV="5088.11" item="QoS Delta" default="12">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>QoS Delta</label>
+          <variable CV="5088.11" item="QoS Delta" default="5">
+            <decVal min="0" max="100"/>
+            <label xml:lang="de">QoS Delta:</label>
+            <label xml:lang="nl">QoS Delta:</label>
+            <label xml:lang="cs">QoS Delta:</label>
+            <label>QoS Delta:</label>
           </variable>
           <variable CV="5088.12" item="Speed Delta" default="3">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Speed Delta</label>
+            <decVal min="0" max="100"/>
+            <label xml:lang="de">Geschw. Delta:</label>
+            <label xml:lang="nl">Sneldheid Delta:</label>
+            <label xml:lang="cs">Speed Delta:</label>
+            <label>Speed Delta:</label>
           </variable>
 
-          <!-- CV 5088.100 to .117 feedback addresses per output-->
-          <variable CV="5088.100" item="Quick setup feedback addresses" default="1">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Quick setup feedback start address</label>
+          <!-- CV 5088.100 to .117 feedback addresses per output -->
+          <variable CV="5088.100" item="Quick setup feedback addresses" default="1" writeOnly="yes">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Schnelles Setup</label>
+            <label xml:lang="nl">Snelinstelling</label>
+            <label xml:lang="cs">Quick setup</label>
+            <label xml:lang="fr">Configuration rapide</label>
+            <label>Quick setup</label>
             <tooltip>Quick setup for feedback addresses with autonumbering</tooltip>
-            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
+            <tooltip xml:lang="de">Schnelles Setup der Rückmeldeadressen mit automatischer Nummerierung</tooltip>
+            <tooltip xml:lang="nl">Snelinstelling Terugmelders met automatisch nummeren vanaf het ingevoerde beginadres</tooltip>
           </variable>
           <variable CV="5088.101" item="Feedback address input 1" default="1">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 1 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 1:</label>
+            <label xml:lang="nl">Ingang 1:</label>
+            <label xml:lang="cs">Input 1:</label>
+            <label xml:lang="fr">Entrée 1:</label>
+            <label>Input 1:</label>
           </variable>
           <variable CV="5088.102" item="Feedback address input 2" default="2">
-            <decVal min="0" max="9999"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 2 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 2:</label>
+            <label xml:lang="nl">Ingang 2:</label>
+            <label xml:lang="cs">Input 2:</label>
+            <label xml:lang="fr">Entrée 2:</label>
+            <label>Input 2:</label>
           </variable>
           <variable CV="5088.103" item="Feedback address input 3" default="3">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 3 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 3:</label>
+            <label xml:lang="nl">Ingang 3:</label>
+            <label xml:lang="cs">Input 3:</label>
+            <label xml:lang="fr">Entrée 3:</label>
+            <label>Input 3:</label>
           </variable>
           <variable CV="5088.104" item="Feedback address input 4" default="4">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 4 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 4:</label>
+            <label xml:lang="nl">Ingang 4:</label>
+            <label xml:lang="cs">Input 4:</label>
+            <label xml:lang="fr">Entrée 4:</label>
+            <label>Input 4:</label>
           </variable>
           <variable CV="5088.105" item="Feedback address input 5" default="5">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 5 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 5:</label>
+            <label xml:lang="nl">Ingang 5:</label>
+            <label xml:lang="cs">Input 5:</label>
+            <label xml:lang="fr">Entrée 5:</label>
+            <label>Input 5:</label>
           </variable>
           <variable CV="5088.106" item="Feedback address input 6" default="6">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 6 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 6:</label>
+            <label xml:lang="nl">Ingang 6:</label>
+            <label xml:lang="cs">Input 6:</label>
+            <label xml:lang="fr">Entrée 6:</label>
+            <label>Input 6:</label>
           </variable>
           <variable CV="5088.107" item="Feedback address input 7" default="7">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 7 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 7:</label>
+            <label xml:lang="nl">Ingang 7:</label>
+            <label xml:lang="cs">Input 7:</label>
+            <label xml:lang="fr">Entrée 7:</label>
+            <label>Input 7:</label>
           </variable>
           <variable CV="5088.108" item="Feedback address input 8" default="8">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 8 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 8:</label>
+            <label xml:lang="nl">Ingang 8:</label>
+            <label xml:lang="cs">Input 8:</label>
+            <label xml:lang="fr">Entrée 8:</label>
+            <label>Input 8:</label>
           </variable>
           <variable CV="5088.109" item="Feedback address input 9" default="9">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 9 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 9:</label>
+            <label xml:lang="nl">Ingang 9:</label>
+            <label xml:lang="cs">Input 9:</label>
+            <label xml:lang="fr">Entrée 9:</label>
+            <label>Input 9:</label>
           </variable>
           <variable CV="5088.110" item="Feedback address input 10" default="10">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 10 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 10:</label>
+            <label xml:lang="nl">Ingang 10:</label>
+            <label xml:lang="cs">Input 10:</label>
+            <label xml:lang="fr">Entrée 10:</label>
+            <label>Input 10:</label>
           </variable>
           <variable CV="5088.111" item="Feedback address input 11" default="11">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 11 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 11:</label>
+            <label xml:lang="nl">Ingang 11:</label>
+            <label xml:lang="cs">Input 11:</label>
+            <label xml:lang="fr">Entrée 11:</label>
+            <label>Input 11:</label>
           </variable>
           <variable CV="5088.112" item="Feedback address input 12" default="12">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 12 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 12:</label>
+            <label xml:lang="nl">Ingang 12:</label>
+            <label xml:lang="cs">Input 12:</label>
+            <label xml:lang="fr">Entrée 12:</label>
+            <label>Input 12:</label>
           </variable>
           <variable CV="5088.113" item="Feedback address input 13" default="13">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 13 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 13:</label>
+            <label xml:lang="nl">Ingang 13:</label>
+            <label xml:lang="cs">Input 13:</label>
+            <label xml:lang="fr">Entrée 13:</label>
+            <label>Input 13:</label>
           </variable>
           <variable CV="5088.114" item="Feedback address input 14" default="14">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 14 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 14:</label>
+            <label xml:lang="nl">Ingang 14:</label>
+            <label xml:lang="cs">Input 14:</label>
+            <label xml:lang="fr">Entrée 14:</label>
+            <label>Input 14:</label>
           </variable>
           <variable CV="5088.115" item="Feedback address input 15" default="15">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 15 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 15:</label>
+            <label xml:lang="nl">Ingang 15:</label>
+            <label xml:lang="cs">Input 15:</label>
+            <label xml:lang="fr">Entrée 15:</label>
+            <label>Input 15:</label>
           </variable>
           <variable CV="5088.116" item="Feedback address input 16" default="16">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Input 16 Feedback address</label>
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Detektor 16:</label>
+            <label xml:lang="nl">Ingang 16:</label>
+            <label xml:lang="cs">Input 16:</label>
+            <label xml:lang="fr">Entrée 16:</label>
+            <label>Input 16:</label>
           </variable>
-          <variable CV="5088.117" item="Feedback address global" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Use global Feedback address</label>
-          </variable>
-
-          <!-- CV 5088.200 to .217 block addresses per output-->
-          <variable CV="5088.200" item="Quick setup block addresses" default="1">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Quick setup feedback start address</label>
-            <tooltip>Quick setup for block addresses with autonumbering</tooltip>
-            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
-          </variable>
-          <!--  TODO add CV 5088.200 to .216 -->
-          <variable CV="5088.217" item="Block address global" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Use global Block address</label>
+          <variable CV="5088.117" item="Feedback address input globalRC" default="17">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Globaler Detektor:</label>
+            <label xml:lang="nl">Global Terugmelder:</label>
+            <label xml:lang="cs">Global Detector:</label>
+            <label>Global Detector:</label>
           </variable>
 
-          <!-- CV 5088.300 to .317 block addresses per output-->
-          <variable CV="5088.300" item="Quick setup exit delay" default="750">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Quick setup for exit delay</label>
+          <!-- CV 5088.200 to .217 block addresses per output -->
+          <variable CV="5088.200" item="Quick setup block addresses" default="1" writeOnly="yes">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Schnelles Setup:</label>
+            <label xml:lang="nl">Snelinstelling:</label>
+            <label xml:lang="cs">Quick setup:</label>
+            <label xml:lang="fr">Configuration rapide:</label>
+            <label>Quick setup:</label>
+            <tooltip>Quick setup for block addresses with autonumbering starting from this value</tooltip>
+            <tooltip xml:lang="de">Schnelles Setup für Blockadressen mit automatischer Nummerierung ab</tooltip>
+            <tooltip xml:lang="nl">Snelinstelling voor Blokadressen met autonummering vanaf het ingevoerde beginadres</tooltip>
+          </variable>
+          <variable CV="5088.201" item="Block address input 1" default="1">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 1:</label>
+            <label xml:lang="nl">Ingang 1:</label>
+            <label xml:lang="cs">Input 1:</label>
+            <label xml:lang="fr">Entrée 1:</label>
+            <label>Input 1:</label>
+          </variable>
+          <variable CV="5088.202" item="Block address input 2" default="2">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 2:</label>
+            <label xml:lang="nl">Ingang 2:</label>
+            <label xml:lang="cs">Input 2:</label>
+            <label xml:lang="fr">Entrée 2:</label>
+            <label>Input 2:</label>
+          </variable>
+          <variable CV="5088.203" item="Block address input 3" default="3">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 3:</label>
+            <label xml:lang="nl">Ingang 3:</label>
+            <label xml:lang="cs">Input 3:</label>
+            <label xml:lang="fr">Entrée 3:</label>
+            <label>Input 3:</label>
+          </variable>
+          <variable CV="5088.204" item="Block address input 4" default="4">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 4:</label>
+            <label xml:lang="nl">Ingang 4:</label>
+            <label xml:lang="cs">Input 4:</label>
+            <label xml:lang="fr">Entrée 4:</label>
+            <label>Input 4:</label>
+          </variable>
+          <variable CV="5088.205" item="Block address input 5" default="5">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 5:</label>
+            <label xml:lang="nl">Ingang 5:</label>
+            <label xml:lang="cs">Input 5:</label>
+            <label xml:lang="fr">Entrée 5:</label>
+            <label>Input 5:</label>
+          </variable>
+          <variable CV="5088.206" item="Block address input 6" default="6">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 6:</label>
+            <label xml:lang="nl">Ingang 6:</label>
+            <label xml:lang="cs">Input 6:</label>
+            <label xml:lang="fr">Entrée 6:</label>
+            <label>Input 6:</label>
+          </variable>
+          <variable CV="5088.207" item="Block address input 7" default="7">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 7:</label>
+            <label xml:lang="nl">Ingang 7:</label>
+            <label xml:lang="cs">Input 7:</label>
+            <label xml:lang="fr">Entrée 7:</label>
+            <label>Input 7:</label>
+          </variable>
+          <variable CV="5088.208" item="Block address input 8" default="8">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 8:</label>
+            <label xml:lang="nl">Ingang 8:</label>
+            <label xml:lang="cs">Input 8:</label>
+            <label xml:lang="fr">Entrée 8:</label>
+            <label>Input 8:</label>
+          </variable>
+          <variable CV="5088.209" item="Block address input 9" default="9">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 9:</label>
+            <label xml:lang="nl">Ingang 9:</label>
+            <label xml:lang="cs">Input 9:</label>
+            <label xml:lang="fr">Entrée 9:</label>
+            <label>Input 9:</label>
+          </variable>
+          <variable CV="5088.2101" item="Block address input 10" default="10">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 10:</label>
+            <label xml:lang="nl">Ingang 10:</label>
+            <label xml:lang="cs">Input 10:</label>
+            <label xml:lang="fr">Entrée 10:</label>
+            <label>Input 10:</label>
+          </variable>
+          <variable CV="5088.211" item="Block address input 11" default="11">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 11:</label>
+            <label xml:lang="nl">Ingang 11:</label>
+            <label xml:lang="cs">Input 11:</label>
+            <label xml:lang="fr">Entrée 11:</label>
+            <label>Input 11:</label>
+          </variable>
+          <variable CV="5088.212" item="Block address input 12" default="12">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 12:</label>
+            <label xml:lang="nl">Ingang 12:</label>
+            <label xml:lang="cs">Input 12:</label>
+            <label xml:lang="fr">Entrée 12:</label>
+            <label>Input 12:</label>
+          </variable>
+          <variable CV="5088.213" item="Block address input 13" default="13">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 13:</label>
+            <label xml:lang="nl">Ingang 13:</label>
+            <label xml:lang="cs">Input 13:</label>
+            <label xml:lang="fr">Entrée 13:</label>
+            <label>Input 13:</label>
+          </variable>
+          <variable CV="5088.214" item="Block address input 14" default="14">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 14:</label>
+            <label xml:lang="nl">Ingang 14:</label>
+            <label xml:lang="cs">Input 14:</label>
+            <label xml:lang="fr">Entrée 14:</label>
+            <label>Input 14:</label>
+          </variable>
+          <variable CV="5088.215" item="Block address input 15" default="15">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 15:</label>
+            <label xml:lang="nl">Ingang 15:</label>
+            <label xml:lang="cs">Input 15:</label>
+            <label xml:lang="fr">Entrée 15:</label>
+            <label>Input 15:</label>
+          </variable>
+          <variable CV="5088.216" item="Block address input 16" default="16">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Eingang 16:</label>
+            <label xml:lang="nl">Ingang 16:</label>
+            <label xml:lang="cs">Input 16:</label>
+            <label xml:lang="fr">Entrée 16:</label>
+            <label>Input 16:</label>
+          </variable>
+
+          <variable CV="5088.217" item="Block address input globalRC" default="17">
+            <decVal min="1" max="2048"/>
+            <label xml:lang="de">Globaler Detektor</label>
+            <label xml:lang="nl">Global Terugmelder</label>
+            <label xml:lang="cs">Global Detector:</label>
+            <label>Global Detector:</label>
+          </variable>
+
+          <!-- CV 5088.300 to .317 exit delay per output -->
+          <variable CV="5088.300" item="Quick setup exit delay" default="750" writeOnly="yes">
+            <decVal min="150" max="1200"/>
+            <label xml:lang="de">Schnelles Setup:</label>
+            <label xml:lang="nl">Snelinstelling:</label>
+            <label xml:lang="cs">Quick setup:</label>
+            <label xml:lang="fr">Configuration rapide:</label>
+            <label>Quick setup:</label>
             <tooltip>Quick setup for exit delay (sets all detectors )</tooltip>
-            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
+            <tooltip xml:lang="de">Schnelles Setup für die Ausschaltverzögerung aller Detektoren</tooltip>
+            <tooltip xml:lang="nl">Snelinstelling Vrijgavertraging (voor alle ingangen)</tooltip>
           </variable>
-          <!--  TODO add CV 5088.300 to .316 -->
-          <variable CV="5088.317" item="Exit delay global" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Use global Exit delay setting</label>
+          <variable CV="5088.301" item="Exit delay input 1" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 1:</label>
+            <label xml:lang="nl">Ingang 1:</label>
+            <label xml:lang="cs">Input 1:</label>
+            <label xml:lang="fr">Entrée 1:</label>
+            <label>Input 1:</label>
+          </variable>
+          <variable CV="5088.302" item="Exit delay input 2" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 2:</label>
+            <label xml:lang="nl">Ingang 2:</label>
+            <label xml:lang="cs">Input 2:</label>
+            <label xml:lang="fr">Entrée 2:</label>
+            <label>Input 2:</label>
+          </variable>
+          <variable CV="5088.303" item="Exit delay input 3" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 3:</label>
+            <label xml:lang="nl">Ingang 3:</label>
+            <label xml:lang="cs">Input 3:</label>
+            <label xml:lang="fr">Entrée 3:</label>
+            <label>Input 3:</label>
+          </variable>
+          <variable CV="5088.304" item="Exit delay input 4" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 4:</label>
+            <label xml:lang="nl">Ingang 4:</label>
+            <label xml:lang="cs">Input 4:</label>
+            <label xml:lang="fr">Entrée 4:</label>
+            <label>Input 4:</label>
+          </variable>
+          <variable CV="5088.305" item="Exit delay input 5" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 5:</label>
+            <label xml:lang="nl">Ingang 5:</label>
+            <label xml:lang="cs">Input 5:</label>
+            <label xml:lang="fr">Entrée 5:</label>
+            <label>Input 5:</label>
+          </variable>
+          <variable CV="5088.306" item="Exit delay input 6" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 6:</label>
+            <label xml:lang="nl">Ingang 6:</label>
+            <label xml:lang="cs">Input 6:</label>
+            <label xml:lang="fr">Entrée 6:</label>
+            <label>Input 6:</label>
+          </variable>
+          <variable CV="5088.307" item="Exit delay input 7" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 7:</label>
+            <label xml:lang="nl">Ingang 7:</label>
+            <label xml:lang="cs">Input 7:</label>
+            <label xml:lang="fr">Entrée 7:</label>
+            <label>Input 7:</label>
+          </variable>
+          <variable CV="5088.308" item="Exit delay input 8" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 8:</label>
+            <label xml:lang="nl">Ingang 8:</label>
+            <label xml:lang="cs">Input 8:</label>
+            <label xml:lang="fr">Entrée 8:</label>
+            <label>Input 8:</label>
+          </variable>
+          <variable CV="5088.309" item="Exit delay input 9" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 9:</label>
+            <label xml:lang="nl">Ingang 9:</label>
+            <label xml:lang="cs">Input 9:</label>
+            <label xml:lang="fr">Entrée 9:</label>
+            <label>Input 9:</label>
+          </variable>
+          <variable CV="5088.310" item="Exit delay input 10" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 10:</label>
+            <label xml:lang="nl">Ingang 10:</label>
+            <label xml:lang="cs">Input 10:</label>
+            <label xml:lang="fr">Entrée 10:</label>
+            <label>Input 10:</label>
+          </variable>
+          <variable CV="5088.311" item="Exit delay input 11" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 11:</label>
+            <label xml:lang="nl">Ingang 11:</label>
+            <label xml:lang="cs">Input 11:</label>
+            <label xml:lang="fr">Entrée 11:</label>
+            <label>Input 11:</label>
+          </variable>
+          <variable CV="5088.312" item="Exit delay input 12" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 12:</label>
+            <label xml:lang="nl">Ingang 12:</label>
+            <label xml:lang="cs">Input 12:</label>
+            <label xml:lang="fr">Entrée 12:</label>
+            <label>Input 12:</label>
+          </variable>
+          <variable CV="5088.313" item="Exit delay input 13" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 13:</label>
+            <label xml:lang="nl">Ingang 13:</label>
+            <label xml:lang="cs">Input 13:</label>
+            <label xml:lang="fr">Entrée 13:</label>
+            <label>Input 13:</label>
+          </variable>
+          <variable CV="5088.314" item="Exit delay input 14" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 14:</label>
+            <label xml:lang="nl">Ingang 14:</label>
+            <label xml:lang="cs">Input 14:</label>
+            <label xml:lang="fr">Entrée 14:</label>
+            <label>Input 14:</label>
+          </variable>
+          <variable CV="5088.315" item="Exit delay input 15" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 15:</label>
+            <label xml:lang="nl">Ingang 15:</label>
+            <label xml:lang="cs">Input 15:</label>
+            <label xml:lang="fr">Entrée 15:</label>
+            <label>Input 15:</label>
+          </variable>
+          <variable CV="5088.316" item="Exit delay input 16" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Detektor 16:</label>
+            <label xml:lang="nl">Ingang 16:</label>
+            <label xml:lang="cs">Input 16:</label>
+            <label xml:lang="fr">Entrée 16:</label>
+            <label>Input 16:</label>
+          </variable>
+          <variable CV="5088.317" item="Exit delay input globalRC" default="750">
+            <decVal min="150" max="2000"/>
+            <label xml:lang="de">Globaler Detektor</label>
+            <label xml:lang="nl">Global Terugmelder</label>
+            <label xml:lang="cs">Global Detector:</label>
+            <label>Global Detector:</label>
           </variable>
 
-          <!-- CV 5088.400 to .417 block addresses per output-->
-          <variable CV="5088.400" item="Quick setup direction invert" default="0">
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Quick setup for Direction Invert</label>
-            <tooltip>Quick setup for Direction Invert (sets all detectors)</tooltip>
-            <tooltip xml:lang="nl">Zadejte desítkovou hodnotu (1-9999)</tooltip>
-          </variable>
-          <!--  TODO add CV 5088.400 to .416 -->
-          <variable CV="5088.417" item="Direction invert global" default="1">
+          <!-- CV 5088.400 to .417 direction invert per output-->
+          <variable CV="5088.400" item="Quick setup direction invert" default="0" writeOnly="yes">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            <label xml:lang="de">LocoNet Richtung Berichten</label>
-            <label xml:lang="nl">LocoNet Richting Rapporteren</label>
-            <label xml:lang="cs">LocoNet Report of Direction</label>
-            <label>Use global Direction Invert setting</label>
+            <label xml:lang="de">Schnelles Setup:</label>
+            <label xml:lang="nl">Snelinstelling:</label>
+            <label xml:lang="cs">Quick setup:</label>
+            <label xml:lang="fr">Configuration rapide:</label>
+            <label>Quick setup:</label>
+            <tooltip>Quick setup for Railcom Direction Invert (sets all detectors to the selected value)</tooltip>
+            <tooltip xml:lang="de">Schnelles Setup zum invertieren der Richtungserkennung aller Detektoren</tooltip>
+            <tooltip xml:lang="nl">Snel instellen Railcom richting omkeren (zet alle ingangen op de gekozen waarde)</tooltip>
+          </variable>
+          <variable CV="5088.401" item="Direction invert input 1" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 1:</label>
+            <label xml:lang="nl">Ingang 1:</label>
+            <label xml:lang="cs">Input 1:</label>
+            <label>Input 1:</label>
+          </variable>
+          <variable CV="5088.402" item="Direction invert input 2" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 2:</label>
+            <label xml:lang="nl">Ingang 2:</label>
+            <label xml:lang="cs">Input 2:</label>
+            <label>Input 2:</label>
+          </variable>
+          <variable CV="5088.403" item="Direction invert input 3" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 3:</label>
+            <label xml:lang="nl">Ingang 3:</label>
+            <label xml:lang="cs">Input 3:</label>
+            <label>Input 3:</label>
+          </variable>
+          <variable CV="5088.404" item="Direction invert input 4" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 4:</label>
+            <label xml:lang="nl">Ingang 4:</label>
+            <label xml:lang="cs">Input 4:</label>
+            <label>Input 4:</label>
+          </variable>
+          <variable CV="5088.405" item="Direction invert input 5" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 5:</label>
+            <label xml:lang="nl">Ingang 5:</label>
+            <label xml:lang="cs">Input 5:</label>
+            <label>Input 5:</label>
+          </variable>
+          <variable CV="5088.406" item="Direction invert input 6" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 6:</label>
+            <label xml:lang="nl">Ingang 6:</label>
+            <label xml:lang="cs">Input 6:</label>
+            <label>Input 6:</label>
+          </variable>
+          <variable CV="5088.407" item="Direction invert input 7" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 7:</label>
+            <label xml:lang="nl">Ingang 7:</label>
+            <label xml:lang="cs">Input 7:</label>
+            <label>Input 7:</label>
+          </variable>
+          <variable CV="5088.408" item="Direction invert input 8" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 8:</label>
+            <label xml:lang="nl">Ingang 8:</label>
+            <label xml:lang="cs">Input 8:</label>
+            <label>Input 8:</label>
+          </variable>
+          <variable CV="5088.409" item="Direction invert input 9" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 9:</label>
+            <label xml:lang="nl">Ingang 9:</label>
+            <label xml:lang="cs">Input 9:</label>
+            <label>Input 9:</label>
+          </variable>
+          <variable CV="5088.410" item="Direction invert input 10" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 10:</label>
+            <label xml:lang="nl">Ingang 10:</label>
+            <label xml:lang="cs">Input 10:</label>
+            <label>Input 10:</label>
+          </variable>
+          <variable CV="5088.411" item="Direction invert input 11" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 11:</label>
+            <label xml:lang="nl">Ingang 11:</label>
+            <label xml:lang="cs">Input 11:</label>
+            <label>Input 11:</label>
+          </variable>
+          <variable CV="5088.412" item="Direction invert input 12" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 12:</label>
+            <label xml:lang="nl">Ingang 12:</label>
+            <label xml:lang="cs">Input 12:</label>
+            <label>Input 12:</label>
+          </variable>
+          <variable CV="5088.413" item="Direction invert input 13" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 13:</label>
+            <label xml:lang="nl">Ingang 13:</label>
+            <label xml:lang="cs">Input 13:</label>
+            <label>Input 13:</label>
+          </variable>
+          <variable CV="5088.414" item="Direction invert input 14" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 14:</label>
+            <label xml:lang="nl">Ingang 14:</label>
+            <label xml:lang="cs">Input 14:</label>
+            <label>Input 14:</label>
+          </variable>
+          <variable CV="5088.415" item="Direction invert input 15" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 15:</label>
+            <label xml:lang="nl">Ingang 15:</label>
+            <label xml:lang="cs">Input 15:</label>
+            <label>Input 15:</label>
+          </variable>
+          <variable CV="5088.416" item="Direction invert input 16" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Detektor 16:</label>
+            <label xml:lang="nl">Ingang 16:</label>
+            <label xml:lang="cs">Input 16:</label>
+            <label>Input 16:</label>
+          </variable>
+          <variable CV="5088.417" item="Direction invert input globalRC" default="0">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            <label xml:lang="de">Globaler Detektor:</label>
+            <label xml:lang="nl">Global Terugmelder:</label>
+            <label xml:lang="cs">Global Detector:</label>
+            <label>Global Detector:</label>
           </variable>
 
         </variables>
@@ -303,34 +722,34 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         <name xml:lang="nl">LNCV Confuguratie</name>
         <name xml:lang="cs">Konfigurace LNCV</name>
         <row>
+
           <column>
               <label>
                 <text>Before writing, open a Programming</text>
                 <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                 <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
-                  <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+                <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
               </label>
               <label>
                 <text>session using the LocoNet LNCV Tool.</text>
                 <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                 <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
-                  <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+                <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
               </label>
               <label>
                 <text> </text>
               </label>
 
               <label>
-                <text>LNCV4 Configuration</text>
-                <text xml:lang="nl">Instelling LNCV4</text>
-                <text xml:lang="de">LNCV4 Konfiguration</text>
-                <text xml:lang="fr">Configuration LNCV4</text>
-                  <text xml:lang="cs">Konfigurace LNCV4</text>
+                <text>RailCom Module Setup</text>
+                <text xml:lang="nl">RailCom module-instelling</text>
+                <text xml:lang="de">RailCom Modulkonfiguration</text>
+                <text xml:lang="fr">Configuration RailCom de la Module</text>
+                <text xml:lang="cs">Konfigurace RailCom Modul</text>
               </label>
               <separator/>
               <display item="Configuration"/>
-
-              <display item="Report Direction" format="checkbox"/>
+              <display item="RailCom Report Direction"/>
               <display item="Power-on delay"/>
               <display item="Occupancy detection count"/>
               <display item="Polarity detection count"/>
@@ -342,8 +761,14 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
           </column>
 
           <column>
-              <display item="Quick setup feedback addresses"/>
-              <display item="Feedback address global" format="checkbox"/>
+              <label>
+                <text>RailCom Feedback Address</text>
+                <text xml:lang="nl">RailCom Terugmeldadres</text>
+                <text xml:lang="de">RailCom Rückmeldeadresse</text>
+                <text xml:lang="fr">RailCom Adresse de retrosignalisation</text>
+                <text xml:lang="cs">RailCom Feedback Address</text>
+              </label>
+              <separator/>
               <display item="Feedback address input 1"/>
               <display item="Feedback address input 2"/>
               <display item="Feedback address input 3"/>
@@ -360,9 +785,22 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <display item="Feedback address input 14"/>
               <display item="Feedback address input 15"/>
               <display item="Feedback address input 16"/>
+              <display item="Feedback address input globalRC"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Quick setup feedback addresses"/>
+          </column>
 
-              <display item="Quick setup block addresses"/>
-              <display item="Block address global" format="checkbox"/>
+          <column>
+              <label>
+                <text>RailCom Block Address</text>
+                <text xml:lang="nl">RailCom Blokadres</text>
+                <text xml:lang="de">RailCom Blockadresse</text>
+                <text xml:lang="fr">Adresses des Blocs RailCom</text>
+                <text xml:lang="cs">RailCom Block Address</text>
+              </label>
+              <separator/>
               <display item="Block address input 1"/>
               <display item="Block address input 2"/>
               <display item="Block address input 3"/>
@@ -379,9 +817,22 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <display item="Block address input 14"/>
               <display item="Block address input 15"/>
               <display item="Block address input 16"/>
+              <display item="Block address input globalRC"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Quick setup block addresses"/>
+          </column>
 
-              <display item="Quick setup exit delay"/>
-              <display item="Exit delay global" format="checkbox"/>
+          <column>
+              <label>
+                <text>RailCom Exit Delay</text>
+                <text xml:lang="nl">RailCom Vrijgavevertraging</text>
+                <text xml:lang="de">RailCom Ausschaltverzögerung</text>
+                <text xml:lang="fr">RailCom délai d'extinction</text>
+                <text xml:lang="cs">RailCom Exit Delay</text>
+              </label>
+              <separator/>
               <display item="Exit delay input 1"/>
               <display item="Exit delay input 2"/>
               <display item="Exit delay input 3"/>
@@ -398,9 +849,22 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <display item="Exit delay input 14"/>
               <display item="Exit delay input 15"/>
               <display item="Exit delay input 16"/>
+              <display item="Exit delay input globalRC"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Quick setup exit delay"/>
+          </column>
 
-              <display item="Quick setup direction invert" format="checkbox"/>
-              <display item="Direction invert global" format="checkbox"/>
+          <column>
+              <label>
+                <text>Invert Reported Direction</text>
+                <text xml:lang="nl">Meldingsrichting omkeren</text>
+                <text xml:lang="de">Richtungserkennung invertieren</text>
+                <text xml:lang="fr">Inversion de Direction</text>
+                <text xml:lang="cs">Invert Reported Direction</text>
+              </label>
+              <separator/>
               <display item="Direction invert input 1" format="checkbox"/>
               <display item="Direction invert input 2" format="checkbox"/>
               <display item="Direction invert input 3" format="checkbox"/>
@@ -417,7 +881,20 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <display item="Direction invert input 14" format="checkbox"/>
               <display item="Direction invert input 15" format="checkbox"/>
               <display item="Direction invert input 16" format="checkbox"/>
-
+              <display item="Direction invert input globalRC" format="checkbox"/>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Quick setup direction invert" format="checkbox"/>
           </column>
         </row>
     </pane>
