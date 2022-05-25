@@ -1,5 +1,6 @@
-package jmri;
+package jmri.managers;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -9,7 +10,7 @@ import org.junit.Assert;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SectionManagerTest {
+public class DefaultSectionManagerTest {
 
     @Test
     public void testCTor() {

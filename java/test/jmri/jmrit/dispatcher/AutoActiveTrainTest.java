@@ -22,7 +22,7 @@ public class AutoActiveTrainTest {
         DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
         InstanceManager.setDefault(DispatcherFrame.class,df);
 
-        Transit transit = new Transit("TT1");
+        Transit transit = new jmri.implementation.DefaultTransit("TT1");
         ActiveTrain at = new ActiveTrain(transit,"Train",ActiveTrain.USER);
         AutoActiveTrain t = new AutoActiveTrain(at);
         Assertions.assertNotNull(t, "exists");

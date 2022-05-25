@@ -592,5 +592,13 @@
                 found within a "jre" directory within the JMRI program directory.
                 This lets you install a JVM (JRE or JDK) locally just for
                 JMRI's use.
+            <li>The Transit and Section classes have been refactored into an
+                interface with DefaultTransit and DefaultSection implementations
+                respectively.  Similar transforms have been done to
+                TransitManager and SectionManager. None of the production code
+                nor distributed scripts needed changes, as you still create
+                and access Transits and Sections via their managers obtained
+                from the InstanceManager. The SectionType constants in Section
+                has also been converted to an enum.
         </ul>
 

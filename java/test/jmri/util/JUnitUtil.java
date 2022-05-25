@@ -804,7 +804,7 @@ public class JUnitUtil {
     }
 
     public static void initSectionManager() {
-        jmri.SectionManager w = new jmri.SectionManager();
+        jmri.SectionManager w = new jmri.managers.DefaultSectionManager();
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(w, jmri.Manager.SECTIONS);
         }

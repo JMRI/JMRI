@@ -46,7 +46,7 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
         if (tm != null) {
             if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleDigitalExpressionSocket expression : tm.getNamedBeanSet()) {
-                log.debug("action system name is " + expression.getSystemName());  // NOI18N
+                log.debug("action system name is {}", expression.getSystemName() );  // NOI18N
                 try {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
@@ -108,7 +108,7 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
     public void loadExpressions(Element expressions) {
         
         List<Element> expressionList = expressions.getChildren();  // NOI18N
-        log.debug("Found " + expressionList.size() + " expressions");  // NOI18N
+        log.debug("Found {} expressions", expressionList.size());  // NOI18N
 //        DigitalExpressionManager tm = InstanceManager.getDefault(jmri.jmrit.logixng.DigitalExpressionManager.class);
 
         for (int i = 0; i < expressionList.size(); i++) {
@@ -123,7 +123,7 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
-                    log.error("cannot load class " + className, ex);
+                    log.error("cannot load class {}", className, ex);
                 }
             }
             
