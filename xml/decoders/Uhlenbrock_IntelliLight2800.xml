@@ -143,11 +143,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <text>Before writing, open a Programming</text>
                 <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
                 <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+                <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
               </label>
               <label>
                 <text>session using the LocoNet LNCV Tool.</text>
                 <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
                 <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+                <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
               </label>
               <label>
                 <text> </text>
