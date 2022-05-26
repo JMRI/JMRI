@@ -451,6 +451,13 @@ public class PrintLocationsAction extends AbstractAction {
             int dir = location.getTrainDirections();
             s = NEW_LINE + name + getDirection(dir);
             writer.write(s);
+            
+            // division
+            if (location.getDivision() != null) {
+                s = SPACE + Bundle.getMessage("Division") + ": " + location.getDivisionName() + NEW_LINE;
+                writer.write(s);
+            }
+            
             // services car and engine types
             s = getLocationTypes(location);
             writer.write(s);
