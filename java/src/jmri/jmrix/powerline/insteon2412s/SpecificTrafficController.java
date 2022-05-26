@@ -70,7 +70,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             try {
                 wait(250);
             } catch (InterruptedException ex) {
-                log.error(null, ex);
+                log.error("Interrupted Exception", ex);
             }
         }
     }
