@@ -1,20 +1,11 @@
 package jmri.configurexml;
 
-import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import jmri.*;
+import jmri.configurexml.swing.DirtyManagerDialog;
 
 /**
  * The Dirty Manager is notified whenever potential PanelPro data content is added, deleted or modified.
@@ -118,44 +109,7 @@ public class DirtyManager {
      */
     public void storeIfNeeded() {
         if (isDirty()) {
-            // Provide option to invoke the store process before the shutdown.
-            final JDialog dialog = new JDialog();
-            dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
-            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-            JPanel container = new JPanel();
-            container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            JLabel question = new JLabel(Bundle.getMessage("DirtyManagerQuitNotification"));  // NOI18N
-            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.add(question);
-
-            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));    // NOI18N
-            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));      // NOI18N
-            JPanel button = new JPanel();
-            button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.add(noButton);
-            button.add(yesButton);
-            container.add(button);
-
-            noButton.addActionListener((ActionEvent e) -> {
-                dialog.dispose();
-                return;
-            });
-
-            yesButton.addActionListener((ActionEvent e) -> {
-                dialog.setVisible(false);
-                new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
-                dialog.dispose();
-                return;
-            });
-
-            container.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.setAlignmentY(Component.CENTER_ALIGNMENT);
-            dialog.getContentPane().add(container);
-            dialog.pack();
-            dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
-            dialog.setModal(true);
-            dialog.setVisible(true);
+            DirtyManagerDialog.showDialog();
         }
     }
 
@@ -182,8 +136,8 @@ public class DirtyManager {
     class BeanListener implements PropertyChangeListener {
 
         public void propertyChange(PropertyChangeEvent evt) {
-            log.info("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
-            log.info(")) {}", evt.toString());
+//             log.info("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
+            log.info("    evt = {}", evt.toString());
             if (evt.getPropertyName().equals("KnownState")) return;
             if (evt.getPropertyName().equals("value")) return;
             setDirty(true);
