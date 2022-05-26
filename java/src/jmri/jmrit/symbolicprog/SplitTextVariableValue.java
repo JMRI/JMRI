@@ -137,6 +137,8 @@ public class SplitTextVariableValue extends SplitVariableValue {
         return ret; //fall through
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of Error Message")
     void unsupportedCharset() {
         synchronized (this) {
             JOptionPane.showMessageDialog(new JFrame(), Bundle.getMessage("UnsupportedCharset", charSet, _name),

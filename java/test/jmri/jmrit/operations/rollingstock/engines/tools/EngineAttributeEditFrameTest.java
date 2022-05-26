@@ -7,12 +7,16 @@ import java.text.MessageFormat;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.*;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for the Operations Engines GUI class
@@ -54,6 +58,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
 
         // did the replace work?
         assertThat(comboBox.getItemAt(0)).withFailMessage("replaced SD45 with DS54").isEqualTo("DS54");
@@ -97,6 +102,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
 
         // did the replace work?
         assertThat(comboBox.getItemAt(0)).withFailMessage("replaced 12 with 13").isEqualTo("13");
@@ -139,6 +145,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
 
         // did the replace work?
         assertThat(comboBox.getItemAt(25)).withFailMessage("replaced 72 with 73").isEqualTo("73");
@@ -155,7 +162,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -192,7 +199,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
-
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -220,6 +227,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         
         jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         assertThat(comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
@@ -256,8 +264,8 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         assertThat(comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
-
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -293,6 +301,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // need to also push the "Yes" button in the dialog window
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         assertThat(comboBox.getItemAt(0)).withFailMessage("replaced ABC-TEST").isEqualTo("ABCDEF-TEST");
 
@@ -309,6 +318,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }
@@ -344,6 +354,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         // did the replace work?
         assertThat(comboBox.getItemAt(1)).withFailMessage("replaced ABC-TEST").isEqualTo("ABCDEF-TEST");
 
@@ -370,6 +381,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JUnitUtil.waitFor(()->{return jfo.isActive();}, "wait for gui to finish");
         jfo.requestClose();
         jfo.waitClosed();
     }

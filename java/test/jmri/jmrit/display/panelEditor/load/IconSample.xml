@@ -75,16 +75,6 @@
       <iconmaps />
     </sensoricon>
     <positionablelabel x="24" y="15" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Sensor" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="149" y="95" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="90" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
-    <positionablelabel x="208" y="94" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
-        <rotation>1</rotation>
-      </icon>
-    </positionablelabel>
     <positionablelabel x="75" y="90" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
