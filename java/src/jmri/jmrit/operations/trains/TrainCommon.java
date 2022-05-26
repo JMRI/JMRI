@@ -1137,7 +1137,7 @@ public class TrainCommon {
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
-        log.debug(string);
+        log.debug("addLine: {}",string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);
             for (String line : lines) {
@@ -1172,7 +1172,7 @@ public class TrainCommon {
      * @param string The string to write.
      */
     protected void addLine(PrintWriter file, String string) {
-        log.debug(string);
+        log.debug("addLine: {}", string);
         if (file != null) {
             file.println(string);
         }
