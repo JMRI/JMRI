@@ -1414,12 +1414,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (msg == null) {
             OPath path1 = bo.getPath();
             Portal exit = bo.getExitPortal();
-            OBlock block = _orders.get(idx+1).getBlock();
-            Warrant w = block.getWarrant();
-            if ((w != null && !w.equals(this)) || (w == null && block.isOccupied())) {
-                msg =  bo.pathsConnect(path1, exit, block);
-                if (msg == null) {
-                    msg = bo.setPath(this);
+            OBlock block = getBlockAt(idx+1);
+            if (block != null) {
+                Warrant w = block.getWarrant();
+                if ((w != null && !w.equals(this)) || (w == null && block.isOccupied())) {
+                    msg =  bo.pathsConnect(path1, exit, block);
+                    if (msg == null) {
+                        msg = bo.setPath(this);
+                    }
                 }
             }
             b.showAllocated(this, bo.getPathName());
@@ -3042,8 +3044,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         BlockOrder curBlkOrder = getBlockOrderAt(_idxCurrentOrder);
         OBlock curBlock = curBlkOrder.getBlock();
         if (curBlock.isOccupied()) {
-            if (_overrun) {
-                makeOverrunMessage(curBlkOrder);    // does fireRunStatus
+            if (_overrun && !_waitForBlock) {
+                OBlock otherBlock = getBlockAt(_idxCurrentOrder + 1);
+                if (otherBlock != null && otherBlock.isOccupied()) {
+                    Warrant w = otherBlock.getWarrant();
+                    if (w == null || w.equals(this)) {
+                        // occupied, so this must be me.
+                        setPathAt(_idxCurrentOrder + 1);
+                    }
+                } else {
+                    makeOverrunMessage(curBlkOrder);    // does fireRunStatus
+                }
             } else if (_lost) {
                 Warrant w = curBlock.getWarrant();
                 if (w == null || w.equals(this)) {
