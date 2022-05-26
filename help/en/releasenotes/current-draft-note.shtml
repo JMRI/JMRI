@@ -600,5 +600,6 @@
                 and access Transits and Sections via their managers obtained
                 from the InstanceManager. The SectionType constants in Section
                 has also been converted to an enum.
+            <li>Many logging changes to resolve Spotbug SLF4J_FORMAT_SHOULD_BE_CONST
         </ul>
 
