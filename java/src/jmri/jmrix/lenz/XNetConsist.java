@@ -438,6 +438,8 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * Listeners for messages from the command station.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "error message built up from parts")
     public synchronized void message(XNetReply l) {
         if (_state != IDLESTATE) {
             // we're waiting for a reply, so examine what we received
