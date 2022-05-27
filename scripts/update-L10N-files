@@ -12,5 +12,5 @@ for filename in `find java/src/ -name \*_${1}.properties`
 do
     basefile=${filename%%_es.*}.properties
     echo $basefile
-    echo java java/test/jmri/util/i18n/PropertiesMergeTool.java   $basefile $filename
+    java java/test/jmri/util/i18n/PropertiesMergeTool.java   $basefile $filename
 done
