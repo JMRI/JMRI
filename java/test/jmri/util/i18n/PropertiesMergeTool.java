@@ -36,6 +36,9 @@ class PropertiesMergeTool {
             outFile = new File(args[1]);
             outWriter = new FileWriter(outFile);
 
+            // put pathname at top of output file
+            outWriter.write("# "+args[1]+"\n");
+
             // Apparently there's no way to address these in order, so we separately
             // read the file to do that.
             File inFile  = new File(args[0]);
