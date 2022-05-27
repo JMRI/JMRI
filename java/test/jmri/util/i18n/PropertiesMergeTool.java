@@ -55,23 +55,23 @@ class PropertiesMergeTool {
                         writeOutLine(line);
                     } else if ((index = line.indexOf("=")) >= 0) {
                         String part1 = line.substring(0, index);
-                        int keyIndex = line.indexOf(" ");
-                        if (keyIndex == -1) keyIndex = 99999; // no space in line
-                        String key = line.substring(0, Math.min(index, keyIndex));
+                        String key = part1.trim();
+                        var lookUpKey = key.replace("\\", "");
                         String part2 = line.substring(index+1);
                         String pad = "";
                         // pad with same number of leading spaces
-                        while (part2.startsWith(" ")) {
-                            pad = pad+" ";
+                        while (part2.startsWith(" ") || part2.startsWith("\t")) {
+                            pad = pad+part2.substring(0,1);
                             part2 = part2.substring(1);
                         }
+
                         // check if translation in 2nd file
                         if (bundle2.containsKey(key)) {
                             // write translated value
-                            writeOutLine(part1+"="+pad+bundle2.getString(key));
+                            writeOutLine(part1+"="+pad+bundle2.getString(lookUpKey));
                         } else {
                             // write untranslated value
-                            writeOutLine(part1+"="+pad+bundle1.getString(key));
+                            writeOutLine(part1+"="+pad+bundle1.getString(lookUpKey));
                         }
                     } else if (isBlankLine(line)) {
                         // blank line
