@@ -77,6 +77,8 @@ public class Server {
         }
     }
 
+    private PrintStream settingsStream;
+
     public void saveSettings() {
         // we can't use the store capabilities of java.util.Properties, as
         // they are not present in Java 1.1.8
@@ -85,7 +87,7 @@ public class Server {
 
         try {
             OutputStream outStream = new FileOutputStream(settingsFileName);
-            PrintStream settingsStream = new PrintStream(outStream);
+            settingsStream = new PrintStream(outStream);
             settingsStream.println("# DCCppOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));
             settingsStream.println(PORT_NUMBER_KEY + " = " + portNumber);
