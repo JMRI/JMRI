@@ -838,7 +838,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 || ((dccServices & COMMAND) == COMMAND)) {
             tabbedPane.add(profilePane);
         } else {
-            log.info(Bundle.getMessage("StatNoDCC"));
+            log.info("{} Connection:{}", Bundle.getMessage("StatNoDCC"), _memo.getUserName());
             statusLabel.setText(Bundle.getMessage("StatNoDCC"));
         }
 
