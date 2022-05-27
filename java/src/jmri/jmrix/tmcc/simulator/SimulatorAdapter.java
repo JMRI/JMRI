@@ -226,11 +226,10 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
                 writeReply(r);
                 if (log.isDebugEnabled()) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append("TMCC Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
-                    log.debug(buf.toString());
+                    log.debug("TMCC Simulator Thread sent reply: {}", buf );
                 }
             }
         }
