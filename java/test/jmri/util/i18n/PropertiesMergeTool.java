@@ -87,8 +87,13 @@ class PropertiesMergeTool {
             outWriter.close();
 
         } catch (Exception e) {
-            System.out.println("Exception: "+e);
+            System.err.println("Exception: "+e);
             e.printStackTrace();
+            try {
+                if (outWriter != null) outWriter.close();
+            } catch (IOException ex) {
+                System.err.println("exception closing output");
+            }
         }
     }
 
