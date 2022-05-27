@@ -68,6 +68,8 @@ public class PrintEngineRosterAction extends AbstractAction {
     JComboBox<String> manifestOrientationComboBox = new JComboBox<>();
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
 
+    private HardcopyWriter writer;
+
     public void printEngines() {
 
         boolean landscape = false;
@@ -79,7 +81,6 @@ public class PrintEngineRosterAction extends AbstractAction {
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"), fontSize, .5, .5, .5, .5,
                     _isPreview, "", landscape, true, null);

@@ -31,6 +31,9 @@ public class TrainPrintUtilities {
     static final char VERTICAL_LINE_SEPARATOR = '|'; // NOI18N
     static final char SPACE = ' ';
 
+    private volatile static HardcopyWriter writer;
+    private volatile static BufferedReader in;
+
     /**
      * Print or preview a train manifest, build report, or switch list.
      *
@@ -47,8 +50,7 @@ public class TrainPrintUtilities {
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
             String logoURL, String printerName, String orientation, int fontSize, boolean printHeader) {
-        // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
+
         boolean isLandScape = false;
         double margin = .5;
         Dimension pagesize = null; // HardcopyWritter provides default page
@@ -63,6 +65,7 @@ public class TrainPrintUtilities {
             pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
+        // obtain a HardcopyWriter to do this
         try {
             writer = new HardcopyWriter(new Frame(), name, fontSize, margin, margin, .5, .5, isPreview, printerName,
                     isLandScape, printHeader, pagesize);
@@ -76,7 +79,7 @@ public class TrainPrintUtilities {
         }
 
         // now get the build file to print
-        BufferedReader in = null;
+        
         try {
             in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
@@ -243,7 +246,7 @@ public class TrainPrintUtilities {
      */
     public static void editReport(File file, String name) {
         // make a new file with the build report levels removed
-        BufferedReader in = null;
+        
         try {
             in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {

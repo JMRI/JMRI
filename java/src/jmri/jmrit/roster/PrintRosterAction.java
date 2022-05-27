@@ -48,6 +48,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
      * Frame hosting the printing
      */
     Frame mFrame = new Frame();
+    private HardcopyWriter writer;
 
     /**
      * Variable to set whether this is to be printed or previewed
@@ -71,7 +72,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         } else {
             title = title + " " + Bundle.getMessage("TitleGroup") + " " + Bundle.getMessage("TitleEntries", rosterGroup);
         }
-        HardcopyWriter writer = null;
+        
         try {
             writer = new HardcopyWriter(mFrame, title, 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {

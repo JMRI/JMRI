@@ -58,9 +58,11 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
      */
     boolean isPreview;
 
+    private HardcopyWriter writer;
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        // obtain a HardcopyWriter to do this
+
         Roster r = Roster.getDefault();
         String title = Bundle.getMessage("TitleDecoderProRoster");
         String rosterGroup = r.getDefaultRosterGroup();
@@ -75,7 +77,8 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
         } else {
             title = title + " " + Bundle.getMessage("TitleGroup") + " " + Bundle.getMessage("TitleEntries", rosterGroup);
         }
-        HardcopyWriter writer = null;
+
+        // obtain a HardcopyWriter to do this
         try {
             writer = new HardcopyWriter(mFrame, title, 10, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {

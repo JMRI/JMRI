@@ -53,6 +53,8 @@ public class PrintCarLoadsAction extends AbstractAction {
         static final String TAB = "\t"; // NOI18N
         static final String NEW_LINE = "\n"; // NOI18N
 
+        private HardcopyWriter writer;
+
         // no frame needed for now
         public CarLoadPrintOption() {
             super();
@@ -62,7 +64,7 @@ public class PrintCarLoadsAction extends AbstractAction {
         private void printCars() {
 
             // obtain a HardcopyWriter to do this
-            HardcopyWriter writer = null;
+            
             try {
                 writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5,
                         .5, .5, .5, _isPreview);

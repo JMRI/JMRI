@@ -49,9 +49,10 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
         print();
     }
 
+    private HardcopyWriter writer;
+
     private void print() {
         // obtain a HardcopyWriter
-        HardcopyWriter writer;
         try {
             writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsByType"), Control.reportFontSize,
                     .5, .5, .5, .5, isPreview);
