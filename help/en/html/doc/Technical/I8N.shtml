@@ -187,9 +187,12 @@ string; to the right of the equals sign is the String that will be displayed.
       java java/test/jmri/util/i18n/PropertiesMergeTool.java   java/src/apps/AppsBundle.properties java/src/apps/AppsBundle_es.properties
       </pre>
 
-      The program is invoked with Java and given two arguments:  The main (English default)
+      <p>The program is invoked with Java and given two arguments:  The main (English default)
       file and a translated file.  The translated file will be rewritten to include
-      any non-translated key-value pairs from the main file.
+      any non-translated key-value pairs from the main file.</p>
+
+      <p>The scripts/update-L10N-files script can be used to process all files for
+      a given language.  See the comments inside the script.</p>
 
       <h3 id="xml">Translating XML files</h3>
       XML files can also be internationalized. There are examples in the decoder definition
