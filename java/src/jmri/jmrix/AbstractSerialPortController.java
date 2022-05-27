@@ -480,6 +480,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Attempts a re-connection to the serial port from the main reconnect
      * thread.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of Info Message")
     @Override
     protected void reconnectFromLoop(int retryNum){
         try {

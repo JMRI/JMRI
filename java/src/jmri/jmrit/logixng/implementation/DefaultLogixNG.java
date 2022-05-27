@@ -116,7 +116,7 @@ public class DefaultLogixNG extends AbstractNamedBean
                     if (entry._conditionalNG != null) {
                         entry._conditionalNG.setup();
                     } else {
-                        log.error("cannot load conditionalNG " + systemName);
+                        log.error("cannot load conditionalNG {}", systemName);
                     }
                 }
             } else {

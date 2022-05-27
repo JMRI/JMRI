@@ -57,8 +57,8 @@ public class DccLocoAddressSelector extends JPanel {
         configureBox(protocols);
     }
 
-    void configureBox(String[] protocols) {
-        box = new JComboBox<String>(protocols);
+    private void configureBox(String[] protocols) {
+        box = new JComboBox<>(protocols);
         box.setSelectedIndex(0);
         text = new JTextField();
         text.setColumns(4);
@@ -88,7 +88,7 @@ public class DccLocoAddressSelector extends JPanel {
      */
     public DccLocoAddress getAddress() {
         // no object if no address
-        if (text.getText().equals("")) {
+        if (text.getText().isEmpty()) {
             return null;
         }
 
@@ -266,6 +266,8 @@ public class DccLocoAddressSelector extends JPanel {
         return text;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="Error String needs to be evaluated unchanged.")
     void reportError(String msg) {
         log.error(msg, new Exception("traceback"));
     }

@@ -436,7 +436,7 @@ public class ActionTimer extends AbstractDigitalAction
                         _startExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -458,7 +458,7 @@ public class ActionTimer extends AbstractDigitalAction
                         _stopExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -481,7 +481,7 @@ public class ActionTimer extends AbstractDigitalAction
                             ae._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital action " + socketSystemName);
+                            log.error("cannot load digital action {}", socketSystemName);
                         }
                     }
                 } else {

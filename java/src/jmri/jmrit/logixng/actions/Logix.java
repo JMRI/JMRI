@@ -189,7 +189,7 @@ public class Logix extends AbstractDigitalAction
                         _expressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -211,7 +211,7 @@ public class Logix extends AbstractDigitalAction
                         _actionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital boolean action " + socketSystemName);
+                        log.error("cannot load digital boolean action {}", socketSystemName);
                     }
                 }
             } else {

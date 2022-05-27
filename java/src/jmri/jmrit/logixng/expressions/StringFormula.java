@@ -357,7 +357,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load string expression " + socketSystemName);
+                            log.error("cannot load string expression {}", socketSystemName);
                         }
                     }
                 } else {

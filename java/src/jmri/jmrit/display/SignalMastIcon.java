@@ -112,7 +112,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     private boolean loadIcons(String aspect) {
         String s = getSignalMast().getAppearanceMap().getImageLink(aspect, useIconSet);
-        if (s.equals("")) {
+        if (s.isEmpty()) {
             if (aspect.startsWith("$")) {
                 log.debug("No icon found for specific appearance {}", aspect);
             } else {
@@ -128,7 +128,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 n = new NamedIcon(s, s);
             } catch (java.lang.NullPointerException e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}), Bundle.getMessage("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.error(Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
+                log.error("{} : Cannot load Icon", Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
                 return true;
             }
             _iconMap.put(s, n);

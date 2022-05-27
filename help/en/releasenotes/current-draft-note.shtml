@@ -358,7 +358,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Improved accessibility of some buttons.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -382,7 +382,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Rodrigo Rodriguez translated much of the GUI into Spanish.</li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -405,7 +405,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action Script and the expression Script
+          now supports both Jython and ECMA Script (JavaScript).
+          As a result, the option <i>Jython command</i> is now
+          renamed to <i>Single line command</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -585,5 +588,17 @@
         <ul>
             <li>The xercesImpl library was updated to 2.12.2, which may change
                 the content of some error messages.</li>
+            <li>The macOS and Linux startup scripts now will use a JVM
+                found within a "jre" directory within the JMRI program directory.
+                This lets you install a JVM (JRE or JDK) locally just for
+                JMRI's use.
+            <li>The Transit and Section classes have been refactored into an
+                interface with DefaultTransit and DefaultSection implementations
+                respectively.  Similar transforms have been done to
+                TransitManager and SectionManager. None of the production code
+                nor distributed scripts needed changes, as you still create
+                and access Transits and Sections via their managers obtained
+                from the InstanceManager. The SectionType constants in Section
+                has also been converted to an enum.
         </ul>
 

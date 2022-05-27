@@ -371,7 +371,7 @@ public class ActionThrottle extends AbstractDigitalAction
                         _locoAddressSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog expression " + socketSystemName);
+                        log.error("cannot load analog expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -393,7 +393,7 @@ public class ActionThrottle extends AbstractDigitalAction
                         _locoSpeedSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog expression " + socketSystemName);
+                        log.error("cannot load analog expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -415,7 +415,7 @@ public class ActionThrottle extends AbstractDigitalAction
                         _locoDirectionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -437,7 +437,7 @@ public class ActionThrottle extends AbstractDigitalAction
                         _locoFunctionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog expression " + socketSystemName);
+                        log.error("cannot load analog expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -459,7 +459,7 @@ public class ActionThrottle extends AbstractDigitalAction
                         _locoFunctionOnOffSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {

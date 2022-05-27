@@ -1184,7 +1184,7 @@ public class FileUtilSupport extends Bean {
             try {
                 return file.openStream();
             } catch (IOException ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("findInputStream IOException", ex);
             }
         }
         return null;
@@ -1455,7 +1455,7 @@ public class FileUtilSupport extends Bean {
             try {
                 return file.toURL();
             } catch (MalformedURLException ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("findURL MalformedURLException", ex);
             }
         }
         return null;
