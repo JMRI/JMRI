@@ -71,7 +71,7 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
             catch (Exception e) {
                 log.error("Unable to get number from reply: \"{}\" index: {} message: \"{}\"", s, index, toString());
             }
-            log.info(Integer.toString(val));
+            log.info("CV Value {}", val);
             return val;
         }
     }

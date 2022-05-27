@@ -1,6 +1,5 @@
 package jmri.jmrix.dcc4pc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
@@ -151,12 +150,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("formatted message: ");
+                    StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
                         f.append(Integer.toHexString(0xFF & msg[i]));
                         f.append(" ");
                     }
-                    log.debug(new String(f));
+                    log.debug("formatted message: {}", f);
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
@@ -173,13 +172,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         port.setDTR(false);
                         break;
                     } else if (m.getRetries() >= 0) {
-                        if (log.isDebugEnabled()) {
-                            StringBuilder b = new StringBuilder("Retry message: ");
-                            b.append(m.toString());
-                            b.append(" attempts remaining: ");
-                            b.append(m.getRetries());
-                            log.debug(new String(b));
-                        }
+                        log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
                             synchronized (xmtRunnable) {
@@ -294,8 +287,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     waitingForMore = true;
                     try {
                         Thread.sleep(10);
-                    } catch (Exception ex) {
-                        log.debug(ex.getLocalizedMessage(), ex);
+                    } catch (InterruptedException ex) {
+                        log.debug("InterruptedException", ex);
                     }
                     //log.debug("We do not forward the response to the listener as it has not been formed");
                     lastIncomplete = null;
@@ -576,7 +569,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
-                log.error(InterruptMessage);
+                log.error("{} from {}", InterruptMessage, e.getMessage());
             }
         }
         log.debug("TIMEOUT in transmitWait, mCurrentState:{} {} port dsr {} wait time {}", mCurrentState, state, port.isDSR(), waitTime);
