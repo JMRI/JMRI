@@ -10,7 +10,7 @@
  * Effectively, this puts English into the 2nd file for later translation, while
  * maintaining the files in the same order for readability.
  *
- * Note that whitespace and comments are not preserved.  If desired, those have
+ * Note that comments in the 2nd file are not preserved.  If desired, those have
  * to be added back in by hand.
  *
  * Usage:
