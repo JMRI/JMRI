@@ -383,6 +383,7 @@
         <a id="I18N" name="I18N"></a>
         <ul>
             <li>Rodrigo Rodriguez translated much of the GUI into Spanish.</li>
+            <li>Added a new tool to help maintain L10N properties files.</li>
         </ul>
 
     <h3>Layout Editor</h3>
