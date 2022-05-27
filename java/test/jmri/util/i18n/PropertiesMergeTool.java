@@ -110,6 +110,7 @@ class PropertiesMergeTool {
 
         // double \ characters to have them go through explicitly
         var literalLine = line.replaceAll("\\n", "\\\\n");
+        literalLine = literalLine.replaceAll("\\r", "\\\\r");
         outWriter.write(literalLine+"\n");
     }
 }
