@@ -111,7 +111,7 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
                 Dcc4PcMessage m = Dcc4PcMessage.getEnabledInputs(board);
                 m.setTimeout(2000);
                 m.setRetries(2);
-                log.debug(m.toString());
+                log.debug("Sending {}", m);
                 tc.sendDcc4PcMessage(m, this);
             } else if (r.getMessageType()==Dcc4PcMessage.CHILDENABLEDINPUTS) {
                 log.debug("Make Sensors for board {}: {}", board, r.toString());

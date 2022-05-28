@@ -206,7 +206,6 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
             EasyDccReply r;
             if (log.isDebugEnabled()) {
                 StringBuilder buf = new StringBuilder();
-                buf.append("EasyDCC Simulator Thread received message: ");
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
@@ -214,18 +213,17 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
                 } else {
                     buf.append("null message buffer");
                 }
-                log.trace(buf.toString()); // generates a lot of traffic
+                log.trace("EasyDCC Simulator Thread received message: {}", buf); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
                 writeReply(r);
                 if (log.isDebugEnabled()) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append("EasyDCC Simulator Thread sent reply: ");
                     for (int i = 0; i < r.getNumDataElements(); i++) {
                         buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                     }
-                    log.debug(buf.toString());
+                    log.debug("EasyDCC Simulator Thread sent reply: {}", buf);
                 }
             }
         }

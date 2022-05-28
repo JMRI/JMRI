@@ -945,7 +945,7 @@ public class SpeedUtil {
         measuredSpeed *= 1000;    // SpeedProfile is mm/sec
         float aveSettings = _settingsTravelled / _timeAtSpeed;
         if (log.isDebugEnabled()) {
-            log.debug(blkInfo.toString());
+            log.debug("Block: {}", blkInfo );
             float timeRatio = (exitTime - _entertime + _timeOffset) / (float)_timeAtSpeed;
             log.debug("distRatio= {}, timeRatio= {}, _timeOffset= {}, aveSpeed= {}, length= {}, calcLength= {}, elapsedTime= {}", 
                     distRatio, timeRatio, _timeOffset, measuredSpeed, length, _distanceTravelled, (exitTime - _entertime));
