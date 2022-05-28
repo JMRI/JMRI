@@ -311,6 +311,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     @Override
     public void setReporter(Reporter er) {
         reporter = er;
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     @Override

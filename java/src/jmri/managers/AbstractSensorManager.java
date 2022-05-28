@@ -201,6 +201,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                 sen.setSensorDebounceGoingActiveTimer(time);
             }
         }
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /** {@inheritDoc} */
@@ -217,6 +218,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                 sen.setSensorDebounceGoingInActiveTimer(time);
             }
         }
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**

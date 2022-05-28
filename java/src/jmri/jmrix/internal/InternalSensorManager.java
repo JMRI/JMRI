@@ -61,6 +61,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
     public static synchronized void setDefaultStateForNewSensors(int defaultSetting) {
         log.debug("Default new-Sensor state set to {}", defaultSetting);
         defaultState = defaultSetting;
+        jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true);
     }
 
     public static synchronized int getDefaultStateForNewSensors() {
@@ -83,7 +84,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }
-    
+
     /**
      * No validation for Internal Sensors.
      * {@inheritDoc}
