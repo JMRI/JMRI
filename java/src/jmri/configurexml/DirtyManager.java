@@ -1,11 +1,14 @@
 package jmri.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
 import jmri.configurexml.swing.DirtyManagerDialog;
+import jmri.jmrit.display.*;
+import jmri.jmrit.simpleclock.SimpleTimebase;
 
 /**
  * The Dirty Manager is notified whenever potential PanelPro data content is added, deleted or modified.
@@ -13,12 +16,17 @@ import jmri.configurexml.swing.DirtyManagerDialog;
  * The user will have an opportunity to store the data before shutdown proceeds.
  *
  * The basic process is to listen for propertyChange events.  When a relevant event occurs, the global
- * dirty flag is set.  When the store process has completed, the dirty flag is cleared.
+ * dirty flag is set.  When the store process has completed, the dirty flag is cleared.  In addition
+ * to existing property changes, the SetConfigDirty event can be used for changes that don't have
+ * an existing event.
  *
  * During PanelPro data file loading, the propertyChange events are ignored.
  *
  * The propertyChange events can be triggered by managers, individual beans, panels and other special
  * objects such as SSL (blockboss).
+ *
+ * For classes that don't support propertyChangeEvents, a direct call can used:
+ * jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true).
  *
  * @author Dave Sand Copyright (c) 2022
  */
@@ -46,6 +54,14 @@ public class DirtyManager {
             Manager<?> m = (Manager<?>) o;
             m.addPropertyChangeListener(_mgrListen);
             loadBeans(o);
+        } else if (o instanceof SimpleTimebase) {       // SIMPLECLOCK
+            var sb = (SimpleTimebase) o;
+            sb.removePropertyChangeListener(_beanListen);
+            sb.addPropertyChangeListener(_beanListen);
+        } else if (o instanceof Editor) {
+            var em = InstanceManager.getDefault(EditorManager.class);
+            em.removePropertyChangeListener("SetConfigDirty", _beanListen);
+            em.addPropertyChangeListener("SetConfigDirty", _beanListen);
         } else {
             log.info("!! Unable to identify class:  {}", o);
         }
@@ -108,7 +124,7 @@ public class DirtyManager {
      * the shutdown completes.  This is invoked by the shutdown manager.
      */
     public void storeIfNeeded() {
-        if (isDirty()) {
+        if (isDirty() && !GraphicsEnvironment.isHeadless()) {
             DirtyManagerDialog.showDialog();
         }
     }
@@ -137,9 +153,12 @@ public class DirtyManager {
 
         public void propertyChange(PropertyChangeEvent evt) {
 //             log.info("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
-            log.info("    evt = {}", evt.toString());
+//             log.info("    evt = {}", evt.toString());
+            log.info("    evt = {} :: {}", evt.getPropertyName(), evt.getSource());
             if (evt.getPropertyName().equals("KnownState")) return;
             if (evt.getPropertyName().equals("value")) return;
+            if (evt.getPropertyName().equals("time")) return;
+            if (evt.getPropertyName().equals("minutes")) return;
             setDirty(true);
         }
     }

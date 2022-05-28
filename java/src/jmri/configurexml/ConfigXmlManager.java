@@ -178,6 +178,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         confirmAdapterAvailable(o);
         // and add to list
         ulist.add(o);
+        dirtyManager.addManager(o);
     }
 
     /** {@inheritDoc} */

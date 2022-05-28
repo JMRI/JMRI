@@ -311,6 +311,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 hardwareTimeSource = InstanceManager.getDefault(ClockControl.class);
                 masterName = hardwareTimeSource.getHardwareClockName();
             }
+            firePropertyChange("SetConfigDirty", null, null);
         }
     }
 
@@ -336,6 +337,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             masterName = "";
             hardwareTimeSource = null;
         }
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -359,6 +361,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                    userGetRate(), getTime(), false);
             }
         }
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -382,6 +385,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(
                 userGetRate(), getTime(), false);
             }
+            firePropertyChange("SetConfigDirty", null, null);
         }
     }
 
@@ -405,6 +409,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(
                 userGetRate(), getTime(), false);
             }
+            firePropertyChange("SetConfigDirty", null, null);
         }
     }
 
@@ -422,6 +427,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setClockInitialRunState(ClockInitialRunState state) {
         initialState = state;
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -438,6 +444,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setShowStopButton(boolean displayed) {
         showStopButton = displayed;
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -455,6 +462,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public void setStartSetTime(boolean set, Date time) {
         startSetTime = set;
         startTime = new Date(time.getTime());
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -472,6 +480,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public void setStartRate(double factor) {
         startupFactor = factor;
         haveStartupFactor = true;
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -492,6 +501,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setSetRateAtStart(boolean set) {
         startSetRate = set;
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -516,6 +526,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setStartClockOption(int option) {
         startClockOption = option;
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -562,10 +573,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( 0, getTime(), (!internalMaster && !startSetTime)) );
             } else {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( mFactor, getTime(), (!internalMaster && !startSetTime)) );
             }
         } else if (!internalMaster) {

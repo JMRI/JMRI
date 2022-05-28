@@ -19,10 +19,8 @@ import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.ShutDownManager;
-    import jmri.UserPreferencesManager;
+import jmri.UserPreferencesManager;
 import jmri.beans.Bean;
-import jmri.implementation.AbstractShutDownTask;
 
 /**
  * Manager for JMRI Editors. This manager tracks editors, extending the Set
@@ -45,21 +43,15 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public static final String TITLE = "title";
     private final SortedSet<Editor> set = Collections.synchronizedSortedSet(new TreeSet<>(Comparator.comparing(Editor::getTitle)));
 
-    boolean panelSetChanged = false;
-
     public EditorManager() {
         super(false);
-        setShutDownTask();
     }
 
     /**
-     * Panel adds occur during xml data file loading and manual adds.
-     * This sets the change flag for manual adds.
-     * After a Store is complete, the flag is cleared.
-     * @param flag The new value for the panelSetChanged boolean.
+     * Fire the SetConfigDirty event based on panel set changes and on behalf of the panels.
      */
-    public void setChanged(boolean flag) {
-        panelSetChanged = flag;
+    public void setChanged() {
+        firePropertyChange("SetConfigDirty", null, null);
     }
 
     /**
@@ -85,73 +77,6 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
                 "jmri.jmrit.display.EditorManager", "skipDupLoadDialog", Bundle.getMessage("DuplicateLoadSkip"));  // NOI18N
     }
 
-    public transient AbstractShutDownTask shutDownTask = null;
-    public void setShutDownTask() {
-        shutDownTask = new AbstractShutDownTask("EditorManager") {
-            @Override
-            public Boolean call() {
-                if (panelSetChanged) {
-                    notifyStoreNeeded();
-                }
-                return Boolean.TRUE;
-            }
-
-            @Override
-            public void run() {
-            }
-        };
-        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
-        }
-
-        String getClassName() {
-        return EditorManager.class.getName();
-    }
-
-    /**
-     * Prompt whether to invoke the Store process.
-     * The options are "No" and "Yes".
-     */
-    void notifyStoreNeeded() {
-        // Provide option to invoke the store process before the shutdown.
-        final JDialog dialog = new JDialog();
-        dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
-        dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-        JPanel container = new JPanel();
-        container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        JLabel question = new JLabel(Bundle.getMessage("EditorManagerQuitNotification"));  // NOI18N
-        question.setAlignmentX(Component.CENTER_ALIGNMENT);
-        container.add(question);
-
-        JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));    // NOI18N
-        JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));      // NOI18N
-        JPanel button = new JPanel();
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.add(noButton);
-        button.add(yesButton);
-        container.add(button);
-
-        noButton.addActionListener((ActionEvent e) -> {
-            dialog.dispose();
-            return;
-        });
-
-        yesButton.addActionListener((ActionEvent e) -> {
-            dialog.setVisible(false);
-            new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
-            dialog.dispose();
-            return;
-        });
-
-        container.setAlignmentX(Component.CENTER_ALIGNMENT);
-        container.setAlignmentY(Component.CENTER_ALIGNMENT);
-        dialog.getContentPane().add(container);
-        dialog.pack();
-        dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
-        dialog.setModal(true);
-        dialog.setVisible(true);
-    }
-
     /**
      * Add an editor to this manager.
      *
@@ -162,6 +87,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         if (result) {
             fireIndexedPropertyChange(EDITORS, set.size(), null, editor);
             editor.addPropertyChangeListener(TITLE, this);
+            setChanged();
         }
     }
 
@@ -267,7 +193,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
         if (result) {
             fireIndexedPropertyChange(EDITORS, set.size(), editor, null);
             editor.removePropertyChangeListener(TITLE, this);
-            panelSetChanged = true;
+            setChanged();
         }
     }
 
@@ -278,6 +204,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
             if (contains(editor) && TITLE.equals(evt.getPropertyName())) {
                 set.remove(editor);
                 set.add(editor);
+                setChanged();
                 firePropertyChange(evt);
             }
         }
@@ -317,4 +244,7 @@ public class EditorManager extends Bean implements PropertyChangeListener, Insta
     public <T extends Editor> List<T> getList(@Nonnull Class<T> type) {
         return new ArrayList<>(getAll(type));
     }
+
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EditorManager.class);
+
 }
