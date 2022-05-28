@@ -157,6 +157,7 @@ public class DirtyManager {
 //             log.info("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
 //             log.info("    evt = {}", evt.toString());
             log.info("    evt = {} :: {}", evt.getPropertyName(), evt.getSource());
+            if (evt.getPropertyName().equals("CommandedState")) return;
             if (evt.getPropertyName().equals("KnownState")) return;
             if (evt.getPropertyName().equals("value")) return;
             if (evt.getPropertyName().equals("time")) return;

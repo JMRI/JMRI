@@ -71,6 +71,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     public void setInterval(int newInterval) {
         if (newInterval >= minInterval && newInterval <= maxInterval) {
             interval = newInterval;
+            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true);
         }
     }
 
@@ -82,6 +83,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     public void setMaxTries(int newMaxTries) {
         if (newMaxTries >= minMaxTries && newMaxTries <= maxMaxTries) {
             maxTries = newMaxTries;
+            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true);
         }
     }
 
