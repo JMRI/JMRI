@@ -137,12 +137,14 @@ public class DirtyManager {
     class ManagerListener implements PropertyChangeListener {
 
         public void propertyChange(PropertyChangeEvent evt) {
-            log.info("== mgr evt {}", evt);
+            log.info("== mgr evt {} :: {}", evt.getPropertyName(), evt.getSource());
             if (evt.getPropertyName().equals("length")) {
                 log.info("== 0 mgr evt {}", evt.getSource());
                 setDirty(true);
                 loadBeans(evt.getSource());
+                return;
             }
+            setDirty(true);
         }
     }
 

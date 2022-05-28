@@ -32,7 +32,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
 
     private Timebase clock;
     private String hardwareName = null;
-    private boolean changed = false;
     protected boolean showTime = false;
     private final DecimalFormat threeDigits = new DecimalFormat("0.000"); // 3 digit precision for speedup factor
 
@@ -62,7 +61,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     protected JButton setTimeButton = new JButton(Bundle.getMessage("ButtonSet"));
     protected JButton startButton = new JButton(Bundle.getMessage("ButtonStart"));
     protected JButton stopButton = new JButton(Bundle.getMessage("ButtonStop"));
-    protected JButton applyCloseButton = new JButton(Bundle.getMessage("ButtonStoreClock"));
+    protected JButton applyCloseButton = new JButton(Bundle.getMessage("ButtonClose"));
 
     protected JLabel clockStatus = new JLabel();
     protected JLabel timeLabel = new JLabel();
@@ -119,7 +118,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         JPanel panel4 = new JPanel();
         panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
         panel4.add(applyCloseButton);
-        applyCloseButton.addActionListener(this::saveButtonActionPerformed);
+        applyCloseButton.addActionListener(this::closeButtonActionPerformed);
         saveContainerPanel.add(panel4);
 
 
@@ -390,14 +389,12 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         Double v = parseRate(startFactorField.getText());
         if (v != null && !v.equals(clock.getStartRate())) {
             clock.setStartRate(v);
-            changed = true;
         }
         startFactorField.setText(threeDigits.format(clock.getStartRate()));
     }
 
     private void startSetRateChanged(ActionEvent e) {
         clock.setSetRateAtStart(startSetRateCheckBox.isSelected());
-        changed = true;
     }
 
     /**
@@ -471,7 +468,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             log.error("Exception when setting timebase rate", e);
         }
-        changed = true;
     }
 
     /**
@@ -506,7 +502,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
             }
             clock.setInternalMaster(false, true);
         }
-        changed = true;
     }
 
     /**
@@ -514,7 +509,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     private void synchronizeChanged(ActionEvent e) {
         clock.setSynchronize(synchronizeCheckBox.isSelected(), true);
-        changed = true;
     }
 
     /**
@@ -522,7 +516,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     private void correctChanged(ActionEvent e) {
         clock.setCorrectHardware(correctCheckBox.isSelected(), true);
-        changed = true;
     }
 
     /**
@@ -530,7 +523,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     private void displayChanged(ActionEvent e) {
         clock.set12HourDisplay(displayCheckBox.isSelected(), true);
-        changed = true;
     }
 
     /**
@@ -598,7 +590,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_NOTHING);
                 break;
         }
-        changed = true;
     }
 
     /**
@@ -606,7 +597,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     private void showStopButtonChanged(ActionEvent e) {
         clock.setShowStopButton(displayStartStopButton.isSelected());
-        changed = true;
     }
 
     /**
@@ -652,7 +642,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         long nNumMSec = ((cNumMSec / mSecPerHour) * mSecPerHour) - (cHours * mSecPerHour)
                 + (hours * mSecPerHour) + (minutes * mSecPerMinute);
         clock.setStartSetTime(startSetTimeCheckBox.isSelected(), new Date(nNumMSec));
-        changed = true;
     }
 
     /**
@@ -677,7 +666,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 break;
         }
         clock.setStartClockOption(sel);
-        changed = true;
     }
 
     /**
@@ -749,44 +737,19 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     }
 
     /**
-     * Handle Store button.
-     * @param e null if a save reminder, not null then from save button action.
+     * Handle Close button.
+     * @param e Close button action.
      */
-    public void saveButtonActionPerformed(ActionEvent e) {
-
-        String messageString = (e==null ? Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuClocks"))
-                : Bundle.getMessage("StoreClockString") );
-
-        // remind to save
-        Object[] options = {Bundle.getMessage("ButtonSaveConfig"), Bundle.getMessage("ButtonSaveUser"),
-                Bundle.getMessage("ButtonCancel")};
-        int retval = javax.swing.JOptionPane.showOptionDialog(this,
-                messageString,
-                Bundle.getMessage((e==null ? "ReminderTitle" : "MenuItemStore")),
-                0,
-                javax.swing.JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        switch (retval) {
-            case 0:
-                new jmri.configurexml.StoreXmlConfigAction().actionPerformed(null); // Config only
-                break;
-            case 1:
-                new jmri.configurexml.StoreXmlUserAction().actionPerformed(null); // Config + Panels
-                break;
-            default:
-                log.debug("cancel");
-        }
-        changed = false;
+    public void closeButtonActionPerformed(ActionEvent e) {
+        setVisible(false);
+        super.windowClosing(null);
     }
 
     /**
-     * If data changed, prompt to store.
      * {@inheritDoc}
      */
     @Override
     public void windowClosing(WindowEvent e) {
-        if (changed) { // remind to save
-            saveButtonActionPerformed(null);
-        }
         setVisible(false);
         super.windowClosing(e);
     }
