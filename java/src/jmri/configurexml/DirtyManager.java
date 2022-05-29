@@ -21,7 +21,7 @@ import jmri.jmrit.simpleclock.SimpleTimebase;
  */
 public class DirtyManager implements InstanceManagerAutoDefault {
 
-    boolean _dirty = true;
+    boolean _dirty = false;
 
     public DirtyManager() {
     }
@@ -29,9 +29,10 @@ public class DirtyManager implements InstanceManagerAutoDefault {
     /**
      * Set the dirty flag true or false.
      * @param dirty Either true or false.
+     * @param tag A descriptive phrase for debugging purposes. The tag can be null.
      */
-    public void setDirty(boolean dirty) {
-        log.debug("## dirty flag = {}", dirty);
+    public void setDirty(boolean dirty, String tag) {
+        log.debug("## dirty flag = {}, tag = {}", dirty, tag);
         _dirty = dirty;
     }
 
