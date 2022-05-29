@@ -343,15 +343,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 }
 
                 if (log.isDebugEnabled()) {
-                    String msg = "Handling sensor message \"" + r.toString() + "\" for ";
-                    msg += s.getSystemName();
-
-                    if (newState == Sensor.ACTIVE) {
-                        msg += ": ACTIVE";
-                    } else {
-                        msg += ": INACTIVE";
-                    }
-                    log.debug(msg);
+                    log.debug("Handling sensor message \"{}\" for {} {}",
+                        r, s.getSystemName(), s.describeState(newState) );
                 }
                 aiuArray[index].sensorChange(sensorNo, newState);
             }
