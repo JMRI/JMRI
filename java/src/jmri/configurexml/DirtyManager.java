@@ -47,7 +47,7 @@ public class DirtyManager {
      * @param o The manager object.
      */
     protected void addManager(Object o) {
-        log.info("++ 1 dm add manager :: {}", o.getClass().getName());
+        log.debug("++ 1 dm add manager :: {}", o.getClass().getName());
         var cname = o.getClass().getName();
         if (cname.contains("DefaultConditionalManager")) return;  // Special handling required.
         if (o instanceof jmri.managers.AbstractManager) {
@@ -63,7 +63,7 @@ public class DirtyManager {
             em.removePropertyChangeListener("SetConfigDirty", _beanListen);
             em.addPropertyChangeListener("SetConfigDirty", _beanListen);
         } else {
-            log.info("!! Unable to identify class:  {}", o);
+            log.debug("!! Unable to identify class:  {}", o);
         }
     }
 
@@ -86,7 +86,7 @@ public class DirtyManager {
      * @param dirty Either true or false.
      */
     public void setDirty(boolean dirty) {
-        log.info("## dirty flag = {}, loading = {}", dirty, _loading);
+        log.debug("## dirty flag = {}, loading = {}", dirty, _loading);
         if (!_loading) {
             _dirty = dirty;
         }
@@ -107,7 +107,7 @@ public class DirtyManager {
      * @param loading Either true or false.
      */
     public void setLoading(boolean loading) {
-        log.info("@@ loading flag = {}", loading);
+        log.debug("@@ loading flag = {}", loading);
         _loading = loading;
     }
 
@@ -137,9 +137,9 @@ public class DirtyManager {
     class ManagerListener implements PropertyChangeListener {
 
         public void propertyChange(PropertyChangeEvent evt) {
-            log.info("== mgr evt {} :: {}", evt.getPropertyName(), evt.getSource());
+            log.debug("== mgr evt {} :: {}", evt.getPropertyName(), evt.getSource());
             if (evt.getPropertyName().equals("length")) {
-                log.info("== 0 mgr evt {}", evt.getSource());
+                log.debug("== 0 mgr evt {}", evt.getSource());
                 setDirty(true);
                 loadBeans(evt.getSource());
                 return;
@@ -154,9 +154,9 @@ public class DirtyManager {
     class BeanListener implements PropertyChangeListener {
 
         public void propertyChange(PropertyChangeEvent evt) {
-//             log.info("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
-//             log.info("    evt = {}", evt.toString());
-            log.info("    evt = {} :: {}", evt.getPropertyName(), evt.getSource());
+//             log.debug("-- bean evt prop = {} :: src = {} :: evt = {}", evt.getPropertyName(), evt.getSource().getClass().getName(), evt);
+//             log.debug("    evt = {}", evt.toString());
+            log.debug("    evt = {} :: {}", evt.getPropertyName(), evt.getSource());
             if (evt.getPropertyName().equals("CommandedState")) return;
             if (evt.getPropertyName().equals("KnownState")) return;
             if (evt.getPropertyName().equals("value")) return;
