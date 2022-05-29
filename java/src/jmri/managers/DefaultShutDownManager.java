@@ -214,6 +214,10 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
+            var dirtyManager = jmri.InstanceManager.getNullableDefault(jmri.configurexml.DirtyManager.class);
+            if (dirtyManager != null) {
+                dirtyManager.storeIfNeeded();
+            }
             Date start = new Date();
             log.debug("Shutting down with {} callable and {} runnable tasks",
                 callables.size(), runnables.size());
