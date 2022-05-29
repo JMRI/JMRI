@@ -1,0 +1,16 @@
+#! /bin/bash
+#
+# Run over all translated .properties files for a single language,
+# updating using PropertiesMergeTool
+#
+# Takes one argument, which is the language to be updated e.g. "es" or "en_GB"
+#
+# Only updates if the translation file already exists
+#
+
+for filename in `find java/src -name \*_${1}.properties`
+do
+    basefile=${filename%%_${1}.*}.properties
+    echo $basefile
+    java java/test/jmri/util/i18n/PropertiesMergeTool.java   $basefile $filename
+done

@@ -309,6 +309,8 @@ public class SerialAddress {
      * @throws IllegalArgumentException if name is not valid
      * @see Manager#validateSystemNameFormat(java.lang.String, java.util.Locale)
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "Passing Locale.ENGLISH Bundle exception text before stack trace")
     static String validateSystemNameFormat(String name, Manager<?> manager, Locale locale) {
         name = manager.validateSystemNamePrefix(name, locale);
         Pattern pattern;

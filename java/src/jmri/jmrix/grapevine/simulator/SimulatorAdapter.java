@@ -232,15 +232,14 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             SerialReply r;
             if (log.isDebugEnabled()) {
                 StringBuffer buf = new StringBuffer();
-                buf.append("Grapevine Simulator Thread received message: ");
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                     }
                 } else {
                     buf.append("null message buffer");
                 }
-                log.trace(buf.toString()); // generates a lot of traffic
+                log.trace("Grapevine Simulator Thread received message: {}", buf); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
@@ -248,11 +247,10 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
                     writeReply(r);
                     if (log.isDebugEnabled()) {
                         StringBuilder buf = new StringBuilder();
-                        buf.append("Grapevine Simulator Thread sent reply: ");
                         for (int i = 0; i < r.getNumDataElements(); i++) {
                             buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                         }
-                        log.debug(buf.toString());
+                        log.debug("Grapevine Simulator Thread sent reply: {}", buf );
                     }
                 }
             }
@@ -355,7 +353,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
                     // reply = setParity(reply, 0);
                 }
         }
-        log.debug(reply == null ? "Message ignored" : "Reply generated " + reply.toString());
+        log.debug("Reply {}", reply == null ? "empty, Message ignored" : " generated " + reply.toString());
         return reply;
     }
 

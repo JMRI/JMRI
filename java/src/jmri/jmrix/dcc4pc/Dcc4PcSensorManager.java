@@ -227,7 +227,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                 try {
                     thr.start();
                 } catch (java.lang.IllegalThreadStateException ex) {
-                    log.error(ex.toString());
+                    log.error("Exception {} {}", thr.getName(), ex.getMessage());
                 }
             } else {
                 log.error("Do not know who this board message is for");
@@ -641,7 +641,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         synchronized void processInputPacket(Dcc4PcReply r) {
             if (log.isDebugEnabled()) {
                 log.debug("==== Process Packet ====");
-                log.debug(r.toHexString());
+                log.debug("hex = {}", r.toHexString());
             }
             int packetTypeCmd = 0x00;
             int currentByteLocation = 0;
@@ -664,7 +664,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
                     for (int i = oldstart; i < currentByteLocation; i++) {
                         buf.append(Integer.toHexString(r.getElement(i) & 0xff)).append(",");
                     }
-                    log.debug(buf.toString());
+                    log.debug("olstart - current hex {}", buf.toString());
                     log.debug("--- finish packet {} ---", (currentByteLocation - 1));
                 }
             }
@@ -691,7 +691,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 decodeDCCPacket(dcc_Data);
             } catch (Exception ex) {
-                log.error(ex.toString(), ex);
+                log.error("decodeDCCPacket Exception", ex);
             }
 
             if (packetType == 0x02) {
@@ -1092,7 +1092,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         try {
             thr.start();
         } catch (java.lang.IllegalThreadStateException ex) {
-            log.error(ex.toString());
+            log.error("Exception {} {}", thr.getName(), ex.getMessage());
         }
     }
 

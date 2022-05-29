@@ -142,6 +142,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 updateGUI(Math.round(percent));
             }
 
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+                justification = "message String also used in status JLabel")
             @Override
             public void onDone(int errorCode, String errorString) {
                 if (errorCode == 0) {

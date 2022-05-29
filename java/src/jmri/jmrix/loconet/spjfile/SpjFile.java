@@ -216,9 +216,7 @@ public class SpjFile {
             // get first header record
             h0 = new FirstHeader();
             h0.load(s);
-            if (log.isDebugEnabled()) {
-                log.debug(h0.toString());
-            }
+            log.debug("FirstHeader: {}", h0);
             n = h0.numHeaders();
             headers = new Header[n];
             headers[0] = h0;

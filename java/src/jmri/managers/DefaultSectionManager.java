@@ -173,6 +173,8 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @return number or validation errors; -2 is returned if there are no
      *         sections
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "passing section validation text")
     public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
         Set<Section> set = getNamedBeanSet();
         int numSections = 0;
