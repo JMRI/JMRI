@@ -22,6 +22,7 @@ import jmri.jmrit.simpleclock.SimpleTimebase;
 public class DirtyManager implements InstanceManagerAutoDefault {
 
     boolean _dirty = false;
+    boolean _loading = false;
 
     public DirtyManager() {
     }
@@ -32,8 +33,10 @@ public class DirtyManager implements InstanceManagerAutoDefault {
      * @param tag A descriptive phrase for debugging purposes. The tag can be null.
      */
     public void setDirty(boolean dirty, String tag) {
-        log.debug("## dirty flag = {}, tag = {}", dirty, tag);
-        _dirty = dirty;
+        if (!_loading) {
+            log.debug("## dirty flag = {}, tag = {}", dirty, tag);
+            _dirty = dirty;
+        }
     }
 
     /**
@@ -44,6 +47,16 @@ public class DirtyManager implements InstanceManagerAutoDefault {
     public boolean isDirty() {
         return _dirty;
     }
+
+    /**
+      * This is used to ignore the changes that naturally occur data loading.
+      * Set by the PanelPro data load processes to before loading and false when done.
+      * @param loading Either true or false.
+      */
+     public void setLoading(boolean loading) {
+         log.debug("@@ loading flag = {}", loading);
+         _loading = loading;
+     }
 
     /**
      * If the dirty state is true, provide the user with the opporutnity to do a Store before

@@ -31,7 +31,7 @@ public class ControlPanelEditorAction extends AbstractAction {
         }
         ControlPanelEditor frame = new ControlPanelEditor(name);
         InstanceManager.getDefault(EditorManager.class).add(frame);
-        InstanceManager.getDefault(EditorManager.class).setChanged(true);
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "CPE panel added");
         frame.setLocation(20, 20);
 
         frame.setTitle();
