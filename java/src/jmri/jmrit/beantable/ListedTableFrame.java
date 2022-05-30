@@ -628,7 +628,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                 item.getAAClass().setFrame(frame);
                 buildMenus(item);
             } catch (Exception ex) {
-                log.error(ex.getLocalizedMessage(), ex);
+                log.error("Could not build table {}", item, ex);
             }
             list.ensureIndexIsVisible(index);
             list.setSelectedIndex(index);

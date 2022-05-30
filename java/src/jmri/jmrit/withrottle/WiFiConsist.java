@@ -54,7 +54,7 @@ public class WiFiConsist extends NmraConsist {
                 dirNorm);
         if (packet != null) {
             if (log.isDebugEnabled()) {
-                log.debug(java.util.Arrays.toString(packet));
+                log.debug("Sending packet: {}", java.util.Arrays.toString(packet));
             }
             jmri.InstanceManager.getDefault(jmri.CommandStation.class).sendPacket(packet, 1);
         }

@@ -51,7 +51,7 @@ public class CTCMain {
 
     private void handleCTCDebugSystemReload(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {    // NOI18N
-            log.info(Bundle.getMessage("CTCMainShuttingDown"));          // NOI18N
+            log.info("{} : Reload", Bundle.getMessage("CTCMainShuttingDown"));          // NOI18N
             shutdown();
             startup();
         }

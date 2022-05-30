@@ -578,9 +578,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @param dirty true if preferences need to be saved
      */
     private void setDirty(boolean dirty) {
-        boolean oldDirty = this.dirty;
-        this.dirty = dirty;
-        super.firePropertyChange(PROP_DIRTY, oldDirty, dirty);
+        if (this.initialized) {
+            boolean oldDirty = this.dirty;
+            this.dirty = dirty;
+            super.firePropertyChange(PROP_DIRTY, oldDirty, dirty);
+        }
     }
 
     /**

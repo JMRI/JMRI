@@ -3,6 +3,7 @@ package jmri.jmrit.logix;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import jmri.InstanceManager;
 import jmri.implementation.AbstractShutDownTask;
@@ -109,8 +110,9 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
     }
 
     private void merge() {
-        _mergeCandidates.forEach((id, merge) -> {
-            if (merge) {
+        for (Entry<String, Boolean> entry : _mergeCandidates.entrySet()) {
+            if (entry.getValue()) {
+                String id = entry.getKey();
                 RosterEntry rosterEntry = Roster.getDefault().entryFromTitle(id);
                 if (rosterEntry != null) {
                     rosterEntry.setSpeedProfile(_mergeProfiles.get(id));
@@ -119,9 +121,9 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
                     log.debug("Unable to Write SpeedProfile to Roster. No RosterEntry for {}", id);
                 }
             } else {
-                log.debug("SpeedProfile not merged to Roster. id= {}", id);
+                log.debug("SpeedProfile not merged to Roster. id= {}", entry.getKey());
             }
-        });
+        }
         Roster.getDefault().writeRoster();
     }
 

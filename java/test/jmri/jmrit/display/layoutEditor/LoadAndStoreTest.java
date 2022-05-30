@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.stream.Stream;
 
 import jmri.util.*;
+import jmri.jmrit.display.Editor;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -66,10 +67,10 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
             log.debug("not stabilized after check");
         }
-        
+
         // and wait yet another 2 sec before writing out
         done = false;
-        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{
                 done = true;
             }, 2000);
         jmri.util.JUnitUtil.waitFor(()->{return done;});
@@ -79,7 +80,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         }
 
         done = false;
-        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{
                 done = true;
             }, 2000);
         jmri.util.JUnitUtil.waitFor(()->{return done;});
@@ -88,7 +89,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
             log.debug(" nor now");
         }
     }
-     
+
     /**
      * Also writes out image files from these for later offline checking.This
      * can't be (easily) automated, as the images vary from platform to
@@ -114,8 +115,8 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         int index = 0;
         for (JmriJFrame frame : JmriJFrame.getFrameList()) {
             index++;
-            if (frame instanceof LayoutEditor) {
-                LayoutEditor le = (LayoutEditor) frame;
+            if (frame instanceof Editor) {
+                Editor le = (Editor) frame;
 
                 String name = inFile.getName();
                 FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");

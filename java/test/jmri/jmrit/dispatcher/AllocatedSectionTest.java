@@ -20,10 +20,10 @@ public class AllocatedSectionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
-        jmri.Transit transit = new jmri.Transit("TT1");
+        jmri.Transit transit = new jmri.implementation.DefaultTransit("TT1");
         ActiveTrain at = new ActiveTrain(transit, "Train", ActiveTrain.USER);
-        jmri.Section section1 = new jmri.Section("TS1");
-        jmri.Section section2 = new jmri.Section("TS2");
+        jmri.Section section1 = new jmri.implementation.DefaultSection("TS1");
+        jmri.Section section2 = new jmri.implementation.DefaultSection("TS2");
         AllocatedSection t = new AllocatedSection(section1, at, 1, section2, 2);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(d);

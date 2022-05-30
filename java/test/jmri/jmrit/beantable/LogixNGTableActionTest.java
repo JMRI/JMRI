@@ -482,6 +482,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     // * Add a ActionTurnout
     // After that, test that the LogixNG is executed properly
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Timeout(15)
     @Test
     public void testAddAndRun() throws JmriException, InterruptedException {
 
@@ -491,16 +492,19 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         // * Add a LogixNG
         AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
-        logixNGTable.actionPerformed(null); // show table
+        ThreadingUtil.runOnGUI( ()-> {
+            logixNGTable.actionPerformed(null); // show table
+        });
         JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
 
-        logixNGTable.addPressed(null);
+        ThreadingUtil.runOnGUI( ()-> {
+            logixNGTable.addPressed(null);
+        });
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
 
         //disable "Auto System Name" via checkbox
-        JCheckBoxOperator jcbo = new JCheckBoxOperator(addFrame,Bundle.getMessage("LabelAutoSysName"));
-        jcbo.doClick();
+        new JCheckBoxOperator(addFrame,Bundle.getMessage("LabelAutoSysName")).doClick();
         new JTextFieldOperator(addFrame, 0).setText("IQ105");  // NOI18N
         new JTextFieldOperator(addFrame, 1).setText("LogixNG 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
@@ -631,8 +635,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         // We click on the IfThenElse then-action female socket to open the popup menu
         tp = jto.getPathForRow(2);
+        Assert.assertNotNull(tp);
 
         jpm = jto.callPopupOnPath(tp);
+        Assert.assertNotNull(jpm);
         new JPopupMenuOperator(jpm).pushMenuNoBlock("Add");
 
         // First, we get a dialog that lets us select which action to add

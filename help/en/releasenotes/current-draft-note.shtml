@@ -468,9 +468,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>The process for adding multiple Lights/Sensors/Turnouts/Reporters has been
-                improved.  Existing items are no longer skipped, so you get the
-                sequential items you asked for. Some error messages have been clarified.</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -582,7 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The xercesImpl library was updated to 2.12.2, which may change
-                the content of some error messages.</li>
+            <li></li>
         </ul>
 

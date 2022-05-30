@@ -114,7 +114,7 @@ public class LocoFile extends XmlFile {
                         cvObject = cvModel.allCvMap().get(name);
                      } else {
                         // this is a valid way to migrate a decoder definition, i.e. to remove a variable.
-                        log.info("CV "+name+" was in loco file, but not defined by the decoder definition; migrated");
+                        log.info("CV {} was in loco file, but not defined by the decoder definition; migrated", name);
                     }
                 }
                 if (cvObject != null) {

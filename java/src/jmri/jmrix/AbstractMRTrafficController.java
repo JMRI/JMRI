@@ -683,11 +683,11 @@ public abstract class AbstractMRTrafficController {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("formatted message: ");
+                    StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
                         f.append(String.format("%02X ",0xFF & msg[i]));
                     }
-                    log.debug(f.toString());
+                    log.debug("formatted message: {}", f.toString() );
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {

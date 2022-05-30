@@ -132,7 +132,7 @@ public class ImportLocations extends ImportRollingStock {
             fieldLocation = inputLine[FIELD_LOCATION];
             Location location = locationManager.getLocationByName(fieldLocation);
             if (location == null) {
-                log.debug("adding location - " + fieldLocation);
+                log.debug("adding location - {}", fieldLocation);
                 location = locationManager.newLocation(fieldLocation);
             }
             fieldTrack = inputLine[FIELD_TRACK];

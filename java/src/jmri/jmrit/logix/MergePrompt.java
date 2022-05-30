@@ -37,7 +37,7 @@ import jmri.util.table.ButtonEditor;
 public class MergePrompt extends JDialog {
 
     Map<String, Boolean> _candidates;   // merge candidate choices
-    HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
+//    HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
     Map<String, Map<Integer, Boolean>> _anomalyMap;
     JPanel _viewPanel;
     JmriJFrame _anomolyFrame;
@@ -47,8 +47,6 @@ public class MergePrompt extends JDialog {
         super();
         _candidates = cand;
         _anomalyMap = anomalies;
-        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        _mergeProfiles = manager.getMergeProfiles();
         setTitle(name);
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -138,7 +136,7 @@ public class MergePrompt extends JDialog {
         }
     }
 
-    void showProfiles(String id) {
+    private void showProfiles(String id) {
         if (_viewPanel != null) {
             getContentPane().remove(_viewPanel);
         }
@@ -152,29 +150,26 @@ public class MergePrompt extends JDialog {
         setVisible(true);
     }
 
-    JPanel makeViewPanel(String id) {
-        if (Roster.getDefault().getEntryForId(id) == null) {
+    private JPanel makeViewPanel(String id) {
+        RosterEntry entry = Roster.getDefault().getEntryForId(id);
+        if (entry == null) {
             return null;
         }
         JPanel viewPanel = new JPanel();
         viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));
         viewPanel.add(Box.createGlue());
         JPanel panel = new JPanel();
-        panel.add(MergePrompt.makeEditInfoPanel(id));
+        panel.add(MergePrompt.makeEditInfoPanel(entry));
         viewPanel.add(panel);
 
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
         spPanel.add(Box.createGlue());
 
-        RosterEntry re = Roster.getDefault().entryFromTitle(id);
-        RosterSpeedProfile speedProfile = null;
-        if (re != null) {
-            speedProfile = re.getSpeedProfile();
-            if (speedProfile != null ){
-                spPanel.add(makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
-                spPanel.add(Box.createGlue());
-            }
+        RosterSpeedProfile speedProfile = entry.getSpeedProfile();
+        if (speedProfile != null ){
+            spPanel.add(makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
+            spPanel.add(Box.createGlue());
         }
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
@@ -187,10 +182,10 @@ public class MergePrompt extends JDialog {
         return viewPanel;
     }
 
-    static JPanel makeEditInfoPanel(String id) {
+    static JPanel makeEditInfoPanel(RosterEntry entry) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        JLabel label = new JLabel(Bundle.getMessage("viewTitle", id));
+        JLabel label = new JLabel(Bundle.getMessage("viewTitle", entry.getId()));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(label);
         label = new JLabel(Bundle.getMessage("deletePrompt1"));

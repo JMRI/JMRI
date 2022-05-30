@@ -98,7 +98,7 @@ public class AbstractMaleSocketXml
         }
         
         List<Element> localVariableList = maleSocketElement.getChildren("LocalVariable");  // NOI18N
-        log.debug("Found " + localVariableList.size() + " male sockets");  // NOI18N
+        log.debug("Found {} male sockets", localVariableList.size() );  // NOI18N
         
         for (Element e : localVariableList) {
             Element elementName = e.getChild("name");   // NOI18N

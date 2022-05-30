@@ -152,7 +152,7 @@ public final class TreeModel extends DefaultTreeModel {
                         float value = event.getValue();
 
                         if (log.isDebugEnabled()) {
-                            StringBuffer buffer = new StringBuffer("Name [");
+                            StringBuffer buffer = new StringBuffer();
                             buffer.append(controllers[i].getName());
                             buffer.append("] Component [");
                             // buffer.append(event.getNanos()).append(", ");
@@ -166,7 +166,7 @@ public final class TreeModel extends DefaultTreeModel {
                                     buffer.append("Off");
                                 }
                             }
-                            log.debug(new String(buffer));
+                            log.debug("Name [ {}", buffer);
                         }
 
                         // ensure item exits

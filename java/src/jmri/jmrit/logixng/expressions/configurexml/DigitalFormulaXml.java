@@ -102,7 +102,7 @@ public class DigitalFormulaXml extends jmri.managers.configurexml.AbstractNamedB
             try {
                 h.setFormula(formula.getTextTrim());
             } catch (ParserException e) {
-                log.error("cannot set formula: " + formula.getTextTrim(), e);
+                log.error("cannot set formula: {}", formula.getTextTrim(), e);
             }
         }
 

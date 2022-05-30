@@ -665,29 +665,12 @@ public class NXFrame extends WarrantRoute {
         }
        return len;
     }
-    private float adjustdistance(float fromSpeed, float toSpeed, float distance, BlockOrder bo) throws JmriException {
-        float pathLen = getPathLength(bo);
-        if (pathLen <= 0) {
-            throw new JmriException(Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName()));
-        }
-        int timeIncrement = _speedUtil.getRampTimeIncrement();
-        float minDist = _speedUtil.getDistanceOfSpeedChange(fromSpeed, toSpeed, timeIncrement) +.1f;
-        if (distance < minDist) {
-            distance = minDist;
-        } else if (distance > pathLen - minDist) {
-            distance = pathLen - minDist;
-        }
-        return distance;
-    }
     /*
-     * Return length of warrant route in mm.  Assume start and end is in the middle of first
-     * and last blocks.  Use a default length for blocks with unspecified length.
+     * Return length of warrant route in mm.
      */
     private float getTotalLength() throws JmriException {
         float totalLen = 0.0f;
         List<BlockOrder> orders = getOrders();
-        float throttleIncrement = _speedUtil.getRampThrottleIncrement();
-        _startDist = adjustdistance(0f, throttleIncrement, _startDist, orders.get(0));
         totalLen = _startDist;
         for (int i = 1; i < orders.size() - 1; i++) {
             BlockOrder bo = orders.get(i);
@@ -697,7 +680,6 @@ public class NXFrame extends WarrantRoute {
             }
             totalLen += pathLen;
         }
-        _stopDist = adjustdistance(throttleIncrement, 0f, _stopDist, orders.get(0));
         totalLen += _stopDist;
         return totalLen;
     }
@@ -766,6 +748,7 @@ public class NXFrame extends WarrantRoute {
         float noopTime = 0;     // ms time for entry into next block
         ListIterator<Float> iter = upRamp.speedIterator(true);
         float curThrottle = iter.next();  // throttle setting
+        float prevThrottle = 0f;
         float nextThrottle = 0f;
         float curDistance = 0;  // current distance traveled mm
         float blkDistance = 0;  // distance traveled in current block mm
@@ -783,10 +766,13 @@ public class NXFrame extends WarrantRoute {
 
             while (blkDistance < blockLen && iter.hasNext()) {
                 nextThrottle = iter.next().floatValue();
-                float dist = _speedUtil.getDistanceOfSpeedChange(curThrottle, nextThrottle, timeInterval);
+//                float dist = _speedUtil.getDistanceOfSpeedChange(curThrottle, nextThrottle, timeInterval);
+                // interval distance up to speed change
+                float dist = _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, timeInterval);
                 if (blkDistance + dist <= blockLen) {
                     blkDistance += dist;
                     remRamp -= dist;
+                    prevThrottle = curThrottle;
                     curThrottle = nextThrottle;
                     w.addThrottleCommand(new ThrottleSetting((int) speedTime, Command.SPEED, -1, ValueType.VAL_FLOAT, 
                             SpeedStepMode.UNKNOWN, curThrottle, blockName, _speedUtil.getTrackSpeed(curThrottle)));
@@ -942,9 +928,11 @@ public class NXFrame extends WarrantRoute {
                     nextThrottle = iter.previous();
                     hasPrevious = true;
                 }
-                float dist = _speedUtil.getDistanceOfSpeedChange(curThrottle, nextThrottle, timeInterval);
+//                float dist = _speedUtil.getDistanceOfSpeedChange(curThrottle, nextThrottle, timeInterval);
+                float dist = _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, timeInterval);
                 blkDistance += dist;
-                remRamp -= dist;                
+                remRamp -= dist;
+                prevThrottle = curThrottle;
                 curThrottle = nextThrottle;
                 if (curThrottle <= 0f && !atLastBlock) {
                     log.warn("Set curThrottle = {} in block \"{}\" (NOT the last block)!", curThrottle, blockName);

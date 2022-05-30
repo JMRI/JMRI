@@ -190,7 +190,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 log.debug("Initial window location & size: {}", window);
 
                 log.debug("Detected {} screens.",GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length);
-                log.debug(windowFrameRef);
+                log.debug("windowFrameRef: {}", windowFrameRef);
                 if (reuseFrameSavedPosition) {
                     log.debug("setFrameLocation 1st clause sets \"{}\" location to {}", getTitle(), prefsMgr.getWindowLocation(windowFrameRef));
                     window.setLocation(prefsMgr.getWindowLocation(windowFrameRef));

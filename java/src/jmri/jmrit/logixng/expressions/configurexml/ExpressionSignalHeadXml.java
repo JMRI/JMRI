@@ -102,7 +102,7 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
                     int appearance = Integer.parseInt(appearanceElement.getTextTrim());
                     h.setAppearance(appearance);
                 } catch (NumberFormatException e) {
-                    log.error("cannot parse apperance: " + appearanceElement.getTextTrim(), e);
+                    log.error("cannot parse apperance: {}", appearanceElement.getTextTrim(), e);
                 }
             }
 

@@ -511,7 +511,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             } else if (value!=null) {
                 String setting = (String) value;
                 if (mode == Warrant.MODE_RUN || mode == Warrant.MODE_MANUAL) {
-                    int s = -1;
+                    int s = 0;
                     if (setting.equals(WarrantTableFrame.halt)) {
                         s = Warrant.HALT;
                     } else if (setting.equals(WarrantTableFrame.ramp)) {
@@ -531,8 +531,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     } else if (setting.isEmpty()) {
                         s = Warrant.DEBUG;
                     }
-                    if (s != -1) {
+                    if (s > 0) {
                         w.controlRunTrain(s);
+                    } else {
+                        w.locateTrain();
                     }
                 }
             }
