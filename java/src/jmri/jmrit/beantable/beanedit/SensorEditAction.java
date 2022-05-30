@@ -50,7 +50,10 @@ public class SensorEditAction extends BeanEditAction<Sensor> {
     @Override
     protected void saveBasicItems(ActionEvent e) {
         super.saveBasicItems(e);
-        bean.setInverted(inverted.isSelected());
+        if (bean.getInverted() != inverted.isSelected()) {
+            bean.setInverted(inverted.isSelected());
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set inverted");
+        }
     }
 
     @Override

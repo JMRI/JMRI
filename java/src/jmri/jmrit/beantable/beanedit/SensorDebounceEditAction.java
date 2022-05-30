@@ -98,11 +98,21 @@ public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
         }
 
         long time = (long) sensorDebounceActiveSpinner.getValue();
-        bean.setSensorDebounceGoingActiveTimer(time);
+        if (time != bean.getSensorDebounceGoingActiveTimer()) {
+            bean.setSensorDebounceGoingActiveTimer(time);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "debounce active time");
+        }
 
         time = (long) sensorDebounceInactiveSpinner.getValue();
-        bean.setSensorDebounceGoingInActiveTimer(time);
-        bean.setUseDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
+        if (time != bean.getSensorDebounceGoingInActiveTimer()) {
+            bean.setSensorDebounceGoingInActiveTimer(time);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "debounce inactive time");
+        }
+
+        if (bean.getUseDefaultTimerSettings() != sensorDebounceGlobalCheck.isSelected()) {
+            bean.setUseDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "use default debounce");
+        }
     }
 
     protected void resetDebounceItems(ActionEvent e) {
@@ -112,10 +122,10 @@ public class SensorDebounceEditAction extends BeanEditAction<Sensor> {
         }
         enabled(true);
         sensorDebounceGlobalCheck.setSelected(bean.getUseDefaultTimerSettings());
-        
+
         sensorDebounceActiveSpinner.setEnabled(!bean.getUseDefaultTimerSettings());
         sensorDebounceInactiveSpinner.setEnabled(!bean.getUseDefaultTimerSettings());
-        
+
         sensorDebounceActiveSpinner.setValue(bean.getSensorDebounceGoingActiveTimer()); // as long
         sensorDebounceInactiveSpinner.setValue(bean.getSensorDebounceGoingInActiveTimer());
     }

@@ -12,7 +12,7 @@ import jmri.Sensor;
  * on the SensorDebounceEditAction class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
- * @author Kevin Dickerson Copyright (C) 2017 
+ * @author Kevin Dickerson Copyright (C) 2017
  */
 public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
 
@@ -73,7 +73,11 @@ public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
             return;
         }
 
-        bean.setPullResistance((Sensor.PullResistance)sensorPullUpComboBox.getSelectedItem());
+        var cbo = (Sensor.PullResistance) sensorPullUpComboBox.getSelectedItem();
+        if (bean.getPullResistance().getShortName() != cbo.getShortName()) {
+            bean.setPullResistance((Sensor.PullResistance)sensorPullUpComboBox.getSelectedItem());
+            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "pullup");
+        }
     }
 
     protected void resetPullUpItems(ActionEvent e) {

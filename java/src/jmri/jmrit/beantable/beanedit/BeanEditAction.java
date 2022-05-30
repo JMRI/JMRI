@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides the basic information and structure for for a editing the details of
  * a bean object.
- * 
+ *
  * @param <B> the type of supported NamedBean
  *
  * @author Kevin Dickerson Copyright (C) 2011
@@ -192,14 +192,20 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         String uname = bean.getUserName();
         if (uname == null && !userNameField.getText().isEmpty()) {
             renameBean(userNameField.getText());
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set user name");
         } else if (uname != null && !uname.equals(userNameField.getText())) {
             if (userNameField.getText().isEmpty()) {
                 removeName();
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "remove user name");
             } else {
                 renameBean(userNameField.getText());
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "change user name");
             }
         }
-        bean.setComment(commentField.getText());
+        if (!commentField.getText().equals(bean.getComment() == null ? "" : bean.getComment())) {
+            bean.setComment(commentField.getText());
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "change comment");
+        }
     }
 
     @OverridingMethodsMustInvokeSuper
@@ -221,7 +227,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
      * Accessible so Edit Actions can set custom tool tip.
      */
     protected JButton applyBut;
-    
+
     public void setSelectedComponent(Component c) {
         selectedTab = c;
     }
@@ -311,7 +317,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
             InstanceManager.getDefault(UserPreferencesManager.class)
                 .setProperty(getClass().getName(), TAB_SELECT_STRING, detailsTab.getSelectedIndex());
         });
-    
+
     }
 
     protected void applyButtonAction(ActionEvent e) {
@@ -602,6 +608,7 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
                     ite.remove();
                 }
             }
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Bean Properties");
             wasModified = false;
         }
 

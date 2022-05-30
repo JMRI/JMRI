@@ -397,6 +397,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 T nBean = getBySystemName(sysNameList.get(row));
                 nBean.setUserName((String) value);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "user name");
                 if (nbMan.inUse(sysNameList.get(row), nBean)) {
                     String msg = Bundle.getMessage("UpdateToUserName", getBeanType(), value, sysNameList.get(row));
                     int optionPane = JOptionPane.showConfirmDialog(null,
@@ -414,8 +415,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 break;
             case COMMENTCOL:
-                getBySystemName(sysNameList.get(row)).setComment(
-                        (String) value);
+                getBySystemName(sysNameList.get(row)).setComment((String) value);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Comment");
                 break;
             case VALUECOL:
                 // button fired, swap state
@@ -457,6 +458,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     protected void doDelete(T bean) {
         try {
             getManager().deleteBean(bean, "DoDelete");
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "delete bean");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
             log.error("doDelete should not fail after canDelete. {}", e.getMessage());
@@ -859,6 +861,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         try {
             nBean.setUserName(newName);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "rename bean username");
         } catch (NamedBean.BadSystemNameException | NamedBean.BadUserNameException ex) {
             JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -906,6 +909,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             nbMan.updateBeanFromUserToSystem(nBean);
         }
         nBean.setUserName(null);
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "remove bean name");
         fireTableRowsUpdated(row, row);
     }
 
@@ -995,6 +999,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
             }
             fireTableRowsUpdated(row, row);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "move user name");
             InstanceManager.getDefault(UserPreferencesManager.class).
                     showInfoMessage(Bundle.getMessage("ReminderTitle"),
                             Bundle.getMessage("UpdateComplete", getBeanType()),
@@ -1016,6 +1021,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             return;
         }
         nBean.setComment(commentField.getText());
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "edit comment");
    }
 
     /**

@@ -264,6 +264,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "create sensor");
     }
 
     private String addEntryToolTip;
@@ -382,7 +383,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             defaultState = jmri.Sensor.INCONSISTENT;
         }
 
-        jmri.jmrix.internal.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
+        if (defaultState != jmri.jmrix.internal.InternalSensorManager.getDefaultStateForNewSensors()) {
+            jmri.jmrix.internal.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
+            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "internaldefault");
+        }
     }
 
     /**

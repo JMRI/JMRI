@@ -309,7 +309,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 return super.getValueAt(row, col);
         }
     }
-    
+
     /**
      * Small class to ensure type-safety of references otherwise lost to type erasure
      */
@@ -335,9 +335,11 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         switch (col) {
             case INVERTCOL:
                 s.setInverted(((boolean) value));
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "invert");
                 break;
             case USEGLOBALDELAY:
                 s.setUseDefaultTimerSettings(((boolean) value));
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "global delay");
                 break;
             case ACTIVEDELAY:
                 try {
@@ -347,6 +349,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                             + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
                         s.setSensorDebounceGoingActiveTimer(activeDeBounce);
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "active bounce");
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError")
@@ -357,10 +360,11 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 try {
                     long inactiveDeBounce = (long) value;
                     if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
-                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") 
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange")
                             + "\n\"" + Sensor.MAX_DEBOUNCE + "\"", Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else {
                         s.setSensorDebounceGoingInActiveTimer(inactiveDeBounce);
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "inactive bounce");
                     }
                 } catch (NumberFormatException exActiveDeBounce) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError")
@@ -375,6 +379,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case PULLUPCOL:
                 PullResistanceComboBox cb = (PullResistanceComboBox) value;
                 s.setPullResistance((Sensor.PullResistance) cb.getSelectedItem());
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "pullup");
                 break;
             case FORGETCOL:
                 try {
