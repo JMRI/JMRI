@@ -57,7 +57,6 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
                         + Bundle.getMessage("ConsoleWindowHasInfo"),  // NOI18N
                         Bundle.getMessage("StoreError"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             } else {
-                InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).setChanged(false);
                 InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(false, "stored");
             }
         }
