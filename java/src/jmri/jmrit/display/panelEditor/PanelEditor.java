@@ -661,6 +661,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void mousePressed(MouseEvent event) {
+        log.error("mousePressed: popup: {}", event.isPopupTrigger());
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
             log.debug("mousePressed at ({},{}) _dragging= {}", event.getX(), event.getY(), _dragging);
@@ -736,6 +737,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void mouseReleased(MouseEvent event) {
+        log.error("mouseReleased: popup: {}", event.isPopupTrigger());
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
             // in if statement to avoid inline conditional unless logging
