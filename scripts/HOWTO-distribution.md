@@ -253,13 +253,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/4.99.7-SNAPSHOT/4.99.9-SNAPSHOT/g pom.xml
+        sed -i .bak s/4.99.8-SNAPSHOT/4.99.9-SNAPSHOT/g pom.xml
         git commit -m"4.99.9 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field to 4.99.7 and 4.99.9)
 ```
-        sed -i .bak s/release.build=7/release.build=8/g release.properties
+        sed -i .bak s/release.build=8/release.build=9/g release.properties
         git commit -m"4.99.9 until next release" release.properties
         git push github
 ```
@@ -484,9 +484,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.9+Rc81de3c361.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+Rc81de3c361.dmg) | 8c6c0b549cb85db16a571d86297f8bbac8f6db2207eb1c6dca986b7e7975dbf9
-[JMRI.4.99.9+Rc81de3c361.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+Rc81de3c361.exe) | 9361d25468b27ef2236fdf46d522b02ce9e63ffe93b9a9825894281b913742de
-[JMRI.4.99.9+Rc81de3c361.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+Rc81de3c361.tgz) | dba6a4825cf8a310bb44a0bf15c8ea0509abd6c45cf17c510116f6632c098be4
+[JMRI.4.99.9+R20a7adae24.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+R20a7adae24.dmg) | ab674eb5b35a0492fb2deed0a18ee36a1049a63575a922352ab20a8e431c6db4
+[JMRI.4.99.9+R20a7adae24.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+R20a7adae24.exe) | 42dc28f12e379e790e750933841e3034f14a6cf2adbbebd10a43e21e5c2cddf1
+[JMRI.4.99.9+R20a7adae24.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+R20a7adae24.tgz) | d07c41158e92a9d6d2dc8db523b6c3e4918b92c2c852b1b8bbfc2639cf194627
 
 ```
 
@@ -627,10 +627,6 @@ You might want to edit it, i.e. to add
 
 ```
 - Commit this document and push back to GitHub
-
-- Wait a day for complaints
-
-- If production release, mail announcement to jmri-announce@lists.sourceforge.net
 
 - For production releases, file copyright registration
 
