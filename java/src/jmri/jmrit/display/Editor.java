@@ -3133,37 +3133,37 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     @Override
     public final void mousePressed(MouseEvent event) {
-        mousePressed(new JmriMouseEvent(event));
+        mousePressed(new JmriMouseEvent(event, JmriMouseEvent.EventType.MousePressed));
     }
 
     @Override
     public final void mouseReleased(MouseEvent event) {
-        mouseReleased(new JmriMouseEvent(event));
+        mouseReleased(new JmriMouseEvent(event, JmriMouseEvent.EventType.MouseReleased));
     }
 
     @Override
     public final void mouseClicked(MouseEvent event) {
-        mouseClicked(new JmriMouseEvent(event));
+        mouseClicked(new JmriMouseEvent(event, JmriMouseEvent.EventType.MouseClicked));
     }
 
     @Override
     public final void mouseDragged(MouseEvent event) {
-        mouseDragged(new JmriMouseEvent(event));
+        mouseDragged(new JmriMouseEvent(event, JmriMouseEvent.EventType.MouseDragged));
     }
 
     @Override
     public final void mouseMoved(MouseEvent event) {
-        mouseMoved(new JmriMouseEvent(event));
+        mouseMoved(new JmriMouseEvent(event, JmriMouseEvent.EventType.MouseMoved));
     }
 
     @Override
     public final void mouseEntered(MouseEvent event) {
-        mouseEntered(new JmriMouseEvent(event));
+        mouseEntered(new JmriMouseEvent(event, JmriMouseEvent.EventType.MouseEntered));
     }
 
     @Override
     public final void mouseExited(MouseEvent event) {
-        mouseExited(new JmriMouseEvent(event));
+        mouseExited(new JmriMouseEvent(event, JmriMouseEvent.EventType.MouseExited));
     }
 
     /*

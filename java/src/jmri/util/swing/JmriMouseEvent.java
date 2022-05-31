@@ -16,10 +16,23 @@ import jmri.util.SystemType;
  */
 public class JmriMouseEvent {
 
-    private final MouseEvent event;
+    public static enum EventType {
+        None,
+        MousePressed,
+        MouseReleased,
+        MouseClicked,
+        MouseDragged,
+        MouseMoved,
+        MouseEntered,
+        MouseExited,
+    }
 
-    public JmriMouseEvent(MouseEvent event) {
+    private final MouseEvent event;
+    private final EventType eventType;
+
+    public JmriMouseEvent(MouseEvent event, EventType eventType) {
         this.event = event;
+        this.eventType = eventType;
     }
 
     /**
