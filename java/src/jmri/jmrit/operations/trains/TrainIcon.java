@@ -19,7 +19,6 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.trains.Bundle;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriMouseEvent;
