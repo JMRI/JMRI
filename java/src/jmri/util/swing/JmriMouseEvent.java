@@ -2,6 +2,8 @@ package jmri.util.swing;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
@@ -193,7 +195,7 @@ public class JmriMouseEvent {
      * @since 1.4
      * @see Toolkit#areExtraMouseButtonsEnabled()
      * @see java.awt.MouseInfo#getNumberOfButtons()
-     * @see #MouseEvent(Component, int, long, int, int, int, int, int, int, boolean, int)
+     * @see MouseEvent(Component, int, long, int, int, int, int, int, int, boolean, int)
      * @see InputEvent#getMaskForButton(int)
      */
     public int getButton() {

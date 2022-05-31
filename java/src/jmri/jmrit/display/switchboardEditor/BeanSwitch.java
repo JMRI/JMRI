@@ -573,7 +573,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Show pop-up on a switch with its unique attributes including the
      * (un)connected bean. Derived from
-     * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
+     * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, JmriMouseEvent)}
      *
      * @param e unused because we now our own location
      * @return true when pop up displayed
