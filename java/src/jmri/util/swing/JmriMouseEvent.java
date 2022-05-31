@@ -213,7 +213,12 @@ public class JmriMouseEvent {
      *         for this platform
      */
     public boolean isPopupTrigger() {
-        return event.isPopupTrigger();
+        if (SystemType.isWindows()) {
+            // event.isPopupTrigger() returns false on mousePressed() on Windows
+            return SwingUtilities.isRightMouseButton(event);
+        } else {
+            return event.isPopupTrigger();
+        }
     }
 
     /**
