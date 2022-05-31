@@ -15,6 +15,7 @@ import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Test functioning of SwitchboardEditor.
@@ -82,7 +83,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         popup_thread1.setName("Switch popup");
         popup_thread1.start();
 
-        sw.showPopUp(new MouseEvent(sw, 1, 0, 0, 0, 0, 1, false));
+        sw.showPopUp(new JmriMouseEvent(new MouseEvent(sw, 1, 0, 0, 0, 0, 1, false)));
 
         JUnitUtil.waitFor(() -> !(popup_thread1.isAlive()), "Switch popup");
     }

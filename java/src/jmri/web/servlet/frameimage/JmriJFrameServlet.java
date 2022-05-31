@@ -102,7 +102,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((Positionable) c).doMouseClicked(new JmriMouseEvent(e, JmriMouseEvent.EventType.MouseClicked));
+            ((Positionable) c).doMouseClicked(new JmriMouseEvent(e));
         } else if (Positionable.class.isAssignableFrom(c.getClass())) {
             log.debug("Invoke Pressed, Released and Clicked on Positionable");
             MouseEvent e = new MouseEvent(c,
@@ -113,7 +113,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.Positionable) c).doMousePressed(new JmriMouseEvent(e, JmriMouseEvent.EventType.MousePressed));
+            ((jmri.jmrit.display.Positionable) c).doMousePressed(new JmriMouseEvent(e));
 
             e = new MouseEvent(c,
                     MouseEvent.MOUSE_RELEASED,
@@ -123,7 +123,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.Positionable) c).doMouseReleased(new JmriMouseEvent(e, JmriMouseEvent.EventType.MouseReleased));
+            ((jmri.jmrit.display.Positionable) c).doMouseReleased(new JmriMouseEvent(e));
 
             e = new MouseEvent(c,
                     MouseEvent.MOUSE_CLICKED,
@@ -133,7 +133,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.Positionable) c).doMouseClicked(new JmriMouseEvent(e, JmriMouseEvent.EventType.MouseClicked));
+            ((jmri.jmrit.display.Positionable) c).doMouseClicked(new JmriMouseEvent(e));
         } else {
             MouseListener[] la = c.getMouseListeners();
             log.debug("Invoke {} contained mouse listeners", la.length);

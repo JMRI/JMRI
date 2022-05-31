@@ -727,7 +727,7 @@ public class PositionablePointView extends LayoutTrackView {
         xClick = e.getX();
         yClick = e.getY();
         // if (debug) log.debug("Pressed: "+where(e));
-        JmriMouseEvent event = new JmriMouseEvent(e, JmriMouseEvent.EventType.MousePressed);
+        JmriMouseEvent event = new JmriMouseEvent(e);
         if (event.isPopupTrigger()) {
             showPopup(event);
         }
@@ -735,14 +735,14 @@ public class PositionablePointView extends LayoutTrackView {
 
     public void mouseReleased(MouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
-        JmriMouseEvent event = new JmriMouseEvent(e, JmriMouseEvent.EventType.MouseReleased);
+        JmriMouseEvent event = new JmriMouseEvent(e);
         if (event.isPopupTrigger()) {
             showPopup(event);
         }
     }
 
     public void mouseClicked(MouseEvent e) {
-        JmriMouseEvent event = new JmriMouseEvent(e, JmriMouseEvent.EventType.MouseClicked);
+        JmriMouseEvent event = new JmriMouseEvent(e);
         if (event.isPopupTrigger()) {
             showPopup(event);
         }

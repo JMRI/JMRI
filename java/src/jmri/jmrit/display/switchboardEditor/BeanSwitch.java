@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
@@ -23,6 +24,8 @@ import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -238,16 +241,18 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
             @Override
             public void mouseReleased(MouseEvent me) { // for Windows
-                if (me.isPopupTrigger()) {
-                    showPopUp(me); // display the popup
+                JmriMouseEvent event = new JmriMouseEvent(me);
+                if (event.isPopupTrigger()) {
+                    showPopUp(event); // display the popup
                 }
             }
 
             @Override
             public void mousePressed(MouseEvent me) { // for macOS, Linux
-                if (me.isPopupTrigger()) {
+                JmriMouseEvent event = new JmriMouseEvent(me);
+                if (event.isPopupTrigger()) {
                     log.debug("what's clicking?");
-                    showPopUp(me); // display the popup
+                    showPopUp(event); // display the popup
                 }
             }
         });
@@ -578,7 +583,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * @param e unused because we now our own location
      * @return true when pop up displayed
      */
-    public boolean showPopUp(MouseEvent e) {
+    public boolean showPopUp(JmriMouseEvent e) {
         if (switchPopup != null) {
             switchPopup.removeAll();
         } else {

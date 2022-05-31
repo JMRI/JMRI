@@ -20,6 +20,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -365,22 +366,28 @@ public class LayoutEditorToolBarPanel extends JPanel {
         locationPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
-                if (me.isPopupTrigger()) {
-                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                // JmriMouseEvent has special handling of isPopupTrigger()
+                JmriMouseEvent event = new JmriMouseEvent(me);
+                if (event.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, event.getX(), event.getY());
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-                if (me.isPopupTrigger()) {
-                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                // JmriMouseEvent has special handling of isPopupTrigger()
+                JmriMouseEvent event = new JmriMouseEvent(me);
+                if (event.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, event.getX(), event.getY());
                 }
             }
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (me.isPopupTrigger()) {
-                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                // JmriMouseEvent has special handling of isPopupTrigger()
+                JmriMouseEvent event = new JmriMouseEvent(me);
+                if (event.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, event.getX(), event.getY());
                 }
             }
         });

@@ -480,8 +480,7 @@ abstract public class LayoutTrackView {
                         0, // modifiers
                         (int) where.getX(), (int) where.getY(), // where
                         0, // click count
-                        true),
-                JmriMouseEvent.EventType.None));                         // popup trigger
+                        true)));                         // popup trigger
 
     }
 

@@ -18,23 +18,10 @@ import jmri.util.SystemType;
  */
 public class JmriMouseEvent {
 
-    public static enum EventType {
-        None,
-        MousePressed,
-        MouseReleased,
-        MouseClicked,
-        MouseDragged,
-        MouseMoved,
-        MouseEntered,
-        MouseExited,
-    }
-
     private final MouseEvent event;
-    private final EventType eventType;
 
-    public JmriMouseEvent(MouseEvent event, EventType eventType) {
+    public JmriMouseEvent(MouseEvent event) {
         this.event = event;
-        this.eventType = eventType;
     }
 
     /**
@@ -195,7 +182,7 @@ public class JmriMouseEvent {
      * @since 1.4
      * @see Toolkit#areExtraMouseButtonsEnabled()
      * @see java.awt.MouseInfo#getNumberOfButtons()
-     * @see MouseEvent(Component, int, long, int, int, int, int, int, int, boolean, int)
+     * @see #MouseEvent(Component, int, long, int, int, int, int, int, int, boolean, int)
      * @see InputEvent#getMaskForButton(int)
      */
     public int getButton() {
