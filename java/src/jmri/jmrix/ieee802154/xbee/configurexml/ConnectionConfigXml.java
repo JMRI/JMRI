@@ -168,11 +168,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
 
                 Element connect; 
-	        try {
-			connect = n.getChildren("connection").get(0); // there should only be one connection child.
-		} catch(IndexOutOfBoundsException ioobe){
-			connect = null;
-		}
+                try {
+                   connect = n.getChildren("connection").get(0); // there should only be one connection child.
+                } catch(IndexOutOfBoundsException ioobe){
+                   connect = null;
+                }
 
                 // configure the controller.
                 if (streamController != null) {
