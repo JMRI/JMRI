@@ -40,7 +40,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2014, 2022
  */
 public class PrintLocationsAction extends AbstractAction {
 
@@ -680,8 +680,8 @@ public class PrintLocationsAction extends AbstractAction {
                         track.getName() +
                         getDirection(location.getTrainDirections() & track.getTrainDirections());
                 writer.write(s);
-                writer.write(getTrackCarTypes(location, track));
-                writer.write(getTrackEngineTypes(location, track));
+                writer.write(getTrackCarTypes(track));
+                writer.write(getTrackEngineTypes(track));
                 writer.write(getTrackRoads(track));
                 writer.write(getTrackLoads(track));
                 writer.write(getTrackShipLoads(track));
@@ -736,7 +736,7 @@ public class PrintLocationsAction extends AbstractAction {
         return buf.toString();
     }
 
-    private String getTrackCarTypes(Location location, Track track) {
+    private String getTrackCarTypes(Track track) {
         StringBuffer buf =
                 new StringBuffer(TAB + TAB + Bundle.getMessage("CarTypesServicedTrack") + NEW_LINE + TAB + TAB);
         int charCount = 0;
@@ -753,7 +753,9 @@ public class PrintLocationsAction extends AbstractAction {
                 buf.append(type + ", ");
             }
         }
-
+        if (buf.length() > 2) {
+            buf.setLength(buf.length() - 2); // remove trailing separators
+        } 
         // does this track accept all types?
         if (typeCount == cts.getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllCarTypes"));
@@ -762,7 +764,7 @@ public class PrintLocationsAction extends AbstractAction {
         return buf.toString();
     }
     
-    private String getTrackEngineTypes(Location location, Track track) {
+    private String getTrackEngineTypes(Track track) {
         StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("EngineTypesServicedTrack") + NEW_LINE + TAB + TAB);
         int charCount = 0;
         int typeCount = 0;
