@@ -19,11 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
+import jmri.util.swing.JmriMouseEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
@@ -293,31 +294,31 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     // overide where used - e.g. momentary
     @Override
-    public void doMousePressed(MouseEvent event) {
+    public void doMousePressed(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseReleased(MouseEvent event) {
+    public void doMouseReleased(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseClicked(MouseEvent event) {
+    public void doMouseClicked(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseDragged(MouseEvent event) {
+    public void doMouseDragged(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseMoved(MouseEvent event) {
+    public void doMouseMoved(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseEntered(MouseEvent event) {
+    public void doMouseEntered(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseExited(MouseEvent event) {
+    public void doMouseExited(JmriMouseEvent event) {
     }
 
     @Override

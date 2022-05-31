@@ -14,18 +14,20 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.beans.PropertyChangeListener;
 import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.PositionableJComponent;
+import jmri.jmrit.display.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.SystemType;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +58,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
     protected int _height;
 
     protected DrawFrame _editFrame;
-    
+
     static final int TOP = 0;
     static final int RIGHT = 1;
     static final int BOTTOM = 2;
@@ -491,7 +493,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     @Override
-    public void doMousePressed(MouseEvent event) {
+    public void doMousePressed(JmriMouseEvent event) {
         _hitIndex = -1;
         if (!_editor.isEditable()) {
             return;
@@ -517,7 +519,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
         }
     }
 
-    protected boolean doHandleMove(MouseEvent event) {
+    protected boolean doHandleMove(JmriMouseEvent event) {
         if (_hitIndex >= 0 && _editor.isEditable()) {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;

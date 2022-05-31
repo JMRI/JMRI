@@ -13,6 +13,7 @@ import javax.swing.*;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.*;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component abstract base for the LayoutTrack hierarchy.
@@ -461,7 +462,7 @@ abstract public class LayoutTrackView {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    abstract protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
+    abstract protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent);
 
     /**
      * show the popup menu for this layout track
@@ -471,14 +472,15 @@ abstract public class LayoutTrackView {
      */
     @Nonnull
     final protected JPopupMenu showPopup(Point2D where) {
-        return this.showPopup(new MouseEvent(
-                layoutEditor.getTargetPanel(), // source
-                MouseEvent.MOUSE_CLICKED, // id
-                System.currentTimeMillis(), // when
-                0, // modifiers
-                (int) where.getX(), (int) where.getY(), // where
-                0, // click count
-                true));                         // popup trigger
+        return this.showPopup(new JmriMouseEvent(
+                new MouseEvent(
+                        layoutEditor.getTargetPanel(), // source
+                        MouseEvent.MOUSE_CLICKED, // id
+                        System.currentTimeMillis(), // when
+                        0, // modifiers
+                        (int) where.getX(), (int) where.getY(), // where
+                        0, // click count
+                        true)));                         // popup trigger
 
     }
 

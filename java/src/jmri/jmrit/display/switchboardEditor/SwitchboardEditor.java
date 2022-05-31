@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 //import javax.annotation.concurrent.GuardedBy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 //import com.alexandriasoftware.swing.Validation;
+
 import jmri.*;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;
@@ -21,6 +23,8 @@ import jmri.swing.ManagerComboBox;
 import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1633,32 +1637,32 @@ public class SwitchboardEditor extends Editor {
     }
 
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseDragged(MouseEvent event) {
+    public void mouseDragged(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseMoved(MouseEvent event) {
+    public void mouseMoved(JmriMouseEvent event) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent event) {
+    public void mouseEntered(JmriMouseEvent event) {
         _targetPanel.repaint();
     }
 
     @Override
-    public void mouseExited(MouseEvent event) {
+    public void mouseExited(JmriMouseEvent event) {
         setToolTip(null);
         _targetPanel.repaint(); // needed for ToolTip on targetPane
     }
@@ -1805,7 +1809,7 @@ public class SwitchboardEditor extends Editor {
      * @param event MouseEvent heard
      */
     @Override
-    protected void showPopUp(Positionable p, MouseEvent event) {
+    protected void showPopUp(Positionable p, JmriMouseEvent event) {
     }
 
     protected ArrayList<Positionable> getSelectionGroup() {

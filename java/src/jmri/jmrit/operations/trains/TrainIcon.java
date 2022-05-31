@@ -2,7 +2,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -15,14 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.LocoIcon;
+import jmri.jmrit.display.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.Bundle;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * An icon that displays the position of a train icon on a panel.
@@ -232,7 +232,7 @@ public class TrainIcon extends LocoIcon {
      * route.
      */
     @Override
-    public void doMouseDragged(MouseEvent event) {
+    public void doMouseDragged(JmriMouseEvent event) {
         log.debug("Mouse dragged, X={} Y={}", getX(), getY());
         if (_train != null) {
             RouteLocation next = _train.getNextRouteLocation(_train.getCurrentRouteLocation());
