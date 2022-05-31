@@ -311,7 +311,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                     appendFuncString(7,sb,((tr.getElement(1) & 0x40) == 0x40));
                     appendFuncString(8,sb,((tr.getElement(1) & 0x80) == 0x80));
                     
-                    log.trace(sb.toString());
+                    log.trace("Functions: {}", sb );
                 } catch (RuntimeException ex) {
                     log.error("Error handling reply from MC", ex);
                 }

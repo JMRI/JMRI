@@ -210,7 +210,7 @@ public class IfThenElse extends AbstractDigitalAction
                         _ifExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -232,7 +232,7 @@ public class IfThenElse extends AbstractDigitalAction
                         _thenActionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {
@@ -254,7 +254,7 @@ public class IfThenElse extends AbstractDigitalAction
                         _elseActionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {

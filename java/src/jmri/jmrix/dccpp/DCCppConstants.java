@@ -104,9 +104,9 @@ public final class DCCppConstants {
 
     // Message / Reply Regexes
     public static final String THROTTLE_CMD_REGEX    = "t\\s*(\\d+)\\s+(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t REG CAB SPEED DIR>
-    public static final String THROTTLE_V3_CMD_REGEX = "t\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*"; // <t CAB SPEED DIR>
+    public static final String THROTTLE_V3_CMD_REGEX = "t\\s*(\\d+)\\s+([-]*\\d+)\\s+([01])\\s*"; // <t CAB SPEED DIR>
     public static final String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // <f ADDR BYTE1 (BYTE2)>
-    public static final String FUNCTION_V4_CMD_REGEX="F\\s*([0-9]{1,4})\\s*([0-9]){1,2}\\s*([1,0])\\s*"; // <F CAB FUNC STATE>
+    public static final String FUNCTION_V4_CMD_REGEX="F\\s*([0-9]{1,4})\\s+([0-9]{1,2})\\s+([01])\\s*"; // <F CAB FUNC STATE>
     public static final String FORGET_CAB_CMD_REGEX ="-\\s*([0-9]{0,4})\\s*"; // <- [CAB]>
     public static final String ACCESSORY_CMD_REGEX = "a\\s(\\d+)\\s(\\d+)\\s([1,0])"; // <a ADDR SUBADDR ACTIVATE>
     public static final String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])"; // <T ID THROW>
@@ -135,7 +135,7 @@ public final class DCCppConstants {
     public static final String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)"; // <W cv value callbacknum callbacksub>
     public static final String PROG_WRITE_BYTE_V4_REGEX =  "W\\s*(\\d+)\\s(\\d+)"; // <W cv value>
     public static final String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)"; // <B cv bit value callbacknum callbacksub>
-    public static final String PROG_WRITE_BIT_V4_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([1,0])"; // <B cv bit value> 
+    public static final String PROG_WRITE_BIT_V4_REGEX =   "B\\s*(\\d+)\\s([0-7])\\s([01])"; // <B cv bit value> 
     public static final String PROG_READ_CV_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)"; // <R cv callbacknum callbacksub> 
     public static final String PROG_READ_CV_V4_REGEX = "R\\s*(\\d+)"; // <R cv> - use <V cv guess> instead
     public static final String PROG_READ_LOCOID_REGEX =  "R"; // <R>

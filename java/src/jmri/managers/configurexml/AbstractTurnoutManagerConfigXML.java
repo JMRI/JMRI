@@ -103,7 +103,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 }
 
                 // include number of control bits, if different from one
-                int iNum = t.getNumberOutputBits();
+                int iNum = t.getNumberControlBits();
                 if (iNum != 1) {
                     elem.setAttribute("numBits", "" + iNum);
                 }
@@ -133,10 +133,10 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 if (opstr != null) {
                     elem.setAttribute("automate", opstr);
                 }
-                if ((t.getDivergingSpeed() != null) && (!t.getDivergingSpeed().equals("")) && !t.getDivergingSpeed().contains("Global")) {
+                if ((t.getDivergingSpeed() != null) && (!t.getDivergingSpeed().isEmpty()) && !t.getDivergingSpeed().contains("Global")) {
                     elem.addContent(new Element("divergingSpeed").addContent(t.getDivergingSpeed()));
                 }
-                if ((t.getStraightSpeed() != null) && (!t.getStraightSpeed().equals("")) && !t.getStraightSpeed().contains("Global")) {
+                if ((t.getStraightSpeed() != null) && (!t.getStraightSpeed().isEmpty()) && !t.getStraightSpeed().contains("Global")) {
                     elem.addContent(new Element("straightSpeed").addContent(t.getStraightSpeed()));
                 }
 
@@ -175,7 +175,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             log.warn("unexpected extra elements found in turnout operations list");
             result = false;
         }
-        if (operationList.size() > 0) {
+        if (!operationList.isEmpty()) {
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
             tomx.load(operationList.get(0), null);
         }
@@ -187,23 +187,23 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         try {
             if (shared.getChild("defaultclosedspeed") != null) {
                 String closedSpeed = shared.getChild("defaultclosedspeed").getText();
-                if (closedSpeed != null && !closedSpeed.equals("")) {
+                if (closedSpeed != null && !closedSpeed.isEmpty()) {
                     tm.setDefaultClosedSpeed(closedSpeed);
                 }
             }
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("JmriException {}", ex.getMessage() );
         }
 
         try {
             if (shared.getChild("defaultthrownspeed") != null) {
                 String thrownSpeed = shared.getChild("defaultthrownspeed").getText();
-                if (thrownSpeed != null && !thrownSpeed.equals("")) {
+                if (thrownSpeed != null && !thrownSpeed.isEmpty()) {
                     tm.setDefaultThrownSpeed(thrownSpeed);
                 }
             }
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("JmriException {}", ex.getMessage() );
         }
 
         for (Element elem : turnoutList) {
@@ -292,14 +292,14 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             // number of bits, if present - if not, defaults to 1
             a = elem.getAttribute("numBits");
             if (a == null) {
-                t.setNumberOutputBits(1);
+                t.setNumberControlBits(1);
             } else {
                 int iNum = Integer.parseInt(a.getValue());
                 if ((iNum == 1) || (iNum == 2)) {
-                    t.setNumberOutputBits(iNum);
+                    t.setNumberControlBits(iNum);
                 } else {
                     log.warn("illegal number of output bits for control of turnout {}", sysName);
-                    t.setNumberOutputBits(1);
+                    t.setNumberControlBits(1);
                     result = false;
                 }
             }
@@ -321,7 +321,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
             // operation stuff
             List<Element> myOpList = elem.getChildren("operation");
-            if (myOpList.size() > 0) {
+            if (!myOpList.isEmpty()) {
                 if (myOpList.size() > 1) {
                     log.warn("unexpected extra elements found in turnout-specific operations");
                     result = false;
@@ -351,24 +351,24 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 t.setDivergingSpeed("Global");
                 if (elem.getChild("divergingSpeed") != null) {
                     String speed = elem.getChild("divergingSpeed").getText();
-                    if (speed != null && !speed.equals("") && !speed.contains("Global")) {
+                    if (speed != null && !speed.isEmpty() && !speed.contains("Global")) {
                         t.setDivergingSpeed(speed);
                     }
                 }
             } catch (jmri.JmriException ex) {
-                log.error(ex.toString());
+                log.error("Turnout {} : {}", t, ex.getMessage());
             }
 
             try {
                 t.setStraightSpeed("Global");
                 if (elem.getChild("straightSpeed") != null) {
                     String speed = elem.getChild("straightSpeed").getText();
-                    if (speed != null && !speed.equals("") && !speed.contains("Global")) {
+                    if (speed != null && !speed.isEmpty() && !speed.contains("Global")) {
                         t.setStraightSpeed(speed);
                     }
                 }
             } catch (jmri.JmriException ex) {
-                log.error(ex.toString());
+                log.error("Turnout {} : {}", t, ex.getMessage());
             }
         }
 

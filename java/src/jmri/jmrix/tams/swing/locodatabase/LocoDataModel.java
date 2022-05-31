@@ -241,12 +241,12 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
                 TamsMessage m = new TamsMessage("xLOCDUMP");
                 memo.getTrafficController().sendTamsMessage(m, this);
             } else {
-                locolist = new ArrayList<String[]>();
+                locolist = new ArrayList<>();
                 String msg = r.toString();
                 String[] rawlocolist = msg.split("\\r");
                 log.info("Raw loco list length: {}", rawlocolist.length);
                 for (String loco : rawlocolist) {
-                    log.info(loco);
+                    log.info("Loco: {}", loco );
                     if (!loco.equals("*END*")) {
                         String[] locodetails = loco.split(",");
                         locolist.add(locodetails);

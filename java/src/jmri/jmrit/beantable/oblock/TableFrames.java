@@ -457,7 +457,8 @@ public class TableFrames implements InternalFrameListener {
                     p0.setToPortal(port);
                 }
             } catch (IllegalArgumentException iae) {
-                log.error(iae.toString());
+                log.error("Could not convert Block {} to OBlock. {}",
+                    b.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), iae.getMessage());
             }
             // finished setting up 1 OBlock
         }

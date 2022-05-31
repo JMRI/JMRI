@@ -1,5 +1,7 @@
 package jmri.jmrit.logix;
 
+import javax.annotation.Nonnull;
+
 /**
  * This class holds speed data for a block of a warrant's route. The data is
  * gathered when a warrant is about to be executed and uses speed information
@@ -11,20 +13,20 @@ package jmri.jmrit.logix;
 class BlockSpeedInfo {
     String blockName;
     float entranceSpeed;
-    float maxSpeed;
     float exitSpeed;
     long time;
-    float blkDist;
+    float pathDist;
+    float calcDist;
     int firstIdx;
     int lastIdx;
 
-    BlockSpeedInfo(String n, float ens, float ms, float exs, long t, float d, int fi, int li) {
+    BlockSpeedInfo(String n, float ens, float exs, long t, float d, float c, int fi, int li) {
         blockName = n;
         entranceSpeed = ens;
-        maxSpeed = ms;
         exitSpeed = exs;
         time = t;
-        blkDist = d;
+        pathDist = d;
+        calcDist = c;
         firstIdx = fi;
         lastIdx = li;
     }
@@ -37,11 +39,6 @@ class BlockSpeedInfo {
         return entranceSpeed;
     }
 
-    // Maximum throttle setting in block
-    float getMaxSpeed() {
-        return maxSpeed;
-    }
-
     // Throttle setting at exit of block
     float getExitSpeed() {
         return exitSpeed;
@@ -51,8 +48,14 @@ class BlockSpeedInfo {
         return time;
     }
 
-    float getDistance() {
-        return blkDist;
+    // Path length in block
+    float getPathLen() {
+        return pathDist;
+    }
+
+    // Calculated path length in block according to speedProfile
+    float getCalcLen() {
+        return calcDist;
     }
     int getFirstIndex() {
         return firstIdx;
@@ -60,5 +63,27 @@ class BlockSpeedInfo {
 
     int getLastIndex() {
         return lastIdx;
+    }
+
+    @Override
+    @Nonnull
+    public String toString() {
+        StringBuilder sb = new StringBuilder("BlockSpeedInfo \"");
+        sb.append(blockName);
+        sb.append("\" entranceSpeed ");
+        sb.append(entranceSpeed);
+        sb.append(", exitSpeed ");
+        sb.append(exitSpeed);
+        sb.append(", time ");
+        sb.append(time);
+        sb.append(", pathDist ");
+        sb.append(pathDist);
+        sb.append(", calcDist ");
+        sb.append(calcDist);
+        sb.append(", from ");
+        sb.append(firstIdx);
+        sb.append(" to ");
+        sb.append(lastIdx);
+        return sb.toString();
     }
 }

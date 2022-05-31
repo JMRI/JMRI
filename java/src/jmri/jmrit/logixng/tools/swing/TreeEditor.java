@@ -1895,7 +1895,7 @@ public class TreeEditor extends TreeViewer {
                 _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-                log.error(e.getMessage());
+                log.error("Unexpected doDelete failure for {}, {}", _maleSocket, e.getMessage() );
             }
         }
 
@@ -1911,7 +1911,7 @@ public class TreeEditor extends TreeViewer {
                 _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                    log.warn(e.getMessage());
+                    log.warn("Do not Delete {}, {}", _maleSocket, e.getMessage());
                     message.append(Bundle.getMessage(
                             "VetoDeleteBean",
                             ((NamedBean)_maleSocket.getObject()).getBeanType(),

@@ -40,7 +40,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2014, 2022
  */
 public class PrintLocationsAction extends AbstractAction {
 
@@ -451,6 +451,13 @@ public class PrintLocationsAction extends AbstractAction {
             int dir = location.getTrainDirections();
             s = NEW_LINE + name + getDirection(dir);
             writer.write(s);
+            
+            // division
+            if (location.getDivision() != null) {
+                s = SPACE + Bundle.getMessage("Division") + ": " + location.getDivisionName() + NEW_LINE;
+                writer.write(s);
+            }
+            
             // services car and engine types
             s = getLocationTypes(location);
             writer.write(s);
@@ -476,11 +483,11 @@ public class PrintLocationsAction extends AbstractAction {
                 printTrackInfo(location, interchanges);
             }
 
-            List<Track> stagings = location.getTracksByNameList(Track.STAGING);
-            if (stagings.size() > 0) {
+            List<Track> staging = location.getTracksByNameList(Track.STAGING);
+            if (staging.size() > 0) {
                 s = SPACE + Bundle.getMessage("StagingName") + NEW_LINE;
                 writer.write(s);
-                printTrackInfo(location, stagings);
+                printTrackInfo(location, staging);
             }
         }
         if (printAnalysis.isSelected() || printErrorAnalysis.isSelected()) {
@@ -488,7 +495,7 @@ public class PrintLocationsAction extends AbstractAction {
         }
     }
 
-    private final boolean showStaging = false;
+    private final boolean showStaging = true;
 
     private void printAnalysisSelected() throws IOException {
         CarManager carManager = InstanceManager.getDefault(CarManager.class);
@@ -673,7 +680,8 @@ public class PrintLocationsAction extends AbstractAction {
                         track.getName() +
                         getDirection(location.getTrainDirections() & track.getTrainDirections());
                 writer.write(s);
-                writer.write(getTrackTypes(location, track));
+                writer.write(getTrackCarTypes(track));
+                writer.write(getTrackEngineTypes(track));
                 writer.write(getTrackRoads(track));
                 writer.write(getTrackLoads(track));
                 writer.write(getTrackShipLoads(track));
@@ -719,7 +727,8 @@ public class PrintLocationsAction extends AbstractAction {
         }
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
-        } // does this location accept all types?
+        } 
+        // does this location accept all types?
         if (typeCount == cts.getNames().length + InstanceManager.getDefault(EngineTypes.class).getNames().length) {
             buf = new StringBuffer(TAB + TAB + Bundle.getMessage("LocationAcceptsAllTypes"));
         }
@@ -727,8 +736,9 @@ public class PrintLocationsAction extends AbstractAction {
         return buf.toString();
     }
 
-    private String getTrackTypes(Location location, Track track) {
-        StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TypesServicedTrack") + NEW_LINE + TAB + TAB);
+    private String getTrackCarTypes(Track track) {
+        StringBuffer buf =
+                new StringBuffer(TAB + TAB + Bundle.getMessage("CarTypesServicedTrack") + NEW_LINE + TAB + TAB);
         int charCount = 0;
         int typeCount = 0;
 
@@ -743,6 +753,21 @@ public class PrintLocationsAction extends AbstractAction {
                 buf.append(type + ", ");
             }
         }
+        if (buf.length() > 2) {
+            buf.setLength(buf.length() - 2); // remove trailing separators
+        } 
+        // does this track accept all types?
+        if (typeCount == cts.getNames().length) {
+            buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllCarTypes"));
+        }
+        buf.append(NEW_LINE);
+        return buf.toString();
+    }
+    
+    private String getTrackEngineTypes(Track track) {
+        StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("EngineTypesServicedTrack") + NEW_LINE + TAB + TAB);
+        int charCount = 0;
+        int typeCount = 0;
 
         for (String type : InstanceManager.getDefault(EngineTypes.class).getNames()) {
             if (track.isTypeNameAccepted(type)) {
@@ -757,9 +782,10 @@ public class PrintLocationsAction extends AbstractAction {
         }
         if (buf.length() > 2) {
             buf.setLength(buf.length() - 2); // remove trailing separators
-        } // does this track accept all types?
-        if (typeCount == cts.getNames().length + InstanceManager.getDefault(EngineTypes.class).getNames().length) {
-            buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllTypes"));
+        } 
+        // does this track accept all types?
+        if (typeCount == InstanceManager.getDefault(EngineTypes.class).getNames().length) {
+            buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TrackAcceptsAllEngTypes"));
         }
         buf.append(NEW_LINE);
         return buf.toString();

@@ -174,6 +174,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="String already built for use in exception text")
     @Override
     @OverridingMethodsMustInvokeSuper
     public void register(@Nonnull E s) {
@@ -381,7 +383,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
                     vc.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
                     if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                        log.info(e.getMessage());
+                        log.info("Do Not Delete : {}", e.getMessage());
                         throw e;
                     }
                     message.append(e.getMessage()).append("<hr>"); // NOI18N
@@ -565,86 +567,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             throw new JmriException("Hardware Address passed "+curAddress+" should be a number");
         }
         return curAddress;
-    }
-
-    /**
-     * Get the Next valid hardware address.
-     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
-     * <p>
-     * System-specific methods may want to override getIncrement() rather than this one.
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it
-     *                          does not exist, else true to force an increment.
-     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address,
-     *                          or more than 10 next addresses in use.
-     */
-    @Nonnull
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        log.debug("getNextValid for address {} ignoring {}", curAddress, ignoreInitialExisting);
-        String testAddr;
-        NamedBean bean;
-        int increment;
-        // If hardware address passed does not already exist then this is the next valid address.
-        try {
-            // System.out.format("curaddress: "+curAddress);
-            testAddr = validateSystemNameFormat(createSystemName(curAddress,prefix));
-            // System.out.format("testaddr: "+testAddr);
-            bean = getBySystemName(testAddr);
-            increment = ( bean instanceof Turnout ? ((Turnout)bean).getNumberOutputBits() : 1);
-            testAddr = testAddr.substring(getSystemNamePrefix().length());
-
-            // do not check for incrementability here as could be String only
-            // getIncrement(testAddr, increment);
-        }
-        catch ( NamedBean.BadSystemNameException | JmriException ex ){
-            throw new JmriException(ex.getMessage());
-        }
-        if (bean == null && !ignoreInitialExisting) {
-            log.debug("address {} not in use", curAddress);
-            return curAddress;
-        }
-        for (int i = 0; i <10; i++) {
-            testAddr = getIncrement(testAddr, increment);
-            bean = getBySystemName(validateSystemNameFormat(createSystemName(testAddr,prefix)));
-            if ( bean == null) {
-                return testAddr;
-            }
-        }
-        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,testAddr));
-    }
-
-    /**
-     * Increment a hardware address.
-     * <p>
-     * Default is to increment only an existing number.
-     * Sub-classes may wish to override this.
-     * @param curAddress the address to increment, excluding both system name prefix and type letter.
-     * @param increment the amount to increment by.
-     * @return incremented address, no system prefix or type letter.
-     * @throws JmriException if unable to increment the address.
-     */
-    @Nonnull
-    protected String getIncrement(String curAddress, int increment) throws JmriException {
-        return getIncrementFromExistingNumber(curAddress,increment);
-    }
-
-    /**
-     * Increment a hardware address with an existing number.
-     * <p>
-     * @param curAddress the address to increment, excluding both system name prefix and type letter
-     * @param increment the amount to increment by.
-     * @return incremented number.
-     * @throws JmriException if unable to increment the address.
-     */
-    @Nonnull
-    protected String getIncrementFromExistingNumber(String curAddress, int increment) throws JmriException {
-        String newIncrement = jmri.util.StringUtil.incrementLastNumberInString(curAddress, increment);
-        if (newIncrement==null) {
-            throw new JmriException("No existing number found when incrementing " + curAddress);
-        }
-        return newIncrement;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManager.class);

@@ -206,38 +206,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     private int bitNum = 0;
     private int nAddress = 0;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
-
-        String tmpSName = createSystemName(curAddress, prefix);
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            for (int x = 1; x < 10; x++) {
-                bitNum++;
-                tmpSName = getMemo().makeSystemName("S", nAddress, bitNum);
-                s = getBySystemName(tmpSName);
-                if (s == null) {
-                    int seperator = tmpSName.lastIndexOf("S") + 1;
-                    curAddress = tmpSName.substring(seperator);
-                    return curAddress;
-                }
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
-        } else {
-            int seperator = tmpSName.lastIndexOf("S") + 1;
-            curAddress = tmpSName.substring(seperator);
-            return curAddress;
-        }
-    }
-
-    /**
+   /**
      * {@inheritDoc}
      */
     @Override
@@ -245,7 +214,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
-    
+
     /**
      * {@inheritDoc}
      */

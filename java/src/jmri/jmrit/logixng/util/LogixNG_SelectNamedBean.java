@@ -103,7 +103,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         _base.assertListenersAreNotRegistered(log, "setNamedBean");
         E namedBean = _manager.getNamedBean(name);
         if (namedBean != null) {
-            setNamedBean(namedBean);
+            setNamedBean(name, namedBean);
         } else {
             removeNamedBean();
             log.error("{} \"{}\" is not found", _manager.getBeanTypeHandled(), name);
@@ -117,9 +117,13 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
     }
 
     public void setNamedBean(@Nonnull E namedBean) {
+        setNamedBean(namedBean.getDisplayName(), namedBean);
+    }
+
+    public void setNamedBean(@Nonnull String name, @Nonnull E namedBean) {
         _base.assertListenersAreNotRegistered(log, "setNamedBean");
         setNamedBean(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(namedBean.getDisplayName(), namedBean));
+                .getNamedBeanHandle(name, namedBean));
     }
 
     public void removeNamedBean() {

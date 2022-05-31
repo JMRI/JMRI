@@ -1,5 +1,6 @@
-package jmri.configurexml;
+package jmri.managers;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -9,25 +10,26 @@ import org.junit.Assert;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class StoreXmlAllActionTest {
+public class DefaultTransitManagerTest {
 
     @Test
     public void testCTor() {
-        StoreXmlAllAction t = new StoreXmlAllAction();
+        TransitManager t = new jmri.managers.DefaultTransitManager();
         Assert.assertNotNull("exists",t);
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StoreXmlAllActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TransitManagerTest.class);
 
 }

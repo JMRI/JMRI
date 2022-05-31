@@ -6,13 +6,14 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.script.ScriptEngineSelector;
+import jmri.script.swing.ScriptEngineSelectorSwing;
 import jmri.script.swing.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
@@ -49,10 +50,18 @@ public class ActionScriptSwing extends AbstractDigitalActionSwing {
     private JTextField _scriptLocalVariableTextField;
     private JTextField _scriptFormulaTextField;
 
+    private ScriptEngineSelectorSwing _scriptEngineSelectorSwing;
+
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionScript action = (ActionScript)object;
+
+        if (action != null) {
+            _scriptEngineSelectorSwing = new ScriptEngineSelectorSwing(action.getScriptEngineSelector());
+        } else {
+            _scriptEngineSelectorSwing = new ScriptEngineSelectorSwing(new ScriptEngineSelector());
+        }
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -194,6 +203,12 @@ public class ActionScriptSwing extends AbstractDigitalActionSwing {
 
         for (JComponent c : componentList) actionPanel.add(c);
         panel.add(actionPanel);
+
+        JPanel scriptSelectorPanel = new JPanel();
+        scriptSelectorPanel.add(new JLabel(Bundle.getMessage("ActionScript_ScriptSelector")));
+        scriptSelectorPanel.add(_scriptEngineSelectorSwing.getComboBox());
+
+        panel.add(scriptSelectorPanel);
     }
 
     /** {@inheritDoc} */
@@ -282,6 +297,8 @@ public class ActionScriptSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        _scriptEngineSelectorSwing.update();
     }
 
     /** {@inheritDoc} */

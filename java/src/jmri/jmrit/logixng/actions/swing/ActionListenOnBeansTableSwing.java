@@ -20,7 +20,7 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
-    private BeanSelectPanel<NamedTable> tableBeanPanel;
+    private BeanSelectPanel<NamedTable> _tableBeanPanel;
     private JComboBox<TableRowOrColumn> _tableRowOrColumnComboBox;
     private JComboBox<String> _rowOrColumnNameComboBox;
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
@@ -40,40 +40,21 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
         JPanel tableBeanPanelPanel = new JPanel();
         tableBeanPanelPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_Table")));
-        tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
-        tableBeanPanelPanel.add(tableBeanPanel);
+        _tableBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(NamedTableManager.class), null);
+        tableBeanPanelPanel.add(_tableBeanPanel);
         panel.add(tableBeanPanelPanel);
 
+        _rowOrColumnNameComboBox = new JComboBox<>();
         _tableRowOrColumnComboBox = new JComboBox<>();
         for (TableRowOrColumn item : TableRowOrColumn.values()) {
             _tableRowOrColumnComboBox.addItem(item);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_tableRowOrColumnComboBox);
         _tableRowOrColumnComboBox.addActionListener((evt) -> {
-            _rowOrColumnNameComboBox.removeAllItems();
-            NamedTable table = tableBeanPanel.getNamedBean();
-            if (table != null) {
-                if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
-                    for (int column=0; column <= table.numColumns(); column++) {
-                        // If the header is null or empty, treat the row as a comment
-                        Object header = table.getCell(0, column);
-                        if ((header != null) && (!header.toString().isEmpty())) {
-                            _rowOrColumnNameComboBox.addItem(header.toString());
-                        }
-                    }
-                } else {
-                    for (int row=0; row <= table.numRows(); row++) {
-                        // If the header is null or empty, treat the row as a comment
-                        Object header = table.getCell(row, 0);
-                        if ((header != null) && (!header.toString().isEmpty())) {
-                            _rowOrColumnNameComboBox.addItem(header.toString());
-                        }
-                    }
-                }
-                if (action != null) {
-                    _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
-                }
-            }
+            comboListener(action);
+        });
+        _tableBeanPanel.getBeanCombo().addActionListener((evt) -> {
+            comboListener(action);
         });
 
         JPanel tableRowOrColumnPanel = new JPanel();
@@ -83,7 +64,6 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
         JPanel rowOrColumnNamePanel = new JPanel();
         rowOrColumnNamePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansTableSwing_RowOrColumnName")));
-        _rowOrColumnNameComboBox = new JComboBox<>();
         rowOrColumnNamePanel.add(_rowOrColumnNameComboBox);
         panel.add(rowOrColumnNamePanel);
         JComboBoxUtil.setupComboBoxMaxRows(_rowOrColumnNameComboBox);
@@ -111,12 +91,40 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
 
         if (action != null) {
             if (action.getSelectNamedBean().getNamedBean() != null) {
-                tableBeanPanel.setDefaultNamedBean(action.getSelectNamedBean().getNamedBean().getBean());
+                _tableBeanPanel.setDefaultNamedBean(action.getSelectNamedBean().getNamedBean().getBean());
             }
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
             _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
             _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
             _listenOnAllPropertiesCheckBox.setSelected(action.getListenOnAllProperties());
+        }
+    }
+
+    private void comboListener( ActionListenOnBeansTable action ) {
+
+        _rowOrColumnNameComboBox.removeAllItems();
+        NamedTable table = _tableBeanPanel.getNamedBean();
+        if (table != null) {
+            if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
+                for (int column=0; column <= table.numColumns(); column++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(0, column);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            } else {
+                for (int row=0; row <= table.numRows(); row++) {
+                    // If the header is null or empty, treat the row as a comment
+                    Object header = table.getCell(row, 0);
+                    if ((header != null) && (!header.toString().isEmpty())) {
+                        _rowOrColumnNameComboBox.addItem(header.toString());
+                    }
+                }
+            }
+            if (action != null) {
+                _rowOrColumnNameComboBox.setSelectedItem(action.getRowOrColumnName());
+            }
         }
     }
 
@@ -140,9 +148,12 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         if (!(object instanceof ActionListenOnBeansTable)) {
             throw new IllegalArgumentException("object must be an ActionListenOnBeansTable but is a: "+object.getClass().getName());
         }
+        if ( _tableBeanPanel == null ){
+            throw new UnsupportedOperationException("No Bean Panel Present ");
+        }
 
         ActionListenOnBeansTable action = (ActionListenOnBeansTable)object;
-        NamedTable table = tableBeanPanel.getNamedBean();
+        NamedTable table = _tableBeanPanel.getNamedBean();
         if (table != null) {
             NamedBeanHandle<NamedTable> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)

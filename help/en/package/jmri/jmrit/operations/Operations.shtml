@@ -603,19 +603,16 @@
                   <a href="#CopyTrain">Copy Train</a>
                 </li>
 
-                <li>
-                  <a href="#TrainShowCarTypesServiced">Show Car Types Serviced (Diagnostic
-                  Tool)</a>
-                </li>
+        <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced (Diagnostic Tool)</a>
+        </li>
 
-                <li>
-                  <a href="#TrainConductor">Train Conductor</a>
-                </li>
+        <li><a href="#TrainConductor">Train Conductor</a>
+         <ul>
+          <li><a href="#ShowCarsInTrain">Show Cars in Train</a></li>
+         </ul></li>
 
-                <li>
-                  <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a>
-                </li>
-              </ul>
+        <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a></li>
+       </ul>
             </li>
 
             <li>
@@ -4905,11 +4902,19 @@
       <p>FD = Final Destination</p>
 
       <h3 id="TrainConductor">Train Conductor</h3>
-      The train conductor window provides a train manifest for each location that the train visits.
-      This real time window allows you to see the work needed at a location for a built train, and
-      once the work is completed by selected all of the work checkboxes, allows you to move the
-      train to the next location in the train's route.
-      <h4 id="ModifyingBuiltTrain">Modifying a built train</h4>
+   The train conductor window provides a train manifest for each location that the train visits.
+   This real time window allows you to see the work needed at a location for a built train, and once
+   the work is completed by selected all of the work checkboxes, allows you to move the train to the
+   next location in the train's route.
+
+   <h4 id="ShowCarsInTrain">Show Cars in Train</h4>
+    There are two tools available in the conductor window, "Show Cars in Train" and "Show full
+    hyphened location name". The "Show Cars in Train" is used to see the correct blocking order in a
+    train along with set outs and pick ups at each location in the train's route. The "Show full
+    hyphened location name" tool will toggle the display of location names showing the full name of
+    the location when using the <a href="#AddLocation">hyphen</a> feature.
+
+   <h4 id="ModifyingBuiltTrain">Modifying a built train</h4>
 
       <p>You can also modify the train's manifest by pressing the "Modify" button in the Conductor
       or <a href="#Yardmaster">Yardmaster</a> window. The modify button once pressed will ask you

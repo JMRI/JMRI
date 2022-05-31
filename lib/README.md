@@ -110,7 +110,7 @@ which checks the dates of the control files to make sure they've benen updated w
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.29 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.29/openlcb-0.7.29.jar or the maven central repository.
+- 0.7.30 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.30/openlcb-0.7.30.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -280,9 +280,13 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
-##### xercesImpl-2.12.0.jar
-- version Xerces-J 2.12.0
-- from Maven
+##### xercesImpl-2.12.2.jar
+- version Xerces-J 2.12.2
+- from Maven https://mvnrepository.com/artifact/xerces/xercesImpl/2.12.2
+
+##### xml-apis-1.4.01.jar
+#- For xercesImpl 2.12.2
+# but we use the one provided by the JRE - see pom.xml - so there's no file for this
 
 ##### xml-apis-ext-1.3.04.jar
 - from Maven

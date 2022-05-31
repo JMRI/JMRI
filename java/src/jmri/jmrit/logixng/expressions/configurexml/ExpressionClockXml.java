@@ -69,7 +69,7 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
             try {
                 beginTime = Integer.parseInt(beginTimeElement.getTextTrim());
             } catch (NumberFormatException e) {
-                log.error("cannot parse beginTime: " + beginTimeElement.getTextTrim(), e);
+                log.error("cannot parse beginTime: {}", beginTimeElement.getTextTrim(), e);
             }
         }
         if (endTimeElement != null) {
@@ -77,7 +77,7 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
                 endTime =  Integer.parseInt(endTimeElement.getTextTrim());
                 h.setRange(beginTime, endTime);
             } catch (NumberFormatException e) {
-                log.error("cannot parse endTime: " + endTimeElement.getTextTrim(), e);
+                log.error("cannot parse endTime: {}", endTimeElement.getTextTrim(), e);
             }
         }
         h.setRange(beginTime, endTime);

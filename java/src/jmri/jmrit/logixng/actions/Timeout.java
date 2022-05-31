@@ -241,7 +241,7 @@ public class Timeout extends AbstractDigitalAction
                         _expressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -263,7 +263,7 @@ public class Timeout extends AbstractDigitalAction
                         _actionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital action " + socketSystemName);
+                        log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {
@@ -326,6 +326,7 @@ public class Timeout extends AbstractDigitalAction
 
         @Override
         public void execute() throws JmriException {
+            if (conditionalNG == null) { throw new NullPointerException("conditionalNG is null"); }
             if (_actionSocket != null) {
                 SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
                 conditionalNG.setSymbolTable(newSymbolTable);

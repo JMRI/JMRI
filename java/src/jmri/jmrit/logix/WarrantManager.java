@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownTask;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
@@ -358,41 +357,31 @@ public class WarrantManager extends AbstractManager<Warrant>
                 jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
             }
         }
-        if (id != null) {
+        log.debug("setMergeProfile id = {}", id);
+        if (id != null && merge != null) {
+            _mergeProfiles.remove(id);
             _mergeProfiles.put(id, merge);
         }
     }
 
     /**
      * Return a copy of the RosterSpeedProfile for Roster entry
-     * @param id Roster entry
+     * @param id roster id
      * @return RosterSpeedProfile
      */
-    @Nonnull
     protected RosterSpeedProfile getMergeProfile(String id) {
-        RosterSpeedProfile mergeProfile = _mergeProfiles.get(id);
-        if (mergeProfile != null && mergeProfile.getProfileSize() > 0 ) {
-            return makeProfileCopy(mergeProfile, id);
-        }
-        return makeProfileCopy(null, id);
+        log.debug("getMergeProfile id = {}", id);
+        return _mergeProfiles.get(id);
     }
 
-    protected RosterSpeedProfile makeProfileCopy(RosterSpeedProfile mergeProfile, String id) {
-        RosterSpeedProfile profile = new RosterSpeedProfile(null);
+    protected RosterSpeedProfile makeProfileCopy(RosterSpeedProfile mergeProfile, @Nonnull RosterEntry re) {
+        RosterSpeedProfile profile = new RosterSpeedProfile(re);
         if (mergeProfile == null) {
-            if (id != null && !id.isEmpty()) {
-                RosterEntry rosterEntry = Roster.getDefault().getEntryForId(id);
-                if (rosterEntry != null) {
-                    RosterSpeedProfile rosterProfile = rosterEntry.getSpeedProfile();
-                    if (rosterProfile != null) { // make copy of Roster SpeedProfile tree
-                        TreeMap<Integer, SpeedStep> rosterTree = rosterProfile.getProfileSpeeds();
-                        for (Map.Entry<Integer, SpeedStep> entry : rosterTree.entrySet()) {
-                            profile.setSpeed(entry.getKey(), entry.getValue().getForwardSpeed(), entry.getValue().getReverseSpeed());
-                        }
-                    }
-                }
+            mergeProfile = re.getSpeedProfile();
+            if (mergeProfile == null) {
+                mergeProfile = new RosterSpeedProfile(re);
+                re.setSpeedProfile(mergeProfile);
             }
-            return profile;
         }
         // make copy of mergeProfile
         TreeMap<Integer, SpeedStep> rosterTree = mergeProfile.getProfileSpeeds();

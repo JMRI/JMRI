@@ -631,7 +631,7 @@ public class ThrottlesPreferencesWindowKeyboardControls implements Cloneable {
             }
             moreSpeedMultiplier = Float.parseFloat(e.getAttributeValue("moreSpeedMultiplier"));
         } catch (NumberFormatException exc) {
-            log.error("Error while restoring thottle controls from xml : "+exc.getMessage());
+            log.error("Error while restoring thottle controls from xml : {}", exc.getMessage());
         }
         
     }

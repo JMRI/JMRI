@@ -195,41 +195,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
 
-    @Test
-    public void testGetNextValidAddress() throws JmriException {
-
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-
-        Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-
-        Assert.assertNotEquals("requesting ignore existing does not return same",
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-
-        Sensor t =  l.provide(getASystemNameWithNoPrefix());
-        Assert.assertNotNull("exists", t);
-
-        String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
-        Sensor nextValid =  l.provide(nextValidAddr);
-        Assert.assertNotNull("exists", nextValid);
-        Assert.assertNotEquals(nextValid, t);
-
-    }
-
-    @Test
-    public void testIncorrectGetNextValidAddress() {
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        boolean contains = Assert.assertThrows(JmriException.class,
-                ()->{
-                    l.getNextValidAddress("NOTANINCREMENTABLEADDRESS", l.getSystemPrefix(),false);
-                }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
-        Assert.assertTrue("Exception contained incorrect address", contains);
-    }
-
     /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers

@@ -304,7 +304,7 @@ public class RosterSpeedProfile {
         int key;
         Entry<Integer, SpeedStep> entry = findEquivalentEntry (throttleSetting, speedIncrement);
         if (entry != null) {    // close keys. i.e. resolve to same throttle step
-            float value = entry.getValue().getForwardSpeed();
+            float value = entry.getValue().getReverseSpeed();
             speed = (speed + value) / 2;
             key = entry.getKey();
         } else {    // nothing close. make new entry

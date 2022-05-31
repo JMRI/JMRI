@@ -60,16 +60,8 @@ public class ActionTurnoutLockXml extends jmri.managers.configurexml.AbstractNam
         var selectEnumXml = new LogixNG_SelectEnumXml<ActionTurnoutLock.TurnoutLock>();
 
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
-        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "turnout");
 
         selectEnumXml.load(shared.getChild("state"), h.getSelectEnum());
-        selectEnumXml.loadLegacy(
-                shared, h.getSelectEnum(),
-                "stateAddressing",
-                "turnoutLock",
-                "stateReference",
-                "stateLocalVariable",
-                "stateFormula");
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

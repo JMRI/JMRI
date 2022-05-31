@@ -807,7 +807,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 if (doIt) {
                     float newSpeed = (speedSlider.getValue() / (intSpeedSteps * 1.0f));
                     if (log.isDebugEnabled()) {
-                        log.debug("stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed);
+                        log.debug("stateChanged: slider pos: {} speed: {}", speedSlider.getValue(), newSpeed);
                     }
                     if (sliderPanel.isVisible() && throttle != null) {
                         throttle.setSpeedSetting(newSpeed);
@@ -855,7 +855,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     float newSpeed = (java.lang.Math.abs(speedSliderContinuous.getValue()) / (intSpeedSteps * 1.0f));
                     boolean newDir = (speedSliderContinuous.getValue() >= 0);
                     if (log.isDebugEnabled()) {
-                        log.debug("stateChanged: slider pos: " + speedSliderContinuous.getValue() + " speed: " + newSpeed + " dir: " + newDir);
+                        log.debug("stateChanged: slider pos: {} speed: {} dir: {}", speedSliderContinuous.getValue(), newSpeed, newDir);
                     }
                     if (speedSliderContinuousPanel.isVisible() && throttle != null) {
                         throttle.setSpeedSetting(newSpeed);
@@ -883,7 +883,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             if (!internalAdjust) {
                 float newSpeed = ((Integer) speedSpinner.getValue()).floatValue() / (intSpeedSteps * 1.0f);
                 if (log.isDebugEnabled()) {
-                    log.debug("stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed);
+                    log.debug("stateChanged: spinner pos: {} speed: {}", speedSpinner.getValue(), newSpeed);
                 }
                 if (throttle != null) {
                     if (spinnerPanel.isVisible()) {

@@ -310,12 +310,14 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * Provides a mechanism to read several OpSw values in a sequence. The
      * sequence is defined by the {@link #nextState(int)} method.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+        justification="I18N of log message")
     public void readAll() {
         // check the address
         try {
             setAddress(256);
         } catch (Exception e) {
-            log.debug(Bundle.getMessage("ERROR_READALL_INVALID_ADDRESS"));
+            log.debug("{}", Bundle.getMessage("ERROR_READALL_INVALID_ADDRESS"));
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
             status.setText(" ");
