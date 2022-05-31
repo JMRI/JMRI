@@ -276,7 +276,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From http://patrick.lidstone.net/html/dev_tools.html
 - See license http://patrick.lidstone.net/html/xap.html
 
-##### xbee-java-library-1.2.1.jar
+##### xbee-java-library-1.3.1.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
