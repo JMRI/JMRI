@@ -88,11 +88,6 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="206" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
-      <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="90" scale="1.0">
-        <rotation>0</rotation>
-      </icon>
-    </positionablelabel>
     <positionablelabel x="146" y="225" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif" degrees="0" scale="1.0">
         <rotation>1</rotation>
