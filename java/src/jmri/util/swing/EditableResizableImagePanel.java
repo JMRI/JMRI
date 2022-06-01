@@ -14,8 +14,6 @@ import javax.swing.JPopupMenu;
 
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
-import jmri.util.swing.JmriMouseEvent;
-import jmri.util.swing.JmriMouseListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
