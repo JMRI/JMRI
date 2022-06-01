@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Display a TurnoutOperationConfig Dialog for the turnout.
- * 
+ *
  * Code originally within TurnoutTableAction.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
@@ -40,15 +40,15 @@ public class TurnoutOperationEditorDialog extends JDialog {
         myTurnout = t;
         init();
     }
-        
+
     private void init() {
-        
+
         myOp.addPropertyChangeListener(evt -> {
             if (evt.getPropertyName().equals("Deleted")) {
                 setVisible(false);
             }
         });
-        
+
         TurnoutOperationConfig config = TurnoutOperationConfig.getConfigPanel(myOp);
         setTitle();
         log.debug("TurnoutOpsEditDialog title set");
@@ -68,6 +68,7 @@ public class TurnoutOperationEditorDialog extends JDialog {
                     setTitle();
                     myTurnout.setTurnoutOperation(null);
                     myTurnout.setTurnoutOperation(myOp); // no-op but updates display - have to <i>change</i> value
+                    jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "change operation name");
                 }
             });
             JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
@@ -100,7 +101,7 @@ public class TurnoutOperationEditorDialog extends JDialog {
                     editingOps.set(false);
                 }
             });
-            
+
         } else {
             log.error("Error opening Turnout automation edit pane");
         }

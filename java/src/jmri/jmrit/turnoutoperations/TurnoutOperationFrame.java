@@ -104,6 +104,7 @@ public class TurnoutOperationFrame extends JDialog {
             if (JOptionPane.showConfirmDialog(this, query + Bundle.getMessage("DeleteOperationDialog", currentOperation.getName()),
                     Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 currentOperation.dispose();
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "delete turnout operation");
                 populateTabs();
             }
         }

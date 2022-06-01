@@ -271,6 +271,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         // We will allow the turnout manager to handle checking whether the values have changed
         try {
             assert thrownValue != null;
+            if (!turnoutManager.getDefaultThrownSpeed().equals(thrownValue)) {
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "thrown speed");
+            }
             turnoutManager.setDefaultThrownSpeed(thrownValue);
         } catch (jmri.JmriException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + thrownValue);
@@ -278,6 +281,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         try {
             assert closedValue != null;
+            if (!turnoutManager.getDefaultClosedSpeed().equals(closedValue)) {
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "closed speed");
+            }
             turnoutManager.setDefaultClosedSpeed(closedValue);
         } catch (jmri.JmriException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + closedValue);
@@ -621,6 +627,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
+        jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "create turnout");
     }
 
     private String addEntryToolTip;

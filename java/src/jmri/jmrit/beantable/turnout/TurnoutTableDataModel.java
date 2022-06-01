@@ -386,18 +386,22 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         if (col == INVERTCOL) {
             if (t.canInvert()) {
                 t.setInverted((Boolean) value);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "invert turnout");
             }
         } else if (col == LOCKCOL) {
             t.setLocked(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT, (Boolean) value);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set lock out");
         } else if (col == MODECOL) {
             @SuppressWarnings("unchecked")
             String modeName = (String) ((JComboBox<String>) value).getSelectedItem();
             assert modeName != null;
             t.setFeedbackMode(modeName);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set feedback mode");
         } else if (col == SENSOR1COL) {
             try {
                 Sensor sensor = (Sensor) value;
                 t.provideFirstFeedbackSensor(sensor != null ? sensor.getDisplayName() : null);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set feedback sensor 1");
             } catch (jmri.JmriException e) {
                 JOptionPane.showMessageDialog(null, e.toString());
             }
@@ -405,6 +409,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             try {
                 Sensor sensor = (Sensor) value;
                 t.provideSecondFeedbackSensor(sensor != null ? sensor.getDisplayName() : null);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set feedback sensor 2");
             } catch (jmri.JmriException e) {
                 JOptionPane.showMessageDialog(null, e.toString());
             }
@@ -439,16 +444,19 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
             }
             fireTableRowsUpdated(row, row);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set lock selection");
         } else if (col == LOCKDECCOL) {
             @SuppressWarnings("unchecked")
             String decoderName = (String) ((JComboBox<String>) value).getSelectedItem();
             t.setDecoderName(decoderName);
             fireTableRowsUpdated(row, row);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set lock decoder");
         } else if (col == STRAIGHTCOL) {
             @SuppressWarnings("unchecked")
             String speed = (String) ((JComboBox<String>) value).getSelectedItem();
             try {
                 t.setStraightSpeed(speed);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set straight speed");
             } catch (jmri.JmriException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                 return;
@@ -465,6 +473,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             String speed = (String) ((JComboBox<String>) value).getSelectedItem();
             try {
                 t.setDivergingSpeed(speed);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set diverging speed");
             } catch (jmri.JmriException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
                 return;
@@ -752,6 +761,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
      * @param cb JComboBox for ops for t in the TurnoutTable
      */
     protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
+        var oper = getOperationType(t);
         switch (cb.getSelectedIndex()) {
             case 0:   // Off
                 t.setInhibitOperation(true);
@@ -767,6 +777,22 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                         getOperation(((String) java.util.Objects.requireNonNull(cb.getSelectedItem()))));
                 break;
         }
+        if (!oper.equals(getOperationType(t))) {
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "update operation type");
+        }
+    }
+
+    /**
+     * Convert the operation settings into a simple string that can be compared to indicate a change.
+     * @return a string containing 'off', 'default' or the toString of a turnout operation.
+     */
+    private String getOperationType(Turnout bean) {
+        var type = bean.getInhibitOperation() ? "off" : "on";
+        if (type.equals("on")) {
+            TurnoutOperation oper = bean.getTurnoutOperation();
+            type = oper == null ? "default" : oper.toString();
+        }
+        return type;
     }
 
     /**

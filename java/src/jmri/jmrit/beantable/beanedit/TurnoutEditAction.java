@@ -33,6 +33,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        operationTYpe = getOperationType();
         oldAutomationSelection = bean.getTurnoutOperation();
         oldModeSelection = bean.getFeedbackModeName();
         super.actionPerformed(e);
@@ -65,7 +66,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     protected void saveBasicItems(ActionEvent e) {
         super.saveBasicItems(e);
         Turnout turn = bean;
-        turn.setInverted(inverted.isSelected());
+        if (turn.getInverted() != inverted.isSelected()) {
+            turn.setInverted(inverted.isSelected());
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set turnout inverted");
+        }
     }
 
     @Override
@@ -86,6 +90,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     private TurnoutOperationConfig config;
     private BeanItemPanel feedback;
     private JPanel turnoutOperation = new JPanel();
+    private String operationTYpe;   // Used by DirtyManager to detect turnout operation changes.
 
     private BeanItemPanel feedback() {
         feedback = new BeanItemPanel();
@@ -165,6 +170,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                     } else {
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "operation name");
                     }
                     bean.setTurnoutOperation(null);
                     bean.setTurnoutOperation(currentOperation);
@@ -191,14 +197,23 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 oldAutomationSelection = bean.getTurnoutOperation();
                 oldModeSelection = bean.getFeedbackModeName();
                 try {
+                    if (bean.getFirstSensor() != sensorFeedBack1ComboBox.getSelectedItem()) {
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "feedback sensor 1");
+                    }
                     bean.provideFirstFeedbackSensor(sensorFeedBack1ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
                 try {
+                    if (bean.getSecondSensor() != sensorFeedBack2ComboBox.getSelectedItem()) {
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "feedback sensor 2");
+                    }
                     bean.provideSecondFeedbackSensor(sensorFeedBack2ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
+                }
+                if (!operationTYpe.equals(getOperationType())) {
+                    InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "operation selection");
                 }
             }
         });
@@ -212,7 +227,6 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 automationBox.removeActionListener(automationSelectionListener);
                 jmri.jmrit.beantable.TurnoutTableAction.updateAutomationBox(bean, automationBox);
                 automationBox.addActionListener(automationSelectionListener);
-
                 bean.setFeedbackMode(oldModeSelection);
                 updateFeedbackOptions();
             }
@@ -242,7 +256,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 sensorFeedBack1ComboBox.setEnabled(true);
                 sensorFeedBack2ComboBox.setEnabled(true);
             }
-            bean.setFeedbackMode(mode);
+            if (!mode.equals(bean.getFeedbackModeName())) {
+                bean.setFeedbackMode(mode);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "turnout feedback mode");
+            }
         }
 
         bean.setFeedbackMode((String) modeBox.getSelectedItem());
@@ -250,7 +267,6 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
     }
 
     private void updateAutomationOptions() {
-
         currentOperation = null;
         automationBox.removeActionListener(automationSelectionListener);
         if (automationBox.getSelectedIndex() > 1) {
@@ -280,6 +296,19 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
             }
         }
         automationBox.addActionListener(automationSelectionListener);
+    }
+
+    /**
+     * Convert the operation settings into a simple string that can be compared to indicate a change.
+     * @return a string containing 'off', 'default' or the toString of a turnout operation.
+     */
+    private String getOperationType() {
+        var type = bean.getInhibitOperation() ? "off" : "on";
+        if (type.equals("on")) {
+            TurnoutOperation oper = bean.getTurnoutOperation();
+            type = oper == null ? "default" : oper.toString();
+        }
+        return type;
     }
 
     @Override
@@ -346,6 +375,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
             lock.setSaveItem(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
+                    // Used by DirtyManager checking
+                    var oldLockType = getLockType();
+
                     String lockOpName = (String) lockOperationBox.getSelectedItem();
                     if (lockOpName != null) {
                         if (lockOpName.equals(bothText)) {
@@ -360,9 +393,18 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                             bean.enableLockOperation(Turnout.CABLOCKOUT, false);
                             bean.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
                         }
+
+                        if (oldLockType != getLockType()) {
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Lock operation");
+                        }
+
                     }
+
                     String decoderName = (String) lockBox.getSelectedItem();
                     if (decoderName != null) {
+                        if (!decoderName.equals(bean.getDecoderName())) {
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "lock decoder");
+                        }
                         bean.setDecoderName(decoderName);
                     }
                 }
@@ -394,6 +436,16 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         return lock;
     }   // lock()
 
+    /**
+     * Convert the lock settings into an integer that can be used to detect changes.
+     * @return 0 for None, 1 for cab lockout, 2 for push button lockout, 3 for both.
+     */
+    private int getLockType() {
+        int lockType = bean.canLock(Turnout.CABLOCKOUT) ? 1 : 0;
+        lockType += bean.canLock(Turnout.PUSHBUTTONLOCKOUT) ? 2 : 0;
+        return lockType;
+    }
+
     private java.util.Vector<String> speedListClosed = new java.util.Vector<>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<>();
 
@@ -413,7 +465,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global")
                 + " " + InstanceManager.turnoutManagerInstance().getDefaultClosedSpeed());
 
-      useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
+        useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
         speedListClosed.add(defaultClosedSpeedText);
         speedListThrown.add(defaultThrownSpeedText);
@@ -446,12 +498,15 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 Bundle.getMessage("ThrownSpeed"),
                 Bundle.getMessage("ThrownSpeedToolTip")));
 
-      speed.setSaveItem(new AbstractAction() {
+        speed.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String speed = (String) closedSpeedBox.getSelectedItem();
                 if (speed != null) {
                     try {
+                        if (!bean.getStraightSpeed().equals(speed)) {
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set straight speed");
+                        }
                         bean.setStraightSpeed(speed);
                         if ((!speedListClosed.contains(speed)) && !speed.contains("Global")) {
                             speedListClosed.add(speed);
@@ -463,6 +518,9 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 speed = (String) thrownSpeedBox.getSelectedItem();
                 if (speed != null) {
                     try {
+                        if (!bean.getDivergingSpeed().equals(speed)) {
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set diverging speed");
+                        }
                         bean.setDivergingSpeed(speed);
                         if ((!speedListThrown.contains(speed)) && !speed.contains("Global")) {
                             speedListThrown.add(speed);
@@ -502,6 +560,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
 
         bei.add(speed);
         return speed;
-    }
+    }   // speed()
 
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutEditAction.class);
 }
