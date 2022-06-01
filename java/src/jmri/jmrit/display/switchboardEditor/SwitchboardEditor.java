@@ -1806,7 +1806,7 @@ public class SwitchboardEditor extends Editor {
      * Not used on switchboards but has to override Editor.
      *
      * @param p     the item on the Panel
-     * @param event MouseEvent heard
+     * @param event the event triggering the menu
      */
     @Override
     protected void showPopUp(Positionable p, JmriMouseEvent event) {
