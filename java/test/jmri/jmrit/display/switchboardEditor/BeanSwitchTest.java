@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import jmri.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 import org.junit.jupiter.api.*;
 
@@ -76,7 +77,7 @@ public class BeanSwitchTest {
             nb.setState(Turnout.THROWN);
         } catch (JmriException ignore) {
         }
-        t.operate(new MouseEvent(t, 1, 0, 0, 0, 0, 1, false), "NAME");
+        t.operate(new JmriMouseEvent(new MouseEvent(t, 1, 0, 0, 0, 0, 1, false)), "NAME");
 
         Assertions.assertEquals("IT1: C", t.getIconLabel(), "On label +");
         t.displayState(Turnout.UNKNOWN);

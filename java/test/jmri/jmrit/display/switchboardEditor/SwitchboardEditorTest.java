@@ -164,7 +164,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         sensor20.setCommandedState(Sensor.ACTIVE);
         // should follow state
         Assertions.assertEquals("IS20: +", e.getSwitch("IS20").getIconLabel(), "IS20 displays Active");
-        e.getSwitch("IS20").doMouseClicked(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false));
+        e.getSwitch("IS20").doMouseClicked(new JmriMouseEvent(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false)));
         Assertions.assertEquals(Sensor.INACTIVE, sensor20.getState(), "sensor20 state is Inactive");
         Assertions.assertEquals("IS20: -", e.getSwitch("IS20").getIconLabel(), "IS20 displays Inactive");
         e.getSwitch("IS20").setBeanInverted(true);
@@ -197,7 +197,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assertions.assertEquals(Light.OFF, light1.getState(), "IL1 is Off");
 
         Assertions.assertNotNull(e.getSwitch("IL1"));
-        e.getSwitch("IL1").doMouseClicked(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false));
+        e.getSwitch("IL1").doMouseClicked(new JmriMouseEvent(new MouseEvent(e, 1, 0, 0, 0, 0, 1, false)));
         Assertions.assertEquals(Light.ON, light1.getState(), "IL1 is On");
 
         e.switchAllLights(Light.OFF);

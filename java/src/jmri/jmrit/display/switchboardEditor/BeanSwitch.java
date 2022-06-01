@@ -236,7 +236,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         addMouseListener(new MouseAdapter() { // handled by JPanel
             @Override
             public void mouseClicked(MouseEvent me) {
-                operate(me, switchName);
+                JmriMouseEvent event = new JmriMouseEvent(me);
+                operate(event, switchName);
             }
 
             @Override
@@ -769,7 +770,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * @param name ID of this button (identical to name of suggested bean
      *             object)
      */
-    public void operate(MouseEvent e, String name) {
+    public void operate(JmriMouseEvent e, String name) {
         log.debug("Button {} clicked", name);
         if (namedBean == null || e == null || e.isMetaDown()) {
             return;
@@ -783,7 +784,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      *
      * @param e the event heard
      */
-    public void doMouseClicked(java.awt.event.MouseEvent e) {
+    public void doMouseClicked(JmriMouseEvent e) {
         log.debug("Switch clicked");
         if (namedBean == null || e == null || e.isMetaDown()) {
             return;
