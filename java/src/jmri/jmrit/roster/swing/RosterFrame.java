@@ -14,9 +14,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
@@ -70,6 +67,9 @@ import jmri.util.HelpUtil;
 import jmri.util.WindowMenu;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
@@ -489,8 +489,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 // nothing to do
             }
         });
-        MouseListener rosterMouseListener = new RosterPopupListener();
-        rtable.getTable().addMouseListener(rosterMouseListener);
+        JmriMouseListener rosterMouseListener = new RosterPopupListener();
+        rtable.getTable().addMouseListener(JmriMouseListener.adapt(rosterMouseListener));
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval"));
         } catch (RuntimeException e) {
@@ -1200,7 +1200,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         groups.setSelectedRosterGroup(rosterGroup);
     }
 
-    protected void showPopup(MouseEvent e) {
+    protected void showPopup(JmriMouseEvent e) {
         int row = rtable.getTable().rowAtPoint(e.getPoint());
         if (!rtable.getTable().isRowSelected(row)) {
             rtable.getTable().changeSelection(row, 0, false, false);
@@ -1664,7 +1664,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Displays a context (right-click) menu for a roster entry.
      */
-    private class RosterPopupListener extends MouseAdapter {
+    private class RosterPopupListener extends JmriMouseAdapter {
 
         // does clickTimer still actually do anything in this code?
         // it looks like it just starts and stops, without
@@ -1672,21 +1672,21 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         javax.swing.Timer clickTimer = null;
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
                 return;
