@@ -75,9 +75,9 @@ public class SensorPullUpEditAction extends BeanEditAction<Sensor> {
 
         var cbo = (Sensor.PullResistance) sensorPullUpComboBox.getSelectedItem();
         if (!bean.getPullResistance().getShortName().equals(cbo.getShortName())) {
-            bean.setPullResistance((Sensor.PullResistance)sensorPullUpComboBox.getSelectedItem());
-            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "pullup");
+            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit sensor pullup");
         }
+        bean.setPullResistance((Sensor.PullResistance)sensorPullUpComboBox.getSelectedItem());
     }
 
     protected void resetPullUpItems(ActionEvent e) {

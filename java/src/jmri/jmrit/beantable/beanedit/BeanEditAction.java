@@ -192,20 +192,20 @@ public abstract class BeanEditAction<B extends NamedBean> extends AbstractAction
         String uname = bean.getUserName();
         if (uname == null && !userNameField.getText().isEmpty()) {
             renameBean(userNameField.getText());
-            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set user name");
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit set user name");
         } else if (uname != null && !uname.equals(userNameField.getText())) {
             if (userNameField.getText().isEmpty()) {
                 removeName();
-                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "remove user name");
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit remove user name");
             } else {
                 renameBean(userNameField.getText());
-                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "change user name");
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit change user name");
             }
         }
         if (!commentField.getText().equals(bean.getComment() == null ? "" : bean.getComment())) {
-            bean.setComment(commentField.getText());
-            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "change comment");
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit   change comment");
         }
+        bean.setComment(commentField.getText());
     }
 
     @OverridingMethodsMustInvokeSuper

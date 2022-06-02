@@ -68,7 +68,7 @@ public class TurnoutOperationEditorDialog extends JDialog {
                     setTitle();
                     myTurnout.setTurnoutOperation(null);
                     myTurnout.setTurnoutOperation(myOp); // no-op but updates display - have to <i>change</i> value
-                    jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "change operation name");
+                    jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit change operation name");
                 }
             });
             JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));

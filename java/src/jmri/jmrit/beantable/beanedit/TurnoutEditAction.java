@@ -67,9 +67,9 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         super.saveBasicItems(e);
         Turnout turn = bean;
         if (turn.getInverted() != inverted.isSelected()) {
-            turn.setInverted(inverted.isSelected());
-            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set turnout inverted");
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit turnout inverted");
         }
+        turn.setInverted(inverted.isSelected());
     }
 
     @Override
@@ -170,7 +170,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                     } else {
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
-                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "operation name");
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit operation name");
                     }
                     bean.setTurnoutOperation(null);
                     bean.setTurnoutOperation(currentOperation);
@@ -198,7 +198,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 oldModeSelection = bean.getFeedbackModeName();
                 try {
                     if (bean.getFirstSensor() != sensorFeedBack1ComboBox.getSelectedItem()) {
-                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "feedback sensor 1");
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit feedback sensor 1");
                     }
                     bean.provideFirstFeedbackSensor(sensorFeedBack1ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
@@ -206,14 +206,14 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 }
                 try {
                     if (bean.getSecondSensor() != sensorFeedBack2ComboBox.getSelectedItem()) {
-                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "feedback sensor 2");
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit feedback sensor 2");
                     }
                     bean.provideSecondFeedbackSensor(sensorFeedBack2ComboBox.getSelectedItemDisplayName());
                 } catch (jmri.JmriException ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
                 }
                 if (!operationTYpe.equals(getOperationType())) {
-                    InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "operation selection");
+                    InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit operation selection");
                 }
             }
         });
@@ -257,9 +257,9 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 sensorFeedBack2ComboBox.setEnabled(true);
             }
             if (!mode.equals(bean.getFeedbackModeName())) {
-                bean.setFeedbackMode(mode);
-                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "turnout feedback mode");
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit turnout feedback mode");
             }
+            bean.setFeedbackMode(mode);
         }
 
         bean.setFeedbackMode((String) modeBox.getSelectedItem());
@@ -395,7 +395,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                         }
 
                         if (oldLockType != getLockType()) {
-                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Lock operation");
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit lock operation");
                         }
 
                     }
@@ -403,7 +403,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                     String decoderName = (String) lockBox.getSelectedItem();
                     if (decoderName != null) {
                         if (!decoderName.equals(bean.getDecoderName())) {
-                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "lock decoder");
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit lock decoder");
                         }
                         bean.setDecoderName(decoderName);
                     }
@@ -505,7 +505,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 if (speed != null) {
                     try {
                         if (!bean.getStraightSpeed().equals(speed)) {
-                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set straight speed");
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit turnout straight speed");
                         }
                         bean.setStraightSpeed(speed);
                         if ((!speedListClosed.contains(speed)) && !speed.contains("Global")) {
@@ -519,7 +519,7 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                 if (speed != null) {
                     try {
                         if (!bean.getDivergingSpeed().equals(speed)) {
-                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "set diverging speed");
+                            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit turnout diverging speed");
                         }
                         bean.setDivergingSpeed(speed);
                         if ((!speedListThrown.contains(speed)) && !speed.contains("Global")) {

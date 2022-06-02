@@ -71,13 +71,13 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
         int newInterval = ((Integer) intervalSpinner.getValue()).intValue();
         if (newInterval != myOp.getInterval()) {
             jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "turnout op interval");
-            myOp.setInterval(newInterval);
         }
+        myOp.setInterval(newInterval);
 
         int newMaxTries = ((Integer) maxTriesSpinner.getValue()).intValue();
         if (newMaxTries != myOp.getMaxTries()) {
             jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "turnout op max tries");
-            myOp.setMaxTries(newMaxTries);
         }
+        myOp.setMaxTries(newMaxTries);
     }
 }
