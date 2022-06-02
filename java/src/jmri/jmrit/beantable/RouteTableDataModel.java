@@ -37,7 +37,7 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
         switch (col) {
             case VALUECOL: // no heading on "Edit"
             case SETCOL: // no heading on "Set"
-                return "";  
+                return "";
             case ENABLECOL:
                 return Bundle.getMessage("ColumnHeadEnabled");
             case LOCKCOL:
@@ -110,25 +110,6 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
-            case USERNAMECOL:
-                // Directly changing the username should only be possible if the username was previously null or ""
-                // check to see if user name already exists
-                if (value.equals("")) {
-                    value = null;
-                } else {
-                    Route nB = getByUserName((String) value);
-                    if (nB != null) {
-                        log.error("User Name is not unique {}", value);
-                        String msg;
-                        msg = Bundle.getMessage("WarningUserName", ("" + value));
-                        JOptionPane.showMessageDialog(null, msg, Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }
-                Route nBean = getBySystemName(sysNameList.get(row));
-                nBean.setUserName((String) value);
-                fireTableRowsUpdated(row, row);
-                break;
             case SETCOL:
                 SwingUtilities.invokeLater(() -> {
                     JmriJFrame editFrame = new RouteEditFrame(((Route) getValueAt(row, SYSNAMECOL)).getSystemName());
@@ -139,12 +120,14 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
                 // alternate
                 Route r = (Route) getValueAt(row, SYSNAMECOL);
                 r.setEnabled(!r.getEnabled());
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Table route enabled");
                 break;
             }
             case LOCKCOL: {
                 // alternate
                 Route r = (Route) getValueAt(row, SYSNAMECOL);
                 r.setLocked(!r.getLocked());
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Table route locked");
                 break;
             }
             default:
@@ -170,6 +153,7 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     protected void doDelete(Route bean) {
         bean.deActivateRoute();
         super.doDelete(bean);
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Table delete route");
     }
 
     // want to update when enabled parameter changes

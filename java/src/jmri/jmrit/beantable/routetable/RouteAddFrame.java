@@ -91,14 +91,10 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
      * Cancel Add mode.
      */
     private void cancelAdd() {
-        if (routeDirty) {
-            showReminderMessage();
-        }
         curRoute = null;
         finishUpdate();
         status1.setText(Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
         //status2.setText(Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
-        routeDirty = false;
         // hide addFrame
         setVisible(false);
         _routeSensorModel.dispose();
@@ -124,7 +120,6 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
         if (curRoute != null) {
             curRoute.activateRoute();
         }
-        closeFrame();
     }
 
     /**

@@ -99,7 +99,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             ActionListener cancelListener = (ActionEvent e1) -> {
                 cancelPressed(e1);
             };
-            AddNewBeanPanel anbp = new AddNewBeanPanel(sysNameField, userNameField, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel); 
+            AddNewBeanPanel anbp = new AddNewBeanPanel(sysNameField, userNameField, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel);
             addFrame.add(anbp);
             addFrame.getRootPane().setDefaultButton(anbp.ok);
             addFrame.setEscapeKeyClosesWindow(true);
@@ -188,6 +188,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
                 } else {
                     InstanceManager.getDefault(MemoryManager.class).newMemory(sName, uName);
                 }
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Create memory");
             } catch (IllegalArgumentException ex) {
                 // uName input no good
                 handleCreateException(sName);

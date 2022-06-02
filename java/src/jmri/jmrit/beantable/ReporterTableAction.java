@@ -237,6 +237,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
             // end of for loop creating rangeCheckBox of Reporters
         }
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Create Reporter");
         // provide success feedback to uName
         statusBarLabel.setText(statusMessage);
         statusBarLabel.setForeground(Color.gray);

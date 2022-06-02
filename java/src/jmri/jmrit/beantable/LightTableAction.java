@@ -92,7 +92,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
     JmriJFrame addFrame = null;
     Light curLight = null;
-    boolean lightCreatedOrUpdated = false;
     boolean noWarn = false;
 
     // items for Add/Edit Light frame
@@ -460,7 +459,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             lightIntensityPanel.setLightFromPane((VariableLight)g);
         }
         g.activateLight();
-        lightCreatedOrUpdated = true;
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Light created");
 
         status2.setText("");
         status2.setVisible(false);
@@ -520,21 +519,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
      * @param e the button press action
      */
     void cancelPressed(ActionEvent e) {
-
-        if (addFrame != null) {
-            addFrame.setVisible(false); // hide first for cleaner display
-        }
-
-        // remind to save, if Light was created or edited
-        if (lightCreatedOrUpdated) {
-            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString",
-                            Bundle.getMessage("MenuItemLightTable")),
-                            getClassName(),
-                            "remindSaveLight"); // NOI18N
-        }
-        lightCreatedOrUpdated = false;
-        // finally, get rid of the add/edit Frame
         if (addFrame != null) {
 
             lightControlPanel.dispose(); // closes any popup windows
@@ -544,7 +528,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             addFrame.dispose();
             addFrame = null;
             create.removePropertyChangeListener(colorChangeListener);
-
         }
     }
 

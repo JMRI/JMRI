@@ -332,6 +332,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         } else {
             light.setEnabled(false);
         }
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Light control enabled");
     }
 
     /**
@@ -362,6 +363,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
                 variableLight.setMaxIntensity(max);
                 variableLight.setTransitionTime(time);
                 updateLightStatusFields(false);
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Light control changes applied");
             }
         } catch (NumberFormatException ex) {
             log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());

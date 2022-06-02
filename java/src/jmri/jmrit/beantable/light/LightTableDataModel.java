@@ -23,13 +23,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a Light Table.
  * Code originally within LightTableAction.
- * 
+ *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Egbert Broerse Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
  */
 public class LightTableDataModel extends BeanTableDataModel<Light> {
-    
+
     static public final int ENABLECOL = BeanTableDataModel.NUMCOLUMN;
     static public final int INTENSITYCOL = ENABLECOL + 1;
     static public final int EDITCOL = INTENSITYCOL + 1;
@@ -37,7 +37,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
 
     // for icon state col
     protected boolean _graphicState = false; // updated from prefs
-    
+
     public LightTableDataModel(){
         super();
         initTable();
@@ -48,15 +48,15 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
         setManager(mgr);
         initTable();
     }
-    
+
     private void initTable() {
 
         _graphicState = InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isGraphicTableState();
-        
+
     }
-    
+
     private Manager<Light> lightManager;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -91,7 +91,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
         getManager().addPropertyChangeListener(this);
         updateNameList();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -240,6 +240,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
                     if (l instanceof VariableLight) {
                         double intensity = Math.max(0, Math.min(1.0, (Double) value));
                         ((VariableLight)l).setTargetIntensity(intensity);
+                        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Table light intensity");
                     } else {
                         double intensity = ((Double) value);
                         l.setCommandedState( intensity > 0.5 ? Light.ON : Light.OFF);
@@ -250,6 +251,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
                 break;
             case ENABLECOL:
                 l.setEnabled(!l.getEnabled());
+                InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Table light enabled");
                 break;
             case VALUECOL:
                 clickOn(l);
@@ -260,7 +262,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
                 break;
         }
     }
-    
+
     private void editButton(Light bean){
         jmri.jmrit.beantable.beanedit.LightEditAction beanEdit = new jmri.jmrit.beantable.beanedit.LightEditAction();
         beanEdit.setBean(bean);
@@ -459,7 +461,7 @@ public class LightTableDataModel extends BeanTableDataModel<Light> {
         }
 
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(LightTableDataModel.class);
-            
+
 }

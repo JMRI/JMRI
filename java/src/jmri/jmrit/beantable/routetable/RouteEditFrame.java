@@ -150,6 +150,7 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
         curRoute = null;
         finishUpdate();
         closeFrame();
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Edit delete route");
     }
 
 }

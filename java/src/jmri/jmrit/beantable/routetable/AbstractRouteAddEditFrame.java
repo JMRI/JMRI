@@ -115,7 +115,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     protected ArrayList<RouteSensor> _includedSensorList;
     protected UserPreferencesManager pref;
     private JRadioButton allButton = null;
-    protected boolean routeDirty = false;  // true to fire reminder to save work
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
     private ScriptFileChooser scriptChooser = null;
@@ -575,13 +574,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         }
     }
 
-    protected void showReminderMessage() {
-        InstanceManager.getDefault(UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
-                        Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
-                        getClassName(), "remindSaveRoute"); // NOI18N
-    }
-
     private int sensorModeFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         return sensorModeFromString(mode);
@@ -748,7 +740,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         setTitle(Bundle.getMessage("TitleAddRoute"));
         clearPage();
         // reactivate the Route
-        routeDirty = true;
         // get out of edit mode
         editMode = false;
         if (curRoute != null) {
@@ -946,6 +937,8 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") :
                 Bundle.getMessage("RouteAddStatusUpdated")) + ": \"" + uName + "\" (" + _includedTurnoutList.size() + " "
                 + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
+        InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Create / edit update route");
+        closeFrame();
     }
 
     /**
@@ -986,11 +979,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     protected void closeFrame(){
-        // remind to save, if Route was created or edited
-        if (routeDirty) {
-            showReminderMessage();
-            routeDirty = false;
-        }
         // hide addFrame
         setVisible(false);
 

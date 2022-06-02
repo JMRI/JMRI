@@ -39,7 +39,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     public SimpleTurnoutCtrlFrame() {
         super();
 
-        // configure items for GUI        
+        // configure items for GUI
         adrTextField.setText("");
         adrTextField.setVisible(true);
         adrTextField.setToolTipText(Bundle.getMessage("AddressToolTip"));
@@ -248,6 +248,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             } else if (turnout.canLock(Turnout.CABLOCKOUT)) {
                 turnout.setLocked(Turnout.CABLOCKOUT, true);
             }
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Turnout control cab lockout");
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
         } catch (Exception ex2) {
@@ -274,6 +275,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             } else if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                 turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, true);
             }
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Turnout control button lockout");
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
         } catch (Exception ex2) {
@@ -288,7 +290,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // If the Commanded State changes, show transition state as "<inconsistent>" 
+        // If the Commanded State changes, show transition state as "<inconsistent>"
         if (e.getPropertyName().equals("CommandedState")) { // NOI18N
             nowStateLabel.setText(Bundle.getMessage("BeanStateInconsistent"));
         }

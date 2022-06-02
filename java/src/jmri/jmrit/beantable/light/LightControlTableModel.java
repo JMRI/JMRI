@@ -117,11 +117,13 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
     public void addControl(LightControl lc){
         controlList.add(lc);
         fireTableDataChanged();
+        jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Light control add");
     }
 
     public void removeControl(LightControl lc){
         controlList.remove(lc);
         fireTableDataChanged();
+        jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Light control remove");
     }
 
     /**
@@ -219,6 +221,7 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
         else if (col == REMOVE_COLUMN) {
             controlList.remove(row);
             fireTableDataChanged();
+            jmri.InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setDirty(true, "Light control delete");
         }
     }
 

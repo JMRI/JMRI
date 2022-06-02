@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
     protected final LnTrafficController tc;
-    
+
     // ctor has to register for LocoNet events
     public LnReporterManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
@@ -79,6 +79,11 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
+    }
+
+    @Override
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+        return true;
     }
 
     /**
