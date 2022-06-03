@@ -36,7 +36,9 @@ public class PerformFileModel extends AbstractStartupModel {
         File file = new File(this.getFileName());
         ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
         if (cm != null) {
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setEnabled(false);
             cm.load(file);
+            InstanceManager.getDefault(jmri.configurexml.DirtyManager.class).setEnabled(true);
         }
     }
 }

@@ -39,7 +39,9 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
         // Cancel button can't be localized like userFileChooser.setCancelButtonText() TODO
         userFileChooser.setDialogTitle(Bundle.getMessage("LoadTitle"));
 
+        jmri.InstanceManager.getDefault(DirtyManager.class).setEnabled(false);
         boolean results = loadFile(userFileChooser);
+        jmri.InstanceManager.getDefault(DirtyManager.class).setEnabled(true);
         if (results) {
             log.debug("load was successful");
             setCurrentFile(userFileChooser.getSelectedFile());
