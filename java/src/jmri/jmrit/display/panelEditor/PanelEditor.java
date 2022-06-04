@@ -679,7 +679,7 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 _currentSelection = selections.get(0);
             }
-            if (event.isPopupTrigger()) {
+            if (isPopupTrigger(event)) {
                 log.debug("mousePressed calls showPopUp");
                 if (isMetaDown(event) || event.isAltDown()) {
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
@@ -732,6 +732,15 @@ public class PanelEditor extends Editor implements ItemListener {
             _selectionGroup = null;
         }
         _targetPanel.repaint(); // needed for ToolTip
+    }
+
+    private boolean isPopupTrigger(MouseEvent event) {
+        if (SystemType.isWindows()) {
+            // event.isPopupTrigger() returns false on mousePressed() on Windows
+            return SwingUtilities.isRightMouseButton(event);
+        } else {
+            return event.isPopupTrigger();
+        }
     }
 
     @Override
