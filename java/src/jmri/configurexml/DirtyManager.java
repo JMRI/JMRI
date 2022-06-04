@@ -60,8 +60,8 @@ public class DirtyManager {
             sb.addPropertyChangeListener(_beanListen);
         } else if (o instanceof Editor) {
             var em = InstanceManager.getDefault(EditorManager.class);
-            em.removePropertyChangeListener("SetConfigDirty", _beanListen);
-            em.addPropertyChangeListener("SetConfigDirty", _beanListen);
+            em.removePropertyChangeListener(_beanListen);
+            em.addPropertyChangeListener(_beanListen);
         } else {
             log.debug("!! Unable to identify class:  {}", o);
         }
