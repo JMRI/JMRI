@@ -69,7 +69,9 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                 if (cm == null) {
                     log.error("Failed to get default configure manager");  // NOI18N
                 } else {
+                    jmri.InstanceManager.getDefault(DirtyManager.class).setEnabled(false);
                     results = cm.load(file);
+                    jmri.InstanceManager.getDefault(DirtyManager.class).setEnabled(true);
                     if (results) {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();

@@ -292,7 +292,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setInternalMaster(boolean master, boolean update) {
         if (master != internalMaster) {
+            var old = internalMaster;
             internalMaster = master;
+            firePropertyChange("internalMaster", old, internalMaster);
             if (internalMaster) {
                 mFactor = hardwareFactor; // get rid of any fiddled rate present
             }
@@ -327,13 +329,16 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setMasterName(String name) {
+        var old = masterName;
         if (!internalMaster) {
             masterName = name;
+            firePropertyChange("masterName", old, masterName);
             // if multiple clocks, this must be replaced by a loop over all hardware clocks to identify
             // the one that is the hardware time source
             hardwareTimeSource = InstanceManager.getDefault(ClockControl.class);
         } else {
             masterName = "";
+            firePropertyChange("masterName", old, masterName);
             hardwareTimeSource = null;
         }
     }
@@ -352,7 +357,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setSynchronize(boolean synchronize, boolean update) {
         if (synchronizeWithHardware != synchronize) {
+            var old = synchronizeWithHardware;
             synchronizeWithHardware = synchronize;
+            firePropertyChange("synchronizeWithHardware", old, synchronizeWithHardware);
             if (update) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
                 InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(
@@ -376,7 +383,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setCorrectHardware(boolean correct, boolean update) {
         if (correctHardware != correct) {
+            var old = correctHardware;
             correctHardware = correct;
+            firePropertyChange("correctHardware", old, correctHardware);
             if (update) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
                 InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(
@@ -399,7 +408,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void set12HourDisplay(boolean display, boolean update) {
         if (display != display12HourClock) {
+            var old = display12HourClock;
             display12HourClock = display;
+            firePropertyChange("display12HourClock", old, display12HourClock);
             if (update) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
                 InstanceManager.getDefault(ClockControl.class).initializeHardwareClock(
@@ -421,7 +432,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setClockInitialRunState(ClockInitialRunState state) {
+        var old = initialState;
         initialState = state;
+        firePropertyChange("initialState", old, initialState);
     }
 
     /**
@@ -437,7 +450,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setShowStopButton(boolean displayed) {
+        var old = showStopButton;
         showStopButton = displayed;
+        firePropertyChange("showStopButton", old, showStopButton);
     }
 
     /**
@@ -453,8 +468,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartSetTime(boolean set, Date time) {
+        var old = startSetTime;
         startSetTime = set;
         startTime = new Date(time.getTime());
+        firePropertyChange("startSetTime", old, startSetTime);
     }
 
     /**
@@ -470,8 +487,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartRate(double factor) {
+        var old = startupFactor;
         startupFactor = factor;
         haveStartupFactor = true;
+        firePropertyChange("startupFactor", old, startupFactor);
     }
 
     /**
@@ -491,7 +510,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setSetRateAtStart(boolean set) {
+        var old = startSetRate;
         startSetRate = set;
+        firePropertyChange("startSetRate", old, startSetRate);
     }
 
     /**
@@ -515,7 +536,9 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void setStartClockOption(int option) {
+        var old = startClockOption;
         startClockOption = option;
+        firePropertyChange("startClockOption", old, startClockOption);
     }
 
     /**
@@ -562,10 +585,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( 0, getTime(), (!internalMaster && !startSetTime)) );
             } else {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( mFactor, getTime(), (!internalMaster && !startSetTime)) );
             }
         } else if (!internalMaster) {

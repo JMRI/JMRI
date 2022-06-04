@@ -120,6 +120,8 @@ public class DirtyManager {
     }
 
     private String getEventString(PropertyChangeEvent event) {
+        if (event == null) return "";
+
         var property = event.getPropertyName();
         var vOld = event.getOldValue();
         var vNew = event.getNewValue();
@@ -173,6 +175,7 @@ public class DirtyManager {
             if (evt.getPropertyName().equals("value")) return;
             if (evt.getPropertyName().equals("time")) return;
             if (evt.getPropertyName().equals("minutes")) return;
+            if (evt.getPropertyName().equals("run") && evt.getSource() instanceof SimpleTimebase) return;
             if (evt.getPropertyName().equals("Comment") && evt.getOldValue() == null && ((String) evt.getNewValue()).isEmpty()) return;
 //             log.debug("    evt = {} :: {}", evt.getPropertyName(), evt.getSource());
             setDirty(true, evt);
