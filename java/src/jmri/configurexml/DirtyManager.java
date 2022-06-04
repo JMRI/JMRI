@@ -84,6 +84,7 @@ public class DirtyManager {
      * True occurs when changes are reported by listener events and other special cases.
      * After a Store, the flag is set to false.
      * @param dirty Either true or false.
+     * @param e The property change event or null.
      */
     public void setDirty(boolean dirty, PropertyChangeEvent e) {
         if (_enabled) {
@@ -198,8 +199,10 @@ public class DirtyManager {
 
             case "beans":
                 if (e.getSource() instanceof jmri.AudioManager) {
-                    var audio = (jmri.Audio) e.getNewValue();
-                    if (audio.getSystemName().equals("IAL$")) return true;
+                    if (e.getNewValue() != null) {
+                        var audio = (jmri.Audio) e.getNewValue();
+                        if (audio.getSystemName().equals("IAL$")) return true;
+                    }
                 }
                 break;
 
