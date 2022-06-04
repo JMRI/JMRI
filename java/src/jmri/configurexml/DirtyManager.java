@@ -176,10 +176,16 @@ public class DirtyManager {
             if (evt.getPropertyName().equals("time")) return;
             if (evt.getPropertyName().equals("minutes")) return;
             if (evt.getPropertyName().equals("run") && evt.getSource() instanceof SimpleTimebase) return;
-            if (evt.getPropertyName().equals("Comment") && evt.getOldValue() == null && ((String) evt.getNewValue()).isEmpty()) return;
+            if (evt.getPropertyName().equals("Comment") && isCommentEqual(evt)) return;
 //             log.debug("    evt = {} :: {}", evt.getPropertyName(), evt.getSource());
             setDirty(true, evt);
         }
+    }
+
+    private boolean isCommentEqual(PropertyChangeEvent e) {
+        var oldValue = e.getOldValue() == null ? "" : e.getOldValue();
+        var newValue = e.getNewValue() == null ? "" : e.getNewValue();
+        return oldValue.equals(newValue);
     }
 
     private boolean isDefaultAudio(PropertyChangeEvent e) {
@@ -195,6 +201,9 @@ public class DirtyManager {
                     var audio = (jmri.Audio) e.getNewValue();
                     if (audio.getSystemName().equals("IAL$")) return true;
                 }
+                break;
+
+            default:
                 break;
         }
         return false;
