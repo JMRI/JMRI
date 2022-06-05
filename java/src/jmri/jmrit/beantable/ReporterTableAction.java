@@ -219,22 +219,24 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
             }
 
-            // bump system name
-            try {
-                rName = InstanceManager.getDefault(ReporterManager.class).getNextValidSystemName(r);
-            } catch (jmri.JmriException ex) {
-                displayHwError(r.getSystemName(), ex);
-                // directly add to statusBarLabel (but never called?)
-                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", rName));
-                statusBarLabel.setForeground(Color.red);
-                return;
-            }
+            // except on last pass
+            if (x < numberOfReporters-1) {
+                // bump system name
+                try {
+                    rName = InstanceManager.getDefault(ReporterManager.class).getNextValidSystemName(r);
+                } catch (jmri.JmriException ex) {
+                    displayHwError(r.getSystemName(), ex);
+                    // directly add to statusBarLabel (but never called?)
+                    statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", rName));
+                    statusBarLabel.setForeground(Color.red);
+                    return;
+                }
 
-            // bump user name
-            if (!uName.isEmpty()) {
-                uName = nextName(uName);
+                // bump user name
+                if (!uName.isEmpty()) {
+                    uName = nextName(uName);
+                }
             }
-
             // end of for loop creating rangeCheckBox of Reporters
         }
         // provide success feedback to uName
