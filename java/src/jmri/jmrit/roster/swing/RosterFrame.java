@@ -1170,7 +1170,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             updateDetails();
             rtable.moveTableViewToSelected();
         } else {
-            log.warn("Address {} Read, but no such loco in roster", dccAddress); //"No roster entry found; changed to promote the number to the front, June 2022,  Bill Chown"
+            log.warn("Read address {}, but no such loco in roster", dccAddress); //"No roster entry found; changed to promote the number to the front, June 2022,  Bill Chown"
             JOptionPane.showMessageDialog(this, dccAddress + " was read from the decoder\nbut has not been found in the Roster", dccAddress + " No roster entry found", JOptionPane.INFORMATION_MESSAGE);
         }
     }
