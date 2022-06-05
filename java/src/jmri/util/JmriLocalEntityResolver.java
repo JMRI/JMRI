@@ -148,7 +148,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 return null;
             }
         } catch (URISyntaxException e1) {
-            log.warn(e1.getLocalizedMessage(), e1);
+            log.warn("Could not resolve Local Entity.", e1);
             return null;
         }
     }

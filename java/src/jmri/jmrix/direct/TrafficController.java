@@ -69,11 +69,11 @@ public class TrafficController implements jmri.CommandStation {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("write message: ");
+                    StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
                         f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }
-                    log.debug(f.toString());
+                    log.debug("write message: {}", f);
                 }
                 ostream.write(msg);
             } else {

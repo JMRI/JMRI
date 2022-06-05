@@ -79,18 +79,11 @@ public class PrintEngineRosterAction extends AbstractAction {
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
-        try {
-            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"), fontSize, .5, .5, .5, .5,
-                    _isPreview, "", landscape, true, null);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
+        try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
+            fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
 
-        numberCharPerLine = writer.getCharactersPerLine();
+            numberCharPerLine = writer.getCharactersPerLine();
 
-        try {
             // create header
             writer.write(createHeader());
 
@@ -158,11 +151,14 @@ public class PrintEngineRosterAction extends AbstractAction {
                 }
                 writer.write(s + NEW_LINE);
             }
+            // and force completion of the printing
+            writer.close();
         } catch (IOException we) {
             log.error("Error printing ConsistRosterEntry", we);
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print cancelled");
         }
-        // and force completion of the printing
-        writer.close();
+        
     }
 
     private String createHeader() {

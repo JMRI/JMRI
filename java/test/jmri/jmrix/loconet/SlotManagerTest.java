@@ -658,7 +658,9 @@ public class SlotManagerTest {
         Assert.assertEquals("initial status", -999, status);
 
         // check that final CV write happened
-        Assert.assertEquals("three messages sent", 3, lnis.outbound.size());
+        JUnitUtil.waitFor(() -> {
+            return 3 == lnis.outbound.size();
+        }, "three messages sent ");
         Assert.assertEquals("write final CV message",
                 "EF 0E 7C 2B 00 00 00 00 10 00 00 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());

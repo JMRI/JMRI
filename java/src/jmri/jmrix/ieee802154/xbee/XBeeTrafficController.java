@@ -104,6 +104,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
          in AbstractMRTrafficController here */
         // forward using XBee Specific message format
         try {
+            log.trace("Sending message {}",m);
             xbee.sendPacketAsync(((XBeeMessage) m).getXBeeRequest());
         } catch (XBeeException xbe) {
             log.error("Error Sending message to XBee", xbe);

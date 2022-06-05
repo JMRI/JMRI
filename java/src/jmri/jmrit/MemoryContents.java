@@ -519,7 +519,7 @@ public class MemoryContents {
                             // problem - data record happened after an EOF record was parsed
                             String message = "Found a Data record in line " // NOI18N
                                     + lineNum + " after the EOF record"; // NOI18N
-                            log.error(message);
+                            logError(message);
                             throw new MemoryFileRecordFoundAfterEOFRecord(message);
                         }
 

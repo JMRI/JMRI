@@ -4,11 +4,6 @@
          We accept certain types of bugs at certain levels until we get them
          all cleared out. -->
 
-    <!-- Suppress SLF4J bugs which we _don't_ want to fail CI until we can get them removed -->
-     <Match>
-        <Bug pattern="SLF4J_FORMAT_SHOULD_BE_CONST" />
-     </Match>
-
     <!-- Suppress medium bugs which we _don't_ want to fail CI until we can get them removed -->
      <Match>
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
@@ -26,7 +21,6 @@
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
-           <Bug pattern="OS_OPEN_STREAM_EXCEPTION_PATH" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UW_UNCOND_WAIT" />

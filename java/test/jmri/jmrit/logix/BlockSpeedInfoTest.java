@@ -10,8 +10,10 @@ public class BlockSpeedInfoTest {
 
     @Test
     public void testCTor() {
-        BlockSpeedInfo info = new BlockSpeedInfo("blockA", .33f, .99f, .66f, 5555, 6666.6f, 9, 11);
+        BlockSpeedInfo info = new BlockSpeedInfo("blockA", .33f, .99f, 5555, .66f, 6666.6f, 9, 11);
         assertThat(info).withFailMessage("exists").isNotNull();
+        String message = info.toString();
+        assertThat(message).withFailMessage("toString").isNotNull();
     }
 
     @BeforeEach

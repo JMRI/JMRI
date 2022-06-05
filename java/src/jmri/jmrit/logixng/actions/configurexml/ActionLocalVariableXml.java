@@ -155,7 +155,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             try {
                 h.setVariableOperation(ActionLocalVariable.VariableOperation.valueOf(queryType.getTextTrim()));
             } catch (ParserException e) {
-                log.error("cannot set variable operation: " + queryType.getTextTrim(), e);  // NOI18N
+                log.error("cannot set variable operation: {}", queryType.getTextTrim(), e);  // NOI18N
             }
         }
 
@@ -208,7 +208,7 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
             try {
                 h.setFormula(formula.getTextTrim());
             } catch (ParserException e) {
-                log.error("cannot set data: " + formula.getTextTrim(), e);  // NOI18N
+                log.error("cannot set data: {}", formula.getTextTrim(), e);  // NOI18N
             }
         }
 

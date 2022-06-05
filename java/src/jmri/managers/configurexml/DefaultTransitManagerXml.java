@@ -1,4 +1,4 @@
-package jmri.configurexml;
+package jmri.managers.configurexml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2008
  */
-public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DefaultTransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public TransitManagerXml() {
+    public DefaultTransitManagerXml() {
     }
 
     /**
@@ -232,6 +232,6 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.getDefault(TransitManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransitManagerXml.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultTransitManagerXml.class);
 
 }

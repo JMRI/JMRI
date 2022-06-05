@@ -172,6 +172,8 @@ public class DieselPane extends EnginePane {
     }
 
     // Respond to a start button press with stateChanged
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of Headless Info Message")
     public void startButtonStateChange(ChangeEvent ev) {
         AbstractButton abstractButton = (AbstractButton) ev.getSource();
         ButtonModel buttonModel = abstractButton.getModel();

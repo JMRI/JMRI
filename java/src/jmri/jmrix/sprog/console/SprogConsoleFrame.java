@@ -360,9 +360,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         sv = v;
         // Save it for others
         _memo.setSprogVersion(v);
-        if (log.isDebugEnabled()) {
-            log.debug("Found: {}", sv.toString());
-        }
+        log.debug("Found: {}", sv );
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
             JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
@@ -376,21 +374,17 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
             // Enable blueline & firmware unlock check boxes
             if (isBlueLineSupportPossible()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Enable blueline check box");
-                }
+                log.debug("Enable blueline check box");
                 blueCheckBox.setEnabled(true);
                 if (log.isDebugEnabled()) {
-                    log.debug(Boolean.toString(blueCheckBox.isEnabled()));
+                    log.debug("blueCheckBox isEnabled: {}", blueCheckBox.isEnabled() );
                 }
             }
             if (isFirmwareUnlockPossible()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Enable firmware check box");
-                }
+                log.debug("Enable firmware check box");
                 unlockCheckBox.setEnabled(true);
                 if (log.isDebugEnabled()) {
-                    log.debug(Boolean.toString(unlockCheckBox.isEnabled()));
+                    log.debug("unlockCheckBox isEnabled: {}", unlockCheckBox.isEnabled() );
                 }
             }
 

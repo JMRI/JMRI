@@ -207,29 +207,27 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             }
             SerialMessage m = readMessage();
             SerialReply r;
-            if (log.isDebugEnabled()) {
-                StringBuffer buf = new StringBuffer();
-                buf.append("Secsi Simulator Thread received message: ");
+            if (log.isTraceEnabled()) {
+                StringBuilder buf = new StringBuilder();
                 if (m != null) {
                     for (int i = 0; i < m.getNumDataElements(); i++) {
-                        buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+                        buf.append(Integer.toHexString(0xFF & m.getElement(i))).append(" ");
                     }
                 } else {
                     buf.append("null message buffer");
                 }
-                log.trace(buf.toString()); // generates a lot of traffic
+                log.trace("Secsi Simulator Thread received message: {}", buf ); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
                 if (r != null) { // ignore errors and null replies
                     writeReply(r);
                     if (log.isDebugEnabled()) {
-                        StringBuffer buf = new StringBuffer();
-                        buf.append("Secsi Simulator Thread sent reply: ");
+                        StringBuilder buf = new StringBuilder();
                         for (int i = 0; i < r.getNumDataElements(); i++) {
-                            buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+                            buf.append(Integer.toHexString(0xFF & r.getElement(i))).append(" ");
                         }
-                        log.debug(buf.toString());
+                        log.debug("Secsi Simulator Thread sent reply: {}", buf );
                     }
                 }
             }
