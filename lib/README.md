@@ -342,7 +342,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### PlantUML
 - plantuml.jar
     was from plantuml.org, now from https://github.com/plantuml/plantuml.git
-    pulled June 1, 2021 and modified with PR#1028
+    pulled June 1, 2021 and modified with PR#1028 https://github.com/plantuml/plantuml/pull/1028
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases
