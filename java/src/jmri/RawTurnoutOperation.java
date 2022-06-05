@@ -40,7 +40,7 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
      */
     @Override
     public TurnoutOperation makeCopy(String n) {
-        return new NoFeedbackTurnoutOperation(n, interval, maxTries);
+        return new RawTurnoutOperation(n, interval, maxTries);
     }
 
     @Override
