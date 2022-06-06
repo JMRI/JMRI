@@ -730,6 +730,25 @@
         </copy>
     </target>
 
+    <target name="tests-for-jar"
+            description="compile test classes in the location where a jar will pick them up"
+            depends="debug">
+        <!-- Compile the test java code from ${source} into ${target} -->
+        <java-compile
+                javac.source="${test};${acceptancetest}"
+                javac.target="${target}"
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            />
+        <!-- Copy resources into ${testtarget} so they coexist with identical
+             resources in ${target} (this is important for the Java ServiceLoader -->
+        <copy todir="${testtarget}">
+            <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="**/*.xml"/>
+            <fileset dir="${test}" includes="META-INF/**"/>
+        </copy>
+    </target>
+
     <target name="graal-compile"
             description="compile GraalVM-specific source; must currently have a GraalVM JDK active"
             depends="init">
@@ -1830,6 +1849,39 @@
         </jar>
     </target>
 
+    <target name="jar-tests"
+            description="create working jar file with test file contents"
+            depends="tests">
+        <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
+          <classpath refid="project.class.path" />
+        </manifestclasspath>
+        <jar jarfile="${jartarget}/jmri-tests.jar"
+             basedir="${testtarget}"
+             compress="true"
+             index="true">
+          <manifest>
+            <attribute name="Main-Class" value="jmri.Version"/>
+            <attribute name="Class-Path" value="${jar.classpath}"/>
+            <section name="jmri">
+              <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="jmri"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="apps">
+              <attribute name="Specification-Title" value="JMRI Applications Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="apps"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+          </manifest>
+        </jar>
+    </target>
+
     <target name="jar-resources"
             description="package all resources as a jar file"
             depends="debug">
@@ -2196,9 +2248,9 @@
             depends="clean, init, debug, jar">
     </target>
 
-    <target name="dist-debug"
-            description="create a distribution jar file including tests"
-            depends="clean, init, debug, jar">
+    <target name="dist-tests"
+            description="create a distribution jar file of just the tests"
+            depends="clean, init, debug, tests, jar-tests">
     </target>
 
     <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties"
@@ -2222,6 +2274,23 @@
         </spotbugs>
     </target>
 
+    <target name="tests-spotbugs" depends="jar-tests" description="generate SpotBugs (HTML) report including test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
+        </spotbugs>
+    </target>
+
     <target name="spotbugs-check" depends="dist" description="generate SpotBugs check-only (HTML) report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
@@ -2239,6 +2308,23 @@
         </spotbugs>
     </target>
 
+    <target name="tests-spotbugs-check" depends="dist-tests" description="generate SpotBugs check-only (HTML) report including test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs-check.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
+                  failOnError="true"
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
+        </spotbugs>
+    </target>
+
     <target name="spotbugs-ci" depends="dist" description="generate SpotBugs CI (XML) report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
@@ -2250,8 +2336,24 @@
                   reportLevel="low"
                   >
             <sourcePath path="${source}/"/>
-            <class location="${jartarget}/jmri.jar"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
             <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="tests-spotbugs-ci" depends="dist-tests" description="generate SpotBugs CI (XML) report including test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs.xml"
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
         </spotbugs>
     </target>
 
@@ -2269,6 +2371,23 @@
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
             <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="tests-spotbugs-check-ci" depends="dist-tests" description="generate SpotBugs CI check-only (XML) report inncluding test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
+                  failOnError="true"
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
         </spotbugs>
     </target>
 
