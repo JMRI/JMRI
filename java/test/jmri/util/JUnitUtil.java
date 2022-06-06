@@ -471,19 +471,16 @@ public class JUnitUtil {
     /**
      * Wait for a specific condition to be true, without having to wait longer
      * <p>
-     * To be used in assumptions, will return false if the total delay is longer
-     * than WAITFOR_MAX_DELAY
+     * To be used in tests, will do an assert if the total delay is longer than
+     * WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>Assume.assumeTrue("reply not received", JUnitUtil.waitForTrue(()->{return replyVariable != null;}));</code>
+     * <code>JUnitUtil.waitForTrue(()->{return replyVariable != null;});</code>
      *
      * @param condition condition to wait for
-     * @return true if condition is met before WAITFOR_MAX_DELAY, false
-     *         otherwise
      */
-    static public boolean waitFor(ReleaseUntil condition) {
-        waitFor(condition, "Steve Young test"); // This will never return if failure
-        return true;
+    static public void waitFor(ReleaseUntil condition) {
+        waitFor(condition, "JUnitUtil.waitFor() timed out");
     }
 
     /**

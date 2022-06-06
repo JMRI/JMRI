@@ -42,21 +42,21 @@ public class ZeroConfServiceTest {
     @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
-        
+
         // wait for dns threads to end
-        Thread.getAllStackTraces().keySet().forEach((t) -> 
+        Thread.getAllStackTraces().keySet().forEach((t) ->
             {
                 String name = t.getName();
                 if (! name.equals("dns.close in ZerConfServiceManager#stopAll")) return; // skip
-                
+
                 try {
-                    t.join(5000); // wait up to 35 seconds for that thread to end; 
+                    t.join(5000); // wait up to 35 seconds for that thread to end;
                 } catch (InterruptedException e) {
                     // nothing, just means that thread was terminated externally
                 }
             }
-        );        
-        
+        );
+
         JUnitUtil.tearDown();
     }
 
@@ -150,9 +150,9 @@ public class ZeroConfServiceTest {
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
-        }));
+        }, "Timed out publishing ZeroConf Service");
         Assert.assertTrue(instance.isPublished());
     }
 
@@ -165,9 +165,9 @@ public class ZeroConfServiceTest {
         Assert.assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
-        }));
+        }, "Timed out publishing ZeroConf Service");
         Assert.assertTrue(instance.isPublished());
         instance.stop();
         JUnitUtil.waitFor(() -> {

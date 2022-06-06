@@ -46,24 +46,24 @@ public class ZeroConfServiceManagerTest {
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
         manager = null;
-        
+
         // wait for dns threads to end
-        Thread.getAllStackTraces().keySet().forEach((t) -> 
+        Thread.getAllStackTraces().keySet().forEach((t) ->
             {
                 String name = t.getName();
                 if (! name.equals("dns.close in ZerConfServiceManager#stopAll")) return; // skip
-                
+
                 try {
-                    t.join(5000); // wait up to 35 seconds for that thread to end; 
+                    t.join(5000); // wait up to 35 seconds for that thread to end;
                 } catch (InterruptedException e) {
                     // nothing, just means that thread was terminated externally
                 }
             }
-        );        
-        
+        );
+
         JUnitUtil.tearDown();
     }
-    
+
     /**
      * Test of create method, of class ZeroConfServiceManager.
      */
@@ -124,9 +124,9 @@ public class ZeroConfServiceManagerTest {
         Assert.assertFalse(manager.isPublished(instance));
         // can fail if platform does not release earlier stopped service within 15 seconds
         manager.publish(instance);
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return manager.isPublished(instance) == true;
-        }));
+        }, "Timed out publishing ZeroConf Service");
         Assert.assertTrue(manager.isPublished(instance));
     }
 
@@ -139,9 +139,9 @@ public class ZeroConfServiceManagerTest {
         Assert.assertFalse(manager.isPublished(instance));
         // can fail if platform does not release earlier stopped service within 15 seconds
         manager.publish(instance);
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return manager.isPublished(instance) == true;
-        }));
+        }, "Timed out publishing ZeroConf Service");
         Assert.assertTrue(manager.isPublished(instance));
         manager.stop(instance);
         JUnitUtil.waitFor(() -> {
@@ -159,9 +159,9 @@ public class ZeroConfServiceManagerTest {
         Assert.assertFalse(manager.isPublished(instance));
         // can fail if platform does not release earlier stopped service within 15 seconds
         manager.publish(instance);
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return manager.isPublished(instance) == true;
-        }));
+        }, "Timed out publishing ZeroConf Service");
         Assert.assertTrue(manager.isPublished(instance));
         manager.stopAll();
         JUnitUtil.waitFor(() -> {
@@ -181,9 +181,9 @@ public class ZeroConfServiceManagerTest {
         Assert.assertEquals(0, manager.allServices().size());
         // can fail if platform does not release earlier stopped service within 15 seconds
         manager.publish(instance);
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return manager.isPublished(instance) == true;
-        }));
+        }, "Timed out publishing ZeroConf Service");
         Assert.assertEquals(1, manager.allServices().size());
     }
 

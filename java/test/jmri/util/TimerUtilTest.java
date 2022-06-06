@@ -16,24 +16,24 @@ public class TimerUtilTest {
         TimerUtil t = new TimerUtil();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testScheduleDate() {
         TimerUtil.schedule(task, 10);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
+        JUnitUtil.waitFor(() -> {return taskRan;});
     }
 
     @Test
     public void testScheduleDateOnLayout() {
         TimerUtil.scheduleOnLayoutThread(task, 10);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
+        JUnitUtil.waitFor(() -> {return taskRan;});
         Assert.assertTrue(taskRanOnLayout);
     }
 
     @Test
     public void testScheduleDateOnGUI() {
         TimerUtil.scheduleOnGUIThread(task, 10);
-        Assert.assertTrue(JUnitUtil.waitFor(() -> {return taskRan;}));
+        JUnitUtil.waitFor(() -> {return taskRan;});
         Assert.assertTrue(taskRanOnGUI);
     }
 
@@ -54,7 +54,7 @@ public class TimerUtilTest {
         JUnitUtil.setUp();
         taskRan = false;
         taskRanOnGUI = false;
-        taskRanOnLayout = false;        
+        taskRanOnLayout = false;
     }
 
     @AfterEach

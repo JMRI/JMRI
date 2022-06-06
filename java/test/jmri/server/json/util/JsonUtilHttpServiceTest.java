@@ -97,9 +97,9 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
             return zcs.isPublished() == false;
         });
         zcs.publish();
-        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
-        }));
+        }, "Published ZeroConf Service");
         assertEquals(service.getNetworkService(JSON.ZEROCONF_SERVICE_TYPE, new JsonRequest (locale, JSON.V5, JSON.GET, 42)), service.doGet(JSON.NETWORK_SERVICE, JSON.ZEROCONF_SERVICE_TYPE,
                         NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
         zcs.stop();
@@ -220,9 +220,9 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
             return zcs.isPublished() == false;
         });
         zcs.publish();
-        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
-        }));
+        }, "Published ZeroConf Service");
         result = service.getNetworkServices(new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(1, result.size());
@@ -320,9 +320,9 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
             return zcs.isPublished() == false;
         });
         zcs.publish();
-        Assume.assumeTrue("Published ZeroConf Service", JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return zcs.isPublished() == true;
-        }));
+        }, "Published ZeroConf Service");
         result = service.getNetworkService(JSON.ZEROCONF_SERVICE_TYPE, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
         assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
