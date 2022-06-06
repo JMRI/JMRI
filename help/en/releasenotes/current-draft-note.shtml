@@ -581,5 +581,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Minor changes to resolve Spotbug OS_OPEN_STREAM_EXCEPTION_PATH </li>
+            <li>Minor changes to resolve Spotbug ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD </li>
         </ul>
 
