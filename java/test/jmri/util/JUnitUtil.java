@@ -482,32 +482,8 @@ public class JUnitUtil {
      *         otherwise
      */
     static public boolean waitFor(ReleaseUntil condition) {
-        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
-            log.error("Cannot use waitFor on Swing thread", new Exception());
-            return false;
-        }
-        int delay = 0;
-        try {
-            while (delay < WAITFOR_MAX_DELAY) {
-                if (condition.ready()) {
-                    return true;
-                }
-                int priority = Thread.currentThread().getPriority();
-                try {
-                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-                    Thread.sleep(WAITFOR_DELAY_STEP);
-                    delay += WAITFOR_DELAY_STEP;
-                } catch (InterruptedException e) {
-                    return false;
-                } finally {
-                    Thread.currentThread().setPriority(priority);
-                }
-            }
-            return false;
-        } catch (Exception ex) {
-            log.error("Exception in waitFor condition.", ex);
-            return false;
-        }
+        waitFor(condition, "Steve Young test"); // This will never return if failure
+        return true;
     }
 
     /**
