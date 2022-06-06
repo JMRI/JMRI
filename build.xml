@@ -2274,7 +2274,7 @@
         </spotbugs>
     </target>
 
-    <target name="tests-spotbugs" depends="jar-tests" description="generate SpotBugs (HTML) report including test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+    <target name="tests-spotbugs" depends="jar-tests" description="generate SpotBugs (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
                   outputFile="${jartarget}/spotbugs.html"
@@ -2308,7 +2308,7 @@
         </spotbugs>
     </target>
 
-    <target name="tests-spotbugs-check" depends="dist-tests" description="generate SpotBugs check-only (HTML) report including test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+    <target name="tests-spotbugs-check" depends="dist-tests" description="generate SpotBugs check-only (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
                   outputFile="${jartarget}/spotbugs-check.html"
@@ -2341,7 +2341,7 @@
         </spotbugs>
     </target>
 
-    <target name="tests-spotbugs-ci" depends="dist-tests" description="generate SpotBugs CI (XML) report including test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+    <target name="tests-spotbugs-ci" depends="dist-tests" description="generate SpotBugs CI (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
                   outputFile="spotbugs.xml"
@@ -2374,7 +2374,7 @@
         </spotbugs>
     </target>
 
-    <target name="tests-spotbugs-check-ci" depends="dist-tests" description="generate SpotBugs CI check-only (XML) report including test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+    <target name="tests-spotbugs-check-ci" depends="dist-tests" description="generate SpotBugs CI check-only (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
                   outputFile="spotbugs.xml"
