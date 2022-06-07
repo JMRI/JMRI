@@ -237,20 +237,23 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
             }
 
-            // bump system name
-            try {
-                sName = InstanceManager.getDefault(SensorManager.class).getNextValidSystemName(s);
-            } catch (jmri.JmriException ex) {
-                displayHwError(s.getSystemName(), ex);
-                // directly add to statusBarLabel (but never called?)
-                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", sName));
-                statusBarLabel.setForeground(Color.red);
-                return;
-            }
+            // except on last pass
+            if (x < numberOfSensors-1) {
+                // bump system name
+                try {
+                    sName = InstanceManager.getDefault(SensorManager.class).getNextValidSystemName(s);
+                } catch (jmri.JmriException ex) {
+                    displayHwError(s.getSystemName(), ex);
+                    // directly add to statusBarLabel (but never called?)
+                    statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", sName));
+                    statusBarLabel.setForeground(Color.red);
+                    return;
+                }
 
-            // bump user name
-            if (!uName.isEmpty()) {
-                uName = nextName(uName);
+                // bump user name
+                if (!uName.isEmpty()) {
+                    uName = nextName(uName);
+                }
             }
             // end of for loop creating rangeBox of Sensors
         }

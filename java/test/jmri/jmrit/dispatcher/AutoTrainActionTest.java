@@ -15,11 +15,11 @@ public class AutoTrainActionTest {
 
     @Test
     public void testCTor() {
-        
+
         DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
         InstanceManager.setDefault(DispatcherFrame.class,df);
-        
-        jmri.Transit transit = new jmri.Transit("TT1");
+
+        jmri.Transit transit = new jmri.implementation.DefaultTransit("TT1");
         ActiveTrain at = new ActiveTrain(transit,"Train",ActiveTrain.USER);
         AutoActiveTrain aat = new AutoActiveTrain(at);
         AutoTrainAction t = new AutoTrainAction(aat);

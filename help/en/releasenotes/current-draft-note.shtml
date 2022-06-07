@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Add throttle commands and replies to simulator</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -96,8 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Handled a case in MQTT signal masts that would cause a
-                    spurious error message.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -241,6 +240,11 @@
                 <li></li>
             </ul>
 
+        <h4>Massoth</h4>
+             <ul>
+                <li>New decoder definition for "Pulsed Smoker for round boilers" (product nr 8415001</li>
+             </ul>
+
         <h4>MD Electronics</h4>
              <ul>
                 <li></li>
@@ -359,7 +363,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Improved accessibility of some buttons.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -406,10 +410,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action Script and the expression Script
-          now supports both Jython and ECMA Script (JavaScript).
-          As a result, the option <i>Jython command</i> is now
-          renamed to <i>Single line command</i>.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -473,9 +474,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>The process for adding multiple Lights/Sensors/Turnouts/Reporters has been
-                improved.  Existing items are no longer skipped, so you get the
-                sequential items you asked for. Some error messages have been clarified.</li>
+            <li>Fixed a spurious error message when creating some internal items.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -587,11 +586,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The xercesImpl library was updated to 2.12.2, which may change
-                the content of some error messages.</li>
-            <li>The macOS and Linux startup scripts now will use a JVM
-                found within a "jre" directory within the JMRI program directory.
-                This lets you install a JVM (JRE or JDK) locally just for
-                JMRI's use.
+            <li>Minor changes to resolve Spotbug OS_OPEN_STREAM_EXCEPTION_PATH </li>
         </ul>
 

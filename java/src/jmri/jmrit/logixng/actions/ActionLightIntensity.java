@@ -159,7 +159,7 @@ public class ActionLightIntensity extends AbstractDigitalAction
                         _intensitySocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog expression " + socketSystemName);
+                        log.error("cannot load analog expression {}", socketSystemName);
                     }
                 }
             } else {

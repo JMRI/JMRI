@@ -62,7 +62,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         try {
             add(new JLabel("Hub IP address " + InetAddress.getLocalHost().getHostAddress() + ":" + hub.getPort()));
         } catch (UnknownHostException e) {
-            log.error(e.getLocalizedMessage(), e);
+            log.error("Unknown Host", e);
         }
         add(label);
 

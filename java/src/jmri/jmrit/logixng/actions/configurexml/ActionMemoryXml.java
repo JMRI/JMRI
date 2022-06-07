@@ -84,7 +84,7 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
             try {
                 h.setMemoryOperation(ActionMemory.MemoryOperation.valueOf(queryType.getTextTrim()));
             } catch (ParserException e) {
-                log.error("cannot set memory operation: " + queryType.getTextTrim(), e);
+                log.error("cannot set memory operation: {}", queryType.getTextTrim(), e);
             }
         }
 

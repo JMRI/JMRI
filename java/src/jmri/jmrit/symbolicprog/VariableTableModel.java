@@ -806,6 +806,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of Error Message")
     protected VariableValue processSplitTextVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
         VariableValue v;
         Attribute a;

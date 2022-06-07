@@ -749,8 +749,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
-            Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
-            log.error(ex.getMessage(), ex);
+            Exception ex = new Exception("Please send logs to the JMRI developers.");
+            log.error("Error calculating speed.", ex);
             return 1;  // return estop anyway
         } else if (value >= steps) {
             return steps; // maximum possible speed

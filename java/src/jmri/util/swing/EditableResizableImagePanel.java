@@ -95,7 +95,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             try {
                 Desktop.getDesktop().open(new File(path));
             } catch (IOException ex) {
-                log.error("Browse to action "+ex.getMessage());
+                log.error("Browse to action {}", ex.getMessage());
             }
         });
         myMouseAdapter.addMenuItem(mi);

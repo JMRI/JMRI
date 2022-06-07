@@ -62,19 +62,13 @@ public class PrintCarLoadsAction extends AbstractAction {
         private void printCars() {
 
             // obtain a HardcopyWriter to do this
-            HardcopyWriter writer = null;
-            try {
-                writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5,
-                        .5, .5, .5, _isPreview);
-            } catch (HardcopyWriter.PrintCanceledException ex) {
-                log.debug("Print cancelled");
-                return;
-            }
+            try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5,
+                            .5, .5, .5, _isPreview); ){
 
-            // Loop through the Roster, printing as needed
-            String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
-            Hashtable<String, List<CarLoad>> list = InstanceManager.getDefault(CarLoads.class).getList();
-            try {
+                // Loop through the Roster, printing as needed
+                String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
+                Hashtable<String, List<CarLoad>> list = InstanceManager.getDefault(CarLoads.class).getList();
+
                 String s = Bundle.getMessage("Type") +
                         TAB +
                         tabString(Bundle.getMessage("Load"),
@@ -124,11 +118,13 @@ public class PrintCarLoadsAction extends AbstractAction {
                         writer.write(buf.toString() + NEW_LINE);
                     }
                 }
-            } catch (IOException we) {
-                log.error("Error printing car roster");
+                // and force completion of the printing
+                writer.close();
+            } catch (HardcopyWriter.PrintCanceledException ex) {
+                log.debug("Print cancelled");
+            } catch (IOException ex) {
+                log.error("Error printing car roster", ex);
             }
-            // and force completion of the printing
-            writer.close();
         }
     }
 

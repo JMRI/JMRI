@@ -371,7 +371,7 @@ public class DefaultSignalMastLogicManager
                     }
                     catch (JmriException ex) {
                         //log.debug("we shouldn't get an exception here!");
-                        log.debug(ex.getLocalizedMessage(), ex);
+                        log.warn("Unexpected exception setting mast", ex);
                     }
                 }
             }

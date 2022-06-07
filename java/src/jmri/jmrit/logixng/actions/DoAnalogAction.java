@@ -160,7 +160,7 @@ public class DoAnalogAction
                         _analogExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog expression " + socketSystemName);
+                        log.error("cannot load analog expression {}", socketSystemName);
                     }
                 }
             } else {
@@ -183,7 +183,7 @@ public class DoAnalogAction
                         _analogActionSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog action " + socketSystemName);
+                        log.error("cannot load analog action {}", socketSystemName);
                     }
                 }
             } else {

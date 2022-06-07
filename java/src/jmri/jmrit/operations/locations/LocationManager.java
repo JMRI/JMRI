@@ -221,7 +221,36 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
             }
         }
         return out;
-
+    }
+    
+    /**
+     * Get unique locations list by location name.
+     *
+     * @return list of locations ordered by name. Locations with "similar" names
+     *         to the primary location are not returned. Also checks and updates
+     *         the primary location for any changes to the other "similar"
+     *         locations.
+     */
+    public List<Location> getUniqueLocationsByNameList() {
+        List<Location> locations = getLocationsByNameList();
+        List<Location> out = new ArrayList<Location>();
+        Location mainLocation = null;
+        
+        // also update the primary location for locations with similar names
+        for (Location location : locations) {
+            String name = TrainCommon.splitString(location.getName());
+            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
+                location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
+                if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
+                    mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
+                    location.setStatus(Location.UPDATED); // and clear the secondaries
+                }
+                continue;
+            }
+            mainLocation = location;
+            out.add(location);
+        }
+        return out;
     }
 
     /**

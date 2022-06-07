@@ -298,6 +298,9 @@
 
         <li>Joan de Castro who contributed the Catalan internationalization</li>
 
+        <li>Bruno De Grave, <!-- brucel050 -->
+        who contributed a Massoth decoder definition
+
         <li>Andrew Deak<!-- adeak1rr -->
          who added the CPMEGA C/MRI option.</li>
 
@@ -804,13 +807,15 @@
         <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable the use of
         CBus attached RFID readers.</li>
 
+        <li>Peter Riley, who helped debug a graphics display issue.</li>
+
         <li>Bill Robinson of Team Digital, who provided a schematic of their MS100-equivalent level
         shifter, contributed the LnSendTool.py script and decoder definitions for Team Digital
         products, helped fix a problem with overrunning LocoNet command stations, and provided
         example web pages for layout control via the mini-webserver.</li>
 
         <li>Rodrigo Rodriguez, <!-- RodrigoFXE  -->
-        who translated the decoder definitions into Spanish.
+        who translated the decoder definitions and much of the GUI into Spanish.
 
         <li>Mark Rogerson, who provided the RXTX (Java communications library) for Mac OS X
         machines with Intel processors</li>

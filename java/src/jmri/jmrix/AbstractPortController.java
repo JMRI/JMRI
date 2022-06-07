@@ -441,7 +441,9 @@ abstract public class AbstractPortController implements PortAdapter {
      * @param retryNum Reconnection attempt number.
      */
     protected void reconnectFromLoop(int retryNum){}
-    
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="I18N of Info Message")
     private class ReconnectWait extends Thread {
         @Override
         public void run() {

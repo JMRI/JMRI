@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.BeanSetting;
+
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import jmri.jmrit.logix.TrainOrder.Cause;
 
@@ -141,11 +144,11 @@ public class BlockOrder {
                 // See if path to exit can be set without messing up block of bo1
                 OPath path1 = getPath();
                 Portal exit = getExitPortal();
-                msg =  pathsConnect(path1, exit, bo1, to1._cause);
-                if (msg != null) {
-                    // cannot set path
-                    return new TrainOrder(Warrant.Stop, to1._cause, bo1._index, _index, msg);
-                }
+                msg =  pathsConnect(path1, exit, bo1._block);
+            }
+            if (msg != null) {
+                // cannot set path
+                return new TrainOrder(Warrant.Stop, (to1 != null?to1._cause:Cause.WARRANT), bo1._index, _index, msg);
             }
             // Crossovers typically have both switches controlled by one TO, 
             // yet each switch is in a different block. Setting the path may change
@@ -199,15 +202,13 @@ public class BlockOrder {
         return null;
     }
 
-    private String pathsConnect(OPath path1, Portal exit, BlockOrder bo2, Cause cause) {
-        if (exit == null) {
+    protected String pathsConnect(OPath path1, Portal exit, OBlock block) {
+        if (exit == null || block == null) {
             return null;
         }
-        OPath path2 = bo2._block.getPath();
+        
+        OPath path2 = block.getPath();
         if (path2 == null) {
-            return null;
-        }
-        if (exit.equals(path2.getToPortal()) || exit.equals(path2.getFromPortal())) {
             return null;
         }
         for (BeanSetting bs1 : path1.getSettings()) {
@@ -215,19 +216,19 @@ public class BlockOrder {
                 if (bs1.getBean().equals(bs2.getBean())) {
                     // TO is shared (same bean)
                     if (bs1.equals(bs2)) {
-//                        if (log.isDebugEnabled()) {
-//                            log.debug("Path \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
-//                                    path1.getName(), path2.getName(), bo2._block.getDisplayName(), 
-//                                    bs1.getBean().getDisplayName());
-//                        }
-                        return null;
-                    } else {
                         if (log.isDebugEnabled()) {
-                            log.debug("Path \"{}\" and \"{}\" in block \"{}\" have opposed settings of shared turnout \"{}\"",
-                                    path1.getName(), path2.getName(), bo2._block.getDisplayName(), 
+                            log.debug("Path \"{}\" in block \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
+                                    path1.getName(), _block.getDisplayName(), path2.getName(), block.getDisplayName(), 
                                     bs1.getBean().getDisplayName());
                         }
-                        return  Bundle.getMessage("SharedTurnoutSet", bs1.getBean().getDisplayName());
+                        return  Bundle.getMessage("SharedTurnout", bs1.getBean().getDisplayName(), _block.getDisplayName(), block.getDisplayName());
+                    } else {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Path \"{}\" in block \"{}\" and \"{}\" in block \"{}\" have opposed settings of shared turnout \"{}\"",
+                                    path1.getName(), _block.getDisplayName(), path2.getName(), block.getDisplayName(), 
+                                    bs1.getBean().getDisplayName());
+                        }
+                        return  Bundle.getMessage("SharedTurnout", bs1.getBean().getDisplayName(), _block.getDisplayName(), block.getDisplayName());
                     }
                 }
             }

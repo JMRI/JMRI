@@ -162,7 +162,7 @@
         <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
-        <pathelement location="${libdir}/xbee-java-library-1.2.1.jar"/>
+        <pathelement location="${libdir}/xbee-java-library-1.3.1.jar"/>
         <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
         <pathelement location="${libdir}/commons-io-2.11.0.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
@@ -1320,12 +1320,12 @@
                 <include name="empty key check"/>
                 <include name="messageformat check"/>
                 <include name="unicode check"/>
-                <include name="invalid char check"/> <!-- c.f. native2ascii -->
+                <!-- <include name="invalid char check"/> native2ascii not needed in Java 11 -->
 
                 <!-- someday want to get to these -->
+                <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
                 <exclude name="placeholder check"/> <!-- Is this _global_ on name?  C.f. ConnectionName -->
                 <exclude name="upper lower check"/>
-                <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
 
                 <!-- our usage may be inconsistent with these, needs further thought -->
                 <exclude name="empty value check"/>

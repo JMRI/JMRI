@@ -367,11 +367,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
     public void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {
-            StringBuilder buf = new StringBuilder("Identified " + pList.size() + " matches: ");
+            StringBuilder buf = new StringBuilder();
             for (int i = 0; i < pList.size(); i++) {
                 buf.append(pList.get(i).getModel()).append(":");
             }
-            log.debug(buf.toString());
+            log.debug("Identified {} matches: {}", pList.size() , buf );
         }
         if (pList.size() <= 0) {
             log.error("Found empty list in updateForDecoderTypeID, should not happen");
@@ -462,6 +462,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="String also built for display in _statusLabel")
     @Override
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
@@ -511,6 +513,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="String also built for display in _statusLabel")
     @Override
     void updateForDecoderNotID(int pMfgID, int pModelID) {
         String msg = "Found mfg " + pMfgID + " version " + pModelID + "; no such manufacturer defined";

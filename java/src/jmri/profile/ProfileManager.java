@@ -93,7 +93,7 @@ public class ProfileManager extends Bean {
             this.readProfiles();
             this.findProfiles();
         } catch (JDOMException | IOException ex) {
-            log.error(ex.getLocalizedMessage(), ex);
+            log.error("Exception opening Profiles in {}", catalog, ex);
         }
     }
 
