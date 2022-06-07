@@ -513,6 +513,7 @@
         <delete includeEmptyDirs="true" quiet="true"  verbose="true">
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>
+            <fileset file="${jartarget}/jmri-tests.jar"/>
             <fileset file="${javadir}/manifest"/>
             <!-- .gitignore test artifacts -->
             <fileset file="junit-results.xml"/>

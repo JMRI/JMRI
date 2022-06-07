@@ -855,6 +855,8 @@
         <li>Jeff Schmaltz, who contributed decoder definitions for the Massoth eMotion and LGB
         decoders, the Zimo MX65, and the ESU LokPilot and LokPilotBasic decoders.</li>
 
+        <li>George Schreyer, who tests JMRI on new macOS versions as they come out.</li>
+
         <li>Mark Schutzer, who helped debug some significant NCE improvements and contributed the
         Lenz Gold decoder definition</li>
 
