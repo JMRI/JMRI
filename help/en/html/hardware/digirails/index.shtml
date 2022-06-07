@@ -18,7 +18,7 @@
 
       <h3>Command Station</h3>
 
-      <p>JMRI can connect to a Digirails DR5000 Digicentral command station via a network
+      <p>JMRI can connect to a Digikeijs DR5000 Digicentral command station via a network
       connection or USB connection.</p>
 
       <h2 id="limitations">Limitations</h2>
@@ -42,7 +42,7 @@
 
         <li>Enter the IP address for your DR5000 unit</li>
 
-        <li>You may optionally change the connection name to "Digirails"</li>
+        <li>You may optionally change the connection name to "Digikeijs"</li>
 
         <li>Leave the port number at 15471</li>
 
@@ -90,20 +90,25 @@
 
       <h3>Sensors</h3>
 
-      <p>The S88 bus on the DR5000 (whether in use or not) is configured by default to think it has
+      <p class="important">The S88 bus on the DR5000 (whether in use or not) is configured by default to think it has
       one 16-channel input device connected. The S88 and LocoNet busses apparently share addresses.
       Whenever an input from LS0 to LS15 goes HIGH on LocoNet, the S88 bus says 'NOPE'. The
       resulting LOW signal is in turn broadcast onto the LocoNet bus. Set the number of connected
       S88 units to zero in the (Windows) configuration application. (thanks to Steve R. Jan.
       2018)</p>
 
+      <p>The Digikeijs DR4088LN and DR50018RC decoders can report occupancy state via LocoNet.<br>
+      The DR5088RC handles RailCom and is configurable via LNCV programming.</p>
+
       <h3>Turnouts</h3>
 
-      <p>The Digirails DR4018 decoder can drive turnouts with several protocols.</p>
+      <p>The Digikeijs DR4018 decoder can drive turnouts with several protocols.<br>
+      The DR4024 can drive 4 servos.<br>
+      Both are configurable in DecoderPro as a roster entry at address 9999.</p>
 
       <h3 id="dr4018">Signals</h3>
 
-      <p>The Digirails DR4018 decoder can be configured for signaling using DecoderPro.<br>
+      <p>The Digikeijs DR4018 decoder can be configured for signaling using DecoderPro.<br>
       To configure the signal Masts, use the <a href=
       "../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#matrixCtl">Matrix Signal
       Mast</a> driver.<br>
