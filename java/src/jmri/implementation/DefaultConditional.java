@@ -2,7 +2,6 @@ package jmri.implementation;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -752,7 +751,11 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }   // takeActionIfNeeded
 
-    static private boolean _skipErrorDialog = false;
+    private static volatile boolean _skipErrorDialog = false;
+
+    private static synchronized void setSkipErrorDialog( boolean skip ) {
+        _skipErrorDialog = skip;
+    }
 
     class ErrorDialog extends JDialog {
 
@@ -782,14 +785,9 @@ public class DefaultConditional extends AbstractNamedBean
 
             panel = new JPanel();
             JButton closeButton = new JButton("Close");  // NOI18N
-            closeButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    if (rememberSession.isSelected()) {
-                        _skipErrorDialog = true;
-                    }
-                    dispose();
-                }
+            closeButton.addActionListener((ActionEvent a) -> {
+                DefaultConditional.setSkipErrorDialog(rememberSession.isSelected());
+                dispose();
             });
             panel.add(closeButton);
             contentPanel.add(panel);

@@ -225,12 +225,16 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     // should probably be abstract and put in invoking GUI
     static JFileChooser chooser;  // shared across all uses
 
+    private synchronized static void setChooser( JFileChooser jfc ){
+        chooser = jfc;
+    }
+
     void replWavButtonPressed(Object value, int row, int col) {
         if (chooser == null) {
-            chooser = new JFileChooser(FileUtil.getUserFilesPath());
+            setChooser( new JFileChooser(FileUtil.getUserFilesPath()));
         }
-        chooser.rescanCurrentDirectory();
-        int retVal = chooser.showOpenDialog(null);
+        EditorTableDataModel.chooser.rescanCurrentDirectory();
+        int retVal = EditorTableDataModel.chooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return;  // give up if no file selected
         }

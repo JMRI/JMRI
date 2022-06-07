@@ -109,9 +109,6 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         // now load train icons on panels
         InstanceManager.getDefault(TrainManager.class).loadTrainIcons();
 
-        // loading complete run startup scripts
-        InstanceManager.getDefault(TrainManager.class).runStartUpScripts();
-
         log.debug("Trains have been loaded!");
         InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
         
@@ -121,6 +118,11 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
                 train.reset();
             }
         }
+        
+        // loading complete run startup scripts
+        InstanceManager.getDefault(TrainManager.class).runStartUpScripts();       
+        InstanceManager.getDefault(AutomationManager.class).runStartupAutomation();
+        
         setDirty(false); // clear dirty flag
     }
 
