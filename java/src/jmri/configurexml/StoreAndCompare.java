@@ -14,8 +14,6 @@ import java.util.UUID;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
-import jmri.configurexml.ShutdownPreferences;
-
 public class StoreAndCompare extends AbstractAction {
 
     public StoreAndCompare() {
