@@ -16,6 +16,8 @@ import jmri.LocoAddress.Protocol;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.logix.ThrottleSetting.Command;
+import jmri.jmrit.logix.ThrottleSetting.CommandValue;
+import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
@@ -54,7 +56,6 @@ public class SpeedUtil {
     private float _speedIncrement;  // throttle's minimum speed step
 
     private RosterSpeedProfile _sessionProfile; // speeds measured in the session
-    private boolean _noProfile =  true;
     private SignalSpeedMap _signalSpeedMap;
     private float _ma;  // milliseconds needed to increase speed by throttle step amount
     private float _md;  // milliseconds needed to decrease speed by throttle step amount
@@ -216,6 +217,9 @@ public class SpeedUtil {
         RosterEntry rosterEntry = new RosterEntry();
         rosterEntry.setId(id);
         DccLocoAddress dccAddr = getDccAddress();
+        if (dccAddr == null) {
+            return null;
+        }
         rosterEntry.setDccAddress(String.valueOf(dccAddr.getNumber()));
         rosterEntry.setProtocol(dccAddr.getProtocol());
         rosterEntry.ensureFilenameExists();
@@ -375,11 +379,9 @@ public class SpeedUtil {
             _rosterEntry = Roster.getDefault().getEntryForId(_rosterId);
             RosterSpeedProfile profile;
             if (_rosterEntry == null) {
-                _noProfile =  true;
                 _rosterEntry = makeRosterEntry(_rosterId);
                 profile = new RosterSpeedProfile(_rosterEntry);
             } else {
-                _noProfile =  false;
                 profile = _rosterEntry.getSpeedProfile();
                 if (profile == null) {
                     profile = new RosterSpeedProfile(_rosterEntry);
@@ -536,13 +538,11 @@ public class SpeedUtil {
         }
     }*/
 
-    synchronized protected void mergeSpeedProfile() {
-//        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-//        manager.setMergeProfile(_rosterId, _sessionProfile);
-    }
-
     protected void setIsForward(boolean direction) {
         _isForward = direction;
+        if (_throttle != null) {
+            _throttle.setIsForward(direction);
+        }
     }
 
     protected boolean getIsForward() {
@@ -675,16 +675,18 @@ public class SpeedUtil {
         if (throttleSetting <= 0.0f) {
             return 0.0f;
         }
-        if (_dccAddress == null || _noProfile) {
+        if (_dccAddress == null) {
             return factorSpeed(throttleSetting);
         }
+        RosterSpeedProfile sessionProfile = getMergeProfile(); 
         boolean isForward = getIsForward();
         // Note SpeedProfile uses millimeters per second.
-        float speed = _sessionProfile.getSpeed(throttleSetting, isForward) / 1000;
+        float speed = sessionProfile.getSpeed(throttleSetting, isForward) / 1000;
         if (speed <= 0.0f) {
-            speed = _sessionProfile.getSpeed(throttleSetting, !isForward) / 1000;
+            speed = sessionProfile.getSpeed(throttleSetting, !isForward) / 1000;
         }
         if (speed <= 0.0f) {
+            log.debug("Using Factor for throttle {}!", throttleSetting);
             return factorSpeed(throttleSetting);
         }
         return speed;
@@ -704,7 +706,12 @@ public class SpeedUtil {
      */
     protected float getThrottleSettingForSpeed(float trackSpeed) {
         RosterSpeedProfile speedProfile = getMergeProfile();
-        float throttleSpeed = speedProfile.getThrottleSetting(trackSpeed * 1000, getIsForward());
+        float throttleSpeed;
+        if (speedProfile != null) {
+            throttleSpeed = speedProfile.getThrottleSetting(trackSpeed * 1000, getIsForward());
+        } else {
+            throttleSpeed = 0f;
+        }
         if (throttleSpeed <= 0.0f) {
             throttleSpeed =  trackSpeed * _signalSpeedMap.getLayoutScale() / (SCALE_FACTOR *_signalSpeedMap.getDefaultThrottleFactor());
         }
@@ -734,12 +741,12 @@ public class SpeedUtil {
      * @param distance in millimeters
      * @return time in milliseconds
      */
-    protected float getTimeForDistance(float throttleSetting, float distance) {
+    protected int getTimeForDistance(float throttleSetting, float distance) {
         float speed = getTrackSpeed(throttleSetting);
         if (distance <= 0 || speed <= 0) {
-            return 0.0f;
+            return 0;
         }
-        return (distance/speed);
+        return Math.round(distance/speed);
     }
 
     /*************** Block Speed Info *****************/
@@ -765,24 +772,43 @@ public class SpeedUtil {
         String blkName = blk.getDisplayName();
         for (int i = 0; i < commands.size(); i++) {
             ts = commands.get(i);
-            ThrottleSetting.CommandValue cmdVal = ts.getValue();
+            Command command = ts.getCommand();
+            CommandValue cmdVal = ts.getValue();
+            if (command.equals(Command.FORWARD)) {
+                ValueType val = cmdVal.getType();
+                if (val.equals(ValueType.VAL_TRUE)) {
+                    setIsForward(true);
+                } else {
+                    setIsForward(false);
+                }
+            }
             long time = ts.getTime();
             blkTime += time;
             float dist = getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);
-//            log.debug("block: {} Cmd#{} Dist= {} in {}ms from {} to {}", blkName, i+1, dist, time, intStartSpeed, intEndSpeed);
             calcDist += dist;
-            if (cmdVal.getType() == ThrottleSetting.ValueType.VAL_FLOAT) {
-                speed = cmdVal.getFloat();
-                if (speed <= 0) {
-                    intStartSpeed = 0;
-                    intEndSpeed = 0;
-                }else {
-                    intStartSpeed = intEndSpeed;
-                    intEndSpeed = speed;
-                }
+            if (log.isDebugEnabled() && dist > 0) {
+                log.debug("block: {} Cmd#{} Dist= {} in {}ms calcDist= {} from {} to {}",
+                        blkName, i+1, dist, time, calcDist, intStartSpeed, intEndSpeed);
+                
             }
-            if (ts.getCommand().equals(Command.NOOP)) {
-                // make map entry
+            if (command.equals(Command.SPEED)) {
+                speed = cmdVal.getFloat();
+                if (speed < 0) {
+                    speed = 0;
+                }
+                intStartSpeed = intEndSpeed;
+                intEndSpeed = speed;
+            }
+            if (command.equals(Command.NOOP)) {
+                // make map entry. First measure distance to end of block
+                dist = getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);
+                calcDist += dist;
+                if (log.isDebugEnabled() && dist > 0) {
+                    log.debug("block: {} Cmd#{} Dist= {} in {}ms calcDist= {} from {} to {}",
+                            blkName, i+1, dist, time, calcDist, intStartSpeed, intEndSpeed);
+                    
+                }
+               
                 boolean trace = false;
                 if (calcDist<= 0) {
                     log.warn("block: {} Path distance or SpeedProfile unreliable! pathDist= {}, calcDist={}!", blkName, pathDist, calcDist);
@@ -801,7 +827,7 @@ public class SpeedUtil {
                 }
                 _speedInfo.add(new BlockSpeedInfo(blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i));
                 if (trace || log.isDebugEnabled()) {
-                   log.debug("block: {} speeds: entrance= {}, exit= {}. time= {}ms, pathDist= {}, calcDist= {}. index {} to {}",
+                   log.debug("block: {} totals. Speeds: entrance= {}, exit= {}. time= {}ms, pathDist= {}, calcDist= {}. index {} to {}",
                             blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, i);
                 }
                 blkOrderIdx++;
@@ -809,6 +835,7 @@ public class SpeedUtil {
                 blkName = blk.getDisplayName();
                 blkTime = 0;
                 calcDist = 0;
+                intStartSpeed = intEndSpeed;
                 firstSpeed = speed;
                 firstIdx = i + 1; // first in next block is next index
             }
@@ -1055,7 +1082,7 @@ public class SpeedUtil {
             if (_intStartSpeed > 0 || _intEndSpeed > 0) {
                 _timeAtSpeed += elapsedTime;
             }
-            if (log.isDebugEnabled()) {
+            if (log.isTraceEnabled()) {
                 log.debug("speedChange to {}: dist={} in {}ms from speed {} to {}.",
                         throttleSetting, dist, elapsedTime, _intStartSpeed, _intEndSpeed);
             }
