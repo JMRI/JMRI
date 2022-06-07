@@ -375,6 +375,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
         list.add(new BuildTrainIfSelectedAction());
         list.add(new PrintTrainManifestAction());
         list.add(new PrintTrainManifestIfSelectedAction());
+        list.add(new PrintTrainBuildReportAction());
         list.add(new RunTrainAction());
         list.add(new MoveTrainAction());
         list.add(new TerminateTrainAction());
@@ -387,11 +388,11 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new PrintSwitchListAction());
-//        list.add(new PrintSwitchListChangesAction()); // see UpdateSwitchListAction
         list.add(new UpdateSwitchListAction());
         list.add(new WaitSwitchListAction());
         list.add(new GenerateSwitchListAction());
         list.add(new GenerateSwitchListChangesAction());
+        list.add(new ResetSwitchListsAction());
         list.add(new RunSwitchListAction());
         list.add(new RunSwitchListChangesAction());
         list.add(new RunAutomationAction());
