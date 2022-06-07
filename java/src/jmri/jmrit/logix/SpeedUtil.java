@@ -29,6 +29,8 @@ import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * All speed related method transferred from Engineer and Warrant classes.
  * Until June 2017, the problem of determining the actual track speed of a
@@ -926,6 +928,7 @@ public class SpeedUtil {
      * @param blkIdx BlockOrder index of the block the engine just left. (not train)
      * The lead engine just entered the next block after blkIdx.
      */
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     protected void leavingBlock(int blkIdx) {
         long exitTime = System.currentTimeMillis();
         BlockSpeedInfo blkInfo = getBlockSpeedInfo(blkIdx);

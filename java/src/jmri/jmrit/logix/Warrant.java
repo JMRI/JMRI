@@ -2158,20 +2158,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * if current listening signal is not at signalIndex, remove listener and
      * set new listening signal
      */
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     private boolean changeSignalListener(NamedBean  signal,  int signalIndex) {
         if (signalIndex == _idxProtectSignal) {
             return true;
         }
-        StringBuilder sb = new StringBuilder(getDisplayName());
+//        StringBuilder sb = new StringBuilder(getDisplayName());
         if (_protectSignal != null) {
             _protectSignal.removePropertyChangeListener(this);
-            if (log.isDebugEnabled()) {
+/*            if (log.isDebugEnabled()) {
                 sb.append("Removes \"");
                 sb.append(_protectSignal.getDisplayName());
                 sb.append("\" at \"");
                 sb.append(getBlockAt(_idxProtectSignal).getDisplayName());
                 sb.append("\"");
-            }
+            }*/
             _protectSignal = null;
             _idxProtectSignal = -1;
         }
@@ -2181,8 +2182,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _idxProtectSignal = signalIndex;
             _protectSignal.addPropertyChangeListener(this);
             if (_trace || log.isDebugEnabled()) {
-                log.info("{}. {}", Bundle.getMessage("ProtectSignalSet", getTrainName(),
-                        _protectSignal.getDisplayName(), getBlockAt(_idxProtectSignal).getDisplayName()), sb);
+                log.info(Bundle.getMessage("ProtectSignalSet", getTrainName(),
+                        _protectSignal.getDisplayName(), getBlockAt(_idxProtectSignal).getDisplayName()));
             }
             ret = true;
         }
