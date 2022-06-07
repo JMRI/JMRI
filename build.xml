@@ -2337,7 +2337,7 @@
                   reportLevel="low"
                   >
             <sourcePath path="${source}/"/>
-            <class location="${jartarget}/jmri-tests.jar"/>
+            <class location="${jartarget}/jmri.jar"/>
             <auxClasspath refid="compile.class.path" />
         </spotbugs>
     </target>
