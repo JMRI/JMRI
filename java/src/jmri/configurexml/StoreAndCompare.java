@@ -57,7 +57,7 @@ public class StoreAndCompare extends AbstractAction {
         log.info("File 2 = {}", file2);
 
         // Store the current data using the temp file.
-        jmri.ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        jmri.ConfigureManager cm = jmri.InstanceManager.getDefault(jmri.ConfigureManager.class);
         boolean stored = cm.storeUser(file2);
         log.info("stored = {}", stored);
 
@@ -68,7 +68,9 @@ public class StoreAndCompare extends AbstractAction {
             log.info("exception: ", ex);
         }
 
-        file2.delete();
+        if (!file2.delete() {
+            log.warn("An error occurred while deleting temporary file {}", file2.getPath());
+        }
 
         return result;
     }
@@ -203,14 +205,13 @@ public class StoreAndCompare extends AbstractAction {
             }
 
             if (!match && !line1.equals(line2)) {
-                log.error("match failed in LoadAndStoreTest:");
+                log.error("match failed in StoreAndCompare:");
                 log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                 log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
                 log.error("  comparing file1:\"{}\"", inFile1.getPath());
                 log.error("         to file2:\"{}\"", inFile2.getPath());
                 result = true;
                 break;
-                // Assert.assertEquals(line1, line2);
             }
             line1 = next1;
             line2 = next2;
