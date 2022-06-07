@@ -37,6 +37,7 @@ public class ActionCodes {
     public static final int DESELECT_TRAIN = 0x0B00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     public static final int WAIT_FOR_TRAIN_TERMINATE = 0x0C00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     public static final int IS_TRAIN_EN_ROUTE = 0x0D00 + ENABLE_TRAINS + ENABLE_ROUTES + OK_MESSAGE + FAIL_MESSAGE;
+    public static final int PRINT_TRAIN_BUILDREPORT = 0x0E00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     
     public static final int UPDATE_SWITCHLIST = 0x1000 + OK_MESSAGE;
     public static final int PRINT_SWITCHLIST = 0x1100 + OK_MESSAGE;
@@ -46,6 +47,7 @@ public class ActionCodes {
     public static final int PRINT_SWITCHLIST_CHANGES = 0x1500 + OK_MESSAGE;
     public static final int GENERATE_SWITCHLIST_CHANGES = 0x1600 + OK_MESSAGE + FAIL_MESSAGE;
     public static final int GENERATE_SWITCHLIST = 0x1700 + OK_MESSAGE + FAIL_MESSAGE;
+    public static final int RESET_SWITCHLIST = 0x1800 + OK_MESSAGE;
     
     public static final int ACTIVATE_TRAIN_SCHEDULE = 0x2000 + OK_MESSAGE + ENABLE_OTHER; 
     public static final int APPLY_TRAIN_SCHEDULE = 0x2100 + OK_MESSAGE + FAIL_MESSAGE;

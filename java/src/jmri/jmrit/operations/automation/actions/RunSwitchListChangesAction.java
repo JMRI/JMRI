@@ -82,7 +82,7 @@ public class RunSwitchListChangesAction extends Action {
             if (InstanceManager.getDefault(TrainCustomSwitchList.class).doesCommonFileExist()) {
                 log.warn("Switch List CSV common file exists!");
             }
-            for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
+            for (Location location : InstanceManager.getDefault(LocationManager.class).getUniqueLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
                         (!isChanged || location.getStatus().equals(Location.MODIFIED))) {
                     File csvFile = trainCsvSwitchLists.buildSwitchList(location);
