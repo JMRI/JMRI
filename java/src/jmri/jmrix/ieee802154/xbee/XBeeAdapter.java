@@ -1,5 +1,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.connection.ConnectionType;
 import com.digi.xbee.api.connection.IConnectionInterface;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
@@ -266,6 +267,11 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
        iConnectionOpened = true;
        // don't do anything here.  We handle the details of open through the
        // openPort call, which is called from the JMRI infrastructure.
+    }
+
+    @Override
+    public ConnectionType getConnectionType() {
+        return ConnectionType.UNKNOWN;
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class);

@@ -239,6 +239,11 @@
                 <li></li>
             </ul>
 
+        <h4>Massoth</h4>
+             <ul>
+                <li>New decoder definition for "Pulsed Smoker for round boilers" (product nr 8415001</li>
+             </ul>
+
         <h4>MD Electronics</h4>
              <ul>
                 <li></li>
@@ -468,7 +473,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed a spurious error message when creating some internal items.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -580,6 +585,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Minor changes to resolve Spotbug OS_OPEN_STREAM_EXCEPTION_PATH </li>
         </ul>
 

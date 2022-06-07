@@ -2894,10 +2894,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
     }
 
-    public void printBuildReport() {
+    public boolean printBuildReport() {
         boolean isPreview = (InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled() ||
                 Setup.isBuildReportAlwaysPreviewEnabled());
-        printBuildReport(isPreview);
+        return printBuildReport(isPreview);
     }
 
     public boolean printBuildReport(boolean isPreview) {

@@ -19,8 +19,8 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         super(memo);
         //Request status of turnout changes
         TamsMessage m = TamsMessage.getXEvtTrn();
-        memo.getTrafficController().sendTamsMessage(m, this);
-        memo.getTrafficController().addPollMessage(m, this);
+        memo.getTrafficController().sendTamsMessage(m, TamsTurnoutManager.this);
+        memo.getTrafficController().addPollMessage(m, TamsTurnoutManager.this);
     }
 
     /**
@@ -77,16 +77,16 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     @Override
     public void reply(TamsReply r) {//To listen for Turnout status changes
         //TamsMessage tm = TamsMessage.getXEvtTrn();
-        if (TamsTrafficController.replyType == 'T') {//Only handle Turnout events
+        if ( getMemo().getTrafficController().replyType == 'T') {//Only handle Turnout events
             log.debug("*** Tams Turnout Reply ***");
-            if (TamsTrafficController.replyBinary) {//Typical polling message
+            if ( getMemo().getTrafficController().replyBinary ) {//Typical polling message
                 log.debug("Reply to binary command = {}", r.toString());
                 if ((r.getNumDataElements() > 1) && (r.getElement(0) > 0x00) && (r.getElement(0) != 'T')) {
                     //Here we break up a long turnout related TamsReply into individual turnout status'
                     for (int i = 1; i < r.getNumDataElements() - 1; i = i + 2) {
                         //create a new TamsReply and pass it to the decoder
                         TamsReply tr = new TamsReply();
-                        tr.setBinary(TamsTrafficController.replyBinary);
+                        tr.setBinary(true);
                         tr.setElement(0, r.getElement(i));
                         tr.setElement(1, r.getElement(i + 1));
                         log.debug("Going to pass this to the decoder = {}", tr.toString());
@@ -131,6 +131,12 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         TamsTurnout ttu = (TamsTurnout)provideTurnout(turnoutName);
         ttu.setCommandedStateFromCS(turnoutState);
         ttu.setKnownStateFromCS(turnoutState);
+    }
+
+    @Override
+    public void dispose() {
+        getMemo().getTrafficController().removePollMessage(TamsMessage.getXEvtTrn(), this);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class);
