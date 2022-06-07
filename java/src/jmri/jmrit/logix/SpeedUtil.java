@@ -686,7 +686,6 @@ public class SpeedUtil {
             speed = sessionProfile.getSpeed(throttleSetting, !isForward) / 1000;
         }
         if (speed <= 0.0f) {
-            log.debug("Using Factor for throttle {}!", throttleSetting);
             return factorSpeed(throttleSetting);
         }
         return speed;
@@ -846,10 +845,9 @@ public class SpeedUtil {
             log.debug("block: {} speeds: entrance= {}, exit= {}. time= {}ms pathDist= {}, calcDist= {}. index {} to {}",
                     blkName, firstSpeed, speed, blkTime, pathDist, calcDist, firstIdx, (commands.size() - 1));
         }
-        clearStats();
+        clearStats(-1);
         _intStartSpeed = 0;
         _intEndSpeed = 0;
-        _prevChangeTime = -1;
     }
 
     protected BlockSpeedInfo getBlockSpeedInfo(int idxBlockOrder) {
@@ -911,18 +909,12 @@ public class SpeedUtil {
     private long _timeAtSpeed = 0;
     private float _intStartSpeed = 0.0f;
     private float _intEndSpeed = 0.0f;
-//    private float _prevSpeed = 0;
     private float _distanceTravelled = 0;
     private float _settingsTravelled = 0;
     private long _prevChangeTime = -1;
     private int _numchanges = 0;        // number of time changes within the block
     private long _entertime = 0;        // entrance time to block
-    private long _timeOffset = 0;
-//    private boolean _halted = false;    // speed has at 0 at some time while in the block
-
-    protected void enterTimeOffset(long time) {
-        _timeOffset = time;
-    }
+    private boolean _cantMeasure = false;    // speed has at 0 at some time while in the block
 
     /**
      * Just entered a new block at 'toTime'. Do the calculation of speed of the
@@ -936,9 +928,18 @@ public class SpeedUtil {
      */
     protected void leavingBlock(int blkIdx) {
         long exitTime = System.currentTimeMillis();
+        BlockSpeedInfo blkInfo = getBlockSpeedInfo(blkIdx);
+        if (log.isDebugEnabled()) {
+            log.debug(blkInfo.toString());
+        }
+        if (_cantMeasure) {
+            clearStats(exitTime);
+            _entertime = exitTime;   // entry of next block
+            log.debug("Skip speed measurement");
+            return;
+        }
         boolean isForward = getIsForward();
         float throttle = _throttle.getSpeedSetting();   // may not be a multiple of a speed step
-        BlockSpeedInfo blkInfo = getBlockSpeedInfo(blkIdx);
         float length = blkInfo.getPathLen();
         if (_numchanges == 0) {
             long elapsedTime = exitTime - _prevChangeTime;
@@ -972,10 +973,9 @@ public class SpeedUtil {
         measuredSpeed *= 1000;    // SpeedProfile is mm/sec
         float aveSettings = _settingsTravelled / _timeAtSpeed;
         if (log.isDebugEnabled()) {
-            log.debug("Block: {}", blkInfo );
-            float timeRatio = (exitTime - _entertime + _timeOffset) / (float)_timeAtSpeed;
-            log.debug("distRatio= {}, timeRatio= {}, _timeOffset= {}, aveSpeed= {}, length= {}, calcLength= {}, elapsedTime= {}", 
-                    distRatio, timeRatio, _timeOffset, measuredSpeed, length, _distanceTravelled, (exitTime - _entertime));
+            float timeRatio = (exitTime - _entertime) / (float)_timeAtSpeed;
+            log.debug("distRatio= {}, timeRatio= {}, aveSpeed= {}, length= {}, calcLength= {}, elapsedTime= {}", 
+                    distRatio, timeRatio, measuredSpeed, length, _distanceTravelled, (exitTime - _entertime));
         }
         if (aveSettings > 1.0 || measuredSpeed > MAX_TGV_SPEED*aveSettings/_signalSpeedMap.getLayoutScale()
                 || distRatio > 1.15f || distRatio < 0.87f) {
@@ -994,10 +994,8 @@ public class SpeedUtil {
                     _numchanges, blkInfo.getBlockDisplayName(), Math.round(_distanceTravelled), length,
                     aveSettings, measuredSpeed, getTrackSpeed(aveSettings)*1000, throttle);
         }
-        clearStats();
-        _prevChangeTime = exitTime;
+        clearStats(exitTime);
         _entertime = exitTime;   // entry of next block
-        _timeOffset = 0;
     }
 
     private void setSpeedProfile(RosterSpeedProfile profile, float throttle, float measuredSpeed, boolean isForward) {
@@ -1056,11 +1054,13 @@ public class SpeedUtil {
         }
        return false;
     }
-    private void clearStats() {
+    private void clearStats(long exitTime) {
         _timeAtSpeed = 0;
         _distanceTravelled = 0.0f;
         _settingsTravelled = 0.0f;
         _numchanges = 0;
+        _prevChangeTime = exitTime;
+        _cantMeasure = false;
     }
 
     /*
@@ -1069,6 +1069,7 @@ public class SpeedUtil {
      */
     synchronized protected void speedChange(float throttleSetting) {
         if (Math.abs(_intEndSpeed - throttleSetting) < 0.00001f) {
+            _cantMeasure = true;
             return;
         }
         _numchanges++;
@@ -1079,7 +1080,7 @@ public class SpeedUtil {
         if (_prevChangeTime > 0) {
             long elapsedTime = time - _prevChangeTime;
             float dist = getDistanceOfSpeedChange(_intStartSpeed, _intEndSpeed, elapsedTime);
-            if (_intStartSpeed > 0 || _intEndSpeed > 0) {
+            if (dist > 0) {
                 _timeAtSpeed += elapsedTime;
             }
             if (log.isTraceEnabled()) {
