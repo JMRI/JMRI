@@ -13,6 +13,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import jmri.configurexml.ShutdownPreferences;
+import jmri.configurexml.ShutdownPreferences.DialogDisplayOptions;
+
 /**
  * Swing dialog notify that there is un-stored PanelPro data changes.
  *
@@ -20,7 +23,14 @@ import javax.swing.JPanel;
  */
 public class StoreAndCompareDialog {
 
+    private static ShutdownPreferences _preferences = jmri.InstanceManager.getDefault(ShutdownPreferences.class);
+
     static public void showDialog() {
+        if (_preferences.getDisplayDialog().equals(ShutdownPreferences.DialogDisplayOptions.SkipDialog)) {
+            performStore();
+            return;
+        }
+
         try {
             // Provide option to invoke the store process before the shutdown.
             final JDialog dialog = new JDialog();
@@ -48,7 +58,7 @@ public class StoreAndCompareDialog {
 
             yesButton.addActionListener((ActionEvent e) -> {
                 dialog.setVisible(false);
-                new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
+                performStore();
                 dialog.dispose();
                 return;
             });
@@ -64,5 +74,9 @@ public class StoreAndCompareDialog {
         } catch (HeadlessException ex) {
             // silently do nothig - we can't display a dialog and shutdown continues without a store.
         }
+    }
+
+    static private void performStore() {
+        new jmri.configurexml.StoreXmlUserAction("").actionPerformed(null);
     }
 }
