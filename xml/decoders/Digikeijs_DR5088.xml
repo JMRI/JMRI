@@ -18,7 +18,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 or later -->
 
     <decoder>
-        <family name="DR5088RC" mfg="Digikeijs" type="stationary">
+        <family name="Stationary" mfg="Digikeijs" type="stationary">
             <model model="DR5088" productID="5088" formFactor="Stationary" comment="16 port LocoNet Feedback module with RailCom">
               <versionCV />
               <size length="102" width="86" height="20" units="mm" />
@@ -82,6 +82,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="cs">LocoNet Report of Direction:</label>
               <label>RailCom Report of Direction:</label>
             </variable>
+
+            <!-- next 11 items in LNCV4? not documented, so read only for now awaiting hardware -->
             <variable CV="5088.4" item="Configuration" readOnly="yes">
               <decVal min="0" max="9999"/>
               <label xml:lang="de">Zusätzl. Konfiguration:</label>
@@ -91,6 +93,66 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label>Additional Configuration:</label>
               <tooltip>Compound LNCV 4 value, needs hardware to analyse meaning of bits. For now:</tooltip>
             </variable>
+            <variable CV="5088.4" mask="VXXXXXXXXXXXXX" item="Power-on report" default="0" readOnly="yes">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Report all inputs at Power On</label>
+              <label xml:lang="de">Kontakte melden nach dem Einschalten</label>
+              <label xml:lang="nl">Meld alle ingangen na Power On</label>
+            </variable>
+            <variable CV="5088.4" mask="XVXXXXXXXXXXXX" item="Use channel 2" default="0" readOnly="yes">
+              <label>Use Channel 2 for Address</label>
+              <label xml:lang="de">Verwende Kanal 2 für Adr.Erkennung</label>
+              <label xml:lang="nl">Gebruik Kanaal 2 voor Adresmelding</label>
+            </variable>
+            <variable CV="5088.4" mask="XXVXXXXXXXXXXX" item="Slow module timing" default="0" readOnly="yes">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Slow module timing</label>
+              <label xml:lang="de">'Langsame Module' timing</label>
+              <label xml:lang="nl">'Langzame module' Timing'</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXVXXXXXXXXXX" item="Baudrate tuning" default="0" readOnly="yes">
+              <label>Baudrate tuning</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXXVXXXXXXXXX" item="Short address format" default="1" readOnly="yes">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Short Address Format (0x7D)</label>
+              <label xml:lang="de">Meldung Kurze Adressen (0x7D)</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXXXVXXXXXXXX" item="Block address RX8" default="1" readOnly="yes">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Send Block Address as RX8</label>
+              <label xml:lang="de">Block Adresse in RX8 Format</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXXXXVXXXXXXX" item="Report QoS" default="1" readOnly="yes">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Report Signal Quality (QoS)</label>
+              <label xml:lang="de">Melde Signalqualität</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXXXXXVXXXXXX" item="Report tank contents" default="1" readOnly="yes">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Report Tank Contents</label>
+              <label xml:lang="de">Behälterinhalt melden</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXXXXXXVVXXXX" item="RailCom Report Format" default="0" readOnly="yes">
+              <!-- enum 0=Standard / 1=Long / 2=Both -->
+              <enumVal>
+                <enumChoice choice="OPC_MULTI_SENSE Standard">
+                  <choice>OPC_MULTI_SENSE Standard</choice>
+                </enumChoice>
+                <enumChoice choice="OPC_MULTI_SENSE Long">
+                  <choice>OPC_MULTI_SENSE Long</choice>
+                </enumChoice>
+                <enumChoice choice="OPC_MULTI_SENSE Both">
+                  <choice>OPC_MULTI_SENSE Both</choice>
+                </enumChoice>
+              </enumVal>
+              <label>RailCom Report Format:</label>
+            </variable>
+            <variable CV="5088.4" mask="XXXXXXXXVVVV" item="Comparator tuning" default="0" readOnly="yes">
+              <decVal min="0" max="15"/>
+              <label>Comparator tuning (V)</label>
+            </variable>
+          <!-- end of experimental/undocumented vars -->
 
           <variable CV="5088.5" item="Power-on delay" default="1000">
             <decVal min="0" max="8000"/>
@@ -298,7 +360,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 16:</label>
             <label>Input 16:</label>
           </variable>
-          <variable CV="5088.117" item="Feedback address input globalRC" default="17">
+          <variable CV="5088.117" item="Feedback address input globalRC" default="1001">
             <decVal min="1" max="2048"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
@@ -449,7 +511,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 16:</label>
           </variable>
 
-          <variable CV="5088.217" item="Block address input globalRC" default="17">
+          <variable CV="5088.217" item="Block address input globalRC" default="1001">
             <decVal min="1" max="2048"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
@@ -796,8 +858,20 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <text xml:lang="cs">Konfigurace RailCom Moduly</text>
               </label>
               <separator/>
-              <display item="Configuration"/>
               <display item="RailCom Report Direction"/>
+              <!-- next 11 items in LNCV4? not documented, so read only for now awaiting hardware -->
+              <display item="Configuration"/>
+              <display item="Power-on report"/>
+              <display item="Use channel 2"/>
+              <display item="Slow module timing"/>
+              <display item="Baudrate tuning"/>
+              <display item="Short address format"/>
+              <display item="Block address RX8"/>
+              <display item="Report QoS"/>
+              <display item="Report tank contents"/>
+              <display item="RailCom Report Format"/>
+              <display item="Comparator tuning"/>
+
               <display item="Power-on delay"/>
               <display item="Occupancy detection count"/>
               <display item="Polarity detection count"/>
