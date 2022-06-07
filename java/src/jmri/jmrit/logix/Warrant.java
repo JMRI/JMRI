@@ -836,7 +836,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         log.debug("{}: engineer state {} after {}ms", getDisplayName(), eng.getState().toString(), time);
     }
 
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     public void stopWarrant(boolean abort, boolean turnOffFunctions) {
         _delayStart = false;
         clearWaitFlags(true);
@@ -1075,7 +1075,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param idx index of control command
      * @return false if command cannot be given
      */
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     public boolean controlRunTrain(int idx) {
         if (idx < 0) {
             return false;
@@ -1722,7 +1722,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /*
      * _protectSignal made an aspect change
      */
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     private void readStoppingSignal() {
         if (_idxProtectSignal < _idxCurrentOrder) { // signal is behind train. ignore
             changeSignalListener(null, _idxCurrentOrder);  // remove signal
@@ -1849,7 +1849,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * and launch an engineer. Also called by retry control command to help user
      * work out of an error condition.
      */
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     synchronized private void clearStoppingBlock() {
         if (_stoppingBlock == null) {
             return;
@@ -1943,7 +1943,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * This may or may not be all the conditions restricting speed.
      * @return true if automatic restart is done
      */
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     private boolean restoreRunning(String speedType) {
         _message = okToRun();
         boolean returnOK;
@@ -2067,7 +2067,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * is preventing this warrant from allocating the block to continue.
      * <p>
      */
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     private void setStoppingBlock(int idxBlock) {
         OBlock block = getBlockAt(idxBlock);
         if (block == null) {
@@ -2198,7 +2198,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param block Block in the route is going active.
      */
     @jmri.InvokeOnLayoutThread
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     protected void goingActive(OBlock block) {
         if (log.isDebugEnabled()) {
             if (!ThreadingUtil.isLayoutThread()) {
@@ -2331,7 +2331,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param block Block in the route is going Inactive
      */
     @jmri.InvokeOnLayoutThread
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     protected void goingInactive(OBlock block) {
         if (log.isDebugEnabled()) {
             if (!ThreadingUtil.isLayoutThread()) {
@@ -3022,7 +3022,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return waitTime;
     }
 
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     synchronized private void rampSpeedDelay (long waitTime, String speedType, String reason, float waitSpeed, int endBlockIdx) {
         waitTime -= 50;     // Subtract a bit
         if( waitTime < 0) {
@@ -3087,7 +3087,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
     
-    @SuppressFBWarnings(value="_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
     private void makeOverrunMessage(BlockOrder curBlkOrder) {
         OBlock curBlock = curBlkOrder.getBlock();
         String name = null;
