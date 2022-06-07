@@ -12,6 +12,8 @@ import java.util.UUID;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
+import jmri.configurexml.ShutdownPreferences;
+
 public class StoreAndCompare extends AbstractAction {
 
     public StoreAndCompare() {
@@ -22,14 +24,18 @@ public class StoreAndCompare extends AbstractAction {
         super(s);
     }
 
+    private static ShutdownPreferences _preferences = jmri.InstanceManager.getDefault(ShutdownPreferences.class);
+
     @Override
     public void actionPerformed(ActionEvent e) {
         requestStoreIfNeeded();
     }
 
     public static void requestStoreIfNeeded() {
-        if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
-            jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+        if (_preferences.isStoreCheckEnabled()) {
+            if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
+                jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+            }
         }
     }
 
