@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -68,13 +70,17 @@ public class StoreAndCompare extends AbstractAction {
             log.info("exception: ", ex);
         }
 
-        if (!file2.delete() {
+        if (!file2.delete()) {
             log.warn("An error occurred while deleting temporary file {}", file2.getPath());
         }
 
         return result;
     }
 
+    @SuppressFBWarnings(value = {"OS_OPEN_STREAM_EXCEPTION_PATH", "RV_DONT_JUST_NULL_CHECK_READLINE"},
+            justification =
+            "Open streams are not a problem during JMRI shutdown."
+            + "The line represents the end of a XML comment and is not relevant")
     public static boolean checkFile(File inFile1, File inFile2) throws Exception {
         boolean result = false;
         // compare files, except for certain special lines
