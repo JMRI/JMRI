@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import static java.lang.Float.POSITIVE_INFINITY;
 import java.text.MessageFormat;
@@ -16,6 +15,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component for the LayoutTurntable class.
@@ -586,7 +586,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popupMenu != null) {
             popupMenu.removeAll();
         } else {
@@ -649,7 +649,7 @@ public class LayoutTurntableView extends LayoutTrackView {
 
     private JPopupMenu rayPopup = null;
 
-    protected void showRayPopUp(MouseEvent e, int index) {
+    protected void showRayPopUp(JmriMouseEvent e, int index) {
         if (rayPopup != null) {
             rayPopup.removeAll();
         } else {

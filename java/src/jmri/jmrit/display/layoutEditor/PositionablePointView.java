@@ -18,6 +18,7 @@ import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.JCBHandle;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component for the PositionablePoint class.
@@ -721,7 +722,7 @@ public class PositionablePointView extends LayoutTrackView {
     int xClick = 0;
     int yClick = 0;
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(JmriMouseEvent e) {
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
@@ -731,14 +732,14 @@ public class PositionablePointView extends LayoutTrackView {
         }
     }
 
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(JmriMouseEvent e) {
         // if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             showPopup(e);
         }
     }
 
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(JmriMouseEvent e) {
         if (e.isPopupTrigger()) {
             showPopup(e);
         }
@@ -751,7 +752,7 @@ public class PositionablePointView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {

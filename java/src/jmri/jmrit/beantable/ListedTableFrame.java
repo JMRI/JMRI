@@ -2,13 +2,12 @@ package jmri.jmrit.beantable;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Vector;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,10 +25,15 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
+
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,7 +162,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
-        list.addMouseListener(actionList);
+        list.addMouseListener(JmriMouseListener.adapt(actionList));
 
         listPanel = new JPanel();
         listPanel.setLayout(new BorderLayout(5, 0));
@@ -529,7 +533,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
      * List panel and allows for right click popups and double click to open new
      * windows of the items we are hovering over.
      */
-    class ActionJList extends MouseAdapter {
+    class ActionJList extends JmriMouseAdapter {
 
         JPopupMenu popUp;
         JMenuItem menuItem;
@@ -548,14 +552,14 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         private int currentItemSelected;
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
@@ -567,7 +571,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         //Records the item index that the mouse is currently over
         private int mouseItem;
 
-        void showPopup(MouseEvent e) {
+        void showPopup(JmriMouseEvent e) {
             popUp.show(e.getComponent(), e.getX(), e.getY());
             mouseItem = list.locationToIndex(e.getPoint());
         }
@@ -577,7 +581,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
 
             mouseItem = list.locationToIndex(e.getPoint());
             if (popUp.isVisible()) {
