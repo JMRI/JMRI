@@ -2,19 +2,16 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for adding and editing the automation roster for operations.
@@ -80,6 +77,7 @@ public class AutomationsTableFrame extends OperationsFrame {
         menuBar.add(toolMenu);
         toolMenu.add(new AutomationCopyAction());
         toolMenu.add(new AutomationResumeAction());
+        toolMenu.add(new AutomationStartupAction());
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Automation", true); // NOI18N
 
