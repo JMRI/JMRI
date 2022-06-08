@@ -1,5 +1,6 @@
 # build artifacts
 jmri.jar
+jmri-tests.jar
 /dist
 java/docs
 /target

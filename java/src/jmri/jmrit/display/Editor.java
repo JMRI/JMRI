@@ -36,6 +36,9 @@ import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.DnDStringImportHandler;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.JmriMouseMotionListener;
 
 /**
  * This is the Model and a Controller for panel editor Views. (Panel Editor,
@@ -76,7 +79,7 @@ import jmri.util.swing.JmriColorChooser;
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
-abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
+abstract public class Editor extends JmriJFrame implements JmriMouseListener, JmriMouseMotionListener,
         ActionListener, KeyListener, VetoableChangeListener {
 
     final public static int BKG = 1;
@@ -362,8 +365,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 targetWindowClosingEvent(e);
             }
         });
-        _targetPanel.addMouseListener(this);
-        _targetPanel.addMouseMotionListener(this);
+        _targetPanel.addMouseListener(JmriMouseListener.adapt(this));
+        _targetPanel.addMouseMotionListener(JmriMouseMotionListener.adapt(this));
         _targetPanel.setFocusable(true);
         _targetPanel.addKeyListener(this);
         //_targetFrame.pack();
@@ -2621,7 +2624,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * **************** Mouse Methods **********************
      */
-    public void showToolTip(Positionable selection, MouseEvent event) {
+    public void showToolTip(Positionable selection, JmriMouseEvent event) {
         ToolTip tip = selection.getToolTip();
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);
@@ -2759,7 +2762,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-    protected List<Positionable> getSelectedItems(MouseEvent event) {
+    protected List<Positionable> getSelectedItems(JmriMouseEvent event) {
         Rectangle rect = new Rectangle();
         ArrayList<Positionable> selections = new ArrayList<>();
         for (Positionable p : _contents) {
@@ -2805,7 +2808,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Gather all items inside _selectRect
      * Keep old group if Control key is down
      */
-    protected void makeSelectionGroup(MouseEvent event) {
+    protected void makeSelectionGroup(JmriMouseEvent event) {
         if (!event.isControlDown() || _selectionGroup == null) {
             _selectionGroup = new ArrayList<>();
         }
@@ -2843,7 +2846,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * If there, delete.
      * make new group if Cntl key is not held down
      */
-    protected void modifySelectionGroup(Positionable selection, MouseEvent event) {
+    protected void modifySelectionGroup(Positionable selection, JmriMouseEvent event) {
         if (!event.isControlDown() || _selectionGroup == null) {
             _selectionGroup = new ArrayList<>();
         }
@@ -3134,25 +3137,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * ********************* Abstract Methods ***********************
      */
     @Override
-    abstract public void mousePressed(MouseEvent event);
+    abstract public void mousePressed(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseReleased(MouseEvent event);
+    abstract public void mouseReleased(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseClicked(MouseEvent event);
+    abstract public void mouseClicked(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseDragged(MouseEvent event);
+    abstract public void mouseDragged(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseMoved(MouseEvent event);
+    abstract public void mouseMoved(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseEntered(MouseEvent event);
+    abstract public void mouseEntered(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseExited(MouseEvent event);
+    abstract public void mouseExited(JmriMouseEvent event);
 
     /*
      * set up target panel, frame etc.
@@ -3186,7 +3189,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param p     the item containing or requiring the context menu
      * @param event the event triggering the menu
      */
-    abstract protected void showPopUp(Positionable p, MouseEvent event);
+    abstract protected void showPopUp(Positionable p, JmriMouseEvent event);
 
     /**
      * After construction, initialize all the widgets to their saved config

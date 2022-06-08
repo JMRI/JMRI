@@ -7,6 +7,7 @@ import static jmri.web.servlet.ServletUtil.UTF8;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -36,6 +38,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
@@ -43,7 +46,9 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriMouseEvent;
 import jmri.web.server.WebServerPreferences;
+
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,8 +94,8 @@ public class JmriJFrameServlet extends HttpServlet {
             sendClickSequence((MouseListener) c, c, x, y);
         } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
             log.debug("Invoke Clicked on MultiSensorIcon");
-            MouseEvent e = new MouseEvent(c,
-                    MouseEvent.MOUSE_CLICKED,
+            JmriMouseEvent e = new JmriMouseEvent(c,
+                    JmriMouseEvent.MOUSE_CLICKED,
                     0, // time
                     0, // modifiers
                     xg, yg, // this component expects global positions for some reason
@@ -100,8 +105,8 @@ public class JmriJFrameServlet extends HttpServlet {
             ((Positionable) c).doMouseClicked(e);
         } else if (Positionable.class.isAssignableFrom(c.getClass())) {
             log.debug("Invoke Pressed, Released and Clicked on Positionable");
-            MouseEvent e = new MouseEvent(c,
-                    MouseEvent.MOUSE_PRESSED,
+            JmriMouseEvent e = new JmriMouseEvent(c,
+                    JmriMouseEvent.MOUSE_PRESSED,
                     0, // time
                     0, // modifiers
                     x, y, // x, y not in this component?
@@ -110,8 +115,8 @@ public class JmriJFrameServlet extends HttpServlet {
             );
             ((jmri.jmrit.display.Positionable) c).doMousePressed(e);
 
-            e = new MouseEvent(c,
-                    MouseEvent.MOUSE_RELEASED,
+            e = new JmriMouseEvent(c,
+                    JmriMouseEvent.MOUSE_RELEASED,
                     0, // time
                     0, // modifiers
                     x, y, // x, y not in this component?
@@ -120,8 +125,8 @@ public class JmriJFrameServlet extends HttpServlet {
             );
             ((jmri.jmrit.display.Positionable) c).doMouseReleased(e);
 
-            e = new MouseEvent(c,
-                    MouseEvent.MOUSE_CLICKED,
+            e = new JmriMouseEvent(c,
+                    JmriMouseEvent.MOUSE_CLICKED,
                     0, // time
                     0, // modifiers
                     x, y, // x, y not in this component?
@@ -208,15 +213,15 @@ public class JmriJFrameServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // because we work with Swing, we do this on the AWT thread
-        
+
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             doGetOnSwing(request, response);
             return;
         }
-        
+
         try {
             javax.swing.SwingUtilities.invokeAndWait(
-                () -> { 
+                () -> {
                     try {
                         doGetOnSwing(request, response);
                     } catch ( ServletException | IOException ex ) {
