@@ -10,7 +10,6 @@
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
-           <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 327 cases -->
         </Or>
      </Match>

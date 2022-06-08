@@ -5096,7 +5096,17 @@
       This action will report "Failed" if a train isn't selected from the "Train" menu, the train
       isn't built, or the "Build" checkbox isn't selected for the train in the <a href=
       "#Trains">Trains</a> window.
-      <h5>Run Excel for Train</h5>
+
+   <h5>Preview or Print Train Build Report</h5>
+   This action's name and function depends on the "Preview" checkbox in the
+   <a href="#Trains">Trains</a> window, and the "Always use Preview for Build Reports" checkbox in
+   the <a href="#BuildReportDetails">Build Report Options</a> window. If either checkbox is
+   selected, then the action becomes "Preview Train Build Report". If both checkboxes are not selected,
+   then the action becomes "Print Train Build Report". You must choose a train using the "Train"
+   menu. This action will report "Failed" if a train isn't selected from the "Train" menu, or the
+   train isn't built.
+
+   <h5>Run Excel for Train</h5>
       This action will cause an external Excel program to run for the selected train. See <a href=
       "#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information. You
       must choose a train using the "Train" menu. This action will fail if a train isn't selected
@@ -5180,8 +5190,15 @@
       This action works like the "Generate CVS Switch List Changes" button in the <a href=
       "#SwitchListByLocation">Switch Lists by Location</a> window. There has to be new work at one
       of the locations selected in the <a href="#SwitchListByLocation">Switch Lists by Location</a>
-      window for this action to succeed.
-      <h5>Run Excel Switch List</h5>
+   window for this action to succeed.
+
+   <h5>Reset Switch Lists</h5>
+   This action works like the "Reset Switch Lists" button in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. The "Reset Switch
+   Lists" action removes terminated and reset trains from your switch lists, and restores all switch lists
+   for trains that are built. Useful when running switch lists in <a href="#RealTime">consolidation mode</a>.
+
+   <h5>Run Excel Switch List</h5>
       This action works like the "Run" button in the <a href="#SwitchListByLocation">Switch Lists
       by Location</a> window. It will create CSV files for each of the locations selected in the
       window, and then run the configured Excel program to generate custom printouts. See <a href=
@@ -5220,6 +5237,9 @@
       the first action in the automation, therefore it is recommended that you not use any of the
       "Wait for" actions as the very first line item of an automation, instead use "Do Nothing"
       action followed by the needed "Wait for" action.
+      
+      <h5>Select Start Automation</h5>
+      This tool will allow you to select an automation to run when OperationsPro starts.
       <p>This is the end of the automation section.</p>
 
       <h4 id="TrainsCopyTrain">Copy Train</h4>
@@ -5610,10 +5630,11 @@
       new page each time a train visits the location. Useful if you don't want multiple visits by a
       train to be on the same set of pages.</p>
 
-      <p>The last option "Real Time" is whether you want your switch lists in real time or
+      <h4 id="RealTime">Real Time or Consolidation</h4>
+      The last option "Real Time" is whether you want your switch lists in real time or
       consolidation mode. Normally you would generate your switch lists in real time. In this mode
       the switch list for a location shows the work planned for trains that are built and not yet
-      terminated.</p>
+      terminated.
 
       <p>If you only want to print out work for new trains, then deselect the real time option.
       Once you've printed out the switch list for a location, when new work is created by building
