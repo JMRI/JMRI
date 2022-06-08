@@ -255,6 +255,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             return this._namedBean;
         }
 
+        @SuppressWarnings({"unchecked", "rawtypes"})    // The actual types are not known by this class.
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
