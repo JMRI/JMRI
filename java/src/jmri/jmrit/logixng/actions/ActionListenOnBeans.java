@@ -273,7 +273,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         private boolean _listenOnAllProperties = false;
 
         public NamedBeanReference(NamedBeanReference ref) {
-            this(ref._name, ref._type, ref._listenOnAllProperties);
+            this(ref._handle, ref._type, ref._listenOnAllProperties);
         }
 
         public NamedBeanReference(String name, NamedBeanType type, boolean all) {
@@ -287,13 +287,44 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             }
         }
 
+        public NamedBeanReference(NamedBeanHandle<? extends NamedBean> handle, NamedBeanType type, boolean all) {
+            _name = handle != null ? handle.getName() : null;
+            _type = type;
+            _listenOnAllProperties = all;
+            _handle = handle;
+        }
+
         public String getName() {
             return _name;
         }
 
         public void setName(String name) {
-            _name = name;
-            updateHandle();
+            if (name != null && !name.isEmpty()) {
+                NamedBean bean = _type.getManager().getNamedBean(name);
+                if (bean != null) {
+                    _name = name;
+                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                            .getNamedBeanHandle(name, bean);
+                } else {
+                    log.warn("Cannot find named bean {} in manager for {}", name, _type.getManager().getBeanTypeHandled());
+                    _name = null;
+                    _handle = null;
+                }
+            } else {
+                _name = null;
+                _handle = null;
+            }
+        }
+
+        public void setName(NamedBean bean) {
+            if (bean != null) {
+                _handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(bean.getDisplayName(), bean);
+                _name = _handle.getName();
+            } else {
+                _name = null;
+                _handle = null;
+            }
         }
 
         public NamedBeanType getType() {
@@ -306,25 +337,11 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 type = NamedBeanType.Turnout;
             }
             _type = type;
-            updateHandle();
+            _handle = null;
         }
 
         public NamedBeanHandle<? extends NamedBean> getHandle() {
             return _handle;
-        }
-
-        private void updateHandle() {
-            if (!_name.isEmpty()) {
-                NamedBean bean = _type.getManager().getNamedBean(_name);
-                if (bean != null) {
-                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
-                } else {
-                    log.warn("Cannot find named bean {} in manager for {}", _name, _type.getManager().getBeanTypeHandled());
-                    _handle = null;
-                }
-            } else {
-                _handle = null;
-            }
         }
 
         public boolean getListenOnAllProperties() {
