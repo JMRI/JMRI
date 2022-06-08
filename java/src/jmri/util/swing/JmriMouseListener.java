@@ -3,8 +3,9 @@ package jmri.util.swing;
 import java.awt.event.MouseEvent;
 
 /**
- * Replacement for MouseListener.
- * This class is used to replace MouseEvent with JmriMouseEvent.
+ * Replacement for {@link java.awt.event.MouseListener}.
+ * This class is used to replace {@link java.awt.event.MouseEvent} with
+ * {@link jmri.util.swing.JmriMouseEvent}.
  *
  * @author Daniel Bergqvist (C) 2022
  */
