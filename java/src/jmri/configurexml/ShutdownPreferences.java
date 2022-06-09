@@ -4,6 +4,7 @@ import java.util.prefs.Preferences;
 
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PreferencesBean;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -22,9 +23,13 @@ public final class ShutdownPreferences extends PreferencesBean implements Instan
 
 
     public ShutdownPreferences() {
-        super(ProfileManager.getDefault().getActiveProfile());
+        this(ProfileManager.getDefault().getActiveProfile());
+    }
+
+    public ShutdownPreferences(Profile profile) {
+        super(profile);
         Preferences sharedPreferences = ProfileUtils.getPreferences(
-                super.getProfile(), this.getClass(), true);
+                profile, this.getClass(), true);
         this.readPreferences(sharedPreferences);
     }
 

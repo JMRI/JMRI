@@ -19,11 +19,11 @@ import javax.annotation.Nonnull;
  * each file individually. This would also allow a profile to be opened by
  * double clicking on it, and to have a unique icon within the iOS Files app and
  * macOS Finder.
- * 
+ *
  * Note that JMRI itself is not currently capable of supporting opening a
  * profile by double clicking on it, even if other applications on the same
  * computer can.
- * 
+ *
  * @author Randall Wood Copyright (C) 2013, 2014, 2015, 2018
  */
 public class Profile implements Comparable<Profile> {
@@ -116,6 +116,10 @@ public class Profile implements Comparable<Profile> {
         if (!this.path.isDirectory()) {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
+        var preferences = new jmri.configurexml.ShutdownPreferences(this);
+        preferences.setEnableStoreCheck(true);
+        preferences.setDisplayDialog(jmri.configurexml.ShutdownPreferences.DialogDisplayOptions.ShowDialog);
+        preferences.save();
         this.save();
         if (!Profile.isProfile(this.path)) {
             throw new IllegalArgumentException(path + " does not contain a profile.properties file"); // NOI18N
