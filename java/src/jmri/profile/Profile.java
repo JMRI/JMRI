@@ -116,11 +116,18 @@ public class Profile implements Comparable<Profile> {
         if (!this.path.isDirectory()) {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
+
+        // Set property "Check for changes that have not been stored" to true.
+        // This ensures that new users have this setting enabled.
+        // Existing profiles are not affected by this.
         var preferences = new jmri.configurexml.ShutdownPreferences(this);
         preferences.setEnableStoreCheck(true);
         preferences.setDisplayDialog(jmri.configurexml.ShutdownPreferences.DialogDisplayOptions.ShowDialog);
         preferences.save();
+
+        // Create the profile on disk
         this.save();
+
         if (!Profile.isProfile(this.path)) {
             throw new IllegalArgumentException(path + " does not contain a profile.properties file"); // NOI18N
         }
