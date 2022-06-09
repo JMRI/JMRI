@@ -82,7 +82,7 @@ public class ArbitraryBeanTest {
                 .contains(DP, DIP, AP, AIP);
     }
 
-    private static class ArbitraryBeanImpl extends ArbitraryBean {
+    protected static class ArbitraryBeanImpl extends ArbitraryBean {
 
         public String definedProperty;
         public final List<String> definedIndexedProperty = new ArrayList<>();
@@ -91,9 +91,9 @@ public class ArbitraryBeanTest {
             return definedProperty;
         }
 
-        // public void setDefinedProperty(String value) {
-        //     definedProperty = value;
-        // }
+        public void setDefinedProperty(String value) {
+            definedProperty = value;
+        }
 
         public String[] getDefinedIndexedProperty() {
             return definedIndexedProperty.toArray(new String[definedIndexedProperty.size()]);
@@ -103,21 +103,21 @@ public class ArbitraryBeanTest {
             return definedIndexedProperty.get(i);
         }
 
-        // public void setDefinedIndexedProperty(String[] values) {
-        //     definedIndexedProperty.clear();
-        //     definedIndexedProperty.addAll(Arrays.asList(values));
-        // }
+        public void setDefinedIndexedProperty(String[] values) {
+            definedIndexedProperty.clear();
+            definedIndexedProperty.addAll(Arrays.asList(values));
+        }
 
         /*
          * Throws IndexOutOfBoundsException if index > size.
          */
-        // public void setDefinedIndexedProperty(int i, String value) {
-        //     if (i < definedIndexedProperty.size()) {
-        //         definedIndexedProperty.set(i, value);
-        //     } else {
-        //         definedIndexedProperty.add(i, value);
-        //     }
-        // }
+        public void setDefinedIndexedProperty(int i, String value) {
+            if (i < definedIndexedProperty.size()) {
+                definedIndexedProperty.set(i, value);
+            } else {
+                definedIndexedProperty.add(i, value);
+            }
+        }
     }
 
 }
