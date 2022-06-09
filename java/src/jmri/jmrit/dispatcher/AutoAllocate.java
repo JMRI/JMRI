@@ -119,6 +119,9 @@ public class AutoAllocate implements Runnable {
     }
 
     protected void scanAllocationRequests(TaskAllocateRelease task) {
+        log.trace("Add request from [{}] for [{}][{}]",
+                task.getTrainName(),task.getAction().name(),
+                task.getAllocationRequest() == null ? "None" : task.getAllocationRequest().getSectionName());
         taskList.add(task);
     }
 
@@ -203,7 +206,7 @@ public class AutoAllocate implements Runnable {
                     }
                     // is the train held
                     if (activeTrain.holdAllocation()|| (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
-                        log.debug("[{}]:Allocation is Holding or Delayed", trainName);
+                        log.debug("[{}]:Allocation is Holding or Delayed hold[{}] started[{}], delayedstart[{}]", trainName, activeTrain.holdAllocation(), activeTrain.getStarted(), activeTrain.getDelayedStart() != ActiveTrain.NODELAY);
                         continue;
                     }
                     // apparently holdAllocation() is not set when holding !!!
