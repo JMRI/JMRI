@@ -449,7 +449,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>A <strong>Shutdown</strong> preference has been created to support the
+            StoreAndCompare process that detects changes to PanelPro tables and panels.</li>
         </ul>
 
     <h3>Resources</h3>

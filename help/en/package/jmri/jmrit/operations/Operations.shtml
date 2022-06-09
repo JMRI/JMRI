@@ -5071,7 +5071,9 @@
       This action can display a message when executed. Use the "Add" button under the "Messages"
       column to add a message. This can be helpful when debugging an automation by displaying
       messages when appropriate. Also useful if you need to communicate a manual step in your
-      automation. Otherwise the action does nothing, or for programmers a NOP or no operation.
+      automation. If you do create a message, you have the options of either continuing with the
+      automation by pressing the "OK" button, or stopping the automation by pressing the "Halt" button.
+      Without a message the action does nothing, or for programmers a NOP or no operation.
       <h5>Build Train</h5>
       This action will build the train selected in the "Train" menu adjacent to the "Build Train"
       column. This action will report "Failed" if the train fails to build or if you haven't
@@ -5209,13 +5211,26 @@
       the <a href="#SwitchListByLocation">Switch Lists by Location</a> window for this action to
       succeed.
       <h5>Run Automation</h5>
-      This action can run any automation. You must select an automation from the "Automation" menu.
+   This action can start an automation from the beginning. You must select an automation from the "Automation" menu.
+   <h5>Resume Automation</h5>
+   This action can resume an automation that has been stopped or halted. The current pointer for the
+   selected automation determines where the program resumes execution. You must select an automation from the
+   "Automation" menu.
+   <h5>Stop Automation</h5>
+      This action can stop an automation that is running. You must select an automation from the "Automation" menu.
+      <h5>Message Yes or No</h5>
+      This action can be used to ask a question to which the answer is Yes or No.  Use the "If Success GOTO" action
+      to branch if the answer is Yes. Use the "If failure GOTO" action to branch if the answer is No.
       <h5>GOTO</h5>
       This action allows you to jump to any action in the table. You must select the action id you
       want to goto from the "Automation" menu.
       <h5>If Success GOTO</h5>
       This action will cause the automation to jump to the action id selected from the "Automation"
-      menu when the previous action is successful. If the previous action failed, the automation
+      menu when the previous action was successful. If the previous action failed, the automation
+      continues to the next action in the table.
+      <h5>If Failure GOTO</h5>
+      This action will cause the automation to jump to the action id selected from the "Automation"
+      menu when the previous action has failed. If the previous action was successful, the automation
       continues to the next action in the table.
       <h5>Halt</h5>
       This action stops the execution of the automation. You can use the "Step Automation" or

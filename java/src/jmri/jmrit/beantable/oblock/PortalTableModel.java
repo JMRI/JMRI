@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
@@ -10,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logix.*;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriMouseListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,10 +1,11 @@
 package jmri.jmrit.display;
 
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
+
+import jmri.util.swing.JmriMouseEvent;
 
 /**
- * This class provides a concrete implementation of the Abstract Editor 
+ * This class provides a concrete implementation of the Abstract Editor
  * class to be used in testing.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2003, 2007
@@ -35,31 +36,31 @@ public class EditorScaffold extends Editor {
      * ********************* Abstract Methods ***********************
      */
     @Override
-    public void mousePressed(MouseEvent event){
+    public void mousePressed(JmriMouseEvent event){
     }
 
     @Override
-    public void mouseReleased(MouseEvent event){
+    public void mouseReleased(JmriMouseEvent event){
     }
 
     @Override
-    public void mouseClicked(MouseEvent event){
+    public void mouseClicked(JmriMouseEvent event){
     }
 
     @Override
-    public void mouseDragged(MouseEvent event){
+    public void mouseDragged(JmriMouseEvent event){
     }
 
     @Override
-    public void mouseMoved(MouseEvent event){
+    public void mouseMoved(JmriMouseEvent event){
     }
 
     @Override
-    public void mouseEntered(MouseEvent event){
+    public void mouseEntered(JmriMouseEvent event){
     }
 
     @Override
-    public void mouseExited(MouseEvent event){
+    public void mouseExited(JmriMouseEvent event){
     }
 
     /*
@@ -99,7 +100,7 @@ public class EditorScaffold extends Editor {
      *
      */
     @Override
-    protected void showPopUp(Positionable p, MouseEvent event){
+    protected void showPopUp(Positionable p, JmriMouseEvent event){
     }
 
     /**

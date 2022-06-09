@@ -7,10 +7,13 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
+
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Used to intercept inputs and to display a busy cursor during reads and
@@ -173,7 +176,7 @@ public class BusyGlassPane extends JComponent {
         }
 
         private void testForDrag(int eventID) {
-            if (eventID == MouseEvent.MOUSE_PRESSED) {
+            if (eventID == JmriMouseEvent.MOUSE_PRESSED) {
                 inDrag = true;
             }
         }

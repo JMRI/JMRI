@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Date;
 
@@ -23,6 +22,8 @@ import javax.swing.JRadioButtonMenuItem;
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -438,7 +439,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     }
 
     @Override
-    public void doMouseClicked(MouseEvent event) {
+    public void doMouseClicked(JmriMouseEvent event) {
         log.debug("click to {}", _url);
         if (_url == null || _url.trim().length() == 0) {
             return;
