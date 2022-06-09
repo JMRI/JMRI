@@ -4,9 +4,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -24,12 +21,15 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.display.palette.ItemPanel;
 import jmri.jmrit.display.palette.TextItemPanel;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.JmriMouseMotionListener;
 
 /**
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author Bob Jacobsen copyright (C) 2009
  */
-public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
+public class PositionableJPanel extends JPanel implements Positionable, JmriMouseListener, JmriMouseMotionListener {
 
     protected Editor _editor = null;
 
@@ -293,31 +293,31 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
 
     // overide where used - e.g. momentary
     @Override
-    public void doMousePressed(MouseEvent event) {
+    public void doMousePressed(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseReleased(MouseEvent event) {
+    public void doMouseReleased(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseClicked(MouseEvent event) {
+    public void doMouseClicked(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseDragged(MouseEvent event) {
+    public void doMouseDragged(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseMoved(MouseEvent event) {
+    public void doMouseMoved(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseEntered(MouseEvent event) {
+    public void doMouseEntered(JmriMouseEvent event) {
     }
 
     @Override
-    public void doMouseExited(MouseEvent event) {
+    public void doMouseExited(JmriMouseEvent event) {
     }
 
     @Override
@@ -429,51 +429,51 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        _editor.mousePressed(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+    public void mousePressed(JmriMouseEvent e) {
+        _editor.mousePressed(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        _editor.mouseReleased(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+    public void mouseReleased(JmriMouseEvent e) {
+        _editor.mouseReleased(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        _editor.mouseClicked(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+    public void mouseClicked(JmriMouseEvent e) {
+        _editor.mouseClicked(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(JmriMouseEvent e) {
 //     transferFocus();
-        _editor.mouseExited(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+        _editor.mouseExited(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-        _editor.mouseEntered(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+    public void mouseEntered(JmriMouseEvent e) {
+        _editor.mouseEntered(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        _editor.mouseMoved(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+    public void mouseMoved(JmriMouseEvent e) {
+        _editor.mouseMoved(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        _editor.mouseDragged(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
+    public void mouseDragged(JmriMouseEvent e) {
+        _editor.mouseDragged(new JmriMouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(),
                 e.getX() + this.getX(), e.getY() + this.getY(),
                 e.getClickCount(), e.isPopupTrigger()));
     }

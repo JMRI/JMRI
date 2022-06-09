@@ -14,8 +14,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -23,6 +21,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.InstanceManager;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
-public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseListener {
+public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouseListener {
 
     static final String ramp = Bundle.getMessage("Halt");
     static final String halt = Bundle.getMessage("Stop");
@@ -172,7 +172,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel statusLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("status")));
-        _status.addMouseListener(this);
+        _status.addMouseListener(JmriMouseListener.adapt(this));
         _status.setBackground(Color.white);
         _status.setFont(_status.getFont().deriveFont(Font.BOLD));
         _status.setEditable(false);
@@ -437,7 +437,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     @Override
-    public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(JmriMouseEvent event) {
         int clicks = event.getClickCount();
         if (clicks > 1) {
             StringBuilder sb = new StringBuilder();
@@ -459,16 +459,16 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     }
 
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
     }
     @Override
-    public void mouseEntered(MouseEvent event) {
+    public void mouseEntered(JmriMouseEvent event) {
     }
     @Override
-    public void mouseExited(MouseEvent event) {
+    public void mouseExited(JmriMouseEvent event) {
     }
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
     }
 
     void setStatusText(String msg, Color c, boolean save) {
