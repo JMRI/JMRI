@@ -54,6 +54,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
@@ -298,7 +299,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), // NOI18N
@@ -1325,12 +1326,12 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
-                
+
                 dialog.getRootPane().setDefaultButton(noButton);
                 noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
                 dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                         dialog.setVisible(false);
-                        dialog.dispose(); }, 
+                        dialog.dispose(); },
                     KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
                 dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
