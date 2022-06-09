@@ -120,7 +120,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         JPanel panel4 = new JPanel();
         panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
         panel4.add(doneButton);
-        doneButton.addActionListener(this::DoneButtonActionPerformed);
+        doneButton.addActionListener(this::doneButtonActionPerformed);
         saveContainerPanel.add(panel4);
 
 
@@ -753,7 +753,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      * Handle Done button.
      * @param e null if a save reminder, not null then from Done button action.
      */
-    public void DoneButtonActionPerformed(ActionEvent e) {
+    public void doneButtonActionPerformed(ActionEvent e) {
         if (changed && !checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
@@ -780,7 +780,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     @Override
     public void windowClosing(WindowEvent e) {
-        DoneButtonActionPerformed(null);
+        doneButtonActionPerformed(null);
     }
 
     @Override
