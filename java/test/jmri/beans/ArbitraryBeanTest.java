@@ -96,7 +96,7 @@ public class ArbitraryBeanTest {
         }
 
         public String[] getDefinedIndexedProperty() {
-            return definedIndexedProperty.toArray(String[]::new);
+            return definedIndexedProperty.toArray(new String[definedIndexedProperty.size()]);
         }
 
         public String getDefinedIndexedProperty(int i) {
