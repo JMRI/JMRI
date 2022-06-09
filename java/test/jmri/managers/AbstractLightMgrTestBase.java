@@ -28,7 +28,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     abstract public String getSystemName(int i);
 
-    static protected boolean listenerResult = false;
+    private boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
 
@@ -124,7 +124,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     }
 
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
