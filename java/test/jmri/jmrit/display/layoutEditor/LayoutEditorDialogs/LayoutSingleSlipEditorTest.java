@@ -137,7 +137,6 @@ public class LayoutSingleSlipEditorTest extends LayoutSlipEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

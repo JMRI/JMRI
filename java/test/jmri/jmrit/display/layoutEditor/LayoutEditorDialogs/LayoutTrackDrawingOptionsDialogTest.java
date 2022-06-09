@@ -44,7 +44,6 @@ public class LayoutTrackDrawingOptionsDialogTest {
             efo.closeFrameWithConfirmations();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.tearDown();
     }

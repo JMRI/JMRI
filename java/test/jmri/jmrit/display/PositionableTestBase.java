@@ -61,7 +61,6 @@ abstract public class PositionableTestBase {
         editor = null;
         p = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

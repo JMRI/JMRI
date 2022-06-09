@@ -143,7 +143,6 @@ public class DestinationPointsTest {
         panels = null;
         tools = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -309,7 +309,6 @@ public class LayoutEditorConnectivityTest {
     public void tearDown() throws Exception {
         cm = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.tearDown();
     }
