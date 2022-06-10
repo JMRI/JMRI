@@ -14,6 +14,23 @@ import java.util.UUID;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
+import jmri.*;
+
+/**
+ * Determine if there have been changes made to the PanelPro data.  If so, then a prompt will
+ * be displayed to store the data before the JMRI shutdown process proceeds.
+ * <p>
+ * If the JMRI application is DecoderPro, the checking does not occur.  If the PanelPro tables
+ * contain only 3 time related beans and no panels, the checking does not occur.
+ * <p>
+ * The main check process uses the checkFile process which is used by the load and store tests.
+ * The current configuration is stored to a temporary file. This temp file is compared to the file
+ * that was loaded manually or via a start up action.  If there are differences and the
+ * shutdown store check preference is enabled, a store request prompt is displayed.  The
+ * prompt does not occur when running in headless mode.
+ *
+ * @author Dave Sand Copyright (c) 2022
+ */
 public class StoreAndCompare extends AbstractAction {
 
     public StoreAndCompare() {
@@ -32,9 +49,11 @@ public class StoreAndCompare extends AbstractAction {
     }
 
     public static void requestStoreIfNeeded() {
-        if (_preferences.isStoreCheckEnabled()) {
-            if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
-                jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+        if (!Application.getApplicationName().equals("DecoderPro")) {
+            if (_preferences.isStoreCheckEnabled()) {
+                if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
+                    jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+                }
             }
         }
     }
@@ -46,7 +65,9 @@ public class StoreAndCompare extends AbstractAction {
         JFileChooser chooser = LoadStoreBaseAction.getUserFileChooser();
         File file1 = chooser.getSelectedFile();
         if (file1 == null) {
-            return true;    // No file loaded, request store by default.
+            // No file loaded, check for only time beans.
+            // If true, no check needed so return false, else return true.
+            return !haveOnlyTimeBeans();    // Invert the meaning of the haveOnlyTimeBeans return
         }
 
         // Get file 2 :: This is the default tmp directory with a random xml file name.
@@ -54,22 +75,59 @@ public class StoreAndCompare extends AbstractAction {
         var fileName = UUID.randomUUID().toString();
         File file2 = new File(tempDir + fileName + ".xml");
 
-        log.info("File 2 = {}", file2);
-
         // Store the current data using the temp file.
         jmri.ConfigureManager cm = jmri.InstanceManager.getDefault(jmri.ConfigureManager.class);
         boolean stored = cm.storeUser(file2);
-        log.info("stored = {}", stored);
+        log.debug("temp file '{}' stored :: {}", file2, stored);
 
         try {
             result = checkFile(file1, file2);
-            log.info("result = {}", result);
         } catch (Exception ex) {
-            log.info("exception: ", ex);
+            log.debug("checkFile exception: ", ex);
         }
 
         if (!file2.delete()) {
             log.warn("An error occurred while deleting temporary file {}", file2.getPath());
+        }
+
+        return result;
+    }
+
+    private static boolean haveOnlyTimeBeans() {
+        var result = true;
+
+        var sMgr = InstanceManager.getDefault(SensorManager.class);
+        var mMgr = InstanceManager.getDefault(MemoryManager.class);
+
+        if (sMgr == null || mMgr == null) result = false;
+
+        if (result) {
+            if (sMgr.getNamedBeanSet().size() != 1) {
+                result = false;
+            } else {
+                if (sMgr.getBySystemName("ISCLOCKRUNNING") == null) {
+                    result = false;
+                }
+            }
+        }
+
+        if (result) {
+            if (mMgr.getNamedBeanSet().size() != 2) {
+                result = false;
+            } else {
+                if (mMgr.getBySystemName("IMCURRENTTIME") == null) {
+                    result = false;
+                }
+                if (mMgr.getBySystemName("IMRATEFACTOR") == null) {
+                    result = false;
+                }
+            }
+        }
+
+        if (result) {
+            if (InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getList().size() > 0) {
+                result = false;
+            }
         }
 
         return result;

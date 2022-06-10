@@ -29,7 +29,7 @@ public final class ShutdownPreferences extends PreferencesBean implements Instan
     }
 
     private void readPreferences(Preferences sharedPreferences) {
-        _enableStoreCheck = sharedPreferences.getBoolean(ENABLE_STORE_CHECK, false);
+        _enableStoreCheck = sharedPreferences.getBoolean(ENABLE_STORE_CHECK, true);
         var display = sharedPreferences.get(DISPLAY_DIALOG, "ShowDialog");
         _displayDialog = DialogDisplayOptions.valueOf(display);
         setIsDirty(false);
