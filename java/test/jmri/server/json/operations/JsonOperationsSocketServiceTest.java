@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.beans.PropertyChangeEvent;
 import java.io.DataOutputStream;
@@ -48,7 +49,7 @@ public class JsonOperationsSocketServiceTest {
     public void testOnListCar() throws IOException, JmriException, JsonException {
         service.onList(JsonOperations.CAR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertEquals(9, message.size());
         assertEquals(JsonOperations.CAR, message.path(0).path(JSON.TYPE).asText());
         assertEquals("CP777", message.path(0).path(JSON.DATA).path(JSON.NAME).asText());
@@ -72,7 +73,7 @@ public class JsonOperationsSocketServiceTest {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
         manager.newRS("GNWR", "300005");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.size()).isEqualTo(10);
     }
 
@@ -96,14 +97,14 @@ public class JsonOperationsSocketServiceTest {
         service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.CAR);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo("GNWR300005");
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("");
         // change car
         manager.getById("GNWR300005").setTypeName("Boxcar");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.CAR);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo("GNWR300005");
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("Boxcar");
@@ -119,7 +120,7 @@ public class JsonOperationsSocketServiceTest {
                 new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         assertThat(manager.getById("GNWR300005")).isNotNull();
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.CAR);
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("");
         // makes change
@@ -127,12 +128,12 @@ public class JsonOperationsSocketServiceTest {
                 mapper.createObjectNode().put(JSON.NAME, "GNWR300005").put(JsonOperations.CAR_TYPE, "Boxcar"),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("Boxcar");
         // gets external change
         manager.getById("GNWR300005").setTypeName("Flatcar");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JsonOperations.CAR_TYPE).asText()).isEqualTo("Flatcar");
         // deletes car
         service.onMessage(JsonOperations.CAR, mapper.createObjectNode().put(JSON.NAME, "GNWR300005"),
@@ -144,7 +145,7 @@ public class JsonOperationsSocketServiceTest {
     public void testOnListEngine() throws IOException, JmriException, JsonException {
         service.onList(JsonOperations.ENGINE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertEquals(4, message.size());
         assertEquals(JsonOperations.ENGINE, message.path(0).path(JSON.TYPE).asText());
         assertEquals("PC5016", message.path(0).path(JSON.DATA).path(JSON.NAME).asText());
@@ -158,7 +159,7 @@ public class JsonOperationsSocketServiceTest {
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         manager.newRS("GNWR", "45");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.size()).isEqualTo(5);
     }
 
@@ -182,14 +183,14 @@ public class JsonOperationsSocketServiceTest {
         service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.ENGINE);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo("GNWR45");
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("");
         // change car
         manager.getById("GNWR45").setModel("MP15DC");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.ENGINE);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo("GNWR45");
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("MP15DC");
@@ -208,7 +209,7 @@ public class JsonOperationsSocketServiceTest {
                 new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         assertThat(manager.getById("GNWR45")).isNotNull();
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.ENGINE);
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("");
         // makes change
@@ -216,12 +217,12 @@ public class JsonOperationsSocketServiceTest {
                 mapper.createObjectNode().put(JSON.NAME, "GNWR45").put(JSON.MODEL, "MP15DC"),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("MP15DC");
         // gets external change
         manager.getById("GNWR45").setModel("");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JSON.MODEL).asText()).isEqualTo("");
         // deletes car
         service.onMessage(JsonOperations.ENGINE, mapper.createObjectNode().put(JSON.NAME, "GNWR45"),
@@ -240,7 +241,7 @@ public class JsonOperationsSocketServiceTest {
         service.onList(JsonOperations.LOCATION, mapper.createObjectNode(),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertEquals(3, message.size());
         assertEquals(JsonOperations.LOCATION, message.path(0).path(JSON.TYPE).asText());
         assertEquals("1", message.path(0).path(JSON.DATA).path(JSON.NAME).asText());
@@ -252,7 +253,7 @@ public class JsonOperationsSocketServiceTest {
         LocationManager manager = InstanceManager.getDefault(LocationManager.class);
         manager.newLocation("Acme Transfer");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.size()).isEqualTo(4);
     }
 
@@ -276,14 +277,14 @@ public class JsonOperationsSocketServiceTest {
         service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.LOCATION);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo(location.getId());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("");
         // change location
         location.setComment("Watch for coyotes");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.LOCATION);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo(location.getId());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Watch for coyotes");
@@ -301,7 +302,7 @@ public class JsonOperationsSocketServiceTest {
         Location location = manager.getLocationByName("Acme Transfer");
         assertThat(location).isNotNull();
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.LOCATION);
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("");
         // makes change
@@ -309,12 +310,12 @@ public class JsonOperationsSocketServiceTest {
                 mapper.createObjectNode().put(JSON.NAME, location.getId()).put(JSON.COMMENT, "Watch for coyotes"),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Watch for coyotes");
         // gets external change
         location.setComment("");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("");
         // deletes location
         service.onMessage(JsonOperations.LOCATION, mapper.createObjectNode().put(JSON.NAME, location.getId()),
@@ -326,7 +327,7 @@ public class JsonOperationsSocketServiceTest {
     public void testOnListTrain() throws IOException, JmriException, JsonException {
         service.onList(JsonOperations.TRAIN, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertEquals(2, message.size());
         assertEquals(JsonOperations.TRAIN, message.path(0).path(JSON.TYPE).asText());
         assertEquals("1", message.path(0).path(JSON.DATA).path(JSON.NAME).asText());
@@ -336,7 +337,7 @@ public class JsonOperationsSocketServiceTest {
         TrainManager manager = InstanceManager.getDefault(TrainManager.class);
         manager.newTrain("Acme Transfer");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.size()).isEqualTo(3);
     }
 
@@ -360,14 +361,14 @@ public class JsonOperationsSocketServiceTest {
         service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.TRAIN);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo(train.getId());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("");
         // change location
         train.setComment("Watch for coyotes");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.TRAIN);
         assertThat(message.path(JSON.DATA).path(JSON.NAME).asText()).isEqualTo(train.getId());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Watch for coyotes");
@@ -397,7 +398,7 @@ public class JsonOperationsSocketServiceTest {
         service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId()),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonOperations.TRAIN);
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).isEmpty()).isTrue();
         // makes invalid change
@@ -415,7 +416,7 @@ public class JsonOperationsSocketServiceTest {
         service.onMessage(JsonOperations.TRAIN, mapper.createObjectNode().put(JSON.NAME, train.getId())
                 .put(JsonOperations.LOCATION, location2.getName()), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEqualTo(location2.getName());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Test comment for train STF");
         // makes ignored change
@@ -423,20 +424,20 @@ public class JsonOperationsSocketServiceTest {
                 mapper.createObjectNode().put(JSON.NAME, train.getId()).put(JSON.COMMENT, "Watch for coyotes"),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEqualTo(location2.getName());
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Test comment for train STF");
         // gets external change
         train.setComment("Watch for coyotes");
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JSON.COMMENT).asText()).isEqualTo("Watch for coyotes");
         // terminates train
         service.onMessage(JsonOperations.TRAIN,
                 mapper.createObjectNode().put(JSON.NAME, train.getId()).putNull(JsonOperations.LOCATION),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).isNull()).isFalse();
         assertThat(message.path(JSON.DATA).path(JsonOperations.LOCATION).asText()).isEmpty();
         // deletes train
@@ -466,7 +467,7 @@ public class JsonOperationsSocketServiceTest {
     public void testOnListKernel() throws IOException, JmriException, JsonException {
         service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertEquals(1, message.size());
         assertEquals(JsonOperations.KERNEL, message.path(0).path(JSON.TYPE).asText());
         JsonNode kernel = message.path(0).path(JSON.DATA);
@@ -523,7 +524,7 @@ public class JsonOperationsSocketServiceTest {
         assertThat(mock.invalidBeanListeners.size()).isEqualTo(1);
         assertThat(train.getPropertyChangeListeners().length).isEqualTo(1);
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonException.ERROR);
         assertThat(message.path(JSON.DATA).path(JsonException.CODE).asInt()).isEqualTo(500);
         assertThat(message.path(JSON.DATA).path(JsonException.MESSAGE).asText()).isEqualTo("Internal invalid-type handling error. See JMRI logs for information.");
@@ -551,7 +552,7 @@ public class JsonOperationsSocketServiceTest {
         mock.invalidBeansListener.propertyChange("invalid-type");
         assertThat(manager.getPropertyChangeListeners().length).isEqualTo(1);
         JsonNode message = connection.getMessage();
-        assertThat(message).isNotNull();
+        assertNotNull(message);
         assertThat(message.path(JSON.TYPE).asText()).isEqualTo(JsonException.ERROR);
         assertThat(message.path(JSON.DATA).path(JsonException.CODE).asInt()).isEqualTo(500);
         assertThat(message.path(JSON.DATA).path(JsonException.MESSAGE).asText()).isEqualTo("Internal invalid-type handling error. See JMRI logs for information.");
