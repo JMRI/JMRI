@@ -81,6 +81,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         version = 1;
                     }
+                    tInfo.setVersion(version);
                     // there are train info options defined, read them
                     if (traininfo.getAttribute("transitname") != null) {
                         // there is a transit name selected

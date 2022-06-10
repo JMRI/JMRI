@@ -24,6 +24,7 @@ public class TrainInfo {
     }
 
     // instance variables for both manual and automatic operation
+    private int version = 1;
     private String transitName = "";
     private String transitId = "";
     private String trainName = "";
@@ -81,6 +82,13 @@ public class TrainInfo {
     //
     // Access methods for manual and automatic instance variables
     //
+    public void setVersion(int ver) {
+        version = ver;
+    }
+    public int getVersion() {
+        return version;
+    }
+
     public void setTransitName(String s) {
         transitName = s;
     }

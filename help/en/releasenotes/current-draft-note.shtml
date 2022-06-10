@@ -374,7 +374,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Separated reverse at end delays from reset delays</li>
+             <li>Allow a next traininfo to be run at successful termination using the same loco info</li>
         </ul>
 
     <h3>Dispatcher System</h3>

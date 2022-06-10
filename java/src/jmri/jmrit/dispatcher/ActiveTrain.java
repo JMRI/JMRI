@@ -297,7 +297,7 @@ public class ActiveTrain implements PropertyChangeProvider {
                 mStatus = status;
                 firePropertyChange("status", Integer.valueOf(old), Integer.valueOf(mStatus));
                 if (mStatus == DONE) {
-                    InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(this,terminateWhenFinished,false);
+                    InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(this,terminateWhenFinished,true);
                 }
             }
         } else {

@@ -360,8 +360,8 @@ import java.nio.file.StandardCopyOption;
 
             JUnitUtil.waitFor(waitInterval);
 
-            // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            // now return.- use the v4 reverse restart sensor.
+            JUnitUtil.setBeanState(sm.getSensor("TrainReverseRestart"), Sensor.ACTIVE);
 
             // and reverses
             JUnitUtil.waitFor(() -> {

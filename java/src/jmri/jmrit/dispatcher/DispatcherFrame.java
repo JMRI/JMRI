@@ -1068,7 +1068,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         if (at != null) {
-            terminateActiveTrain(at,true,true);
+            terminateActiveTrain(at,true,false);
         }
     }
 
@@ -1492,7 +1492,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     @Deprecated
     public void terminateActiveTrain(ActiveTrain at) {
-        terminateActiveTrain(at,true,true);
+        terminateActiveTrain(at,true,false);
     }
 
     /**
@@ -1562,9 +1562,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             removeHeldMast(null, at);
             at.terminate();
-            if (!at.getNextTrain().isEmpty() && !at.getNextTrain().equals("None")) {
+            if (runNextTrain && !at.getNextTrain().isEmpty() && !at.getNextTrain().equals("None")) {
                 log.debug("Loading Next Train[{}]", at.getNextTrain());
-                loadTrainFromTrainInfo(at.getNextTrain());
+                if (at.getRosterEntry() != null) {
+                    loadTrainFromTrainInfo(at.getNextTrain(),"ROSTER",at.getRosterEntry().getId());
+                } else {
+                    loadTrainFromTrainInfo(at.getNextTrain(),"USER",at.getDccAddress());
+                }
             }
             at.dispose();
         }
@@ -3059,7 +3063,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             if (col == TERMINATEBUTTON_COLUMN) {
                 if (activeTrainsList.get(row) != null) {
-                    terminateActiveTrain(activeTrainsList.get(row),true,true);
+                    terminateActiveTrain(activeTrainsList.get(row),true,false);
                 }
             }
             if (col == RESTARTCHECKBOX_COLUMN) {

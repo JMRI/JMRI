@@ -236,7 +236,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    saveTrainInfo(e);
+                    saveTrainInfo(e,true);
                 }
             });
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
@@ -611,14 +611,25 @@ public class ActivateTrainFrame extends JmriJFrame {
         loadAtStartupBox.setSelected(false);
         initializeFreeTransitsCombo(new ArrayList<Transit>());
         nextTrain.addItem("");
-        for (String file: _tiFile.getTrainInfoFileNames()) {
-            nextTrain.addItem(file);
-        }
+        refreshNextTrainCombo();
         setTrainsFromOptions(_TrainsFrom);
         initiateFrame.pack();
         initiateFrame.setVisible(true);
     }
 
+    private void refreshNextTrainCombo() {
+        Object saveEntry = null;
+        if (nextTrain.getSelectedIndex() > 0) {
+            saveEntry=nextTrain.getSelectedItem();
+        }
+        nextTrain.removeAll();
+        for (String file: _tiFile.getTrainInfoFileNames()) {
+            nextTrain.addItem(file);
+        }
+        if (saveEntry != null) {
+            nextTrain.setSelectedItem(saveEntry);
+        }
+    }
     private void setTrainsFromOptions(TrainsFrom transFrom) {
         switch (transFrom) {
             case TRAINSFROMROSTER:
@@ -800,6 +811,7 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void handleTerminateWhenDoneBoxClick(ActionEvent e) {
         if (terminateWhenDoneBox.isSelected()) {
+            refreshNextTrainCombo();
             resetWhenDoneBox.setSelected(false);
             terminateWhenDoneDetails.setVisible(true);
         } else {
@@ -1259,10 +1271,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         handleReverseAtEndBoxClick(null);
     }
 
-    private void saveTrainInfo(ActionEvent e) {
+    private void saveTrainInfo(ActionEvent e, boolean locoOptional) {
         TrainInfo info = null;
         try {
-            info = dialogToTrainInfo();
+            info = dialogToTrainInfo(locoOptional);
         } catch (IllegalArgumentException ide) {
             JOptionPane.showMessageDialog(initiateFrame, ide.getMessage(),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1401,7 +1413,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         autoTrainInfoToDialog(info);
     }
 
-    private TrainInfo dialogToTrainInfo() throws IllegalArgumentException {
+    private TrainInfo dialogToTrainInfo(boolean locoOptional) throws IllegalArgumentException {
         TrainInfo info = new TrainInfo();
         int index = transitSelectBox.getSelectedIndex();
         if (index < 0) {
@@ -1412,10 +1424,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         switch (_TrainsFrom) {
             case TRAINSFROMROSTER:
-                if (rosterComboBox.getSelectedIndex() < 1) {
-                    throw new IllegalArgumentException(Bundle.getMessage("Error41"));
+                if (!locoOptional) {
+                    if (rosterComboBox.getSelectedIndex() < 1) {
+                        throw new IllegalArgumentException(Bundle.getMessage("Error41"));
+                    }
+                    info.setTrainName(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
                 }
-                info.setTrainName(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
                 info.setDccAddress(" ");
                 break;
             case TRAINSFROMOPS:
