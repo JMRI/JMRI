@@ -49,7 +49,7 @@ public class StoreAndCompare extends AbstractAction {
     }
 
     public static void requestStoreIfNeeded() {
-        if (!Application.getApplicationName().equals("DecoderPro")) {
+        if (Application.getApplicationName().equals("PanelPro")) {
             if (_preferences.isStoreCheckEnabled()) {
                 if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
                     jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
