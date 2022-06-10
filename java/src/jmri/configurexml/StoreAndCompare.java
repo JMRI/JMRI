@@ -76,18 +76,20 @@ public class StoreAndCompare extends AbstractAction {
         File file2 = new File(tempDir + fileName + ".xml");
 
         // Store the current data using the temp file.
-        jmri.ConfigureManager cm = jmri.InstanceManager.getDefault(jmri.ConfigureManager.class);
-        boolean stored = cm.storeUser(file2);
-        log.debug("temp file '{}' stored :: {}", file2, stored);
+        jmri.ConfigureManager cm = jmri.InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
+        if (cm != null) {
+            boolean stored = cm.storeUser(file2);
+            log.debug("temp file '{}' stored :: {}", file2, stored);
 
-        try {
-            result = checkFile(file1, file2);
-        } catch (Exception ex) {
-            log.debug("checkFile exception: ", ex);
-        }
+            try {
+                result = checkFile(file1, file2);
+            } catch (Exception ex) {
+                log.debug("checkFile exception: ", ex);
+            }
 
-        if (!file2.delete()) {
-            log.warn("An error occurred while deleting temporary file {}", file2.getPath());
+            if (!file2.delete()) {
+                log.warn("An error occurred while deleting temporary file {}", file2.getPath());
+            }
         }
 
         return result;
@@ -101,7 +103,7 @@ public class StoreAndCompare extends AbstractAction {
 
         if (sMgr == null || mMgr == null) result = false;
 
-        if (result) {
+        if (result && sMgr != null) {
             if (sMgr.getNamedBeanSet().size() != 1) {
                 result = false;
             } else {
@@ -111,7 +113,7 @@ public class StoreAndCompare extends AbstractAction {
             }
         }
 
-        if (result) {
+        if (result && mMgr != null) {
             if (mMgr.getNamedBeanSet().size() != 2) {
                 result = false;
             } else {
