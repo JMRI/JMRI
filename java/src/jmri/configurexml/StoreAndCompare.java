@@ -95,6 +95,9 @@ public class StoreAndCompare extends AbstractAction {
         return result;
     }
 
+    @SuppressFBWarnings(value = {"RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"},
+            justification =
+                    "spotbugs did not like the protection provided by the result boolean, but the second test was declared redundant")
     private static boolean haveOnlyTimeBeans() {
         var result = true;
 
