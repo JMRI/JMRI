@@ -816,7 +816,8 @@ public class ActivateTrainFrame extends JmriJFrame {
             terminateWhenDoneDetails.setVisible(true);
         } else {
             terminateWhenDoneDetails.setVisible(false);
-            nextTrain.setSelectedItem("");
+            // leave it
+            //nextTrain.setSelectedItem("");
         }
     }
     private void handleReverseAtEndBoxClick(ActionEvent e) {
@@ -1400,12 +1401,14 @@ public class ActivateTrainFrame extends JmriJFrame {
         delayReverseResetSensorBox.setSelected(info.getReverseResetRestartSensor());
 
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
+        nextTrain.setSelectedIndex(-1);
+
         try {
             nextTrain.setSelectedItem(info.getNextTrain());
         } catch (Exception ex){
             nextTrain.setSelectedIndex(-1);
         }
-
+        handleTerminateWhenDoneBoxClick(null);
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
