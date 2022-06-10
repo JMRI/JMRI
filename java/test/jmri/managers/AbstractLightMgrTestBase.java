@@ -42,7 +42,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     @Test
     public void testCreate() {
         l.addPropertyChangeListener(new Listen());
-        Light t = l.provideLight("" + getNumToTest1());
+        Light t = l.provide("" + getSystemName(getNumToTest1()));
         Assertions.assertNotNull( t, "real object returned ");
         Assertions.assertTrue( listenerResult, "listener triggered");
     }
