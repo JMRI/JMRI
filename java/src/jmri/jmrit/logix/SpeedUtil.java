@@ -857,7 +857,7 @@ public class SpeedUtil {
     }
 
     /**
-     * Get the ramp for a speed change
+     * Get the ramp for a speed change from Throttle settings
      * @param fromSpeed - starting speed setting
      * @param toSpeed - ending speed setting
      * @return ramp data
@@ -867,12 +867,18 @@ public class SpeedUtil {
         return ramp;
     }
 
-    protected float getRampLengthForEntry(float currentSpeed, float endSpeed) {
-        RampData ramp = getRampForSpeedChange(currentSpeed, endSpeed);
+    /**
+     * Get the ramp length for a speed change from Throttle settings
+     * @param fromSpeed - starting speed setting
+     * @param toSpeed - ending speed setting
+     * @return ramp length
+     */
+   protected float getRampLengthForEntry(float fromSpeed, float toSpeed) {
+        RampData ramp = getRampForSpeedChange(fromSpeed, toSpeed);
         float enterLen = ramp.getRampLength();
         if (log.isTraceEnabled()) {
             log.debug("getRampLengthForEntry: from speed={} to speed={}. rampLen={}",
-                    currentSpeed, endSpeed, enterLen);
+                    fromSpeed, toSpeed, enterLen);
         }
         return enterLen;
     }
@@ -989,7 +995,7 @@ public class SpeedUtil {
                         blkInfo.getBlockDisplayName(), aveSettings,  measuredSpeed, MAX_TGV_SPEED*aveSettings/_signalSpeedMap.getLayoutScale(),
                         _distanceTravelled, length);
             }
-        } else /*if (_numchanges < 1)*/ {
+        } else /* if (_numchanges < 1) */ {
             setSpeedProfile(_sessionProfile, aveSettings, measuredSpeed, isForward);
         }
         if (log.isDebugEnabled()) {

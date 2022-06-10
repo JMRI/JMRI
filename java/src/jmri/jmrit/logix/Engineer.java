@@ -445,6 +445,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         endSpeedType, _warrant.getCurrentBlockName()));
             }
             _ramp.setParameters(endSpeedType, endBlockIdx);
+            _ramp._rampDown = (endBlockIdx >= 0) || endSpeedType.equals(Warrant.Stop);
+            setIsRamping(true);
             _holdRamp = false;
             setWaitforClear(true);
             synchronized (_rampLockObject) {
@@ -717,16 +719,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             log.debug("{}: setStop({}) from speed={} scriptSpeed={}", _warrant.getDisplayName(), eStop, speed, _normalSpeed);
     }
 
-    protected int getRampEndBlockIdx() {
-        if (isRamping()) {
-            return _ramp._endBlockIdx;
-        }
-        return -1;
-    }
-
     protected Warrant.SpeedState getSpeedState() {
         if (isRamping()) {
-            if (_ramp.isRampDown()) {
+            if (_ramp._rampDown) {
                 return Warrant.SpeedState.RAMPING_DOWN;
             } else {
                 return Warrant.SpeedState.RAMPING_UP;
@@ -734,13 +729,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
         return Warrant.SpeedState.STEADY_SPEED;
     }
-/*
-    protected int getRampTimeForDistance(float availDist, float changeDist, float bufDist) {
-        if (_ramp == null) {
-            return 0;
-        }
-        return _ramp. getRampTimeForDistance(availDist, bufDist);
-    }*/
 
     protected int getRunState() {
         if (_stopPending) {
@@ -1114,9 +1102,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             setName("Ramp(" + _warrant.getTrainName() +")");
             _endBlockIdx = -1;
          }
-         final boolean isRampDown() {
-             return _rampDown;
-         }
 
          @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called by another thread to clear all ramp waits")
          void quit(boolean die) {
@@ -1183,37 +1168,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                     curBlkName, limit+1, _warrant.getBlockAt(blockIdx).getDisplayName());
             return limit;
         }
-/*
-        private int getRampTimeForDistance(float availDist, float bufDist) {
-            float accumTime = 0;    // accumulated time of commands up to ramp start
-            float accumDist = 0;
-            int timeIncrement = rampData.getRampTimeIncrement();
-            ListIterator<Float> iter = rampData.speedIterator(true);
-            float speedSetting = getSpeedSetting();
-            float speed;
-            float trackSpeed;
-            while (iter.hasNext()) {
-                if (_rampDown) {
-                    speed = iter.previous().floatValue();   // skip repeat of current throttle setting
-                } else {
-                    speed = iter.next().floatValue();   // skip repeat of current speed                
-                }
-                float changeDist = _speedUtil.getRampLengthForEntry(speedSetting, speed) + bufDist;
-                trackSpeed = _speedUtil.getTrackSpeed(speed);
-                accumDist += trackSpeed * timeIncrement;
-                accumTime += timeIncrement;
-                if (changeDist + accumDist >= availDist) {
-                    float remDist = changeDist + accumDist - availDist;
-                    if (trackSpeed > 0) {
-                        accumTime -= remDist / trackSpeed;
-                    } else {
-                        accumTime -= timeIncrement;
-                    }
-                    break;
-                }
-            }
-            return Math.round(accumTime);
-        }*/
 
         @Override
         @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
