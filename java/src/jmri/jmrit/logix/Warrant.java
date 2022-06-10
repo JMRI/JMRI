@@ -2904,7 +2904,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         float prevSetting = speedSetting;
         String currentSpeedType = _engineer.getSpeedType(false); // current speed type
 
-        float curTrackSpeed = _speedUtil.getTrackSpeed(speedSetting);   // mm/sec track speed at modSetting;
         float changeDist = 0;
         if (log.isDebugEnabled()) {
             log.debug("makeRampWait for speed change \"{}\" to \"{}\". Throttle from={}, to={}, availDist={}",
@@ -2926,7 +2925,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             speedSetting = iter.next();
             
             if (changeDist + accumDist >= availDist) {
-                curTrackSpeed = _speedUtil.getTrackSpeed(speedSetting);
+                float curTrackSpeed = _speedUtil.getTrackSpeed(speedSetting);
                 float remDist = changeDist + accumDist - availDist;
                 if (curTrackSpeed > 0) {
                     accumTime -= remDist / curTrackSpeed;
@@ -2938,7 +2937,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         if (changeDist < accumDist) {
-            curTrackSpeed = _speedUtil.getTrackSpeed(speedSetting);
+            float curTrackSpeed = _speedUtil.getTrackSpeed(speedSetting);
             if (curTrackSpeed > 0) {
                 accumTime += (availDist - changeDist) / curTrackSpeed;
             } else {
