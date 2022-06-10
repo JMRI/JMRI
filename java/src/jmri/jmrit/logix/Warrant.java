@@ -2884,11 +2884,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case STEADY_SPEED:
                 //$FALL-THROUGH$    
                 default:
-                    if (changeDist > availDist && _idxCurrentOrder > 0) {
-                        cancelDelayRamp(true);
-                        rampSpeedTo(speedType, idxSpeedChange);
-                        return false;
-                    }
                     makeScriptWait(availDist, changeDist, idxSpeedChange, speedType, cmdStartIdx);
             }
         }
@@ -2906,8 +2901,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
         float changeDist = 0;
         if (log.isDebugEnabled()) {
-            log.debug("makeRampWait for speed change \"{}\" to \"{}\". Throttle from={}, to={}, availDist={}",
-                    currentSpeedType, speedType, speedSetting, endSpeed, availDist);
+            log.debug("{}: makeRampWait for speed change \"{}\" to \"{}\". Throttle from={}, to={}, availDist={}",
+                    getDisplayName(), currentSpeedType, speedType, speedSetting, endSpeed, availDist);
             // command index numbers biased by 1
         }
         float bufDist = getEntranceBufferDist(idxSpeedChange);
@@ -2993,8 +2988,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             changeDist = 0;
         }
         if (log.isDebugEnabled()) {
-            log.debug("makespeedChange cmdIdx #{} to #{} at speedType \"{}\" to \"{}\". speedSetting={}, changeDist={}, availDist={}",
-                    cmdStartIdx+1, cmdEndIdx+1, currentSpeedType, speedType, speedSetting, changeDist, availDist);
+            log.debug("{}: makespeedChange cmdIdx #{} to #{} at speedType \"{}\" to \"{}\". speedSetting={}, changeDist={}, availDist={}",
+                    getDisplayName(), cmdStartIdx+1, cmdEndIdx+1, currentSpeedType, speedType, speedSetting, changeDist, availDist);
             // command index numbers biased by 1
         }
         float accumTime = 0;    // accumulated time of commands up to ramp start

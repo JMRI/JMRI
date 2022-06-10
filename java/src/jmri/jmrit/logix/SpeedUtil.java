@@ -1007,6 +1007,7 @@ public class SpeedUtil {
         _entertime = exitTime;   // entry of next block
     }
 
+    // average with existing entry, if possible
     private void setSpeedProfile(RosterSpeedProfile profile, float throttle, float measuredSpeed, boolean isForward) {
         int keyIncrement = Math.round(getThrottleSpeedStepIncrement() * 1000);
         TreeMap<Integer, SpeedStep> speeds = profile.getProfileSpeeds();
@@ -1023,6 +1024,12 @@ public class SpeedUtil {
                 return;
             }
         }
+
+        float speed = profile.getSpeed(throttle, isForward);
+        if (speed > 0.0f) {
+            measuredSpeed = (measuredSpeed + speed) / 2;
+        }
+        
         if (isForward) {
             profile.setForwardSpeed(throttle, measuredSpeed, _throttle.getSpeedIncrement());
         } else {
