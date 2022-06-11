@@ -17,11 +17,11 @@ import jmri.jmrix.can.cbus.CbusNameService;
 
 /**
  * Panel to Create Turnouts, Sensor and Lights from CBUS event via drop action.
- * 
+ *
  * @author Steve Young Copyright (C) 2020
  */
 public class CbusCreateBeanPane extends JPanel {
-    
+
     private final CanPanel _mainPane;
     private JLabel beanLabel;
     private JPanel editPanel;
@@ -30,11 +30,11 @@ public class CbusCreateBeanPane extends JPanel {
     private NamedBean bean;
     private JButton editUserNameButton;
     protected CbTransferHandler[] transferArray;
-    
+
     private final jmri.TurnoutManager tm;
     private final jmri.SensorManager sm;
     private final jmri.LightManager lm;
-    
+
     public CbusCreateBeanPane(CanPanel mainPane){
         super();
         _mainPane = mainPane;
@@ -44,25 +44,25 @@ public class CbusCreateBeanPane extends JPanel {
         lm = (jmri.LightManager) mainPane.getMemo().get(jmri.LightManager.class);
         init();
     }
-    
+
     private void init() {
-    
+
         transferArray = new CbTransferHandler[3];
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("CreateNew"))); // NOI18N
-        
+
         add(getNewDragPanel());
         add(getEditPane());
     }
-    
+
     private JPanel getNewDragPanel(){
-        
+
         JPanel dragContainer = new JPanel();
         dragContainer.setToolTipText(Bundle.getMessage("DragHereForNew")); // NOI18N
         dragContainer.setLayout(new BoxLayout(dragContainer, BoxLayout.X_AXIS));
-        
+
         for (int i =0; i<3; i++){
             StringBuilder sb = new StringBuilder();
             sb.append("<html><h2>")
@@ -77,20 +77,20 @@ public class CbusCreateBeanPane extends JPanel {
         }
         return dragContainer;
     }
-    
+
     private JPanel getEditPane(){
-    
+
         editPanel = new JPanel();
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.X_AXIS));
         editPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("TslDetails"))); // NOI18N
-        
+
         beanUsername = new JTextField(20);
         beanUsername.setDropTarget(null);
         beanUsername.setMinimumSize(new java.awt.Dimension(60,16));
-        
+
         beanLabel = new JLabel();
-        
+
         editUserNameButton = new JButton(Bundle.getMessage("EditUserName")); // NOI18N
         editUserNameButton.setToolTipText(Bundle.getMessage("EditUNameTip")); // NOI18N
         editUserNameButton.addActionListener((ActionEvent e) -> {
@@ -98,21 +98,21 @@ public class CbusCreateBeanPane extends JPanel {
             bean.setUserName(newUname);
             showSaveReminder();
         });
-        
+
         setEditPaneActive(false);
-        
+
         editPanel.add(beanLabel);
         editPanel.add(beanUsername);
         editPanel.add(editUserNameButton);
         return editPanel;
     }
-    
+
     private void setEditPaneActive( boolean enabled){
         editPanel.setEnabled(enabled);
         beanUsername.setEnabled(enabled);
         editUserNameButton.setEnabled(enabled);
     }
-    
+
     /**
      * Handles drop actions containing CBUS event.
      */
@@ -129,17 +129,17 @@ public class CbusCreateBeanPane extends JPanel {
             }
             return false;
         }
-        
+
         /**
          * {@inheritDoc}
          */
         @Override
         public boolean importData(JComponent c, Transferable t) {
             if (canImport(c, t.getTransferDataFlavors())) {
-                
+
                 String validatedAddr;
                 jmri.ProvidingManager<?> mgrClass;
-                
+
                 // do some validation on the input string
                 // processed in the same way as a sensor, turnout or light so less chance of breaking in future
                 // and can also accept the Hex "X9001020304;X9101020304" format
@@ -150,12 +150,12 @@ public class CbusCreateBeanPane extends JPanel {
                 } catch (UnsupportedFlavorException | IOException | IllegalArgumentException | ClassCastException e) {
                     return false;
                 }
-                
+
                 int nn = CbusMessage.getNodeNumber(new CbusAddress(validatedAddr).makeMessage(0));
                 int en = CbusMessage.getEvent(new CbusAddress(validatedAddr).makeMessage(0));
-                
+
                 boolean dirty = false;
-                
+
                 bean = mgrClass.getBySystemName(validatedAddr);
                 if ( bean == null) {
                     dirty = true;
@@ -169,7 +169,7 @@ public class CbusCreateBeanPane extends JPanel {
             return false;
         }
     }
-    
+
     private jmri.ProvidingManager<?> classMgrInString(String dropLocation){
         for (int i =0; i<3; i++){
             if (dropLocation.contains(
@@ -179,7 +179,7 @@ public class CbusCreateBeanPane extends JPanel {
         }
         throw new IllegalArgumentException("Unable to get Bean Type");
     }
-    
+
     private jmri.ProvidingManager<?> getManagerByIndex(int index){
         switch (index) {
             case 0:
@@ -192,33 +192,34 @@ public class CbusCreateBeanPane extends JPanel {
                 throw new IllegalArgumentException("Unable to get Manager from Index" + index);
         }
     }
-    
+
     private void resetBeanText(NamedBean bean, boolean tableChanged, int nn, int en ){
-    
+
         beanLabel.setText(bean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME));
         editPanel.setBorder(BorderFactory.createTitledBorder(
       BorderFactory.createEtchedBorder(), nameservice.getEventNodeString(nn,en)));
         beanUsername.setText(bean.getUserName());
-        
+
         if (tableChanged) {
             showSaveReminder();
         }
     }
-    
+
     private boolean showReminder = true;
-    
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+
     /**
      * Show reminder to save Bean Table.
      */
     private void showSaveReminder() {
-        if (showReminder) {
+        if (showReminder && !checkEnabled) {
             JCheckBox checkbox = new JCheckBox(Bundle.getMessage("HideFurtherDialog"));
             Object[] params = {Bundle.getMessage("SavePanelReminder"), checkbox};
-            JOptionPane.showMessageDialog (_mainPane, params, 
+            JOptionPane.showMessageDialog (_mainPane, params,
           Bundle.getMessage("ReminderTitle"), JOptionPane.INFORMATION_MESSAGE); // NOI18N
             showReminder=!checkbox.isSelected();
         }
     }
-    
+
     // private final static Logger log = LoggerFactory.getLogger(CbusCreateBeanPane.class);
 }

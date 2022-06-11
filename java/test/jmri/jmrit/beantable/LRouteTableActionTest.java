@@ -164,7 +164,6 @@ public class LRouteTableActionTest {
             _lRouteTable.f.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

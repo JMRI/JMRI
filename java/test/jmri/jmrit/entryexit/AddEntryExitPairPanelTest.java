@@ -99,7 +99,6 @@ public class AddEntryExitPairPanelTest {
         JUnitUtil.removeMatchingThreads("Routing stabilising timer");
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

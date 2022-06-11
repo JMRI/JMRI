@@ -320,6 +320,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
 
     boolean routeDirty = false;  // true to fire reminder to save work
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     ArrayList<RouteInputElement> _inputList;
     private HashMap<String, RouteInputElement> _inputMap;
@@ -1116,6 +1117,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     }
 
     void showReminderMessage() {
+        if (checkEnabled) return;
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
             showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
                     getClassName(),

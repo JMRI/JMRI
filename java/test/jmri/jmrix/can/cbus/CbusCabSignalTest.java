@@ -75,7 +75,6 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         cs.dispose();
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

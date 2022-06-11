@@ -32,7 +32,6 @@ public class LayoutEditorComponentTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

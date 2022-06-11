@@ -248,7 +248,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             }
             // confirm that attribute is to be deleted
             if (!cancel) {
-                int results = JOptionPane.showOptionDialog(null,
+                int results = JOptionPane.showOptionDialog(this,
                         MessageFormat
                                 .format(Bundle.getMessage("ConfirmDeleteAttribute"), new Object[] { _attribute, item }),
                         Bundle.getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,

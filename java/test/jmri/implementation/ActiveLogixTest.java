@@ -186,7 +186,6 @@ public class ActiveLogixTest {
     @AfterAll
     public static void tearDown() throws Exception {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
