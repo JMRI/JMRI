@@ -81,7 +81,6 @@ public class LayoutLHTurnoutEditorTest extends LayoutTurnoutEditorTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

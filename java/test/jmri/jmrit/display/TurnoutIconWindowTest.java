@@ -152,7 +152,6 @@ public class TurnoutIconWindowTest {
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

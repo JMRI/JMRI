@@ -236,7 +236,6 @@ public class ImportEntryExitTest {
         JUnitUtil.clearTurnoutThreads();
         JUnitUtil.clearRouteThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

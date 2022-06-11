@@ -687,7 +687,6 @@ public class JUnitOperationsUtil {
         }
         Assert.assertNotNull(operationShutdownTask);
         sm.deregister(operationShutdownTask);
-        jmri.util.JUnitUtil.deregisterEditorManagerShutdownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
