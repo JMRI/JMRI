@@ -179,7 +179,6 @@ public class ColorDialogTest {
         EditorFrameOperator.clearEditorFrameOperatorThreads();
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

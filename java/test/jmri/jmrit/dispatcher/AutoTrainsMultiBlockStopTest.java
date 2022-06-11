@@ -887,7 +887,6 @@ import java.nio.file.StandardCopyOption;
         @AfterEach
         public void tearDown() throws Exception {
             JUnitUtil.deregisterBlockManagerShutdownTask();
-            JUnitUtil.deregisterEditorManagerShutdownTask();
             JUnitUtil.resetWindows(false,false);
             JUnitUtil.resetFileUtilSupport();
             JUnitUtil.tearDown();

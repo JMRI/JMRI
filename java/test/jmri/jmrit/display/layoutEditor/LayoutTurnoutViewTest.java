@@ -233,7 +233,6 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public static void afterClass() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
     }
 
     @BeforeEach

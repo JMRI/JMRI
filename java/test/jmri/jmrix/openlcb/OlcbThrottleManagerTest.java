@@ -65,7 +65,6 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         connection = null;
         nodeID = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

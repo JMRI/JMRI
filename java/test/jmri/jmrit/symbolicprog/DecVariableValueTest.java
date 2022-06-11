@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
 public class DecVariableValueTest extends AbstractVariableValueTestBase {
 
     // Local tests version of makeVar with settable parameters and cvList support.
-    DecVariableValue makeVarDec(String label, String comment, String cvName,
+    private DecVariableValue makeVarDec(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
@@ -48,7 +48,7 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((DecVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((DecVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override

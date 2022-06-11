@@ -458,7 +458,6 @@ public class NXFrameTest {
     public void tearDown() throws Exception {
         JUnitUtil.removeMatchingThreads("Engineer(");
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();

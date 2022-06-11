@@ -59,7 +59,6 @@ public class EnterReporterDialogTest {
             enterReporterDialog = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
