@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
 
@@ -28,9 +27,9 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     abstract public String getSystemName(int i);
 
-    static protected boolean listenerResult = false;
+    private boolean listenerResult = false;
 
-    protected class Listen implements PropertyChangeListener {
+    private class Listen implements PropertyChangeListener {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -42,6 +41,10 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
+        l.addPropertyChangeListener(new Listen());
+        Light t = l.provide("" + getSystemName(getNumToTest1()));
+        Assertions.assertNotNull( t, "real object returned ");
+        Assertions.assertTrue( listenerResult, "listener triggered");
     }
 
     @Test
@@ -124,7 +127,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     }
 
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
