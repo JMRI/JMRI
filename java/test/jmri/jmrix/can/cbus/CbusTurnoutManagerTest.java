@@ -64,7 +64,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // create
         Turnout t = l.provide("MT+123");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName("MT+123"));
     }
 
@@ -251,7 +251,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     @Test
-    public void testgetEntryToolTip() {
+    @Override
+    public void testGetEntryToolTip() {
+        super.testGetEntryToolTip();
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
 
@@ -291,11 +293,11 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testSimpleNext() throws JmriException {
         Turnout t =  l.provideTurnout("MT+17");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MT+18");
+        Assert.assertEquals("MT+18", next);
 
         t =  l.provideTurnout("MT+N45E22");
         next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MT+N45E23");
+        Assert.assertEquals("MT+N45E23", next);
 
     }
 
@@ -303,7 +305,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testDoubleNext() throws JmriException {
         Turnout t =  l.provideTurnout("MT+18;-21");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MT+19;-22");
+        Assert.assertEquals( "MT+19;-22", next);
     }
 
     @Test

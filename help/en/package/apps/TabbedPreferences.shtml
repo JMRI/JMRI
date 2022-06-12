@@ -281,14 +281,14 @@
         </div>
 
         <p><strong><em>Check for changes that have not been stored</em></strong> is the master
-        switch for the process.  If this is unchecked, no checking will occur.  Unchecked is the
-        default setting.  This is also the recommended setting when <strong>DecoderPro</strong> is
-        the primary JMRI application.  Starting either PanelPro or DecoderPro creates some default
-        table entries which will create a store request every time DecoderPro is stopped if
-        checking is enabled.</p>
+        switch for the process.  If this is unchecked, no checking will occur.  Checked is the
+        default setting.  Starting PanelPro creates some default <strong>Fast Clock</strong>
+        table entries. If these are the only table entries, a store request will not occur.</p>
 
         <p>If the check process has been enabled and there are changes that should be stored, a
-        dialog will be displayed.</p>
+        dialog will be displayed.  The changes normally occur due to table and panel changes.
+        They can also occur when a connection, such as Digitrax, automatically adds sensors and
+        turnouts.</p>
 
         <div style="margin-left: 2em">
           <a href="images/StoreRequest.png"><img src="images/StoreRequest.png" alt="store reqquest"></a>

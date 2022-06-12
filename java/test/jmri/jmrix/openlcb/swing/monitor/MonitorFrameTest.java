@@ -1,7 +1,5 @@
 package jmri.jmrix.openlcb.swing.monitor;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -9,7 +7,8 @@ import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.openlcb.can.AliasMap;
 
 /**
@@ -17,6 +16,7 @@ import org.openlcb.can.AliasMap;
  *
  * @author Bob Jacobsen Copyright 2010
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class MonitorFrameTest {
 
     private String testFormatted;
@@ -27,7 +27,6 @@ public class MonitorFrameTest {
 
     @Test
     public void testFormatMsg() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
 
@@ -53,7 +52,6 @@ public class MonitorFrameTest {
 
     @Test
     public void testFormatReply() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         MonitorPane f = new MonitorPane() {
             @Override
@@ -81,8 +79,8 @@ public class MonitorFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         tcs = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
@@ -96,7 +94,7 @@ public class MonitorFrameTest {
         memo = null;
         tcs.terminateThreads();
         tcs = null;
-        jmri.util.JUnitUtil.resetWindows(false, false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
 
     }
