@@ -172,7 +172,7 @@ public class SCWarrant extends Warrant {
 
         startupWarrant();
 
-        firePropertyChange("runMode", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
+        firePropertyChange("WarrantStart", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
         runSignalControlledTrain();
     }
 
