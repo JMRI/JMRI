@@ -1366,29 +1366,18 @@ public class WarrantFrame extends WarrantRoute {
             switch (_warrant.getRunMode()) {
                 case Warrant.MODE_NONE:
                     _warrant.removePropertyChangeListener(this);
-                    if (e.getPropertyName().equals("runMode")) {
-                        int newMode = ((Integer) e.getNewValue()).intValue();
-                        if (newMode == Warrant.MODE_ABORT) {
-                            msg = Bundle.getMessage("warrantAbort",
-                                    _warrant.getTrainName(),
-                                    _warrant.getDisplayName());
+                    if (property.equals("StopWarrant")) {
+                        String blkName = (String) e.getOldValue();
+                        String bundleKey = (String) e.getNewValue();
+                        if (blkName == null) {
+                            msg = Bundle.getMessage(bundleKey,
+                                    _warrant.getTrainName(), _warrant.getDisplayName());
+                            color =  Color.red;                        
                         } else {
-                            int oldMode = ((Integer) e.getOldValue()).intValue();
-                            if (oldMode != Warrant.MODE_NONE) {
-                                OBlock curBlock = _warrant.getCurrentBlockOrder().getBlock();
-                                OBlock lastBlock = _warrant.getLastOrder().getBlock();
-                                if (lastBlock.equals(curBlock)) {
-                                    msg = Bundle.getMessage("warrantComplete",
-                                            _warrant.getTrainName(), _warrant.getDisplayName(),
-                                            lastBlock.getDisplayName());
-                                    color = Color.green;
-                                } else {
-                                    msg = Bundle.getMessage("warrantEnd",
-                                            _warrant.getTrainName(), _warrant.getDisplayName(),
-                                            lastBlock.getDisplayName());
-                                    color = Color.red;
-                                }
-                            }
+                            msg = Bundle.getMessage("bundleKey",
+                                    _warrant.getTrainName(), _warrant.getDisplayName(), 
+                                    blkName);
+                            color = myGreen;
                         }
                     }
                     break;
@@ -1469,19 +1458,13 @@ public class WarrantFrame extends WarrantRoute {
                         msg = Bundle.getMessage("WarrantOverrun",
                                 _warrant.getTrainName(), blkName, warName);
                         color = Color.red;
-                    } else if (e.getPropertyName().equals("runMode")) {
-                        int oldMode = ((Integer) e.getOldValue()).intValue();
-                        int newMode = ((Integer) e.getNewValue()).intValue();
-                        if (oldMode == Warrant.MODE_NONE) {
-                            if (newMode != Warrant.MODE_NONE) {
-                                msg = Bundle.getMessage("warrantStart",
-                                        _warrant.getTrainName(), _warrant.getDisplayName(),
-                                        _warrant.getCurrentBlockName());
-                                if (_warrant.getState() == Warrant.HALT) {
-                                    JOptionPane.showMessageDialog(this, _warrant.getRunningMessage(),
-                                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                                }
-                            }
+                    } else if (e.getPropertyName().equals("WarrantStart")) {
+                        msg = Bundle.getMessage("warrantStart",
+                                _warrant.getTrainName(), _warrant.getDisplayName(),
+                                _warrant.getCurrentBlockName());
+                        if (_warrant.getState() == Warrant.HALT) {
+                            JOptionPane.showMessageDialog(this, _warrant.getRunningMessage(),
+                                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         }
                     } else if (e.getPropertyName().equals("controlChange")) {
                         int newCntrl = ((Integer) e.getNewValue()).intValue();

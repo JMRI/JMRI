@@ -190,7 +190,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     }
 
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
