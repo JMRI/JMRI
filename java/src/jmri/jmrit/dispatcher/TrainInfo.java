@@ -24,6 +24,7 @@ public class TrainInfo {
     }
 
     // instance variables for both manual and automatic operation
+    private int version = 1;
     private String transitName = "";
     private String transitId = "";
     private String trainName = "";
@@ -50,11 +51,19 @@ public class TrainInfo {
     private int departureTimeMin = 00;
     private String delaySensorName = null;
     private boolean resetStartSensor = true;
+
     private String restartSensorName = null;
     private boolean resetRestartSensor = true;
     private int restartDelayMin = 0;
+
+    private int reverseDelayedRestart = ActiveTrain.NODELAY;
+    private String reverseRestartSensorName = null;
+    private boolean reverseResetRestartSensor = true;
+    private int reverseRestartDelayMin = 0;
+
     private String trainType = "";
     private boolean terminateWhenDone = false;
+    private String nextTrain = "None";
     private boolean loadAtStartup = false;
 
     // instance variables for automatic operation
@@ -73,6 +82,13 @@ public class TrainInfo {
     //
     // Access methods for manual and automatic instance variables
     //
+    public void setVersion(int ver) {
+        version = ver;
+    }
+    public int getVersion() {
+        return version;
+    }
+
     public void setTransitName(String s) {
         transitName = s;
     }
@@ -219,6 +235,15 @@ public class TrainInfo {
         return terminateWhenDone;
     }
 
+    public void setNextTrain(String s) {
+        nextTrain = s;
+    }
+
+    public String getNextTrain() {
+        return nextTrain;
+    }
+
+
     public void setPriority(int pri) {
         priority = pri;
     }
@@ -328,6 +353,50 @@ public class TrainInfo {
         return delaySensorName;
     }
 
+    public void setReverseDelayedRestart(int ds) {
+        reverseDelayedRestart = ds;
+    }
+
+    /**
+     * return restart code for this train, only used for continuous running
+     *
+     * @return one of ActiveTrain.NODELAY,TIMEDDELAY,SENSORDELAY
+     */
+    public int getReverseDelayedRestart() {
+        return reverseDelayedRestart;
+    }
+
+    public void setReverseRestartSensorName(String value) {
+        reverseRestartSensorName = value;
+    }
+
+    public String getReverseRestartSensorName() {
+        return reverseRestartSensorName;
+    }
+
+    public void setReverseResetRestartSensor(boolean value) {
+        reverseResetRestartSensor = value;
+    }
+
+    public boolean getReverseResetRestartSensor() {
+        return reverseResetRestartSensor;
+    }
+
+    public Sensor getReverseRestartSensor() {
+        if (reverseRestartSensorName == null) {
+            return null;
+        }
+        return jmri.InstanceManager.sensorManagerInstance().getSensor(reverseRestartSensorName);
+    }
+
+    public void setReverseRestartDelayMin(int value) {
+        reverseRestartDelayMin = value;
+    }
+
+    public int getReverseRestartDelayMin() {
+        return reverseRestartDelayMin;
+    }
+
     /**
      * retrieve the startup delay sensor using the delay sensor name
      *
@@ -396,7 +465,7 @@ public class TrainInfo {
     public void setResetRestartSensor(boolean b) {
         resetRestartSensor = b;
     }
-    
+
     /**
      * number of minutes to delay between restarting for continuous runs
      *
