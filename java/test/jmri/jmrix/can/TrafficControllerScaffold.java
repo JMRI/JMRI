@@ -20,16 +20,6 @@ public class TrafficControllerScaffold extends TrafficController {
     public TrafficControllerScaffold() {
     }
 
-    static protected TrafficControllerScaffold self = null;
-
-    static public TrafficControllerScaffold instance() {
-        if (self == null) {
-            log.debug("creating a new TrafficControllerScaffold object");
-            self = new TrafficControllerScaffold();
-        }
-        return self;
-    }
-
     // non-functional dummy
     @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
@@ -76,8 +66,8 @@ public class TrafficControllerScaffold extends TrafficController {
     /**
      * record messages sent, provide access for making sure they are OK
      */
-    public Vector<CanMessage> outbound = new Vector<CanMessage>();  // public OK here, so long as this is a test class
-    public Vector<CanReply> inbound = new Vector<CanReply>();  // public OK here, so long as this is a test class
+    public Vector<CanMessage> outbound = new Vector<>();  // public OK here, so long as this is a test class
+    public Vector<CanReply> inbound = new Vector<>();  // public OK here, so long as this is a test class
 
     @Override
     public void sendCanMessage(CanMessage m, CanListener l) {

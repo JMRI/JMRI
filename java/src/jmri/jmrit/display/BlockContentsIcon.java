@@ -177,7 +177,7 @@ public class BlockContentsIcon extends MemoryIcon {
                     popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            df.terminateActiveTrain(at,true);
+                            df.terminateActiveTrain(at,true,false);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {

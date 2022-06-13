@@ -7,10 +7,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
