@@ -13,7 +13,6 @@ import jmri.jmrit.logixng.expressions.ExpressionDispatcher.DispatcherState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -281,6 +280,13 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
     @Override
     public String toString() {
         return Bundle.getMessage("Dispatcher_Short");
+    }
+
+    @Override
+    public void setDefaultValues() {
+        if (_stateComboBox.getSelectedIndex() < 1) {
+            _stateComboBox.setSelectedIndex(1);
+        }
     }
 
     @Override

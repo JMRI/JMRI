@@ -912,8 +912,8 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     // from here down is testing infrastructure
     @BeforeAll
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public static void beforeClass() {
-        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             JUnitUtil.resetInstanceManager();
@@ -925,17 +925,17 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     }
 
     @AfterAll
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public static void afterClass() {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
-        JUnitUtil.tearDown();
     }
 
     @BeforeEach
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
 
@@ -1001,6 +1001,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
 
     @AfterEach
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
         if (ltRH != null) {
             ltRH.remove();
@@ -1068,7 +1069,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         layoutEditor = null;
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

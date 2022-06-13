@@ -143,7 +143,7 @@
             </li>
 
             <li>
-              <a href="marklin/index.shtml">Märklin CS2</a>
+              <a href="marklin/index.shtml">M&auml;rklin CS2</a>
             </li>
 
             <li>
@@ -243,7 +243,7 @@
             </li>
 
             <li>
-              <a href="can/cbus/index.shtml">CBUS®</a>
+              <a href="can/cbus/index.shtml">CBUS&reg;</a>
             </li>
 
             <li>
@@ -823,7 +823,7 @@
           </dt>
 
           <dt>
-            <a href="marklin/index.shtml">Märklin</a>
+            <a href="marklin/index.shtml">M&auml;rklin</a>
           </dt>
 
           <dd>
@@ -1622,7 +1622,7 @@
       <p><a href="#TopOfPage">[Go to top of page]</a>
       </p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
       <!--#include virtual="/Footer.shtml" -->
     </div>

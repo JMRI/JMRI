@@ -29,11 +29,11 @@ import org.junit.jupiter.params.provider.Arguments;
  * class is:
  <pre>
    public class LoadAndStoreTest extends LoadAndStoreTestBase {
- 
-     public static Stream&amp;Arguments&amp; data() { 
-       return getFiles(new File("java/test/jmri/configurexml"), false, true); 
+
+     public static Stream&amp;Arguments&amp; data() {
+       return getFiles(new File("java/test/jmri/configurexml"), false, true);
      }
-  
+
      @ParameterizedTest
      @MethodSource("data")
      public void loadAndStoreTest(File file, boolean pass) { super.validate(file, pass); }
@@ -280,10 +280,6 @@ public class LoadAndStoreTestBase {
 
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         switch (inSaveType) {
-            case All: {
-                cm.storeAll(outFile);
-                break;
-            }
             case Config: {
                 cm.storeConfig(outFile);
                 break;
@@ -301,7 +297,7 @@ public class LoadAndStoreTestBase {
                 break;
             }
             default: {
-                log.error("Unknown save type {}.", inSaveType);
+                Assert.fail("Unknown save type "+inSaveType);
                 break;
             }
         }
@@ -326,7 +322,7 @@ public class LoadAndStoreTestBase {
         // to ease comparison, dump the history information;
         // if you need to turn that off you can override
         dumpHistory();
-        
+
         // find comparison files
         File compFile = new File(file.getCanonicalFile().getParentFile().
                 getParent() + "/loadref/" + file.getName());
@@ -342,20 +338,20 @@ public class LoadAndStoreTestBase {
 
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
-  
-    /** 
+
+    /**
      * By default, drop the history information
-     * to simplify diffing the files. 
-     * Override if that info is needed for a test.  
+     * to simplify diffing the files.
+     * Override if that info is needed for a test.
      */
     protected void dumpHistory(){
         jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).purge(0);
     }
-    
+
     /**
      * If anything, i.e. typically a delay,
-     * is needed after loading the file before storing or doing 
-     * any final tests, 
+     * is needed after loading the file before storing or doing
+     * any final tests,
      * it can be added by override here.
      */
     protected void postLoadProcessing() {
@@ -375,11 +371,19 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
-        
+
         // kill the fast clock and set to a consistent time
         jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);
-        clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+
+        try {
+            clock.setTime(
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse("2021-12-02 00:00:00.0")
+            );
+        } catch (Exception e) {
+            log.warn("Unexpected Exception in test setup", e);
+        }
+
     }
 
     @AfterEach

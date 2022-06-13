@@ -144,7 +144,12 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
         // format and send message to go to program mode
         if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-            DCCppMessage msg = DCCppMessage.makeWriteDirectCVMsg(CV, val);
+            DCCppMessage msg;
+            if (controller().getCommandStation().isProgramV4Supported()) { //drops the callbacks
+                msg = DCCppMessage.makeWriteDirectCVMsgV4(CV, val);
+            } else {
+                msg = DCCppMessage.makeWriteDirectCVMsg(CV, val); //older syntax with dummy callbacks
+            }
             controller().sendDCCppMessage(msg, this);
         }
     }
@@ -297,8 +302,11 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return _controller;
     }
 
+    @Override
     public void dispose() {
-        controller().removeDCCppListener(LISTENER_MASK, this);
+        if ( _controller != null ) {
+            _controller.removeDCCppListener(LISTENER_MASK, this);
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppProgrammer.class);

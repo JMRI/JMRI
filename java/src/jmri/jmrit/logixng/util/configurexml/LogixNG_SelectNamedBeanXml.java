@@ -30,13 +30,24 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
         namedBeanElement.addContent(new Element("addressing").addContent(selectNamedBean.getAddressing().name()));
-        NamedBeanHandle<E> table = selectNamedBean.getNamedBean();
-        if (table != null) {
-            namedBeanElement.addContent(new Element("name").addContent(table.getName()));
+        NamedBeanHandle<E> namedBeanHandle = selectNamedBean.getNamedBean();
+        if (namedBeanHandle != null) {
+            namedBeanElement.addContent(new Element("name").addContent(namedBeanHandle.getName()));
         }
-        namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
-        namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
-        namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
+        if (selectNamedBean.getReference() != null && !selectNamedBean.getReference().isEmpty()) {
+            namedBeanElement.addContent(new Element("reference").addContent(selectNamedBean.getReference()));
+        }
+        var memory = selectNamedBean.getMemory();
+        if (memory != null) {
+            namedBeanElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
+        namedBeanElement.addContent(new Element("listenToMemory").addContent(selectNamedBean.getListenToMemory() ? "yes" : "no"));
+        if (selectNamedBean.getLocalVariable() != null && !selectNamedBean.getLocalVariable().isEmpty()) {
+            namedBeanElement.addContent(new Element("localVariable").addContent(selectNamedBean.getLocalVariable()));
+        }
+        if (selectNamedBean.getFormula() != null && !selectNamedBean.getFormula().isEmpty()) {
+            namedBeanElement.addContent(new Element("formula").addContent(selectNamedBean.getFormula()));
+        }
 
         if (selectNamedBean.getAddressing() == NamedBeanAddressing.Table) {
             namedBeanElement.addContent(selectTableXml.store(selectNamedBean.getSelectTable(), "table"));
@@ -46,6 +57,10 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
     }
 
     public void load(Element namedBeanElement, LogixNG_SelectNamedBean<E> selectNamedBean) throws JmriConfigureXmlException {
+        load(namedBeanElement, selectNamedBean, false);
+    }
+
+    public void load(Element namedBeanElement, LogixNG_SelectNamedBean<E> selectNamedBean, boolean delayedLookup) throws JmriConfigureXmlException {
 
         if (namedBeanElement != null) {
 
@@ -59,13 +74,30 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
 
                 elem = namedBeanElement.getChild("name");
                 if (elem != null) {
-                    E t = selectNamedBean.getManager().getNamedBean(elem.getTextTrim());
-                    if (t != null) selectNamedBean.setNamedBean(t);
-                    else selectNamedBean.removeNamedBean();
+                    if (delayedLookup) {
+                        selectNamedBean.setDelayedNamedBean(elem.getTextTrim());
+                    } else {
+                        String name = elem.getTextTrim();
+                        E t = selectNamedBean.getManager().getNamedBean(name);
+                        if (t != null) selectNamedBean.setNamedBean(name, t);
+                        else selectNamedBean.removeNamedBean();
+                    }
                 }
 
                 elem = namedBeanElement.getChild("reference");
                 if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
+
+                Element memoryName = namedBeanElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectNamedBean.setMemory(m);
+                    else selectNamedBean.removeMemory();
+                }
+
+                Element listenToMemoryElem = namedBeanElement.getChild("listenToMemory");
+                if (listenToMemoryElem != null) {
+                    selectNamedBean.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
+                }
 
                 elem = namedBeanElement.getChild("localVariable");
                 if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());
@@ -96,6 +128,31 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
             LogixNG_SelectNamedBean<E> selectNamedBean,
             String beanElementName)
             throws JmriConfigureXmlException {
+        loadLegacy(shared, selectNamedBean, beanElementName, "addressing", "reference", "localVariable", "formula");
+    }
+
+    /**
+     * This method is for backward compability up to and including 4.99.4.Remove this class after 5.0.
+     *
+     * @param shared the shared element
+     * @param selectNamedBean           the LogixNG_SelectNamedBean
+     * @param beanElementName           the name of the element of the bean, for example "turnout"
+     * @param addressingElementName     the name of the element of the addressing, for example "addressing"
+     * @param referenceElementName      the name of the element of the reference, for example "reference"
+     * @param localVariableElementName  the name of the element of the local variable, for example "localVariable"
+     * @param formulaElementName        the name of the element of the formula, for example "formula"
+     * @throws JmriConfigureXmlException if an exception occurs
+     */
+    public void loadLegacy(
+            Element shared,
+            LogixNG_SelectNamedBean<E> selectNamedBean,
+            String beanElementName,
+            String addressingElementName,
+            String referenceElementName,
+            String localVariableElementName,
+            String formulaElementName
+            )
+            throws JmriConfigureXmlException {
 
         Element beanName = shared.getChild(beanElementName);
         if (beanName != null) {
@@ -105,19 +162,29 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
         }
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                selectNamedBean.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            Element elem;
+
+            if (addressingElementName != null) {
+                elem = shared.getChild(addressingElementName);
+                if (elem != null) {
+                    selectNamedBean.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
             }
 
-            elem = shared.getChild("reference");
-            if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
+            if (referenceElementName != null) {
+                elem = shared.getChild(referenceElementName);
+                if (elem != null) selectNamedBean.setReference(elem.getTextTrim());
+            }
 
-            elem = shared.getChild("localVariable");
-            if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());
+            if (localVariableElementName != null) {
+                elem = shared.getChild(localVariableElementName);
+                if (elem != null) selectNamedBean.setLocalVariable(elem.getTextTrim());
+            }
 
-            elem = shared.getChild("formula");
-            if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
+            if (formulaElementName != null) {
+                elem = shared.getChild(formulaElementName);
+                if (elem != null) selectNamedBean.setFormula(elem.getTextTrim());
+            }
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);

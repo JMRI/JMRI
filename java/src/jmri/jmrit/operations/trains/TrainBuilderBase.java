@@ -45,7 +45,6 @@ public class TrainBuilderBase extends TrainCommon {
     protected static final int DISPLAY_CAR_LIMIT_50 = 50;
     protected static final int DISPLAY_CAR_LIMIT_100 = 100;
 
-    protected static final int PERCENT_100 = 100;
     protected static final boolean USE_BUNIT = true;
 
     // build variables shared between local routines
@@ -2060,8 +2059,9 @@ public class TrainBuilderBase extends TrainCommon {
                     log.debug("Car ({}) can be droped by train to track ({})", car.toString(), track.getName());
                 } else {
                     addLine(_buildReport, SEVEN,
-                            MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"), new Object[] {
-                                    car.toString(), _train.getName(), track.getTrackTypeName(), track.getName() }));
+                            MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"), new Object[]{
+                                    car.toString(), _train.getName(), track.getTrackTypeName(),
+                                    track.getLocation().getName(), track.getName()}));
                     return false;
                 }
             }
@@ -2071,8 +2071,8 @@ public class TrainBuilderBase extends TrainCommon {
                 } else {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildCanNotDropCarRoute"),
-                                    new Object[] { car.toString(), _train.getRoute().getName(),
-                                            track.getTrackTypeName(), track.getName() }));
+                                    new Object[]{car.toString(), _train.getRoute().getName(),
+                                            track.getTrackTypeName(), track.getLocation().getName(), track.getName()}));
                     return false;
                 }
             }
@@ -2662,7 +2662,6 @@ public class TrainBuilderBase extends TrainCommon {
             // check to see if alternate track is available if track full
             if (status.startsWith(Track.LENGTH) &&
                     testTrack.getAlternateTrack() != null &&
-                    car.getFinalDestination() == null &&
                     car.getTrack() != testTrack.getAlternateTrack() &&
                     checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
                 addLine(_buildReport, SEVEN,

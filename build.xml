@@ -121,7 +121,7 @@
         <pathelement location="${libdir}/JavaVersionCheckWindow.jar"/> <!-- Java 8 check, keep at start -->
         <pathelement location="${libdir}/jmri.script.jsr223graalpython.jar"/> <!-- Optional GraalVM-built code -->
         <pathelement location="${libdir}/purejavacomm-1.0.5.jar"/>
-        <pathelement location="${libdir}/xercesImpl-2.12.0.jar"/>
+        <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/commons-csv-1.9.0.jar"/>
         <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
@@ -131,8 +131,7 @@
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
-        <pathelement location="${libdir}/jsoup-1.13.1.jar"/>
-        <pathelement location="${libdir}/jsoup-1.13.1-javadoc.jar"/>
+        <pathelement location="${libdir}/jsoup-1.14.3.jar"/>
         <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
         <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/javax.servlet-api-3.1.0.jar"/>
@@ -146,9 +145,9 @@
         <pathelement location="${libdir}/commons-logging-1.2.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
         <pathelement location="${libdir}/commons-compress-1.18.jar"/>
-        <pathelement location="${libdir}/jackson-core-2.10.0.jar"/>
-        <pathelement location="${libdir}/jackson-annotations-2.10.0.jar"/>
-        <pathelement location="${libdir}/jackson-databind-2.10.0.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.12.6.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.12.6.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.12.6.1.jar"/>
         <pathelement location="${libdir}/jetty-http-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-io-9.4.28.v20200408.jar"/>
         <pathelement location="${libdir}/jetty-security-9.4.28.v20200408.jar"/>
@@ -163,9 +162,9 @@
         <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
-        <pathelement location="${libdir}/xbee-java-library-1.2.1.jar"/>
+        <pathelement location="${libdir}/xbee-java-library-1.3.1.jar"/>
         <pathelement location="${libdir}/pi4j-core-1.2.jar"/>
-        <pathelement location="${libdir}/commons-io-2.6.jar"/>
+        <pathelement location="${libdir}/commons-io-2.11.0.jar"/>
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
@@ -492,6 +491,8 @@
             <!-- .gitignore transient artifacts -->
             <fileset file=".ant-targets-build.xml"/>
             <fileset file=".run.sh"/>
+            <fileset file="pom.xml.back"/>
+            <fileset file="release.properties.bak"/>
             <fileset file="release.zip"/>
             <fileset file="spotbugs.html"/>
             <fileset file="spotbugs-check.html"/>
@@ -512,6 +513,7 @@
         <delete includeEmptyDirs="true" quiet="true"  verbose="true">
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>
+            <fileset file="${jartarget}/jmri-tests.jar"/>
             <fileset file="${javadir}/manifest"/>
             <!-- .gitignore test artifacts -->
             <fileset file="junit-results.xml"/>
@@ -717,6 +719,25 @@
         <java-compile
                 javac.source="${test};${acceptancetest}"
                 javac.target="${testtarget}"
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            />
+        <!-- Copy resources into ${testtarget} so they coexist with identical
+             resources in ${target} (this is important for the Java ServiceLoader -->
+        <copy todir="${testtarget}">
+            <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="**/*.xml"/>
+            <fileset dir="${test}" includes="META-INF/**"/>
+        </copy>
+    </target>
+
+    <target name="tests-for-jar"
+            description="compile test classes in the location where a jar will pick them up"
+            depends="debug">
+        <!-- Compile the test java code from ${source} into ${target} -->
+        <java-compile
+                javac.source="${test};${acceptancetest}"
+                javac.target="${target}"
                 javac.classpath="test.class.path"
                 javac.deprecation="off"
             />
@@ -1319,12 +1340,12 @@
                 <include name="empty key check"/>
                 <include name="messageformat check"/>
                 <include name="unicode check"/>
-                <include name="invalid char check"/> <!-- c.f. native2ascii -->
+                <!-- <include name="invalid char check"/> native2ascii not needed in Java 11 -->
 
                 <!-- someday want to get to these -->
+                <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
                 <exclude name="placeholder check"/> <!-- Is this _global_ on name?  C.f. ConnectionName -->
                 <exclude name="upper lower check"/>
-                <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
 
                 <!-- our usage may be inconsistent with these, needs further thought -->
                 <exclude name="empty value check"/>
@@ -1432,7 +1453,33 @@
         </java>
     </target>
 
-    <target name="buildhelp" depends="buildhelpfiles" description="build help files">
+    <target name="buildsearchhelpfile" depends="tests, runtime-library-selection" description="build help search.json file">
+        <java classname="jmri.util.GenerateSearchIndexTest"
+            dir="."
+            failonerror="yes"
+            fork="yes" >
+
+              <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+              <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+              <sysproperty key="log4j.ignoreTCL" path="true/"/>
+              <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+              <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
+              <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
+              <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
+
+              <sysproperty key="java.awt.headless" value="true"/>
+
+              <sysproperty key="user.language" value="en"/>
+              <sysproperty key="user.country" value="US"/>
+
+              <classpath refid="test.class.path"/>
+
+              <jvmarg line="${jvm.args}"/>
+              <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <target name="buildhelp" depends="buildhelpfiles, buildsearchhelpfile" description="build help files">
         <ant dir="help/en/" />
         <ant dir="help/fr/" />
     </target>
@@ -1803,6 +1850,39 @@
         </jar>
     </target>
 
+    <target name="jar-tests"
+            description="create working jar file with test file contents"
+            depends="tests">
+        <manifestclasspath property="jar.classpath" jarfile="${jartarget}/jmri.jar">
+          <classpath refid="project.class.path" />
+        </manifestclasspath>
+        <jar jarfile="${jartarget}/jmri-tests.jar"
+             basedir="${testtarget}"
+             compress="true"
+             index="true">
+          <manifest>
+            <attribute name="Main-Class" value="jmri.Version"/>
+            <attribute name="Class-Path" value="${jar.classpath}"/>
+            <section name="jmri">
+              <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="jmri"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+            <section name="apps">
+              <attribute name="Specification-Title" value="JMRI Applications Classes"/>
+              <attribute name="Specification-Version" value="${release}"/>
+              <attribute name="Specification-Vendor" value="JMRI"/>
+              <attribute name="Package-Title" value="apps"/>
+              <attribute name="Package-Version" value="${release}"/>
+              <attribute name="Package-Vendor" value="JMRI"/>
+            </section>
+          </manifest>
+        </jar>
+    </target>
+
     <target name="jar-resources"
             description="package all resources as a jar file"
             depends="debug">
@@ -1898,6 +1978,7 @@
                  failonwarning="true"
                  source="11"
                  windowtitle="JMRI API"
+                 useexternalfile="yes"
             >
 
             <packageset dir="${source}" defaultexcludes="yes">
@@ -1945,8 +2026,7 @@
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
             <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
 
-            <!-- <link href="https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.9.8/"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" />
+            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1/" />
 
             <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
@@ -2029,7 +2109,7 @@
                 <param name="--show-members=package"/>
                 <param name="-linksource"/>
                 <param name="-use"/>
-                <param name="--uml-timeout" value="1800" /> <!-- timeout passed to plantuml -->
+                <param name="--uml-timeout" value="3600" /> <!-- timeout passed to plantuml -->
                 <param name="--uml-image-format" value="svg" />
                 <param name="--uml-excluded-package-dependencies" value="java,javax,com,org,edu,net,io" />
             </doclet>
@@ -2071,10 +2151,10 @@
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
 
-            <link offline="true" href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8/" packagelistLoc="lib/jackson-databind-2.9.8-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <link href="https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1/" />
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
 
@@ -2169,9 +2249,9 @@
             depends="clean, init, debug, jar">
     </target>
 
-    <target name="dist-debug"
-            description="create a distribution jar file including tests"
-            depends="clean, init, debug, jar">
+    <target name="dist-tests"
+            description="create a distribution jar file of just the tests"
+            depends="clean, init, debug, tests, jar-tests">
     </target>
 
     <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties"
@@ -2195,6 +2275,23 @@
         </spotbugs>
     </target>
 
+    <target name="tests-spotbugs" depends="dist-tests" description="generate SpotBugs (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
+        </spotbugs>
+    </target>
+
     <target name="spotbugs-check" depends="dist" description="generate SpotBugs check-only (HTML) report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
@@ -2209,6 +2306,23 @@
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
             <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="tests-spotbugs-check" depends="dist-tests" description="generate SpotBugs check-only (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs-check.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
+                  failOnError="true"
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
         </spotbugs>
     </target>
 
@@ -2228,6 +2342,22 @@
         </spotbugs>
     </target>
 
+    <target name="tests-spotbugs-ci" depends="dist-tests" description="generate SpotBugs CI (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs.xml"
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
+        </spotbugs>
+    </target>
+
     <target name="spotbugs-check-ci" depends="dist" description="generate SpotBugs CI check-only (XML) report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
@@ -2242,6 +2372,23 @@
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
             <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="tests-spotbugs-check-ci" depends="dist-tests" description="generate SpotBugs CI check-only (XML) report over test code. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
+                  failOnError="true"
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${test}/"/>
+            <class location="${jartarget}/jmri-tests.jar"/>
+            <auxClasspath refid="test.class.path" />
         </spotbugs>
     </target>
 
@@ -2617,9 +2764,14 @@
     <!-- several steps are involved in creating a new test release
     branch from the head of the ${release.branch} (often master) branch.
     This target intends to manage as  many of those as possible.
-    ${release.branch} should be set in the release.properties file. -->
+    ${release.branch} should be set in the release.properties file.
+    See scripts/scripts/HOWTO-distribution.md for more information. -->
     <target name="make-test-release-branch"
             description="Make a new test release branch in Git from the head of the ${release.branch} branch">
+
+        <!-- this target's contents are not consistent with current practice,
+            see scripts/scripts/HOWTO-distribution.md for more information. -->
+        <fail>This target is not currently in use by the release process.</fail>
 
         <!-- make sure on ${release.branch} branch and
          it's up to date-->

@@ -38,6 +38,9 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionListenOnBeans copy = new ActionListenOnBeans(sysName, userName);
         copy.setComment(getComment());
+        copy.setLocalVariableNamedBean(_localVariableNamedBean);
+        copy.setLocalVariableEvent(_localVariableEvent);
+        copy.setLocalVariableNewValue(_localVariableNewValue);
         for (NamedBeanReference reference : _namedBeanReferences.values()) {
             copy.addReference(reference);
         }
@@ -67,7 +70,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         try {
             NamedBeanType type = NamedBeanType.valueOf(parts[0]);
             NamedBeanReference reference = new NamedBeanReference(parts[1], type, listenToAll);
-            _namedBeanReferences.put(reference._name, reference);
+            addReference(reference);
         } catch (IllegalArgumentException e) {
             String types = Arrays.asList(NamedBeanType.values())
                     .stream()
@@ -81,11 +84,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void addReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "addReference");
         _namedBeanReferences.put(reference._name, reference);
+        reference._type.getManager().addVetoableChangeListener(this);
     }
 
     public void removeReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "removeReference");
-        _namedBeanReferences.remove(reference._name);
+        _namedBeanReferences.remove(reference._name, reference);
+        reference._type.getManager().removeVetoableChangeListener(this);
     }
 
     public Collection<NamedBeanReference> getReferences() {
@@ -134,21 +139,19 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
+        var tempNamedBeanReferences = new ArrayList<NamedBeanReference>(_namedBeanReferences.values());
+        for (NamedBeanReference reference : tempNamedBeanReferences) {
+            if (reference._type.getClazz().isAssignableFrom(evt.getOldValue().getClass())) {
+                if ((reference._handle != null) && evt.getOldValue().equals(reference._handle.getBean())) {
+                    if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+                        PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                        throw new PropertyVetoException(getDisplayName(), e);
+                    } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+                        _namedBeanReferences.remove(reference._name, reference);
+                    }
                 }
             }
         }
-*/
     }
 
     /** {@inheritDoc} */
@@ -163,7 +166,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         // The main purpose of this action is only to listen on property
         // changes of the registered beans and execute the ConditionalNG
         // when it happens.
-        
+
         synchronized(this) {
             SymbolTable symbolTable = getConditionalNG().getSymbolTable();
             if (_localVariableNamedBean != null) {
@@ -319,7 +322,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 if (bean != null) {
                     _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
                 } else {
-                    log.warn("Cannot find named bean "+_name+" in manager for "+_type.getManager().getBeanTypeHandled());
+                    log.warn("Cannot find named bean {} in manager for {}", _name, _type.getManager().getBeanTypeHandled());
                     _handle = null;
                 }
             } else {

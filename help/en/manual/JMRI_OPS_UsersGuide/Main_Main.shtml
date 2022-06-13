@@ -27,12 +27,12 @@
       <hr>
 
       <p>All of the JMRI functions - including the OperationsPro Program - can be accessed via the
-      menu bar on either the DecoderPro® or PanelPro main window.</p>
+      menu bar on either the DecoderPro&reg; or PanelPro main window.</p>
 
       <p>All OperationsPro functionality is always available from the <strong>Tools -&gt;
       Operations</strong> menu on the main JMRI toolbar.</p>
 
-      <p>The main DecoderPro® screen below shows the optional <strong>Operations</strong> menu (by
+      <p>The main DecoderPro&reg; screen below shows the optional <strong>Operations</strong> menu (by
       selecting it in the <a href="Ops_Settings.shtml#options">OperationsPro Settings</a>
       pane).</p>
 
@@ -40,7 +40,7 @@
       "images/Splash_Screen.png">
       </p>
 
-      <p>DecoderPro® icon and DecoderPro® version information is displayed. The version of Java
+      <p>DecoderPro&reg; icon and DecoderPro&reg; version information is displayed. The version of Java
       installed and in use is also shown.</p>
 
       <h2><a href="Main_Menu.shtml">Main window menu bar</a>
@@ -48,9 +48,9 @@
 
       <p>The main menu contains the menus that allow you to access all the features of JMRI.</p>
 
-      <p>This Manual focusses on the functions and menus that apply to JMRI® OperationsPro version
+      <p>This Manual focusses on the functions and menus that apply to JMRI&reg; OperationsPro version
       3.x.<br>
-      Please consult the other JMRI® Manuals for other functions.</p>
+      Please consult the other JMRI&reg; Manuals for other functions.</p>
 
       <div class="ops-right">
         <p><a href="index.shtml#Main">Back to Index</a>

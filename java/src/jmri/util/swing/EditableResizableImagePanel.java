@@ -2,8 +2,6 @@ package jmri.util.swing;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -70,11 +68,11 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             if (myMouseAdapter == null) {
                 myMouseAdapter = new MyMouseAdapter(this);
             }
-            addMouseListener(myMouseAdapter);
+            addMouseListener(JmriMouseListener.adapt(myMouseAdapter));
         } else {
             URIDrop.remove(this);
             if (myMouseAdapter != null) {
-                removeMouseListener(myMouseAdapter);
+                removeMouseListener(JmriMouseListener.adapt(myMouseAdapter));
             }
         }
     }
@@ -95,7 +93,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             try {
                 Desktop.getDesktop().open(new File(path));
             } catch (IOException ex) {
-                log.error("Browse to action "+ex.getMessage());
+                log.error("Browse to action {}", ex.getMessage());
             }
         });
         myMouseAdapter.addMenuItem(mi);
@@ -116,7 +114,7 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
     //
     // For contextual menu
-    private static class MyMouseAdapter implements MouseListener {
+    private static class MyMouseAdapter implements JmriMouseListener {
 
         private JPopupMenu popUpMenu;
         private final JMenuItem removeMenuItem;
@@ -143,29 +141,29 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             maybeShowPopup(e);
         }
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             maybeShowPopup(e);
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             maybeShowPopup(e);
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
+        public void mouseEntered(JmriMouseEvent e) {
         }
 
         @Override
-        public void mouseExited(MouseEvent e) {
+        public void mouseExited(JmriMouseEvent e) {
         }
 
-        private void maybeShowPopup(MouseEvent e) {
+        private void maybeShowPopup(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 popUpMenu.show(e.getComponent(), e.getX(), e.getY());
             }

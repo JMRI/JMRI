@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import jmri.util.JUnitUtil;
@@ -15,7 +16,7 @@ import org.junit.Test;
 
 /**
  * Test ShutdownComputerSwing
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class ShutdownComputerSwingTest {
@@ -23,19 +24,21 @@ public class ShutdownComputerSwingTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         ShutdownComputerSwing t = new ShutdownComputerSwing();
         Assert.assertNotNull("exists",t);
     }
-    
+
     @Test
     public void testCreatePanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
+        JDialog dialog = new JDialog();
+
         Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing().getConfigPanel(new JPanel()));
+            null != new ShutdownComputerSwing(dialog).getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing().getConfigPanel(new ShutdownComputer("IQDA1", null), new JPanel()));
+            null != new ShutdownComputerSwing(dialog).getConfigPanel(new ShutdownComputer("IQDA1", null), new JPanel()));
     }
     
     // The minimal setup for log4J
@@ -55,5 +58,5 @@ public class ShutdownComputerSwingTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
+
 }

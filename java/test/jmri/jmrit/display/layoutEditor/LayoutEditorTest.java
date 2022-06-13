@@ -52,7 +52,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         }
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

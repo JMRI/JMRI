@@ -6,10 +6,12 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Swing class for jmri.jmrit.logixng.util.LogixNG_SelectString.
@@ -25,10 +27,13 @@ public class LogixNG_SelectStringSwing {
     private JTextField _valueTextField;
     private JPanel _panelDirect;
     private JPanel _panelReference;
+    private JPanel _panelMemory;
     private JPanel _panelLocalVariable;
     private JPanel _panelFormula;
     private JPanel _panelTable;
     private JTextField _referenceTextField;
+    private BeanSelectPanel<Memory> _memoryPanel;
+    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -47,6 +52,7 @@ public class LogixNG_SelectStringSwing {
         _tabbedPane = new JTabbedPane();
         _panelDirect = new javax.swing.JPanel();
         _panelReference = new javax.swing.JPanel();
+        _panelMemory = new JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
         if (selectStr != null) {
@@ -55,8 +61,16 @@ public class LogixNG_SelectStringSwing {
             _panelTable = _selectTableSwing.createPanel(null);
         }
 
+        _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
+
+        _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
+        _panelMemory.add(_memoryPanel);
+        _panelMemory.add(_listenToMemoryCheckBox);
+
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
+        _tabbedPane.addTab(NamedBeanAddressing.Memory.toString(), _panelMemory);
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
         _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelTable);
@@ -81,6 +95,7 @@ public class LogixNG_SelectStringSwing {
             switch (selectStr.getAddressing()) {
                 case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
                 case Reference: _tabbedPane.setSelectedComponent(_panelReference); break;
+                case Memory: _tabbedPane.setSelectedComponent(_panelMemory); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
                 case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
@@ -90,6 +105,8 @@ public class LogixNG_SelectStringSwing {
                 _valueTextField.setText(selectStr.getValue());
             }
             _referenceTextField.setText(selectStr.getReference());
+            _memoryPanel.setDefaultNamedBean(selectStr.getMemory());
+            _listenToMemoryCheckBox.setSelected(selectStr.getListenToMemory());
             _localVariableTextField.setText(selectStr.getLocalVariable());
             _formulaTextField.setText(selectStr.getFormula());
         }
@@ -119,6 +136,8 @@ public class LogixNG_SelectStringSwing {
                 selectStr.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
                 selectStr.setAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
+                selectStr.setAddressing(NamedBeanAddressing.Memory);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
@@ -150,6 +169,10 @@ public class LogixNG_SelectStringSwing {
             } else if (_tabbedPane.getSelectedComponent() == _panelReference) {
                 selectStr.setAddressing(NamedBeanAddressing.Reference);
                 selectStr.setReference(_referenceTextField.getText());
+            } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
+                selectStr.setAddressing(NamedBeanAddressing.Memory);
+                selectStr.setMemory(_memoryPanel.getNamedBean());
+                selectStr.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectStr.setLocalVariable(_localVariableTextField.getText());

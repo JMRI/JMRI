@@ -709,7 +709,7 @@ public class LnDplxGrpInfoImplTest {
     @Test
     public void testCreateSetUr92GroupPasswordPacket() {
         LocoNetMessage m = new LocoNetMessage(20);
-        String testString = new String("1234");
+        String testString;
         char c0, c1, c2, c3;
         char[] conversion = new char[13];
         conversion[0] = '0';
@@ -1151,12 +1151,11 @@ public class LnDplxGrpInfoImplTest {
         LocoNetMessage rcvMsg = lnis.outbound.get(0);
         dpxGrpInfoImpl.message(rcvMsg); // echo the transmitted message back to the sender
 
-        LocoNetMessage m = new LocoNetMessage(20);
         int ch = 4;
         int id = 131;
         String name = "\231\032\033\034\035\036\237\140";
         String pass="0200";
-        m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
+        LocoNetMessage m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket(name, pass, ch, id);
         Assert.assertTrue("Now waiting (2) for Duplex Group Name, etc. Report", dpxGrpInfoImpl.isAwaitingDuplexGroupReportMessage());
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
@@ -2166,7 +2165,7 @@ public class LnDplxGrpInfoImplTest {
         lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
         // memo.configureManagers(); // Skip this step, else autonomous loconet traffic is generated!
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 

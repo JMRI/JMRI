@@ -2035,10 +2035,10 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     /**
-     * Six train routing test. First move uses a local train.
+     * Seven train routing test. First move uses a local train.
      */
     @Test
-    public void testCarRoutingSixTrains() {
+    public void testCarRouting7Trains() {
 
         // now load up the managers
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -2060,6 +2060,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Location essex = lmanager.getLocationByName("Essex");
         Location foxboro = lmanager.getLocationByName("Foxboro");
         Location gulf = lmanager.getLocationByName("Gulf");
+        
+        Track gulfSpur1 = gulf.getTrackByName("Gulf Spur 1", null);
 
         // create 2 cars
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("BA", "3", "Boxcar", "40", "DAB", "1984", actonSpur1, 0);
@@ -2297,6 +2299,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // set final destination Gulf
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(gulf);
+        c3.setFinalDestinationTrack(gulfSpur1);
         // should fail no train!
         Assert.assertFalse("Try routing with final destination", router.setDestination(c3, null, null));
 
@@ -2307,7 +2310,24 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         routeFG.addLocation(gulf);
         FoxboroToGulfTrain.setRoute(routeFG);
 
-        // 7th train should fail (A -> A -> B -> C -> D -> E -> F -> G)
+        // 7 train route (A -> A -> B -> C -> D -> E -> F -> G)
+        Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain1, null));
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonTrain2, null));
+        
+        c3.setDestination(null, null); // clear previous destination
+        // Force last move to be by local train
+        gulfSpur1.setTrainDirections(0);
+        
+        // create a local train servicing Gulf
+        Train gulfTrain1 = tmanager.newTrain("Acton Local 1");
+        Route routeG = rmanager.newRoute("G");
+        routeG.addLocation(gulf);
+        gulfTrain1.setRoute(routeG);
+        
+        // 8 train route should fail (A -> A -> B -> C -> D -> E -> F -> G -> G)
         Assert.assertFalse("Try routing with final destination and train", router.setDestination(c3, null, null));
         Assert.assertFalse("Try routing with final destination and train",
                 router.setDestination(c3, actonTrain1, null));
@@ -2317,7 +2337,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // get rid of the local train
         actonSpur1.setTrainDirections(Track.NORTH);
 
-        // now should work! (A -> B -> C -> D -> E -> F -> G)
+        // 7 trains should work! (A -> B -> C -> D -> E -> F -> G -> G)
         Assert.assertTrue("Try routing with final destination and train", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Boston", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Boston Interchange 1", c3.getDestinationTrackName());

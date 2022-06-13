@@ -122,8 +122,8 @@ public class OBlockTest {
         w1.setTrainName("T1");
         Warrant w2 = new Warrant("IW2", null);
         OBlock b = blkMgr.createNewOBlock("OB102", "c");
+        assertThat(b.getState()).withFailMessage("state is dark").isEqualTo(OBlock.UNDETECTED);
         Assert.assertNull("Allocate w1", b.allocate(w1));
-        assertThat(b.getState()).withFailMessage("state allocated & dark").isEqualTo(OBlock.ALLOCATED|OBlock.UNDETECTED);
         assertThat(b.allocate(w2)).withFailMessage("Allocate w2").isEqualTo(Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName(), w1.getTrainName()));
         
         assertThat(b.setPath("PathName", w1)).withFailMessage("path not found").isEqualTo(Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()));
@@ -132,16 +132,16 @@ public class OBlockTest {
         Assert.assertNull("path set", b.setPath("path1", w1));
         Assert.assertFalse("Allocated to w2", b.isAllocatedTo(w2));
         assertThat(b.isAllocatedTo(w1)).withFailMessage("Allocated to w1").isTrue();
-        Assert.assertFalse("DeAllocate null", b.deAllocate(null));
 
         Assert.assertTrue("DeAllocate null", b.deAllocate(w1));
         b.setOutOfService(true);
-        assertThat(b.allocate(w2)).withFailMessage("Allocate oos").isEqualTo(Bundle.getMessage("BlockOutOfService", b.getDisplayName()));
-        assertThat(b.getState()).withFailMessage("state not allocated, dark").isEqualTo(OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE);
-        
+        Assert.assertNull("Allocate w2", b.allocate(w2));        
         b.setOutOfService(false);
-        Assert.assertNull(b.setPath("path1", w1));
-        Assert.assertTrue(b.isAllocatedTo(w1));
+        Assert.assertTrue("deAllocate w2", b.deAllocate(w2));        
+
+        assertThat(b.setPath("path1", w1)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName(), Bundle.getMessage("Warrant")));
+        Assert.assertNull("Allocate w1", b.allocate(w1));
+        assertThat(b.setPath("path1", w2)).withFailMessage("path not set").isEqualTo(Bundle.getMessage("PathNotSet", "path1", b.getDisplayName(), w1.getDisplayName()));
     }
     
     @Test

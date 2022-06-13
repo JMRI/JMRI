@@ -16,57 +16,55 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.BeanSelectPanel;
 
 /**
  * Configures an ActionMemory object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
 
-    private BeanSelectPanel<Memory> memoryBeanPanel;
-    
-    
+    private LogixNG_SelectNamedBeanSwing<Memory> _selectNamedBeanSwing;
+
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         AnalogActionMemory action = (AnalogActionMemory)object;
-        
+
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(MemoryManager.class), getJDialog(), this);
+
         panel = new JPanel();
-        memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        
+        JPanel _tabbedPaneNamedBean;
         if (action != null) {
-            if (action.getMemory() != null) {
-                memoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
-            }
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
         }
-        
+
         panel.add(new JLabel(Bundle.getMessage("BeanNameMemory")));
-        panel.add(memoryBeanPanel);
+        panel.add(_tabbedPaneNamedBean);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        return true;
+        // Create a temporary action to test formula
+        AnalogActionMemory action = new AnalogActionMemory("IQAA1", null);
+        updateObject(action);
+        return errorMessages.isEmpty();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         AnalogActionMemory action = new AnalogActionMemory(systemName, userName);
-        Memory memory = memoryBeanPanel.getNamedBean();
-        if (memory != null) {
-            NamedBeanHandle<Memory> handle
-                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                            .getNamedBeanHandle(memory.getDisplayName(), memory);
-            action.setMemory(handle);
-        } else {
-            action.removeMemory();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
         return InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -74,29 +72,21 @@ public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
             throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
         }
         AnalogActionMemory action = (AnalogActionMemory)object;
-        Memory memory = memoryBeanPanel.getNamedBean();
-        if (memory != null) {
-            NamedBeanHandle<Memory> handle
-                    = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                            .getNamedBeanHandle(memory.getDisplayName(), memory);
-            action.setMemory(handle);
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("AnalogActionMemory_Short");
     }
-    
+
     @Override
     public void dispose() {
-        if (memoryBeanPanel != null) {
-            memoryBeanPanel.dispose();
-        }
+        // Do nothing
     }
-    
-    
+
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemorySwing.class);
-    
+
 }

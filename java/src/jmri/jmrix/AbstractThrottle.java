@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
@@ -201,7 +201,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public boolean getFunction(int fN) {
         if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
-            log.warn("Unhandled get function: {}",fN);
+            log.warn("Unhandled get function: {} {}", fN, this.getClass().getName());
             return false;
         }
         return FUNCTION_BOOLEAN_ARRAY[fN];
@@ -213,7 +213,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public boolean getFunctionMomentary(int fN) {
         if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
-            log.warn("Unhandled get momentary function: {}",fN);
+            log.warn("Unhandled get momentary function: {} {}", fN, this.getClass().getName());
             return false;
         }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
@@ -276,7 +276,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL", l);
+            log.warn("Preventing {} adding duplicate PCL to {}", l, this.getClass().getName());
             return;
         }
         super.addPropertyChangeListener(l);
@@ -317,7 +317,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
-            log.error("Dispose called when not active");
+            log.error("Dispose called when not active {}", this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
@@ -328,7 +328,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
-            log.warn("dispatch called when not active");
+            log.warn("dispatch called when not active {}", this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
     }
@@ -339,7 +339,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void release(ThrottleListener l) {
         if (!active) {
-            log.warn("release called when not active");
+            log.warn("release called when not active {}",this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().releaseThrottle(this, l);
     }
@@ -435,7 +435,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     public void updateFunctionMomentary(int fn, boolean state) {
         if (fn < 0 || fn > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
-            log.warn("Unhandled update momentary function number: {}", fn);
+            log.warn("Unhandled update momentary function number: {} {}", fn, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fn];
@@ -545,7 +545,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void setFunctionMomentary(int momFuncNum, boolean state){
         if (momFuncNum < 0 || momFuncNum > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
-            log.warn("Unhandled set momentary function number: {}", momFuncNum);
+            log.warn("Unhandled set momentary function number: {} {}", momFuncNum, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum];
@@ -749,8 +749,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
-            Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
-            log.error(ex.getMessage(), ex);
+            Exception ex = new Exception("Please send logs to the JMRI developers.");
+            log.error("Error calculating speed.", ex);
             return 1;  // return estop anyway
         } else if (value >= steps) {
             return steps; // maximum possible speed

@@ -23,7 +23,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro® Main Window</h1>
+      <h1 id="Top">DecoderPro&reg; Main Window</h1>
 
       <h2>Tools Menu</h2>
 
@@ -331,7 +331,7 @@
       </p>
 
       <h3><a id="Ops"></a><strong>Operations<img src="images/arrow.gif" alt="arrow" height="9"
-      width="20"></strong> (See the JMRI® Operations User's Guide )</h3>
+      width="20"></strong> (See the JMRI&reg; Operations User's Guide )</h3>
 
       <ul>
         <li><strong>Settings</strong>

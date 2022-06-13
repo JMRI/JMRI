@@ -110,36 +110,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private int nNode = 0;
 
     /**
-     * Return the next valid free turnout hardware address.
-     */
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        Turnout t = getBySystemName(tmpSName);
-        if (t == null && !ignoreInitialExisting) {
-            return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
-            //return ""+nNode+(nCard+bitNum);
-        }
-
-        // The Number of Output Bits of the previous turnout will help determine the next
-        // valid address.
-        int increment = ( t==null ? 1 : t.getNumberOutputBits());
-        for (int x = 0; x < 10; x++) {
-            bitNum = bitNum + increment;
-            tmpSName = prefix + "T" + nNode + (nCard + bitNum);
-            t = getBySystemName(tmpSName);
-            if (t == null) {
-                return Integer.toString(nNode) + Integer.toString((nCard + bitNum));
-            }
-        }
-        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,tmpSName));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

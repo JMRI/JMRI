@@ -49,15 +49,13 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
             cm.makeBackup(file);
             // and finally store
             boolean results = cm.storeUser(file);
-            log.debug(results ? "store was successful" : "store failed");  // NOI18N
+            log.debug("store {}", results ? "was successful" : "failed");  // NOI18N
             if (!results) {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StoreHasErrors") + "\n"  // NOI18N
                         + Bundle.getMessage("StoreIncomplete") + "\n"  // NOI18N
                         + Bundle.getMessage("ConsoleWindowHasInfo"),  // NOI18N
                         Bundle.getMessage("StoreError"), JOptionPane.ERROR_MESSAGE);  // NOI18N
-            } else {
-                InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).setChanged(false);
             }
         }
     }

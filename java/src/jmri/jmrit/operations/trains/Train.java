@@ -1810,7 +1810,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         if (!track.isDropTrainAccepted(this)) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
-                    new Object[] { car.toString(), getName(), track.getTrackTypeName(), track.getName() }));
+                    new Object[]{car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
+                            track.getName()}));
             return false;
         }
         return true;
@@ -2893,10 +2894,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
     }
 
-    public void printBuildReport() {
+    public boolean printBuildReport() {
         boolean isPreview = (InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled() ||
                 Setup.isBuildReportAlwaysPreviewEnabled());
-        printBuildReport(isPreview);
+        return printBuildReport(isPreview);
     }
 
     public boolean printBuildReport(boolean isPreview) {

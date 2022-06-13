@@ -28,7 +28,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public String getSystemName(int i) {
         return "MSX0A;+N15E" + i;
     }
-    
+
     @Override
     protected String getASystemNameWithNoPrefix() {
         return "+6";
@@ -286,28 +286,30 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void testQueryAll() {
         tcis.outbound.clear();
         memo.setOutputInterval(2); // reduce output interval for tests
-        
+
         Sensor t1 = l.provideSensor("MS+N123E456");
         Sensor t2 = l.provideSensor("MS-N9875E45670");
 
         Assert.assertTrue(tcis.outbound.isEmpty());
 
         l.updateAll();
-        JUnitUtil.waitFor(() -> ( 2 == tcis.outbound.size()));
+        JUnitUtil.waitFor(() -> ( 2 == tcis.outbound.size()),"2 messages sent");
         Assert.assertEquals(2, tcis.outbound.size());
 
         Sensor t3 = l.provideSensor("MSX0A;X5E6DEEF4");
         tcis.outbound.clear();
         l.updateAll();
-        JUnitUtil.waitFor(() -> ( 3 == tcis.outbound.size()));
+        JUnitUtil.waitFor(() -> ( 3 == tcis.outbound.size()),"3 messages sent");
         Assert.assertEquals(3, tcis.outbound.size());
         Assert.assertNotNull("exists", t1);
         Assert.assertNotNull("exists", t2);
         Assert.assertNotNull("exists", t3);
     }
 
+    @Override
     @Test
-    public void testgetEntryToolTip() {
+    public void testGetEntryToolTip() {
+        super.testGetEntryToolTip();
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
 
@@ -339,13 +341,13 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS-0", NameValidity.VALID, l.validSystemNameFormat("MS-0"));
         Assert.assertEquals("MS+N17E0", NameValidity.VALID, l.validSystemNameFormat("MS+N17E0"));
         Assert.assertEquals("MS+N17E00", NameValidity.VALID, l.validSystemNameFormat("MS+N17E00"));
-        
-        
+
+
         Assert.assertEquals("M", NameValidity.INVALID, l.validSystemNameFormat("M"));
         Assert.assertEquals("MS", NameValidity.INVALID, l.validSystemNameFormat("MS"));
         Assert.assertEquals("MS-65536", NameValidity.INVALID, l.validSystemNameFormat("MS-65536"));
         Assert.assertEquals("MS65536", NameValidity.INVALID, l.validSystemNameFormat("MS65536"));
-        
+
         Assert.assertEquals("MS7;0", NameValidity.INVALID, l.validSystemNameFormat("MS7;0"));
         Assert.assertEquals("MS0;7", NameValidity.INVALID, l.validSystemNameFormat("MS0;7"));
         Assert.assertEquals("MS+N0E17", NameValidity.VALID, l.validSystemNameFormat("MS+N0E17"));
@@ -357,52 +359,22 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Test
-    public void testgetNextValidAddress() throws JmriException {
+    public void testSimpleNext() throws JmriException {
+        Sensor t =  l.provideSensor("MS+17");
+        String next = l.getNextValidSystemName(t);
+        Assert.assertEquals("MS+18", next);
 
-        Assert.assertEquals("+17", "+17", l.getNextValidAddress("+17", "M",false));
-        Sensor t = l.provideSensor("MS+17");
-        Assert.assertNotNull("exists", t);
-        Assert.assertEquals("+18", "+18", l.getNextValidAddress("+17", "M",false));
+        t =  l.provideSensor("MS+N45E22");
+        next = l.getNextValidSystemName(t);
+        Assert.assertEquals("MS+N45E23", next);
 
-        Assert.assertEquals("+N45E22", "+N45E22", l.getNextValidAddress("+N45E22", "M",false));
-        Sensor ta = l.provideSensor("MS+N45E22");
-        Assert.assertNotNull("exists", ta);
-        Assert.assertEquals("+N45E23", "+N45E23", l.getNextValidAddress("+N45E22", "M",false));
-
-        try {
-            String val = l.getNextValidAddress("", "M",false);
-            Assert.assertNull(val);
-        } catch (JmriException ex) {
-            Assert.assertEquals("System name \"MS\" is missing suffix.", ex.getMessage());
-        }
     }
 
     @Test
-    public void testgetNextValidAddressPt2() throws JmriException {
-        Sensor t = l.provideSensor("MS+65535");
-        Assert.assertNotNull("exists", t);
-
-        Assert.assertThrows(JmriException.class, () -> l.getNextValidAddress("+65535", "M",false));
-    }
-
-    @Test
-    public void testgetNextValidAddressPt3() throws JmriException {
-
-        Sensor t = l.provideSensor("MS+10");
-        Assert.assertNotNull("exists", t);
-
-        Assert.assertEquals("+10", "+11", l.getNextValidAddress("+10", "M",false));
-    }
-
-    @Test
-    public void testgetNextValidAddressPt4() throws JmriException {
-
-        Sensor t = l.provideSensor("MS+9");
-        Sensor ta = l.provideSensor("MS+10");
-        Assert.assertNotNull("exists", t);
-        Assert.assertNotNull("exists", ta);
-
-        Assert.assertEquals(" null +9 +10", "+11", l.getNextValidAddress("+9", "M",false));
+    public void testDoubleNext() throws JmriException {
+        Sensor t =  l.provideSensor("MS+18;-21");
+        String next = l.getNextValidSystemName(t);
+        Assert.assertEquals("MS+19;-22", next);
     }
 
     @Test
@@ -413,27 +385,27 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals("MS-N34E610", "MS-N34E610", l.createSystemName("-N34E610", "M"));
         Assert.assertEquals("MS+N34E610;-N987E654", "MS+N34E610;-N987E654", l.createSystemName("+N34E610;-N987E654", "M"));
 
-        
+
         try {
             l.createSystemName("S", "M");
         } catch (JmriException ex) {
             Assert.assertEquals("System name \"S\" contains invalid character \"S\".", ex.getMessage());
         }
-        
+
         boolean contains = Assert.assertThrows(JmriException.class,
             ()->{
                 l.createSystemName("+10", "M2");
             }).getMessage().contains("System name must start with \"MS\"");
         Assert.assertTrue("Exception message relevant", contains);
-        
+
         contains = Assert.assertThrows(JmriException.class,
             ()->{
                 l.createSystemName("+10", "ZZZZZZZZZ");
             }).getMessage().contains("System name must start with \"MS\"");
         Assert.assertTrue("Exception message relevant", contains);
-        
+
     }
-    
+
     @Test
     @Override
     public void testAutoSystemNames() {

@@ -668,6 +668,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     ConditionalEditBase _baseEdit;
 
     boolean _showReminder = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
@@ -1278,7 +1279,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")), // NOI18N

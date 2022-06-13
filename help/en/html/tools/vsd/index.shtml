@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Virtual Sound Decoder Documentation</title>
+  <meta name="author" content="Klaus Killinger">
+  <meta name="author" content="Mark Underwood">
+  <meta name="keywords" content="sound model railroad JMRI panelpro">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <div id="container">
+    <!--#include virtual="/Header.shtml" -->
+
+    <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+
+      <div id="mainContent">
+        <!-- Page Body -->
+
+        <h1>JMRI: Virtual Sound Decoder</h1>
+
+        <p><span id="product_desc">The Virtual Sound Decoder (VSD) provides a way for those who
+        do not have sound-equipped locomotives (or who are not satisfied with the hardware sound
+        decoder options in smaller scales) to enjoy throttle-controlled locomotive sounds from
+        their computer speakers.</span>
+        </p>
+
+        <p>Here is the documentation overview for the JMRI Virtual Sound Decoder:</p>
+
+        <ul>
+          <li>
+            <a href="VSDMain.shtml">Main page and introduction</a>
+          </li>
+
+          <li>
+            <a href="VSDManager.shtml">Manage Virtual Sound Decoders</a>
+          </li>
+
+          <li>
+            <a href="VSDLocationsMgr.shtml">Manage apparent sound locations of Reporters and other
+            VSD elements</a>
+          </li>
+
+          <li>
+            <a href="VSDFileAndConfig.shtml">VSD File and Configuration</a>
+          </li>
+
+          <li>
+            <a href="VSDHeadless.shtml">Using VSD Headless Mode</a>
+          </li>
+
+          <li>
+            <a href="VSDMain.shtml#preferences">Manage VSD Preferences elements</a>
+          </li>
+        </ul>
+
+        <!--#include virtual="/Footer.shtml" -->
+      </div>
+      <!-- closes #mainContent-->
+    </div>
+    <!-- closes #mBody-->
+  </div>
+  <!-- closes #container -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

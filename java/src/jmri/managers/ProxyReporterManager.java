@@ -112,14 +112,6 @@ public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
-        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter"); // NOI18N

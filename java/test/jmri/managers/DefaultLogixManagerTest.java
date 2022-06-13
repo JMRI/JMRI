@@ -94,7 +94,6 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
     public void tearDown() {
         l = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

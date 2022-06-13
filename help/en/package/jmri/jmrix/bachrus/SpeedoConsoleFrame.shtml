@@ -133,7 +133,29 @@
 
       <p>For best results the momentum CVs should be set to zero so that speed commands take
       immediate effect.</p>
-      <br>
+
+      <p>
+      <strong>Speed Matching:</strong>
+      At the bottom of the right side is a "Speed Matching" section.
+      This configures the Vstart (3) and Vhigh (4) CVs to match the
+      your desired speeds at speed step 1 and 28.
+      The Vmid CV is set to half way between these to attempt
+      to set a straight-line speed curve.</p>
+      <a href="../../../../html/hardware/bachrus/images/SpeedMatchSection.png"><img src="../../../../html/hardware/bachrus/images/SpeedMatchSection.png"></a>
+      <p>
+      Note that after these CVs have been set by running the matching,
+      you should go to the DecoderPro roster entry for this decoder
+      and do a "Read Full Sheet"
+      of the "Basic Speed Control" pane to capture the new values.
+      <p>
+      If you are doing this on the the programming track,
+      the process will have set the momentum CVs to zero and restored them on
+      successful completion. This is done
+      to avoid them interfering with the matching process. If you're programming
+      on the main track, this step is skipped.  In that case, make sure that you
+      have set the momentum CVs to zero before starting the process, and
+      restore them manually afterwards.
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

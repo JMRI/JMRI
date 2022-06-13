@@ -204,12 +204,12 @@ public class JsonUtil {
      * @throws JsonException if id does not match a known location
      */
     public ObjectNode getLocation(String name, Locale locale, int id) throws JsonException {
-        try {
-            return getLocation(locationManager().getLocationById(name), locale);
-        } catch (NullPointerException e) {
+        if (locationManager().getLocationById(name) == null) {
             log.error("Unable to get location id [{}].", name);
-            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.LOCATION, name), id);
+            throw new JsonException(404,
+                    Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.LOCATION, name), id);
         }
+        return getLocation(locationManager().getLocationById(name), locale);
     }
 
     /**
@@ -389,12 +389,12 @@ public class JsonUtil {
      * @throws JsonException if id does not represent a known train
      */
     public ObjectNode getTrain(String name, Locale locale, int id) throws JsonException {
-        try {
-            return getTrain(trainManager().getTrainById(name), locale);
-        } catch (NullPointerException ex) {
-            log.error("Unable to get train id [{}].", name, ex);
-            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.TRAIN, name), id);
+        if (trainManager().getTrainById(name) == null) {
+            log.error("Unable to get train id [{}].", name);
+            throw new JsonException(404,
+                    Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JsonOperations.TRAIN, name), id);
         }
+        return getTrain(trainManager().getTrainById(name), locale);
     }
 
     /**

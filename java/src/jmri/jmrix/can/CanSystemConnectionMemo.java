@@ -7,9 +7,8 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
+import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
-import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager.SubProtocol;
 import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
@@ -37,11 +36,21 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
 
     private boolean protocolOptionsChanged = false;
 
+    /**
+     * Create a new CanSystemConnectionMemo.
+     * Default prefix: M
+     * Default Username: CAN
+     */
     public CanSystemConnectionMemo() {
         super("M", DEFAULT_USERNAME);
     }
-    
-    // Allow for default systemPrefix other than "M"
+
+    /**
+     * Create a new CanSystemConnectionMemo.
+     * Allows for default systemPrefix other than "M"
+     * Default Username: CAN
+     * @param prefix System prefix to use, e.g. M.
+     */
     public CanSystemConnectionMemo(String prefix) {
         super(prefix, DEFAULT_USERNAME);
     }
@@ -63,7 +72,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected TrafficController tm;
 
     /**
-     * Set Connection Traffic Controller
+     * Set Connection Traffic Controller.
      * @param tm System Connection Traffic Controller
      */
     public void setTrafficController(TrafficController tm) {
@@ -71,7 +80,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
     
     /**
-     * Get Connection Traffic Controller
+     * Get Connection Traffic Controller.
      * @return System Connection Traffic Controller
      */
     public TrafficController getTrafficController() {
@@ -84,6 +93,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
 
     /**
      * {@inheritDoc }
+     * Searches ConfigurationManager for class before super.
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -103,9 +113,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
             if (mgr == null) return false;
             return mgr.isAddressedModePossible();
         }
-        if (type.equals(jmri.ConsistManager.class)) { // until a CAN ConsistManager is implemented, use Internal
-            return false;
-        }
+        
         boolean result = manager.provides(type);
         if(result) {
            return true;
@@ -116,20 +124,44 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
 
     /**
      * {@inheritDoc }
+     * Searches ConfigurationManager for class before super.
      */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (manager != null && !getDisabled()) {
-            return (T) manager.get(T);
+            T existing = manager.get(T);
+            if ( existing !=null ) {
+                return existing;
+            }
         }
         return super.get(T);
     }
 
+    /**
+     * Get a class directly from the memo Class Object Map.
+     * @param <T> Class type
+     * @param T Class type
+     * @return object in class object map, or null if not present.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getFromMap(Class<?> T) {
+        return (T) classObjectMap.get(T);
+    }
+
+    /**
+     * Get the Protocol in use by the CAN Connection.
+     * e.g. ConfigurationManager.SPROGCBUS
+     * @return ConfigurationManager constant of protocol.
+     */
     public String getProtocol() {
         return _protocol;
     }
-    
+
+    /**
+     * Set the protocol in use by the connection.
+     * @param protocol e.g. ConfigurationManager.SPROGCBUS
+     */
     public void setProtocol(String protocol) {
         StartupActionFactory old = getActionFactory();
         if (null != protocol) {
@@ -155,10 +187,18 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         firePropertyChange("actionFactory", old, getActionFactory());
     }
 
+    /**
+     * Get ENUM of the sub protocol.
+     * @return the sub protocol in use, e.g. SubProtocol.CBUS
+     */
     public SubProtocol getSubProtocol() {
         return _subProtocol;
     }
-    
+
+    /**
+     * Set the sub protocol ENUM.
+     * @param sp e.g. SubProtocol.CBUS
+     */
     public void setSubProtocol(SubProtocol sp) {
         if (null != sp) {
             _subProtocol = sp;
@@ -166,8 +206,8 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
 
     /**
-     * Get the stare of the programming mode switch which indicates what combination
-     * o service and/or ops mode programming is supported by the connection.
+     * Get the state of the programming mode switch which indicates what combination
+     * of service and/or ops mode programming is supported by the connection.
      * 
      * @return the supported modes
      */
@@ -222,8 +262,11 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     }
     
     /**
-     * Configure the common managers for Can connections. This puts the common
-     * manager config in one place.
+     * Configure the common managers for Can connections.
+     * {@inheritDoc }
+     * Calls ConfigurationManager.configureManagers
+     * Stores Can Memo to Instance to indicate available.
+     * 
      */
     @Override
     public void configureManagers() {
@@ -326,11 +369,11 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      */
     @Override
     public void dispose() {
+        super.dispose(); // remove class map object items before manager config
         if (manager != null) {
             manager.dispose();
         }
         tm = null;
-        super.dispose();
     }
 
     private static final Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class);

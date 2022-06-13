@@ -62,7 +62,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
     private static final int NUM_MACRO = 256;  // there are 256 possible macros
     private static final int MACRO_LNTH = 20;  // 20 bytes per macro
     private static final int REPLY_16 = 16;   // reply length of 16 byte expected
-    private static int replyLen = 0;    // expected byte length
+    private int replyLen = 0;    // expected byte length
     private int waiting = 0;      // to catch responses not intended for this module
     private boolean secondRead = false;    // when true, another 16 byte read expected
     private boolean fileValid = false;    // used to flag backup status messages

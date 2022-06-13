@@ -156,10 +156,50 @@
         </tr>
 
         <tr>
+          <td>
+            Improved File support, including writeString(), readString(), and isSameFile().
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
+            asMatchPredicate() method for pattern recognition, which will simplify GUI parsing.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
+            G1 garbage collector reduces run-time pauses
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
+            TimeUnit conversions provide simplified replacement for deprecated date&time methods.
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
+          <td>
+            var can be used in lambda expressions
+          </td>
+          <td>11</td>
+          <td>11</td>
+        </tr>
+
+        <tr>
           <td>JMRI uses several com.sun classes that will, at some point, no longer be accessible.
           This was originally scheduled as part of JPMS for 1.9, but was later removed. At some
           point, we will need to migrate away from these before using a more advanced JRE or
-          JDK.</td>
+          JDK. This can start once we're using Java 11, so that it's done before needed.</td>
           <td>&gt; 11</td>
           <td>&gt; 11</td>
         </tr>
@@ -179,6 +219,22 @@
             The <a href=
             "https://www.infoworld.com/article/2888189/red-hat-shenandoah-boosts-java-garbage-collection.html">
             Shenandoah garbage collector</a> might be another source of better performance.
+          </td>
+          <td>12</td>
+          <td>12</td>
+        </tr>
+
+        <tr>
+          <td>
+            Multiple improvements in the Stream API for ease of use and performance.
+          </td>
+          <td>12</td>
+          <td>12</td>
+        </tr>
+
+        <tr>
+          <td>
+            Improved switch statement with more flexible content matching.
           </td>
           <td>12</td>
           <td>12</td>
@@ -522,7 +578,7 @@
             <th>JMRI</th>
             <th>Java</th>
             <th>
-              <a href="https://jmri.org/install/MacOSX.shtml#sysreq">OS X</a>
+              <a href="https://jmri.org/install/MacOSX.shtml#sysreq">macOS</a>
             </th>
             <th>
               <a href="https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a>

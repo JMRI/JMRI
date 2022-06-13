@@ -90,7 +90,7 @@ public class CbusNodeTrickleFetch implements CanListener {
     
     public void dispose(){
         stopTrickleTimer();
-        tc.removeCanListener(this);
+        removeTc(tc);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeTrickleFetch.class);

@@ -7,12 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Map;
+
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
@@ -24,6 +26,8 @@ import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.datatransfer.RosterEntrySelection;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -244,7 +248,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                df.terminateActiveTrain(at);
+                                df.terminateActiveTrain(at,true,false);
                             }
                         });
                         popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
@@ -385,7 +389,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(val.toString());
                     setIcon(null);
                 } else if (val instanceof jmri.IdTag){
-                    // most IdTags are Reportable objects, so 
+                    // most IdTags are Reportable objects, so
                     // this needs to be before Reportable
                     _icon = false;
                     _text = true;
@@ -397,8 +401,13 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(((Reportable)val).toReportString());
                     setIcon(null);
                 } else {
-                    log.warn("can't display current value of {}, val= {} of Class {}",
+                    // don't recognize the type, do our best with toString
+                    log.debug("display current value of {} as String, val= {} of Class {}",
                             getNameString(), val, val.getClass().getName());
+                    _icon = false;
+                    _text = true;
+                    setText(val.toString());
+                    setIcon(null);
                 }
             } else {
                 // map exists, use it
@@ -558,7 +567,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     @Override
-    public void doMouseClicked(java.awt.event.MouseEvent e) {
+    public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
             editMemoryValue();
         }
@@ -650,7 +659,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     addRosterToIcon(roster);
                 }
             } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException e) {
-                log.error(e.getLocalizedMessage(), e);
+                log.error("Could not add a RosterEntry to Icon.", e);
             }
             return true;
         }

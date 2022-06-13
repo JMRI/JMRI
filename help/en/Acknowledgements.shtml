@@ -220,7 +220,7 @@
         systems to the preferences, added the Light Control, provided sample scripts, improved the
         titling of throttle windows, and created the InstallTest app.</li>
 
-        <li>Paco Cañada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">
+        <li>Paco Ca&ntilde;ada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">
           PpP decoders</a>.
         </li>
 
@@ -229,9 +229,10 @@
         <li>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger
         decoders</li>
 
-        <li>Joan Carrancà, who provided the German DB signal set.</li>
+        <li>Joan Carranc&agrave;, who provided the German DB signal set.</li>
 
-        <li>Alain Carasso, who provided decoder definition for Arnold and Mistral Train
+        <li>Alain Carasso, <!-- alain355 -->
+        who provided decoder definition for Arnold and Mistral Train
         decoders</li>
 
         <li>Peter Cesaro provided MRC decoder definitions</li>
@@ -296,6 +297,9 @@
         <li>Ray deBlieck, who let us test on his Empire Builder</li>
 
         <li>Joan de Castro who contributed the Catalan internationalization</li>
+
+        <li>Bruno De Grave, <!-- brucel050 -->
+        who contributed a Massoth decoder definition
 
         <li>Andrew Deak<!-- adeak1rr -->
          who added the CPMEGA C/MRI option.</li>
@@ -437,6 +441,9 @@
         <li>Mark Gurries, who provided loaner equipment and great ideas. He's currently working on
         decoder definitions for DecoderPro <a id="H"></a>
         </li>
+
+        <li>Peter Hagenaars, who helped with the definition for the MD Electronics
+        HDD decoder.
 
         <li>Victoria K. Hall led the legal action that held Matt Katzer responsible for his
         depredations against JMRI</li>
@@ -684,7 +691,7 @@
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
-        <li>Bob Milhaupt, <-- devel-bobm -->
+        <li>Bob Milhaupt, <!-- devel-bobm -->
         who fixed a problem with transponding messages in the LocoNet monitor,
         provided a lot of usability improvements in the LocoNet monitor, updated several
         LocoNet-related help pages, and provided significant help with the
@@ -739,7 +746,7 @@
         on Mac OS X <a id="P"></a>
         </li>
 
-        <li>Pål <-paoSoft -->
+        <li>P&aring;l <!--paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
 
         <li>Gopal Patnaik helped with Intellibox development.</li>
@@ -776,7 +783,7 @@
 
         <li>Ian Price who contributed the LocoTracker.py script</li>
 
-        <li>Vladimír Preclík <!-- vpreclik -->
+        <li>Vladim&iacute;r Precl&iacute;k <!-- vpreclik -->
          who contributed fixes to the panel JavaScript code</li>
 
         <li>Oscar A. Pruitt, who provided the implementation to support RFID readers using the
@@ -786,7 +793,7 @@
         "Q"></a> <a id="R"></a>
         </li>
 
-        <li>Balazs Racz, <-- balazsracz -->
+        <li>Balazs Racz, <!-- balazsracz -->
         who fixed a bug in startup and improved our tech documentation, updated
         the OpenLCB support to their version 0.7, and added support for bean properties to the
         Tables</li>
@@ -800,10 +807,15 @@
         <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable the use of
         CBus attached RFID readers.</li>
 
+        <li>Peter Riley, who helped debug a graphics display issue.</li>
+
         <li>Bill Robinson of Team Digital, who provided a schematic of their MS100-equivalent level
         shifter, contributed the LnSendTool.py script and decoder definitions for Team Digital
         products, helped fix a problem with overrunning LocoNet command stations, and provided
         example web pages for layout control via the mini-webserver.</li>
+
+        <li>Rodrigo Rodriguez, <!-- RodrigoFXE  -->
+        who translated the decoder definitions and much of the GUI into Spanish.
 
         <li>Mark Rogerson, who provided the RXTX (Java communications library) for Mac OS X
         machines with Intel processors</li>
@@ -843,6 +855,8 @@
         <li>Jeff Schmaltz, who contributed decoder definitions for the Massoth eMotion and LGB
         decoders, the Zimo MX65, and the ESU LokPilot and LokPilotBasic decoders.</li>
 
+        <li>George Schreyer, who tests JMRI on new macOS versions as they come out.</li>
+
         <li>Mark Schutzer, who helped debug some significant NCE improvements and contributed the
         Lenz Gold decoder definition</li>
 
@@ -875,7 +889,7 @@
 
         <li>Dustin Shoup, who figured out how to preserve order in XML files</li>
 
-        <li>Petr Šídlo, <!-- sidlo64 -->
+        <li>Petr &Scaron;&iacute;dlo, <!-- sidlo64 -->
          who provided a large update to the Czech translations of JMRI</li>
 
         <li>Pekka Siiskonen, who suggested we add error numbers to error messages to make it easier
@@ -943,10 +957,10 @@
         <li>Jim Thompson provided a sample script for handling messages from PM42 power
         controllers</li>
 
-        <li>Benny Tjäder, <!-- etxbct -->
+        <li>Benny Tj&auml;der, <!-- etxbct -->
         who provided the MQTT Last Will support and a Swedish signal system.
 
-        <li>Kenneth Tjøstheim, <!-- SeaU2 -->
+        <li>Kenneth Tj&oslash;stheim, <!-- SeaU2 -->
             who provided the Norway-2001 signal system</li>
 
         <li>Walter Thompson, who provided the ID information for the Lionel Challenger decoder and
@@ -997,7 +1011,7 @@
 
         <li>Jack Walton, who created the Lenz LE080 decoder definition</li>
 
-        <li>Steve Walton, <-- swalton00 -->
+        <li>Steve Walton, <!-- swalton00 -->
         who fixed the tag sorting.
 
         <li>George Warner, who changed all the TextFields to editable comboboxes (with drop-down

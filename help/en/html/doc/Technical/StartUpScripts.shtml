@@ -64,21 +64,33 @@
       Since JMRI version 2.11.4, it is possible to influence the settings used to launch JMRI via
       the use of environment variables which are interpreted by the startup scripts. These are:
       <dl>
-        <dt>JMRI_HOME</dt>
+        <dt>JAVA_HOME</dt>
+        <dd>This specifies the Java Virtual Machine (JVM) that JMRI will use.
+            This could be a Java Runtime Environment (JRE) or
+            Java Development Kit (JDK).
+            <ul>
+                <li>If a JRE is present in a
+                directory called "jre" within the JMRI program directory,
+                it will be used regardless of the JAVA_HOME setting.</li>
+                <li>If JAVA_HOME is undefined and there is no local "jre"
+                directory, the script will go through several steps to
+                try to locate a usable JVM.  If that fails, the
+                user will be prompted to install Java.</li>
+            </ul>
+        </dd>
 
+        <dt>JMRI_HOME</dt>
         <dd>This determines the program location</dd>
 
         <dt>JMRI_OPTIONS</dt>
-
         <dd>This specifies additional JVM options</dd>
 
         <dt>JMRI_PREFSDIR</dt>
-
         <dd>This specifies the location of an alternative preferences directory</dd>
 
         <dt>JMRI_USERHOME</dt>
-
         <dd>This specifies the location of an alternative user home directory</dd>
+
       </dl>
       If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the location defined by JMRI_PREFSDIR
       will take precedence over the location defined by JMRI_USERHOME for determining the location
@@ -600,10 +612,9 @@
       <ol>
         <li><strong>Using PanelPro with script</strong>: With the exception of a different icon and
         different fixed buttons on the main window, PanelPro has an identical user interface to the
-        legacy DecoderPro.</li>
+        legacy DecoderPro.
 
-        <li style="list-style: none">
-          <ul>
+        <ul>
             <li>You can add the 3 fixed buttons (Open Roster, Service Mode, Operations Mode) that
             used to be on the legacy DecoderPro by adding a script at start-up.</li>
 
@@ -611,12 +622,10 @@
             "C:\Program Files\JMRI\jython\jython/MakeOriginalDecoderPro.py"</li>
 
             <li>Then, save and restart.</li>
-          </ul>
-        </li>
+          </ul></li>
 
-        <li><strong>Using PanelPro with buttons</strong>:</li>
+        <li><strong>Using PanelPro with buttons</strong>:
 
-        <li style="list-style: none">
           <ul>
             <li>You can add several fixed buttons of your choice on the PanelPro interface.</li>
 
@@ -627,12 +636,10 @@
             programmer" and "DecoderPro ops-mode programmer"</li>
 
             <li>Then, save and restart.</li>
-          </ul>
-        </li>
+          </ul></li>
 
-        <li><strong>Adding a custom shortcut to legacy DecoderPro</strong>:</li>
+        <li><strong>Adding a custom shortcut to legacy DecoderPro</strong>:
 
-        <li style="list-style: none">
           <ul>
             <li>Copy and Paste the "DecoderPro" shortcut (on your desktop or in the start
             menu)</li>
@@ -646,8 +653,7 @@
             apps.DecoderPro.DecoderPro</li>
 
             <li>This will launch the legacy DecoderPro interface.</li>
-          </ul>
-        </li>
+          </ul></li>
       </ol>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -65,7 +65,7 @@
       <h2>LogixNG Components</h2>
 
       <p>The LogixNG tool has three main components. They are accessed via the main PanelPro
-      <strong>Tools ⇒ Tables ⇒ LogixNG</strong> menu path like other JMRI table items. The 3
+      <strong>Tools &rArr; Tables &rArr; LogixNG</strong> menu path like other JMRI table items. The 3
       LogixNG tables and related content will be <strong><em>loaded</em></strong> and
       <strong><em>stored</em></strong> along with all of the other tables and panels.</p>
       <a id="logixngs"></a>
@@ -125,7 +125,7 @@
       <a id="preferences"></a>
       <h2>LogixNG Preferences</h2>
 
-      <p>LogixNG has settings that can be set in JMRI <strong>Preferences ⇒ LogixNG</strong>.</p>
+      <p>LogixNG has settings that can be set in JMRI <strong>Preferences &rArr; LogixNG</strong>.</p>
 
       <div style="margin-left: 2em">
         <a href="images/Preferences.png"><img src="images/Preferences.png" alt="LogixNG Preferences"></a>
@@ -136,7 +136,7 @@
 
         <dd>If checked, the enabled LogixNG definitions will be active after the completion of the
         PanelPro xml data file loading. If not checked, the LogixNGs will be inactive until
-        <strong>Tools ⇒ LogixNG ⇒ Start LogixNG</strong> is selected. The default setting is
+        <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> is selected. The default setting is
         checked.</dd>
 
         <dt>Install Debugger</dt>
@@ -156,7 +156,7 @@
         setting. Individual expressions and actions can override the default setting.</dd>
       </dl>
 
-      <p>Note: LogixNG execution can be stopped using <strong>Tools ⇒ LogixNG ⇒ Stop
+      <p>Note: LogixNG execution can be stopped using <strong>Tools &rArr; LogixNG &rArr; Stop
       LogixNG</strong>.</p>
 
       <p><a href="#TopOfPage">[Go to top of page]</a>

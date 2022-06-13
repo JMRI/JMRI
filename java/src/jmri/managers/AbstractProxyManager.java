@@ -299,52 +299,20 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         return createSystemName(curAddress, prefix, getNamedBeanClass());
     }
 
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
-        for (Manager<E> m : mgrs) {
-            log.debug("NextValidAddress requested for {}", curAddress);
-            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
-                try {
-                    switch (typeLetter) { // use #getDefaultManager() instead?
-                        case 'T':
-                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix, false);
-                        case 'S':
-                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix, false);
-                        case 'R':
-                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix, false);
-                        default:
-                            return null;
-                    }
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
-            }
-        }
-        return null;
-    }
+    @Nonnull
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        int prefixLength = Manager.getSystemPrefixLength(currentBean.getSystemName());
 
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting, char typeLetter) throws jmri.JmriException {
+        String prefix = currentBean.getSystemName().substring(0, prefixLength);
+        char typeLetter = currentBean.getSystemName().charAt(prefixLength);
+
         for (Manager<E> m : mgrs) {
-            log.debug("NextValidAddress requested for {}", curAddress);
+            log.debug("getNextValidSystemName requested for {}", currentBean.getSystemName());
             if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
-                try {
-                    switch (typeLetter) { // use #getDefaultManager() instead?
-                        case 'T':
-                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        case 'S':
-                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        case 'L':
-                            return ((LightManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        case 'R':
-                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        default:
-                            return null;
-                    }
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
+                return ((NameIncrementingManager) m).getNextValidSystemName(currentBean); // can thrown JmriException upward
             }
         }
-        return null;
+        throw new jmri.JmriException("\""+currentBean.getSystemName()+"\" did not match a manager");
     }
 
     /** {@inheritDoc} */

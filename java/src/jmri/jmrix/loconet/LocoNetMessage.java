@@ -2,12 +2,15 @@ package jmri.jmrix.loconet;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
+
 /**
  * Represents a single command or response on the LocoNet.
  * <p>
@@ -392,21 +395,21 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * message.
      * <p>
      * Where appropriate, this method presents both the JMRI "System Name" and
-     * the JMRI "User Name" (where available) for messages which contain control 
+     * the JMRI "User Name" (where available) for messages which contain control
      * or status information for a Turnout, Sensor or Reporter.
      * <p>
      * Display of "User Name" information is acquired from the appropriate "manager",
-     * via a reference to an object with an assembled "System Name".  This method 
+     * via a reference to an object with an assembled "System Name".  This method
      * assumes a system connection "prefix" of "L" when assembling that system name.
-     * The remainder of the assembled system name depends on the message contents - 
+     * The remainder of the assembled system name depends on the message contents -
      * message type determines which JMRI object type letter to add - "T" for turnouts,
      * "S" for sensors, and "R" for transponding reporters.
      * <p>
      * If the appropriate manager already has an object for the system name being
      * referenced, the method requests the associated user name.  If a user name is
-     * returned, then the method uses that user name as part of the message.  If 
+     * returned, then the method uses that user name as part of the message.  If
      * there is no associated JMRI object configured, or if the associated JMRI
-     * object does not have a user name assigned, then the method does not display 
+     * object does not have a user name assigned, then the method does not display
      * a user name.
      * <p>
      * The method is not appropriate when the user has multiple LocoNet connections
@@ -425,30 +428,30 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * message when a specific connection prefix is known.
      * <p>
      * Where appropriate, this method presents both the JMRI "System Name" and
-     * the JMRI "User Name" (where available) for messages which contain control 
+     * the JMRI "User Name" (where available) for messages which contain control
      * or status information for a Turnout, Sensor or Reporter.
      * <p>
      * Display of "User Name" information is acquired from the appropriate "manager",
-     * via a reference to an object with an assembled "System Name".  This method 
-     * uses system connection "prefix" as specified in the "prefix" argument when 
-     * assembling that system name.  The remainder of the assembled system name 
-     * depends on the message contents.  Message type determines which JMRI 
-     * object type letter is added after the "prefix" - "T" for turnouts, * "S" 
-     * for sensors, and "R" for transponding reporters.  The item number 
-     * specified in the LocoNet message is appended to finish the system name. 
+     * via a reference to an object with an assembled "System Name".  This method
+     * uses system connection "prefix" as specified in the "prefix" argument when
+     * assembling that system name.  The remainder of the assembled system name
+     * depends on the message contents.  Message type determines which JMRI
+     * object type letter is added after the "prefix" - "T" for turnouts, * "S"
+     * for sensors, and "R" for transponding reporters.  The item number
+     * specified in the LocoNet message is appended to finish the system name.
      * <p>
      * If the appropriate manager already has an object for the system name being
      * referenced, the method requests the associated user name.  If a user name is
-     * returned, then the method uses that user name as part of the message.  If 
+     * returned, then the method uses that user name as part of the message.  If
      * there is no associated JMRI object configured, or if the associated JMRI
-     * object does not have a user name assigned, then the method does not display 
+     * object does not have a user name assigned, then the method does not display
      * a user name.
      *
      * @param prefix  the "System Name" prefix denoting the connection
      * @return a human readable representation of the message.
      */
     public String toMonitorString(@Nonnull String prefix){
-          return LocoNetMessageInterpret.interpretMessage(this, 
+          return LocoNetMessageInterpret.interpretMessage(this,
                   prefix+"T", prefix+"S", prefix+"R");
     }
 
@@ -586,6 +589,36 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         int a1 = getElement(1);
         int a2 = getElement(2);
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
+    }
+
+    /**
+     * Two messages are the same if their masked data content is the same.
+     * <br>
+     * We ignore the error-check byte to ease comparisons before a message is
+     * transmitted.
+     *
+     * @param o the LocoNet message to be compared against this object's message
+     * @param masks an array of bytes to use to mask the corresponding bytes of 
+     * the messages.
+     * @return true if objects contain the same message contents
+     */
+    public boolean equals(LocoNetMessage o, int[] masks) {
+        if (o == null) {
+            return false;   // basic contract
+        }
+        LocoNetMessage m = new LocoNetMessage(o);
+        if (m._nDataChars != this._nDataChars) {
+            return false;
+        }
+        if (m._nDataChars != masks.length) {
+            return false;
+        }
+        for (int i = 0; i < _nDataChars - 1; i++) {
+            if ((m._dataChars[i] & masks[i]) != (this._dataChars[i] & masks[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Hex char array for toString conversion

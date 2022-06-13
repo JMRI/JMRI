@@ -117,7 +117,6 @@ public abstract class AbstractBase
         boolean result = true;
         for (int i=0; i < getChildCount(); i++) {
             FemaleSocket femaleSocket = getChild(i);
-            femaleSocket.setParent(this);
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
                 if ((connectedSocket.getParent() != null)
@@ -293,7 +292,7 @@ public abstract class AbstractBase
     public void assertListenersAreNotRegistered(Logger log, String method) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
-            log.error(method + " must not be called when listeners are registered", e);
+            log.error("{} must not be called when listeners are registered", method, e);
             throw e;
         }
     }

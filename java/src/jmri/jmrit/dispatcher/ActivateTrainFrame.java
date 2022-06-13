@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -120,11 +119,24 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final ButtonGroup allocateMethodButtonGroup = new ButtonGroup();
     private final JSpinner allocateCustomSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 100, 1));
     private final JCheckBox terminateWhenDoneBox = new JCheckBox(Bundle.getMessage("TerminateWhenDone"));
+    private final JPanel terminateWhenDoneDetails = new JPanel();
+    private final JComboBox<String> nextTrain = new JComboBox<>();
+    private final JLabel nextTrainLabel = new JLabel(Bundle.getMessage("TerminateWhenDoneNextTrain"));
     private final JSpinner prioritySpinner = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
     private final JCheckBox resetWhenDoneBox = new JCheckBox(Bundle.getMessage("ResetWhenDone"));
     private final JCheckBox reverseAtEndBox = new JCheckBox(Bundle.getMessage("ReverseAtEnd"));
+
     int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
     String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
+
+    private final JComboBox<String> reverseDelayedRestartType = new JComboBox<>(delayedStartString);
+    private final JLabel delayReverseReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
+    private final JLabel delayReverseReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
+    private final JCheckBox delayReverseResetSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
+    private final NamedBeanComboBox<Sensor> delayReverseReStartSensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
+    private final JSpinner delayReverseMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+    private final JLabel delayReverseMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
+
     private final JCheckBox resetStartSensorBox = new JCheckBox(Bundle.getMessage("ResetStartSensor"));
     private final JComboBox<String> delayedStartBox = new JComboBox<>(delayedStartString);
     private final JLabel delayedReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
@@ -224,7 +236,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             saveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    saveTrainInfo(e);
+                    saveTrainInfo(e,true);
                 }
             });
             saveButton.setToolTipText(Bundle.getMessage("SaveButtonHint"));
@@ -427,6 +439,8 @@ public class ActivateTrainFrame extends JmriJFrame {
             handleResetWhenDoneClick(null);
             initiatePane.add(p6b);
 
+            initiatePane.add(new JSeparator());
+
             JPanel p10 = new JPanel();
             p10.setLayout(new FlowLayout());
             p10.add(reverseAtEndBox);
@@ -438,10 +452,55 @@ public class ActivateTrainFrame extends JmriJFrame {
                     handleReverseAtEndBoxClick(e);
                 }
             });
+            JPanel pDelayReverseRestartDetails = new JPanel();
+            pDelayReverseRestartDetails.setLayout(new FlowLayout());
+            ((FlowLayout) pDelayReverseRestartDetails.getLayout()).setVgap(1);
+            pDelayReverseRestartDetails.add(delayReverseReStartLabel);
+            pDelayReverseRestartDetails.add(reverseDelayedRestartType);
+            pDelayReverseRestartDetails.add(delayReverseResetSensorBox);
+            delayReverseResetSensorBox.setToolTipText(Bundle.getMessage("ReverseResetRestartSensorHint"));
+            delayReverseResetSensorBox.setSelected(true);
+            reverseDelayedRestartType.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleReverseAtEndBoxClick(e);
+                }
+            });
+            reverseDelayedRestartType.setToolTipText(Bundle.getMessage("ReverseDelayedReStartHint"));
+            initiatePane.add(pDelayReverseRestartDetails);
+
+            JPanel pDelayReverseRestartDetails2 = new JPanel();
+            pDelayReverseRestartDetails2.setLayout(new FlowLayout());
+            ((FlowLayout) pDelayReverseRestartDetails2.getLayout()).setVgap(1);
+            pDelayReverseRestartDetails2.add(delayReverseMinLabel);
+            pDelayReverseRestartDetails2.add(delayReverseMinSpinner); // already set to 0
+            delayReverseMinSpinner.setToolTipText(Bundle.getMessage("ReverseRestartTimedHint"));
+            pDelayReverseRestartDetails2.add(delayReverseReStartSensorLabel);
+            pDelayReverseRestartDetails2.add(delayReverseReStartSensor);
+            delayReverseReStartSensor.setAllowNull(true);
+            handleReverseAtEndBoxClick(null);
+            initiatePane.add(pDelayReverseRestartDetails2);
+
+            initiatePane.add(new JSeparator());
+
             JPanel p10a = new JPanel();
             p10a.setLayout(new FlowLayout());
             p10a.add(terminateWhenDoneBox);
+            terminateWhenDoneBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handleTerminateWhenDoneBoxClick(e);
+                }
+            });
             initiatePane.add(p10a);
+            terminateWhenDoneDetails.setLayout(new FlowLayout());
+            terminateWhenDoneDetails.add(nextTrainLabel);
+            terminateWhenDoneDetails.add(nextTrain);
+            nextTrain.setToolTipText(Bundle.getMessage("TerminateWhenDoneNextTrainHint"));
+            initiatePane.add(terminateWhenDoneDetails);
+            handleTerminateWhenDoneBoxClick(null);
+
+            initiatePane.add(new JSeparator());
 
             JPanel p8 = new JPanel();
             p8.setLayout(new FlowLayout());
@@ -551,11 +610,26 @@ public class ActivateTrainFrame extends JmriJFrame {
         autoRunBox.setSelected(false);
         loadAtStartupBox.setSelected(false);
         initializeFreeTransitsCombo(new ArrayList<Transit>());
+        nextTrain.addItem("");
+        refreshNextTrainCombo();
         setTrainsFromOptions(_TrainsFrom);
         initiateFrame.pack();
         initiateFrame.setVisible(true);
     }
 
+    private void refreshNextTrainCombo() {
+        Object saveEntry = null;
+        if (nextTrain.getSelectedIndex() > 0) {
+            saveEntry=nextTrain.getSelectedItem();
+        }
+        nextTrain.removeAll();
+        for (String file: _tiFile.getTrainInfoFileNames()) {
+            nextTrain.addItem(file);
+        }
+        if (saveEntry != null) {
+            nextTrain.setSelectedItem(saveEntry);
+        }
+    }
     private void setTrainsFromOptions(TrainsFrom transFrom) {
         switch (transFrom) {
             case TRAINSFROMROSTER:
@@ -720,6 +794,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (resetWhenDoneBox.isSelected()) {
             delayedReStartLabel.setVisible(true);
             delayedReStartBox.setVisible(true);
+            terminateWhenDoneBox.setSelected(false);
             if (delayedReStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartTimed"))) {
                 delayMinSpinner.setVisible(true);
                 delayMinLabel.setVisible(true);
@@ -728,13 +803,46 @@ public class ActivateTrainFrame extends JmriJFrame {
                 delayReStartSensorLabel.setVisible(true);
                 resetRestartSensorBox.setVisible(true);
             }
+        } else {
+            terminateWhenDoneBox.setEnabled(true);
         }
-        handleReverseAtEndBoxClick(e);
         initiateFrame.pack();
     }
 
+    private void handleTerminateWhenDoneBoxClick(ActionEvent e) {
+        if (terminateWhenDoneBox.isSelected()) {
+            refreshNextTrainCombo();
+            resetWhenDoneBox.setSelected(false);
+            terminateWhenDoneDetails.setVisible(true);
+        } else {
+            terminateWhenDoneDetails.setVisible(false);
+            // leave it
+            //nextTrain.setSelectedItem("");
+        }
+    }
     private void handleReverseAtEndBoxClick(ActionEvent e) {
-        if (reverseAtEndBox.isSelected() || resetWhenDoneBox.isSelected()) {
+        delayReverseMinSpinner.setVisible(false);
+        delayReverseMinLabel.setVisible(false);
+        delayReverseReStartLabel.setVisible(false);
+        reverseDelayedRestartType.setVisible(false);
+        delayReverseReStartSensorLabel.setVisible(false);
+        delayReverseReStartSensor.setVisible(false);
+        delayReverseResetSensorBox.setVisible(false);
+        if (reverseAtEndBox.isSelected()) {
+            delayReverseReStartLabel.setVisible(true);
+            reverseDelayedRestartType.setVisible(true);
+            if (reverseDelayedRestartType.getSelectedItem().equals(Bundle.getMessage("DelayedStartTimed"))) {
+                delayReverseMinSpinner.setVisible(true);
+                delayReverseMinLabel.setVisible(true);
+            } else if (reverseDelayedRestartType.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))) {
+                delayReverseReStartSensor.setVisible(true);
+                delayReStartSensorLabel.setVisible(true);
+                delayReverseResetSensorBox.setVisible(true);
+            }
+        }
+        initiateFrame.pack();
+
+        if (resetWhenDoneBox.isSelected()) {
             terminateWhenDoneBox.setSelected(false);
             terminateWhenDoneBox.setEnabled(false);
         } else {
@@ -816,6 +924,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         int delayedStart = delayModeFromBox(delayedStartBox);
         int delayedReStart = delayModeFromBox(delayedReStartBox);
+        int delayedReverseReStart = delayModeFromBox(reverseDelayedRestartType);
         int departureTimeHours = 8;
         departureTimeHours = (Integer) departureHrSpinner.getValue();
         int departureTimeMinutes = 8;
@@ -826,6 +935,14 @@ public class ActivateTrainFrame extends JmriJFrame {
             JOptionPane.showMessageDialog(initiateFrame, delayMinSpinner.getValue(),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             log.warn("Range error in Delay Restart Time Minutes field");
+            return;
+        }
+        int delayReverseRestartMinutes = 0;
+        delayReverseRestartMinutes = (Integer) delayReverseMinSpinner.getValue();
+        if ((delayReverseRestartMinutes < 0)) {
+            JOptionPane.showMessageDialog(initiateFrame, delayReverseMinSpinner.getValue(),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            log.warn("Range error in Reverse Delay Restart Time Minutes field");
             return;
         }
         int tSource = 0;
@@ -923,7 +1040,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         at.setDepartureTimeMin(departureTimeMinutes);
         at.setRestartDelay(delayRestartMinutes);
         at.setDelaySensor(delaySensor.getSelectedItem());
-        at.setResetStartSensor(resetStartSensorBox.isSelected());
+        at.setReverseDelayRestart(delayedReverseReStart);
+        at.setReverseRestartDelay(delayReverseRestartMinutes);
+        at.setReverseDelaySensor(delayReverseReStartSensor.getSelectedItem());
+        at.setReverseResetRestartSensor(delayReverseResetSensorBox.isSelected());
         if ((_dispatcher.isFastClockTimeGE(departureTimeHours, departureTimeMinutes) && delayedStart != ActiveTrain.SENSORDELAY)
                 || delayedStart == ActiveTrain.NODELAY) {
             at.setStarted();
@@ -932,6 +1052,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         at.setResetRestartSensor(resetRestartSensorBox.isSelected());
         at.setTrainType(trainType);
         at.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
+        at.setNextTrain(_nextTrain);
         if (autoRunBox.isSelected()) {
             AutoActiveTrain aat = new AutoActiveTrain(at);
             setAutoRunItems(aat);
@@ -1151,10 +1272,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         handleReverseAtEndBoxClick(null);
     }
 
-    private void saveTrainInfo(ActionEvent e) {
+    private void saveTrainInfo(ActionEvent e, boolean locoOptional) {
         TrainInfo info = null;
         try {
-            info = dialogToTrainInfo();
+            info = dialogToTrainInfo(locoOptional);
         } catch (IllegalArgumentException ide) {
             JOptionPane.showMessageDialog(initiateFrame, ide.getMessage(),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1272,7 +1393,22 @@ public class ActivateTrainFrame extends JmriJFrame {
         delayMinSpinner.setValue(info.getRestartDelayMin());
         delayReStartSensor.setSelectedItem(info.getRestartSensor());
         resetRestartSensorBox.setSelected(info.getResetRestartSensor());
+
+        resetStartSensorBox.setSelected(info.getResetStartSensor());
+        setDelayModeBox(info.getReverseDelayedRestart(), reverseDelayedRestartType);
+        delayReverseMinSpinner.setValue(info.getReverseRestartDelayMin());
+        delayReverseReStartSensor.setSelectedItem(info.getReverseRestartSensor());
+        delayReverseResetSensorBox.setSelected(info.getReverseResetRestartSensor());
+
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
+        nextTrain.setSelectedIndex(-1);
+
+        try {
+            nextTrain.setSelectedItem(info.getNextTrain());
+        } catch (Exception ex){
+            nextTrain.setSelectedIndex(-1);
+        }
+        handleTerminateWhenDoneBoxClick(null);
         setComboBox(trainTypeBox, info.getTrainType());
         autoRunBox.setSelected(info.getAutoRun());
         loadAtStartupBox.setSelected(info.getLoadAtStartup());
@@ -1280,7 +1416,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         autoTrainInfoToDialog(info);
     }
 
-    private TrainInfo dialogToTrainInfo() throws IllegalArgumentException {
+    private TrainInfo dialogToTrainInfo(boolean locoOptional) throws IllegalArgumentException {
         TrainInfo info = new TrainInfo();
         int index = transitSelectBox.getSelectedIndex();
         if (index < 0) {
@@ -1291,10 +1427,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         switch (_TrainsFrom) {
             case TRAINSFROMROSTER:
-                if (rosterComboBox.getSelectedIndex() < 1) {
-                    throw new IllegalArgumentException(Bundle.getMessage("Error41"));
+                if (!locoOptional) {
+                    if (rosterComboBox.getSelectedIndex() < 1) {
+                        throw new IllegalArgumentException(Bundle.getMessage("Error41"));
+                    }
+                    info.setTrainName(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
                 }
-                info.setTrainName(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
                 info.setDccAddress(" ");
                 break;
             case TRAINSFROMOPS:
@@ -1353,7 +1491,14 @@ public class ActivateTrainFrame extends JmriJFrame {
         info.setRestartSensorName(delayReStartSensor.getSelectedItemDisplayName());
         info.setResetRestartSensor(resetRestartSensorBox.isSelected());
         info.setRestartDelayMin((Integer) delayMinSpinner.getValue());
+
+        info.setReverseDelayedRestart(delayModeFromBox(reverseDelayedRestartType));
+        info.setReverseRestartSensorName(delayReverseReStartSensor.getSelectedItemDisplayName());
+        info.setReverseResetRestartSensor(delayReverseResetSensorBox.isSelected());
+        info.setReverseRestartDelayMin((Integer) delayReverseMinSpinner.getValue());
+
         info.setTerminateWhenDone(terminateWhenDoneBox.isSelected());
+        info.setNextTrain((String)nextTrain.getSelectedItem());
         autoRunItemsToTrainInfo(info);
         return info;
     }
@@ -1493,6 +1638,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     boolean _stopBySpeedProfile = false;
     float _stopBySpeedProfileAdjust = 1.0f;
     boolean _useSpeedProfile = true;
+    String _nextTrain = "";
 
     private void setAutoRunDefaults() {
         _speedFactor = 1.0f;
@@ -1505,6 +1651,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         _stopBySpeedProfile = false;
         _stopBySpeedProfileAdjust = 1.0f;
         _useSpeedProfile = true;
+        _nextTrain = "";
 
     }
 
@@ -1646,6 +1793,11 @@ public class ActivateTrainFrame extends JmriJFrame {
         _stopBySpeedProfile = stopBySpeedProfileCheckBox.isSelected();
         if (_stopBySpeedProfile) {
             _stopBySpeedProfileAdjust = (Float) stopBySpeedProfileAdjustSpinner.getValue();
+        }
+        if (nextTrain.getSelectedIndex() < 0) {
+            _nextTrain="";
+        } else {
+            _nextTrain = (String)nextTrain.getSelectedItem();
         }
         return success;
     }

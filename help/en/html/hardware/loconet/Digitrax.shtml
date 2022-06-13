@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - Digitrax LocoNet</title>
   <meta name="keywords" content=
-  "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB LocoBuffer-NG MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI">
+  "Digitrax LocoNet LocoBuffer LocoBuffer-II LocoBuffer-USB LocoBuffer-NG MS100 PR2 PR3 PR4 DCS210 DCS240 DCS100 DCS240 DCS50 DCS51 DB150 JMRI DCS210Plus">
   <!--#include virtual="/Style.shtml" -->
 
   <style>
@@ -20,7 +20,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Support: Digitrax LocoNet®</h1>
+      <h1>Support: Digitrax LocoNet&reg;</h1>
 
       <div class="toc">
         <ul>
@@ -41,7 +41,7 @@
             <a href="#Setup">Connecting</a>
             <ul>
               <li>
-                <a href="#Using">Using JMRI with LocoNet®</a>
+                <a href="#Using">Using JMRI with LocoNet&reg;</a>
                 <ul>
                   <li>
                     <a href="#LocoNetAddressing">LocoNet Device Addressing</a>
@@ -54,7 +54,7 @@
               </li>
 
               <li>
-                <a href="#Network">Networked Computers and LocoNet®</a>
+                <a href="#Network">Networked Computers and LocoNet&reg;</a>
               </li>
             </ul>
           </li>
@@ -126,7 +126,7 @@
       <h2 id="hardware">Supported Hardware</h2>
 
       <p>JMRI software, including DecoderPro and PanelPro, works with your Digitrax command station
-      to program decoders. To do this, it communicates with the command station over the LocoNet®
+      to program decoders. To do this, it communicates with the command station over the LocoNet&reg;
       using one of several types of <a href="#adapters">adapter</a>.</p>
 
       <h3>Command Stations</h3>
@@ -175,7 +175,7 @@
       are supported. When a layout uses LocoNet peripheral devices but not a LocoNet-based command
       station, a "<a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>" is used.<br>
       In addition, JMRI software may be configured to use a simulated LocoNet connection instead of
-      a real LocoNet connection. This is the "<a href="LocoNetSim.shtml">LocoNet®
+      a real LocoNet connection. This is the "<a href="LocoNetSim.shtml">LocoNet&reg;
       Simulator</a>".</p>
 
       <h3 id="adapters">Computer Interfaces</h3>
@@ -468,7 +468,7 @@
       this case, use the "Defaults" settings to select one LocoNet connection only for "Programmer"
       and the other LocoNet connection for "Throttles", "Power Control", and "Command Station".</p>
 
-      <h2 id="Using">Using JMRI with LocoNet®</h2>
+      <h2 id="Using">Using JMRI with LocoNet&reg;</h2>
       JMRI provides a number of features which allow it to interact with LocoNet. Some key things
       to know about are included here.
       <h3 id="LocoNetAddressing">LocoNet Device Addressing</h3>
@@ -481,9 +481,9 @@
 
       <p>JMRI provides a variety of LocoNet-related tools. These primarily allow configuration of
       LocoNet device functionality, but also include some tools for status monitoring. Information
-      on these tools can be found at the <a href="LocoNetTools.shtml">LocoNet® tools page</a>.</p>
+      on these tools can be found at the <a href="LocoNetTools.shtml">LocoNet&reg; tools page</a>.</p>
 
-      <h2 id="Network">Networked Computers and LocoNet®</h2>
+      <h2 id="Network">Networked Computers and LocoNet&reg;</h2>
       There are several mechanisms available to allow multiple computers to communicate with
       LocoNet. These communicate via standard TCP/IP protocols, and can even work remotely. At
       least one of the networked computers must have a functioning LocoNet interface. See <a href=
@@ -813,7 +813,7 @@
             other resources via one LocoNet connection, and access signals and turnouts via another
             LocoNet connection. This requires a separate LocoNet interface device for each
             connection.
-              <p>See the JMRI <a href="StandaloneLocoNet.shtml">Standalone LocoNet®</a> page for
+              <p>See the JMRI <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a> page for
               background, ideas, and suggestions for implementing a Standalone LocoNet.</p>
             </li>
           </ul>
@@ -856,7 +856,7 @@
       <h3 id="devicetoolhelp">JMRI LocoNet-specific Help pages</h3>
 
       <ul>
-        <li>Computer-to-LocoNet® Interface Hardware
+        <li>Computer-to-LocoNet&reg; Interface Hardware
           <ul>
             <li>
               <a href="LocoBufferUSB.shtml">RR-CirKits LocoBuffer-NG</a>
@@ -1015,25 +1015,25 @@
         <li>Other LocoNet-related information and features
           <ul>
             <li>
-              <a href="Addressing.shtml">JMRI addressing</a> of LocoNet® Turnouts, Sensors and
+              <a href="Addressing.shtml">JMRI addressing</a> of LocoNet&reg; Turnouts, Sensors and
               Transponding zones
             </li>
 
             <li>
-              <a href="LocoNetSim.shtml">LocoNet® Simulator</a>
+              <a href="LocoNetSim.shtml">LocoNet&reg; Simulator</a>
             </li>
 
             <li>
-              <a href="LocoNetworking.shtml">Connecting multiple computers to a LocoNet® layout</a>
+              <a href="LocoNetworking.shtml">Connecting multiple computers to a LocoNet&reg; layout</a>
               <ul>
                 <li>
-                  <a href="LbServer.shtml">Connecting Multiple Computers to LocoNet® via
+                  <a href="LbServer.shtml">Connecting Multiple Computers to LocoNet&reg; via
                   LBServer</a>
                 </li>
 
                 <li>
                   <a href="LocoNetServer.shtml">Connecting Multiple Computers to LocoNet via
-                  LocoNet® Server</a>
+                  LocoNet&reg; Server</a>
                 </li>
               </ul>
             </li>
@@ -1043,7 +1043,7 @@
             </li>
 
             <li>
-              <a href="LocoNetClasses.shtml">JMRI High-level Structures for LocoNet®
+              <a href="LocoNetClasses.shtml">JMRI High-level Structures for LocoNet&reg;
               Interfacing</a>
             </li>
 
@@ -1359,7 +1359,7 @@
         </li>
       </ul>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

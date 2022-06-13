@@ -32,10 +32,30 @@
       </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="LogixNG_LocalVariable_InitialValueType_Type">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="None"/>
+        <xs:enumeration value="Integer"/>
+        <xs:enumeration value="FloatingNumber"/>
+        <xs:enumeration value="String"/>
+        <xs:enumeration value="Array"/>
+        <xs:enumeration value="Map"/>
+        <xs:enumeration value="LocalVariable"/>
+        <xs:enumeration value="Memory"/>
+        <xs:enumeration value="Reference"/>
+        <xs:enumeration value="Formula"/>
+        <xs:enumeration value="ScriptExpression"/>
+        <xs:enumeration value="ScriptFile"/>
+        <xs:enumeration value="LogixNG_Table"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+
     <xs:simpleType name="LogixNG_Addressing_Type">
       <xs:restriction base="xs:token">
         <xs:enumeration value="Direct"/>
         <xs:enumeration value="Reference"/>
+        <xs:enumeration value="Memory"/>
         <xs:enumeration value="LocalVariable"/>
         <xs:enumeration value="Formula"/>
         <xs:enumeration value="Table"/>
@@ -45,6 +65,7 @@
     <xs:simpleType name="LogixNG_NamedBeanType">
       <xs:restriction base="xs:token">
          <xs:enumeration value="Block"/>
+         <xs:enumeration value="GlobalVariable"/>
          <xs:enumeration value="EntryExit"/>
          <xs:enumeration value="Light"/>
          <xs:enumeration value="Memory"/>
@@ -64,6 +85,8 @@
          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
          <xs:element name="name" type="beanNameType" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -76,6 +99,8 @@
          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
          <xs:element name="enum" type="xs:string" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -88,6 +113,8 @@
          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
          <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -100,6 +127,22 @@
          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
          <xs:element name="value" type="xs:int" minOccurs="0" maxOccurs="1"/>
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
+       </xs:sequence>
+     </xs:complexType>
+
+
+     <xs:complexType name="LogixNG_SelectDoubleType">
+       <xs:sequence>
+         <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+         <xs:element name="value" type="xs:double" minOccurs="0" maxOccurs="1"/>
+         <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
          <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -116,6 +159,7 @@
                <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
                <xs:element name="name" type="beanNameType" minOccurs="0" maxOccurs="1"/>
                <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
                <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -129,6 +173,7 @@
                <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
                <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
                <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
                <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
@@ -142,6 +187,7 @@
                <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
                <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
                <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
                <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
                <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>

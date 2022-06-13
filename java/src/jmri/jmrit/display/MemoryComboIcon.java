@@ -2,7 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+
 import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -14,10 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean.DisplayOptions;
+import jmri.util.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,9 @@ public class MemoryComboIcon extends PositionableJPanel
     // the associated Memory object
     private NamedBeanHandle<Memory> namedMemory;
 
+    private final java.awt.event.MouseListener _mouseListener = JmriMouseListener.adapt(this);
+    private final java.awt.event.MouseMotionListener _mouseMotionListener = JmriMouseMotionListener.adapt(this);
+
     public MemoryComboIcon(Editor editor, String[] list) {
         super(editor);
         if (list != null) {
@@ -53,13 +58,13 @@ public class MemoryComboIcon extends PositionableJPanel
 
         setLayout(new java.awt.GridBagLayout());
         add(_comboBox);
-        _comboBox.addMouseListener(this);
+        _comboBox.addMouseListener(JmriMouseListener.adapt(this));
 
         for (int i = 0; i < _comboBox.getComponentCount(); i++) {
             java.awt.Component component = _comboBox.getComponent(i);
             if (component instanceof AbstractButton) {
-                component.addMouseListener(this);
-                component.addMouseMotionListener(this);
+                component.addMouseListener(_mouseListener);
+                component.addMouseMotionListener(_mouseMotionListener);
             }
         }
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
@@ -228,6 +233,7 @@ public class MemoryComboIcon extends PositionableJPanel
             protected void addAdditionalButtons(JPanel p) {
                 _listModel = new DefaultListModel<>();
                 bDel.addActionListener(a -> {
+                    if ( list == null ){ return; }
                     idx = list.getSelectedIndex();
                     if (idx >= 0) {
                         _listModel.removeElementAt(idx);
@@ -235,7 +241,7 @@ public class MemoryComboIcon extends PositionableJPanel
                 });
                 bAdd.addActionListener(a -> {
                     String text = textfield.getText();
-                    if (text == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
+                    if (text == null || list == null || text.length() == 0 || _listModel.indexOf(text) >= 0) {
                         return;
                     }
                     idx = list.getSelectedIndex();
@@ -303,7 +309,7 @@ public class MemoryComboIcon extends PositionableJPanel
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(JmriMouseEvent e) {
         _comboBox.setFocusable(false);
         _comboBox.transferFocus();
         super.mouseExited(e);
@@ -318,11 +324,11 @@ public class MemoryComboIcon extends PositionableJPanel
             for (int i = 0; i < _comboBox.getComponentCount(); i++) {
                 java.awt.Component component = _comboBox.getComponent(i);
                 if (component instanceof AbstractButton) {
-                    component.removeMouseListener(this);
-                    component.removeMouseMotionListener(this);
+                    component.removeMouseListener(_mouseListener);
+                    component.removeMouseMotionListener(_mouseMotionListener);
                 }
             }
-            _comboBox.removeMouseListener(this);
+            _comboBox.removeMouseListener(_mouseListener);
         }
         namedMemory = null;
     }

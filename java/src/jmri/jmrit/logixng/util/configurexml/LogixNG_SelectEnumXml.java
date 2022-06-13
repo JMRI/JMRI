@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.configurexml;
 
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
@@ -31,9 +32,20 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
 
         enumElement.addContent(new Element("addressing").addContent(selectEnum.getAddressing().name()));
         enumElement.addContent(new Element("enum").addContent(selectEnum.getEnum().name()));
-        enumElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
-        enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
-        enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+        if (selectEnum.getReference() != null && !selectEnum.getReference().isEmpty()) {
+            enumElement.addContent(new Element("reference").addContent(selectEnum.getReference()));
+        }
+        var memory = selectEnum.getMemory();
+        if (memory != null) {
+            enumElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
+        enumElement.addContent(new Element("listenToMemory").addContent(selectEnum.getListenToMemory() ? "yes" : "no"));
+        if (selectEnum.getLocalVariable() != null && !selectEnum.getLocalVariable().isEmpty()) {
+            enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
+        }
+        if (selectEnum.getFormula() != null && !selectEnum.getFormula().isEmpty()) {
+            enumElement.addContent(new Element("formula").addContent(selectEnum.getFormula()));
+        }
 
         if (selectEnum.getAddressing() == NamedBeanAddressing.Table) {
             enumElement.addContent(selectTableXml.store(selectEnum.getSelectTable(), "table"));
@@ -62,6 +74,18 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
 
                 elem = enumElement.getChild("reference");
                 if (elem != null) selectEnum.setReference(elem.getTextTrim());
+
+                Element memoryName = enumElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectEnum.setMemory(m);
+                    else selectEnum.removeMemory();
+                }
+
+                Element listenToMemoryElem = enumElement.getChild("listenToMemory");
+                if (listenToMemoryElem != null) {
+                    selectEnum.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
+                }
 
                 elem = enumElement.getChild("localVariable");
                 if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
@@ -107,20 +131,28 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         }
 
         try {
-            Element elem = shared.getChild(addressingElementName);
-            if (elem != null) {
-                selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+            Element elem;
+            if (addressingElementName != null) {
+                elem = shared.getChild(addressingElementName);
+                if (elem != null) {
+                    selectEnum.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
+                }
             }
 
-            elem = shared.getChild(referenceElementName);
-            if (elem != null) selectEnum.setReference(elem.getTextTrim());
+            if (referenceElementName != null) {
+                elem = shared.getChild(referenceElementName);
+                if (elem != null) selectEnum.setReference(elem.getTextTrim());
+            }
 
-            elem = shared.getChild(localVariableElementName);
-            if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
+            if (localVariableElementName != null) {
+                elem = shared.getChild(localVariableElementName);
+                if (elem != null) selectEnum.setLocalVariable(elem.getTextTrim());
+            }
 
-            elem = shared.getChild(formulaElementName);
-            if (elem != null) selectEnum.setFormula(elem.getTextTrim());
-
+            if (formulaElementName != null) {
+                elem = shared.getChild(formulaElementName);
+                if (elem != null) selectEnum.setFormula(elem.getTextTrim());
+            }
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }

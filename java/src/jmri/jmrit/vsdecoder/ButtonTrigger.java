@@ -1,32 +1,34 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Button trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.AbstractButton;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ButtonTrigger extends Trigger implements ActionListener, MouseListener {
+public class ButtonTrigger extends Trigger implements ActionListener, JmriMouseListener {
 
     enum ButtonAction {
     }
@@ -49,7 +51,7 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
     }
 
     public boolean getMatchValue() {
-        return (match_value);
+        return match_value;
     }
 
     // Button action functions called directly from the enclosing SoundEvent.
@@ -68,7 +70,7 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
     }
 
     public void click(boolean v) {
-        log.debug("buttonTrigger {} click( {}) called.", getName(), v);
+        log.debug("buttonTrigger {} click({}) called.", getName(), v);
         if (v == match_value) {
             this.callback.takeAction();
         }
@@ -90,27 +92,27 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
 
     // MouseListener functions
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(JmriMouseEvent e) {
         log.debug("MouseListener.mousePressed() {}", this.getName());
         this.mouseDown();
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(JmriMouseEvent e) {
         log.debug("MouseListener.mouseReleased() {}", this.getName());
         this.mouseUp();
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(JmriMouseEvent e) {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(JmriMouseEvent e) {
     }
 
     @Override
@@ -131,7 +133,7 @@ public class ButtonTrigger extends Trigger implements ActionListener, MouseListe
         me.addContent(new Element("match").addContent(Boolean.valueOf(match_value).toString()));
         me.addContent(new Element("action").addContent(this.getTriggerType().toString()));
 
-        return (me);
+        return me;
     }
 
     @Override

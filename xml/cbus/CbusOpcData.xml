@@ -10,6 +10,7 @@ decode = The decode parse string used in CbusOpCodes.java, used for Console Log.
     Values starting "OPC_" must have a corresponding CbusBundle value
     ~OPC_SN~
     %1 - Translate next 1 Byte ( 0-255 )
+    ^S - Translate next 1 byte as loco speed / direction
     %2 - Translate next 2 bytes as hi lo pair ( 0-65535 )
     ^2 - Translate next 2 bytes to Loco ID
     $2 - Translate next 2 bytes with node name ( if possible )
@@ -45,7 +46,7 @@ filter = Enum of which categories apply in CbusFilter.java
   <CbusOpc hex="44" minPri="2" name="STMOD" decode="~OPC_SN~: ,%1, ~OPC_DA~: ,%1" filter="CFCS,CFCSAQRL"/>
   <CbusOpc hex="45" minPri="2" name="PCON" decode="~OPC_SN~: ,%1, ~OPC_CA~: ,%1" filter="CFCS,CFCSAQRL"/>
   <CbusOpc hex="46" minPri="2" name="KCON" decode="~OPC_SN~: ,%1, ~OPC_CA~: ,%1" filter="CFCS,CFCSAQRL"/>
-  <CbusOpc hex="47" minPri="2" name="DSPD" decode="~OPC_SN~: ,%1, ~OPC_SD~: ,%1" filter="CFCS,CFCSDSPD"/>
+  <CbusOpc hex="47" minPri="2" name="DSPD" decode="~OPC_SN~: ,%1,^S" filter="CFCS,CFCSDSPD"/>
   <CbusOpc hex="48" minPri="2" name="DFLG" decode="~OPC_SN~: ,%1, ~OPC_FL~: ,%1" filter="CFCS,CFCSAQRL"/>
   <CbusOpc hex="49" minPri="2" name="DFNON" decode="~OPC_SN~: ,%1, ~OPC_FN~: ,%1" filter="CFCS,CFCSFUNC"/>
   <CbusOpc hex="4A" minPri="2" name="DFNOF" decode="~OPC_SN~: ,%1, ~OPC_FN~: ,%1" filter="CFCS,CFCSFUNC"/>
@@ -130,7 +131,7 @@ filter = Enum of which categories apply in CbusFilter.java
   <CbusOpc hex="DE" minPri="3" name="ARSOF2" decode="$4, ~OPC_DA~: ,%1, ,%1" filter="CFEVENT,CFNODE,CFOF,CFSHORT,CFRESPONSE,CFED2"/>
   <CbusOpc hex="DF" minPri="3" name="EXTC5" decode=": ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFMISC,CFOTHER"/>
   <CbusOpc hex="E0" minPri="2" name="RDCC6" decode="~OPC_RP~: ,%1, ~OPC_DA~: ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFCS,CFCSLC"/>
-  <CbusOpc hex="E1" minPri="2" name="PLOC" decode="~OPC_SN~: ,%1, ~OPC_AD~: ,^2, ~OPC_SD~: ,%1, F1: ,%1, F2: ,%1, F3: ,%1" filter="CFCS,CFCSAQRL"/>
+  <CbusOpc hex="E1" minPri="2" name="PLOC" decode="~OPC_SN~: ,%1, ~OPC_AD~: ,^2,^S, F1: ,%1, F2: ,%1, F3: ,%1" filter="CFCS,CFCSAQRL"/>
   <CbusOpc hex="E2" minPri="3" name="NAME" decode="~OPC_CH~: ,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFNDCONFIG,CFNDSETUP"/>
   <CbusOpc hex="E3" minPri="2" name="STAT" decode="$2, ~OPC_CS~: ,%1, ~OPC_FL~: ,%1, ~OPC_VN~: ,%1, ,%1, ,%1" filter="CFNODE,CFCS,CFCSC"/>
   <CbusOpc hex="EF" minPri="3" name="PARAMS" decode="~OPC_PA~ :,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1" filter="CFNDCONFIG,CFNDSETUP"/>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for Throttle Layout Config xml file                         -->
+
+<!-- This schema is part of JMRI. Copyright 2022.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/throttle-config.xsd"/>
+  <xs:annotation>
+    <xs:documentation>
+      The ThrottleFrameType, windowType and JynstrumentType are included from throttle-config.xsd.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="throttle-layout-config" type="throttle-layout-configType"/>
+
+  <xs:complexType name="ThrottlesListPanelType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="JynstrumentToolType">
+    <xs:annotation>
+      <xs:documentation>
+        Jynstrument items in the tool bar do not have a window component but do have a USB component.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element type="USBThrottleType" name="USBThrottle" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="JynstrumentFolder" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="USBThrottleType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="DesiredController" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ThrottleWindowFrameType">
+    <xs:complexContent>
+      <xs:extension base="ThrottleFrameType">
+        <xs:attribute type="xs:string" name="ThrottleXMLFile" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ThrottleWindowType">
+    <xs:sequence>
+      <xs:element type="windowType" name="window"/>
+      <xs:element type="ThrottleWindowFrameType" name="ThrottleFrame" maxOccurs="unbounded"/>
+      <xs:element type="JynstrumentToolType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="systemPrefix" use="optional"/>
+    <xs:attribute type="xs:string" name="title"/>
+    <xs:attribute name="titleType" default="address">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="address"/>
+          <xs:enumeration value="text"/>
+          <xs:enumeration value="textAddress"/>
+          <xs:enumeration value="addresstext"/>
+          <xs:enumeration value="rosterID"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute type="trueFalseType" name="isEditMode"/>
+  </xs:complexType>
+
+  <xs:complexType name="throttle-layout-configType">
+    <xs:sequence>
+      <xs:element type="ThrottlesListPanelType" name="ThrottlesListPanel"/>
+      <xs:element type="ThrottleWindowType" name="ThrottleWindow" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -144,7 +144,6 @@ public class PortalManagerTest {
         JUnitUtil.removeMatchingThreads("Engineer(");
         _portalMgr = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -806,14 +806,12 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     void updateForDecoderNotID(int pMfgID, int pModelID) {
-        String msg = "Found mfg " + pMfgID + " version " + pModelID + "; no such manufacterer defined";
-        log.warn(msg);
+        log.warn("Found mfg {} version {}; no such manufacterer defined", pMfgID, pModelID );
         dTree.clearSelection();
     }
 
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {
-        String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
-        log.warn(msg);
+        log.warn("Found mfg {} ({}) version {}; no such decoder defined", pMfgID, pMfg, pModelID );
         dTree.clearSelection();
         Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
@@ -832,17 +830,12 @@ public class EcosLocoToRoster implements EcosListener {
     void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {
-            //String msg = "Identified "+pList.size()+" matches: ";
             StringBuilder buf = new StringBuilder();
-            buf.append("Identified "); // NOI18N
-            buf.append(pList.size());
-            buf.append(" matches: ");
             for (int i = 0; i < pList.size(); i++) {
                 buf.append(pList.get(i).getModel());
                 buf.append(":");
-                //msg = msg+pList.get(i).getModel()+":";
             }
-            log.debug(buf.toString());
+            log.debug("Identified {} matches: {}", pList.size(), buf );
         }
         if (pList.size() <= 0) {
             log.error("Found empty list in updateForDecoderTypeID, should not happen");

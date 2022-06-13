@@ -343,7 +343,6 @@ public class LayoutSlipTest {
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

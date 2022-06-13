@@ -143,7 +143,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         log.trace("NceReply(len {}) waiting: {} watingForRead: {} waitingForCmdTime: {} waitingForCmd1224: {} waitingForCmdRatio: {} waitingForCmdStop: {} waitingForCmdStart: {}", r.getNumDataElements(), waiting, waitingForCmdRead, waitingForCmdTime, waitingForCmd1224, waitingForCmdRatio, waitingForCmdStop, waitingForCmdStart);
 
         if (waiting <= 0) {
-            log.error(Bundle.getMessage("LogReplyEnexpected"));
+            log.error("{}", Bundle.getMessage("LogReplyEnexpected"));
             return;
         }
         waiting--;
@@ -200,37 +200,34 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         // unhandled reply, nothing to do about it
         if (log.isDebugEnabled()) {
             StringBuffer buf = new StringBuffer();
-            buf.append("NceReply(len " + r.getNumDataElements() + ")");
             if (waiting > 0) {
-                buf.append(" waiting: " + waiting);
+                buf.append("waiting: ").append(waiting);
             }
             if (waitingForCmdRead) {
-                buf.append(" waitingForCmdRead: " + waitingForCmdRead);
+                buf.append("waitingForCmdRead: ").append(waitingForCmdRead);
             }
             if (waitingForCmdTime) {
-                buf.append(" waitingForCmdTime: " + waitingForCmdTime);
+                buf.append("waitingForCmdTime: ").append(waitingForCmdTime);
             }
             if (waitingForCmd1224) {
-                buf.append(" waitingForCmd1224: " + waitingForCmd1224);
+                buf.append("waitingForCmd1224: ").append(waitingForCmd1224);
             }
             if (waitingForCmdRatio) {
-                buf.append(" waitingForCmdRatio: " + waitingForCmdRatio);
+                buf.append("waitingForCmdRatio: ").append(waitingForCmdRatio);
             }
             if (waitingForCmdStop) {
-                buf.append(" waitingForCmdStop: " + waitingForCmdStop);
+                buf.append("waitingForCmdStop: ").append(waitingForCmdStop);
             }
             if (waitingForCmdStart) {
-                buf.append(" waitingForCmdStart: " + waitingForCmdStart);
+                buf.append("waitingForCmdStart: ").append(waitingForCmdStart);
             }
-            log.debug(buf.toString());
+            log.debug("NceReply(len {}) {}", r.getNumDataElements(), buf);
             buf = new StringBuffer();
-            buf.append(Bundle.getMessage("LogReplyUnexpected") + ":");
             for (int i = 0; i < r.getNumDataElements(); i++) {
-                buf.append(" " + r.getElement(i));
+                buf.append(" ").append(r.getElement(i));
             }
-            log.debug(buf.toString());
+            log.debug("{}:{}", Bundle.getMessage("LogReplyUnexpected"), buf );
         }
-        return;
     }
 
     /**
@@ -238,7 +235,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     @Override
     public String getHardwareClockName() {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("getHardwareClockName");
         }
         return ("Nce Fast Clock");
@@ -249,7 +246,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     @Override
     public boolean canCorrectHardwareClock() {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("getHardwareClockName");
         }
         return false;
@@ -260,7 +257,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     @Override
     public boolean canSet12Or24HourClock() {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("canSet12Or24HourClock");
         }
         return true;
@@ -269,14 +266,16 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     /**
      * Set Nce clock speed, must be 1 to 15.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+        justification="I18N of log message")
     @Override
     public void setRate(double newRate) {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("setRate: {}", newRate);
         }
         int newRatio = (int) newRate;
         if (newRatio < 1 || newRatio > 15) {
-            log.error(Bundle.getMessage("LogNceClockRatioRangeError"));
+            log.error("{}", Bundle.getMessage("LogNceClockRatioRangeError"));
         } else {
             issueClockRatio(newRatio);
         }
@@ -287,7 +286,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     @Override
     public boolean requiresIntegerRate() {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("requiresIntegerRate");
         }
         return true;
@@ -300,7 +299,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     public double getRate() {
         issueReadOnlyRequest(); // get the current rate
         //issueDeferredGetRate = true;
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("getRate: {}", nceLastRatio);
         }
         return (nceLastRatio);
@@ -312,7 +311,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public void setTime(Date now) {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("setTime: {}", now);
         }
         issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
@@ -340,7 +339,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
             now.setMinutes(nceLastMinute);
             now.setSeconds(nceLastSecond);
         }
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("getTime returning: {}", now);
         }
         return (now);
@@ -352,7 +351,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     @Override
     public void startHardwareClock(Date now) {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("startHardwareClock: {}", now);
         }
         issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
@@ -364,7 +363,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     @Override
     public void stopHardwareClock() {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("stopHardwareClock");
         }
         issueClockStop();
@@ -375,7 +374,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      * time
      */
     public void initiateRead() {
-        if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()) {
+        if (DEBUG_SHOW_PUBLIC_CALLS ) {
             log.debug("initiateRead");
         }
         issueReadOnlyRequest();
@@ -398,9 +397,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
      */
     public void newInternalMinute() {
         if (DEBUG_SHOW_SYNC_CALLS) {
-            if (log.isDebugEnabled()) {
-                log.debug("newInternalMinute clockMode: " + clockMode + " nceInit: " + nceSyncInitStateCounter + " nceRun: " + nceSyncRunStateCounter);
-            }
+            log.debug("newInternalMinute clockMode: {} nceInit: {} nceRun: {}",
+                clockMode, nceSyncInitStateCounter, nceSyncRunStateCounter );
         }
     }
 

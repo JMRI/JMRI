@@ -191,7 +191,6 @@ public class LayoutShapeTest {
             layoutEditor = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

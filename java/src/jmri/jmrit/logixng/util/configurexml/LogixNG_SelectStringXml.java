@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.configurexml;
 
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
@@ -28,10 +29,23 @@ public class LogixNG_SelectStringXml {
         Element enumElement = new Element(tagName);
 
         enumElement.addContent(new Element("addressing").addContent(selectStr.getAddressing().name()));
-        enumElement.addContent(new Element("value").addContent(selectStr.getValue()));
-        enumElement.addContent(new Element("reference").addContent(selectStr.getReference()));
-        enumElement.addContent(new Element("localVariable").addContent(selectStr.getLocalVariable()));
-        enumElement.addContent(new Element("formula").addContent(selectStr.getFormula()));
+        if (selectStr.getValue() != null) {
+            enumElement.addContent(new Element("value").addContent(selectStr.getValue()));
+        }
+        if (selectStr.getReference() != null && !selectStr.getReference().isEmpty()) {
+            enumElement.addContent(new Element("reference").addContent(selectStr.getReference()));
+        }
+        var memory = selectStr.getMemory();
+        if (memory != null) {
+            enumElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
+        enumElement.addContent(new Element("listenToMemory").addContent(selectStr.getListenToMemory() ? "yes" : "no"));
+        if (selectStr.getLocalVariable() != null && !selectStr.getLocalVariable().isEmpty()) {
+            enumElement.addContent(new Element("localVariable").addContent(selectStr.getLocalVariable()));
+        }
+        if (selectStr.getFormula() != null && !selectStr.getFormula().isEmpty()) {
+            enumElement.addContent(new Element("formula").addContent(selectStr.getFormula()));
+        }
 
         if (selectStr.getAddressing() == NamedBeanAddressing.Table) {
             enumElement.addContent(selectTableXml.store(selectStr.getSelectTable(), "table"));
@@ -40,35 +54,47 @@ public class LogixNG_SelectStringXml {
         return enumElement;
     }
 
-    public void load(Element enumElement, LogixNG_SelectString selectStr)
+    public void load(Element strElement, LogixNG_SelectString selectStr)
             throws JmriConfigureXmlException {
 
-        if (enumElement != null) {
+        if (strElement != null) {
 
             LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
             try {
-                Element elem = enumElement.getChild("addressing");
+                Element elem = strElement.getChild("addressing");
                 if (elem != null) {
                     selectStr.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                elem = enumElement.getChild("value");
+                elem = strElement.getChild("value");
                 if (elem != null) {
                     selectStr.setValue(elem.getTextTrim());
                 }
 
-                elem = enumElement.getChild("reference");
+                elem = strElement.getChild("reference");
                 if (elem != null) selectStr.setReference(elem.getTextTrim());
 
-                elem = enumElement.getChild("localVariable");
+                Element memoryName = strElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectStr.setMemory(m);
+                    else selectStr.removeMemory();
+                }
+
+                Element listenToMemoryElem = strElement.getChild("listenToMemory");
+                if (listenToMemoryElem != null) {
+                    selectStr.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
+                }
+
+                elem = strElement.getChild("localVariable");
                 if (elem != null) selectStr.setLocalVariable(elem.getTextTrim());
 
-                elem = enumElement.getChild("formula");
+                elem = strElement.getChild("formula");
                 if (elem != null) selectStr.setFormula(elem.getTextTrim());
 
-                if (enumElement.getChild("table") != null) {
-                    selectTableXml.load(enumElement.getChild("table"), selectStr.getSelectTable());
+                if (strElement.getChild("table") != null) {
+                    selectTableXml.load(strElement.getChild("table"), selectStr.getSelectTable());
                 }
 
             } catch (ParserException e) {

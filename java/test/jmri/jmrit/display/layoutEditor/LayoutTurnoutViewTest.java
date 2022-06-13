@@ -218,8 +218,8 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
     // from here down is testing infrastructure
     @BeforeAll
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public static void beforeClass() {
-        JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             JUnitUtil.resetInstanceManager();
@@ -230,10 +230,9 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
     }
 
     @AfterAll
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public static void afterClass() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
-        JUnitUtil.tearDown();
     }
 
     @BeforeEach

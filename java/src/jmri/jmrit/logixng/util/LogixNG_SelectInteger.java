@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.util;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -18,34 +22,57 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectInteger {
+public class LogixNG_SelectInteger implements VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
     private final LogixNG_SelectTable _selectTable;
+    private final PropertyChangeListener _listener;
+    private boolean _listenToMemory;
+    private boolean _listenersAreRegistered;
+    private final FormatterParserValidator _formatterParserValidator;
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private int _value;
     private String _reference = "";
+    private NamedBeanHandle<Memory> _memoryHandle;
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
 
-    public LogixNG_SelectInteger(AbstractBase base) {
+    public LogixNG_SelectInteger(
+            @Nonnull AbstractBase base,
+            @Nonnull PropertyChangeListener listener) {
+
+        this(base, listener, new DefaultFormatterParserValidator());
+    }
+
+    public LogixNG_SelectInteger(
+            @Nonnull AbstractBase base,
+            @Nonnull PropertyChangeListener listener,
+            @Nonnull FormatterParserValidator formatterParserValidator) {
         _base = base;
         _inUse = () -> true;
         _selectTable = new LogixNG_SelectTable(_base, _inUse);
+        _listener = listener;
+        _formatterParserValidator = formatterParserValidator;
+        _value = _formatterParserValidator.getInitialValue();
     }
-
 
     public void copy(LogixNG_SelectInteger copy) throws ParserException {
         copy.setAddressing(_addressing);
         copy.setValue(_value);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
+        copy.setMemory(_memoryHandle);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
+    }
+
+    @Nonnull
+    public FormatterParserValidator getFormatterParserValidator() {
+        return _formatterParserValidator;
     }
 
     public void setAddressing(@Nonnull NamedBeanAddressing addressing) throws ParserException {
@@ -75,6 +102,46 @@ public class LogixNG_SelectInteger {
 
     public String getReference() {
         return _reference;
+    }
+
+    public void setMemory(@Nonnull String memoryName) {
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setMemory(memory);
+        } else {
+            removeMemory();
+            log.warn("memory \"{}\" is not found", memoryName);
+        }
+    }
+
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        _memoryHandle = handle;
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+        addRemoveVetoListener();
+    }
+
+    public void setMemory(@Nonnull Memory memory) {
+        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+
+    public void removeMemory() {
+        if (_memoryHandle != null) {
+            _memoryHandle = null;
+            addRemoveVetoListener();
+        }
+    }
+
+    public NamedBeanHandle<Memory> getMemory() {
+        return _memoryHandle;
+    }
+
+    public void setListenToMemory(boolean listenToMemory) {
+        _listenToMemory = listenToMemory;
+    }
+
+    public boolean getListenToMemory() {
+        return _listenToMemory;
     }
 
     public void setLocalVariable(@Nonnull String localVariable) {
@@ -109,6 +176,14 @@ public class LogixNG_SelectInteger {
         return _selectTable;
     }
 
+    private void addRemoveVetoListener() {
+        if (_memoryHandle != null) {
+            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
+        } else {
+            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
+        }
+    }
+
     public int evaluateValue(ConditionalNG conditionalNG) throws JmriException {
 
         if (_addressing == NamedBeanAddressing.Direct) {
@@ -120,6 +195,10 @@ public class LogixNG_SelectInteger {
                 case Reference:
                     val = ReferenceUtil.getReference(
                             conditionalNG.getSymbolTable(), _reference);
+                    break;
+
+                case Memory:
+                    val = _memoryHandle.getBean().getValue();
                     break;
 
                 case LocalVariable:
@@ -141,12 +220,26 @@ public class LogixNG_SelectInteger {
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
 
-            return (int) TypeConversionUtil.convertToLong(val);
+            if (val instanceof String) {
+                String validateResult = _formatterParserValidator.validate(val.toString());
+                if (validateResult != null) throw new JmriException(validateResult);
+                return _formatterParserValidator.parse(val.toString());
+            }
+
+            return (int) TypeConversionUtil.convertToLong(val, true, true);
         }
     }
 
     public String getDescription(Locale locale) {
         String enumName;
+
+        String memoryName;
+        if (_memoryHandle != null) {
+            memoryName = _memoryHandle.getName();
+        } else {
+            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+
         switch (_addressing) {
             case Direct:
                 enumName = Bundle.getMessage(locale, "AddressByDirect", _value);
@@ -154,6 +247,10 @@ public class LogixNG_SelectInteger {
 
             case Reference:
                 enumName = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
+
+            case Memory:
+                enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 break;
 
             case LocalVariable:
@@ -177,6 +274,122 @@ public class LogixNG_SelectInteger {
                 throw new IllegalArgumentException("invalid _addressing: " + _addressing.name());
         }
         return enumName;
+    }
+
+    /**
+     * Register listeners if this object needs that.
+     */
+    public void registerListeners() {
+        if (!_listenersAreRegistered
+                && (_addressing == NamedBeanAddressing.Memory)
+                && (_memoryHandle != null)
+                && _listenToMemory) {
+            _memoryHandle.getBean().addPropertyChangeListener("value", _listener);
+            _listenersAreRegistered = true;
+        }
+    }
+
+    /**
+     * Unregister listeners if this object needs that.
+     */
+    public void unregisterListeners() {
+        if (_listenersAreRegistered
+                && (_addressing == NamedBeanAddressing.Memory)
+                && (_memoryHandle != null)
+                && _listenToMemory) {
+            _memoryHandle.getBean().removePropertyChangeListener("value", _listener);
+            _listenersAreRegistered = false;
+        }
+    }
+
+    @Override
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if ("CanDelete".equals(evt.getPropertyName()) && _inUse.isInUse()) { // No I18N
+            if (evt.getOldValue() instanceof Memory) {
+                boolean doVeto = false;
+                if ((_addressing == NamedBeanAddressing.Memory) && (_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    doVeto = true;
+                }
+                if (doVeto) {
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("MemoryInUseMemoryExpressionVeto", _base.getDisplayName()), e); // NOI18N
+                }
+            }
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof Memory) {
+                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
+                    removeMemory();
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Format, parse and validate.
+     */
+    public interface FormatterParserValidator {
+
+        /**
+         * Get the initial value
+         * @return the initial value
+         */
+        public int getInitialValue();
+
+        /**
+         * Format the value
+         * @param value the value
+         * @return the formatted string
+         */
+        public String format(int value);
+
+        /**
+         * Parse the string
+         * @param str the string
+         * @return the parsed value
+         */
+        public int parse(String str);
+
+        /**
+         * Validates the string
+         * @param str the string
+         * @return null if valid. An error message if not valid
+         */
+        public String validate(String str);
+    }
+
+
+    public static class DefaultFormatterParserValidator
+            implements FormatterParserValidator {
+
+        @Override
+        public int getInitialValue() {
+            return 0;
+        }
+
+        @Override
+        public String format(int value) {
+            return Integer.toString(value);
+        }
+
+        @Override
+        public int parse(String str) {
+            try {
+                return Integer.parseInt(str);
+            } catch (NumberFormatException e) {
+                return getInitialValue();
+            }
+        }
+
+        @Override
+        public String validate(String str) {
+            try {
+                return null;
+            } catch (NumberFormatException e) {
+                return Bundle.getMessage("LogixNG_SelectInteger_MustBeValidInteger");
+            }
+        }
+
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectInteger.class);

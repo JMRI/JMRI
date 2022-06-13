@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
 <!--                                                                        -->
@@ -70,6 +70,7 @@
         <choice xml:lang="fr">Format 14 Pas de vitesse</choice>
         <choice xml:lang="it">Formato 14 step</choice>
         <choice xml:lang="nl">14 rijstappenmodus</choice>
+        <choice xml:lang="es">Modo de 14 pasos de velocidad</choice>
       </enumChoice>
       <enumChoice choice="28/128 speed step format">
         <choice>28/128 speed step format (recommended)</choice>
@@ -78,6 +79,7 @@
         <choice xml:lang="fr">Format 28/128 Pas de vitesse (recommandé)</choice>
         <choice xml:lang="it">Formato 28 o 128 step (raccomandato)</choice>
         <choice xml:lang="nl">28/128 rijstappenmodus mode (aanbevolen)</choice>
+        <choice xml:lang="es">Modo de  28/128 pasos de velocidad (recomendado)</choice>
       </enumChoice>
     </enumVal>
     <label>Speed Steps</label>
@@ -86,11 +88,13 @@
     <label xml:lang="fr">Pas de vitesse</label>
     <label xml:lang="it">Step Velocità</label>
     <label xml:lang="nl">Rijstappen</label>
+    <label xml:lang="es">pasos de velocidad</label>
     <tooltip>Sets the Speed Step for motor, also may affect some light settings</tooltip>
     <tooltip xml:lang="cs">Nastaví režim rychlostních kroků, může mít také vliv na některé efekty světel</tooltip>
     <tooltip xml:lang="de">Setzt den Fahrstufenmodus und hat Auswirkung auf einige Lichteffekte</tooltip>
     <tooltip xml:lang="fr">Règle les Pas de vitesse pour le moteur; peut aussi influencer certains réglages de lumières</tooltip>
     <tooltip xml:lang="it">Seleziona Step Velocità motore, potrebbe avere effetti sulle luci</tooltip>
     <tooltip xml:lang="nl">Hiermee stelt u de rijstappenmodus in en beinvloedt mogelijk bepaalde lichteffecten.</tooltip>
+    <tooltip xml:lang="es">Establece los pasos de velocidad, puede afectar algunos ajustes de iluminación</tooltip>
   </variable>
 </variables>

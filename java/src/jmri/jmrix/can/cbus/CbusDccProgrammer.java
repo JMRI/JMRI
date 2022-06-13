@@ -40,7 +40,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<>();
+        List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         ret.add(ProgrammingMode.PAGEMODE);
@@ -224,6 +224,11 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
         notifyProgListenerEnd(temp,value,status);
+    }
+
+    @Override
+    public void dispose() {
+        removeTc(tc);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccProgrammer.class);

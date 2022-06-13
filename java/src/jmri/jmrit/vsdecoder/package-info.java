@@ -3,10 +3,7 @@
  *
  * <h2>Related Documentation</h2>
  *
- * For documentation, please see:
- * <ul>
- *   <li><a href="http://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml">Main page and introduction</a>
- * </ul>
+ *   <a href="http://jmri.org/help/en/html/tools/vsd/index.shtml">Virtual Sound Decoder</a>
 */
 
 //@annotations for the entire package go here

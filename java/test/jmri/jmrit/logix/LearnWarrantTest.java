@@ -243,7 +243,6 @@ public class LearnWarrantTest {
             }
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

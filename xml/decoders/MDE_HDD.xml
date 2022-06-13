@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2022</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname><surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber><date>2022-04-29</date><authorinitials>BJ</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <decoder>
+    <family name="mXion" mfg="MD Electronics">
+      <model model="HDD" lowVersionID="10" highVersionID="10"/>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+    </programming>
+    <variables>
+
+      <!-- standard variables that go in standard panes -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <variable item="Product Number" CV="105" default="15" readOnly="yes">
+        <decVal/>
+        <label>Product Number</label>
+      </variable>
+
+      <!-- The following is from xml/decoders/nmra/decoderLockId16.xml with specific default -->
+      <variable item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="195">
+        <decVal/>
+        <label>Decoder Lock ID number</label>
+        <label xml:lang="it">ID Codice Blocco Decoder</label>
+        <label xml:lang="fr">No de verrouillage décodeur (Lock ID)</label>
+        <label xml:lang="de">Nummer der Decoder Lock ID</label>
+        <label xml:lang="cs">Zámek dekodéru ID číslo</label>
+        <label xml:lang="nl">Nummer van het Decoder Lock ID</label>
+        <label xml:lang="es">Número ID de bloqueo del decodificador</label>
+      </variable>
+
+      <!-- variables specific to this decoder that go in custom panes -->
+
+      <variable item="Odd Step Calculation Activation" CV="45">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Odd Step Calculation Activation</label>
+      </variable>
+
+      <variable item="Odd Step Factor" CV="46">
+        <decVal/>
+        <label>Odd Step Factor</label>
+      </variable>
+
+      <variable item="Switch Address Calculation" CV="48">
+        <enumVal>
+            <enumChoice>
+                <choice>Switch address like norm</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Switch address like Roco, Fleischmann</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Switch Address Calculation</label>
+      </variable>
+
+      <variable mask="XXXXXXXV" item="A3 During Motion" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal Function</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Flashes While Turning</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A3 During Motion</label>
+      </variable>
+
+      <variable mask="XXXXXXVX" item="A4/A5 Option" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Light Signal</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A4/A5 Function</label>
+      </variable>
+
+      <variable mask="XXXXXVXX" item="Stepper" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Stepper</label>
+      </variable>
+
+      <variable mask="XXXXVXXX" item="Stepper Single" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Stepper Single</label>
+      </variable>
+
+      <variable mask="XXXVXXXX" item="Stepper 180" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Stepper 180</label>
+      </variable>
+
+      <variable mask="XXVXXXXX" item="Stepper Drive Direction" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Stepper Drive Direction</label>
+      </variable>
+
+      <variable mask="XVXXXXXX" item="Stepper End Position" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Not Hold</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Hold</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Stepper End Position</label>
+      </variable>
+
+      <variable mask="VXXXXXXX" item="Light Signal" CV="49">
+        <enumVal>
+            <enumChoice>
+                <choice>Switch</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Fading</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Light Signal</label>
+      </variable>
+
+      <variable mask="XXXXXXXV" item="Working Mode" CV="96">
+        <enumVal>
+            <enumChoice>
+                <choice>DCC</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>MM (Automatic System)</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Working Mode</label>
+      </variable>
+
+      <variable mask="XXXXXXXV" item="Segment Working Mode" CV="102">
+        <enumVal>
+            <enumChoice>
+                <choice>Direction Auto</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Direction Per Switch</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Segment Working Mode</label>
+      </variable>
+
+      <variable mask="VVVVVVVV" item="Segment/Stage-Mode" CV="107">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal Turntable (Round)</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Segment/Stage (stops at end)</choice>
+            </enumChoice>
+            <enumChoice value="128">
+                <choice>Segment/stage for Heyn/Pola</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Segment/Stage-Mode</label>
+      </variable>
+
+      <variable mask="XXXXVVVV" item="Turntable Mode" CV="112">
+        <enumVal>
+            <enumChoice>
+                <choice>Self build/extern turntable</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Heyn 720 mm</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Heyn 600 mm</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Heyn 500 mm</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Heyn 380 mm</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Heyn 210 mm</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Heyn 380 mm, with 3rd step calculation</choice>
+            </enumChoice>
+            <enumChoice value="11">
+                <choice>Pola-G</choice>
+            </enumChoice>
+            <enumChoice value="12">
+                <choice>Railcar mode</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Turntable Mode</label>
+      </variable>
+
+      <variable mask="XXXXXXXV" item="Calibration" CV="102">
+        <enumVal>
+            <enumChoice>
+                <choice>Not Calibrated (Done By Start)</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Calibrated (Manual with CV189/190)</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Calibration</label>
+      </variable>
+
+      <variable item="Reverse Loop Current Detection Value" CV="114" default="25">
+        <decVal min="1" max="100"/>
+        <label>Reverse Loop Current Detection Value</label>
+      </variable>
+
+      <variable item="Reverse Loop Wait Time" CV="115" default="12">
+        <decVal/>
+        <label>Reverse Loop Wait Time</label>
+      </variable>
+
+      <variable item="Reverse Loop Sampling Rate" CV="116" default="5">
+        <decVal/>
+        <label>Reverse Loop Current Sampling Gate</label>
+      </variable>
+
+      <variable item="Max Output Segments" CV="119" default="72">
+        <decVal min="1" max="72"/>
+        <label>    Max Output Segments</label> <!-- for spacing on HDD Segments pane -->
+      </variable>
+
+
+      <variable mask="VVVVVVVV" item="A1 Function" CV="120">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice value="64">
+                <choice>Permanent Off</choice>
+            </enumChoice>
+            <enumChoice value="128">
+                <choice>Permanent On</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A1 Function</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A1 Dimming Value" CV="121" default="100">
+        <decVal min="1" max="100"/>
+        <label>A1 Dimming Value</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A1 Dimming" CV="121">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Fading</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A1 Dimming</label>
+      </variable>
+      <variable item="A1 Condition" CV="122" readOnly="yes">
+        <decVal/>
+        <label>A1 Condition</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A1 Special Function" CV="123" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+        <label>A1 Special Function</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A1 Special Function Inverse" CV="123">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A1 Special Function Inverse</label>
+      </variable>
+      <variable item="A1 Time For Special Function" CV="124" default="5">
+        <decVal/>
+        <label>A1 Time For Special Function</label>
+      </variable>
+      <variable item="A1 Address" CV="126,125" default="1">
+        <splitVal min="1" max="2048" highCV="125"/>
+        <label>A1 Address</label>
+      </variable>
+
+      <variable mask="VVVVVVVV" item="A2 Function" CV="130">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice value="64">
+                <choice>Permanent Off</choice>
+            </enumChoice>
+            <enumChoice value="128">
+                <choice>Permanent On</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A2 Function</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A2 Dimming Value" CV="131" default="100">
+        <decVal min="1" max="100"/>
+        <label>A2 Dimming Value</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A2 Dimming" CV="131">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Fading</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A2 Dimming</label>
+      </variable>
+      <variable item="A2 Condition" CV="132" readOnly="yes">
+        <decVal/>
+        <label>A2 Condition</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A2 Special Function" CV="133" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+        <label>A2 Special Function</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A2 Special Function Inverse" CV="133">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A2 Special Function Inverse</label>
+      </variable>
+      <variable item="A2 Time For Special Function" CV="134" default="5">
+        <decVal/>
+        <label>A2 Time For Special Function</label>
+      </variable>
+      <variable item="A2 Address" CV="136,135" default="2">
+        <splitVal min="1" max="2048" highCV="135"/>
+        <label>A2 Address</label>
+      </variable>
+
+
+      <variable mask="VVVVVVVV" item="A3 Function" CV="140">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice value="64">
+                <choice>Permanent Off</choice>
+            </enumChoice>
+            <enumChoice value="128">
+                <choice>Permanent On</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A3 Function</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A3 Dimming Value" CV="141" default="100">
+        <decVal min="1" max="100"/>
+        <label>A3 Dimming Value</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A3 Dimming" CV="141">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Fading</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A2 Dimming</label>
+      </variable>
+      <variable item="A3 Condition" CV="142" readOnly="yes">
+        <decVal/>
+        <label>A3 Condition</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A3 Special Function" CV="143" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+        <label>A3 Special Function</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A3 Special Function Inverse" CV="143">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A3 Special Function Inverse</label>
+      </variable>
+      <variable item="A3 Time For Special Function" CV="144" default="5">
+        <decVal/>
+        <label>A3 Time For Special Function</label>
+      </variable>
+      <variable item="A3 Address" CV="146,145" default="3">
+        <splitVal min="1" max="2048" highCV="145"/>
+        <label>A3 Address</label>
+      </variable>
+
+      <variable mask="VVVVVVVV" item="A4 Function" CV="150">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice value="64">
+                <choice>Permanent Off</choice>
+            </enumChoice>
+            <enumChoice value="128">
+                <choice>Permanent On</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A4 Function</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A4 Dimming Value" CV="151" default="100">
+        <decVal min="1" max="100"/>
+        <label>A4 Dimming Value</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A4 Dimming" CV="151">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Fading</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A2 Dimming</label>
+      </variable>
+      <variable item="A4 Condition" CV="152" readOnly="yes">
+        <decVal/>
+        <label>A4 Condition</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A4 Special Function" CV="153" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+        <label>A4 Special Function</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A4 Special Function Inverse" CV="153">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A4 Special Function Inverse</label>
+      </variable>
+      <variable item="A4 Time For Special Function" CV="154" default="5">
+        <decVal/>
+        <label>A4 Time For Special Function</label>
+      </variable>
+      <variable item="A4 Address" CV="156,155" default="4">
+        <splitVal min="1" max="2048" highCV="155"/>
+        <label>A4 Address</label>
+      </variable>
+
+      <variable mask="VVVVVVVV" item="A5 Function" CV="160">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice value="64">
+                <choice>Permanent Off</choice>
+            </enumChoice>
+            <enumChoice value="128">
+                <choice>Permanent On</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A5 Function</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A5 Dimming Value" CV="161" default="100">
+        <decVal min="1" max="100"/>
+        <label>A5 Dimming Value</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A5 Dimming" CV="161">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Fading</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A2 Dimming</label>
+      </variable>
+      <variable item="A5 Condition" CV="162" readOnly="yes">
+        <decVal/>
+        <label>A5 Condition</label>
+      </variable>
+      <variable mask="XVVVVVVV" item="A5 Special Function" CV="163" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+        <label>A5 Special Function</label>
+      </variable>
+      <variable mask="VXXXXXXX" item="A5 Special Function Inverse" CV="163">
+        <enumVal>
+            <enumChoice>
+                <choice>Normal</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>A5 Special Function Inverse</label>
+      </variable>
+      <variable item="A5 Time For Special Function" CV="164" default="5">
+        <decVal/>
+        <label>A5 Time For Special Function</label>
+      </variable>
+      <variable item="A5 Address" CV="166,165" default="5">
+        <splitVal min="1" max="2048" highCV="165"/>
+        <label>A5 Address</label>
+      </variable>
+
+      <variable item="Servo Speed" CV="170" default="10">
+        <decVal/>
+        <label>Servo Speed</label>
+      </variable>
+      <variable item="Servo End Position Right" CV="171" default="200">
+        <decVal/>
+        <label>Servo End Position Right</label>
+      </variable>
+      <variable item="Servo End Position Left" CV="172" default="20">
+        <decVal/>
+        <label>Servo End Position Left</label>
+      </variable>
+      <variable mask="XXXXXXXV" item="Servo Inverse" CV="173">
+        <enumVal>
+            <enumChoice>
+                <choice>Not Inverse</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Inverse</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Servo Inverse</label>
+      </variable>
+      <variable mask="XXXXXXXV" item="Servo Stop End" CV="174" default="1">
+        <enumVal>
+            <enumChoice>
+                <choice>Hold End Position</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>Not Hold End Position</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Servo Stop End</label>
+      </variable>
+      <variable item="Servo Address" CV="176,175" default="6">
+        <splitVal min="1" max="2048" highCV="175"/>
+        <label>Servo Address</label>
+      </variable>
+
+
+      <variable item="Stepper Address" CV="181,180" default="120">
+        <splitVal min="1" max="2048" highCV="180"/>
+        <label>Stepper Address</label>
+      </variable>
+      <variable item="Stepper Speed" CV="182" default="1">
+        <decVal/>
+        <label>Stepper Speed</label>
+      </variable>
+      <variable item="Stepper Single Address" CV="184,183" default="121">
+        <splitVal min="1" max="2048" highCV="183"/>
+        <label>Stepper Single Address</label>
+      </variable>
+      <variable item="Stepper 180 Address" CV="186,185" default="122">
+        <splitVal min="1" max="2048" highCV="185"/>
+        <label>Stepper 180 Address</label>
+      </variable>
+      <variable item="Stepper Direction Address" CV="188,187" default="123">
+        <splitVal min="1" max="2048" highCV="187"/>
+        <label>Stepper Direction Address</label>
+      </variable>
+      <variable item="Stepper Reset Address" CV="190,189" default="124">
+        <splitVal min="1" max="2048" highCV="190"/>
+        <label>Stepper Reset Address</label>
+      </variable>
+
+      <variable item="Fullsteps" CV="264,263">
+        <splitVal highCV="263"/>
+        <label>Fullsteps</label>
+      </variable>
+
+      <variable item="Halfsteps" CV="265">
+        <decVal/>
+        <label>Halfsteps</label>
+      </variable>
+      <variable item="Quartersteps" CV="266">
+        <decVal/>
+        <label>Quartersteps</label>
+      </variable>
+      <variable item="Eighthsteps" CV="267">
+        <decVal/>
+        <label>Eighthsteps</label>
+      </variable>
+      <variable item="Sixteenthsteps" CV="268">
+        <decVal/>
+        <label>Sixteenthsteps</label>
+      </variable>
+
+      <variable item="Slippery Fullsteps" CV="270,269">
+        <splitVal highCV="269"/>
+        <label>Slippery Fullsteps</label>
+      </variable>
+      <variable item="Slippery Halfsteps" CV="271">
+        <decVal/>
+        <label>Slippery Halfsteps</label>
+      </variable>
+      <variable item="Slippery Quartersteps" CV="272">
+        <decVal/>
+        <label>Slippery Quartersteps</label>
+      </variable>
+      <variable item="Slippery Eighthsteps" CV="273">
+        <decVal/>
+        <label>Slippery Eighthsteps</label>
+      </variable>
+      <variable item="Slippery Sixteenthsteps" CV="274">
+        <decVal/>
+        <label>Slippery Sixteenthsteps</label>
+      </variable>
+
+
+      <variable item="S01 Output Active" CV="191"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S02 Output Active" CV="192"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S03 Output Active" CV="193"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S04 Output Active" CV="194"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S05 Output Active" CV="195"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S06 Output Active" CV="196"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S07 Output Active" CV="197"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S08 Output Active" CV="198"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S09 Output Active" CV="199"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S10 Output Active" CV="200"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S11 Output Active" CV="201"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S12 Output Active" CV="202"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S13 Output Active" CV="203"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S14 Output Active" CV="204"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S15 Output Active" CV="205"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S16 Output Active" CV="206"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S17 Output Active" CV="207"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S18 Output Active" CV="208"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S19 Output Active" CV="209"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S20 Output Active" CV="210"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S21 Output Active" CV="211"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S22 Output Active" CV="212"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S23 Output Active" CV="213"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S24 Output Active" CV="214"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S25 Output Active" CV="215"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S26 Output Active" CV="216"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S27 Output Active" CV="217"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S28 Output Active" CV="218"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S29 Output Active" CV="219"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S30 Output Active" CV="220"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S31 Output Active" CV="221"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S32 Output Active" CV="222"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S33 Output Active" CV="223"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S34 Output Active" CV="224"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S35 Output Active" CV="225"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S36 Output Active" CV="226"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S37 Output Active" CV="227"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S38 Output Active" CV="228"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S39 Output Active" CV="229"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S40 Output Active" CV="230"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S41 Output Active" CV="231"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S42 Output Active" CV="232"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S43 Output Active" CV="233"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S44 Output Active" CV="234"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S45 Output Active" CV="235"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S46 Output Active" CV="236"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S47 Output Active" CV="237"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S48 Output Active" CV="238"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S49 Output Active" CV="239"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S50 Output Active" CV="240"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S51 Output Active" CV="241"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S52 Output Active" CV="242"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S53 Output Active" CV="243"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S54 Output Active" CV="244"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S55 Output Active" CV="245"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S56 Output Active" CV="246"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S57 Output Active" CV="247"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S58 Output Active" CV="248"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S59 Output Active" CV="249"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S60 Output Active" CV="250"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S61 Output Active" CV="251"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S62 Output Active" CV="252"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S63 Output Active" CV="253"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S64 Output Active" CV="254"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S65 Output Active" CV="255"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S66 Output Active" CV="256"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S67 Output Active" CV="257"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S68 Output Active" CV="258"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S69 Output Active" CV="259"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S70 Output Active" CV="260"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S71 Output Active" CV="261"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+      <variable item="S72 Output Active" CV="262"><enumVal><enumChoice><choice>Don't Stop</choice></enumChoice><enumChoice><choice>Stop</choice></enumChoice></enumVal></variable>
+
+      <variable item="S01 Address" CV="276,275" default="126"><splitVal highCV="275"/></variable>
+      <variable item="S02 Address" CV="278,277" default="127"><splitVal highCV="277"/></variable>
+      <variable item="S03 Address" CV="280,279" default="128"><splitVal highCV="279"/></variable>
+      <variable item="S04 Address" CV="282,281" default="129"><splitVal highCV="281"/></variable>
+      <variable item="S05 Address" CV="284,283" default="130"><splitVal highCV="283"/></variable>
+      <variable item="S06 Address" CV="286,285" default="131"><splitVal highCV="285"/></variable>
+      <variable item="S07 Address" CV="288,287" default="132"><splitVal highCV="287"/></variable>
+      <variable item="S08 Address" CV="290,289" default="133"><splitVal highCV="289"/></variable>
+      <variable item="S09 Address" CV="292,291" default="134"><splitVal highCV="291"/></variable>
+      <variable item="S10 Address" CV="294,293" default="135"><splitVal highCV="293"/></variable>
+      <variable item="S11 Address" CV="296,295" default="136"><splitVal highCV="295"/></variable>
+      <variable item="S12 Address" CV="298,297" default="137"><splitVal highCV="297"/></variable>
+      <variable item="S13 Address" CV="300,299" default="138"><splitVal highCV="299"/></variable>
+      <variable item="S14 Address" CV="302,301" default="139"><splitVal highCV="301"/></variable>
+      <variable item="S15 Address" CV="304,303" default="140"><splitVal highCV="303"/></variable>
+      <variable item="S16 Address" CV="306,305" default="141"><splitVal highCV="305"/></variable>
+      <variable item="S17 Address" CV="308,307" default="142"><splitVal highCV="307"/></variable>
+      <variable item="S18 Address" CV="310,309" default="143"><splitVal highCV="309"/></variable>
+      <variable item="S19 Address" CV="312,311" default="144"><splitVal highCV="311"/></variable>
+      <variable item="S20 Address" CV="314,313" default="145"><splitVal highCV="313"/></variable>
+      <variable item="S21 Address" CV="316,315" default="146"><splitVal highCV="315"/></variable>
+      <variable item="S22 Address" CV="318,317" default="147"><splitVal highCV="317"/></variable>
+      <variable item="S23 Address" CV="320,319" default="148"><splitVal highCV="319"/></variable>
+      <variable item="S24 Address" CV="322,321" default="149"><splitVal highCV="321"/></variable>
+      <variable item="S25 Address" CV="324,323" default="150"><splitVal highCV="323"/></variable>
+      <variable item="S26 Address" CV="326,325" default="151"><splitVal highCV="325"/></variable>
+      <variable item="S27 Address" CV="328,327" default="152"><splitVal highCV="327"/></variable>
+      <variable item="S28 Address" CV="330,329" default="153"><splitVal highCV="329"/></variable>
+      <variable item="S29 Address" CV="332,331" default="154"><splitVal highCV="331"/></variable>
+      <variable item="S30 Address" CV="334,333" default="155"><splitVal highCV="333"/></variable>
+      <variable item="S31 Address" CV="336,335" default="156"><splitVal highCV="335"/></variable>
+      <variable item="S32 Address" CV="338,337" default="157"><splitVal highCV="337"/></variable>
+      <variable item="S33 Address" CV="340,339" default="158"><splitVal highCV="339"/></variable>
+      <variable item="S34 Address" CV="342,341" default="159"><splitVal highCV="341"/></variable>
+      <variable item="S35 Address" CV="344,343" default="160"><splitVal highCV="343"/></variable>
+      <variable item="S36 Address" CV="346,345" default="161"><splitVal highCV="345"/></variable>
+      <variable item="S37 Address" CV="348,347" default="162"><splitVal highCV="347"/></variable>
+      <variable item="S38 Address" CV="350,349" default="163"><splitVal highCV="349"/></variable>
+      <variable item="S39 Address" CV="352,351" default="164"><splitVal highCV="351"/></variable>
+      <variable item="S40 Address" CV="354,353" default="165"><splitVal highCV="353"/></variable>
+      <variable item="S41 Address" CV="356,355" default="166"><splitVal highCV="355"/></variable>
+      <variable item="S42 Address" CV="358,357" default="167"><splitVal highCV="357"/></variable>
+      <variable item="S43 Address" CV="360,359" default="168"><splitVal highCV="359"/></variable>
+      <variable item="S44 Address" CV="362,361" default="169"><splitVal highCV="361"/></variable>
+      <variable item="S45 Address" CV="364,363" default="170"><splitVal highCV="363"/></variable>
+      <variable item="S46 Address" CV="366,365" default="171"><splitVal highCV="365"/></variable>
+      <variable item="S47 Address" CV="368,367" default="172"><splitVal highCV="367"/></variable>
+      <variable item="S48 Address" CV="370,369" default="173"><splitVal highCV="369"/></variable>
+      <variable item="S49 Address" CV="372,371" default="174"><splitVal highCV="371"/></variable>
+      <variable item="S50 Address" CV="374,373" default="175"><splitVal highCV="373"/></variable>
+      <variable item="S51 Address" CV="376,375" default="176"><splitVal highCV="375"/></variable>
+      <variable item="S52 Address" CV="378,377" default="177"><splitVal highCV="377"/></variable>
+      <variable item="S53 Address" CV="380,379" default="178"><splitVal highCV="379"/></variable>
+      <variable item="S54 Address" CV="382,381" default="179"><splitVal highCV="381"/></variable>
+      <variable item="S55 Address" CV="384,383" default="180"><splitVal highCV="383"/></variable>
+      <variable item="S56 Address" CV="386,385" default="181"><splitVal highCV="385"/></variable>
+      <variable item="S57 Address" CV="388,387" default="182"><splitVal highCV="387"/></variable>
+      <variable item="S58 Address" CV="390,389" default="183"><splitVal highCV="389"/></variable>
+      <variable item="S59 Address" CV="392,391" default="184"><splitVal highCV="391"/></variable>
+      <variable item="S60 Address" CV="394,393" default="185"><splitVal highCV="393"/></variable>
+      <variable item="S61 Address" CV="396,395" default="186"><splitVal highCV="395"/></variable>
+      <variable item="S62 Address" CV="398,397" default="187"><splitVal highCV="397"/></variable>
+      <variable item="S63 Address" CV="400,399" default="188"><splitVal highCV="399"/></variable>
+      <variable item="S64 Address" CV="402,401" default="189"><splitVal highCV="401"/></variable>
+      <variable item="S65 Address" CV="404,403" default="190"><splitVal highCV="403"/></variable>
+      <variable item="S66 Address" CV="406,405" default="191"><splitVal highCV="405"/></variable>
+      <variable item="S67 Address" CV="408,407" default="192"><splitVal highCV="407"/></variable>
+      <variable item="S68 Address" CV="410,409" default="193"><splitVal highCV="409"/></variable>
+      <variable item="S69 Address" CV="412,411" default="194"><splitVal highCV="411"/></variable>
+      <variable item="S70 Address" CV="414,413" default="195"><splitVal highCV="413"/></variable>
+      <variable item="S71 Address" CV="416,415" default="196"><splitVal highCV="415"/></variable>
+      <variable item="S72 Address" CV="418,417" default="197"><splitVal highCV="417"/></variable>
+
+
+    </variables>
+
+    <resets>
+        <factReset label="Basic settings (CV 1,11-13,17-19,29-119) CV8=>11" CV="7" default="11"/>
+        <factReset label="Programming lock (CV 15/16) CV8=>16"              CV="7" default="16"/>
+        <factReset label="Function and Switch outputs (CV 120-169) CV8=>33" CV="7" default="33"/>
+        <factReset label="Servo and turntable address (CV170-190) CV8=>66"  CV="7" default="66"/>
+        <factReset label="Array and steps (CV 191 – 268) CV8=>77"           CV="7" default="77"/>
+        <factReset label="Direct addresses CV8=>88"                         CV="7" default="88"/>
+    </resets>
+
+  </decoder>
+
+  <pane>
+    <row>
+      <column>
+        <display item="Odd Step Calculation Activation"/>
+        <display item="Odd Step Factor"/>
+        <display item="Switch Address Calculation"/>
+
+        <display item="A3 During Motion"/>
+        <display item="A4/A5 Option"/>
+        <display item="Stepper"/>
+        <display item="Stepper Single"/>
+        <display item="Stepper 180"/>
+        <display item="Stepper Drive Direction"/>
+        <display item="Stepper End Position"/>
+        <display item="Light Signal"/>
+
+        <display item="Working Mode"/>
+        <display item="Segment Working Mode"/>
+        <display item="Segment/Stage-Mode"/>
+
+        <display item="Turntable Mode"/>
+
+        <display item="Calibration"/>
+        <display item=""/>
+        <display item=""/>
+        <display item=""/>
+        <display item=""/>
+        <display item=""/>
+        <display item=""/>
+      </column>
+
+      <column>
+        <display item="Reverse Loop Current Detection Value"/>
+        <display item="Reverse Loop Wait Time"/>
+        <display item="Reverse Loop Current Sampling Gate"/>
+       <label><text> </text></label>
+        <display item="Max Output Segments"/>
+     </column>
+    </row>
+    <name>Basic</name>
+  </pane>
+
+  <pane>
+    <grid>
+      <griditem gridx="0" gridy="0"><column>
+        <display item="A1 Function"/>
+        <display item="A1 Dimming Value"/>
+        <display item="A1 Dimming"/>
+        <display item="A1 Condition"/>
+        <display item="A1 Special Function"/>
+        <display item="A1 Special Function Inverse"/>
+        <display item="A1 Time For Special Function"/>
+        <display item="A1 Address"/>
+        <separator/>
+      </column></griditem>
+
+      <griditem  gridx="1" gridy="0"><separator/><column>
+        <display item="A2 Function"/>
+        <display item="A2 Dimming Value"/>
+        <display item="A2 Dimming"/>
+        <display item="A2 Condition"/>
+        <display item="A2 Special Function"/>
+        <display item="A2 Special Function Inverse"/>
+        <display item="A2 Time For Special Function"/>
+        <display item="A2 Address"/>
+        <separator/>
+      </column></griditem>
+
+      <griditem gridx="2" gridy="0"><separator/><column>
+        <display item="A3 Function"/>
+        <display item="A3 Dimming Value"/>
+        <display item="A3 Dimming"/>
+        <display item="A3 Condition"/>
+        <display item="A3 Special Function"/>
+        <display item="A3 Special Function Inverse"/>
+        <display item="A3 Time For Special Function"/>
+        <display item="A3 Address"/>
+        <separator/>
+      </column></griditem>
+
+      <griditem gridx="0" gridy="1"><column>
+        <display item="A4 Function"/>
+        <display item="A4 Dimming Value"/>
+        <display item="A4 Dimming"/>
+        <display item="A4 Condition"/>
+        <display item="A4 Special Function"/>
+        <display item="A4 Special Function Inverse"/>
+        <display item="A4 Time For Special Function"/>
+        <display item="A4 Address"/>
+      </column></griditem>
+
+      <griditem gridx="1" gridy="1"><separator/><column>
+        <display item="A5 Function"/>
+        <display item="A5 Dimming Value"/>
+        <display item="A5 Dimming"/>
+        <display item="A5 Condition"/>
+        <display item="A5 Special Function"/>
+        <display item="A5 Special Function Inverse"/>
+        <display item="A5 Time For Special Function"/>
+        <display item="A5 Address"/>
+      </column><separator/></griditem>
+    </grid>
+    <name>HDD Functions</name>
+  </pane>
+
+  <pane>
+    <row>
+      <column>
+        <display item="Servo Speed"/>
+        <display item="Servo End Position Right"/>
+        <display item="Servo End Position Left"/>
+        <display item="Servo Inverse"/>
+        <display item="Servo Stop End"/>
+        <display item="Servo Address"/>
+        <display item="Servo Special Function"/>
+      </column>
+    </row>
+    <name>HDD Servo</name>
+  </pane>
+
+  <pane>
+    <row>
+      <column>
+        <display item="Stepper Address"/>
+        <display item="Stepper Speed"/>
+        <display item="Stepper Single Address"/>
+        <display item="Stepper 180 Address"/>
+        <display item="Stepper Direction Address"/>
+        <display item="Stepper Reset Address"/>
+
+        <label><text> </text></label>
+
+        <display item="Fullsteps"/>
+        <display item="Halfsteps"/>
+        <display item="Quartersteps"/>
+        <display item="Eighthsteps"/>
+        <display item="Sixteenthsteps"/>
+        <display item="Slippery Fullsteps"/>
+        <display item="Slippery Halfsteps"/>
+        <display item="Slippery Quartersteps"/>
+        <display item="Slippery Eighthsteps"/>
+        <display item="Slippery Sixteenthsteps"/>
+
+        <label><text> </text></label>
+
+        <display item="Auto Calibration Address"/>
+        <display item="Stepper Hold Address"/>
+      </column>
+    </row>
+    <name>HDD Stepper</name>
+  </pane>
+
+  <pane>
+    <column>
+      <display item="Max Output Segments"/>
+      <separator/>
+      <label><text>  </text></label>
+      <label><text>    Check the boxes for the exit tracks that you’ll be using; all unchecked ones will be inactive.</text></label>
+      <label><text>  </text></label>
+        <row>
+          <column>
+            <row><display item="S01 Output Active" format="checkbox" label="    Segment  1"/><display item="S01 Address" label="Address:"/></row>
+            <row><display item="S02 Output Active" format="checkbox" label="    Segment  2"/><display item="S02 Address" label="Address:"/></row>
+            <row><display item="S03 Output Active" format="checkbox" label="    Segment  3"/><display item="S03 Address" label="Address:"/></row>
+            <row><display item="S04 Output Active" format="checkbox" label="    Segment  4"/><display item="S04 Address" label="Address:"/></row>
+            <row><display item="S05 Output Active" format="checkbox" label="    Segment  5"/><display item="S05 Address" label="Address:"/></row>
+            <row><display item="S06 Output Active" format="checkbox" label="    Segment  6"/><display item="S06 Address" label="Address:"/></row>
+            <row><display item="S07 Output Active" format="checkbox" label="    Segment  7"/><display item="S07 Address" label="Address:"/></row>
+            <row><display item="S08 Output Active" format="checkbox" label="    Segment  8"/><display item="S08 Address" label="Address:"/></row>
+            <row><display item="S09 Output Active" format="checkbox" label="    Segment  9"/><display item="S09 Address" label="Address:"/></row>
+            <row><display item="S10 Output Active" format="checkbox" label="    Segment 10"/><display item="S10 Address" label="Address:"/></row>
+            <row><display item="S11 Output Active" format="checkbox" label="    Segment 11"/><display item="S11 Address" label="Address:"/></row>
+            <row><display item="S12 Output Active" format="checkbox" label="    Segment 12"/><display item="S12 Address" label="Address:"/></row>
+            <row><display item="S13 Output Active" format="checkbox" label="    Segment 13"/><display item="S13 Address" label="Address:"/></row>
+            <row><display item="S14 Output Active" format="checkbox" label="    Segment 14"/><display item="S14 Address" label="Address:"/></row>
+            <row><display item="S15 Output Active" format="checkbox" label="    Segment 15"/><display item="S15 Address" label="Address:"/></row>
+            <row><display item="S16 Output Active" format="checkbox" label="    Segment 16"/><display item="S16 Address" label="Address:"/></row>
+            <row><display item="S17 Output Active" format="checkbox" label="    Segment 17"/><display item="S17 Address" label="Address:"/></row>
+            <row><display item="S18 Output Active" format="checkbox" label="    Segment 18"/><display item="S18 Address" label="Address:"/></row>
+          </column>
+          <separator/>
+          <column>
+            <row><display item="S19 Output Active" format="checkbox" label="    Segment 19"/><display item="S19 Address" label="Address:"/></row>
+            <row><display item="S20 Output Active" format="checkbox" label="    Segment 20"/><display item="S20 Address" label="Address:"/></row>
+            <row><display item="S21 Output Active" format="checkbox" label="    Segment 21"/><display item="S21 Address" label="Address:"/></row>
+            <row><display item="S22 Output Active" format="checkbox" label="    Segment 22"/><display item="S22 Address" label="Address:"/></row>
+            <row><display item="S23 Output Active" format="checkbox" label="    Segment 23"/><display item="S23 Address" label="Address:"/></row>
+            <row><display item="S24 Output Active" format="checkbox" label="    Segment 24"/><display item="S24 Address" label="Address:"/></row>
+            <row><display item="S25 Output Active" format="checkbox" label="    Segment 25"/><display item="S25 Address" label="Address:"/></row>
+            <row><display item="S26 Output Active" format="checkbox" label="    Segment 26"/><display item="S26 Address" label="Address:"/></row>
+            <row><display item="S27 Output Active" format="checkbox" label="    Segment 27"/><display item="S27 Address" label="Address:"/></row>
+            <row><display item="S28 Output Active" format="checkbox" label="    Segment 28"/><display item="S28 Address" label="Address:"/></row>
+            <row><display item="S29 Output Active" format="checkbox" label="    Segment 29"/><display item="S29 Address" label="Address:"/></row>
+            <row><display item="S30 Output Active" format="checkbox" label="    Segment 30"/><display item="S30 Address" label="Address:"/></row>
+            <row><display item="S31 Output Active" format="checkbox" label="    Segment 31"/><display item="S31 Address" label="Address:"/></row>
+            <row><display item="S32 Output Active" format="checkbox" label="    Segment 32"/><display item="S32 Address" label="Address:"/></row>
+            <row><display item="S33 Output Active" format="checkbox" label="    Segment 33"/><display item="S33 Address" label="Address:"/></row>
+            <row><display item="S34 Output Active" format="checkbox" label="    Segment 34"/><display item="S34 Address" label="Address:"/></row>
+            <row><display item="S35 Output Active" format="checkbox" label="    Segment 35"/><display item="S35 Address" label="Address:"/></row>
+            <row><display item="S36 Output Active" format="checkbox" label="    Segment 36"/><display item="S36 Address" label="Address:"/></row>
+          </column>
+          <separator/>
+          <column>
+            <row><display item="S37 Output Active" format="checkbox" label="    Segment 37"/><display item="S37 Address" label="Address:"/></row>
+            <row><display item="S38 Output Active" format="checkbox" label="    Segment 38"/><display item="S38 Address" label="Address:"/></row>
+            <row><display item="S39 Output Active" format="checkbox" label="    Segment 39"/><display item="S39 Address" label="Address:"/></row>
+            <row><display item="S40 Output Active" format="checkbox" label="    Segment 40"/><display item="S40 Address" label="Address:"/></row>
+            <row><display item="S41 Output Active" format="checkbox" label="    Segment 41"/><display item="S41 Address" label="Address:"/></row>
+            <row><display item="S42 Output Active" format="checkbox" label="    Segment 42"/><display item="S42 Address" label="Address:"/></row>
+            <row><display item="S43 Output Active" format="checkbox" label="    Segment 43"/><display item="S43 Address" label="Address:"/></row>
+            <row><display item="S44 Output Active" format="checkbox" label="    Segment 44"/><display item="S44 Address" label="Address:"/></row>
+            <row><display item="S45 Output Active" format="checkbox" label="    Segment 45"/><display item="S45 Address" label="Address:"/></row>
+            <row><display item="S46 Output Active" format="checkbox" label="    Segment 46"/><display item="S46 Address" label="Address:"/></row>
+            <row><display item="S47 Output Active" format="checkbox" label="    Segment 47"/><display item="S47 Address" label="Address:"/></row>
+            <row><display item="S48 Output Active" format="checkbox" label="    Segment 48"/><display item="S48 Address" label="Address:"/></row>
+            <row><display item="S49 Output Active" format="checkbox" label="    Segment 49"/><display item="S49 Address" label="Address:"/></row>
+            <row><display item="S50 Output Active" format="checkbox" label="    Segment 50"/><display item="S50 Address" label="Address:"/></row>
+            <row><display item="S51 Output Active" format="checkbox" label="    Segment 51"/><display item="S51 Address" label="Address:"/></row>
+            <row><display item="S52 Output Active" format="checkbox" label="    Segment 52"/><display item="S52 Address" label="Address:"/></row>
+            <row><display item="S53 Output Active" format="checkbox" label="    Segment 53"/><display item="S53 Address" label="Address:"/></row>
+            <row><display item="S54 Output Active" format="checkbox" label="    Segment 54"/><display item="S54 Address" label="Address:"/></row>
+          </column>
+          <separator/>
+          <column>
+            <row><display item="S55 Output Active" format="checkbox" label="    Segment 55"/><display item="S55 Address" label="Address:"/></row>
+            <row><display item="S56 Output Active" format="checkbox" label="    Segment 56"/><display item="S56 Address" label="Address:"/></row>
+            <row><display item="S57 Output Active" format="checkbox" label="    Segment 57"/><display item="S57 Address" label="Address:"/></row>
+            <row><display item="S58 Output Active" format="checkbox" label="    Segment 58"/><display item="S58 Address" label="Address:"/></row>
+            <row><display item="S59 Output Active" format="checkbox" label="    Segment 59"/><display item="S59 Address" label="Address:"/></row>
+            <row><display item="S60 Output Active" format="checkbox" label="    Segment 60"/><display item="S60 Address" label="Address:"/></row>
+            <row><display item="S61 Output Active" format="checkbox" label="    Segment 61"/><display item="S61 Address" label="Address:"/></row>
+            <row><display item="S62 Output Active" format="checkbox" label="    Segment 62"/><display item="S62 Address" label="Address:"/></row>
+            <row><display item="S63 Output Active" format="checkbox" label="    Segment 63"/><display item="S63 Address" label="Address:"/></row>
+            <row><display item="S64 Output Active" format="checkbox" label="    Segment 64"/><display item="S64 Address" label="Address:"/></row>
+            <row><display item="S65 Output Active" format="checkbox" label="    Segment 65"/><display item="S65 Address" label="Address:"/></row>
+            <row><display item="S66 Output Active" format="checkbox" label="    Segment 66"/><display item="S66 Address" label="Address:"/></row>
+            <row><display item="S67 Output Active" format="checkbox" label="    Segment 67"/><display item="S67 Address" label="Address:"/></row>
+            <row><display item="S68 Output Active" format="checkbox" label="    Segment 68"/><display item="S68 Address" label="Address:"/></row>
+            <row><display item="S69 Output Active" format="checkbox" label="    Segment 69"/><display item="S69 Address" label="Address:"/></row>
+            <row><display item="S70 Output Active" format="checkbox" label="    Segment 70"/><display item="S70 Address" label="Address:"/></row>
+            <row><display item="S71 Output Active" format="checkbox" label="    Segment 71"/><display item="S71 Address" label="Address:"/></row>
+            <row><display item="S72 Output Active" format="checkbox" label="    Segment 72"/><display item="S72 Address" label="Address:"/></row>
+          </column>
+        </row>
+      </column>
+    <name>HDD Segments</name>
+  </pane>
+
+</decoder-config>

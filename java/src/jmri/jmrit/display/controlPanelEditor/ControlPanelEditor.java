@@ -59,6 +59,8 @@ import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -983,7 +985,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         super.deselectSelectionGroup();
     }
 
-    protected Positionable getCurrentSelection(MouseEvent event) {
+    protected Positionable getCurrentSelection(JmriMouseEvent event) {
         if (_pastePending && !event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
             return getCopySelection(event);
         }
@@ -1081,7 +1083,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return selection;
     }
 
-    private Positionable getCopySelection(MouseEvent event) {
+    private Positionable getCopySelection(JmriMouseEvent event) {
         if (_selectionGroup == null) {
             return null;
         }
@@ -1160,7 +1162,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private long _mouseDownTime = 0;
 
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
         _mouseDownTime = System.currentTimeMillis();
         setToolTip(null); // ends tooltip if displayed
         log.debug("mousePressed at ({},{}) _dragging={}", event.getX(), event.getY(), _dragging);
@@ -1202,7 +1204,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
         _mouseDownTime = 0;
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) { // avoid string concatination if not debug
@@ -1271,7 +1273,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private long _clickTime;
 
     @Override
-    public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(JmriMouseEvent event) {
         if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isNonStandardMouseEvent()) {
             long time = System.currentTimeMillis();
             if (time - _clickTime < 20) {
@@ -1312,7 +1314,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseDragged(MouseEvent event) {
+    public void mouseDragged(JmriMouseEvent event) {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")");
         setToolTip(null); // ends tooltip if displayed
 
@@ -1377,7 +1379,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseMoved(MouseEvent event) {
+    public void mouseMoved(JmriMouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             return;
@@ -1395,12 +1397,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     @Override
-    public void mouseEntered(MouseEvent event) {
+    public void mouseEntered(JmriMouseEvent event) {
         _targetPanel.repaint();
     }
 
     @Override
-    public void mouseExited(MouseEvent event) {
+    public void mouseExited(JmriMouseEvent event) {
         setToolTip(null);
         _targetPanel.repaint();  // needed for ToolTip
     }
@@ -1571,7 +1573,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * only to specific Positionable types.
      */
     @Override
-    protected void showPopUp(Positionable p, MouseEvent event) {
+    protected void showPopUp(Positionable p, JmriMouseEvent event) {
         if (!((JComponent) p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
         }

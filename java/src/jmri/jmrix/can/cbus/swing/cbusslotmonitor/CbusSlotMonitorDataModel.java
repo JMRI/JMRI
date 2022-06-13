@@ -2,8 +2,10 @@ package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
 import java.util.ArrayList;
 import java.util.TimerTask;
+
 import javax.swing.JButton;
-import jmri.DccLocoAddress;
+
+import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -26,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @see CbusSlotMonitorPane
  *
  */
-public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
+public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableModel implements CanListener, Disposable  {
 
     private final TextAreaFIFO tablefeedback;
     private final TrafficController tc;
@@ -62,7 +64,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     public CbusSlotMonitorDataModel(CanSystemConnectionMemo memo) {
 
-        _mainArray = new ArrayList<>();
+        _mainArray = new ArrayList<>(0);
 
         // connect to the CanInterface
         tc = memo.getTrafficController();
@@ -146,7 +148,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case SESSION_ID_COLUMN:
             case LOCO_ID_COLUMN:
             case LOCO_CONSIST_COLUMN:
-            case LOCO_COMMANDED_SPEED_COLUMN:
                 return Integer.class;
             case LOCO_ID_LONG_COLUMN:
                 return Boolean.class;
@@ -154,6 +155,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case FUNCTION_LIST:
             case FLAGS_COLUMN:
             case SPEED_STEP_COLUMN:
+            case LOCO_COMMANDED_SPEED_COLUMN:
                 return String.class;
             case ESTOP_COLUMN:
                 return JButton.class;
@@ -499,8 +501,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
 
     // kloc sent from throttle to command station to release loco, which will continue at current speed
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
-                                                        justification="I18N of log message")
     private void processkloc(boolean messagein, int session) {
         int row=getrowfromsession(session);
         String messagedir;
@@ -509,7 +509,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         } else { // jmri throttle
             messagedir = Bundle.getMessage("CBUS_OUT_CMD");
         }
-        log.debug("{} {}",messagedir,Bundle.getMessage("CNFO_KLOC",session));
+        log.debug("direction {} kloc {}",messagedir,Bundle.getMessage("CNFO_KLOC",session));
         if ( row > -1 ) {
             setValueAt(0, row, SESSION_ID_COLUMN); // Session restored by sending QLOC if v4 firmware
 
@@ -517,8 +517,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             // if this is sent with the v3 firmware then a popup error comes up from cbus throttlemanager when
             // errStr is populated in the switch error clauses in canreply.
             // check if version 4
-            if ( ( cmndstat_fw > 3 ) && ( _mainArray.get(row).getCommandedSpeed() > 0 )) {
-                log.debug("{} {}",Bundle.getMessage("CBUS_OUT_CMD"),Bundle.getMessage("QuerySession8a",session));
+            if ( ( cmndstat_fw > 3 ) && ( !"0".startsWith(_mainArray.get(row).getCommandedSpeed()) )) {
+                log.debug("send qloc {} {}",Bundle.getMessage("CBUS_OUT_CMD"),Bundle.getMessage("QuerySession8a",session));
                 CanMessage m = new CanMessage(tc.getCanid());
                 m.setNumDataElements(2);
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
@@ -533,7 +533,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     private void processrloc(boolean messagein, DccLocoAddress addr ) {
 
         int row = provideTableRow(addr);
-        log.debug("new table row {}",row);
+        log.debug("{} new table row {}", messagein,row);
 
     }
 
@@ -857,8 +857,9 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     /**
      * disconnect from the CBUS
      */
+    @Override
     public void dispose() {
-        tc.removeCanListener(this);
+        removeTc(tc);
 
         // stop timers if running
         clearEStopTask();

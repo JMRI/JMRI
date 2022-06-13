@@ -274,7 +274,6 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

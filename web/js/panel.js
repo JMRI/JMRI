@@ -4897,13 +4897,14 @@ class BumperDecoration extends Decoration {
         var bumperLength = this.length;
         var halfLength = bumperLength / 2;
         // common points
-        var p1 = [0, -halfLength], p2 = [0, +halfLength];
         if ((this.end == "start") || (this.end == "both")) {
+	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
             var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
             $drawLineP(p1, p2);   // draw cross tie
         }
         if ((this.end == "stop") || (this.end == "both")) {
+	        var p1 = [0, -halfLength], p2 = [0, +halfLength];
             var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
             var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
             $drawLineP(p1, p2);   // draw cross tie

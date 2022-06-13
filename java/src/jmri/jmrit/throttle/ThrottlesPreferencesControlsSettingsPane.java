@@ -479,7 +479,8 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
                         values[0] = e.getModifiersEx();
                         values[1] = e.getExtendedKeyCode();
                         shortCutsField.addValue(values, e.getComponent());
-                        log.debug("Key pressed: "+e.getKeyCode()+" / modifier: "+e.getModifiersEx()+" / ext. key code: "+e.getExtendedKeyCode()+" / location: "+e.getKeyLocation());
+                        log.debug("Key pressed: {} / modifier: {} / ext. key code: {} / location: {}",
+                            e.getKeyCode(), e.getModifiersEx(), e.getExtendedKeyCode(), e.getKeyLocation());
                     }
                 });
         }

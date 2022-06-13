@@ -515,13 +515,35 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringCVWriteByteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 123");
-        Assert.assertEquals("Monitor string", "Program Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, Value: 123", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Reply: CallbackNum:1234, Sub:4321, CV:5, Value:123", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 5 123"); // <r cv value>
+        Assert.assertEquals("Monitor string", "Program Reply: CV:5, Value:123", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 3 -1"); // <r cv value>
+        Assert.assertEquals("Monitor string", "Program Reply: CV:3, Value:-1", l.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringLocoIdReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("r 456"); // <r locoId>
+        Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:456", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r -1"); // <r locoId> (-1 for error)
+        Assert.assertEquals("Monitor string", "Program LocoId Reply: LocoId:-1", l.toMonitorString());
+    }
+
+    @Test
+    public void testMonitorStringVerifyReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("v 78 99"); // <v cv byteValue>
+        Assert.assertEquals("Monitor string", "Prog Verify Reply: CV: 78, Value: 99", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("v 90 -1"); // <v cv byteValue>
+        Assert.assertEquals("Monitor string", "Prog Verify Reply: CV: 90, Value: -1", l.toMonitorString());
     }
 
     @Test
     public void testMonitorStringBitWriteReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("r 1234|4321|5 3 1");
-        Assert.assertEquals("Monitor string", "Program Bit Reply: Callback Num: 1234, Callback Sub: 4321, CV: 5, CV Bit: 3, Value: 1", l.toMonitorString());
+        Assert.assertEquals("Monitor string", "Program Bit Reply: CallbackNum:1234, Sub:4321, CV:5, Bit:3, Value:1", l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("r 5 3 1"); // <r cv bit value>
+        Assert.assertEquals("Monitor string", "Program Bit Reply: CV:5, Bit:3, Value:1", l.toMonitorString());
     }
 
     @Test

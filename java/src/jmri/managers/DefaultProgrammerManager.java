@@ -167,5 +167,11 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
         return retval;
     }
 
+    public void dispose() {
+        if (programmer != null) {
+            programmer.dispose();
+        }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class);
 }

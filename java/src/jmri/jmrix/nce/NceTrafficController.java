@@ -541,6 +541,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "passing exception text")
     @Override
     public void sendNceMessage(NceMessage m, NceListener reply) {
         try {

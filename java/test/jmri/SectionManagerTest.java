@@ -13,7 +13,13 @@ public class SectionManagerTest {
 
     @Test
     public void testCTor() {
-        SectionManager t = new SectionManager();
+        SectionManager t = new jmri.managers.DefaultSectionManager();
+        Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testInstanceManagerAccess() {
+        SectionManager t = InstanceManager.getDefault(SectionManager.class);
         Assert.assertNotNull("exists",t);
     }
 
@@ -25,7 +31,6 @@ public class SectionManagerTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

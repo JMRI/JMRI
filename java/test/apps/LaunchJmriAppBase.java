@@ -26,7 +26,7 @@ abstract public class LaunchJmriAppBase {
 
     /**
      * Run one application.
-     * 
+     *
      * @param profileName       Name of the Profile folder to copy from
      *                          java/test/apps/PanelPro/profiles/
      * @param frameName         Application (frame) title
@@ -70,7 +70,7 @@ abstract public class LaunchJmriAppBase {
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 40);
+            JUnitUtil.waitFor(40);
         }
     }
 

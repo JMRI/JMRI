@@ -5,16 +5,19 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.jmrit.display.Editor;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +50,7 @@ public class DrawPolygon extends DrawFrame {
                 iter.currentSegment(coord);
                 _vertices.add(new Point(x + Math.round(coord[0]), y + Math.round(coord[1])));
                 iter.next();
-            }            
+            }
         }
         ((PositionablePolygon)_shape).editing(_editing);
         _shape.drawHandles();
@@ -71,7 +74,7 @@ public class DrawPolygon extends DrawFrame {
         return panel;
     }
 
-    // double click was made - 
+    // double click was made -
     @Override
     protected PositionableShape makeFigure(Rectangle r, Editor ed) {
 /*        Point pt = new Point(event.getX(), event.getY());
@@ -133,7 +136,7 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    protected void makeVertex(MouseEvent event, Editor ed) {
+    protected void makeVertex(JmriMouseEvent event, Editor ed) {
         log.debug("makeVertex point= ({}, {}), _editing= {}", event.getX(), event.getY(), _editing);
         if (!_editing) {    // creating new polygon
              Point pt = new Point(event.getX(), event.getY());
@@ -149,7 +152,7 @@ public class DrawPolygon extends DrawFrame {
         p.x += pt.x;
         p.y += pt.y;
         if (_editing) {
-            _shape.setShape(makePath(getStartPoint()));            
+            _shape.setShape(makePath(getStartPoint()));
         }
         return false;
     }
@@ -164,7 +167,7 @@ public class DrawPolygon extends DrawFrame {
             path.lineTo(_vertices.get(i).x - pt.x, _vertices.get(i).y - pt.y);
         }
 //        if (closed) {
-//            path.lineTo(_vertices.get(0).x - pt.x, _vertices.get(0).y - pt.y);            
+//            path.lineTo(_vertices.get(0).x - pt.x, _vertices.get(0).y - pt.y);
 //        }
         return path;
     }
@@ -256,7 +259,7 @@ public class DrawPolygon extends DrawFrame {
             }
             _vertices.remove(hitIndex);
             if (hitIndex > 0) {
-                _shape._hitIndex--;                
+                _shape._hitIndex--;
             }
             _shape.setShape(makePath(getStartPoint()));
             _shape.drawHandles();

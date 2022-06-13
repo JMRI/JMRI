@@ -36,6 +36,7 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.util.swing.BeanSelectCreatePanel;
+import jmri.util.swing.JComboBoxUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -239,7 +240,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 try {
                     val = s.getAppearanceName();
                 } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                    log.error(e.getLocalizedMessage(), e);
+                    log.error("Could not get Appearance Name for {}", s.getDisplayName(), e);
                 }
                 if (val != null) {
                     return val;
@@ -757,6 +758,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                 typeBox.addItem(grapevine);
             }
             typeBox.addActionListener(e1 -> typeChanged());
+            JComboBoxUtil.setupComboBoxMaxRows(typeBox);
 
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
@@ -889,7 +891,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
             userNameTextField.setText("");
         }
         typeBox.setSelectedIndex(2);  // force GUI status consistent. Default set to Double Head type
-        
+
         addFrame.setEscapeKeyClosesWindow(true);
         addFrame.pack();
         addFrame.setVisible(true);
@@ -2519,7 +2521,7 @@ public class SignalHeadTableAction extends AbstractTableAction<SignalHead> {
                         ((DccSignalHead) curS).setOutputForAppearance(curS.getValidStates()[i], number);
                     } catch (Exception ex) {
                         //in theory JSpinner should already have caught a number conversion error.
-                        log.error(ex.toString());
+                        log.error("JSpinner for {} did not catch number conversion error", className, ex);
                     }
                 }
                 ((DccSignalHead) curS).useAddressOffSet(dccOffSetAddressEdt.isSelected());
