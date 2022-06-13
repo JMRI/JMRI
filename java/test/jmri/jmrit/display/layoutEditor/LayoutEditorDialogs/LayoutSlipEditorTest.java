@@ -8,9 +8,9 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutSlipEditorTest extends LayoutTurnoutEditorTest {
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     @Override
     public void testCtor() {

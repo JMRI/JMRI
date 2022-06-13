@@ -7,12 +7,14 @@ import jmri.util.MathUtil;
 
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of LayoutWyeEditor.
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class LayoutWyeEditorTest extends LayoutTurnoutEditorTest {
 
     @Test
