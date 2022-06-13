@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -56,7 +57,7 @@ public class LoadAtStartUpTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
         
-        // signal mast manager
+        // signal mast managerls -l
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
 
         checkAndSetSpeeds();
@@ -189,9 +190,36 @@ public class LoadAtStartUpTest {
             return aat.getThrottle().getSpeedSetting() == 0.0;
         }, "Signal Just passed east end throat now stop");
 
-        // cancel (terminate) the train.
-        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
-        bo.push();
+        JUnitUtil.waitFor(200);
+        // check for next train note dcc name is original transit name has changed
+        Assert.assertEquals("Next Train Load","1000 / SouthPlatFormReturnToSouthCC", d.getActiveTrainsList().get(0).getActiveTrainName());
+        JUnitUtil.waitFor(2000);
+        // its a new train.
+        at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+        JUnitUtil.waitFor(() -> {
+            return aat.getThrottle().getSpeedSetting() == speedRestricted;
+        }, "Started to move");
+        sm.getSensor("Occ East Block").setState(Sensor.ACTIVE);
+        sm.getSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
+        sm.getSensor("Occ South Platform").setState(Sensor.INACTIVE);
+//      JUnitUtil.waitFor(200);
+       JUnitUtil.waitFor(() -> {
+            return aat.getThrottle().getSpeedSetting() == speedRestricted;
+        }, "Continueing");
+        sm.getSensor("Occ South Block").setState(Sensor.ACTIVE);
+//        JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(() -> {
+            return aat.getThrottle().getSpeedSetting() == speedRestricted;
+        }, "Prepare to stop");
+        sm.getSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
+        sm.getSensor("Occ East Block").setState(Sensor.INACTIVE);
+        // train slows to stop
+//      JUnitUtil.waitFor(200);
+        JUnitUtil.waitFor(() -> {
+            return aat.getThrottle().getSpeedSetting() == 0.0;
+        }, "Stopped");
+        //terminates at end
         // wait for cleanup to finish
         JUnitUtil.waitFor(200);
 
@@ -244,6 +272,7 @@ public class LoadAtStartUpTest {
     // the file we create that we will delete
     private static Path outPathTrainInfo1 = null;
     private static Path outPathTrainInfo2 = null;
+    private static Path outPathTrainInfo3 = null;
     private static Path outPathWarrentPreferences = null;
 
     @BeforeAll
@@ -261,6 +290,12 @@ public class LoadAtStartUpTest {
                         "TestTrainCW.xml").toPath();
                 outPathTrainInfo1 = new File(outBaseTrainInfo, "TestTrainCW.xml").toPath();
                 Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+            }
+            {
+                Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "TestTrainCW_Return.xml").toPath();
+                outPathTrainInfo3 = new File(outBaseTrainInfo, "TestTrainCW_Return.xml").toPath();
+                Files.copy(inPath, outPathTrainInfo3, StandardCopyOption.REPLACE_EXISTING);
             }
             {
                 Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
@@ -289,6 +324,11 @@ public class LoadAtStartUpTest {
         }
         try {
             Files.delete(outPathTrainInfo2);
+        } catch  (IOException e) {
+            // doesnt matter its gonezo
+        }
+        try {
+            Files.delete(outPathTrainInfo3);
         } catch  (IOException e) {
             // doesnt matter its gonezo
         }

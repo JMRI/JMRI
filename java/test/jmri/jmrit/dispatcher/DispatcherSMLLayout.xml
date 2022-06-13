@@ -424,6 +424,13 @@
       <transitsection sectionname="IY:AUTO:0006" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
       <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
     </transit>
+    <transit systemName="IZ:AUTO:0003" userName="SouthPlatFormReturnToSouthCC">
+      <systemName>IZ:AUTO:0003</systemName>
+      <userName>SouthPlatFormReturnToSouthCC</userName>
+      <transitsection sectionname="IY:AUTO:0002" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
   </transits>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
