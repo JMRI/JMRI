@@ -61,9 +61,13 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
         automation.addItem();
         automation.run();
         
-        Assert.assertEquals("table size", 1, f.automationsModel.getRowCount());
-        
+        Assert.assertEquals("table size", 1, f.automationsModel.getRowCount());        
         Assert.assertEquals("Confirm Comment", "Test Automation Comment", tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Comment"))));
+        
+        // it can take awhile for the the automation to complete
+        JUnitUtil.waitFor(() -> {
+            return "OK".equals(tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Status"))));
+        }, "Wait for status");
         Assert.assertEquals("Confirm Status", "OK", tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Status"))));
         JUnitUtil.dispose(f);
     }
