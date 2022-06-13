@@ -456,7 +456,7 @@
 
       <code>memories.getMemory('IMCURRENTTIME').addPropertyChangeListener('value', self)</code>
 
-      <p>Select the type of script. THe supported script types are <strong>Jython Files</strong>
+      <p>Select the type of script. The supported script types are <strong>Jython Files</strong>
       and <strong>ECMAScript Files</strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
