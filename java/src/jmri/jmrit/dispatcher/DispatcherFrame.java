@@ -3062,6 +3062,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 allocateNextRequested(row);
             }
             if (col == TERMINATEBUTTON_COLUMN) {
+                if (activeTrainsList.get(row) != null) {
                     terminateActiveTrain(activeTrainsList.get(row),true,false);
                 }
             }
