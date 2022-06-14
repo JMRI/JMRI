@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 
@@ -8,10 +7,11 @@ import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-import org.junit.*;
-import org.junit.rules.Timeout;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -22,56 +22,18 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  *
  * @author George Warner Copyright (C) 2019
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class EnterReporterDialogTest {
-
-    private static LayoutEditor layoutEditor = null;
-    private static EnterReporterDialog enterReporterDialog = null;
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
-
-    /*
-     * This is called before each test
-     */
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            layoutEditor = new LayoutEditor();
-            enterReporterDialog = new EnterReporterDialog(layoutEditor);
-            layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
-            layoutEditor.setVisible(true);
-        }
-    }
-
-    /*
-     * This is called after each test
-     */
-    @After
-    public void tearDown() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-            layoutEditor = null;
-            enterReporterDialog = null;
-        }
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
-    }
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("layoutEditor exists", layoutEditor);
-        Assert.assertNotNull("EnterReporterDialog exists", enterReporterDialog);
+
+        Assertions.assertNotNull(layoutEditor, "layoutEditor exists");
+        Assertions.assertNotNull(enterReporterDialog, "EnterReporterDialog exists");
     }
 
     @Test
     public void testEnterReporterCanceled() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterReporterDialog.enterReporter(150, 200);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
@@ -83,7 +45,6 @@ public class EnterReporterDialogTest {
 
     @Test
     public void testEnterReporter() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         enterReporterDialog.enterReporter(150, 200);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
@@ -160,4 +121,38 @@ public class EnterReporterDialogTest {
         addNewLabelButtonOperator.doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
+
+    private LayoutEditor layoutEditor = null;
+    private EnterReporterDialog enterReporterDialog = null;
+
+    /*
+     * This is called before each test
+     */
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+
+        layoutEditor = new LayoutEditor();
+        enterReporterDialog = new EnterReporterDialog(layoutEditor);
+        layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
+        layoutEditor.setVisible(true);
+
+    }
+
+    /*
+     * This is called after each test
+     */
+    @AfterEach
+    public void tearDown() {
+
+        EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+        efo.closeFrameWithConfirmations();
+        layoutEditor = null;
+        enterReporterDialog = null;
+
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        EditorFrameOperator.clearEditorFrameOperatorThreads();
+        JUnitUtil.tearDown();
+    }
+
 }
