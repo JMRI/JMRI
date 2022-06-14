@@ -262,9 +262,11 @@ public class ActionWarrant extends AbstractDigitalAction
                     }
                     break;
                 case SetTrainId:
-                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
-                        throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
-                    }
+                	if (warrant.getRunMode() == Warrant.MODE_NONE) {
+                        if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
+                            throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
+                        }
+                	}
                     break;
                 case SetTrainName:
                     warrant.setTrainName(getNewData(theOper));

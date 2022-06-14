@@ -666,8 +666,8 @@ public class DefaultConditional extends AbstractNamedBean
                     case SET_ROUTE_TURNOUTS:
                         conditionalExecute.setRouteTurnouts(action, (Warrant) nb, actionCount, errorList);
                         break;
-                    case THROTTLE_FACTOR:
-                        log.info("Set warrant Throttle Factor deprecated - Use Warrrant Preferences");  // NOI18N
+                    case SET_TRAIN_LOCATION:
+                        conditionalExecute.setTrainLocation(action, (Warrant) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
                         break;
                     case SET_TRAIN_ID:
                         conditionalExecute.setTrainId(action, (Warrant) nb, getActionString(action), actionCount, errorList);

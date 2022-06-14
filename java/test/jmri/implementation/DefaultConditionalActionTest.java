@@ -207,8 +207,8 @@ public class DefaultConditionalActionTest {
         ix1.setType("Set Signal Mast Aspect");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_ASPECT);
         
-        ix1.setType("Set Throttle Factor");
-        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.THROTTLE_FACTOR);
+        ix1.setType("Set Train Current Location");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_TRAIN_LOCATION);
         
         ix1.setType("Set Signal Mast Held");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_HELD);
@@ -803,23 +803,23 @@ public class DefaultConditionalActionTest {
         ix1.setType(Conditional.Action.SET_ROUTE_TURNOUTS);
         ix1.setActionData(Route.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Set Route Turnouts on Warrant, \"3\".".equals(ix1.description(false)));
+                "When Triggered True, Set Route Turnouts of Warrant, \"3\".".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Set Route Turnouts on Warrant, \"3\".".equals(ix1.description(true)));
+                "On Change To True, Set Route Turnouts of Warrant, \"3\".".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.AUTO_RUN_WARRANT);
         ix1.setActionData(Warrant.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Auto Run Train on Warrant, \"3\".".equals(ix1.description(false)));
+                "When Triggered True, Auto Run Train of Warrant, \"3\".".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Auto Run Train on Warrant, \"3\".".equals(ix1.description(true)));
+                "On Change To True, Auto Run Train of Warrant, \"3\".".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.MANUAL_RUN_WARRANT);
         ix1.setActionData(Warrant.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Manually Run Train on Warrant, \"3\".".equals(ix1.description(false)));
+                "When Triggered True, Manually Run Train of Warrant, \"3\".".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Manually Run Train on Warrant, \"3\".".equals(ix1.description(true)));
+                "On Change To True, Manually Run Train of Warrant, \"3\".".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.SET_SENSOR);
         ix1.setActionData(Sensor.INACTIVE);
@@ -901,9 +901,9 @@ public class DefaultConditionalActionTest {
         ix1.setType(Conditional.Action.CONTROL_TRAIN);
         ix1.setActionData(Warrant.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Control Auto Train on Warrant \"3\" to Abort".equals(ix1.description(false)));
+                "When Triggered True, Control Auto Train of Warrant \"3\" to Abort".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Control Auto Train on Warrant \"3\" to Abort".equals(ix1.description(true)));
+                "On Change To True, Control Auto Train of Warrant \"3\" to Abort".equals(ix1.description(true)));
         
 //        ix1.setType(-1);
 //        ix1.setActionData(NamedBean.INCONSISTENT);

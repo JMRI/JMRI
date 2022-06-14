@@ -378,8 +378,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     public String getCurrentBlockName() {
         OBlock block = getBlockAt(_idxCurrentOrder);
-        if (block == null) {
-            return "";
+        if (block == null || !block.isOccupied()) {
+            return Bundle.getMessage("Unknown");
         } else {
             return block.getDisplayName();
         }
@@ -462,7 +462,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     public void setTrainName(String name) {
-        _trainName = name;
+    	if (_runMode == MODE_NONE) {
+            _trainName = name;
+    	}
     }
 
     public boolean getRunBlind() {
@@ -1452,7 +1454,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      *         is OUT_OF_SERVICE
      */
     public String allocateRoute(boolean show, List<BlockOrder> orders) {
-        if (_totalAllocated) {
+        if (_totalAllocated && _runMode != MODE_NONE && _runMode != MODE_ABORT) {
             return null;
         }
         if (orders != null) {
@@ -1526,11 +1528,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * Deallocates blocks from the current BlockOrder list
      */
     public void deAllocate() {
-        _allocated = false;
-        _totalAllocated = false;
-        _routeSet = false;
-        for (int i = 0; i < _orders.size(); i++) {
-            deAllocateBlock(_orders.get(i).getBlock());
+        if (_runMode == MODE_NONE || _runMode == MODE_ABORT) {
+            _allocated = false;
+            _totalAllocated = false;
+            _routeSet = false;
+            for (int i = 0; i < _orders.size(); i++) {
+                deAllocateBlock(_orders.get(i).getBlock());
+            }
         }
     }
 
@@ -2105,7 +2109,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 if (w != null) {
                     cause = w.getDisplayName();
                 } else {
-                    cause = Bundle.getMessage("unknownTrain");
+                    cause = Bundle.getMessage("Unknown");
                 }
             } else if (_waitForBlock) {
                 reason = Bundle.getMessage("Occupancy");

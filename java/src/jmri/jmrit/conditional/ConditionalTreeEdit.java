@@ -3538,16 +3538,34 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case WARRANT:
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
-                    if (_curAction.getActionData() == Warrant.HALT) {
-                        _actionBox.setSelectedIndex(0);
-                    } else if (_curAction.getActionData() == Warrant.RESUME) {
-                        _actionBox.setSelectedIndex(1);
-                    } else if (_curAction.getActionData() == Warrant.ABORT) {
-                        _actionBox.setSelectedIndex(2);
-                    }
+                	switch (_curAction.getActionData()) {
+                		case Warrant.RAMP_HALT:
+                			_actionBox.setSelectedIndex(0);
+                			break;
+                        case Warrant.RESUME:
+                            _actionBox.setSelectedIndex(1);
+                    		break;
+                        case Warrant.RETRY_FWD:
+                            _actionBox.setSelectedIndex(2);
+                    		break;
+                        case Warrant.SPEED_UP:
+                            _actionBox.setSelectedIndex(3);
+                    		break;
+                        case Warrant.HALT:
+                        case Warrant.STOP:
+                            _actionBox.setSelectedIndex(4);
+                    		break;
+                        case Warrant.ESTOP:
+                            _actionBox.setSelectedIndex(5);
+                    		break;
+                        case Warrant.ABORT:
+                            _actionBox.setSelectedIndex(6);
+                    		break;
+                        default:
+                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());  // NOI18N
+                	}
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
-                        || actionType == Conditional.Action.SET_TRAIN_NAME
-                        || actionType == Conditional.Action.THROTTLE_FACTOR) {
+                        || actionType == Conditional.Action.SET_TRAIN_NAME) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
                 break;
@@ -3887,12 +3905,16 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     warrantGrid = "StandardAction";  // NOI18N
                     _actionBoxLabel.setText(Bundle.getMessage("LabelControlTrain"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("DataHintTrainControl"));  // NOI18N
-                    _actionBox.addItem(Bundle.getMessage("WarrantHalt"));   // NOI18N
-                    _actionBox.addItem(Bundle.getMessage("WarrantResume")); // NOI18N
-                    _actionBox.addItem(Bundle.getMessage("WarrantAbort"));  // NOI18N
+                    _actionBox.addItem(Bundle.getMessage("WarrantHalt"));
+                	_actionBox.addItem(Bundle.getMessage("WarrantResume"));
+                	_actionBox.addItem(Bundle.getMessage("WarrantMoveToNext"));
+                	_actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
+                	_actionBox.addItem(Bundle.getMessage("WarrantStop"));
+                	_actionBox.addItem(Bundle.getMessage("EStop"));            	
+                	_actionBox.addItem(Bundle.getMessage("WarrantAbort"));            	
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
-                        || actionType == Conditional.Action.THROTTLE_FACTOR) {
+                        || actionType == Conditional.Action.SET_TRAIN_LOCATION) {
                     warrantGrid = "ShortFieldNoBoxAction";  // NOI18N
                     if (actionType == Conditional.Action.SET_TRAIN_ID) {
                         _shortActionLabel.setText(Bundle.getMessage("LabelTrainId"));  // NOI18N
@@ -3900,9 +3922,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     } else if (actionType == Conditional.Action.SET_TRAIN_NAME) {
                         _shortActionLabel.setText(Bundle.getMessage("LabelTrainName"));  // NOI18N
                         _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintTrainName"));  // NOI18N
-                    } else { // must be Conditional.Action.THROTTLE_FACTOR, so treat as such
-                        _shortActionLabel.setText(Bundle.getMessage("LabelThrottleFactor"));  // NOI18N
-                        _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintThrottleFactor"));  // NOI18N
+                    } else if (actionType == Conditional.Action.SET_TRAIN_LOCATION) {
+                        _shortActionLabel.setText(Bundle.getMessage("LabelMemoryLocation"));  // NOI18N
+                        _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintToMemory"));  // NOI18N
                     }
                 }
 
@@ -4417,16 +4439,35 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
-                    if (_actionBox.getSelectedIndex() == 0) {
-                        _curAction.setActionData(Warrant.HALT);
-                    } else if (_actionBox.getSelectedIndex() == 1) {
-                        _curAction.setActionData(Warrant.RESUME);
-                    } else {
-                        _curAction.setActionData(Warrant.ABORT);
-                    }
+                	switch (_actionBox.getSelectedIndex()) {
+                		case 0:
+                			_curAction.setActionData(Warrant.RAMP_HALT);
+                			break;
+                        case 1:
+                            _curAction.setActionData(Warrant.RESUME);
+                            break;
+                        case 2:
+                            _curAction.setActionData(Warrant.RETRY_FWD);
+                            break;
+                        case 3:
+                            _curAction.setActionData(Warrant.SPEED_UP);
+                            break;
+                        case 4:
+                            _curAction.setActionData(Warrant.STOP);
+                            break;
+                        case 5:
+                            _curAction.setActionData(Warrant.ESTOP);
+                            break;
+                        case 6:
+                            _curAction.setActionData(Warrant.ABORT);
+                            break;
+                        default:
+                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());  // NOI18N
+                            break;
+                	}
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
-                        || actionType == Conditional.Action.THROTTLE_FACTOR) {
+                        || actionType == Conditional.Action.SET_TRAIN_LOCATION) {
                     _curAction.setActionString(actionString);
                 }
                 break;
