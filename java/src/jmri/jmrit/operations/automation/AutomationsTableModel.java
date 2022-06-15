@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.automation;
 
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -9,11 +8,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -275,13 +270,6 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             automationManager.deregister(automation);
             OperationsXml.save();
-        }
-    }
-
-    protected void comboBoxActionPerformed(ActionEvent ae) {
-        log.debug("combobox action");
-        if (_table.isEditing()) {
-            _table.getCellEditor().stopCellEditing(); // Allows the table contents to update
         }
     }
 
