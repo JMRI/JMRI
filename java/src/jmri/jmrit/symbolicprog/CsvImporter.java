@@ -48,7 +48,7 @@ public class CsvImporter {
                 if (lineStrings.length < 2) {
                     bufferedReader.close();
                     throw new IOException();
-                } else if (lineStrings[0].equals("CV")) {
+                } else if (lineStrings[0].contains("CV")) {
                     log.debug("Header OK");
                 } else {
                     name = lineStrings[0].trim();
