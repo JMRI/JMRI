@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -11,6 +13,7 @@ import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.swing.JTablePersistenceManager;
+import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -28,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * Buttons in table row allows to add roster entry for device, and switch to the
  * DecoderPro ops mode programmer.
  *
- * @author Egbert Broerse Copyright (C) 2021
+ * @author Egbert Broerse Copyright (C) 2021, 2022
  */
 public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
@@ -90,6 +93,21 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     }
 
     /**
+     * Prevent closing tool with programming session left open on module(s).
+     */
+    public void handleCloseEvent() {
+        log.debug("handleCloseEvent() called in LncvProgPane");
+        if (allProgRunning || moduleProgRunning > 0) {
+            // show dialog
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DialogRunningWarning"),
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.WARNING_MESSAGE);
+            // dispose will take care of stopping any open prog session
+        }
+    }
+
+    /**
      * Initialize the config window
      */
     @Override
@@ -100,6 +118,21 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         add(initDirectPanel()); // starts hidden, to set bits in Direct Mode only
         add(initStatusPanel()); // positioned after ButtonPanel so to keep it simple also delayed
         // creation of table must wait for memo + tc to be available, see initComponents(memo) next
+
+        // only way to get notice of the tool being closed, as a JPanel is silently embedded in some JFrame
+        addHierarchyListener(e -> {
+            if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0) {
+                Component comp = e.getChanged();
+                if (comp instanceof JmriJFrame) {
+                    JmriJFrame toolFrame = (JmriJFrame) comp;
+                    if ((Objects.equals(toolFrame.getTitle(), this.getTitle()) &&
+                            !toolFrame.isVisible())) { // it was closed/hidden a moment ago
+                        handleCloseEvent();
+                        log.debug("Component hidden: " + e.getChanged());
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -603,7 +636,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         //log.debug("LncvProgPane heard message {}", m.toMonitorString());
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
             // raw data, to display
-            String raw = (rawCheckBox.isSelected() ? ("[" + m.toString() + "] ") : "");
+            String raw = (rawCheckBox.isSelected() ? ("[" + m + "] ") : "");
             // format the message text, expect it to provide consistent \n after each line
             String formatted = m.toMonitorString(memo.getSystemPrefix());
             // copy the formatted data

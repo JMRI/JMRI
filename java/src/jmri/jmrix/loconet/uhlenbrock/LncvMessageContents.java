@@ -263,6 +263,7 @@ public class LncvMessageContents {
                 returnString = Bundle.getMessage(locale, "LNCV_READ_INTERPRETED", sArt, sMod, sCvn);
                 break;
             case LNCV_READ_REPLY: // mod positions store CV value in ReadReply
+            case LNCV_READ_REPLY2: // for Digikeijs DK5088RC not following specs? experimental EBR
                 returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
             case LNCV_DIRECT_LED1: // CV position contains module address, Value position contains LED 0-15 on/off
@@ -599,7 +600,7 @@ public class LncvMessageContents {
         LncvMessageContents lmc = new LncvMessageContents(m);
         log.debug("request to article {}", lmc.getLncvArticleNum());
         LocoNetMessage forward = new LocoNetMessage(m);
-        forward.setElement(LncvMessageContents.LNCV_CMDDATA_ELEMENT_INDEX, 0x00); // correct CMDDATA for ReadRequest
+        forward.setElement(LncvMessageContents.LNCV_CMDDATA_ELEMENT_INDEX, 0x00); // correct CMDDATA for ReadRequest (0x80 also observed)
         forward.setElement(LncvMessageContents.PXCT1_ELEMENT_INDEX, m.getElement(PXCT1_ELEMENT_INDEX)^0x40); // together with this HIBIT
         if (lmc.getLncvArticleNum() == LNCV_ALL) { // mock a certain device
             log.debug("art ALL");
@@ -636,11 +637,12 @@ public class LncvMessageContents {
     /**
      * LNCV Commands mapped to unique sets of 3 parts in message. LNCV knows only 3 simple &lt;CMD&gt; values.
      */
-    public enum LncvCommand { // commands mapped to 3 values in message, LNCV knows only 3 simple commands
+    public enum LncvCommand { // full commands mapped to 3 values in message, LNCV knows only 3 simple CMD commands
         LNCV_WRITE (LNCV_CMD_WRITE, LnConstants.OPC_IMM_PACKET, 0x00), // CMD=0x20, CmdData=0x0
         // LNCV_WRITE_REPLY = LACK
         LNCV_READ (LNCV_CMD_READ, LnConstants.OPC_IMM_PACKET, 0x00), // CMD=0x21, CmdData=0x0
         LNCV_READ_REPLY (LNCV_CMD_READ_REPLY, LnConstants.OPC_PEER_XFER, 0x00), // CMD=0x1f, CmdData=0x0
+        LNCV_READ_REPLY2 (LNCV_CMD_READ_REPLY, LnConstants.OPC_PEER_XFER, 0x80), // CMD=0x1f, CmdData=0x0
         LNCV_PROG_START (LNCV_CMD_READ, LnConstants.OPC_IMM_PACKET, LNCV_DATA_PRON_MASK), // CMD=0x21, CmdData=0x80
         LNCV_PROG_END (LNCV_CMD_READ, LnConstants.OPC_PEER_XFER, LNCV_DATA_PROFF_MASK), // CMD=0x21, CmdData=0x40
         LNCV_DIRECT_LED1 (LNCV_CMD_WRITE, LnConstants.OPC_IMM_PACKET, LNCV_DATA_LED1_MASK), // CMD=0x20, CmdData=0xff
