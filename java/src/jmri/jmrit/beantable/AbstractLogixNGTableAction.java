@@ -204,6 +204,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected AbstractLogixNGEditor<E> _editor = null;
 
     boolean _showReminder = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
@@ -623,7 +624,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixNGTable")), // NOI18N

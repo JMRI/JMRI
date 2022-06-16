@@ -11,17 +11,8 @@ import org.junit.jupiter.api.*;
 public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
     @Test
-    public void testCTor() {
-        MergConnectionConfig t = new MergConnectionConfig();
-        Assertions.assertNotNull(t, "exists");
-        t.dispose();
-    }
-
-    @Test
     public void testMergName() {
-        MergConnectionConfig t = new MergConnectionConfig();
-        Assertions.assertEquals("CAN via MERG Network Interface", t.name(),"MERG name");
-        t.dispose();
+        Assertions.assertEquals("CAN via MERG Network Interface", cc.name(),"MERG name");
     }
 
     @BeforeEach
@@ -29,12 +20,15 @@ public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfi
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
-        cc = new ConnectionConfig();
+        cc = new MergConnectionConfig();
     }
 
     @AfterEach
     @Override
     public void tearDown() {
+        if ( cc !=null ){
+            cc.dispose();
+        }
         cc = null;
         JUnitUtil.tearDown();
     }

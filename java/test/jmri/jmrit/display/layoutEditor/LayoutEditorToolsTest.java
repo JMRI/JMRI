@@ -665,7 +665,6 @@ public class LayoutEditorToolsTest {
         signalHeads = null;
         sensors = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

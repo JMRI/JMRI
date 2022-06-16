@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
@@ -23,6 +24,8 @@ import jmri.jmrit.beantable.AddNewDevicePanel;
 import jmri.jmrit.display.Positionable;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -573,7 +576,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Show pop-up on a switch with its unique attributes including the
      * (un)connected bean. Derived from
-     * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
+     * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, JmriMouseEvent)}
      *
      * @param e unused because we now our own location
      * @return true when pop up displayed

@@ -220,6 +220,7 @@ public class DefaultShutDownManagerTest {
         JUnitUtil.setUp();
         dsdm = new DefaultShutDownManager();
         runs = 0;
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     @AfterEach

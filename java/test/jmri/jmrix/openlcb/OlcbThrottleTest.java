@@ -444,7 +444,6 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         connection = null;
         nodeID = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -437,7 +437,6 @@ public class IconEditorWindowTest {
 
         JUnitUtil.resetWindows(false, false); // don't log existing windows here, should just be from this class
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

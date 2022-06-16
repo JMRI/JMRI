@@ -108,7 +108,6 @@ public class WhereUsedCollectorsTest {
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
     }

@@ -77,32 +77,36 @@ public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
         //add(pane);
     }
 
-    static JFileChooser chooser;  // shared across all of these
+    private static JFileChooser chooser;  // shared across all of these
 
+    private synchronized static void setChooser( JFileChooser jfc ){
+        chooser = jfc;
+    }
+    
     void selectInputFile() {
         if (chooser == null) {
-            chooser = jmri.jmrit.XmlFile.userFileChooser();
+            setChooser( jmri.jmrit.XmlFile.userFileChooser()) ;
         }
-        chooser.rescanCurrentDirectory();
-        int retVal = chooser.showOpenDialog(this);
+        EditorPane.chooser.rescanCurrentDirectory();
+        int retVal = EditorPane.chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return;  // give up if no file selected
         }
         // success, open the file
-        addFile(chooser.getSelectedFile());
+        addFile(EditorPane.chooser.getSelectedFile());
     }
 
     void selectSaveFile() {
         if (chooser == null) {
-            chooser = new JFileChooser(System.getProperty("user.dir")); // NOI18N
+            setChooser( new JFileChooser(System.getProperty("user.dir"))); // NOI18N
         }
-        int retVal = chooser.showSaveDialog(this);
+        int retVal = EditorPane.chooser.showSaveDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return;  // give up if no file selected
         }
         // success, open the file
         try {
-            saveFile(chooser.getSelectedFile().getPath());
+            saveFile(EditorPane.chooser.getSelectedFile().getPath());
         } catch (IOException e) {
             // failed, warn user
             JOptionPane.showMessageDialog(this, "Error during save: " + e,

@@ -106,7 +106,6 @@ public class ConditionalListCopyTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

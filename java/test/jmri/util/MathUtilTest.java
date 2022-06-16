@@ -15,6 +15,8 @@ import org.python.modules.math;
  *
  * @author George Warner Copyright (C) 2017
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "CNT_ROUGH_CONSTANT_VALUE",
+        justification = "Many co-incidental usages of value near to PI constant")
 public class MathUtilTest {
 
     static final double tolerance = 0.000001;
@@ -253,7 +255,7 @@ public class MathUtilTest {
 
     @Test
     public void testPoint2D_oneThird() {
-        boolean passed = true;    // assume success (optimist!)
+
         Point2D pA = new Point2D.Double(666.0, 999.0);
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
@@ -262,14 +264,14 @@ public class MathUtilTest {
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
         Assert.assertEquals(1.0 / 3.0, t, tolerance);
-        passed = (math.fabs(t - (1.0 / 3.0)) <= tolerance);
+        boolean passed = (math.fabs(t - (1.0 / 3.0)) <= tolerance);
 
         Assert.assertEquals("Point2D third is good", true, passed);
     }
 
     @Test
     public void testPoint2D_twoThirds() {
-        boolean passed = true;    // assume success (optimist!)
+
         Point2D pA = new Point2D.Double(666.0, 999.0);
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
@@ -278,14 +280,14 @@ public class MathUtilTest {
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
         Assert.assertEquals(2.0 / 3.0, t, tolerance);
-        passed = (math.fabs(t - (2.0 / 3.0)) <= tolerance);
+        boolean passed = (math.fabs(t - (2.0 / 3.0)) <= tolerance);
 
         Assert.assertEquals("Point2D two third is good", true, passed);
     }
 
     @Test
     public void testPoint2D_oneFourth() {
-        boolean passed = true;    // assume success (optimist!)
+
         Point2D pA = new Point2D.Double(666.0, 999.0);
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
@@ -295,13 +297,13 @@ public class MathUtilTest {
         double t = distanceAC / distanceAB;
         Assert.assertEquals(1.0 / 4.0, t, tolerance);
 
-        passed = (math.fabs(t - (1.0 / 4.0)) <= tolerance);
+        boolean passed = (math.fabs(t - (1.0 / 4.0)) <= tolerance);
         Assert.assertEquals("Point2D fourth is good", true, passed);
     }
 
     @Test
     public void testPoint2D_threeFourths() {
-        boolean passed = true;    // assume success (optimist!)
+
         Point2D pA = new Point2D.Double(666.0, 999.0);
         Point2D pB = new Point2D.Double(999.0, 666.0);
         double distanceAB = pA.distance(pB);
@@ -311,7 +313,7 @@ public class MathUtilTest {
         double t = distanceAC / distanceAB;
         Assert.assertEquals(3.0 / 4.0, t, tolerance);
 
-        passed = (math.fabs(t - (3.0 / 4.0)) <= tolerance);
+        boolean passed = (math.fabs(t - (3.0 / 4.0)) <= tolerance);
         Assert.assertEquals("Point2D three fourths is good", true, passed);
     }
 

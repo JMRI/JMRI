@@ -729,7 +729,7 @@ public class AbstractAutomaton implements Runnable {
                 blockChanged = true;
                 blockName = ((OBlock) e.getNewValue()).getDisplayName();
             }
-            if (e.getPropertyName().equals("runMode") && !Integer.valueOf(Warrant.MODE_RUN).equals(e.getNewValue())) {
+            if (e.getPropertyName().equals("StopWarrant")) {
                 blockName = null;
                 blockChanged = true;
             }

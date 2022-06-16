@@ -1,35 +1,31 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.*;
 
 import jmri.jmrit.display.layoutEditor.*;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.*;
-
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 /**
  * Test simple functioning of LayoutTurnoutEditor.
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class LayoutTurnoutEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        new LayoutTurnoutEditor(null);
+        Assertions.assertNotNull( new LayoutTurnoutEditor(layoutEditor));
     }
- 
-    protected void turnoutTestSequence(LayoutTurnoutEditor editor, LayoutTurnoutView turnoutView) {
+
+    protected void turnoutTestSequence(LayoutTurnoutEditor ltEeditor, LayoutTurnoutView turnoutView) {
         createTurnouts();
         createBlocks();
 
         // Edit the rh turnout
-        editor.editLayoutTrack(turnoutView);
+        ltEeditor.editLayoutTrack(turnoutView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurnout"));
 
         // Select main turnout

@@ -44,6 +44,7 @@ import jmri.util.JmriJFrame;
     private boolean _inEditMode = false;
 
     private boolean _showReminder = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     private final SymbolTable symbolTable = new DefaultSymbolTable();
 
@@ -339,7 +340,7 @@ import jmri.util.JmriJFrame;
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), // NOI18N

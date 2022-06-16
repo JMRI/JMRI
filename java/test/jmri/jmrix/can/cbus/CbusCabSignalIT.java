@@ -52,7 +52,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         cs.dispose();
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
         JUnitUtil.tearDown();
 

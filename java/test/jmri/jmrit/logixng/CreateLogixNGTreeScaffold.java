@@ -4445,7 +4445,6 @@ public class CreateLogixNGTreeScaffold {
         cleanup();
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

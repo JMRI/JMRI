@@ -45,7 +45,6 @@ public class ScaleTrackDiagramDialogTest {
         layoutEditor = null;
         scaleTrackDiagramDialog = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -286,6 +286,7 @@ public class JUnitUtil {
 
         // Do a minimal amount of de-novo setup
         resetInstanceManager();
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
 
     }
 
@@ -700,6 +701,7 @@ public class JUnitUtil {
         InstanceManager.getDefault().clearAll();
         // ensure the auto-default UserPreferencesManager is not created by installing a test one
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     public static void resetTurnoutOperationManager() {
@@ -771,15 +773,6 @@ public class JUnitUtil {
         InstanceManager
                 .getDefault(ShutDownManager.class)
                 .deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
-    }
-
-    public static void deregisterEditorManagerShutdownTask() {
-        if (! InstanceManager.isInitialized(ShutDownManager.class)) return;
-        if (! InstanceManager.isInitialized(EditorManager.class)) return;
-
-        InstanceManager
-                .getDefault(ShutDownManager.class)
-                .deregister(InstanceManager.getDefault(EditorManager.class).shutDownTask);
     }
 
     public static void initWarrantManager() {
@@ -1206,6 +1199,7 @@ public class JUnitUtil {
      */
     public static void resetProfileManager(Profile profile) {
         ProfileManager.getDefault().setActiveProfile(profile);
+        InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     /**

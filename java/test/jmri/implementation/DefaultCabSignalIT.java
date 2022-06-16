@@ -189,7 +189,6 @@ public class DefaultCabSignalIT {
         cs.dispose(); // verify no exceptions
         cs = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
