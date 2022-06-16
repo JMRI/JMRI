@@ -515,8 +515,16 @@
         <li><strong>Run script:</strong> Starts the specified script. Specify the script to start
         by entering its name in the field provided or use the "..." file selector.</li>
 
-        <li><strong>Jython command:</strong> Enter the command in the Script field</li>
+        <li><strong>Single line command:</strong> Enter the command in the Script field.</li>
+
+        <li><strong>Type of script:</strong> Supported script types are <strong>Jython Files</strong>
+        and <strong>ECMAScript Files</strong>.</li>
       </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_script.png">
+        <img src="images/chapter5/digital_action_script.png" alt="Chapter 5 digital action script"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
