@@ -18,9 +18,10 @@ public class TrainTypeTest {
     @Test
     public void testCreate() {
         try {
-            new TrainType(0);
+            TrainType t = new TrainType(0);
+            Assertions.fail("TrainType t created: " + t);
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "TypeAddFail");  // NOI18N
+            Assert.assertEquals("TypeAddFail", ex.getMessage());  // NOI18N
         }
     }
 
@@ -38,21 +39,14 @@ public class TrainTypeTest {
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
-        jmri.util.JUnitUtil.tearDown();
+        // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
+        JUnitUtil.tearDown();
     }
 }
