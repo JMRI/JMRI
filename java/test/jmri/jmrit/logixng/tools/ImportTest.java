@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
 import java.awt.GraphicsEnvironment;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.junit.*;
 
@@ -51,30 +49,19 @@ public class ImportTest {
         }
     }
 
-    private boolean destinationPointsIsEnabled(DestinationPoints dp) {
-//        Method retrieveItems = dp.getClass().getDeclaredMethod("isEnabled", String.class);
-        try {
-            Method isEnabled = dp.getClass().getDeclaredMethod("isEnabled");
-            isEnabled.setAccessible(true);
-            return (boolean)isEnabled.invoke(dp);
-        } catch ( IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex ) {
-            return false;
-        }
-    }
-
     private void runTestEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException {
-        Assert.assertFalse(destinationPointsIsEnabled(dp));
+        Assert.assertFalse(dp.isEnabled());
         sensor.setState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(() -> (destinationPointsIsEnabled(dp)),"destination point enabled");
-        Assert.assertTrue(destinationPointsIsEnabled(dp));
+        JUnitUtil.waitFor(() -> (dp.isEnabled()),"destination point enabled");
+        Assert.assertTrue(dp.isEnabled());
         sensor.setState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(() -> (!destinationPointsIsEnabled(dp)),"destination point disabled");
-        Assert.assertFalse(destinationPointsIsEnabled(dp));
+        JUnitUtil.waitFor(() -> (!dp.isEnabled()),"destination point disabled");
+        Assert.assertFalse(dp.isEnabled());
     }
 
     @Test
     @Ignore
-    public void testEntryExit() throws InterruptedException, JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void testEntryExit() throws JmriException {
         // ENTRYEXIT
         // SET_NXPAIR_ENABLED
 /*
