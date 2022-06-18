@@ -120,7 +120,8 @@ public class CanReplyTest extends CanMRCommonTestBase {
         CanReply r = new CanReply(canMsg);
         Assert.assertTrue("Header 0x555", r.getHeader() == 0x555);
         Assert.assertTrue("2 Elements", r.getNumDataElements() == 2);
-        Assert.assertTrue("equals same", r.equals(m));
+        Assert.assertTrue("equals same r", r.equals(canMsg));
+        Assert.assertTrue("equals same canMsg", canMsg.equals(r));
     }
 
     @Test
