@@ -608,7 +608,7 @@ public class WarrantFrame extends WarrantRoute {
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         JRadioButton run = new JRadioButton(Bundle.getMessage("ARun"), false);
-        JRadioButton halt = new JRadioButton(Bundle.getMessage("Halt"), false);
+        JRadioButton halt = new JRadioButton(Bundle.getMessage("Stop"), false);
         JRadioButton resume = new JRadioButton(Bundle.getMessage("Resume"), false);
         JRadioButton eStop = new JRadioButton(Bundle.getMessage("EStop"), false);
         JRadioButton abort = new JRadioButton(Bundle.getMessage("Abort"), false);

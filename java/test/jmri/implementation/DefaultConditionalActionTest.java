@@ -207,8 +207,8 @@ public class DefaultConditionalActionTest {
         ix1.setType("Set Signal Mast Aspect");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_ASPECT);
         
-        ix1.setType("Set Train Current Location");
-        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_TRAIN_LOCATION);
+        ix1.setType("Get Train Current Location");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_TRAIN_LOCATION);
         
         ix1.setType("Set Signal Mast Held");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_HELD);
@@ -456,13 +456,13 @@ public class DefaultConditionalActionTest {
         jmri.util.JUnitAppender.assertWarnMessage("Unhandled Audio operation command: 0");
         
         Assert.assertTrue("getActionDataString() returns correct value",
-                "Halt".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.HALT)));
+                "Slow to Halt".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.HALT)));
         Assert.assertTrue("getActionDataString() returns correct value",
                 "Resume".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.RESUME)));
         Assert.assertTrue("getActionDataString() returns correct value",
-                "Abort".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.ABORT)));
-        Assert.assertTrue("getActionDataString() returns correct value",
-                "Abort".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, -1)));
+                "Move into next block".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.RETRY_FWD)));
+//        Assert.assertTrue("getActionDataString() returns correct value",
+//                "Abort".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, -1)));
         
         // Test invalid type
 //        Assert.assertTrue("getActionDataString() returns correct value",
@@ -899,7 +899,7 @@ public class DefaultConditionalActionTest {
                 "On Change To True, Set Signal Mast Aspect, \"3\" to 5".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.CONTROL_TRAIN);
-        ix1.setActionData(Warrant.INCONSISTENT);
+        ix1.setActionData(Warrant.ABORT);
         Assert.assertTrue("description() returns correct value",
                 "When Triggered True, Control Auto Train of Warrant \"3\" to Abort".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",

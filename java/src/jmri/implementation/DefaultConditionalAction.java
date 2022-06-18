@@ -825,7 +825,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 break;
             case CONTROL_TRAIN:
             	switch (data) {
-                	case Warrant.RAMP_HALT:
+                	case Warrant.HALT:
                 		return (rbx.getString("WarrantHalt"));
                     case Warrant.RESUME:
                         return (rbx.getString("WarrantResume"));
@@ -833,7 +833,6 @@ public class DefaultConditionalAction implements ConditionalAction {
                         return (rbx.getString("WarrantMoveToNext"));
                     case Warrant.SPEED_UP:
                         return (rbx.getString("WarrantSpeedUp"));
-                    case Warrant.HALT:
                     case Warrant.STOP:
                         return (rbx.getString("WarrantStop"));
                     case Warrant.ESTOP:
@@ -904,8 +903,12 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + getActionDataString();
                     break;
-                case SET_TRAIN_LOCATION:
-                	str = str + " " + rbx.getString("onWarrant");
+                case GET_TRAIN_LOCATION:
+                case GET_BLOCK_WARRANT:
+                case GET_BLOCK_TRAIN_NAME:
+                	str = str + " \"" + _deviceName + "\" " + rbx.getString("intoMemory")
+                			+ " " + _actionString;
+                	break;
                 case SET_SIGNALMAST_ASPECT:
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + _actionString;

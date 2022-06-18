@@ -108,12 +108,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public static final int ABORT = 3;
     public static final int RETRY_FWD = 4;
     public static final int ESTOP = 5;
-    public static final int RAMP_HALT = 6;
+    protected static final int RAMP_HALT = 6;	// used only to distinguish User halt from speed change halts
     public static final int SPEED_UP = 7;
     public static final int RETRY_BKWD = 8;
     public static final int DEBUG = 9;
     static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "MoveToNext", 
-            "EStop", "SmoothHalt", "SpeedUp", "MoveToPrevious","Debug"};
+            "EStop", "ramp", "SpeedUp", "MoveToPrevious","Debug"};	// RAMP_HALT is not a control command
 
     // engineer running states
     protected static final int RUNNING = 7;
@@ -1094,7 +1094,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case RESUME:
                 case RETRY_FWD:
                 case RETRY_BKWD:
-                case RAMP_HALT:
+//                case RAMP_HALT:
                 case SPEED_UP:
                     break;
                 case STOP:
@@ -1114,11 +1114,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return ret;
         }
         int runState = _engineer.getRunState();
-        if (runState == Warrant.HALT) {
+/*        if (runState == Warrant.HALT) {
             if (_waitForSignal || _waitForBlock || _waitForWarrant) {
                 runState = WAIT_FOR_CLEAR;
             }
-        }
+        }*/
         if (_trace || log.isDebugEnabled()) {
             log.info(Bundle.getMessage("controlChange",
                     getTrainName(), Bundle.getMessage(Warrant.CNTRL_CMDS[idx]),
@@ -1126,24 +1126,36 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         synchronized (this) {
             switch (idx) {
-                case RAMP_HALT:
+                case HALT:
                     rampSpeedTo(Warrant.Stop, -1);  // ramp down
                     _engineer.setHalt(true);
                     ret = true;
                     break;
                 case RESUME:
-                    OBlock block = getBlockAt(_idxCurrentOrder);
+                    BlockOrder bo = getBlockOrderAt(_idxCurrentOrder);
+                    OBlock block = bo.getBlock(); 
                     String msg = null;
-                    if (_waitForSignal || _waitForBlock || _waitForWarrant) {
-                        msg = makeWaitMessage(block.getDisplayName(), _idxCurrentOrder);
-                    } else {
-                        String train = (String)block.getValue();
-                        if (train == null) {
-                            train = Bundle.getMessage("unknownTrain");
+                    if (checkBlockForRunning(_idxCurrentOrder)) {
+                        if (_waitForSignal || _waitForBlock || _waitForWarrant) {
+                            msg = makeWaitMessage(block.getDisplayName(), _idxCurrentOrder);
+                        } else {
+                        	if (runState == WAIT_FOR_CLEAR) {
+                        		TrainOrder to = bo.allocatePaths(this, true);
+                        		if (to._cause == null) {
+                            		_engineer.setWaitforClear(false);
+                        		} else {
+                        			msg = to._message;
+                        		}
+                        	}
+                            String train = (String)block.getValue();
+                            if (train == null) {
+                                train = Bundle.getMessage("unknownTrain");
+                            }
+                            if (block.isOccupied() && !_trainName.equals(train)) {
+                                msg = Bundle.getMessage("blockInUse", train, block.getDisplayName());
+                            }
                         }
-                        if (block.isOccupied() && !_trainName.equals(train)) {
-                            msg = Bundle.getMessage("blockInUse", train, block.getDisplayName());
-                        }
+
                     }
                     if (msg != null) {
                         ret = askResumeQuestion(block, msg);
@@ -1181,7 +1193,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     break;
                 case RETRY_FWD: // Force move into next block
                     if (checkBlockForRunning(_idxCurrentOrder + 1)) {
-                        BlockOrder bo = getBlockOrderAt(_idxCurrentOrder + 1);
+                        bo = getBlockOrderAt(_idxCurrentOrder + 1);
                         block = bo.getBlock(); 
                         if ((_waitForSignal || _waitForBlock || _waitForWarrant) ||
                                 (runState != RUNNING && runState != SPEED_RESTRICTED)) {
@@ -1197,7 +1209,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     break;
                 case RETRY_BKWD: // Force move into previous block - Not enabled.
                     if (checkBlockForRunning(_idxCurrentOrder - 1)) {
-                        BlockOrder bo = getBlockOrderAt(_idxCurrentOrder - 1);
+                        bo = getBlockOrderAt(_idxCurrentOrder - 1);
                         block = bo.getBlock(); 
                         if ((_waitForSignal || _waitForBlock || _waitForWarrant) ||
                                 (runState != RUNNING && runState != SPEED_RESTRICTED)) {
@@ -1215,7 +1227,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     stopWarrant(true, true);
                     ret = true;
                     break;
-                case HALT:
+//                case HALT:
                 case STOP:
                     setSpeedToType(Stop); // sets _halt
                     _engineer.setHalt(true);
@@ -1282,7 +1294,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return false;
         }
         OBlock block = bo.getBlock();
-        if ((block.getState() & OBlock.OCCUPIED) == 0) {
+        if (!block.isOccupied()) {
             _message = Bundle.getMessage("blockUnoccupied", block.getDisplayName());
             return false;
         }

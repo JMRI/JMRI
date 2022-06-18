@@ -51,15 +51,15 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouseListener {
 
-    static final String ramp = Bundle.getMessage("Halt");
-    static final String halt = Bundle.getMessage("Stop");
-    static final String stop = Bundle.getMessage("EStop");
+    static final String ramp = Bundle.getMessage("SmoothHalt");
+    static final String stop = Bundle.getMessage("Stop");
+    static final String estop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
     static final String speedup = Bundle.getMessage("SpeedUp");
     static final String abort = Bundle.getMessage("Abort");
     static final String retryfwd = Bundle.getMessage("MoveToNext");
     static final String retrybkwd = Bundle.getMessage("MoveToPrevious");    // removed from drop down
-    static final String[] controls = {" ", ramp, resume, halt, speedup, retryfwd, stop, abort,
+    static final String[] controls = {" ", ramp, resume, stop, speedup, retryfwd, estop, abort,
                             (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;

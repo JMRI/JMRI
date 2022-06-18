@@ -501,9 +501,9 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setTrainLocation(@Nonnull ConditionalAction action, Warrant w, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void getTrainLocation(@Nonnull ConditionalAction action, Warrant w, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
-            errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
+            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
         	if (mTo == null) {
                 errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
@@ -653,6 +653,43 @@ public class DefaultConditionalExecute {
         } else {
             b.setOutOfService(false);
             increaseCounter(actionCount);
+        }
+    }
+
+    void getBlockTrainName(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (b == null) {
+            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+        	if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+            	String name = (String)b.getValue();
+            	if (name == null) {
+            		name = " ";
+            	}
+                mTo.setValue(name);
+                increaseCounter(actionCount);
+            }
+        }
+    }
+
+    void getBlockWarrant(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (b == null) {
+            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+        	if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+            	Warrant w = b.getWarrant();
+            	String name;
+            	if (w != null) {
+            		name = w.getDisplayName();
+            	} else {
+            		name = " ";
+            	}
+                mTo.setValue(name);
+                increaseCounter(actionCount);
+            }
         }
     }
 

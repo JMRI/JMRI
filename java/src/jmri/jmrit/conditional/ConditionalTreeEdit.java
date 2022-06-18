@@ -3539,8 +3539,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
                 	switch (_curAction.getActionData()) {
-                		case Warrant.RAMP_HALT:
-                			_actionBox.setSelectedIndex(0);
+                    	case Warrant.HALT:
+                    		_actionBox.setSelectedIndex(0);
                 			break;
                         case Warrant.RESUME:
                             _actionBox.setSelectedIndex(1);
@@ -3551,7 +3551,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         case Warrant.SPEED_UP:
                             _actionBox.setSelectedIndex(3);
                     		break;
-                        case Warrant.HALT:
                         case Warrant.STOP:
                             _actionBox.setSelectedIndex(4);
                     		break;
@@ -3572,7 +3571,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
             case OBLOCK:
                 _actionTypeBox.setSelectedItem(actionType);
-                if (actionType == Conditional.Action.SET_BLOCK_VALUE) {
+                if (actionType == Conditional.Action.SET_BLOCK_VALUE
+                		|| actionType == Conditional.Action.SET_TRAIN_NAME
+                		|| actionType == Conditional.Action.GET_TRAIN_LOCATION) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
                 break;
@@ -3914,7 +3915,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 	_actionBox.addItem(Bundle.getMessage("WarrantAbort"));            	
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
-                        || actionType == Conditional.Action.SET_TRAIN_LOCATION) {
+                        || actionType == Conditional.Action.GET_TRAIN_LOCATION) {
                     warrantGrid = "ShortFieldNoBoxAction";  // NOI18N
                     if (actionType == Conditional.Action.SET_TRAIN_ID) {
                         _shortActionLabel.setText(Bundle.getMessage("LabelTrainId"));  // NOI18N
@@ -3922,12 +3923,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     } else if (actionType == Conditional.Action.SET_TRAIN_NAME) {
                         _shortActionLabel.setText(Bundle.getMessage("LabelTrainName"));  // NOI18N
                         _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintTrainName"));  // NOI18N
-                    } else if (actionType == Conditional.Action.SET_TRAIN_LOCATION) {
+                    } else if (actionType == Conditional.Action.GET_TRAIN_LOCATION) {
                         _shortActionLabel.setText(Bundle.getMessage("LabelMemoryLocation"));  // NOI18N
                         _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintToMemory"));  // NOI18N
                     }
                 }
-
                 setActionNameBox(itemType);
                 makeDetailGrid(warrantGrid);
                 break;
@@ -3940,14 +3940,15 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionTypeBox.addItem(action);
                 }
                 if (actionType == Conditional.Action.SET_BLOCK_VALUE) {
-                    oblockGrid = "ShortFieldNoBoxAction";  // NOI18N
                     _shortActionLabel.setText(Bundle.getMessage("LabelBlockValue"));  // NOI18N
                     _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintBlockValue"));  // NOI18N
-                } else if ((actionType == Conditional.Action.DEALLOCATE_BLOCK)
-                        || (actionType == Conditional.Action.SET_BLOCK_ERROR)
-                        || (actionType == Conditional.Action.CLEAR_BLOCK_ERROR)
-                        || (actionType == Conditional.Action.SET_BLOCK_OUT_OF_SERVICE)
-                        || (actionType == Conditional.Action.SET_BLOCK_IN_SERVICE)) {
+                    oblockGrid = "ShortFieldNoBoxAction";  // NOI18N
+                } else if(actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
+                		|| actionType == Conditional.Action.GET_BLOCK_WARRANT) {
+                    _shortActionLabel.setText(Bundle.getMessage("LabelMemoryLocation"));  // NOI18N
+                    _shortActionLabel.setToolTipText(Bundle.getMessage("DataHintToMemory"));  // NOI18N
+                    oblockGrid = "ShortFieldNoBoxAction";  // NOI18N
+                } else {
                     oblockGrid = "NameTypeActionFinal";  // NOI18N
                 }
 
@@ -4441,7 +4442,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
                 	switch (_actionBox.getSelectedIndex()) {
                 		case 0:
-                			_curAction.setActionData(Warrant.RAMP_HALT);
+                			_curAction.setActionData(Warrant.HALT);
                 			break;
                         case 1:
                             _curAction.setActionData(Warrant.RESUME);
@@ -4467,7 +4468,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 	}
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
-                        || actionType == Conditional.Action.SET_TRAIN_LOCATION) {
+                        || actionType == Conditional.Action.GET_TRAIN_LOCATION) {
                     _curAction.setActionString(actionString);
                 }
                 break;
@@ -4481,7 +4482,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 actionType = selection;
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
-                if (actionType == Conditional.Action.SET_BLOCK_VALUE) {
+                if (actionType == Conditional.Action.SET_BLOCK_VALUE
+                		|| actionType == Conditional.Action.SET_TRAIN_NAME
+                		|| actionType == Conditional.Action.GET_TRAIN_LOCATION) {
                     _curAction.setActionString(actionString);
                 }
                 break;
