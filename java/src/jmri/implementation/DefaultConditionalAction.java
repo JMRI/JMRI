@@ -842,6 +842,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     default:
                         log.error("Unhandled Warrant control: {}", data);
             	}
+                break;
             default:
                 // fall through
                 break;

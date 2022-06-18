@@ -207,7 +207,7 @@ public class DefaultConditionalActionTest {
         ix1.setType("Set Signal Mast Aspect");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_ASPECT);
         
-        ix1.setType("Get Train Current Location");
+        ix1.setType("Put Location of Warrant");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_TRAIN_LOCATION);
         
         ix1.setType("Set Signal Mast Held");
