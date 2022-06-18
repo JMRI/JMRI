@@ -51,20 +51,24 @@ public class ImportTest {
         }
     }
 
-    private boolean destinationPointsIsEnabled(DestinationPoints dp) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    private boolean destinationPointsIsEnabled(DestinationPoints dp) {
 //        Method retrieveItems = dp.getClass().getDeclaredMethod("isEnabled", String.class);
-        Method isEnabled = dp.getClass().getDeclaredMethod("isEnabled");
-        isEnabled.setAccessible(true);
-        return (boolean)isEnabled.invoke(dp);
+        try {
+            Method isEnabled = dp.getClass().getDeclaredMethod("isEnabled");
+            isEnabled.setAccessible(true);
+            return (boolean)isEnabled.invoke(dp);
+        } catch ( IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex ) {
+            return false;
+        }
     }
 
-    private void runTestEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    private void runTestEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException {
         Assert.assertFalse(destinationPointsIsEnabled(dp));
         sensor.setState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(() -> (destinationPointsIsEnabled(dp)));
+        JUnitUtil.waitFor(() -> (destinationPointsIsEnabled(dp)),"destination point enabled");
         Assert.assertTrue(destinationPointsIsEnabled(dp));
         sensor.setState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(() -> (!destinationPointsIsEnabled(dp)));
+        JUnitUtil.waitFor(() -> (!destinationPointsIsEnabled(dp)),"destination point disabled");
         Assert.assertFalse(destinationPointsIsEnabled(dp));
     }
 
@@ -123,8 +127,8 @@ public class ImportTest {
 
         sensor.setState(Sensor.ACTIVE);
 
-        JUnitUtil.waitFor(() -> (turnout101.getState() == Turnout.CLOSED));
-        JUnitUtil.waitFor(() -> (turnout102.getState() == Turnout.CLOSED));
+        JUnitUtil.waitFor(() -> (turnout101.getState() == Turnout.CLOSED),"turnout 101 closed");
+        JUnitUtil.waitFor(() -> (turnout102.getState() == Turnout.CLOSED),"turnout 102 closed");
 
         Assert.assertEquals(Turnout.CLOSED, turnout101.getState());
         Assert.assertEquals(Turnout.CLOSED, turnout102.getState());

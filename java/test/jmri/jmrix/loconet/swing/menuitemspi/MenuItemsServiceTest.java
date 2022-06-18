@@ -8,8 +8,11 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.swing.WindowInterface;
 import jmri.jmrix.loconet.swing.menuitemspi.spi.MenuItemsInterface;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -17,7 +20,6 @@ import org.openide.util.lookup.ServiceProvider;
  * <br>
  * @author Bob Milhaupt  Copyright (C) 2022
  */
-
 @ServiceProvider(service = jmri.jmrix.loconet.swing.menuitemspi.spi.MenuItemsInterface.class)
 public class MenuItemsServiceTest implements MenuItemsInterface {
 
@@ -25,7 +27,7 @@ public class MenuItemsServiceTest implements MenuItemsInterface {
     public void testGetInstance() {
         MenuItemsService result = MenuItemsService.getInstance();
         assertNotNull( result);
-        assertEquals("check class returned", MenuItemsService.class, result.getClass());
+        assertEquals(MenuItemsService.class, result.getClass(),"check class returned");
     }
 
     @Test
@@ -35,19 +37,15 @@ public class MenuItemsServiceTest implements MenuItemsInterface {
         LocoNetSystemConnectionMemo memo = null;
         MenuItemsService instance = MenuItemsService.getInstance();
         List<JMenu> result = instance.getMenuExtensionsItems(isLocoNetInterface, wi, memo);
-        assertEquals("result number of menus", 2, result.size());
+        assertEquals(2 , result.size(), "result number of menus");
         JMenu j1 = result.get(0);
-        assertEquals("result's  first item is a JMenu", JMenu.class,
-                j1.getClass());
-        assertEquals("result element 0's name", "A menu", j1.getName());
-        assertEquals("result menu 1's number of items",
-                0, j1.getItemCount());
+        assertEquals( JMenu.class, j1.getClass(), "result's  first item is a JMenu");
+        assertEquals( "A menu", j1.getName(), "result element 0's name");
+        assertEquals( 0, j1.getItemCount(), "result menu 1's number of items");
         JMenu j2 = result.get(1);
-        assertEquals("result's  second item is a JMenu", JMenu.class,
-                j2.getClass());
-        assertEquals("result second item's name", "B menu", j2.getName());
-        assertEquals("result second item's number of items",
-                0, j2.getItemCount());
+        assertEquals( JMenu.class, j2.getClass(), "result's  second item is a JMenu");
+        assertEquals( "B menu", j2.getName(), "result second item's name");
+        assertEquals( 0, j2.getItemCount(), "result second item's number of items");
     }
 
     @Override
@@ -62,4 +60,15 @@ public class MenuItemsServiceTest implements MenuItemsInterface {
         j.add(jm); // add another menu so there's something more to check on.
         return j;
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

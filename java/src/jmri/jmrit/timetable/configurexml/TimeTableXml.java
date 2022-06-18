@@ -504,6 +504,10 @@ public class TimeTableXml {
             return fileLocation;
         }
 
+        /**
+         * Reset the static file location.
+         * Only required for unit testing purposes.
+         */
         public static void resetFileLocation() {
             fileLocation = null;
         }
