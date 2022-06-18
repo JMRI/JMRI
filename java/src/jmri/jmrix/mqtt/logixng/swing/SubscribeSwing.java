@@ -43,6 +43,8 @@ public class SubscribeSwing extends AbstractDigitalActionSwing {
         if (action == null) {
             // Create a temporary action
             action = new Subscribe("IQDA1", null, null);
+            // Make "remove channel" the default for new actions
+            action.setRemoveChannelFromLastTopic(true);
         }
 
         panel = new JPanel();
