@@ -49,26 +49,14 @@ public class ImportEntryExitTest {
         }
     }
 
-    private boolean isEnabled(DestinationPoints dp) {
-//        Method retrieveItems = dp.getClass().getDeclaredMethod("isEnabled", String.class);
-        try {
-            Method isEnabled = dp.getClass().getDeclaredMethod("isEnabled");
-            isEnabled.setAccessible(true);
-            return (boolean)isEnabled.invoke(dp);
-        }
-        catch ( IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex ){
-            return false;
-        }
-    }
-
     private void runTestActionEntryExit(DestinationPoints dp, Sensor sensor) throws JmriException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Assert.assertFalse(isEnabled(dp));
+        Assert.assertFalse(dp.isEnabled());
         sensor.setState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(() -> (isEnabled(dp)),"destination point enabled");
-        Assert.assertTrue(isEnabled(dp));
+        JUnitUtil.waitFor(() -> (dp.isEnabled()),"destination point enabled");
+        Assert.assertTrue(dp.isEnabled());
         sensor.setState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(() -> (!isEnabled(dp)),"destination point disabled");
-        Assert.assertFalse(isEnabled(dp));
+        JUnitUtil.waitFor(() -> (!dp.isEnabled()),"destination point disabled");
+        Assert.assertFalse(dp.isEnabled());
     }
 
     @Test
