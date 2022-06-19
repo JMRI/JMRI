@@ -824,9 +824,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 }
                 break;
             case CONTROL_TRAIN:
-            	switch (data) {
-                	case Warrant.HALT:
-                		return (rbx.getString("WarrantHalt"));
+                switch (data) {
+                    case Warrant.HALT:
+                        return (rbx.getString("WarrantHalt"));
                     case Warrant.RESUME:
                         return (rbx.getString("WarrantResume"));
                     case Warrant.RETRY_FWD:
@@ -841,7 +841,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                         return (rbx.getString("WarrantAbort"));            	
                     default:
                         log.error("Unhandled Warrant control: {}", data);
-            	}
+                }
                 break;
             default:
                 // fall through

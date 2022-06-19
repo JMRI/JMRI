@@ -71,7 +71,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _delayStart; // allows start block unoccupied and wait for train
     private boolean _lost;      // helps recovery if _idxCurrentOrder block goes inactive
     private boolean _overrun;   // train overran a signal or warrant stop
-    private boolean _overBlkOccupied;  // test for overruns. =true assumes occupied by another train
     private int _idxCurrentOrder; // Index of block at head of train (if running)
 
     protected int _runMode = MODE_NONE;
@@ -849,8 +848,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         _curSignalAspect = null;
         cancelDelayRamp(true);
-        // insulate possible non-GUI thread making a block state change
-        ThreadingUtil.runOnGUI(()-> deAllocate());
 
         if (_engineer != null) {
             if (!_engineer.getState().equals(Thread.State.TERMINATED)) {
@@ -871,8 +868,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_addTracker && _idxCurrentOrder == _orders.size()-1) { // run was complete to end
             startTracker();
             _runMode = MODE_MANUAL;
+        } else {
+            _runMode = MODE_NONE;
         }
         _addTracker = false;
+
+        // insulate possible non-GUI thread making this call (e.g. Engineer)
+        ThreadingUtil.runOnGUI(()-> deAllocate());
+
         String bundleKey;
         String blockName;
         if (abort) {
@@ -891,7 +894,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         fireRunStatus("StopWarrant", blockName, bundleKey);
-        _runMode = MODE_NONE;
     }
 
     /**
@@ -930,7 +932,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _delayStart = false;
         _lost = false;
         _overrun = false;
-        _overBlkOccupied = true;   // safety to assume somebody else is ahead
         clearWaitFlags(true);
         if (address != null) {
             _speedUtil.setDccAddress(address);
@@ -1139,14 +1140,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         if (_waitForSignal || _waitForBlock || _waitForWarrant) {
                             msg = makeWaitMessage(block.getDisplayName(), _idxCurrentOrder);
                         } else {
-                        	if (runState == WAIT_FOR_CLEAR) {
-                        		TrainOrder to = bo.allocatePaths(this, true);
-                        		if (to._cause == null) {
-                            		_engineer.setWaitforClear(false);
-                        		} else {
-                        			msg = to._message;
-                        		}
-                        	}
+                            if (runState == WAIT_FOR_CLEAR) {
+                                TrainOrder to = bo.allocatePaths(this, true);
+                                if (to._cause == null) {
+                                       _engineer.setWaitforClear(false);
+                                } else {
+                                    msg = to._message;
+                                }
+                            }
                             String train = (String)block.getValue();
                             if (train == null) {
                                 train = Bundle.getMessage("unknownTrain");
@@ -1155,7 +1156,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                                 msg = Bundle.getMessage("blockInUse", train, block.getDisplayName());
                             }
                         }
-
                     }
                     if (msg != null) {
                         ret = askResumeQuestion(block, msg);
@@ -1341,8 +1341,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         info.append("\n\tWait flags: _waitForSignal= "); info.append(_waitForSignal);
         info.append(", _waitForBlock= "); info.append(_waitForBlock);
         info.append(", _waitForWarrant= "); info.append(_waitForWarrant);
-        info.append("\n\tStatus flags: _overrun= "); info.append(_overrun); info.append(", _overBlkOccupied= "); 
-        info.append(_overBlkOccupied);info.append(", _lost= "); info.append(_lost);
+        info.append("\n\tStatus flags: _overrun= "); info.append(_overrun);
+        info.append(", _lost= "); info.append(_lost);
         if (_protectSignal != null) {
             info.append("\n\tWait for Signal \"");info.append(_protectSignal.getDisplayName());info.append("\" protects block ");
             info.append(getBlockAt(_idxProtectSignal).getDisplayName()); info.append("\" from approch block \"");
@@ -2028,7 +2028,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     private boolean doRestoreRunning(OBlock block, String speedType) {
         _overrun = false;
-        _overBlkOccupied = true;   // for safety, assume somebody else is ahead
         _curSignalAspect = null;
         setPathAt(_idxCurrentOrder);    // show ownership and train Id
         
@@ -2287,7 +2286,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             // previous blocks were checked as UNDETECTED above
             // Indicate the previous dark block was entered
             OBlock prevBlock = getBlockAt(activeIdx - 1);
-            prevBlock._entryTime = System.currentTimeMillis() - 1000; // arbitrarily say
+            prevBlock._entryTime = System.currentTimeMillis() - 5000; // arbitrary. Just say 5 seconds
             prevBlock.setValue(_trainName);
             prevBlock.setState(prevBlock.getState() | OBlock.RUNNING);
             if (log.isDebugEnabled()) {
@@ -2336,7 +2335,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private void setHeadOfTrain(OBlock block ) {
         block.setValue(_trainName);
         block.setState(block.getState() | OBlock.RUNNING);
-//        block._entryTime = System.currentTimeMillis();    was set prior to entering goingActive()
         if (_runMode == MODE_RUN && _idxCurrentOrder > 0 && _idxCurrentOrder < _orders.size()) {
             _speedUtil.leavingBlock(_idxCurrentOrder - 1);
         }
@@ -2432,28 +2430,39 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         doStoppingBlockClear();
                     }
                 }
+                if (_shareRoute) { // don't deallocate if closer than 2 blocks, otherwise deallocate
+                    int k = Math.min(3, _orders.size());
+                    while (k > _idxCurrentOrder) {
+                        if (!curBlock.equals(getBlockAt(k))) {
+                            if (deAllocateBlock(curBlock)) {
+                                curBlock.setValue(null);
+                                _totalAllocated = false;
+                            }
+                        }
+                        k--;
+                    }
+                }
             }
         }
     }
 
-    // BlockOrder index of block is _idxCurrentOrder + 1
+    /*
+     * This block is a possible overrun. If permitted, we may claim ownership.
+     * BlockOrder index of block is _idxCurrentOrder + 1
+     * return true, if warrant can claim occupation and ownership
+     */
     private boolean checkForOverrun(OBlock block) {
-        Warrant w = block.getWarrant();
-        if (w != null && !w.equals(this)) {
-            _message = block.getDisplayName() + " owned by " + w.getDisplayName();
-        }
-        if (block.isOccupied() && (System.currentTimeMillis() - block._entryTime < 3000)) {
-            // Went active with in the last 3 seconds. Could be be overrun
+        if (block.isOccupied() && (System.currentTimeMillis() - block._entryTime < 5000)) {
+            // Went active within the last 5 seconds. Likely an overrun
             _overrun = true;
-            if (w == null) {   // take ownership. 
+            if (!this.equals(block.getWarrant())) {
                 _message = setPathAt(_idxCurrentOrder + 1);    //  no TrainOrder checks. allocates and sets path
                 if (_message == null) {
-                    _overBlkOccupied = false;  // occupier is us
-                    goingActive(block);
+                	_idxCurrentOrder++;
+                    // insulate possible non-GUI thread making this call (e.g. Engineer)
+                    ThreadingUtil.runOnGUI(()-> goingActive(block));
                     return true ;
                 }
-            } else if (w.equals(this)) {
-                return true;
             }
         }
         return false;
@@ -3123,14 +3132,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         fireRunStatus("RampBegin", reason, blkName);
     }
 
-    protected void downRampBegun(int endBlockIdx) {
-        OBlock block = getBlockAt(endBlockIdx + 1);
-        if (block != null) {
-            _overBlkOccupied = block.isOccupied();
-        } else {
-            _overBlkOccupied = true;
-        }
-    }
 
     protected void downRampDone(boolean stop, boolean halted, String speedType, int endBlockIdx) {
         if (_idxCurrentOrder < endBlockIdx) {
@@ -3141,7 +3142,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (nextIdx > 0 && nextIdx < _orders.size()) {
             BlockOrder bo = getBlockOrderAt(nextIdx);
             OBlock block = bo.getBlock();
-            if (block.isOccupied() && !_overBlkOccupied) {
+            if (block.isOccupied()) {
                 // Occupied now, but not occupied by another train at start of ramp.
                 if (!checkForOverrun(block) ) {
                     Warrant w = block.getWarrant();
@@ -3149,12 +3150,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     if (w != null && !w.equals(this)) { // probably redundant
                         _waitForWarrant = true;
                         setStoppingBlock(nextIdx);
-                    } else {    // take ownership, if possible
-                        _message = setPathAt(nextIdx);
-                    }
-                    if (Stop.equals(BlockOrder.getPermissibleSpeedAt(bo))) { // probably redundant
+                    } else if (Stop.equals(BlockOrder.getPermissibleSpeedAt(bo))) { // probably redundant
                         _waitForSignal = true;
                         setProtectingSignal(nextIdx);
+                    } else {
+                    	_waitForBlock = true;
                     }
                 }
                 makeOverrunMessage(bo);

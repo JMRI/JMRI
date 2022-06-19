@@ -2170,31 +2170,31 @@ public class ConditionalEditFrame extends ConditionalFrame {
             case WARRANT:
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
-                	switch (_curAction.getActionData()) {
-                    	case Warrant.HALT:
-                    		_actionBox.setSelectedIndex(0);
-                    		break;
+                    switch (_curAction.getActionData()) {
+                        case Warrant.HALT:
+                            _actionBox.setSelectedIndex(0);
+                            break;
                         case Warrant.RESUME:
                             _actionBox.setSelectedIndex(1);
-                    		break;
+                            break;
                         case Warrant.RETRY_FWD:
                             _actionBox.setSelectedIndex(2);
-                    		break;
+                            break;
                         case Warrant.SPEED_UP:
                             _actionBox.setSelectedIndex(3);
-                    		break;
+                            break;
                         case Warrant.STOP:
                             _actionBox.setSelectedIndex(4);
-                    		break;
+                            break;
                         case Warrant.ESTOP:
                             _actionBox.setSelectedIndex(5);
-                    		break;
+                            break;
                         case Warrant.ABORT:
                             _actionBox.setSelectedIndex(6);
-                    		break;
+                            break;
                         default:
                             log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());  // NOI18N
-                	}
+                    }
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
                         || actionType == Conditional.Action.GET_TRAIN_LOCATION) {
@@ -2205,8 +2205,8 @@ public class ConditionalEditFrame extends ConditionalFrame {
             case OBLOCK:
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.SET_BLOCK_VALUE
-                		|| actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
-                		|| actionType == Conditional.Action.GET_BLOCK_WARRANT) {
+                        || actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
+                        || actionType == Conditional.Action.GET_BLOCK_WARRANT) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
                 break;
@@ -2522,12 +2522,12 @@ public class ConditionalEditFrame extends ConditionalFrame {
                     p = (JPanel) _actionPanel.getComponent(0);
                     l = (JLabel) p.getComponent(0);
                     _actionBox.addItem(Bundle.getMessage("WarrantHalt"));
-                	_actionBox.addItem(Bundle.getMessage("WarrantResume"));
-                	_actionBox.addItem(Bundle.getMessage("WarrantMoveToNext"));
-                	_actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
-                	_actionBox.addItem(Bundle.getMessage("WarrantStop"));
-                	_actionBox.addItem(Bundle.getMessage("WarrantEStop"));            	
-                	_actionBox.addItem(Bundle.getMessage("WarrantAbort"));            	
+                    _actionBox.addItem(Bundle.getMessage("WarrantResume"));
+                    _actionBox.addItem(Bundle.getMessage("WarrantMoveToNext"));
+                    _actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
+                    _actionBox.addItem(Bundle.getMessage("WarrantStop"));
+                    _actionBox.addItem(Bundle.getMessage("WarrantEStop"));            	
+                    _actionBox.addItem(Bundle.getMessage("WarrantAbort"));            	
                     l.setText(Bundle.getMessage("LabelControlTrain"));  // NOI18N
                     _actionPanel.setVisible(true);
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
@@ -2557,8 +2557,8 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _actionNamePanel.setToolTipText(Bundle.getMessage("NameHintOBlock"));  // NOI18N
                 _actionNamePanel.setVisible(true);
                 if (actionType == Conditional.Action.SET_BLOCK_VALUE
-            		|| actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
-            		|| actionType == Conditional.Action.GET_BLOCK_WARRANT) {
+                    || actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
+                    || actionType == Conditional.Action.GET_BLOCK_WARRANT) {
                     p = (JPanel) _shortTextPanel.getComponent(0);
                     l = (JLabel) p.getComponent(0);
                     if (actionType == Conditional.Action.SET_BLOCK_VALUE) {
@@ -2566,8 +2566,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                         l.setText(Bundle.getMessage("LabelBlockValue"));  // NOI18N
                     } else {
                             _shortTextPanel.setToolTipText(Bundle.getMessage("DataHintToMemory"));  // NOI18N
-                            l.setText(Bundle.getMessage("LabelMemoryLocation"));  // NOI18N
-                    		
+                            l.setText(Bundle.getMessage("LabelMemoryLocation"));  // NOI18
                     }
                     _shortTextPanel.setVisible(true);
                 }
@@ -3028,10 +3027,10 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
-                	switch (_actionBox.getSelectedIndex()) {
-                    	case 0:
-                    		_curAction.setActionData(Warrant.HALT);
-                    		break;
+                    switch (_actionBox.getSelectedIndex()) {
+                        case 0:
+                            _curAction.setActionData(Warrant.HALT);
+                            break;
                         case 1:
                             _curAction.setActionData(Warrant.RESUME);
                             break;
@@ -3053,7 +3052,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                         default:
                             log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());  // NOI18N
                             break;
-                	}
+                    }
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
                         || actionType == Conditional.Action.GET_TRAIN_LOCATION) {
@@ -3071,8 +3070,8 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType == Conditional.Action.SET_BLOCK_VALUE
-            		|| actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
-            		|| actionType == Conditional.Action.GET_BLOCK_WARRANT) {
+                    || actionType == Conditional.Action.GET_BLOCK_TRAIN_NAME
+                    || actionType == Conditional.Action.GET_BLOCK_WARRANT) {
                     _curAction.setActionString(actionString);
                 }
                 break;

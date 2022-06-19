@@ -134,7 +134,7 @@ public class IndicatorTrackPaths {
             return;
         }
         String trainName = (String) block.getValue();
-        if (trainName == null ||trainName.isEmpty()) {
+        if (trainName == null || trainName.isEmpty()) {
             removeLocoIcon();
             return;
         }
