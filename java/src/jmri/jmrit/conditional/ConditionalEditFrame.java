@@ -2526,8 +2526,8 @@ public class ConditionalEditFrame extends ConditionalFrame {
                     _actionBox.addItem(Bundle.getMessage("WarrantMoveToNext"));
                     _actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
                     _actionBox.addItem(Bundle.getMessage("WarrantStop"));
-                    _actionBox.addItem(Bundle.getMessage("WarrantEStop"));            	
-                    _actionBox.addItem(Bundle.getMessage("WarrantAbort"));            	
+                    _actionBox.addItem(Bundle.getMessage("WarrantEStop"));
+                    _actionBox.addItem(Bundle.getMessage("WarrantAbort"));
                     l.setText(Bundle.getMessage("LabelControlTrain"));  // NOI18N
                     _actionPanel.setVisible(true);
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID

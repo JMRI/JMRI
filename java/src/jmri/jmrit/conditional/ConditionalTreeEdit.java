@@ -3911,7 +3911,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBox.addItem(Bundle.getMessage("WarrantMoveToNext"));
                     _actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
                     _actionBox.addItem(Bundle.getMessage("WarrantStop"));
-                    _actionBox.addItem(Bundle.getMessage("EStop"));            	
+                    _actionBox.addItem(Bundle.getMessage("EStop"));
                     _actionBox.addItem(Bundle.getMessage("WarrantAbort"));
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
