@@ -836,7 +836,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     case Warrant.STOP:
                         return (rbx.getString("WarrantStop"));
                     case Warrant.ESTOP:
-                        return (rbx.getString("EStop"));
+                        return (rbx.getString("WarrantEStop"));
                     case Warrant.ABORT:
                         return (rbx.getString("WarrantAbort"));
                     default:

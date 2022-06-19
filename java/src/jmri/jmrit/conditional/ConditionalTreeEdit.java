@@ -3190,6 +3190,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         // Action Type Box
         _actionTypeBox = new JComboBox<>();
+        JComboBoxUtil.setupComboBoxMaxRows(_actionTypeBox);
         _actionTypeBox.addItem(Conditional.Action.NONE);
 
         // Action State Box
@@ -3911,7 +3912,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBox.addItem(Bundle.getMessage("WarrantMoveToNext"));
                     _actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
                     _actionBox.addItem(Bundle.getMessage("WarrantStop"));
-                    _actionBox.addItem(Bundle.getMessage("EStop"));
+                    _actionBox.addItem(Bundle.getMessage("WarantEStop"));
                     _actionBox.addItem(Bundle.getMessage("WarrantAbort"));
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME

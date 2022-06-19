@@ -1832,6 +1832,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
         }
 
         _actionTypeBox = new JComboBox<>();
+        JComboBoxUtil.setupComboBoxMaxRows(_actionTypeBox);
         _actionTypeBox.addItem(Conditional.Action.NONE);
         _actionTypePanel = makeEditPanel(_actionTypeBox, "LabelActionType", "ActionTypeHint");  // NOI18N
         _actionTypePanel.setVisible(false);
