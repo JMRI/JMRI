@@ -907,7 +907,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     if (cRef==null){
                         log.error("Conditional :{}: not found while updating username",ref);
                         continue;
-                    }
+                        }
                     List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                     int idx = 0;
                     for (ConditionalVariable var : varList) {
@@ -3912,7 +3912,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBox.addItem(Bundle.getMessage("WarrantSpeedUp"));
                     _actionBox.addItem(Bundle.getMessage("WarrantStop"));
                     _actionBox.addItem(Bundle.getMessage("EStop"));            	
-                    _actionBox.addItem(Bundle.getMessage("WarrantAbort"));            	
+                    _actionBox.addItem(Bundle.getMessage("WarrantAbort"));
                 } else if (actionType == Conditional.Action.SET_TRAIN_ID
                         || actionType == Conditional.Action.SET_TRAIN_NAME
                         || actionType == Conditional.Action.GET_TRAIN_LOCATION) {
@@ -4440,7 +4440,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType == Conditional.Action.CONTROL_TRAIN) {
-                	switch (_actionBox.getSelectedIndex()) {
+                    switch (_actionBox.getSelectedIndex()) {
                         case 0:
                             _curAction.setActionData(Warrant.HALT);
                             break;

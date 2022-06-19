@@ -907,9 +907,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case GET_TRAIN_LOCATION:
                 case GET_BLOCK_WARRANT:
                 case GET_BLOCK_TRAIN_NAME:
-                	str = str + " \"" + _deviceName + "\" " + rbx.getString("intoMemory")
-                			+ " " + _actionString;
-                	break;
+                    str = str + " \"" + _deviceName + "\" " + rbx.getString("intoMemory")
+                              + " " + _actionString;
+                    break;
                 case SET_SIGNALMAST_ASPECT:
                     str = str + ", \"" + _deviceName + "\" " + rbx.getString("to")
                             + " " + _actionString;

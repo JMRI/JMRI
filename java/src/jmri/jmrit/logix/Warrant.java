@@ -107,12 +107,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public static final int ABORT = 3;
     public static final int RETRY_FWD = 4;
     public static final int ESTOP = 5;
-    protected static final int RAMP_HALT = 6;	// used only to distinguish User halt from speed change halts
+    protected static final int RAMP_HALT = 6;  // used only to distinguish User halt from speed change halts
     public static final int SPEED_UP = 7;
     public static final int RETRY_BKWD = 8;
     public static final int DEBUG = 9;
-    static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "MoveToNext", 
-            "EStop", "ramp", "SpeedUp", "MoveToPrevious","Debug"};	// RAMP_HALT is not a control command
+    static final String[] CNTRL_CMDS = {"Stop", "Halt", "Resume", "Abort", "MoveToNext",
+          "EStop", "ramp", "SpeedUp", "MoveToPrevious","Debug"};  // RAMP_HALT is not a control command
 
     // engineer running states
     protected static final int RUNNING = 7;
@@ -461,9 +461,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     public void setTrainName(String name) {
-    	if (_runMode == MODE_NONE) {
+        if (_runMode == MODE_NONE) {
             _trainName = name;
-    	}
+        }
     }
 
     public boolean getRunBlind() {
@@ -2458,7 +2458,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (!this.equals(block.getWarrant())) {
                 _message = setPathAt(_idxCurrentOrder + 1);    //  no TrainOrder checks. allocates and sets path
                 if (_message == null) {
-                	_idxCurrentOrder++;
+                    _idxCurrentOrder++;
                     // insulate possible non-GUI thread making this call (e.g. Engineer)
                     ThreadingUtil.runOnGUI(()-> goingActive(block));
                     return true ;
@@ -3154,7 +3154,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         _waitForSignal = true;
                         setProtectingSignal(nextIdx);
                     } else {
-                    	_waitForBlock = true;
+                        _waitForBlock = true;
                     }
                 }
                 makeOverrunMessage(bo);
