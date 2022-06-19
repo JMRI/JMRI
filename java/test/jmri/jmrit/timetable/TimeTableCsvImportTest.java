@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 import jmri.util.FileUtil;
@@ -27,13 +26,13 @@ public class TimeTableCsvImportTest {
     public void testImport() {
         TimeTableDataManager dm = new TimeTableDataManager(false);
         TimeTableCsvImport imp = new TimeTableCsvImport();
-        List<String> feedback = new ArrayList<>();
+        List<String> feedback;
         try {
             File file = FileUtil.getFile("preference:TestCsvImport.csv");  // NOI18N
             createCsvFile(file);
             feedback = imp.importCsv(file);
         } catch (IOException ex) {
-            log.error("Unable to test the CSV export process");  // NOI18N
+            Assertions.fail("Unable to test the CSV import process: " + ex); // NOI18N
             return;
         }
         Assert.assertEquals("feedback:", 0, feedback.size());
@@ -75,13 +74,13 @@ public class TimeTableCsvImportTest {
     @Test
     public void testMinimalImport() {
         TimeTableCsvImport imp = new TimeTableCsvImport();
-        List<String> feedback = new ArrayList<>();
+        List<String> feedback;
         try {
             File file = FileUtil.getFile("preference:TestMinimalCsvImport.csv");  // NOI18N
             createMinimalCsvFile(file);
             feedback = imp.importCsv(file);
         } catch (IOException ex) {
-            log.error("Unable to test the CSV export process");  // NOI18N
+            Assertions.fail("Unable to test the CSV minimal import process: " + ex ); // NOI18N
             return;
         }
         Assert.assertEquals("Minimal:", 0, feedback.size());
@@ -90,13 +89,13 @@ public class TimeTableCsvImportTest {
     @Test
     public void testBadImport() {
         TimeTableCsvImport imp = new TimeTableCsvImport();
-        List<String> feedback = new ArrayList<>();
+        List<String> feedback;
         try {
             File file = FileUtil.getFile("preference:TestBadCsvImport.csv");  // NOI18N
             createBadCsvFile(file);
             feedback = imp.importCsv(file);
         } catch (IOException ex) {
-            log.error("Unable to test the CSV export process");  // NOI18N
+            Assertions.fail("Unable to test the CSV bad import process: " + ex ); // NOI18N
             return;
         }
         jmri.util.JUnitAppender.assertWarnMessage("Unable to process record 2, content = [Layout]");  // NOI18N
@@ -124,7 +123,7 @@ public class TimeTableCsvImportTest {
            writer.write("Stop,1\n");
            writer.close();
         } catch (IOException ex) {
-            log.warn("Unable to create the test import CSV file ", ex);
+            Assertions.fail("Unable to create the test import CSV file " + ex );
         }
     }
 
@@ -143,7 +142,7 @@ public class TimeTableCsvImportTest {
            writer.write("Stop,2\n");
            writer.close();
         } catch (IOException ex) {
-            log.warn("Unable to create the minimal test import CSV file ", ex);
+            Assertions.fail("Unable to create the minimal test import CSV file " + ex );
         }
     }
 
@@ -158,12 +157,12 @@ public class TimeTableCsvImportTest {
            writer.write("Station, UseSegmentStations\n");
            writer.close();
         } catch (IOException ex) {
-            log.warn("Unable to create the bad test import CSV file ", ex);
+            Assertions.fail("Unable to create the bad test import CSV file " + ex );
         }
     }
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
@@ -171,16 +170,10 @@ public class TimeTableCsvImportTest {
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
-        jmri.util.JUnitUtil.tearDown();
+       // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
+        JUnitUtil.tearDown();
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableCsvImportTest.class);
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableCsvImportTest.class);
 }
