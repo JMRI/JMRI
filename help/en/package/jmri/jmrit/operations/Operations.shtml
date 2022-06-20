@@ -1075,16 +1075,19 @@
       automatically assign the proper NMRA weight for a car based on scale and length.</p>
 
       <h4 id="MaximumTrainLength">Maximum Train Length</h4>
-      Now enter the "Maximum Train Length" you desire for your trains. This field provides the
-      maximum scale train length between stations. Later you can override this length if you wish a
-      shorter train between any two locations. A 1000 foot train can carry approximately 20 cars,
-      and is of course dependent on the car lengths assigned to the train.
-      <p>Note that if you increase the "Maximum Train Length" that it doesn't affect train routes
-      that you've already created. Once you increase the maximum train length, you can manually
-      increase the departure length of a train by editing the train's route. See <a href=
-      "#EditRoute">Edit Route</a> for more details.</p>
+   Enter the "Maximum Train Length" in feet or meters you desire for your trains. See "Unit of
+   Length" below to select feet or meters. This field provides the maximum scale train length
+   between stations. Later you can override this length if you wish a shorter train between any two
+   locations. A 1000 foot train can carry approximately 20 cars, and is of course dependent on the
+   car lengths assigned to the train.
+   <p>
+    Note that if you increase the "Maximum Train Length" that it doesn't affect train routes that
+    you've already created. Once you increase the maximum train length, you can manually increase
+    the departure length of a train by editing the train's route. See <a href="#EditRoute">Edit
+     Route</a> for more details.
+   </p>
 
-      <p>If you decrease the "Maximum Train Length" the program will prompt you to modify your
+   <p>If you decrease the "Maximum Train Length" the program will prompt you to modify your
       existing routes, and you can optionally have the program reduce all of your train's routes to
       the new shorter train length.</p>
 
