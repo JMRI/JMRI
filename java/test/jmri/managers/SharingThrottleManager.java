@@ -6,6 +6,8 @@ import jmri.DccLocoAddress;
 import jmri.ThrottleListener;
 import jmri.LocoAddress;
 
+import org.junit.jupiter.api.Assertions;
+
 /**
  * This is an extension of the DebugThrottleManager that always requires
  * the calling throttle object to share to get a valid throttle.
@@ -21,6 +23,7 @@ public class SharingThrottleManager extends DebugThrottleManager {
 
     /**
      * Constructor.
+     * {@inheritDoc}
      */
     public SharingThrottleManager(jmri.SystemConnectionMemo memo) {
         super(memo);
@@ -41,8 +44,11 @@ public class SharingThrottleManager extends DebugThrottleManager {
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision){
         if ( decision == ThrottleListener.DecisionType.SHARE ) {
-            DccLocoAddress a = (DccLocoAddress) address;
-            notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
+            if (!(address instanceof DccLocoAddress)){
+                Assertions.fail("DebugThrottle needs a dcclocoaddress : " + address );
+                return;
+            }
+            notifyThrottleKnown(new DebugThrottle((DccLocoAddress) address, adapterMemo), address);
         }
         else {
             cancelThrottleRequest(address,l);
