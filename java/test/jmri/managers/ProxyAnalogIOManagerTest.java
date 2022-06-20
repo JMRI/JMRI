@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrix.internal.InternalAnalogIOManager;
@@ -18,22 +17,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
  * @author  Bob Jacobsen 2003, 2006, 2008
  * @author  Daniel Bergqvist Copyright (C) 2020
  */
-public class ProxyAnalogIOManagerTest {
+public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<ProxyAnalogIOManager, AnalogIO> {
 
     public String getSystemName(int i) {
         return "JV" + i;
-    }
-
-    protected AnalogIOManager l = null;     // holds objects under test
-
-    static protected boolean listenerResult = false;
-
-    protected class Listen implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            listenerResult = true;
-        }
     }
 
     private AnalogIO newAnalogIO(String sysName, String userName) {
@@ -229,17 +216,24 @@ public class ProxyAnalogIOManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
+        AnalogIOManager aiom = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
 
-        InstanceManager.setAnalogIOManager(l);
+        InstanceManager.setAnalogIOManager(aiom);
 
         JUnitUtil.initInternalLightManager();
+        AnalogIOManager irman = InstanceManager.getDefault(AnalogIOManager.class);
+        if ( irman instanceof ProxyAnalogIOManager ) {
+            l = (ProxyAnalogIOManager) irman;
+        } else {
+            Assertions.fail("AnalogIOManager is not a ProxyAnalogIOManager");
+        }
+        
     }
 
     @AfterEach
     public void tearDown() {
         // kill timebase created by variable light
-        var timebase = InstanceManager.getNullableDefault(jmri.Timebase.class);
+        var timebase = InstanceManager.getNullableDefault(Timebase.class);
         if (timebase != null) {
             timebase.setRun(false);
             for (var listener : timebase.getMinuteChangeListeners()) {
@@ -255,11 +249,11 @@ public class ProxyAnalogIOManagerTest {
     }
 
 
-    private class MyAnalogIO extends AbstractNamedBean implements AnalogIO {
+    private static class MyAnalogIO extends AbstractNamedBean implements AnalogIO {
 
         double _value = 0.0;
 
-        public MyAnalogIO(String sys, String userName) {
+        MyAnalogIO(String sys, String userName) {
             super(sys, userName);
         }
 
@@ -321,22 +315,22 @@ public class ProxyAnalogIOManagerTest {
     }
 
 
-    private class MyLight extends jmri.implementation.AbstractLight {
+    private static class MyLight extends jmri.implementation.AbstractLight {
 
-        public MyLight(String systemName) {
+        MyLight(String systemName) {
             super(systemName);
         }
 
     }
 
 
-    private class MyVariableLight extends jmri.implementation.AbstractVariableLight {
+    private static class MyVariableLight extends jmri.implementation.AbstractVariableLight {
 
-        public MyVariableLight(String systemName) {
+        MyVariableLight(String systemName) {
             super(systemName);
         }
 
-        public MyVariableLight(String systemName, String userName) {
+        MyVariableLight(String systemName, String userName) {
             super(systemName, userName);
         }
 
@@ -366,7 +360,7 @@ public class ProxyAnalogIOManagerTest {
 
     private static class SomeDeviceBean extends AbstractNamedBean implements SomeDevice {
 
-        public SomeDeviceBean(String systemName) {
+        SomeDeviceBean(String systemName) {
             super(systemName);
         }
 
@@ -434,7 +428,7 @@ public class ProxyAnalogIOManagerTest {
     private static class SomeDeviceManagerImplementation
             extends AbstractManager<SomeDevice> implements SomeDeviceManager {
 
-        public SomeDeviceManagerImplementation() {
+        SomeDeviceManagerImplementation() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
@@ -463,7 +457,7 @@ public class ProxyAnalogIOManagerTest {
 
     private static class MyAnalogIOManager extends AbstractAnalogIOManager {
 
-        public MyAnalogIOManager() {
+        MyAnalogIOManager() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
