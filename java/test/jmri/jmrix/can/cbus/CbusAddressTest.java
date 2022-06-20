@@ -192,6 +192,8 @@ public class CbusAddressTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
+        justification = "CanReply and CanMessage are CanFrame with custom equals")
     @SuppressWarnings("unlikely-arg-type")
     public void testEqualsOK() {
         Assert.assertTrue((new CbusAddress("+001")).equals(new CbusAddress("+001")));
@@ -202,7 +204,7 @@ public class CbusAddressTest {
         Assert.assertFalse((new CbusAddress("+001")).equals(new CbusAddress("+002")));
         Assert.assertFalse((new CbusAddress("+N123E123")).equals(new CbusAddress("+N456E123")));
         Assert.assertFalse((new CbusAddress("+N123E123")).equals(new CbusAddress("+N123E456")));
-        Assert.assertTrue(!new CbusAddress("-268").equals(
+        Assert.assertFalse(new CbusAddress("-268").equals(
             new CanReply(new int[]{CbusConstants.CBUS_SNN, 0x00, 12})));
     }
 
@@ -273,13 +275,13 @@ public class CbusAddressTest {
     @Test
     public void testtoString() {
         CbusAddress a = new CbusAddress("X9801D203A4");
-        Assert.assertTrue(a.toString() == "X9801D203A4");
+        Assert.assertEquals("X9801D203A4", a.toString());
         
         CbusAddress b = new CbusAddress("+N123E456");
-        Assert.assertTrue(b.toString() == "+N123E456");
+        Assert.assertEquals("+N123E456", b.toString());
         
         CbusAddress c = new CbusAddress("-456");
-        Assert.assertTrue(c.toString() == "-456");
+        Assert.assertEquals("-456", c.toString());
     }
 
     @Test
