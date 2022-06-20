@@ -1332,6 +1332,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         // a block i.e. the block of BlockOrder indexed by _endBlockIdx.
                         // Therefore script should resume at the exit to this block.
                         // During ramp down the script may have other Non speed commands that should be executed.
+                        _warrant.downRampBegun(_endBlockIdx);
 
                         rampData = _speedUtil.getRampForSpeedChange(speed, endSpeed);
                         int timeIncrement = rampData.getRampTimeIncrement();

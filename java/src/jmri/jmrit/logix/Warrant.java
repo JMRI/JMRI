@@ -71,6 +71,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _delayStart; // allows start block unoccupied and wait for train
     private boolean _lost;      // helps recovery if _idxCurrentOrder block goes inactive
     private boolean _overrun;   // train overran a signal or warrant stop
+    private boolean _rampBlkOccupied;  // test for overruns when speed change block occupied by another train
     private int _idxCurrentOrder; // Index of block at head of train (if running)
 
     protected int _runMode = MODE_NONE;
@@ -1341,8 +1342,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         info.append("\n\tWait flags: _waitForSignal= "); info.append(_waitForSignal);
         info.append(", _waitForBlock= "); info.append(_waitForBlock);
         info.append(", _waitForWarrant= "); info.append(_waitForWarrant);
-        info.append("\n\tStatus flags: _overrun= "); info.append(_overrun);
-        info.append(", _lost= "); info.append(_lost);
+        info.append("\n\tStatus flags: _overrun= "); info.append(_overrun); info.append(", _rampBlkOccupied= "); 
+        info.append(_rampBlkOccupied);info.append(", _lost= "); info.append(_lost);
         if (_protectSignal != null) {
             info.append("\n\tWait for Signal \"");info.append(_protectSignal.getDisplayName());info.append("\" protects block ");
             info.append(getBlockAt(_idxProtectSignal).getDisplayName()); info.append("\" from approch block \"");
@@ -1978,12 +1979,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                    returnOK = false;
                    break;
                 case OCCUPY:
-                    if (_overrun) {
+                    if (_overrun || _lost) {
                         _message = setPathAt(_idxCurrentOrder);
                         if (_message == null) {
                             returnOK = doRestoreRunning(block, speedType);
                         } else {
                             returnOK = false;
+                        }
+                        if (_lost && returnOK) {
+                            _lost = false;
                         }
                         break;
                     }
@@ -3132,6 +3136,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         fireRunStatus("RampBegin", reason, blkName);
     }
 
+    protected void downRampBegun(int endBlockIdx) {
+        OBlock block = getBlockAt(endBlockIdx + 1);
+        if (block != null) {
+            _rampBlkOccupied = block.isOccupied();
+        } else {
+            _rampBlkOccupied = true;
+        }
+    }
 
     protected void downRampDone(boolean stop, boolean halted, String speedType, int endBlockIdx) {
         if (_idxCurrentOrder < endBlockIdx) {
@@ -3142,7 +3154,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (nextIdx > 0 && nextIdx < _orders.size()) {
             BlockOrder bo = getBlockOrderAt(nextIdx);
             OBlock block = bo.getBlock();
-            if (block.isOccupied()) {
+            if (block.isOccupied() && !_rampBlkOccupied) {
                 // Occupied now, but not occupied by another train at start of ramp.
                 if (!checkForOverrun(block) ) {
                     Warrant w = block.getWarrant();

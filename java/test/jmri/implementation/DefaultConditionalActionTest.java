@@ -251,6 +251,12 @@ public class DefaultConditionalActionTest {
         
         ix1.setType("This is a bad string");
         jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToActionType(This is a bad string)");
+        
+        ix1.setType("Put Warrant occupying Block");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_BLOCK_WARRANT);
+        
+        ix1.setType("Put Train Name occupying Block");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_BLOCK_TRAIN_NAME);
     }
     
     @Test
