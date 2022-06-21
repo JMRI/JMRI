@@ -24,6 +24,7 @@ public class Subscribe extends AbstractDigitalAction
     private String _lastTopic;
     private String _lastMessage;
     private String _lastTopicLocalVariable;
+    private boolean _removeChannelFromLastTopic;
     private String _lastMessageLocalVariable;
 
 
@@ -43,6 +44,7 @@ public class Subscribe extends AbstractDigitalAction
         copy.setComment(getComment());
         copy._subscribeToTopic = _subscribeToTopic;
         copy._lastTopicLocalVariable = _lastTopicLocalVariable;
+        copy._removeChannelFromLastTopic = _removeChannelFromLastTopic;
         copy._lastMessageLocalVariable = _lastMessageLocalVariable;
         return manager.registerAction(copy);
     }
@@ -71,6 +73,15 @@ public class Subscribe extends AbstractDigitalAction
     public void setLastTopicLocalVariable(String variable) {
         _lastTopicLocalVariable = variable;
     }
+
+    public boolean getRemoveChannelFromLastTopic() {
+        return _removeChannelFromLastTopic;
+    }
+
+    public void setRemoveChannelFromLastTopic(boolean value) {
+        _removeChannelFromLastTopic = value;
+    }
+
 
     public String getLastMessageLocalVariable() {
         return _lastMessageLocalVariable;
@@ -151,6 +162,9 @@ public class Subscribe extends AbstractDigitalAction
     @Override
     public void notifyMqttMessage(String topic, String message) {
         _lastTopic = topic;
+        if (_removeChannelFromLastTopic && _lastTopic.startsWith(_memo.getMqttAdapter().baseTopic)) {
+            _lastTopic = _lastTopic.substring(_memo.getMqttAdapter().baseTopic.length());
+        }
         _lastMessage = message;
         getConditionalNG().execute();
     }
