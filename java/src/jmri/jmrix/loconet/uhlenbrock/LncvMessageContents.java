@@ -203,7 +203,7 @@ public class LncvMessageContents {
         if (isSupportedLncvMessage(m)) {
             int msgCmd = m.getElement(LNCV_CMD_ELEMENT_INDEX);
             int msgData = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) | (((m.getElement(PXCT1_ELEMENT_INDEX) & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
-            log.debug("msgData = {}", msgData);
+            //log.debug("msgData = {}", msgData);
             for (LncvCommand c : LncvCommand.values()) {
                 if (c.matches(msgCmd, m.getOpCode(), msgData)) {
                     //log.debug("LncvCommand match found");  // NOI18N
@@ -268,12 +268,10 @@ public class LncvMessageContents {
                 returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
             case LNCV_DIRECT_LED1: // CV position contains module address, Value position contains LED 0-15 on/off
-                String modBin = String.format("%8s", Integer.toBinaryString(mod)).replace(' ', '0');
-                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "1", modBin, sCvn);
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "1", toBinString(mod), sCvn);
                 break;
             case LNCV_DIRECT_LED2: // CV position contains module address, Value position contains LED 16-31 on/off
-                modBin = String.format("%8s", Integer.toBinaryString(mod)).replace(' ', '0');
-                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "2", modBin, sCvn);
+                returnString = Bundle.getMessage(locale, "LNCV_DIRECT_INTERPRETED", "2", toBinString(mod), sCvn);
                 //to16Bits(cvn, true));
                 break;
             case LNCV_DIRECT_REPLY: // CV position contains module address, value position = Button on/off message
@@ -285,6 +283,16 @@ public class LncvMessageContents {
 
         return returnString + "\n"; // NOI18N
     }
+
+    /**
+     * Convert binary integer to "1010" representation string.
+     *
+     * @param bin integer to convert to binary display string
+     */
+    private String toBinString(int bin) {
+        return String.format("%8s", Integer.toBinaryString(bin)).replace(' ', '0');
+    }
+
 
     /**
      * Check set of parameters against compound {@link LncvCommand} enum set.
@@ -555,7 +563,7 @@ public class LncvMessageContents {
     /* These 2 static methods are used to mock replies to requests from JMRI */
 
     /**
-     * In Hexfile simulation mode, mock a ReadReply message back to the CS.
+     * In Hexfile simulation mode, mock a ReadReply message back to the CS (when simulate replies is ON).
      *
      * @param m  the LocoNet message to respond to
      * @return  LocoNet message containing the reply, or null if preceding

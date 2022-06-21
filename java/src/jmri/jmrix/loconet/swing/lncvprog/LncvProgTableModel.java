@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.swing.lncvprog;
 
 import jmri.InstanceManager;
-import jmri.LocoAddress;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -155,7 +154,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                                       null,
                                       null
                               );
-                      log.debug("found {} possible decoder matches for LNCV device", l.size());
+                      //log.debug("found {} possible decoder matches for LNCV device", l.size());
                       String lastModelName = "";
                       if (l.size() > 0) {
                           for (DecoderFile d : l) {
