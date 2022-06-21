@@ -1491,14 +1491,13 @@ public class JUnitUtil {
                             if (traces == null) continue;  // thread went away, maybe terminated in parallel
                             if (traces.length >7 && traces[7].getClassName().contains("org.netbeans.jemmy") ) {
                                 // empirically. jemmy leaves anonymous threads
-                                log.warn("Jemmy remnant thread running {}.{} [{}.{}]",
-                                        traces[7].getClassName(),
-                                        traces[7].getMethodName(),
-                                       traces[7].getFileName(),
-                                       traces[7].getLineNumber()
-                                    );
+                                String details = traces[7].getClassName() + "." + traces[7].getMethodName()
+                                    +" [" + traces[7].getFileName() + "." + traces[7].getLineNumber() + "]";
+                                        
+                                log.warn("Jemmy remnant thread running {}", details );
                                 if ( failRemnantThreads ) {
-                                    Assertions.fail("Jemmy Thread after " + getTestClassName());
+                                    killThread(t); // prevent contamination of other tests
+                                    Assertions.fail("Jemmy remnant thread running " + details);
                                 }
                             } else {
                                 // anonymous thread that should be displayed
@@ -1506,13 +1505,15 @@ public class JUnitUtil {
                                 ex.setStackTrace(traces);
                                 log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
                                 if ( failRemnantThreads ) {
+                                    killThread(t); // prevent contamination of other tests
                                     Assertions.fail("Thread \"" + name + "\" after " + getTestClassName());
                                 }
                             }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                             if ( failRemnantThreads ) {
-                                Assertions.fail("Thread \"" + name + "\" after " + getTestClassName());
+                                killThread(t); // prevent contamination of other tests
+                                Assertions.fail("Thread \"" + name + "\" in group \"" + group + "\" after " + getTestClassName());
                             }
                         }
                         if (kill) {
