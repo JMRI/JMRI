@@ -381,6 +381,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         statusText1.setText(Bundle.getMessage("FeedBackStartAllProg"));
         allProgButton.setText(Bundle.getMessage("ButtonStopAllProg"));
         allProgRunning = true;
+        log.debug("AllProgRunning=TRUE, allProgButtonActionPerformed ready");
     }
 
     // MODULEPROG button
@@ -666,8 +667,9 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ) {
             reply += Bundle.getMessage("LNCV_READ_MOD_MONITOR", (moduleProgRunning == -1 ? "ALL" : moduleProgRunning)) + "\n";
         }
-        if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
-            // it's a LNCV ReadReply message, decode contents:
+        if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||
+        (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY2)) {
+            // it's an LNCV ReadReply message, decode contents:
             LncvMessageContents contents = new LncvMessageContents(m);
             int msgArt = contents.getLncvArticleNum();
             int msgAdr = moduleProgRunning;
@@ -681,7 +683,8 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                     + Bundle.getMessage("LabelCv") + msgCv + " "
                     + Bundle.getMessage("LabelValue")+ msgVal + "\n";
             reply += foundMod;
-            // store Module in list using write reply is handled by loconet.LncvDevicesManager
+            log.debug("ReadReply={}", reply);
+            // storing a Module in the list using the (first) write reply is handled by loconet.LncvDevicesManager
 
             // enter returned CV in CVnum field
             cvField.setText(msgCv + "");

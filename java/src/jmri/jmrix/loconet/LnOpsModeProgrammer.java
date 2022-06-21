@@ -469,14 +469,15 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                 p = null;
                 notifyProgListenerEnd(temp, 0, code);
             }
-            if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
+            if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||
+            (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY2)) {
                 // it's an LNCV ReadReply message, decode contents
                 LncvMessageContents contents = new LncvMessageContents(m);
                 int artReturned = contents.getLncvArticleNum();
                 int valReturned = contents.getCvValue();
                 code = ProgListener.OK;
                 // forward write reply
-                if (artReturned != artNum) { // it's not for for us?
+                if (artReturned != artNum) { // it's not for us?
                     //code = ProgListener.ConfirmFailed;
                     log.warn("LNCV read reply received for article {}, expected article {}", artReturned, artNum);
                 }

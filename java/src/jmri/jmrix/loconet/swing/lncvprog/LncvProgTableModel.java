@@ -155,7 +155,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                                       null,
                                       null
                               );
-                      //log.debug("found {} possible decoder matches for LNCV device", l.size());
+                      log.debug("found {} possible decoder matches for LNCV device", l.size());
                       String lastModelName = "";
                       if (l.size() > 0) {
                           for (DecoderFile d : l) {

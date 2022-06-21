@@ -203,9 +203,10 @@ public class LncvMessageContents {
         if (isSupportedLncvMessage(m)) {
             int msgCmd = m.getElement(LNCV_CMD_ELEMENT_INDEX);
             int msgData = m.getElement(LNCV_CMDDATA_ELEMENT_INDEX) | (((m.getElement(PXCT1_ELEMENT_INDEX) & LNCV_CMDDATA_DAT7_CHECK_MASK) == LNCV_CMDDATA_DAT7_CHECK_MASK) ? 0x80 : 0);
+            log.debug("msgData = {}", msgData);
             for (LncvCommand c : LncvCommand.values()) {
                 if (c.matches(msgCmd, m.getOpCode(), msgData)) {
-                    log.debug("LncvCommand match found");  // NOI18N
+                    //log.debug("LncvCommand match found");  // NOI18N
                     return c;
                 }
             }
@@ -406,7 +407,8 @@ public class LncvMessageContents {
     public int getCvNum() {
         if ((cmd == LncvCommand.LNCV_READ.cmd) ||
                 (cmd == LncvCommand.LNCV_WRITE.cmd) ||
-                (cmd == LncvCommand.LNCV_READ_REPLY.cmd)) {
+                (cmd == LncvCommand.LNCV_READ_REPLY.cmd) ||
+                (cmd == LncvCommand.LNCV_READ_REPLY2.cmd)) {
             return cvn;
         }
         return -1;
@@ -414,7 +416,8 @@ public class LncvMessageContents {
 
     public int getCvValue() {
         if ((cmd == LncvCommand.LNCV_READ_REPLY.cmd) ||
-        (cmd == LncvCommand.LNCV_WRITE.cmd)) {
+                (cmd == LncvCommand.LNCV_READ_REPLY2.cmd) ||
+                (cmd == LncvCommand.LNCV_WRITE.cmd)) {
             return mod;
         }
         return -1;
@@ -423,8 +426,9 @@ public class LncvMessageContents {
     public int getLncvArticleNum() {
         if ((cmd == LncvCommand.LNCV_READ.cmd) ||
                 (cmd == LncvCommand.LNCV_WRITE.cmd) ||
-                (cmd == LncvCommand.LNCV_READ_REPLY.cmd)||
-                (cmd == LncvCommand.LNCV_PROG_START.cmd && art != LNCV_ALL)||
+                (cmd == LncvCommand.LNCV_READ_REPLY.cmd) ||
+                (cmd == LncvCommand.LNCV_READ_REPLY2.cmd) ||
+                (cmd == LncvCommand.LNCV_PROG_START.cmd && art != LNCV_ALL) ||
                 (cmd == LncvCommand.LNCV_PROG_END.cmd && art != LNCV_ALL)) {
             return art;
         }
