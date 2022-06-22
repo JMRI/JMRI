@@ -333,7 +333,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         Toolkit.getDefaultToolkit().addAWTEventListener((AWTEvent e) -> {
             if (e instanceof MouseEvent) {
                 JmriMouseEvent me = new JmriMouseEvent((MouseEvent) e);
-                if (me.isPopupTrigger() && me.getComponent() instanceof JTextComponent) {
+                if (me.origIsPopupTrigger() && me.getComponent() instanceof JTextComponent) {
                     final JTextComponent component1 = (JTextComponent) me.getComponent();
                     final JPopupMenu menu = new JPopupMenu();
                     JMenuItem item;

@@ -682,7 +682,7 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 _currentSelection = selections.get(0);
             }
-            if (event.isPopupTrigger()) {
+            if (event.origIsPopupTrigger()) {
                 log.debug("mousePressed calls showPopUp");
                 if (event.isMetaDown() || event.isAltDown()) {
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
@@ -774,7 +774,7 @@ public class PanelEditor extends Editor implements ItemListener {
         }
         /*if (event.isControlDown() && _currentSelection!=null && !event.isPopupTrigger()){
          amendSelectionGroup(_currentSelection, event);*/
-        if ((event.isPopupTrigger() || delayedPopupTrigger) && _currentSelection != null && !_dragging) {
+        if ((event.origIsPopupTrigger() || delayedPopupTrigger) && _currentSelection != null && !_dragging) {
             if (_selectionGroup != null) {
                 //Will show the copy option only
                 showMultiSelectPopUp(event, _currentSelection);
@@ -860,7 +860,7 @@ public class PanelEditor extends Editor implements ItemListener {
     @Override
     public void mouseMoved(JmriMouseEvent event) {
         // log.debug("mouseMoved at ({},{})", event.getX(), event.getY());
-        if (_dragging || event.isPopupTrigger()) {
+        if (_dragging || event.origIsPopupTrigger()) {
             return;
         }
 
