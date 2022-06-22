@@ -24,7 +24,7 @@
 # Notes:
 # The script uses the ID Tag informaton format introduced in JMRI 4.15.3 and cannot be used with earlier releases.
 # DCC controllers may need to be power-cycled after loading the script to ensure locos already in blocks are detected.
-# Print statements are included in the script (lines 39, 55) to help diagnose its operation. Enable these by uncommenting them.
+# Print statements are included in the script to help diagnose its operation. Enable these by uncommenting them.
 
 import jmri
 import java
