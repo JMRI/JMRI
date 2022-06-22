@@ -420,23 +420,23 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
-    	long time = System.currentTimeMillis();
-    	if (time - lastClicktime < 1000) {
-    		return null;
-    	}
-    	lastClicktime = time;
+        long time = System.currentTimeMillis();
+        if (time - lastClicktime < 1000) {
+            return null;
+        }
+        lastClicktime = time;
 
         String msg = null;
-    	WarrantFrame frame = WarrantTableAction.getDefault().getOpenFrame();
-    	if (frame != null) {
-        	Warrant warrant = frame.getWarrant();
-        	if (warrant != null) {
+        WarrantFrame frame = WarrantTableAction.getDefault().getOpenFrame();
+        if (frame != null) {
+            Warrant warrant = frame.getWarrant();
+            if (warrant != null) {
                 if (w.equals(warrant) && frame.isRunning()) {
                     msg = Bundle.getMessage("CannotRun", w.getDisplayName(),
                             Bundle.getMessage("TrainRunning", warrant.getTrainName()));
                 }
-        	}
-    	}
+            }
+        }
 
         if (msg == null) {
             msg = _model.checkAddressInUse(w);

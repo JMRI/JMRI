@@ -253,7 +253,7 @@ public class WarrantTableAction extends AbstractAction {
     }
     
     protected WarrantFrame getOpenFrame() {
-    	return _openFrame;
+        return _openFrame;
     }
 
     /* ****************** Error checking ************************/

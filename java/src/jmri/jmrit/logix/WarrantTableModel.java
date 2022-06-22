@@ -216,9 +216,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             return Bundle.getMessage("NoLoco");
         }
         for (Warrant w :_warList) {
-        	if (w.equals(warrant)) {
-        		continue;
-        	}
+            if (w.equals(warrant)) {
+                continue;
+            }
             if (w._runMode != Warrant.MODE_NONE) {
                 if (address.equals(w.getSpeedUtil().getDccAddress())) {
                     return Bundle.getMessage("AddressInUse", address, w.getDisplayName(), w.getTrainName());

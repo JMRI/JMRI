@@ -1218,13 +1218,13 @@ public class WarrantFrame extends WarrantRoute {
 
     long lastClicktime; // keep double clicks from showing dialogs
     protected void runTrain() {
-    	long time = System.currentTimeMillis();
-    	if (time - lastClicktime < 1000) {
-    		return;
-    	}
-    	lastClicktime = time;
+        long time = System.currentTimeMillis();
+        if (time - lastClicktime < 1000) {
+            return;
+        }
+        lastClicktime = time;
 
-    	_warrant.setSpeedUtil(_speedUtil); // transfer SpeedUtil to warrant
+        _warrant.setSpeedUtil(_speedUtil); // transfer SpeedUtil to warrant
         String msg = null;
         if (isRunning()) {
             msg = Bundle.getMessage("CannotRun", _warrant.getDisplayName(),
@@ -1261,7 +1261,7 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         if (_warrant.getRunMode() != Warrant.MODE_NONE) {
-        	return;
+            return;
         }
         _warrant.addPropertyChangeListener(this);
 
