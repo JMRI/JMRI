@@ -52,7 +52,11 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
 
-    boolean isEnabled() {
+    /**
+     * public for testing purposes.
+     * @return true if enabled, else false.
+     */
+    public boolean isEnabled() {
         return enabled;
     }
 

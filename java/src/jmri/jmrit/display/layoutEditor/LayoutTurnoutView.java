@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import static java.lang.Float.POSITIVE_INFINITY;
 import java.util.*;
@@ -18,6 +17,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component for the LayoutTurnout class.
@@ -1544,7 +1544,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     @Override
     @Nonnull
-    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
+    protected JPopupMenu showPopup(@CheckForNull JmriMouseEvent mouseEvent) {
         if (popup != null) {
             popup.removeAll();
         } else {

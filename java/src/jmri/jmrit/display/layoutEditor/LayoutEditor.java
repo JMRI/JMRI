@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -39,6 +38,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
@@ -2915,14 +2915,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     * Side effects on xLoc, yLoc and dLoc
      */
     @Nonnull
-    private Point2D calcLocation(MouseEvent event, int dX, int dY) {
+    private Point2D calcLocation(JmriMouseEvent event, int dX, int dY) {
         xLoc = (int) ((event.getX() + dX) / getZoom());
         yLoc = (int) ((event.getY() + dY) / getZoom());
         dLoc = new Point2D.Double(xLoc, yLoc);
         return dLoc;
     }
 
-    private Point2D calcLocation(MouseEvent event) {
+    private Point2D calcLocation(JmriMouseEvent event) {
         return calcLocation(event, 0, 0);
     }
 
@@ -2932,10 +2932,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Side-effects on _anchorX, _anchorY,_lastX, _lastY, xLoc, yLoc, dLoc,
      * selectionActive, xLabel, yLabel
      *
-     * @param event the MouseEvent
+     * @param event the JmriMouseEvent
      */
     @Override
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(JmriMouseEvent event) {
         // initialize cursor position
         _anchorX = xLoc;
         _anchorY = yLoc;
@@ -2950,7 +2950,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             leToolBarPanel.setLocationText(dLoc);
 
             if (event.isPopupTrigger()) {
-                if (isMetaDown(event) || event.isAltDown()) {
+                if (event.isMetaDown() || event.isAltDown()) {
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
                 } else {
@@ -2959,7 +2959,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
             }
 
-            if (isMetaDown(event) || event.isAltDown()) {
+            if (event.isMetaDown() || event.isAltDown()) {
                 // if dragging an item, identify the item for mouseDragging
                 selectedObject = null;
                 selectedHitPointType = HitPointType.NONE;
@@ -3085,12 +3085,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 redrawPanel();
             }
         } else if (allControlling()
-                && !isMetaDown(event) && !event.isPopupTrigger()
+                && !event.isMetaDown() && !event.isPopupTrigger()
                 && !event.isAltDown() && !event.isShiftDown() && !event.isControlDown()) {
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             checkControls(true);
-        } else if ((isMetaDown(event) || event.isAltDown())
+        } else if ((event.isMetaDown() || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
             // not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
@@ -3460,7 +3460,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Override
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(JmriMouseEvent event) {
         super.setToolTip(null);
 
         // initialize mouse position
@@ -3473,7 +3473,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             leToolBarPanel.setLocationText(dLoc);
 
             // released the mouse with shift down... see what we're adding
-            if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
+            if (!event.isPopupTrigger() && !event.isMetaDown() && event.isShiftDown()) {
 
                 currentPoint = new Point2D.Double(xLoc, yLoc);
 
@@ -3554,20 +3554,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 whenReleased = event.getWhen();
                 showEditPopUps(event);
             } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.TURNOUT_CENTER)
-                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 // controlling turnouts, in edit mode
                 LayoutTurnout t = (LayoutTurnout) selectedObject;
                 t.toggleTurnout();
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.SLIP_LEFT)
                     || (selectedHitPointType == HitPointType.SLIP_RIGHT))
-                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 // controlling slips, in edit mode
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedHitPointType);
             } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
-                    && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 // controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
@@ -3576,12 +3576,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
                     || (selectedHitPointType == HitPointType.SLIP_RIGHT))
-                    && allControlling() && (isMetaDown(event) && !event.isAltDown())
+                    && allControlling() && (event.isMetaDown() && !event.isAltDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a turnout (or slip)... see if it will connect to anything
                 hitPointCheckLayoutTurnouts((LayoutTurnout) selectedObject);
             } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.POS_POINT)
-                    && allControlling() && (isMetaDown(event))
+                    && allControlling() && (event.isMetaDown())
                     && !event.isShiftDown() && !event.isControlDown() && isDragging) {
                 // We just dropped a PositionablePoint... see if it will connect to anything
                 PositionablePoint p = (PositionablePoint) selectedObject;
@@ -3600,7 +3600,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
             createSelectionGroups();
         } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.TURNOUT_CENTER)
-                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turnout out of edit mode
             LayoutTurnout t = (LayoutTurnout) selectedObject;
@@ -3611,13 +3611,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.SLIP_LEFT)
                 || (selectedHitPointType == HitPointType.SLIP_RIGHT))
-                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling slip out of edit mode
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedHitPointType);
         } else if ((selectedObject != null) && (HitPointType.isTurntableRayHitType(selectedHitPointType))
-                && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
@@ -3707,7 +3707,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         requestFocusInWindow();
     }   // mouseReleased
 
-    private void showEditPopUps(@Nonnull MouseEvent event) {
+    private void showEditPopUps(@Nonnull JmriMouseEvent event) {
         if (findLayoutTracksHitPoint(dLoc)) {
             if (HitPointType.isBezierHitType(foundHitPointType)) {
                 getTrackSegmentView((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
@@ -3793,7 +3793,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Select the menu items to display for the Positionable's popup.
      */
     @Override
-    public void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {
+    public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
         assert p != null;
 
         if (!((Component) p).isVisible()) {
@@ -3891,14 +3891,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean awaitingIconChange = false;
 
     @Override
-    public void mouseClicked(@Nonnull MouseEvent event) {
+    public void mouseClicked(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
-        if (!isMetaDown(event) && !event.isPopupTrigger() && !event.isAltDown()
+        if (!event.isMetaDown() && !event.isPopupTrigger() && !event.isAltDown()
                 && !awaitingIconChange && !event.isShiftDown() && !event.isControlDown()) {
             List<Positionable> selections = getSelectedItems(event);
 
@@ -4659,7 +4659,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     int _prevNumSel = 0;
 
     @Override
-    public void mouseMoved(@Nonnull MouseEvent event) {
+    public void mouseMoved(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
 
@@ -4705,7 +4705,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean isDragging = false;
 
     @Override
-    public void mouseDragged(@Nonnull MouseEvent event) {
+    public void mouseDragged(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
 
@@ -4725,7 +4725,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // don't allow negative placement, objects could become unreachable
         currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
 
-        if ((selectedObject != null) && (isMetaDown(event) || event.isAltDown())
+        if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown())
                 && (selectedHitPointType == HitPointType.MARKER)) {
             // marker moves regardless of editMode or positionable
             PositionableLabel pl = (PositionableLabel) selectedObject;
@@ -4736,7 +4736,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         if (isEditable()) {
-            if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
+            if ((selectedObject != null) && event.isMetaDown() && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
@@ -4920,7 +4920,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     && leToolBarPanel.shapeButton.isSelected() && (selectedObject != null)) {
                 // dragging from end of shape
                 currentLocation = new Point2D.Double(xLoc, yLoc);
-            } else if (selectionActive && !event.isShiftDown() && !isMetaDown(event)) {
+            } else if (selectionActive && !event.isShiftDown() && !event.isMetaDown()) {
                 selectionWidth = xLoc - selectionX;
                 selectionHeight = yLoc - selectionY;
             }
@@ -4932,7 +4932,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }   // mouseDragged
 
     @Override
-    public void mouseEntered(@Nonnull MouseEvent event) {
+    public void mouseEntered(@Nonnull JmriMouseEvent event) {
         _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
@@ -8205,7 +8205,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Override
     public void showToolTip(
             @Nonnull Positionable selection,
-            @Nonnull MouseEvent event) {
+            @Nonnull JmriMouseEvent event) {
         ToolTip tip = selection.getToolTip();
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);

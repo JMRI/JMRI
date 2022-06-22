@@ -1,19 +1,20 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Bob Jacobsen Copyright 2009
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class MemorySpinnerIconTest extends PositionableJPanelTest {
 
     MemorySpinnerIcon tos1 = null;
@@ -23,17 +24,10 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     MemorySpinnerIcon toi2 = null;
     MemorySpinnerIcon toi3 = null;
 
-    @Test
-    @Override
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists",p);
-    }
-
     @Override
     @Test
     public void testShow() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         JmriJFrame jf = new JmriJFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -88,11 +82,11 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     public void setUp() {
         super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
-            p=tos1 = new MemorySpinnerIcon(editor);
-            tos1.setMemory("IM1");
-        }
+
+        editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
+        p=tos1 = new MemorySpinnerIcon(editor);
+        tos1.setMemory("IM1");
+
     }
 
     @Override

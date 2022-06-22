@@ -217,7 +217,6 @@ public class TrackSegmentTest extends LayoutTrackTest {
         // release refereces to track segment
         trackSegment = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 }

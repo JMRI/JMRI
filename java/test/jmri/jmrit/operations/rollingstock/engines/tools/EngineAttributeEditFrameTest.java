@@ -245,7 +245,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
-        
+        JemmyUtil.waitFor(f); // wait for frame to become active
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         assertThat(comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
 
@@ -371,6 +371,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");  // NOI18N
         jfo.getQueueTool().waitEmpty();
+        JemmyUtil.waitFor(f); // wait for frame to become active
 
         // enter a road name that has a reserved character
         addTextBox.setText("A.B");

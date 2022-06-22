@@ -932,7 +932,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
     }
 
     @BeforeEach
@@ -1070,7 +1069,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         layoutEditor = null;
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

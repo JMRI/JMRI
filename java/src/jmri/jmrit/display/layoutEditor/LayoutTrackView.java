@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.List;
 import java.util.*;
@@ -13,6 +12,7 @@ import javax.swing.*;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.util.*;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * MVC View component abstract base for the LayoutTrack hierarchy.
@@ -461,7 +461,7 @@ abstract public class LayoutTrackView {
      * @return the popup menu for this layout track
      */
     @Nonnull
-    abstract protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent);
+    abstract protected JPopupMenu showPopup(@Nonnull JmriMouseEvent mouseEvent);
 
     /**
      * show the popup menu for this layout track
@@ -471,9 +471,9 @@ abstract public class LayoutTrackView {
      */
     @Nonnull
     final protected JPopupMenu showPopup(Point2D where) {
-        return this.showPopup(new MouseEvent(
+        return this.showPopup(new JmriMouseEvent(
                 layoutEditor.getTargetPanel(), // source
-                MouseEvent.MOUSE_CLICKED, // id
+                JmriMouseEvent.MOUSE_CLICKED, // id
                 System.currentTimeMillis(), // when
                 0, // modifiers
                 (int) where.getX(), (int) where.getY(), // where

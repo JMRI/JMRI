@@ -10,8 +10,6 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extension of AbstractManagerTestBase base for ProvidingManager test classes.
@@ -33,6 +31,8 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
     }
 
+    @jmri.util.junit.annotations.ToDo("Managers which cannot provide SystemName 1 or 2 "
+        + "should override so provide try / catch in called method can be removed")
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
@@ -108,18 +108,19 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         l.deregister(e1);
     }
 
-    protected Field getField(Class c, String fieldName) {
+    protected Field getField(Class<?> c, String fieldName) {
         try {
             return c.getDeclaredField(fieldName);
         } catch (NoSuchFieldException ex) {
-            if (c.getSuperclass() != null)
+            if (c.getSuperclass() != null) {
                 return getField(c.getSuperclass(), fieldName);
+            }
         }
 
         // Field not found
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
 
 }

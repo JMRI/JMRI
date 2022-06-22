@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
-    private static boolean shuttingDown = false;
+    private static volatile boolean shuttingDown = false;
     private static final Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
     private final Set<Callable<Boolean>> callables = new HashSet<>();
     private final Set<Runnable> runnables = new HashSet<>();
@@ -214,6 +214,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
+            jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
             Date start = new Date();
             log.debug("Shutting down with {} callable and {} runnable tasks",
                 callables.size(), runnables.size());
@@ -286,9 +287,13 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      */
     protected void setShuttingDown(boolean state) {
         boolean old = shuttingDown;
-        shuttingDown = state;
+        setStaticShuttingDown(state);
         log.debug("Setting shuttingDown to {}", state);
         firePropertyChange(PROP_SHUTTING_DOWN, old, state);
+    }
+    
+    private synchronized static void setStaticShuttingDown(boolean state){
+        shuttingDown = state;
     }
 
     static final class ProxyTask extends Task implements TaskListener {

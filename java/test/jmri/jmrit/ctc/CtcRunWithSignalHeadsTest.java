@@ -115,7 +115,6 @@ public class CtcRunWithSignalHeadsTest {
         JUnitUtil.clearBlockBossLogicThreads();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

@@ -6,8 +6,10 @@ import javax.swing.*;
 import javax.annotation.*;
 
 import jmri.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -25,18 +27,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutTrackEditorTest {
 
+    @ToDo("Implementing subclasses should use own instance on this method")
     @Test
     public void testHasNxSensorPairsNull() {
-        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
+        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(layoutEditor) { // core of abstract class
+            @Override
             public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
         assertThat(layoutTrackEditor.hasNxSensorPairs(null)).withFailMessage("null block NxSensorPairs").isFalse();
     }
 
+    @ToDo("Implementing subclasses should use own instance on this method")
     @Test
     public void testHasNxSensorPairsDisconnectedBlock() {
-        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
+        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(layoutEditor) { // core of abstract class
+            @Override
             public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
@@ -44,9 +50,11 @@ public class LayoutTrackEditorTest {
         assertThat(layoutTrackEditor.hasNxSensorPairs(b)).withFailMessage("disconnected block NxSensorPairs").isFalse();
     }
 
+    @ToDo("Implementing subclasses should use own instance on this method")
     @Test
     public void testShowSensorMessage() {
-        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(null) { // core of abstract class
+        LayoutTrackEditor layoutTrackEditor = new LayoutTrackEditor(layoutEditor) { // core of abstract class
+            @Override
             public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrack) {}
         };
 
@@ -56,16 +64,36 @@ public class LayoutTrackEditorTest {
         layoutTrackEditor.showSensorMessage();
     }
 
+    protected LayoutEditor layoutEditor = null;
+
     @BeforeEach
     @OverridingMethodsMustInvokeSuper  // invoke first
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+
+        layoutEditor = new LayoutEditor();
+        layoutEditor.setVisible(true);
+
     }
 
     @AfterEach
     @OverridingMethodsMustInvokeSuper  // invoke last
     public void tearDown()  {
+        if (layoutEditor != null) {
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            efo.closeFrameWithConfirmations();
+        }
+        layoutEditor = null;
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
+        
+        
+        JUnitUtil.resetWindows(false, false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
@@ -78,17 +106,19 @@ public class LayoutTrackEditorTest {
      */
     protected static class ToolTipComponentChooser implements ComponentChooser {
 
-        private String buttonTooltip;
-        private StringComparator comparator = Operator.getDefaultStringComparator();
+        private final String buttonTooltip;
+        private final StringComparator comparator = Operator.getDefaultStringComparator();
 
-        public ToolTipComponentChooser(String buttonTooltip) {
+        ToolTipComponentChooser(String buttonTooltip) {
             this.buttonTooltip = buttonTooltip;
         }
 
+        @Override
         public boolean checkComponent(Component comp) {
             return comparator.equals(((JComponent) comp).getToolTipText(), buttonTooltip);
         }
 
+        @Override
         public String getDescription() {
             return "Component with tooltip \"" + buttonTooltip + "\".";
         }

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
  */
 public class NameIncrementingManagerTest {
 
-    class Testable implements NameIncrementingManager {
+    private static class Testable implements NameIncrementingManager {
         @Override
         public boolean allowMultipleAdditions(@Nonnull String systemName) {
             return true;
@@ -59,10 +59,9 @@ public class NameIncrementingManagerTest {
             }
         };
 
-        try {
-            testManager.getNextValidSystemName(start);
-        } catch (JmriException e) { return; }
-        Assert.fail("didn't throw");
+        JmriException assertThrows = Assertions.assertThrows(JmriException.class, () -> testManager.getNextValidSystemName(start));
+        Assertions.assertEquals("No existing number found when incrementing ISFOO", assertThrows.getMessage());
+
     }
 
     @Test

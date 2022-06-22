@@ -1998,8 +1998,26 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setValue("topic");
+        publish.getSelectMessage().setValue("message");
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrix.mqtt.logixng.Subscribe subscribe =
                 new jmri.jmrix.mqtt.logixng.Subscribe(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        maleSocket = digitalActionManager.registerAction(subscribe);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        subscribe = new jmri.jmrix.mqtt.logixng.Subscribe(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        subscribe.setSubscribeToTopic("theTopic");
+        subscribe.setLastTopicLocalVariable("topic");
+        subscribe.setRemoveChannelFromLastTopic(true);
+        subscribe.setLastMessageLocalVariable("lastMessage");
         maleSocket = digitalActionManager.registerAction(subscribe);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -4445,7 +4463,6 @@ public class CreateLogixNGTreeScaffold {
         cleanup();
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

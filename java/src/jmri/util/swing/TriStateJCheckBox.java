@@ -105,14 +105,14 @@ public class TriStateJCheckBox extends JPanel {
 
             @Override
             public void mousePressed(final MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
+                if (e.getButton() == JmriMouseEvent.BUTTON1) {
                     model.setPressed(true);
                 }
             }
 
             @Override
             public void mouseReleased(final MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
+                if (e.getButton() == JmriMouseEvent.BUTTON1) {
                     model.setPressed(false);
                 }
             }

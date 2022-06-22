@@ -14,6 +14,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
@@ -1216,38 +1218,38 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A PopupListener to handle mouse clicks and releases. Handles the popup
      * menu.
      */
-    private class PopupListener extends MouseAdapter {
+    private class PopupListener extends JmriMouseAdapter {
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
-         * @param e The MouseEvent causing the action.
+         * @param e The JmriMouseEvent causing the action.
          */
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             checkTrigger(e);
         }
 
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
-         * @param e The MouseEvent causing the action.
+         * @param e The JmriMouseEvent causing the action.
          */
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             checkTrigger( e);
         }
 
         /**
          * If the event is the popup trigger, which is dependent on the
          * platform, present the popup menu.
-         * @param e The MouseEvent causing the action.
+         * @param e The JmriMouseEvent causing the action.
          */
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             checkTrigger( e);
         }
 
-        private void checkTrigger( MouseEvent e) {
+        private void checkTrigger( JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 initPopupMenu();
                 popupMenu.show(e.getComponent(), e.getX(), e.getY());

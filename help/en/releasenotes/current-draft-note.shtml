@@ -239,6 +239,11 @@
                 <li></li>
             </ul>
 
+        <h4>Massoth</h4>
+             <ul>
+                <li>New decoder definition for "Pulsed Smoker for round boilers" (product nr 8415001</li>
+             </ul>
+
         <h4>MD Electronics</h4>
              <ul>
                 <li></li>
@@ -357,7 +362,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem preventing import of CSV files exported from JMRI.
+            </li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -369,7 +375,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Separated reverse at end delays from reset delays</li>
+             <li>Allow a next traininfo to be run at successful termination using the same loco info</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -404,7 +411,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The MQTT action now has the option <i>Remove channel from topic</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -444,7 +451,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>A <strong>Shutdown</strong> preference has been created to support the
+            StoreAndCompare process that detects changes to PanelPro tables and panels.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -581,5 +589,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Minor changes to resolve Spotbug OS_OPEN_STREAM_EXCEPTION_PATH </li>
+            <li>Minor changes to resolve Spotbug ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD </li>
         </ul>
 

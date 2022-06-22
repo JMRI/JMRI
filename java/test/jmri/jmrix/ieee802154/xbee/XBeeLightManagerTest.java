@@ -38,7 +38,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create
         Light t = l.provide("" + getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -47,7 +47,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create
         Light t = l.provide("ALNode 1:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertEquals("correct object returned ", t, l.getBySystemName("ALNode 1:2"));
     }
 
@@ -56,7 +56,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create
         Light t = l.provide("AL00 02:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertEquals("system name correct ", t, l.getBySystemName("AL00 02:2"));
     }
 
@@ -65,7 +65,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create
         Light t = l.provide("AL00 13 A2 00 40 A0 4D 2D:2");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertEquals("system name correct ", t, l.getBySystemName("AL00 13 A2 00 40 A0 4D 2D:2"));
     }
 
@@ -75,7 +75,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         // create
         Light t = l.provideLight(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
 

@@ -118,7 +118,7 @@ import java.nio.file.StandardCopyOption;
                 return aat.getThrottle().getSpeedSetting() == speedStopping;
                 }, "Still going in block 7, 6 still active");
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 6"), Sensor.INACTIVE);
-            JUnitUtil.waitFor(waitInterval);
+            //JUnitUtil.waitFor(waitInterval);
             JUnitUtil.waitFor(() -> {
                 return aat.getThrottle().getSpeedSetting() == 0.0f;
                 }, "Should have stop on block 6 inactive.");
@@ -360,8 +360,8 @@ import java.nio.file.StandardCopyOption;
 
             JUnitUtil.waitFor(waitInterval);
 
-            // now return.
-            JUnitUtil.setBeanState(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+            // now return.- use the v4 reverse restart sensor.
+            JUnitUtil.setBeanState(sm.getSensor("TrainReverseRestart"), Sensor.ACTIVE);
 
             // and reverses
             JUnitUtil.waitFor(() -> {
@@ -815,6 +815,7 @@ import java.nio.file.StandardCopyOption;
 
         @BeforeAll
         public static void doOnce() throws Exception {
+            JUnitUtil.setUp();
             JUnitUtil.resetFileUtilSupport();
             // set up users files in temp tst area
             outBaseTrainInfo = new File(FileUtil.getUserFilesPath(), "dispatcher/traininfo");
@@ -855,6 +856,7 @@ import java.nio.file.StandardCopyOption;
                     outPathWarrentPreferences = new File(outBaseSignal, "WarrantPreferences.xml").toPath();
                     Files.copy(inPath, outPathWarrentPreferences, StandardCopyOption.REPLACE_EXISTING);
                 }
+
             } catch (IOException e) {
                 throw e;
             }
@@ -887,7 +889,6 @@ import java.nio.file.StandardCopyOption;
         @AfterEach
         public void tearDown() throws Exception {
             JUnitUtil.deregisterBlockManagerShutdownTask();
-            JUnitUtil.deregisterEditorManagerShutdownTask();
             JUnitUtil.resetWindows(false,false);
             JUnitUtil.resetFileUtilSupport();
             JUnitUtil.tearDown();

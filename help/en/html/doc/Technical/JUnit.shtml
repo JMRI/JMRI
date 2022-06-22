@@ -246,6 +246,11 @@ suite.<br>
         <dd>If true, checks for any threads that have not yet been terminated during the test
         tearDown processing. If found, the context is logged as a warning.</dd>
 
+        <dt>jmri.util.JUnitUtil.failRemnantThreads</dt>
+
+        <dd>If true, checks for any threads that have not yet been terminated during the test
+        tearDown processing. If found, the test is marked as failure.</dd>
+        
         <dt>jmri.util.JUnitUtil.checkTestDuration</dt>
 
         <dd>If true, issues a warning if a test takes too long. The default limit is 5000 msec, but
@@ -1109,7 +1114,7 @@ milliseconds can improve the reliability of tests. Also, setting
         </li>
       </ul>
 
-        <h3 id="access">Testing GUI Accessibility</a>
+        <h3 id="access">Testing GUI Accessibility</h3>
         You can enable some accessibility checks using environment variables. These
         control test routines that are included in regular test runs over your code.
         For an example, see
@@ -1122,7 +1127,7 @@ milliseconds can improve the reliability of tests. Also, setting
             <dd>These determine what happens when a non-accessible GUI
                 element is found, ranging from logging to failing the relevant test.
             <dt>jmri.util.AccessibilityChecks.includeLaf
-            <dd>By default, these tests turn off messages about Java Look&Feel classes, i.e. Spinners.
+            <dd>By default, these tests turn off messages about Java Look&amp;Feel classes, i.e. Spinners.
                 Setting this variable true will include those in the output.
         </dl>
 
