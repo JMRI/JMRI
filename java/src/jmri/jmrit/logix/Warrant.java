@@ -630,6 +630,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 if (_engineer == null) {
                     return Bundle.getMessage("engineerGone", getCurrentBlockName());
                 }
+                String speedMsg = getSpeedMessage(_engineer.getSpeedType(true)); // current or pending
+                int runState = _engineer.getRunState();
+
                 int cmdIdx = _engineer.getCurrentCommandIndex();
                 if (cmdIdx >= _commands.size()) {
                     cmdIdx = _commands.size() - 1;
@@ -640,8 +643,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     return Bundle.getMessage("TrackerNoCurrentBlock", _trainName, block.getDisplayName());
                 }
                 String blockName = block.getDisplayName();
-                String speedMsg = getSpeedMessage(_engineer.getSpeedType(true)); // current or pending
-                int runState = _engineer.getRunState();
 
                 switch (runState) {
                     case Warrant.ABORT:
@@ -1116,11 +1117,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return ret;
         }
         int runState = _engineer.getRunState();
-/*        if (runState == Warrant.HALT) {
-            if (_waitForSignal || _waitForBlock || _waitForWarrant) {
-                runState = WAIT_FOR_CLEAR;
-            }
-        }*/
         if (_trace || log.isDebugEnabled()) {
             log.info(Bundle.getMessage("controlChange",
                     getTrainName(), Bundle.getMessage(Warrant.CNTRL_CMDS[idx]),

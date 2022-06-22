@@ -411,6 +411,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
         }
     }
 
+    long lastClicktime; // keep double clicks from showing dialogs
     /**
      * Return error message if warrant cannot be run.
      *
@@ -419,7 +420,28 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
-        String msg = _model.checkAddressInUse(w);
+    	long time = System.currentTimeMillis();
+    	if (time - lastClicktime < 1000) {
+    		return null;
+    	}
+    	lastClicktime = time;
+
+        String msg = null;
+    	WarrantFrame frame = WarrantTableAction.getDefault().getOpenFrame();
+    	if (frame != null) {
+        	Warrant warrant = frame.getWarrant();
+        	if (warrant != null) {
+                if (w.equals(warrant) && frame.isRunning()) {
+                    msg = Bundle.getMessage("CannotRun", w.getDisplayName(),
+                            Bundle.getMessage("TrainRunning", warrant.getTrainName()));
+                }
+        	}
+    	}
+
+        if (msg == null) {
+            msg = _model.checkAddressInUse(w);
+        }
+
         if (msg == null) {
             msg = w.checkforTrackers();
         }

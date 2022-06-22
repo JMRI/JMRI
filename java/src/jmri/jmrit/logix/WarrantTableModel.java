@@ -216,6 +216,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             return Bundle.getMessage("NoLoco");
         }
         for (Warrant w :_warList) {
+        	if (w.equals(warrant)) {
+        		continue;
+        	}
             if (w._runMode != Warrant.MODE_NONE) {
                 if (address.equals(w.getSpeedUtil().getDccAddress())) {
                     return Bundle.getMessage("AddressInUse", address, w.getDisplayName(), w.getTrainName());
@@ -491,7 +494,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             }
             break;
         case AUTO_RUN_COLUMN:
-            msg = frameRunTrain(w, Warrant.MODE_RUN);
+            msg = frameRunTrain(w, Warrant.MODE_RUN); 
             this.fireTableRowsUpdated(row, row);
             break;
         case MANUAL_RUN_COLUMN:

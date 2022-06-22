@@ -1216,8 +1216,15 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
+    long lastClicktime; // keep double clicks from showing dialogs
     protected void runTrain() {
-        _warrant.setSpeedUtil(_speedUtil); // transfer SpeedUtil to warrant
+    	long time = System.currentTimeMillis();
+    	if (time - lastClicktime < 1000) {
+    		return;
+    	}
+    	lastClicktime = time;
+
+    	_warrant.setSpeedUtil(_speedUtil); // transfer SpeedUtil to warrant
         String msg = null;
         if (isRunning()) {
             msg = Bundle.getMessage("CannotRun", _warrant.getDisplayName(),
@@ -1245,13 +1252,16 @@ public class WarrantFrame extends WarrantRoute {
             WarrantTableModel model = WarrantTableFrame.getDefault().getModel();
             msg = model.checkAddressInUse(_warrant);
         }
-        toFront();
+//        toFront();
         if (msg != null) {
             JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.WARNING_MESSAGE);
-            _warrant.deAllocate();
+//            _warrant.deAllocate();
             setStatus(msg, Color.black);
             return;
+        }
+        if (_warrant.getRunMode() != Warrant.MODE_NONE) {
+        	return;
         }
         _warrant.addPropertyChangeListener(this);
 
@@ -1263,9 +1273,9 @@ public class WarrantFrame extends WarrantRoute {
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             setStatus(msg, Color.red);
             return;
-        } else
+        }
 
-            msg = _warrant.checkStartBlock();
+        msg = _warrant.checkStartBlock();
         if (msg != null) {
             if (msg.equals("warnStart")) {
                 msg = Bundle.getMessage("warnStart", _warrant.getTrainName(), _warrant.getCurrentBlockName());
@@ -1374,7 +1384,7 @@ public class WarrantFrame extends WarrantRoute {
                                     _warrant.getTrainName(), _warrant.getDisplayName());
                             color =  Color.red;                        
                         } else {
-                            msg = Bundle.getMessage("bundleKey",
+                            msg = Bundle.getMessage(bundleKey,
                                     _warrant.getTrainName(), _warrant.getDisplayName(), 
                                     blkName);
                             color = myGreen;
@@ -1533,23 +1543,14 @@ public class WarrantFrame extends WarrantRoute {
         bar.invalidate();
     }
 
-    public boolean isWarrantRunning(Warrant w) {
-        if (w != null && w.equals(_warrant)) {
-            return isRunning();
-        }
-        return false;
-    }
-
     /**
      * Called by WarrantTableAction before closing the editing of this warrant
      * 
      * @return true if this warrant or its pre-editing version is running
      */
-    private boolean isRunning() {
-        if (_warrant.getRunMode() != Warrant.MODE_NONE ||
-                (_saveWarrant != null && _saveWarrant.getRunMode() != Warrant.MODE_NONE)) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("CannotEdit", _warrant.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+    protected boolean isRunning() {
+        if (_warrant._runMode != Warrant.MODE_NONE ||
+                (_saveWarrant != null && _saveWarrant._runMode != Warrant.MODE_NONE)) {
             return true;
         }
         return false;
@@ -1562,10 +1563,13 @@ public class WarrantFrame extends WarrantRoute {
      */
     private boolean save() {
         boolean fatal = false;
+        String msg = null;
         if (isRunning()) {
-            return false;
+            msg = Bundle.getMessage("CannotEdit", _warrant.getDisplayName());
         }
-        String msg = routeIsValid();
+        if (msg == null) {
+            msg = routeIsValid();
+        }
         if (msg != null) {
             msg = Bundle.getMessage("SaveError", msg);
             fatal = true;
