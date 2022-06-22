@@ -293,8 +293,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productIDhighest = value;
             if (((productIDlowest >= 129 && productIDlowest <= 135) && (productIDlow == 5))||(modelID >= 5)){
                 productID = productIDlowest+(productIDlow*256)+(productIDhigh*256*256)+(productIDhighest*256*256*256);
-            }
-            else{
+            } else if (((productIDlowest >= 129 && productIDlowest <= 135) && (modelID == 4))) {
+                productID = productIDlowest+(productIDlow*256);
+            } else {
                 productID = productIDlowest;
             }
             return true;
