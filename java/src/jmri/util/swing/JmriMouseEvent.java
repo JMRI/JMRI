@@ -307,6 +307,24 @@ public class JmriMouseEvent {
     }
 
     /**
+     * Returns whether or not this mouse event is the popup menu
+     * trigger event for the platform.
+     * <p><b>Note</b>: Popup menus are triggered differently
+     * on different systems. Therefore, {@code isPopupTrigger}
+     * should be checked in both {@code mousePressed}
+     * and {@code mouseReleased}
+     * for proper cross-platform functionality.
+     * <p><b>Note</b>: This method differs from {@code isPopupTrigger() }
+     * in that it doesn't have special handling for Windows.
+     *
+     * @return boolean, true if this event is the popup menu trigger
+     *         for this platform
+     */
+    public boolean origIsPopupTrigger() {
+        return event.isPopupTrigger();
+    }
+
+    /**
      * Returns a {@code String} instance describing the modifier keys and
      * mouse buttons that were down during the event, such as "Shift",
      * or "Ctrl+Shift". These strings can be localized by changing
