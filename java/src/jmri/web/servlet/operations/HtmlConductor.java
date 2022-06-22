@@ -276,9 +276,25 @@ public class HtmlConductor extends HtmlTrainCommon {
                                     splitString(car.getTrackName())))) {
                         continue;
                     }
+                    // block pick up cars
+                    // caboose or FRED is placed at end of the train
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
                     // note that a car in train doesn't have a track assignment
-                    if (car.getRouteLocation() == location && car.getTrack() != null
-                            && car.getRouteDestination() == rld) {
+                    if (car.getRouteLocation() == location && car.getTrack() != null &&
+                            (car.getRouteDestination() == rld &&
+                            !car.isCaboose() &&
+                            !car.hasFred() &&
+                            !car.isPassenger() ||
+                            rld == train.getTrainDepartsRouteLocation() &&
+                                    car.isPassenger() &&
+                                    car.getBlocking() < 0 ||
+                            rld == train.getTrainTerminatesRouteLocation() &&
+                                    (car.isCaboose() ||
+                                            car.hasFred() ||
+                                            car.isPassenger() && car.getBlocking() >= 0))) {
                         pickedUp.add(car.getId());
                         if (car.isUtility()) {
                             builder.append(pickupUtilityCars(carList, car, TrainCommon.IS_MANIFEST));

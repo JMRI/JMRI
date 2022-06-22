@@ -253,13 +253,13 @@ public class TrainCommon {
                     // the front of the train, positive numbers at the end of
                     // the train.
                     if (car.getRouteLocation() == rl &&
-                            ((car.getRouteDestination() == rld &&
+                            (car.getRouteDestination() == rld &&
                                     !car.isCaboose() &&
                                     !car.hasFred() &&
                                     !car.isPassenger() ||
                                     rld == train.getTrainDepartsRouteLocation() &&
                                             car.isPassenger() &&
-                                            car.getBlocking() < 0) ||
+                                            car.getBlocking() < 0 ||
                                     rld == train.getTrainTerminatesRouteLocation() &&
                                             (car.isCaboose() ||
                                                     car.hasFred() ||

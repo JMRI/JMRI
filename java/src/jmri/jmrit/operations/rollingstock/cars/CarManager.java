@@ -236,30 +236,30 @@ public class CarManager extends RollingStockManager<Car>
 
     /**
      * Provides a very sorted list of cars assigned to the train. Note that this
-     * isn't the final sort as the cars must be sorted by each location the train
-     * visits.
+     * isn't the final sort as the cars must be sorted by each location the
+     * train visits.
      * <p>
      * The sort priority is as follows:
      * <ol>
      * <li>Caboose or car with FRED to the end of the list
-     * <li>Passenger cars to the end of the list, but before cabooses or car with
-     * FRED. Passenger cars have blocking numbers which places them relative to each
-     * other.
-     * <li>Car's destination (alphabetical by location and track name or by track
-     * blocking order)
+     * <li>Passenger cars with positive blocking numbers to the end of the list,
+     * but before cabooses or car with FRED. Passenger cars with negative
+     * blocking numbers are placed at the front of the train. Passenger cars
+     * have blocking numbers which places them relative to each other.
+     * <li>Car's destination (alphabetical by location and track name or by
+     * track blocking order)
      * <li>Car's current location (alphabetical by location and track name)
      * <li>Car's final destination (alphabetical by location and track name)
      * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * </ol>
      * <p>
-     * Cars in a kernel are placed together by their kernel blocking numbers. The
-     * kernel's position in the list is based on the lead car in the kernel.
+     * Cars in a kernel are placed together by their kernel blocking numbers.
+     * The kernel's position in the list is based on the lead car in the kernel.
      * <p>
-     * If the train is to be blocked by track blocking order, all of the tracks at
-     * that location need a blocking number greater than 0.
+     * If the train is to be blocked by track blocking order, all of the tracks
+     * at that location need a blocking number greater than 0.
      *
      * @param train The selected Train.
-     *
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
@@ -310,7 +310,8 @@ public class CarManager extends RollingStockManager<Car>
                 lastCarsIndex++;
             } else if (car.isPassenger()) {
                 if (car.getBlocking() < 0) {
-                 // block passenger cars with negative blocking numbers at front of train
+                    // block passenger cars with negative blocking numbers at
+                    // front of train
                     int index;
                     for (index = 0; index < out.size(); index++) {
                         Car carTest = out.get(index);
