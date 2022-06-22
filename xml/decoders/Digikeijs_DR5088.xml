@@ -454,7 +454,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 9:</label>
             <label>Input 9:</label>
           </variable>
-          <variable CV="5088.2101" item="Block address input 10" default="10">
+          <variable CV="5088.210" item="Block address input 10" default="10">
             <decVal min="1" max="2048"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>

@@ -668,7 +668,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             reply += Bundle.getMessage("LNCV_READ_MOD_MONITOR", (moduleProgRunning == -1 ? "ALL" : moduleProgRunning)) + "\n";
         }
         if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||
-        (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY2)) {
+                (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY2)) {
             // it's an LNCV ReadReply message, decode contents:
             LncvMessageContents contents = new LncvMessageContents(m);
             int msgArt = contents.getLncvArticleNum();
@@ -701,13 +701,15 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             memo.getLncvDevicesManager().firePropertyChange("DeviceListChanged", true, false);
         }
 
-        if (reply != null) {
+        if (reply != null) { // we fool allProgFinished (copied from LNSV2 class)
             allProgFinished(null);
         }
     }
 
-    /*
+    /**
      * AllProg Session callback.
+     *
+     * @param error feedback from Finish process
      */
     public void allProgFinished(String error) {
         if (error != null) {
