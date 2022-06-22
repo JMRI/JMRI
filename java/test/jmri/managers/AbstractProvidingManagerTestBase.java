@@ -31,6 +31,8 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
     }
 
+    @jmri.util.junit.annotations.ToDo("Managers which cannot provide SystemName 1 or 2 "
+        + "should override so provide try / catch in called method can be removed")
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
@@ -66,7 +68,7 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
 
             // If the test is unable to provide a named bean, abort this test.
             JUnitAppender.clearBacklog(Level.WARN);
-            // log.debug("Cannot provide a named bean", ex);
+            log.debug("Cannot provide a named bean", ex);
             Assume.assumeTrue("We got no exception", false);
             return;
         }
@@ -119,6 +121,6 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         return null;
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProvidingManagerTestBase.class);
 
 }
