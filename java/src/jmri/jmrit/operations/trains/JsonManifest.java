@@ -162,7 +162,7 @@ public class JsonManifest extends TrainCommon {
                                     destination == train.getTrainDepartsRouteLocation() &&
                                             car.isPassenger() &&
                                             car.getBlocking() < 0 ||
-                                            destination == train.getTrainTerminatesRouteLocation() &&
+                                    destination == train.getTrainTerminatesRouteLocation() &&
                                             (car.isCaboose() ||
                                                     car.hasFred() ||
                                                     car.isPassenger() && car.getBlocking() >= 0))) {
