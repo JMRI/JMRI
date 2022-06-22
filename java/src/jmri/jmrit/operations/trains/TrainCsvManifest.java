@@ -128,18 +128,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 // the train.
                 for (RouteLocation rld : train.getTrainBlockingOrder()) {
                     for (Car car : carList) {
-                        if (car.getRouteLocation() == rl &&
-                                (car.getRouteDestination() == rld &&
-                                        !car.isCaboose() &&
-                                        !car.hasFred() &&
-                                        !car.isPassenger() ||
-                                        rld == train.getTrainDepartsRouteLocation() &&
-                                                car.isPassenger() &&
-                                                car.getBlocking() < 0 ||
-                                        rld == train.getTrainTerminatesRouteLocation() &&
-                                                (car.isCaboose() ||
-                                                        car.hasFred() ||
-                                                        car.isPassenger() && car.getBlocking() >= 0))) {
+                        if (isNextCar(car, rl, rld)) {
                             newWork = true;
                             int count = 0;
                             if (car.isUtility()) {

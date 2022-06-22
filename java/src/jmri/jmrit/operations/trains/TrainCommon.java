@@ -243,27 +243,13 @@ public class TrainCommon {
                             !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                         continue;
                     }
-                    // note that a car in train doesn't have a track assignment
-                    if (car.getTrack() == null) {
-                        continue;
-                    }
+                    // Block cars
                     // caboose or FRED is placed at end of the train
                     // passenger cars are already blocked in the car list
                     // passenger cars with negative block numbers are placed at
                     // the front of the train, positive numbers at the end of
                     // the train.
-                    if (car.getRouteLocation() == rl &&
-                            (car.getRouteDestination() == rld &&
-                                    !car.isCaboose() &&
-                                    !car.hasFred() &&
-                                    !car.isPassenger() ||
-                                    rld == train.getTrainDepartsRouteLocation() &&
-                                            car.isPassenger() &&
-                                            car.getBlocking() < 0 ||
-                                    rld == train.getTrainTerminatesRouteLocation() &&
-                                            (car.isCaboose() ||
-                                                    car.hasFred() ||
-                                                    car.isPassenger() && car.getBlocking() >= 0))) {
+                    if (isNextCar(car, rl, rld)) {
                         // determine if header is to be printed
                         if (printPickupHeader && !car.isLocalMove()) {
                             printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -355,6 +341,40 @@ public class TrainCommon {
             }
         }
     }
+    
+    /**
+     * Used to determine if car is the next to be processed when producing
+     * Manifests or Switch Lists. Caboose or FRED is placed at end of the train.
+     * Passenger cars are already blocked in the car list. Passenger cars with
+     * negative block numbers are placed at the front of the train, positive
+     * numbers at the end of the train. Note that a car in train doesn't have a
+     * track assignment.
+     * 
+     * @param car the car being tested
+     * @param rl  when in train's route the car is being pulled
+     * @param rld the destination being tested
+     * @return true if this car is the next one to be processed
+     */
+    public static boolean isNextCar(Car car, RouteLocation rl, RouteLocation rld) {
+        Train train = car.getTrain();
+        if (train != null &&
+                car.getTrack() != null &&
+                car.getRouteLocation() == rl &&
+                (rld == car.getRouteDestination() &&
+                        !car.isCaboose() &&
+                        !car.hasFred() &&
+                        !car.isPassenger() ||
+                        rld == train.getTrainDepartsRouteLocation() &&
+                                car.isPassenger() &&
+                                car.getBlocking() < 0 ||
+                        rld == train.getTrainTerminatesRouteLocation() &&
+                                (car.isCaboose() ||
+                                        car.hasFred() ||
+                                        car.isPassenger() && car.getBlocking() >= 0))) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Produces a two column format for car pick ups and set outs. Sorted by track
@@ -386,27 +406,13 @@ public class TrainCommon {
             for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 for (int k = 0; k < carList.size(); k++) {
                     Car car = carList.get(k);
-                    // note that a car in train doesn't have a track assignment
-                    if (car.getTrack() == null) {
-                        continue;
-                    }
+                    // block cars
                     // caboose or FRED is placed at end of the train
                     // passenger cars are already blocked in the car list
                     // passenger cars with negative block numbers are placed at
                     // the front of the train, positive numbers at the end of
                     // the train.
-                    if (car.getRouteLocation() == rl &&
-                            ((car.getRouteDestination() == rld &&
-                                    !car.isCaboose() &&
-                                    !car.hasFred() &&
-                                    !car.isPassenger() ||
-                                    rld == train.getTrainDepartsRouteLocation() &&
-                                            car.isPassenger() &&
-                                            car.getBlocking() < 0) ||
-                                    rld == train.getTrainTerminatesRouteLocation() &&
-                                            (car.isCaboose() ||
-                                                    car.hasFred() ||
-                                                    car.isPassenger() && car.getBlocking() >= 0))) {
+                    if (isNextCar(car, rl, rld)) {
                         if (Setup.isSortByTrackNameEnabled() &&
                                 !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                             continue;

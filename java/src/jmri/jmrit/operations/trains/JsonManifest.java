@@ -153,19 +153,7 @@ public class JsonManifest extends TrainCommon {
             ArrayNode pickups = this.mapper.createArrayNode();
             for (RouteLocation destination : route) {
                 for (Car car : carList) {
-                    if (car.getRouteLocation() == routeLocation &&
-                            car.getTrack() != null &&
-                            (car.getRouteDestination() == destination &&
-                                    !car.isCaboose() &&
-                                    !car.hasFred() &&
-                                    !car.isPassenger() ||
-                                    destination == train.getTrainDepartsRouteLocation() &&
-                                            car.isPassenger() &&
-                                            car.getBlocking() < 0 ||
-                                    destination == train.getTrainTerminatesRouteLocation() &&
-                                            (car.isCaboose() ||
-                                                    car.hasFred() ||
-                                                    car.isPassenger() && car.getBlocking() >= 0))) {
+                    if (isNextCar(car, routeLocation, destination)) {
                         pickups.add(this.utilities.getCar(car, locale));
                     }
                 }

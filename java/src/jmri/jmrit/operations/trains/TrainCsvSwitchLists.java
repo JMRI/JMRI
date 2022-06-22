@@ -206,19 +206,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     // the train.
                     for (RouteLocation rld : train.getTrainBlockingOrder()) {
                         for (Car car : carList) {
-                            if (car.getRouteLocation() == rl &&
-                                    car.getTrack() != null &&
-                                    (car.getRouteDestination() == rld &&
-                                            !car.isCaboose() &&
-                                            !car.hasFred() &&
-                                            !car.isPassenger() ||
-                                            rld == train.getTrainDepartsRouteLocation() &&
-                                                    car.isPassenger() &&
-                                                    car.getBlocking() < 0 ||
-                                            rld == train.getTrainTerminatesRouteLocation() &&
-                                                    (car.isCaboose() ||
-                                                            car.hasFred() ||
-                                                            car.isPassenger() && car.getBlocking() >= 0))) {
+                            if (isNextCar(car, rl, rld)) {
                                 pickupCars++;
                                 int count = 0;
                                 if (car.isUtility()) {

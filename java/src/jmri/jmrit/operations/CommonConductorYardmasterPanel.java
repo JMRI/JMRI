@@ -571,20 +571,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // passenger cars with negative block numbers are placed at
                     // the front of the train, positive numbers at the end of
                     // the train.
-                    if (car.getRouteLocation() == rl &&
-                            car.getRouteDestination() != rl &&
-                            (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName())) &&
-                            ((car.getRouteDestination() == rld &&
-                                    !car.isCaboose() &&
-                                    !car.hasFred() &&
-                                    !car.isPassenger() ||
-                                    rld == _train.getTrainDepartsRouteLocation() &&
-                                            car.isPassenger() &&
-                                            car.getBlocking() < 0) ||
-                                    rld == _train.getTrainTerminatesRouteLocation() &&
-                                            (car.isCaboose() ||
-                                                    car.hasFred() ||
-                                                    car.isPassenger() && car.getBlocking() >= 0))) {
+                    if (TrainCommon.isNextCar(car, rl, rld)) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);
