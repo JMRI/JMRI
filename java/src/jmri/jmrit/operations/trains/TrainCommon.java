@@ -230,7 +230,6 @@ public class TrainCommon {
         List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
-        boolean isOnlyPassenger = train.isOnlyPassengerCars();
         for (Track track : tracks) {
             if (trackNames.contains(splitString(track.getName()))) {
                 continue;
@@ -245,14 +244,26 @@ public class TrainCommon {
                         continue;
                     }
                     // note that a car in train doesn't have a track assignment
+                    if (car.getTrack() == null) {
+                        continue;
+                    }
                     // caboose or FRED is placed at end of the train
-                    // passenger trains are already blocked in the car list
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
                     if (car.getRouteLocation() == rl &&
-                            car.getTrack() != null &&
-                            ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
-                                    (rld == train.getTrainTerminatesRouteLocation() &&
-                                            (car.isCaboose() || car.hasFred())) ||
-                                    (car.isPassenger() && isOnlyPassenger))) {
+                            ((car.getRouteDestination() == rld &&
+                                    !car.isCaboose() &&
+                                    !car.hasFred() &&
+                                    !car.isPassenger() ||
+                                    rld == train.getTrainDepartsRouteLocation() &&
+                                            car.isPassenger() &&
+                                            car.getBlocking() < 0) ||
+                                    rld == train.getTrainTerminatesRouteLocation() &&
+                                            (car.isCaboose() ||
+                                                    car.hasFred() ||
+                                                    car.isPassenger() && car.getBlocking() >= 0))) {
                         // determine if header is to be printed
                         if (printPickupHeader && !car.isLocalMove()) {
                             printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -281,9 +292,6 @@ public class TrainCommon {
                         }
                         pickupCars = true;
                     }
-                }
-                if (isOnlyPassenger) {
-                    break;
                 }
             }
             // now do set outs and local moves
@@ -378,11 +386,27 @@ public class TrainCommon {
             for (RouteLocation rld : train.getTrainBlockingOrder()) {
                 for (int k = 0; k < carList.size(); k++) {
                     Car car = carList.get(k);
-                    if (car.getTrack() != null &&
-                            car.getRouteLocation() == rl &&
-                            ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
-                                    (rld == train.getTrainTerminatesRouteLocation() &&
-                                            (car.isCaboose() || car.hasFred())))) {
+                    // note that a car in train doesn't have a track assignment
+                    if (car.getTrack() == null) {
+                        continue;
+                    }
+                    // caboose or FRED is placed at end of the train
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
+                    if (car.getRouteLocation() == rl &&
+                            ((car.getRouteDestination() == rld &&
+                                    !car.isCaboose() &&
+                                    !car.hasFred() &&
+                                    !car.isPassenger() ||
+                                    rld == train.getTrainDepartsRouteLocation() &&
+                                            car.isPassenger() &&
+                                            car.getBlocking() < 0) ||
+                                    rld == train.getTrainTerminatesRouteLocation() &&
+                                            (car.isCaboose() ||
+                                                    car.hasFred() ||
+                                                    car.isPassenger() && car.getBlocking() >= 0))) {
                         if (Setup.isSortByTrackNameEnabled() &&
                                 !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                             continue;

@@ -309,20 +309,33 @@ public class CarManager extends RollingStockManager<Car>
                 out.add(car); // place at end of list
                 lastCarsIndex++;
             } else if (car.isPassenger()) {
-                // block passenger cars at end of list, but before cabooses or car with FRED
-                int index;
-                for (index = 0; index < lastCarsIndex; index++) {
-                    Car carTest = out.get(out.size() - 1 - index);
-                    log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
-                    if (carTest.isPassenger() &&
-                            !carTest.isCaboose() &&
-                            !carTest.hasFred() &&
-                            carTest.getBlocking() < car.getBlocking()) {
-                        break;
+                if (car.getBlocking() < 0) {
+                 // block passenger cars with negative blocking numbers at front of train
+                    int index;
+                    for (index = 0; index < out.size(); index++) {
+                        Car carTest = out.get(index);
+                        if (!carTest.isPassenger() || carTest.getBlocking() > car.getBlocking()) {
+                            break;
+                        }
                     }
+                    out.add(index, car);
+                } else {
+                    // block passenger cars at end of list, but before cabooses
+                    // or car with FRED
+                    int index;
+                    for (index = 0; index < lastCarsIndex; index++) {
+                        Car carTest = out.get(out.size() - 1 - index);
+                        log.debug("Car ({}) has blocking number: {}", carTest.toString(), carTest.getBlocking());
+                        if (carTest.isPassenger() &&
+                                !carTest.isCaboose() &&
+                                !carTest.hasFred() &&
+                                carTest.getBlocking() < car.getBlocking()) {
+                            break;
+                        }
+                    }
+                    out.add(out.size() - index, car);
+                    lastCarsIndex++;
                 }
-                out.add(out.size() - index, car);
-                lastCarsIndex++;
             }
             // group the cars in the kernel together
             if (car.isLead()) {
@@ -341,7 +354,7 @@ public class CarManager extends RollingStockManager<Car>
                             out.add(index + numberOfCars, kcar);
                         }
                         numberOfCars++;
-                        if (car.hasFred() || car.isCaboose() || car.isPassenger()) {
+                        if (car.hasFred() || car.isCaboose() || car.isPassenger() && car.getBlocking() > 0) {
                             lastCarsIndex++; // place entire kernel at the end of list
                         }
                     }
