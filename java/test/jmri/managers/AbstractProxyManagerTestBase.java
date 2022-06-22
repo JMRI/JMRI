@@ -1,7 +1,7 @@
 package jmri.managers;
 
 import jmri.*;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,11 +15,13 @@ import org.junit.jupiter.api.*;
  * to give it a concrete platform
  *
  * @author Bob Jacobsen Copyright (C) 2017
+ * @param <T> Proxy Bean Manager, e.g. ProxySensorManager
+ * @param <E> Bean type, e.g. Sensor
  */
 public abstract class AbstractProxyManagerTestBase<T extends Manager<E>, E extends NamedBean> {
 
     // ProxyManager<E> under test - setUp() loads this
-    protected T l = null;
+    protected T l;
 
     // check that you can add and remove listeners
     @Test
@@ -48,7 +50,7 @@ public abstract class AbstractProxyManagerTestBase<T extends Manager<E>, E exten
     @Test
     public final void testMakeSystemName() {
         String s = l.makeSystemName("1");
-        Assert.assertTrue(s != null);
-        Assert.assertTrue(! s.isEmpty());
+        Assertions.assertNotNull(s);
+        Assertions.assertFalse( s.isEmpty());
     }
 }
