@@ -2,12 +2,9 @@ package jmri.jmrix.loconet.swing;
 
 import javax.swing.Action;
 import javax.swing.JMenu;
-import javax.swing.JComponent;
 import javax.swing.JSeparator;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ServiceConfigurationError;
 
 import jmri.jmrix.loconet.locomon.LocoMonPane;
 import jmri.jmrix.loconet.slotmon.SlotMonPane;
@@ -89,10 +86,10 @@ public class LocoNetMenu extends JMenu {
         panelItems.add(new LocoNetMenuItem("MenuItemCmdStnConfig", CmdStnConfigPane.class,true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSetID", LocoIdPanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemDuplex", DuplexGroupTabbedPanel.class, true, true)); // NOI18N
+        panelItems.add(new LocoNetMenuItem("MenuItemLncvProg", LncvProgPane.class, true, true)); // NOI18N
         panelItems.add(null);
         panelItems.add(new LocoNetMenuItem("MenuItemThrottleMessages", MessagePanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSendPacket", LocoGenPanel.class, false, true)); // NOI18N
-        panelItems.add(new LocoNetMenuItem("MenuItemLncvProg", LncvProgPane.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemPr3ModeSelect", Pr3SelectPane.class, false, true)); // NOI18N
         panelItems.add(null);
         panelItems.add(new LocoNetMenuItem("MenuItemDownload", jmri.jmrix.loconet.downloader.LoaderPane.class, false, true)); // NOI18N
@@ -265,23 +262,18 @@ public class LocoNetMenu extends JMenu {
     public final java.util.ArrayList<JMenu> getExtensionMenuItems(
             boolean isConnectionWithHardwareInterface, WindowInterface wi, 
             LocoNetSystemConnectionMemo memo) {
-        ArrayList<JMenu> locoNetMenuItems = new ArrayList<>();
-        log.trace("searching for extensions for the canonical name {}", 
+        log.trace("searching for extensions for the canonical name {}",
                 this.getClass().getCanonicalName());
         MenuItemsService lnMenuItemServiceInstance;
         lnMenuItemServiceInstance = MenuItemsService.getInstance();
-        locoNetMenuItems.addAll(
-                lnMenuItemServiceInstance.getMenuExtensionsItems(
-                        isConnectionWithHardwareInterface, wi, memo));
+        ArrayList<JMenu> locoNetMenuItems = new ArrayList<>(lnMenuItemServiceInstance.getMenuExtensionsItems(isConnectionWithHardwareInterface, wi, memo));
         log.trace("LocoNetItems size is {}", locoNetMenuItems.size());
         return locoNetMenuItems;
     }
 
     private void processItems(JMenu menu, ArrayList<LocoNetMenuItem> items, boolean isLocoNetInterface,
             WindowInterface wi, LocoNetSystemConnectionMemo memo) {
-        items.forEach(item -> {
-            processAnItem(menu, item, isLocoNetInterface, wi, memo);
-        });
+        items.forEach(item -> processAnItem(menu, item, isLocoNetInterface, wi, memo));
     }
         
     private void processAnItem(JMenu menu, LocoNetMenuItem item, boolean isLocoNetInterface,

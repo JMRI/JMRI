@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - LocoNet&reg; Simulator</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - LocoNet&reg; Simulator</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <div id="container">
@@ -16,10 +17,10 @@
       <div id="mainContent">
         <h1>Hardware Support: LocoNet&reg; Simulator</h1>
 
-        <p>If JMRI is configured to use a Digitrax LocoNet&reg; connection, but the connection isn't
-        available, several aspects of the program will not function. This is because the program
-        needs to interact with the LocoNet during normal operation, and without the expected
-        responses from the LocoNet it will appear basically dead.</p>
+        <p>If JMRI is configured to use a Digitrax LocoNet&reg; connection, but a physical connection
+        isn't available, several aspects of the program will not function. This is because the
+        program needs to interact with the LocoNet during normal operation, and without the
+        expected responses from the LocoNet it will appear basically dead.</p>
 
         <p>The "LocoNet Simulator" was created to make it possible to use JMRI in a disconnected
         mode. This is useful e.g. if you want to develop a panel while away from your layout.</p>
@@ -72,6 +73,10 @@ BB 10 00 54 &crarr;
 [BB 10 00 54]  Request data/status for slot 16.
 </pre>
         <p>Because there is no Command Station, the last message would not receive a response.</p>
+
+        <h2>Simulate replies</h2>
+        At the bottom of the LocoNet Simulator pane a checkbox allows activating (a limited set of) replies from
+        virtual hardware. This option is primarily intended for developers.
 
         <h2 id="SeeAlso">Documentation</h2>
 
