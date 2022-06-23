@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 
@@ -45,6 +46,7 @@ import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.apache.log4j.Level;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -102,6 +104,8 @@ public class JUnitUtil {
      * This value is always reset to {@value #DEFAULT_WAITFOR_DELAY_STEP}
      * during setUp().
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
+        justification = "value reset dueing setUp() ")
     static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
 
     /**
@@ -120,6 +124,8 @@ public class JUnitUtil {
      * Public in case modification is needed from a test or script.
      * This value is always reset to {@value #DEFAULT_WAITFOR_MAX_DELAY} during setUp().
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
+        justification = "value reset dueing setUp() ")
     static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
@@ -152,6 +158,13 @@ public class JUnitUtil {
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
+
+    /**
+     * Fail Test if any threads left behind after a test calls {@link #tearDown}
+     * <p>
+     * Set from the jmri.util.JUnitUtil.failRemnantThreads environment variable.
+     */
+    static boolean failRemnantThreads =  Boolean.getBoolean("jmri.util.JUnitUtil.failRemnantThreads"); // false unless set true
 
     /**
      * Kill any threads left behind after a test calls {@link #tearDown}
@@ -415,7 +428,7 @@ public class JUnitUtil {
         checkShutDownManager();
 
         // Optionally, handle any threads left running
-        if (checkRemnantThreads || killRemnantThreads) {
+        if (checkRemnantThreads || killRemnantThreads || failRemnantThreads) {
             handleThreads();
         }
 
@@ -482,6 +495,7 @@ public class JUnitUtil {
      * @return true if condition is met before WAITFOR_MAX_DELAY, false
      *         otherwise
      */
+    @CheckReturnValue
     static public boolean waitFor(ReleaseUntil condition) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -518,16 +532,16 @@ public class JUnitUtil {
      * this will have to do.
      * <p>
      *
-     * @param time Delay in milliseconds
+     * @param msec Delay in milliseconds
      */
-    static public void waitFor(int time) {
+    static public void waitFor(int msec) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
         }
         int delay = 0;
         try {
-            while (delay < time) {
+            while (delay < msec) {
                 int priority = Thread.currentThread().getPriority();
                 try {
                     Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
@@ -598,6 +612,7 @@ public class JUnitUtil {
      * @return true if condition is met before 1 second, false
      *         otherwise
      */
+    @CheckReturnValue
     static public boolean fasterWaitFor(ReleaseUntil condition) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
@@ -1078,7 +1093,7 @@ public class JUnitUtil {
      *
      * @see #clearShutDownManager()
      */
-    static void checkShutDownManager() {
+    public static void checkShutDownManager() {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
@@ -1194,6 +1209,7 @@ public class JUnitUtil {
      * <code>
      * jmri.profile.Profile profile = new jmri.profile.NullProfile(temporaryFolder);
      * JUnitUtil.resetProfileManager(profile);
+     * </code>
      *
      * @param profile the provided profile
      */
@@ -1475,20 +1491,27 @@ public class JUnitUtil {
                             if (traces == null) continue;  // thread went away, maybe terminated in parallel
                             if (traces.length >7 && traces[7].getClassName().contains("org.netbeans.jemmy") ) {
                                 // empirically. jemmy leaves anonymous threads
-                                log.warn("Jemmy remnant thread running {}.{} [{}.{}]",
-                                        traces[7].getClassName(),
-                                        traces[7].getMethodName(),
-                                       traces[7].getFileName(),
-                                       traces[7].getLineNumber()
-                                    );
+                                String details = traces[7].getClassName() + "." + traces[7].getMethodName()
+                                    +" [" + traces[7].getFileName() + "." + traces[7].getLineNumber() + "]";
+                                        
+                                log.warn("Jemmy remnant thread running {}", details );
+                                if ( failRemnantThreads ) {
+                                    Assertions.fail("Jemmy remnant thread running " + details);
+                                }
                             } else {
                                 // anonymous thread that should be displayed
                                 Exception ex = new Exception("traceback of numbered thread");
                                 ex.setStackTrace(traces);
                                 log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
+                                if ( failRemnantThreads ) {
+                                    Assertions.fail("Thread \"" + name + "\" after " + getTestClassName());
+                                }
                             }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
+                            if ( failRemnantThreads ) {
+                                Assertions.fail("Thread \"" + name + "\" in group \"" + group + "\" after " + getTestClassName());
+                            }
                         }
                         if (kill) {
                             killThread(t);
@@ -1549,6 +1572,12 @@ public class JUnitUtil {
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;
+    }
+
+    final private static Random random = new Random();
+
+    public static Random getRandom(){
+        return random;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class);

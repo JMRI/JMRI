@@ -944,7 +944,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if only passenger cars have been assigned to this train.
      */
     public boolean isOnlyPassengerCars() {
-        for (Car car : InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(this)) {
+        for (Car car : InstanceManager.getDefault(CarManager.class).getList(this)) {
             if (!car.isPassenger()) {
                 return false;
             }
