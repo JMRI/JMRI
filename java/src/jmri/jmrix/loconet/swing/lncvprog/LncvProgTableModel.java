@@ -299,7 +299,8 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             String s = null;
             while (s == null) {
                 s = JOptionPane.showInputDialog(parent,
-                        Bundle.getMessage("DialogEnterEntryName"), "");
+                        Bundle.getMessage("DialogEnterEntryName"),
+                        Bundle.getMessage("EnterEntryNameTitle"),JOptionPane.QUESTION_MESSAGE);
                 if (s == null) {
                     // Cancel button hit
                     return;
