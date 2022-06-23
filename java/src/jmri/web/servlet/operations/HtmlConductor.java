@@ -257,9 +257,9 @@ public class HtmlConductor extends HtmlTrainCommon {
 
     private String pickupCars() {
         StringBuilder builder = new StringBuilder();
-        RouteLocation location = train.getCurrentRouteLocation();
+        RouteLocation rlocation = train.getCurrentRouteLocation();
         List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
-        List<Track> tracks = location.getLocation().getTracksByNameList(null);
+        List<Track> tracks = rlocation.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         List<String> pickedUp = new ArrayList<>();
         this.clearUtilityCarTypes();
@@ -276,14 +276,19 @@ public class HtmlConductor extends HtmlTrainCommon {
                                     splitString(car.getTrackName())))) {
                         continue;
                     }
+                    // block pick up cars
+                    // caboose or FRED is placed at end of the train
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
                     // note that a car in train doesn't have a track assignment
-                    if (car.getRouteLocation() == location && car.getTrack() != null
-                            && car.getRouteDestination() == rld) {
+                    if (isNextCar(car, rlocation, rld)) {
                         pickedUp.add(car.getId());
                         if (car.isUtility()) {
                             builder.append(pickupUtilityCars(carList, car, TrainCommon.IS_MANIFEST));
                          // use truncated format if there's a switch list
-                        } else if (Setup.isPrintTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+                        } else if (Setup.isPrintTruncateManifestEnabled() && rlocation.getLocation().isSwitchListEnabled()) {
                             builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                         } else {
                             builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));

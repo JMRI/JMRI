@@ -3526,25 +3526,26 @@
 
       <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility, and Hazardous
       Checkboxes</h4>
-      If the car is used in passenger service select the passenger checkbox. The program will place
-      passenger cars towards the rear of a mixed service (combination of passenger and freight
-      cars) train. If the car is a caboose, has a FRED (Flashing Rear End Device), or is hazardous,
-      select the proper checkbox. The program uses the caboose and FRED functions to place the car
-      at the end of a train when the train requires a caboose or car with FRED. The hazardous
-      checkbox will cause the program to add a <a href="#HazardousComment">note</a> to the switch
-      list that the car is transporting hazardous materials. Your railroad's policy regarding
-      hazardous materials can than be applied to this car!
-      <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
-      appear. The text box allows you to enter a number between -100 and 100 and this gives you
-      control where in the train's Manifest a car will be placed. Lower numbers will place the car
-      near the front of the train, and higher numbers towards the rear. We recommend that you start
-      off using numbers cleanly divisible by 10. For example, you might what to place an
-      observation car at the end of the train, a value of "90" would be appropriate. If you wanted
-      a baggage car to be the first car in the passenger train, a value of "10" would be a good
-      value, cars in the middle of the train could use "50". Later you can fine tune your passenger
-      trains by using the other numbers that are available.</p>
+   If the car is used in passenger service select the passenger checkbox. The program will place
+   passenger cars towards the rear of a mixed service (combination of passenger and freight cars)
+   train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
+   blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device), or
+   is hazardous, select the proper checkbox. The program uses the caboose and FRED functions to
+   place the car at the end of a train when the train requires a caboose or car with FRED. The
+   hazardous checkbox will cause the program to add a
+   <a href="#HazardousComment">note</a> to the switch list that the car is transporting hazardous
+   materials. Your railroad's policy regarding hazardous materials can than be applied to this car!
+   <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
+    appear. The text box allows you to enter a number between -100 and 100 and this gives you
+    control where in the train's Manifest a car will be placed. Lower numbers will place the car at
+    the front of the train, and higher numbers towards the rear. We recommend that you start off
+    using numbers cleanly divisible by 10. For example, you might what to place an observation car
+    at the end of the train, a value of "90" would be appropriate. If you wanted a baggage car to be
+    the first car in the passenger train, a value of "10" would be a good value, cars in the middle
+    of the train could use "50". Later you can fine tune your passenger trains by using the other
+    numbers that are available.</p>
 
-      <p>When the utility checkbox is selected, it instructions the program when printing Manifests
+   <p>When the utility checkbox is selected, it instructions the program when printing Manifests
       and switch lists to not show the individual car's road and number, but rather the quantity of
       cars needed of that type. For example, prototype unit trains when shipping coal don't
       normally list the cars in the train by the car's road number but instead it shows the number

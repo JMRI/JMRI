@@ -589,6 +589,48 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by t1 by dest", c6, carList.get(4));
         Assert.assertEquals("6th car in list by t1 by dest", c4, carList.get(5));
     }
+    
+    @Test
+    public void testListCarsByTrainDestinationPassengerNegitiveBlocking() {
+        initializeTest();
+
+        CarManager manager = InstanceManager.getDefault(CarManager.class);
+        Route r = new Route("id", "Test");
+        r.addLocation(l1);
+        r.addLocation(l2);
+        r.addLocation(l3);
+
+        Train t1 = new Train("id1", "F");
+        t1.setRoute(r);
+
+        c1.setPassenger(true);
+        c2.setPassenger(true);
+        c3.setPassenger(true);
+
+        c1.setBlocking(-6);
+        c2.setBlocking(0);
+        c3.setBlocking(-2);
+        c4.setBlocking(3); // caboose
+        c5.setBlocking(1); // FRED
+        c6.setBlocking(-4); // caboose
+
+        c1.setTrain(t1);
+        c2.setTrain(t1);
+        c3.setTrain(t1);
+        c4.setTrain(t1);
+        c5.setTrain(t1);
+        c6.setTrain(t1);
+
+        // now get cars by specific train
+        List<Car> carList = manager.getByTrainDestinationList(t1);
+        Assert.assertEquals("Number of Cars in t1 by dest", 6, carList.size());
+        Assert.assertEquals("1st car in list by t1 by dest", c1, carList.get(0));
+        Assert.assertEquals("2nd car in list by t1 by dest", c3, carList.get(1));
+        Assert.assertEquals("3rd car in list by t1 by dest", c2, carList.get(2));
+        Assert.assertEquals("4th car in list by t1 by dest", c5, carList.get(3));
+        Assert.assertEquals("5th car in list by t1 by dest", c6, carList.get(4));
+        Assert.assertEquals("6th car in list by t1 by dest", c4, carList.get(5));
+    }
 
     @Test
     public void testListCarsAvailableByTrainNoRoute() {
