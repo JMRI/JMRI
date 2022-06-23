@@ -206,7 +206,7 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return bWest.isOccupied() == true;
-                	
+
         }, "South not occupied");
 
         try {
@@ -217,7 +217,7 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return bSouth.isOccupied() == true;
-            	
+
         }, "South not occupied");
 
         // wait for done
