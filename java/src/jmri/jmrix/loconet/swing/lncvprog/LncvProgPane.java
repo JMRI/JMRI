@@ -65,6 +65,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     protected int val;
     boolean writeConfirmed = false;
     private final String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
+    private final String dontWarnOnClose = this.getClass().getName() + ".DontWarnOnClose"; // NOI18N
     private UserPreferencesManager pm;
     private transient TableRowSorter<LncvProgTableModel> sorter;
     private LncvDevicesManager lncvdm;
@@ -93,17 +94,53 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     }
 
     /**
-     * Prevent closing tool with programming session left open on module(s).
+     * Give user feedback on closing of any open programming sessions when tool window is closed.
+     * @see #dispose() for actual closing of sessions
      */
     public void handleCloseEvent() {
-        log.debug("handleCloseEvent() called in LncvProgPane");
+        //log.debug("handleCloseEvent() called in LncvProgPane");
         if (allProgRunning || moduleProgRunning > 0) {
+            // adds a Don't remember again checkbox and stores setting in pm
             // show dialog
-            JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("DialogRunningWarning"),
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
-            // dispose will take care of stopping any open prog session
+            if (pm != null && !pm.getSimplePreferenceState(dontWarnOnClose)) {
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(Bundle.getMessage("ReminderTitle"));
+                dialog.setLocationRelativeTo(null);
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+                JLabel question = new JLabel(Bundle.getMessage("DialogRunningWarning"), JLabel.CENTER);
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+
+                JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
+                JPanel buttons = new JPanel();
+                buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
+                buttons.add(okButton);
+                container.add(buttons);
+
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("DontRemind"));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                remember.setFont(remember.getFont().deriveFont(10f));
+                container.add(remember);
+
+                okButton.addActionListener(e -> {
+                    if ((remember.isSelected()) && (pm != null)) {
+                        pm.setSimplePreferenceState(dontWarnOnClose, remember.isSelected());
+                    }
+                    dialog.dispose();
+                });
+
+
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+
+            // dispose will take care of actually stopping any open prog session
         }
     }
 
@@ -736,6 +773,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         if (pm != null) {
             pm.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         }
+        // prevent closing LNCV tool with programming session left open on module(s).
         if (moduleProgRunning >= 0) {
             modProgButtonActionPerformed();
         }
