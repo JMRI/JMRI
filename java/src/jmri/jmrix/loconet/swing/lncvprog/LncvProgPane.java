@@ -94,57 +94,6 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     }
 
     /**
-     * Give user feedback on closing of any open programming sessions when tool window is closed.
-     * @see #dispose() for actual closing of sessions
-     */
-    public void handleCloseEvent() {
-        //log.debug("handleCloseEvent() called in LncvProgPane");
-        if (allProgRunning || moduleProgRunning > 0) {
-            // adds a Don't remember again checkbox and stores setting in pm
-            // show dialog
-            if (pm != null && !pm.getSimplePreferenceState(dontWarnOnClose)) {
-                final JDialog dialog = new JDialog();
-                dialog.setTitle(Bundle.getMessage("ReminderTitle"));
-                dialog.setLocationRelativeTo(null);
-                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-                JPanel container = new JPanel();
-                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-
-                JLabel question = new JLabel(Bundle.getMessage("DialogRunningWarning"), JLabel.CENTER);
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
-
-                JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
-                JPanel buttons = new JPanel();
-                buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
-                buttons.add(okButton);
-                container.add(buttons);
-
-                final JCheckBox remember = new JCheckBox(Bundle.getMessage("DontRemind"));
-                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-                remember.setFont(remember.getFont().deriveFont(10f));
-                container.add(remember);
-
-                okButton.addActionListener(e -> {
-                    if ((remember.isSelected()) && (pm != null)) {
-                        pm.setSimplePreferenceState(dontWarnOnClose, remember.isSelected());
-                    }
-                    dialog.dispose();
-                });
-
-
-                dialog.getContentPane().add(container);
-                dialog.pack();
-                dialog.setModal(true);
-                dialog.setVisible(true);
-            }
-
-            // dispose will take care of actually stopping any open prog session
-        }
-    }
-
-    /**
      * Initialize the config window
      */
     @Override
@@ -757,6 +706,57 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                 statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lncvdm.getDeviceCount()));
                 result.setText(reply);
             }
+        }
+    }
+
+    /**
+     * Give user feedback on closing of any open programming sessions when tool window is closed.
+     * @see #dispose() for actual closing of sessions
+     */
+    public void handleCloseEvent() {
+        //log.debug("handleCloseEvent() called in LncvProgPane");
+        if (allProgRunning || moduleProgRunning > 0) {
+            // adds a Don't remember again checkbox and stores setting in pm
+            // show dialog
+            if (pm != null && !pm.getSimplePreferenceState(dontWarnOnClose)) {
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(Bundle.getMessage("ReminderTitle"));
+                dialog.setLocationRelativeTo(null);
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+                JLabel question = new JLabel(Bundle.getMessage("DialogRunningWarning"), JLabel.CENTER);
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+
+                JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
+                JPanel buttons = new JPanel();
+                buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
+                buttons.add(okButton);
+                container.add(buttons);
+
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("DontRemind"));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                remember.setFont(remember.getFont().deriveFont(10f));
+                container.add(remember);
+
+                okButton.addActionListener(e -> {
+                    if ((remember.isSelected()) && (pm != null)) {
+                        pm.setSimplePreferenceState(dontWarnOnClose, remember.isSelected());
+                    }
+                    dialog.dispose();
+                });
+
+
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+
+            // dispose will take care of actually stopping any open prog session
         }
     }
 
