@@ -148,7 +148,7 @@ public class PrintListAction extends jmri.util.swing.JmriAbstractAction {
             }
 
             // and force completion of the printing
-            writer.close();
+            // writer.close(); not needed when using try / catch
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         }
