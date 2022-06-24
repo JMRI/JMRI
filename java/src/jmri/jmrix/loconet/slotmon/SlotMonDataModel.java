@@ -931,7 +931,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
-            log.error(null, ex);
+            log.error("Interuppted Sleep", ex);
         }
         // reset status to original value if not previously 'in use'
         if (status != LnConstants.LOCO_IN_USE) {
@@ -974,7 +974,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
-            log.error(null, ex);
+            log.error("Interuppted Sleep", ex);
         }
 
         // reset status to original value if not previously 'in use'
