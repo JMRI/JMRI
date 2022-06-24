@@ -71,19 +71,21 @@ abstract  class AbstractAutoTrainControl extends JPanel {
                         throttleListener);
                 activeTrainNewModeDispatched();
             } else if (newValue == ActiveTrain.AUTOMATIC) {
-                if (throttle == null && autoActiveTrain.getThrottle() != null) {
-                    log.info("[{}]:Set new throttle", autoActiveTrain.getActiveTrain().getActiveTrainName());
-                    throttle = autoActiveTrain.getThrottle();
-                    throttleListener = new java.beans.PropertyChangeListener() {
-                        @Override
-                        public void propertyChange(java.beans.PropertyChangeEvent e) {
-                            handleThrottleListen(e);
-                        }
-                    };
-                    jmri.InstanceManager.throttleManagerInstance().attachListener(throttle.getLocoAddress(), throttleListener);
-                    rosterEntry = autoActiveTrain.getRosterEntry();
-                } else {
-                    log.error("No throttle going automatic");
+                if (throttle == null) {
+                    if (autoActiveTrain.getThrottle() != null) {
+                    log.debug("[{}]:Set new throttle", autoActiveTrain.getActiveTrain().getActiveTrainName());
+                        throttle = autoActiveTrain.getThrottle();
+                        throttleListener = new java.beans.PropertyChangeListener() {
+                            @Override
+                            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                handleThrottleListen(e);
+                            }
+                        };
+                        jmri.InstanceManager.throttleManagerInstance().attachListener(throttle.getLocoAddress(), throttleListener);
+                        rosterEntry = autoActiveTrain.getRosterEntry();
+                    } else {
+                        log.error("No throttle going automatic");
+                    }
                 }
                 activeTrainNewModeAutomatic();
             } else if ((int) e.getNewValue() == ActiveTrain.TERMINATED) {
