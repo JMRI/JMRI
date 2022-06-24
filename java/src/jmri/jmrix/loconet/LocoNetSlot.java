@@ -1506,7 +1506,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcCntrl invalid for slot " + getSlot());
+            log.error("setFcCntrl invalid for slot [{}]", getSlot());
         }
         snd |= val;
     }
@@ -1522,7 +1522,7 @@ public class LocoNetSlot {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcCntrl invalid for slot " + getSlot());
+            log.error("setFcCntrl invalid for slot [{}]" , getSlot());
         }
         snd &= ~val;
     }

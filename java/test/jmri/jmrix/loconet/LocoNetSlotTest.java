@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -593,6 +594,19 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F28", t.isF28());
+    }
+
+    @Test
+    public void testIbIsF28() throws LocoNetException {
+        int ia[] = {0xD4, 0x20, 0x01, 0x05, 0x40, 0x4F};
+        LocoNetMessage lm = new LocoNetMessage(ia);
+        // you can nolonger set up a slot from anything other than a slot message
+        // as you have to know the protocol.
+        // LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
+        LocoNetSlot t = new LocoNetSlot(2);
+        t.setSlotType(SlotType.LOCO);
+        t.setSlot(lm);
+        Assert.assertTrue("is F28", t.isF28());
     }
 
     @Test
