@@ -39,6 +39,7 @@ public class TrainInfo {
     private boolean trainFromRoster = true;
     private boolean trainFromTrains = false;
     private boolean trainFromUser = false;
+    private boolean trainFromSetLater = false;
     private int priority = 5;
     private boolean autoRun = false;
     private boolean resetWhenDone = false;
@@ -181,6 +182,7 @@ public class TrainInfo {
         trainFromRoster = false;
         trainFromTrains = false;
         trainFromUser = false;
+        trainFromSetLater = false;
         switch (value) {
             case TRAINSFROMROSTER:
                 trainFromRoster = true;
@@ -189,8 +191,11 @@ public class TrainInfo {
                 trainFromTrains = true;
                 break;
             case TRAINSFROMUSER:
-            default:
                 trainFromUser = true;
+                break;
+            case TRAINSFROMSETLATER:
+            default:
+                trainFromSetLater = true;
         }
     }
 
@@ -199,8 +204,10 @@ public class TrainInfo {
             return TrainsFrom.TRAINSFROMROSTER;
         } else if (trainFromTrains) {
             return TrainsFrom.TRAINSFROMOPS;
+        } else if (trainFromUser) {
+            return TrainsFrom.TRAINSFROMUSER;
         }
-        return TrainsFrom.TRAINSFROMUSER;
+        return TrainsFrom.TRAINSFROMSETLATER;
     }
 
     public void setTrainFromRoster(boolean b) {
@@ -225,6 +232,14 @@ public class TrainInfo {
 
     public boolean getTrainFromUser() {
         return trainFromUser;
+    }
+
+    public void setTrainFromSetLater(boolean b) {
+        trainFromSetLater = b;
+    }
+
+    public boolean getTrainFromSetLater() {
+        return trainFromSetLater;
     }
 
     public void setTerminateWhenDone(boolean b) {
