@@ -42,7 +42,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     // combo boxes
     JComboBox<String> loadComboBox;
-    JComboBox<String> priorityComboBox;
+    JComboBox<String> priorityComboBox = carLoads.getPriorityComboBox();
+    JComboBox<String> hazardousComboBox = carLoads.getHazardousComboBox();
     JComboBox<String> loadTypeComboBox = carLoads.getLoadTypesComboBox();
 
     // text boxes
@@ -104,6 +105,12 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         pPriority.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPriority")));
         addItem(pPriority, priorityComboBox, 0, 0);
 
+        // row 9
+        JPanel pHazardous = new JPanel();
+        pHazardous.setLayout(new BoxLayout(pHazardous, BoxLayout.Y_AXIS));
+        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Hazardous")));
+        addItem(pHazardous, hazardousComboBox, 0, 0);
+
         // row 10
         // optional panel
         JPanel pOptionalPickup = new JPanel();
@@ -125,6 +132,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         getContentPane().add(pLoad);
         getContentPane().add(pLoadType);
         getContentPane().add(pPriority);
+        getContentPane().add(pHazardous);
         getContentPane().add(pOptionalPickup);
         getContentPane().add(pOptionalDrop);
         getContentPane().add(pControl);
@@ -232,12 +240,14 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
             // Comboboxes get deselected during the addName operation
             String loadType = carLoads.getLoadType(_type, oldLoadName);
             String loadPriority = carLoads.getPriority(_type, oldLoadName);
+            boolean isHazardous = carLoads.isHazardous(_type, oldLoadName);
             String pickupComment = carLoads.getPickupComment(_type, oldLoadName);
             String dropComment = carLoads.getDropComment(_type, oldLoadName);
             
             carLoads.addName(_type, loadName);
             carLoads.setLoadType(_type, loadName, loadType);
             carLoads.setPriority(_type, loadName, loadPriority);
+            carLoads.setHazardous(_type, loadName, isHazardous);
             carLoads.setPickupComment(_type, loadName, pickupComment);
             carLoads.setDropComment(_type, loadName, dropComment);
             replaceLoad(_type, oldLoadName, loadName);
@@ -248,6 +258,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
                     .getSelectedItem());
             carLoads.setPriority(_type, (String) loadComboBox.getSelectedItem(),
                     (String) priorityComboBox.getSelectedItem());
+            carLoads.setHazardous(_type, (String) loadComboBox.getSelectedItem(), hazardousComboBox.getSelectedItem().equals(Bundle.getMessage("ButtonYes")));
             carLoads.setPickupComment(_type, (String) loadComboBox.getSelectedItem(), pickupCommentTextField.getText());
             carLoads.setDropComment(_type, (String) loadComboBox.getSelectedItem(), dropCommentTextField.getText());
             
@@ -264,6 +275,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         updateCarQuanity();
         updateLoadType();
         updatePriority();
+        updateHazardous();
         updateCarCommentFields();
     }
 
@@ -290,7 +302,6 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     private void loadComboboxes() {
         loadComboBox = carLoads.getComboBox(_type);
         carLoads.addPropertyChangeListener(this);
-        priorityComboBox = carLoads.getPriorityComboBox();
     }
 
     boolean showQuanity = false;
@@ -334,6 +345,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
     private void updatePriority() {
         priorityComboBox.setSelectedItem(carLoads.getPriority(_type, (String) loadComboBox.getSelectedItem()));
+    }
+    
+    private void updateHazardous() {
+        hazardousComboBox.setSelectedItem(carLoads.isHazardous (_type, (String) loadComboBox.getSelectedItem()) ? Bundle.getMessage("ButtonYes") : Bundle.getMessage("ButtonNo"));
     }
 
     private void updateCarCommentFields() {

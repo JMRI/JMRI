@@ -563,7 +563,7 @@ public class ImportCars extends ImportRollingStock {
                                 car.setUtility(true);
                             }
                             if (ext[i].equals(Car.HAZARDOUS_EXTENSION)) {
-                                car.setHazardous(true);
+                                car.setCarHazardous(true);
                             }
                         }
                     }

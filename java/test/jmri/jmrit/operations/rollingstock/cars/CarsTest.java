@@ -111,7 +111,7 @@ public class CarsTest extends OperationsTestCase {
         c1.setTypeName("TESTTYPE");
         c1.setLength("TESTLENGTH");
         c1.setColor("TESTCOLOR");
-        c1.setHazardous(true);
+        c1.setCarHazardous(true);
         c1.setFred(true);
         c1.setCaboose(true);
         c1.setWeight("TESTWEIGHT");
