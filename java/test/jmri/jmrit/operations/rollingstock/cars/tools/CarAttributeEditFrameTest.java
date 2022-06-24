@@ -436,7 +436,106 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarAttributeEditFrameRoad() {
+    public void testCarAttributeEditFrameRoadReplace() {
+
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents(CarAttributeEditFrame.ROAD);
+        });
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JComboBoxOperator comboBox = new JComboBoxOperator(jfo, 0);
+        JTextFieldOperator addTextBox = new JTextFieldOperator(jfo, 0);
+
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(133, comboBox.getItemCount());
+
+        // test replace
+        addTextBox.setText("ABCDEF-TEST");
+        // push replace button
+        // need to also push the "Yes" button in the dialog window
+        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
+        JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
+        jfo.getQueueTool().waitEmpty();
+        JemmyUtil.waitFor(f); // wait for frame to become active
+        // did the replace work?
+        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", comboBox.getItemAt(0));
+
+        jfo.requestClose();
+        jfo.waitClosed();
+    }
+    
+    @Test
+    public void testCarAttributeEditFrameRoadDelete() {
+
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents(CarAttributeEditFrame.ROAD);
+        });
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JComboBoxOperator comboBox = new JComboBoxOperator(jfo, 0);
+
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(133, comboBox.getItemCount());
+
+        // test delete
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).push();
+        jfo.getQueueTool().waitEmpty();
+        Assert.assertEquals("1st road after delete", "ACL", comboBox.getItemAt(0));
+        jfo.requestClose();
+        jfo.waitClosed();
+    }
+    
+    @Test
+    public void testCarAttributeEditFrameRoadAddErrors
+    () {
+
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents(CarAttributeEditFrame.ROAD);
+        });
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JComboBoxOperator comboBox = new JComboBoxOperator(jfo, 0);
+        JTextFieldOperator addTextBox = new JTextFieldOperator(jfo, 0);
+
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(133, comboBox.getItemCount());
+        
+        // enter a road name that is too long
+        addTextBox.setText("ABCDEFGHIJKLM-TEST");
+        // should cause error dialog to appear
+        Thread t2 = JemmyUtil.createModalDialogOperatorThread(
+            MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Road") })
+            , Bundle.getMessage("ButtonOK"));
+        new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
+        
+        JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
+        jfo.getQueueTool().waitEmpty();
+        JemmyUtil.waitFor(f); // wait for frame to become active
+
+        // enter a road name that has a reserved character
+        addTextBox.setText("A.B");
+        // should cause error dialog to appear
+        Thread t3 = JemmyUtil.createModalDialogOperatorThread(
+            MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Road") })
+            , Bundle.getMessage("ButtonOK"));
+        new JButtonOperator(jfo,Bundle.getMessage("Add")).push();
+
+        JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");
+        jfo.getQueueTool().waitEmpty();
+        JemmyUtil.waitFor(f); // wait for frame to become active
+        jfo.requestClose();
+        jfo.waitClosed();
+    }
+    
+    @Test
+    public void testCarAttributeEditFrameRoadAdd() {
 
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         ThreadingUtil.runOnGUI(() -> {
@@ -457,46 +556,6 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         jfo.getQueueTool().waitEmpty();
         // new road should appear at start of list
         Assert.assertEquals("new road name", "ABC-TEST", comboBox.getItemAt(1));
-
-        // test replace
-        addTextBox.setText("ABCDEF-TEST");
-        // push replace button
-        // need to also push the "Yes" button in the dialog window
-        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
-        new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
-        JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
-        jfo.getQueueTool().waitEmpty();
-        JemmyUtil.waitFor(f); // wait for frame to become active
-        // did the replace work?
-        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", comboBox.getItemAt(1));
-
-        new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).push();
-        jfo.getQueueTool().waitEmpty();
-        Assert.assertEquals("1st road after delete", "AA", comboBox.getItemAt(0));
-
-        // enter a road name that is too long
-        addTextBox.setText("ABCDEFGHIJKLM-TEST");
-        // should cause error dialog to appear
-        Thread t2 = JemmyUtil.createModalDialogOperatorThread(
-            MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[] { Bundle.getMessage("Road") })
-            , Bundle.getMessage("ButtonOK"));
-        new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
-
-        JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
-        jfo.getQueueTool().waitEmpty();
-        JemmyUtil.waitFor(f); // wait for frame to become active
-        
-        // enter a road name that has a reserved character
-        addTextBox.setText("A.B");
-        // should cause error dialog to appear
-        Thread t3 = JemmyUtil.createModalDialogOperatorThread(
-            MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[] { Bundle.getMessage("Road") })
-            , Bundle.getMessage("ButtonOK"));
-        new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
-
-        JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");
-        jfo.getQueueTool().waitEmpty();
-        JemmyUtil.waitFor(f); // wait for frame to become active
         jfo.requestClose();
         jfo.waitClosed();
     }
