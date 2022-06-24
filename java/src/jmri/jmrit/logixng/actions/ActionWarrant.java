@@ -241,7 +241,7 @@ public class ActionWarrant extends AbstractDigitalAction
                             throw new JmriException("runManualTrain error - " + err);  // NOI18N
                         }
                     break;
-// can control use the other data tabs?
+
                 case ControlAutoTrain:
                     int controlAction = 0;
                     switch (_controlAutoTrain) {
@@ -250,6 +250,18 @@ public class ActionWarrant extends AbstractDigitalAction
                             break;
                         case Resume:
                             controlAction = Warrant.RESUME;
+                            break;
+                        case Stop:
+                            controlAction = Warrant.STOP;
+                            break;
+                        case EStop:
+                            controlAction = Warrant.ESTOP;
+                            break;
+                        case SpeedUp:
+                            controlAction = Warrant.SPEED_UP;
+                            break;
+                        case MoveToNext:
+                            controlAction = Warrant.RETRY_FWD;
                             break;
                         case Abort:
                             controlAction = Warrant.ABORT;
@@ -262,8 +274,10 @@ public class ActionWarrant extends AbstractDigitalAction
                     }
                     break;
                 case SetTrainId:
-                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
-                        throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
+                    if (warrant.getRunMode() == Warrant.MODE_NONE) {
+                        if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
+                            throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
+                        }
                     }
                     break;
                 case SetTrainName:
@@ -381,7 +395,11 @@ public class ActionWarrant extends AbstractDigitalAction
     public enum ControlAutoTrain {
         Halt(Bundle.getMessage("ActionWarrant_Halt_AutoTrain")),
         Resume(Bundle.getMessage("ActionWarrant_Resume_AutoTrain")),
-        Abort(Bundle.getMessage("ActionWarrant_Abort_AutoTrain"));
+        Abort(Bundle.getMessage("ActionWarrant_Abort_AutoTrain")),
+        Stop(Bundle.getMessage("ActionWarrant_Stop_AutoTrain")),
+        EStop(Bundle.getMessage("ActionWarrant_EStop_AutoTrain")),
+        MoveToNext(Bundle.getMessage("ActionWarrant_MoveToNext_AutoTrain")),
+        SpeedUp(Bundle.getMessage("ActionWarrant_SpeedUp_AutoTrain"));
 
         private final String _text;
 

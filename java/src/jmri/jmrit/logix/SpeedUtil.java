@@ -950,13 +950,12 @@ public class SpeedUtil {
         boolean isForward = getIsForward();
         float throttle = _throttle.getSpeedSetting();   // may not be a multiple of a speed step
         float length = blkInfo.getPathLen();
+        long elapsedTime = exitTime - _prevChangeTime;
         if (_numchanges == 0) {
-            long elapsedTime = exitTime - _prevChangeTime;
             _distanceTravelled = getTrackSpeed(throttle) * elapsedTime;
             _settingsTravelled = throttle * elapsedTime;
             _timeAtSpeed = elapsedTime;            
         } else {
-            long elapsedTime = exitTime - _prevChangeTime;
             float dist = getDistanceOfSpeedChange(_intStartSpeed, _intEndSpeed, elapsedTime);
             if (_intStartSpeed > 0 || _intEndSpeed > 0) {
                 _timeAtSpeed += elapsedTime;
@@ -995,7 +994,7 @@ public class SpeedUtil {
                         blkInfo.getBlockDisplayName(), aveSettings,  measuredSpeed, MAX_TGV_SPEED*aveSettings/_signalSpeedMap.getLayoutScale(),
                         _distanceTravelled, length);
             }
-        } else /* if (_numchanges < 1) */ {
+        } else if (_numchanges < 3) {
             setSpeedProfile(_sessionProfile, aveSettings, measuredSpeed, isForward);
         }
         if (log.isDebugEnabled()) {
