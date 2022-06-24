@@ -68,6 +68,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         loadComboBox.setSelectedItem(selectedItem);
         updateLoadType();
         updatePriority();
+        updateHazardous();
 
         // general GUI config
         quanity.setVisible(showQuanity);
