@@ -592,13 +592,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case ROAD_COLUMN:
                 return car.getRoadName();
             case LOAD_COLUMN:
-                if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
-                    return car.getLoadName() + " " + Bundle.getMessage("(P)");
-                } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
-                    return car.getLoadName() + " " + Bundle.getMessage("(M)");
-                } else {
-                    return car.getLoadName();
-                }
+                return getLoadNameString(car);
             case COLOR_COLUMN:
                 return car.getColor();
             case LENGTH_COLUMN:
@@ -684,6 +678,19 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             default:
                 return "unknown " + col; // NOI18N
         }
+    }
+    
+    private String getLoadNameString(Car car) {
+        StringBuffer sb = new StringBuffer(car.getLoadName());
+        if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
+            sb.append(" " + Bundle.getMessage("(P)"));
+        } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+            sb.append(" " + Bundle.getMessage("(M)"));
+        }
+        if (car.isCarLoadHazardous()) {
+            sb.append(" " + Bundle.getMessage("(H)"));
+        }
+        return sb.toString();
     }
 
     CarEditFrame cef = null;
