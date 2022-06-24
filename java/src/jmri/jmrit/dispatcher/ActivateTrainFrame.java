@@ -1037,6 +1037,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                     return;
                 }
                 tSource = ActiveTrain.USER;
+                break;
             case TRAINSFROMSETLATER:
             default:
                 trainName = "";
@@ -1476,6 +1477,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 }
                 info.setTrainName(trainNameField.getText());
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
+                break;
             case TRAINSFROMSETLATER:
             default:
                 info.setTrainName("");
