@@ -483,7 +483,9 @@ public class DefaultConditionalExecute {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
-            if(!w.getSpeedUtil().setAddress(actionStr)) {
+            if (w.getRunMode() != Warrant.MODE_NONE) {
+                errorList.add("Cannot set when Warrant is running - " + action.getActionString());  // NOI18N
+            } else if(!w.getSpeedUtil().setAddress(actionStr)) {
                 errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
             }
             increaseCounter(actionCount);
@@ -496,6 +498,19 @@ public class DefaultConditionalExecute {
         } else {
             w.setTrainName(actionStr);
             increaseCounter(actionCount);
+        }
+    }
+
+    void getTrainLocation(@Nonnull ConditionalAction action, Warrant w, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (w == null) {
+            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+            if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+                mTo.setValue(w.getCurrentBlockName());
+                increaseCounter(actionCount);
+            }
         }
     }
 
@@ -517,12 +532,16 @@ public class DefaultConditionalExecute {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
-            String err = w.setRoute(false, null);
-            if (err == null) {
-                err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
-            }
-            if (err != null) {
-                errorList.add("runManualTrain error - " + err);  // NOI18N
+            if (w.getRunMode() != Warrant.MODE_NONE) {
+                errorList.add("Cannot set when Warrant is running - " + action.getActionString());  // NOI18N
+            } else {
+                String err = w.setRoute(false, null);
+                if (err == null) {
+                    err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
+                }
+                if (err != null) {
+                    errorList.add("runManualTrain error - " + err);  // NOI18N
+                }
             }
             increaseCounter(actionCount);
         }
@@ -634,6 +653,43 @@ public class DefaultConditionalExecute {
         } else {
             b.setOutOfService(false);
             increaseCounter(actionCount);
+        }
+    }
+
+    void getBlockTrainName(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (b == null) {
+            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+            if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+                String name = (String)b.getValue();
+                if (name == null) {
+                    name = " ";
+                }
+                mTo.setValue(name);
+                increaseCounter(actionCount);
+            }
+        }
+    }
+
+    void getBlockWarrant(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (b == null) {
+            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+            if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+                Warrant w = b.getWarrant();
+                String name;
+                if (w != null) {
+                    name = w.getDisplayName();
+                } else {
+                    name = " ";
+                }
+                mTo.setValue(name);
+                increaseCounter(actionCount);
+            }
         }
     }
 
