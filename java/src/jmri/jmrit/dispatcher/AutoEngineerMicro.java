@@ -9,8 +9,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 
@@ -376,9 +377,9 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
         btnThrottle.reSizeIcon(buttonSize);
         btnThrottle.setBorder(BorderFactory.createEtchedBorder());
         activities.add(btnThrottle);
-        btnThrottle.addMouseListener(new MouseAdapter() {
+        btnThrottle.addMouseListener(JmriMouseListener.adapt(new JmriMouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(JmriMouseEvent e) {
                 if (e.getY() > btnThrottle.getSize().getHeight() / 2) {
                     throttleChange(-1);
                 } else {
@@ -386,7 +387,19 @@ public class AutoEngineerMicro extends AbstractAutoTrainControl {
                 }
                 log.info("Clicked");
             }
-        });
+            @Override
+            public void mouseEntered(JmriMouseEvent arg0) {
+            }
+            @Override
+            public void mousePressed(JmriMouseEvent e) {
+            }
+            @Override
+            public void mouseReleased(JmriMouseEvent e) {
+            }
+            @Override
+            public void mouseExited(JmriMouseEvent e) {
+            }
+        }));
 
         btnManualAuto =
                 new AutoEngineerJButton(iconEngineerAuto);
