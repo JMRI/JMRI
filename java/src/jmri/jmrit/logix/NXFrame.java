@@ -307,7 +307,7 @@ public class NXFrame extends WarrantRoute {
                 if (name == null || name.charAt(0) == '$') {
                     name = getTrainName();
                     if (name == null || name.isEmpty()) {
-                        name = Bundle.getMessage("unknownTrain");
+                        name = Bundle.getMessage("Unknown");
                     }
                 }
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("maxSpeedLimit", 

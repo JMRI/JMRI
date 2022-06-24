@@ -207,8 +207,8 @@ public class DefaultConditionalActionTest {
         ix1.setType("Set Signal Mast Aspect");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_ASPECT);
         
-        ix1.setType("Set Throttle Factor");
-        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.THROTTLE_FACTOR);
+        ix1.setType("Put Location of Warrant");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_TRAIN_LOCATION);
         
         ix1.setType("Set Signal Mast Held");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.SET_SIGNALMAST_HELD);
@@ -251,6 +251,12 @@ public class DefaultConditionalActionTest {
         
         ix1.setType("This is a bad string");
         jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToActionType(This is a bad string)");
+        
+        ix1.setType("Put Warrant occupying Block");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_BLOCK_WARRANT);
+        
+        ix1.setType("Put Train Name occupying Block");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == Conditional.Action.GET_BLOCK_TRAIN_NAME);
     }
     
     @Test
@@ -456,13 +462,13 @@ public class DefaultConditionalActionTest {
         jmri.util.JUnitAppender.assertWarnMessage("Unhandled Audio operation command: 0");
         
         Assert.assertTrue("getActionDataString() returns correct value",
-                "Halt".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.HALT)));
+                "Slow to Halt".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.HALT)));
         Assert.assertTrue("getActionDataString() returns correct value",
                 "Resume".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.RESUME)));
         Assert.assertTrue("getActionDataString() returns correct value",
-                "Abort".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.ABORT)));
-        Assert.assertTrue("getActionDataString() returns correct value",
-                "Abort".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, -1)));
+                "Move into next block".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, Warrant.RETRY_FWD)));
+//        Assert.assertTrue("getActionDataString() returns correct value",
+//                "Abort".equals(DefaultConditionalAction.getActionDataString(Conditional.Action.CONTROL_TRAIN, -1)));
         
         // Test invalid type
 //        Assert.assertTrue("getActionDataString() returns correct value",
@@ -803,23 +809,23 @@ public class DefaultConditionalActionTest {
         ix1.setType(Conditional.Action.SET_ROUTE_TURNOUTS);
         ix1.setActionData(Route.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Set Route Turnouts on Warrant, \"3\".".equals(ix1.description(false)));
+                "When Triggered True, Set Route Turnouts of Warrant, \"3\".".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Set Route Turnouts on Warrant, \"3\".".equals(ix1.description(true)));
+                "On Change To True, Set Route Turnouts of Warrant, \"3\".".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.AUTO_RUN_WARRANT);
         ix1.setActionData(Warrant.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Auto Run Train on Warrant, \"3\".".equals(ix1.description(false)));
+                "When Triggered True, Auto Run Train of Warrant, \"3\".".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Auto Run Train on Warrant, \"3\".".equals(ix1.description(true)));
+                "On Change To True, Auto Run Train of Warrant, \"3\".".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.MANUAL_RUN_WARRANT);
         ix1.setActionData(Warrant.INCONSISTENT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Manually Run Train on Warrant, \"3\".".equals(ix1.description(false)));
+                "When Triggered True, Manually Run Train of Warrant, \"3\".".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Manually Run Train on Warrant, \"3\".".equals(ix1.description(true)));
+                "On Change To True, Manually Run Train of Warrant, \"3\".".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.SET_SENSOR);
         ix1.setActionData(Sensor.INACTIVE);
@@ -899,11 +905,11 @@ public class DefaultConditionalActionTest {
                 "On Change To True, Set Signal Mast Aspect, \"3\" to 5".equals(ix1.description(true)));
         
         ix1.setType(Conditional.Action.CONTROL_TRAIN);
-        ix1.setActionData(Warrant.INCONSISTENT);
+        ix1.setActionData(Warrant.ABORT);
         Assert.assertTrue("description() returns correct value",
-                "When Triggered True, Control Auto Train on Warrant \"3\" to Abort".equals(ix1.description(false)));
+                "When Triggered True, Control Auto Train of Warrant \"3\" to Abort".equals(ix1.description(false)));
         Assert.assertTrue("description() returns correct value",
-                "On Change To True, Control Auto Train on Warrant \"3\" to Abort".equals(ix1.description(true)));
+                "On Change To True, Control Auto Train of Warrant \"3\" to Abort".equals(ix1.description(true)));
         
 //        ix1.setType(-1);
 //        ix1.setActionData(NamedBean.INCONSISTENT);

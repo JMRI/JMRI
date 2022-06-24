@@ -1319,7 +1319,7 @@ public class ImportConditional {
 
             default:
                 throw new InvalidConditionalVariableException(
-                        Bundle.getMessage("ActionBadwarrantType", ca.getType().toString()));
+                        Bundle.getMessage("ActionBadWarrantType", ca.getType().toString()));
         }
 
         return action;

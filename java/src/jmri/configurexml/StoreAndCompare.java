@@ -71,7 +71,7 @@ public class StoreAndCompare extends AbstractAction {
         }
 
         // Get file 2 :: This is the default tmp directory with a random xml file name.
-        var tempDir = System.getProperty("java.io.tmpdir");
+        var tempDir = System.getProperty("java.io.tmpdir") + File.separator;
         var fileName = UUID.randomUUID().toString();
         File file2 = new File(tempDir + fileName + ".xml");
 
