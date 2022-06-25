@@ -70,7 +70,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarAttributeEditFrameKernel() {
+    public void testCarAttributeEditFrameKernelAdd() {
 
         // remove all kernels
         KernelManager km = InstanceManager.getDefault(KernelManager.class);
@@ -79,12 +79,11 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
             km.deleteKernel(kList.get(i));
         }
         // create TwoCars kernel
-        InstanceManager.getDefault(KernelManager.class).newKernel("TwoCars");
+        km.newKernel("TwoCars");
 
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         ThreadingUtil.runOnGUI(() -> {
             f.initComponents(CarAttributeEditFrame.KERNEL);
-            f.toggleShowQuanity();
         });
         JFrameOperator jfo = new JFrameOperator(f.getTitle());  // NOI18N
         Assert.assertNotNull(jfo);
@@ -101,8 +100,35 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // new kernel should appear at start of list after blank
         Assert.assertEquals("new kernel", "TestKernel", comboBox.getItemAt(1));
 
+        jfo.requestClose();
+        jfo.waitClosed();
+    }
+    
+    @Test
+    public void testCarAttributeEditFrameKernelReplace() {
+
+        // remove all kernels
+        KernelManager km = InstanceManager.getDefault(KernelManager.class);
+        List<String> kList = km.getNameList();
+        for (int i = 0; i < kList.size(); i++) {
+            km.deleteKernel(kList.get(i));
+        }
+        // create TwoCars kernel
+        km.newKernel("TwoCars");
+
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents(CarAttributeEditFrame.KERNEL);
+            f.toggleShowQuanity();
+        });
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JComboBoxOperator comboBox = new JComboBoxOperator(jfo, 0);
+        JTextFieldOperator addTextBox = new JTextFieldOperator(jfo, 0);
+
         // test replace
-        comboBox.setSelectedItem("TestKernel");
+        comboBox.setSelectedItem("TwoCars");
         addTextBox.setText("TestKernel2");
         // push replace button
         // need to also push the "Yes" button in the dialog window
@@ -112,19 +138,47 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
         JemmyUtil.waitFor(f); // wait for frame to become active
         // did the replace work?
-        Assert.assertEquals("replaced TestKernel with TestKernel2", "TestKernel2", comboBox.getItemAt(1));
-
-        // now try and delete
-        comboBox.setSelectedItem("TestKernel2");
-        new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).push();
-        jfo.getQueueTool().waitEmpty();
-        // blank is the first default kernel
-        Assert.assertEquals("space 2", "", comboBox.getItemAt(0));
-        Assert.assertEquals("previous kernel 2", "TwoCars", comboBox.getItemAt(1));
+        Assert.assertEquals("replaced TwoCars with TestKernel2", "TestKernel2", comboBox.getItemAt(1));
 
         jfo.requestClose();
         jfo.waitClosed();
     }
+    
+    @Test
+    public void testCarAttributeEditFrameKernelDelete() {
+
+        // remove all kernels
+        KernelManager km = InstanceManager.getDefault(KernelManager.class);
+        List<String> kList = km.getNameList();
+        for (int i = 0; i < kList.size(); i++) {
+            km.deleteKernel(kList.get(i));
+        }
+        // create kernels
+        km.newKernel("TwoCars");
+        km.newKernel("ThreeCars");
+
+        CarAttributeEditFrame f = new CarAttributeEditFrame();
+        ThreadingUtil.runOnGUI(() -> {
+            f.initComponents(CarAttributeEditFrame.KERNEL);
+            f.toggleShowQuanity();
+        });
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());  // NOI18N
+        Assert.assertNotNull(jfo);
+
+        JComboBoxOperator comboBox = new JComboBoxOperator(jfo, 0);
+
+        // test delete
+        comboBox.setSelectedItem("TwoCars");
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonDelete")).push();
+        jfo.getQueueTool().waitEmpty();
+        // blank is the first default kernel
+        Assert.assertEquals("space 2", "", comboBox.getItemAt(0));
+        Assert.assertEquals("Should be ThreeCars", "ThreeCars", comboBox.getItemAt(1));
+
+        jfo.requestClose();
+        jfo.waitClosed();
+    }
+
 
     @Test
     public void testCarAttributeEditFrameLength() {
