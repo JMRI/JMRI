@@ -187,8 +187,8 @@ This is the next release in the 5.2 cycle. It's intended to be created from the 
                 move new warnings to old (see below)
                 remove old-version change notes
 
-        git add jmri5.1.1.shtml
-        git commit -m"start new 5.1.1 next release note" jmri5.1.1.shtml
+        git add jmri5.1.2.shtml
+        git commit -m"start new 5.1.2 next release note" jmri5.1.2.shtml
         git push github
         cd ../../JMRI
 ```
@@ -233,7 +233,7 @@ This is the next release in the 5.2 cycle. It's intended to be created from the 
 - Commit release note, push and pull back
 ```
         cd ../website/releasenotes
-        git commit -m"updated 5.1.1 release notes" jmri4.*
+        git commit -m"updated 5.1.1 release notes" jmri5.*
         git push github
         git pull
         cd ../../JMRI
@@ -476,15 +476,15 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
-[Release notes](https://jmri.org/releasenotes/jmri4.99.9.shtml)
+[Release notes](https://jmri.org/releasenotes/jmri5.1.1.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.99.9+R20a7adae24.dmg](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+R20a7adae24.dmg) | ab674eb5b35a0492fb2deed0a18ee36a1049a63575a922352ab20a8e431c6db4
-[JMRI.4.99.9+R20a7adae24.exe](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+R20a7adae24.exe) | 42dc28f12e379e790e750933841e3034f14a6cf2adbbebd10a43e21e5c2cddf1
-[JMRI.4.99.9+R20a7adae24.tgz](https://github.com/JMRI/JMRI/releases/download/v4.99.9/JMRI.4.99.9+R20a7adae24.tgz) | d07c41158e92a9d6d2dc8db523b6c3e4918b92c2c852b1b8bbfc2639cf194627
+[JMRI.5.1.1+Redc443cff0.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.1/JMRI.5.1.1+Redc443cff0.dmg) | 26fad20009292be1a1b3a875693589543257b568900c72becf2a87ea7452a4af
+[JMRI.5.1.1+Redc443cff0.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.1/JMRI.5.1.1+Redc443cff0.exe) | 820024d28f03eea95dd4fd969c51546a30118df8705dd161dd50382f4a36048c
+[JMRI.5.1.1+Redc443cff0.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.1/JMRI.5.1.1+Redc443cff0.tgz) | 03802d775868f754af71b975b5657cc76354865707e50952f458e76827c65754
 
 ```
 
@@ -584,7 +584,7 @@ This is the next release in the 5.2 cycle. It's intended to be created from the 
 
 ## Announcement and Post-release Steps
 
-- Mail announcement to [jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.1.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.1.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20early%20Summer%202022.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.9.6%20or%20earlier,%20we%20strongly%20recommend%20that%20you%20first%20update%20to%20JMRI%204.12%20and%20make%20sure%20that's%20running%20OK%20before%20updating%20to%20this%20test%20release.%20There%20have%20been%20a%20number%20of%20changes%20in%20serial%20port%20support,%20panel%20file%20format%20and%20configuration%20options%20since%20those%20earlier%20releases,%20and%20moving%20to%20the%20stable%20JMRI%204.12%20release%20is%20a%20good%20way%20to%20work%20through%20any%20possible%20problems.%0A<https://www.jmri.org/releasenotes/jmri4.12.shtml>%0A%0AIf%20you%20use%20JMRI%20on%20Linux%20or%20Mac%20and%20are%20updating%20from%20JMRI%204.7.3%20or%20earlier,%20there's%20a%20necessary%20migration%20step.%20(Not%20needed%20on%20Windows)%20Please%20see%20the%20JMRI%204.12%20release%20note%20for%20details:%20<https://www.jmri.org/releasenotes/jmri4.12.shtml#migration>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.1.1%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.1.1.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.1.1.shtml>%0A)
+- Mail announcement to [jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.1.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.1.1%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20December%202022.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.9.6%20or%20earlier,%20we%20strongly%20recommend%20that%20you%20first%20update%20to%20JMRI%204.12%20and%20make%20sure%20that's%20running%20OK%20before%20updating%20to%20this%20test%20release.%20There%20have%20been%20a%20number%20of%20changes%20in%20serial%20port%20support,%20panel%20file%20format%20and%20configuration%20options%20since%20those%20earlier%20releases,%20and%20moving%20to%20the%20stable%20JMRI%204.12%20release%20is%20a%20good%20way%20to%20work%20through%20any%20possible%20problems.%0A<https://www.jmri.org/releasenotes/jmri4.12.shtml>%0A%0AIf%20you%20use%20JMRI%20on%20Linux%20or%20Mac%20and%20are%20updating%20from%20JMRI%204.7.3%20or%20earlier,%20there's%20a%20necessary%20migration%20step.%20(Not%20needed%20on%20Windows)%20Please%20see%20the%20JMRI%204.12%20release%20note%20for%20details:%20<https://www.jmri.org/releasenotes/jmri4.12.shtml#migration>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.1.1%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.1.1.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.1.1.shtml>%0A)
 
 
 Subject:
