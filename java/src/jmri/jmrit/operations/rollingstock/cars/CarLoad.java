@@ -3,7 +3,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 import jmri.InstanceManager;
 
 /**
- * Represents a car load, includes pickup and drop comments.
+ * Represents a car load, load's priority, and if
+ * the load is hazardous. Also includes pickup and drop comments.
  *
  * @author Daniel Boudreau (C) 2010
  *
@@ -26,6 +27,7 @@ public class CarLoad {
     String _pickupComment = NONE;
     String _dropComment = NONE;
     String _loadType = LOAD_TYPE_LOAD;
+    boolean _hazardous = false;
 
     public CarLoad(String name) {
         setName(name);
@@ -48,6 +50,14 @@ public class CarLoad {
 
     public void setPriority(String priority) {
         _priority = priority;
+    }
+    
+    public boolean isHazardous() {
+        return _hazardous;
+    }
+    
+    public void setHazardous(boolean isHazardous) {
+        _hazardous = isHazardous;
     }
 
     public String getPickupComment() {
