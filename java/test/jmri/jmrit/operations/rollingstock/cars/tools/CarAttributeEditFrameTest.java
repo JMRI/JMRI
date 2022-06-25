@@ -56,6 +56,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         // need to also push the "Yes" button in the dialog window
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
+        jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         // did the replace work?
         Assert.assertEquals("replaced Pink with Pinker", "Pinker", comboBox.getItemAt(6));
@@ -66,7 +67,6 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         jfo.requestClose();
         jfo.waitClosed();
-
     }
 
     @Test
@@ -136,6 +136,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");  // NOI18N
+        jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         // did the replace work?
         Assert.assertEquals("replaced TwoCars with TestKernel2", "TestKernel2", comboBox.getItemAt(1));
@@ -209,6 +210,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
+        jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         // did the replace work?
         Assert.assertEquals("replaced 12 with 13", "13", comboBox.getItemAt(0));
@@ -218,7 +220,6 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         jfo.requestClose();
         jfo.waitClosed();
-
     }
 
     @Test
@@ -406,6 +407,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         
         JUnitUtil.waitFor(()->{return !(t.isAlive());}, "dialog finished");
         JUnitUtil.waitFor(()->{return !(t2.isAlive());}, "dialog2 finished");
+        jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         
         // new type should appear at start of list
@@ -420,6 +422,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo,Bundle.getMessage("Replace")).push();
         
         JUnitUtil.waitFor(()->{return !(t3.isAlive());}, "dialog3 finished");
+        jfo.getQueueTool().waitEmpty();
         JemmyUtil.waitFor(f); // wait for frame to become active
         // did the replace work?
         Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", comboBox.getItemAt(0));
