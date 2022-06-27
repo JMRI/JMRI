@@ -105,16 +105,28 @@ public class Car extends RollingStock {
         return car;
     }
 
-    public void setHazardous(boolean hazardous) {
+    public void setCarHazardous(boolean hazardous) {
         boolean old = _hazardous;
         _hazardous = hazardous;
         if (!old == hazardous) {
             setDirtyAndFirePropertyChange("car hazardous", old ? "true" : "false", hazardous ? "true" : "false"); // NOI18N
         }
     }
-
-    public boolean isHazardous() {
+    
+    public boolean isCarHazardous() {
         return _hazardous;
+    }
+    
+    public boolean isCarLoadHazardous() {
+        return carLoads.isHazardous(getTypeName(), getLoadName());
+    }
+
+    /**
+     * Used to determine if the car is hazardous or the car's load is hazardous.
+     * @return true if the car or car's load is hazardous.
+     */
+    public boolean isHazardous() {
+        return isCarHazardous() || isCarLoadHazardous();
     }
 
     public void setPassenger(boolean passenger) {
@@ -914,7 +926,7 @@ public class Car extends RollingStock {
         if (isUtility()) {
             buf.append(EXTENSION_REGEX + UTILITY_EXTENSION);
         }
-        if (isHazardous()) {
+        if (isCarHazardous()) {
             buf.append(EXTENSION_REGEX + HAZARDOUS_EXTENSION);
         }
         return buf.toString();
@@ -1066,8 +1078,8 @@ public class Car extends RollingStock {
         if (isPassenger()) {
             e.setAttribute(Xml.PASSENGER, isPassenger() ? Xml.TRUE : Xml.FALSE);
         }
-        if (isHazardous()) {
-            e.setAttribute(Xml.HAZARDOUS, isHazardous() ? Xml.TRUE : Xml.FALSE);
+        if (isCarHazardous()) {
+            e.setAttribute(Xml.HAZARDOUS, isCarHazardous() ? Xml.TRUE : Xml.FALSE);
         }
         if (isCaboose()) {
             e.setAttribute(Xml.CABOOSE, isCaboose() ? Xml.TRUE : Xml.FALSE);

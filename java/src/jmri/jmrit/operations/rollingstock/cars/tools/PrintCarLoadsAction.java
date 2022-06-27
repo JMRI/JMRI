@@ -69,7 +69,7 @@ public class PrintCarLoadsAction extends AbstractAction {
                 String[] carTypes = InstanceManager.getDefault(CarTypes.class).getNames();
                 Hashtable<String, List<CarLoad>> list = InstanceManager.getDefault(CarLoads.class).getList();
 
-                String s = Bundle.getMessage("Type") +
+                String header = Bundle.getMessage("Type") +
                         TAB +
                         tabString(Bundle.getMessage("Load"),
                                 InstanceManager.getDefault(CarLoads.class).getMaxNameLength() + 1) +
@@ -77,11 +77,12 @@ public class PrintCarLoadsAction extends AbstractAction {
                         "  " +
                         Bundle.getMessage("Priority") +
                         "  " +
+                        tabString(Bundle.getMessage("Hazardous"), 4) +
                         Bundle.getMessage("LoadPickupMessage") +
                         "   " +
                         Bundle.getMessage("LoadDropMessage") +
                         NEW_LINE;
-                writer.write(s);
+                writer.write(header);
                 for (String carType : carTypes) {
                     List<CarLoad> carLoads = list.get(carType);
                     if (carLoads == null) {
@@ -96,7 +97,8 @@ public class PrintCarLoadsAction extends AbstractAction {
                                         .equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName())) &&
                                 carLoad.getPickupComment().equals(CarLoad.NONE) &&
                                 carLoad.getDropComment().equals(CarLoad.NONE) &&
-                                carLoad.getPriority().equals(CarLoad.PRIORITY_LOW)) {
+                                carLoad.getPriority().equals(CarLoad.PRIORITY_LOW) &&
+                                !carLoad.isHazardous()) {
                             continue;
                         }
                         // print the car type once
@@ -111,15 +113,16 @@ public class PrintCarLoadsAction extends AbstractAction {
                                                                          // or
                                                                          // empty
                         buf.append(tabString(carLoad.getPriority(), 5)); // low
-                                                                         // or
+                                                                         // med
                                                                          // high
+                        buf.append(tabString(carLoad.isHazardous()? Bundle.getMessage("ButtonYes") : Bundle.getMessage("ButtonNo"), 4));
                         buf.append(tabString(carLoad.getPickupComment(), 27));
                         buf.append(tabString(carLoad.getDropComment(), 27));
                         writer.write(buf.toString() + NEW_LINE);
                     }
                 }
                 // and force completion of the printing
-                writer.close();
+//                writer.close(); not needed when using try / catch
             } catch (HardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print cancelled");
             } catch (IOException ex) {

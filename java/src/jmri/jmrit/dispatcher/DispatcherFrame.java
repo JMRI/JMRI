@@ -333,7 +333,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected enum TrainsFrom {
         TRAINSFROMROSTER,
         TRAINSFROMOPS,
-        TRAINSFROMUSER;
+        TRAINSFROMUSER,
+        TRAINSFROMSETLATER;
     }
 
     // Dispatcher options (saved to disk if user requests, and restored if present)

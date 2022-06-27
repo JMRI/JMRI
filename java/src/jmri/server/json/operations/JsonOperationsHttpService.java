@@ -505,7 +505,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public ObjectNode postCar(@Nonnull Car car, JsonNode data, Locale locale, int id) throws JsonException {
         ObjectNode result = postRollingStock(car, data, locale, id);
         car.setCaboose(data.path(CABOOSE).asBoolean(car.isCaboose()));
-        car.setHazardous(data.path(HAZARDOUS).asBoolean(car.isHazardous()));
+        car.setCarHazardous(data.path(HAZARDOUS).asBoolean(car.isHazardous()));
         car.setPassenger(data.path(PASSENGER).asBoolean(car.isPassenger()));
         car.setFred(data.path(FRED).asBoolean(car.hasFred()));
         car.setUtility(data.path(UTILITY).asBoolean(car.isUtility()));

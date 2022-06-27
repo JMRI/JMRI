@@ -362,7 +362,11 @@ public class HardcopyWriter extends Writer {
     public void close() {
         synchronized (this.lock) {
             if (isPreview) {
-                pageImages.addElement(previewImage);
+                // new JMRI code using try / catch declaration can call this close twice
+                // writer.close() is no longer needed. Work around next line.
+                if (!pageImages.contains(previewImage)) {
+                    pageImages.addElement(previewImage);
+                }
                 // set up first page for display in preview frame
                 // to get the image displayed, put it in an icon and the icon in a label
                 pagenum = 1;
