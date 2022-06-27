@@ -2073,13 +2073,18 @@
       
       <h3 id="HazardousComment">Hazardous Comment</h3>
 
-      <p>The program will add the "Hazardous Comment" to the Manifests and switch lists when a car
-      has the <a href="#CabooseFredHazardous">Hazardous</a> checkbox selected in the "Car Edit"
-      window and the "Hazardous" message format is selected in the <a href="#PrintOptions">Manifest
-      Print Options</a>. You can change the comment if desired, and press "Save" to keep the
-      change.</p>
+   <p>
+    The program will add the "Hazardous Comment" to the Manifests and
+    switch lists when a car has the <a href="#CabooseFredHazardous">Hazardous</a>
+    checkbox selected in the "Car Edit" window and the "Hazardous"
+    message format is selected in the <a href="#PrintOptions">Manifest
+     Print Options</a>. The program will also add the "Hazardous Comment" if
+    the car's <a href="#EditCarLoads">load</a> has been classified as
+    hazardous. You can change the comment if desired, and press "Save"
+    to keep the change.
+   </p>
 
-      <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
+   <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools". The first "More Print Options" allows you to adjust the length of the tab
       character when using the "Tabular" feature. The next three options "Edit Manifest Header
@@ -3524,26 +3529,35 @@
       cars with coal, and HopCoal-E for the empties, the program can use this information to assign
       and deliver cars to their appropriate trains and locations respectively.</p>
 
-      <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility, and Hazardous
-      Checkboxes</h4>
-   If the car is used in passenger service select the passenger checkbox. The program will place
-   passenger cars towards the rear of a mixed service (combination of passenger and freight cars)
-   train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
-   blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device), or
-   is hazardous, select the proper checkbox. The program uses the caboose and FRED functions to
-   place the car at the end of a train when the train requires a caboose or car with FRED. The
-   hazardous checkbox will cause the program to add a
-   <a href="#HazardousComment">note</a> to the switch list that the car is transporting hazardous
-   materials. Your railroad's policy regarding hazardous materials can than be applied to this car!
-   <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
-    appear. The text box allows you to enter a number between -100 and 100 and this gives you
-    control where in the train's Manifest a car will be placed. Lower numbers will place the car at
-    the front of the train, and higher numbers towards the rear. We recommend that you start off
-    using numbers cleanly divisible by 10. For example, you might what to place an observation car
-    at the end of the train, a value of "90" would be appropriate. If you wanted a baggage car to be
-    the first car in the passenger train, a value of "10" would be a good value, cars in the middle
-    of the train could use "50". Later you can fine tune your passenger trains by using the other
-    numbers that are available.</p>
+   <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility,
+    and Hazardous Checkboxes</h4>
+   If the car is used in passenger service select the passenger
+   checkbox. The program will place passenger cars towards the rear of a
+   mixed service (combination of passenger and freight cars) train when
+   the "Car Blocking Order" numbers are positive, and at the front of
+   the train if the blocking numbers are negative. If the car is a
+   caboose, has a FRED (Flashing Rear End Device), or is hazardous
+   independent of the car's load, select the proper checkbox. The
+   program uses the caboose and FRED functions to place the car at the
+   end of a train when the train requires a caboose or car with FRED.
+   The hazardous checkbox will cause the program to add a
+   <a href="#HazardousComment">Hazardous Comment</a> to the switch list that the car
+   is transporting hazardous materials. You can also classify a car's
+   <a href="#EditCarLoads">load</a> as hazardous. Your railroad's policy
+   regarding hazardous materials can than be applied to this car!
+
+   <p>When the passenger checkbox is selected, a new field called
+    "Car Blocking Order" will appear. The text box allows you to enter a
+    number between -100 and 100 and this gives you control where in the
+    train's Manifest a car will be placed. Lower numbers will place the
+    car at the front of the train, and higher numbers towards the rear.
+    We recommend that you start off using numbers cleanly divisible by
+    10. For example, you might what to place an observation car at the
+    end of the train, a value of "90" would be appropriate. If you
+    wanted a baggage car to be the first car in the passenger train, a
+    value of "10" would be a good value, cars in the middle of the train
+    could use "50". Later you can fine tune your passenger trains by
+    using the other numbers that are available.</p>
 
    <p>When the utility checkbox is selected, it instructions the program when printing Manifests
       and switch lists to not show the individual car's road and number, but rather the quantity of
@@ -3671,38 +3685,45 @@
 
    <p>In addition to the Add, Delete, and Replace buttons and fields described above in the
       <a href="#EditCarAttributes">Car Edit Attributes</a> section, the edit car loads window
-      allows you to set the load's type, priority, pick up and set out messages.</p>
+      allows you to set the load's type, priority, is hazardous, pick up and set out messages.</p>
 
       <h4 id="LoadType">Load Type</h4>
       A load type of "Load" means the program will consider the car as being loaded and the car's
-      maximum weight is used when calculating the train's total weight. A load type of "Empty"
-      tells the program that the car is empty and to only use 1/3 of the car's maximum weight when
-      calculating the train's total weight. If you use the <a href="#ManifestComments">Loads and
-      Empties</a> option when printing your Manifest, you will want to use the correct load type so
-      that the program prints out the correct number of loads and empties in the train.
-      
+      maximum weight is used when calculating the train's total weight. A load type of "Empty" tells
+      the program that the car is empty and to only use 1/3 of the car's maximum weight when
+      calculating the train's total weight. If you use the
+      <a href="#ManifestComments">Loads and Empties</a> option when printing your Manifest, you will
+      want to use the correct load type so that the program prints out the correct number of loads
+      and empties in the train.
+
       <h4>Priority</h4>
 
-      <p>The default load priority is low and you can change the priority to medium or high for a given car
-      type and load. Higher priority car loads are normally serviced before low priority. Useful if
-      you need to get your reefer loaded with fruit to the market ASAP!</p>
+      The default load priority is low and you can change the priority to medium or high for a given
+      car type and load. Higher priority car loads are normally serviced before low priority. Useful
+      if you need to get your reefer loaded with fruit to the market ASAP!
+
+      <h4>Hazardous</h4>
+
+      If you want the <a href="#HazardousComment">Hazardous Comment</a> to be added to your Manifest
+      or switch lists, select "Yes" for your car's load.
 
       <h4>Optional Load Messages</h4>
 
-      <p>You can also provide optional messages for your crew based on the type of car and load.
-      The messages can be useful if you have visible car loads that need to be added or removed by
-      your crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
-      attributes</a> if you want these messages on your Manifests and switch lists.</p>
+      You can also provide optional messages for your crew based on the type of car and load. The
+      messages can be useful if you have visible car loads that need to be added or removed by your
+      crew. You must select the "PickUp Msg" and "SetOut Msg"
+      <a href="#MessageFormats">car attributes</a> if you want these messages on your Manifests and
+      switch lists.
 
       <h3 id="CarsSet">Set Car</h3>
-      After creating a car, you can set the car's location, and optionally the car's destination
-      and train by using the "Set" button found for each car in the <a href="#Cars">Cars</a>
-      window. Normally the car's destination and assigned train are generated by the program, but
-      you can use these fields to force a car to a specific destination using the specified train.
+      After creating a car, you can set the car's location, and optionally the car's destination and
+      train by using the "Set" button found for each car in the
+      <a href="#Cars">Cars</a> window. Normally the car's destination and assigned train are
+      generated by the program, but you can use these fields to force a car to a specific
+      destination using the specified train.
       <p>You can remove a car that has been assigned to a train by simply pressing the "Save"
-      button. You can also add a car to an already built train that hasn't departed its first
-      location. Select a destination, track and train for the car, then press the "Save"
-      button.</p>
+        button. You can also add a car to an already built train that hasn't departed its first
+        location. Select a destination, track and train for the car, then press the "Save" button.</p>
 
       <p><img src="images/SetCarLocation.png" alt="">
       </p>
