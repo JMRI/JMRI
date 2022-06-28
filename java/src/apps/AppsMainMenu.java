@@ -71,7 +71,6 @@ public class AppsMainMenu {
         fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
         fileMenu.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("FileMenuItemHistory")));  // NOI18N
-        fileMenu.add(new jmri.configurexml.StoreAndCompare(Bundle.getMessage("FileMenuStoreCompare")));  // NOI18N
 
         fileMenu.add(new JSeparator());
 
