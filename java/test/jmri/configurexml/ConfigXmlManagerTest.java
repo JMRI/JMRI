@@ -121,8 +121,8 @@ public class ConfigXmlManagerTest {
         // make sure no test file exists in "layout"
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "layout");
         File f = new File(FileUtil.getUserFilesPath() + "layout" + File.separator + "testConfigXmlManagerTest.xml");
-        if (f.delete()) {  // remove it if its there
-            // nothing to do if delete failed
+        if (f.exists()) {
+            Assert.assertTrue(f.delete()); // remove it if its there
         }
 
         // if file is at top level, remove that too
