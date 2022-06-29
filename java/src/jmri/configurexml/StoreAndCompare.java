@@ -112,6 +112,12 @@ public class StoreAndCompare extends AbstractAction {
         var sMgr = InstanceManager.getDefault(SensorManager.class);
         var mMgr = InstanceManager.getDefault(MemoryManager.class);
 
+        // Get the system prefix for internal beans using the memory manager to avoid the default prefix.
+        var systemPrefix = "I";
+        if (mMgr != null) {
+            systemPrefix = mMgr.getSystemPrefix();
+        }
+
         if (tMgr == null || sMgr == null || mMgr == null) result = true;
 
         if (!result && tMgr != null && tMgr.getNamedBeanSet().size() > 0) result = true;
@@ -121,7 +127,7 @@ public class StoreAndCompare extends AbstractAction {
             if (sensorSize > 1) {
                 result = true;
             } else if (sensorSize == 1) {
-                if (sMgr.getBySystemName("ISCLOCKRUNNING") == null) {
+                if (sMgr.getBySystemName(systemPrefix + "SCLOCKRUNNING") == null) {
                     result = true;  // One sensor but it is not ISCLOCKRUNNING
                 }
             }
@@ -132,11 +138,11 @@ public class StoreAndCompare extends AbstractAction {
             if (memSize > 2) {
                 result = true;
             } else if (memSize != 0) {
-                if (mMgr.getBySystemName("IMCURRENTTIME") == null) {
-                    result = true;  // Two memories but on is IMCURRENTTIME
+                if (mMgr.getBySystemName(systemPrefix + "MCURRENTTIME") == null) {
+                    result = true;  // Two memories but one is not IMCURRENTTIME
                 }
-                if (mMgr.getBySystemName("IMRATEFACTOR") == null) {
-                    result = true;  // Two memories but on is IMRATEFACTOR
+                if (mMgr.getBySystemName(systemPrefix + "MRATEFACTOR") == null) {
+                    result = true;  // Two memories but one is not IMRATEFACTOR
                 }
             }
         }
