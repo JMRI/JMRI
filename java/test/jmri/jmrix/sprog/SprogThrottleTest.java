@@ -397,6 +397,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.configureCommandStation();
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new SprogThrottleManager(m));
         instance = new SprogThrottle(m, new jmri.DccLocoAddress(2,false));
+        setMaxFns(SprogConstants.MAX_FUNCTIONS);
     }
 
     @AfterEach

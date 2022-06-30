@@ -31,6 +31,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class AbstractThrottleTest {
 
     protected AbstractThrottle instance = null;
+    protected int maxFns;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -57,6 +58,7 @@ public class AbstractThrottleTest {
             }
         });
         instance = new AbstractThrottleImpl();
+        maxFns = 29;
     }
 
     @AfterEach
@@ -64,6 +66,15 @@ public class AbstractThrottleTest {
         JUnitUtil.tearDown();
     }
 
+    /**
+     * How many functions are we testing?
+     * 
+     * @param maxFns to be tested
+     */
+    protected void setMaxFns(int maxFns) {
+        this.maxFns = maxFns;
+    }
+    
     /**
      * Test of getSpeedSetting method, of class AbstractThrottle.
      */
@@ -768,12 +779,12 @@ public class AbstractThrottleTest {
 
     @Test
     public void testTotalFunctions() {
-        Assert.assertEquals("Total Functions", 29, instance.getFunctions().length);
+        Assert.assertEquals("Total Functions", maxFns, instance.getFunctions().length);
     }
 
     @Test
     public void testTotalFunctionsMomentary() {
-        Assert.assertEquals("Total Momentary Functions", 29, instance.getFunctionsMomentary().length);
+        Assert.assertEquals("Total Momentary Functions", maxFns, instance.getFunctionsMomentary().length);
     }
 
     @Test
@@ -782,8 +793,8 @@ public class AbstractThrottleTest {
         instance.updateFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
 
-        instance.updateFunction(29, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 29");
+        instance.updateFunction(maxFns, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: "+maxFns);
 
     }
 
@@ -793,8 +804,8 @@ public class AbstractThrottleTest {
         instance.setFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: -1");
 
-        instance.setFunction(29, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 29");
+        instance.setFunction(maxFns, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: "+maxFns);
 
     }
 
@@ -803,8 +814,8 @@ public class AbstractThrottleTest {
         instance.getFunction(-1);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: -1");
 
-        instance.getFunction(29);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: 29");
+        instance.getFunction(maxFns);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get function: "+maxFns);
     }
 
     @Test
@@ -813,8 +824,8 @@ public class AbstractThrottleTest {
         instance.updateFunctionMomentary(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: -1");
 
-        instance.updateFunctionMomentary(29, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: 29");
+        instance.updateFunctionMomentary(maxFns, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update momentary function number: "+maxFns);
 
     }
 
@@ -824,8 +835,8 @@ public class AbstractThrottleTest {
         instance.setFunctionMomentary(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: -1");
 
-        instance.setFunctionMomentary(29, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: 29");
+        instance.setFunctionMomentary(maxFns, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set momentary function number: "+maxFns);
 
     }
 
@@ -834,8 +845,8 @@ public class AbstractThrottleTest {
         instance.getFunctionMomentary(-1);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: -1");
 
-        instance.getFunctionMomentary(29);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: 29");
+        instance.getFunctionMomentary(maxFns);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled get momentary function: "+maxFns);
     }
 
 
