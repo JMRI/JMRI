@@ -104,6 +104,7 @@
 <!ATTLIST carLoad name				CDATA #IMPLIED>
 <!ATTLIST carLoad loadType			CDATA #IMPLIED> 
 <!ATTLIST carLoad priority			CDATA #IMPLIED>
+<!ATTLIST carLoad hazardous			(true | false ) "false">
 <!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
 <!ATTLIST carLoad dropComment		CDATA #IMPLIED>
 
