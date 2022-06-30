@@ -31,7 +31,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class AbstractThrottleTest {
 
     protected AbstractThrottle instance = null;
-    protected int maxFns;
+    protected int maxFns = 29;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -58,7 +58,6 @@ public class AbstractThrottleTest {
             }
         });
         instance = new AbstractThrottleImpl();
-        maxFns = 29;
     }
 
     @AfterEach
