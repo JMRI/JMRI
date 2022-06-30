@@ -25,7 +25,7 @@ public class SprogThrottle extends AbstractThrottle {
      * @param address Loco address.
      */
     public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
-        super(memo);
+        super(memo, SprogConstants.MAX_FUNCTIONS);
         station = memo.getCommandStation();
 
         // cache settings.

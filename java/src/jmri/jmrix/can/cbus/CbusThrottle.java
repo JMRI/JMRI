@@ -33,7 +33,7 @@ public class CbusThrottle extends AbstractThrottle {
      * @param handle the Session ID for the Throttle
      */
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
-        super(memo);
+        super(memo, CbusConstants.MAX_FUNCTIONS);
         log.debug("creating new CbusThrottle address {} handle {}",address,handle);
         if (!( address instanceof DccLocoAddress )  ){
             log.error("{} is not a DccLocoAddress",address);

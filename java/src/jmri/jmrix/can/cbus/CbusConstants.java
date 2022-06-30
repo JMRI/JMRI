@@ -348,6 +348,11 @@ public final class CbusConstants {
     public static final int CBUS_SS_28 = 3;
 
     /**
+     * Number of function buttons on a throttle
+     */
+    public static int MAX_FUNCTIONS = 32; 
+    
+    /**
      * Number of slots supported by the command station
      */
     public static final int CBUS_MAX_SLOTS = 32;
