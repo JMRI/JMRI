@@ -2,27 +2,7 @@ package jmri.implementation;
 
 import static jmri.Conditional.*;
 
-import jmri.Audio;
-import jmri.Block;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.Logix;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.Route;
-import jmri.SensorManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastManager;
-import jmri.TurnoutManager;
-import jmri.RouteManager;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
+import jmri.*;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -38,7 +18,8 @@ public class DefaultConditionalActionTest {
 
     @Test
     public void testCtor() {
-        new DefaultConditionalAction();
+        DefaultConditionalAction t = new DefaultConditionalAction();
+        Assertions.assertNotNull(t);
     }
 
     @Test
@@ -59,9 +40,9 @@ public class DefaultConditionalActionTest {
         ConditionalAction ix9 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.SET_TURNOUT, deviceName, Turnout.THROWN, "1");
 
         ConditionalAction ix10 = new DefaultConditionalAction(0, Conditional.Action.NONE, null, Turnout.THROWN, actionStr);
-        
-        Assert.assertFalse(ix1.equals(null));
-        
+
+        Assert.assertNotNull(ix1);
+
         Assert.assertTrue(ix1.equals(ix1));
         Assert.assertTrue(ix1.equals(ix2));
 
