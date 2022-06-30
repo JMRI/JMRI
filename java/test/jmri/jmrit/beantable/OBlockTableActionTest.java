@@ -278,7 +278,6 @@ public class OBlockTableActionTest {
         a = null;
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask(); // perhaps invoked via super, must be cleaned up
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

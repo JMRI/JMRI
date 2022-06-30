@@ -83,6 +83,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public static final int NO_TASK = 0x00;     // No task at stop
     public static final int END_REVERSAL = 0x01;     // Handle reversing direction at end for back and forth running
     public static final int BEGINNING_RESET = 0x02;     // Handle reseting beginning for back and forth running
+    public static final int END_TRAIN = 0x04;     // Ending Transit.
 
     // operational instance variables
     private static final NamedBean.DisplayOptions USERSYS = NamedBean.DisplayOptions.USERNAME_SYSTEMNAME;
@@ -511,7 +512,8 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     // are we going continuously without delay
                     else if ( _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
-                        _activeTrain.setRestart();
+                        _activeTrain.setRestart(_activeTrain.getDelayedRestart(),_activeTrain.getRestartDelay(),
+                                _activeTrain.getRestartSensor(),_activeTrain.getResetRestartSensor());
                         _activeTrain.setTransitReversed(false);
                         _activeTrain.resetAllAllocatedSections();
                         _previousBlock = null;
@@ -536,7 +538,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(NO_TASK);
+                        stopInCurrentSection(END_TRAIN);
                     }
                 }
                 // are we entering the start point
@@ -550,7 +552,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else {
                         log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                         removeCurrentSignal();
-                        stopInCurrentSection(NO_TASK);
+                        stopInCurrentSection(END_TRAIN);
                     }
                 } else {
                     // if we are not in first and not in last get the next block
@@ -613,6 +615,8 @@ public class AutoActiveTrain implements ThrottleListener {
     protected void allocateAFresh() {
         //Reset initialized flag
         _initialized = false;
+        // set direction
+        setForward(!getRunInReverse());
     }
 
     private void addAllocatedSection(AllocatedSection as) {
@@ -1335,6 +1339,9 @@ public class AutoActiveTrain implements ThrottleListener {
         cancelStopInCurrentSection();
         log.trace("exec[{}]",task);
         switch (task) {
+            case END_TRAIN:
+                _activeTrain.setStatus(ActiveTrain.DONE);
+                break;
             case NO_TASK:
                 // clean up stop
                 break;
@@ -1342,24 +1349,27 @@ public class AutoActiveTrain implements ThrottleListener {
                 /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails
                 to stop the loco in the correct block
                  if the first block we come to has a stopped or held signal */
-                _activeTrain.setRestart();
+                _activeTrain.setRestart(_activeTrain.getDelayReverseRestart(),_activeTrain.getReverseRestartDelay(),
+                        _activeTrain.getReverseRestartSensor(),_activeTrain.getResetReverseRestartSensor());
                 _activeTrain.setTransitReversed(true);
                 _activeTrain.reverseAllAllocatedSections();
                 setEngineDirection();
                 _previousBlock = null;
                 _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
-                if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                if (_activeTrain.getDelayReverseRestart() == ActiveTrain.NODELAY) {
+                   _activeTrain.holdAllocation(false);
+                    // a reversal can happen in mid section
+                    setupNewCurrentSignal(_currentAllocatedSection, true);
+                    setSpeedBySignal();
                     if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
                         InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         break;
                     }
-                    // a reversal can happen in mid section
-                    setupNewCurrentSignal(_currentAllocatedSection, true);
-                    setSpeedBySignal();
                 }
                 break;
             case BEGINNING_RESET:
-                _activeTrain.setRestart();
+                _activeTrain.setRestart(_activeTrain.getDelayedRestart(),_activeTrain.getRestartDelay(),
+                        _activeTrain.getRestartSensor(),_activeTrain.getResetRestartSensor());
                 if (_activeTrain.getResetWhenDone()) {
                     if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY && !_activeTrain.getReverseAtEnd()) {
                         log.error("[{}]: train is continueing without pause, should have been handled in handleBlockStateChange.",_activeTrain.getTrainName());
@@ -1370,7 +1380,8 @@ public class AutoActiveTrain implements ThrottleListener {
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         setEngineDirection();
-                        _activeTrain.setRestart();
+                        _activeTrain.setRestart(_activeTrain.getDelayedRestart(),_activeTrain.getRestartDelay(),
+                                _activeTrain.getRestartSensor(), _activeTrain.getResetRestartSensor());
                         if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
                             InstanceManager.getDefault(DispatcherFrame.class).queueScanOfAllocationRequests();
                         }

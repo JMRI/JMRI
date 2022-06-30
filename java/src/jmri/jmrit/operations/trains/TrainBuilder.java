@@ -484,7 +484,7 @@ public class TrainBuilder extends TrainBuilderBase {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildExcludeCarTypeAtLoc"),
                                     new Object[] { car.toString(), car.getTypeName(),
-                                            (car.getLocationName() + " " + car.getTrackName()) }));
+                                            car.getLocationName(), car.getTrackName() }));
                     _carList.remove(car); // remove this car from the list
                     _carIndex--;
                     continue;
@@ -649,7 +649,7 @@ public class TrainBuilder extends TrainBuilderBase {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildExcludeCarTypeAtLoc"),
                                     new Object[] { car.toString(), car.getTypeName(),
-                                            (car.getLocationName() + " " + car.getTrackName()) }));
+                                            car.getLocationName(), car.getTrackName() }));
                     _carList.remove(car); // remove this car from the list
                     _carIndex--;
                     continue;

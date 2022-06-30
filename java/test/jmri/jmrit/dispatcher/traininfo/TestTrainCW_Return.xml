@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 4.99.9-ClubBase-2022-202205171149+R97bd3e7 on Thu Jun 09 16:49:12 EDT 2022-->
+  <traininfo version="4" transitname="SouthPlatFormReturnToSouthCC" transitid="SouthPlatFormReturnToSouthCC" trainname="99" dccaddress="99" trainintransit="yes" startblockname="South Platform-1" startblockid="South Platform" startblockseq="1" endblockname="South Block" endblockid="South Block" endblockseq="3" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" priority="5" resetwhendone="no" delayedrestart="no" reverseatend="no" reversedelayedrestart="no" terminatewhendone="yes" departuretimehr="8" departuretimemin="0" traintype="LOCAL_PASSENGER" autorun="yes" loadatstartup="no" allocatealltheway="no" allocationmethod="3" nexttrain="" speedfactor="1.0" maxspeed="0.6" ramprate="None" resistancewheels="yes" runinreverse="yes" sounddecoder="yes" maxtrainlength="200.0" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" />
+</traininfofile>

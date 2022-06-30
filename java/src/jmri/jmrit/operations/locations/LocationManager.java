@@ -113,13 +113,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
      */
     public Location getLocationByReporter(Reporter r) {
         for (Location location : _locationHashTable.values()) {
-            try {
+            if (location.getReporter() != null) {
                 if (location.getReporter().equals(r)) {
                     return location;
                 }
-            } catch (java.lang.NullPointerException npe) {
-                // it's valid for a reporter to be null (no reporter
-                // at a given location.
             }
         }
         return null;
@@ -133,13 +130,10 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
      */
     public Track getTrackByReporter(Reporter r) {
         for (Track track : getTracks(null)) {
-            try {
+            if (track.getReporter() != null) {
                 if (track.getReporter().equals(r)) {
                     return track;
                 }
-            } catch (java.lang.NullPointerException npe) {
-                // it's valid for a reporter to be null (no reporter
-                // at a given location.
             }
         }
         return null;

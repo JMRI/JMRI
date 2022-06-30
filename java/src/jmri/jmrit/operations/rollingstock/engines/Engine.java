@@ -88,7 +88,7 @@ public class Engine extends RollingStock {
      * @param hp locomotive horsepower
      */
     public void setHp(String hp) {
-        if (getModel().equals(NONE)) {
+        if (getModel() == null || getModel().equals(NONE)) {
             return;
         }
         String old = getHp();
@@ -123,41 +123,30 @@ public class Engine extends RollingStock {
     @Override
     public void setLength(String length) {
         super.setLength(length);
-        try {
-            if (getModel().equals(NONE)) {
-                return;
-            }
-            engineModels.setModelLength(getModel(), length);
-        } catch (java.lang.NullPointerException npe) {
-            // failed, but the model may not have been set.
-            log.debug("NPE setting length for Engine ({})", toString());
+        if (getModel() == null || getModel().equals(NONE)) {
+            return;
         }
-        return;
+        engineModels.setModelLength(getModel(), length);
     }
 
     @Override
     public String getLength() {
-        try {
-            String length = super.getLength();
-            if (getModel() != null && !getModel().equals(NONE)) {
-                length = engineModels.getModelLength(getModel());
-            }
-            if (length == null) {
-                length = NONE;
-            }
-            if (!length.equals(_length)) {
-                // return "old" length, used for track reserve changes
-                if (_lengthChange) {
-                    return _length;
-                }
-                log.debug("Loco ({}) length ({}) has been modified from ({})", toString(), length, _length);
-                super.setLength(length); // adjust track lengths
-            }
-            return length;
-        } catch (java.lang.NullPointerException npe) {
-            log.debug("NPE setting length for Engine ({})", toString());
+        String length = super.getLength();
+        if (getModel() != null && !getModel().equals(NONE)) {
+            length = engineModels.getModelLength(getModel());
         }
-        return NONE;
+        if (length == null) {
+            length = NONE;
+        }
+        if (!length.equals(_length)) {
+            // return "old" length, used for track reserve changes
+            if (_lengthChange) {
+                return _length;
+            }
+            log.debug("Loco ({}) length ({}) has been modified from ({})", toString(), length, _length);
+            super.setLength(length); // adjust track lengths
+        }
+        return length;
     }
 
     /**
@@ -167,39 +156,29 @@ public class Engine extends RollingStock {
      */
     @Override
     public void setWeightTons(String weight) {
-        try {
-            if (getModel().equals(NONE)) {
-                return;
-            }
-            String old = getWeightTons();
-            super.setWeightTons(weight);
-            engineModels.setModelWeight(getModel(), weight);
-            if (!old.equals(weight)) {
-                setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
-            }
-        } catch (java.lang.NullPointerException npe) {
-            // this failed, was the model set?
-            log.debug("NPE setting Weight Tons for Engine ({})", toString());
+        if (getModel() == null || getModel().equals(NONE)) {
+            return;
+        }
+        String old = getWeightTons();
+        super.setWeightTons(weight);
+        engineModels.setModelWeight(getModel(), weight);
+        if (!old.equals(weight)) {
+            setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
         }
     }
 
     @Override
     public String getWeightTons() {
         String weight = null;
-        try {
-            weight = engineModels.getModelWeight(getModel());
-            if (weight == null) {
-                weight = NONE;
-            }
-        } catch (java.lang.NullPointerException npe) {
-            log.debug("NPE getting Weight Tons for Engine ({})", toString());
+        weight = engineModels.getModelWeight(getModel());
+        if (weight == null) {
             weight = NONE;
         }
         return weight;
     }
 
     public void setBunit(boolean bUnit) {
-        if (getModel().equals(NONE)) {
+        if (getModel() == null || getModel().equals(NONE)) {
             return;
         }
         boolean old = isBunit();
@@ -210,12 +189,7 @@ public class Engine extends RollingStock {
     }
 
     public boolean isBunit() {
-        try {
-            return engineModels.isModelBunit(getModel());
-        } catch (java.lang.NullPointerException npe) {
-            log.debug("NPE getting is B unit for Engine ({})", toString());
-        }
-        return false;
+        return engineModels.isModelBunit(getModel());
     }
 
     /**

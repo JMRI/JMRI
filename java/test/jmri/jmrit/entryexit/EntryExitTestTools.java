@@ -1,14 +1,14 @@
 package jmri.jmrit.entryexit;
 
 import java.util.HashMap;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
+
+import jmri.*;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 class EntryExitTestTools {
-    static HashMap<String, LayoutEditor> getPanels() throws Exception {
+    static HashMap<String, LayoutEditor> getPanels() throws JmriConfigureXmlException, JmriException, IllegalArgumentException {
         HashMap<String, LayoutEditor> panels = new HashMap<>();
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
         java.io.File f = new java.io.File("java/test/jmri/jmrit/entryexit/load/EntryExitTest.xml");
@@ -27,7 +27,7 @@ class EntryExitTestTools {
             }
         }
 
-        InstanceManager.getDefault(SensorManager.class).getSensor("Reset").setKnownState(Sensor.ACTIVE);
+        InstanceManager.getDefault(SensorManager.class).provideSensor("Reset").setKnownState(Sensor.ACTIVE);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         return panels;
     }

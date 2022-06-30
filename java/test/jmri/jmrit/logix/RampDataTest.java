@@ -5,6 +5,8 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ListIterator;
 /*
  * @author Pete Cressman Copyright (C) 2019
  */
@@ -29,10 +31,10 @@ public class RampDataTest {
         RampData ramp = new RampData(new SpeedUtil(), .011f, 1500, 0.91f, 0.15f);
         assertThat(ramp).withFailMessage("exists").isNotNull();
         assertThat(ramp.isUpRamp()).withFailMessage("downRamp").isFalse();
-        assertThat(ramp.getNumSteps()).withFailMessage("NumRampSteps").isEqualTo(23);
-        assertThat(ramp.getRamptime()).withFailMessage("Ramptime").isEqualTo(33000);
+        assertThat(ramp.getNumSteps()).withFailMessage("NumRampSteps").isEqualTo(16);
+        assertThat(ramp.getRamptime()).withFailMessage("Ramptime").isEqualTo(22500);
         assertThat(ramp.getMaxSpeed()).withFailMessage("MaxSpeed").isEqualTo(0.91f);
-        assertThat(ramp.getRampLength()).withFailMessage("RampLength").isEqualTo(5083.989f);
+        assertThat(ramp.getRampLength()).withFailMessage("RampLength").isEqualTo(4372.592f);
     }
 
     @BeforeEach

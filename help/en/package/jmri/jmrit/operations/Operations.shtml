@@ -1075,16 +1075,19 @@
       automatically assign the proper NMRA weight for a car based on scale and length.</p>
 
       <h4 id="MaximumTrainLength">Maximum Train Length</h4>
-      Now enter the "Maximum Train Length" you desire for your trains. This field provides the
-      maximum scale train length between stations. Later you can override this length if you wish a
-      shorter train between any two locations. A 1000 foot train can carry approximately 20 cars,
-      and is of course dependent on the car lengths assigned to the train.
-      <p>Note that if you increase the "Maximum Train Length" that it doesn't affect train routes
-      that you've already created. Once you increase the maximum train length, you can manually
-      increase the departure length of a train by editing the train's route. See <a href=
-      "#EditRoute">Edit Route</a> for more details.</p>
+   Enter the "Maximum Train Length" in feet or meters you desire for your trains. See "Unit of
+   Length" below to select feet or meters. This field provides the maximum scale train length
+   between stations. Later you can override this length if you wish a shorter train between any two
+   locations. A 1000 foot train can carry approximately 20 cars, and is of course dependent on the
+   car lengths assigned to the train.
+   <p>
+    Note that if you increase the "Maximum Train Length" that it doesn't affect train routes that
+    you've already created. Once you increase the maximum train length, you can manually increase
+    the departure length of a train by editing the train's route. See <a href="#EditRoute">Edit
+     Route</a> for more details.
+   </p>
 
-      <p>If you decrease the "Maximum Train Length" the program will prompt you to modify your
+   <p>If you decrease the "Maximum Train Length" the program will prompt you to modify your
       existing routes, and you can optionally have the program reduce all of your train's routes to
       the new shorter train length.</p>
 
@@ -2070,13 +2073,18 @@
       
       <h3 id="HazardousComment">Hazardous Comment</h3>
 
-      <p>The program will add the "Hazardous Comment" to the Manifests and switch lists when a car
-      has the <a href="#CabooseFredHazardous">Hazardous</a> checkbox selected in the "Car Edit"
-      window and the "Hazardous" message format is selected in the <a href="#PrintOptions">Manifest
-      Print Options</a>. You can change the comment if desired, and press "Save" to keep the
-      change.</p>
+   <p>
+    The program will add the "Hazardous Comment" to the Manifests and
+    switch lists when a car has the <a href="#CabooseFredHazardous">Hazardous</a>
+    checkbox selected in the "Car Edit" window and the "Hazardous"
+    message format is selected in the <a href="#PrintOptions">Manifest
+     Print Options</a>. The program will also add the "Hazardous Comment" if
+    the car's <a href="#EditCarLoads">load</a> has been classified as
+    hazardous. You can change the comment if desired, and press "Save"
+    to keep the change.
+   </p>
 
-      <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
+   <h3 id="ManifestPrintOptionsTools">Manifest Print Options Tools</h3>
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools". The first "More Print Options" allows you to adjust the length of the tab
       character when using the "Tabular" feature. The next three options "Edit Manifest Header
@@ -3521,27 +3529,37 @@
       cars with coal, and HopCoal-E for the empties, the program can use this information to assign
       and deliver cars to their appropriate trains and locations respectively.</p>
 
-      <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility, and Hazardous
-      Checkboxes</h4>
-      If the car is used in passenger service select the passenger checkbox. The program will place
-      passenger cars towards the rear of a mixed service (combination of passenger and freight
-      cars) train. If the car is a caboose, has a FRED (Flashing Rear End Device), or is hazardous,
-      select the proper checkbox. The program uses the caboose and FRED functions to place the car
-      at the end of a train when the train requires a caboose or car with FRED. The hazardous
-      checkbox will cause the program to add a <a href="#HazardousComment">note</a> to the switch
-      list that the car is transporting hazardous materials. Your railroad's policy regarding
-      hazardous materials can than be applied to this car!
-      <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
-      appear. The text box allows you to enter a number between -100 and 100 and this gives you
-      control where in the train's Manifest a car will be placed. Lower numbers will place the car
-      near the front of the train, and higher numbers towards the rear. We recommend that you start
-      off using numbers cleanly divisible by 10. For example, you might what to place an
-      observation car at the end of the train, a value of "90" would be appropriate. If you wanted
-      a baggage car to be the first car in the passenger train, a value of "10" would be a good
-      value, cars in the middle of the train could use "50". Later you can fine tune your passenger
-      trains by using the other numbers that are available.</p>
+   <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility,
+    and Hazardous Checkboxes</h4>
+   If the car is used in passenger service select the passenger
+   checkbox. The program will place passenger cars towards the rear of a
+   mixed service (combination of passenger and freight cars) train when
+   the "Car Blocking Order" numbers are positive, and at the front of
+   the train if the blocking numbers are negative. If the car is a
+   caboose, has a FRED (Flashing Rear End Device), or is hazardous
+   independent of the car's load, select the proper checkbox. The
+   program uses the caboose and FRED functions to place the car at the
+   end of a train when the train requires a caboose or car with FRED.
+   The hazardous checkbox will cause the program to add a
+   <a href="#HazardousComment">Hazardous Comment</a> to the switch list that the car
+   is transporting hazardous materials. You can also classify a car's
+   <a href="#EditCarLoads">load</a> as hazardous. Your railroad's policy
+   regarding hazardous materials can than be applied to this car!
 
-      <p>When the utility checkbox is selected, it instructions the program when printing Manifests
+   <p>When the passenger checkbox is selected, a new field called
+    "Car Blocking Order" will appear. The text box allows you to enter a
+    number between -100 and 100 and this gives you control where in the
+    train's Manifest a car will be placed. Lower numbers will place the
+    car at the front of the train, and higher numbers towards the rear.
+    We recommend that you start off using numbers cleanly divisible by
+    10. For example, you might what to place an observation car at the
+    end of the train, a value of "90" would be appropriate. If you
+    wanted a baggage car to be the first car in the passenger train, a
+    value of "10" would be a good value, cars in the middle of the train
+    could use "50". Later you can fine tune your passenger trains by
+    using the other numbers that are available.</p>
+
+   <p>When the utility checkbox is selected, it instructions the program when printing Manifests
       and switch lists to not show the individual car's road and number, but rather the quantity of
       cars needed of that type. For example, prototype unit trains when shipping coal don't
       normally list the cars in the train by the car's road number but instead it shows the number
@@ -3667,38 +3685,45 @@
 
    <p>In addition to the Add, Delete, and Replace buttons and fields described above in the
       <a href="#EditCarAttributes">Car Edit Attributes</a> section, the edit car loads window
-      allows you to set the load's type, priority, pick up and set out messages.</p>
+      allows you to set the load's type, priority, is hazardous, pick up and set out messages.</p>
 
       <h4 id="LoadType">Load Type</h4>
       A load type of "Load" means the program will consider the car as being loaded and the car's
-      maximum weight is used when calculating the train's total weight. A load type of "Empty"
-      tells the program that the car is empty and to only use 1/3 of the car's maximum weight when
-      calculating the train's total weight. If you use the <a href="#ManifestComments">Loads and
-      Empties</a> option when printing your Manifest, you will want to use the correct load type so
-      that the program prints out the correct number of loads and empties in the train.
-      
+      maximum weight is used when calculating the train's total weight. A load type of "Empty" tells
+      the program that the car is empty and to only use 1/3 of the car's maximum weight when
+      calculating the train's total weight. If you use the
+      <a href="#ManifestComments">Loads and Empties</a> option when printing your Manifest, you will
+      want to use the correct load type so that the program prints out the correct number of loads
+      and empties in the train.
+
       <h4>Priority</h4>
 
-      <p>The default load priority is low and you can change the priority to medium or high for a given car
-      type and load. Higher priority car loads are normally serviced before low priority. Useful if
-      you need to get your reefer loaded with fruit to the market ASAP!</p>
+      The default load priority is low and you can change the priority to medium or high for a given
+      car type and load. Higher priority car loads are normally serviced before low priority. Useful
+      if you need to get your reefer loaded with fruit to the market ASAP!
+
+      <h4>Hazardous</h4>
+
+      If you want the <a href="#HazardousComment">Hazardous Comment</a> to be added to your Manifest
+      or switch lists, select "Yes" for your car's load.
 
       <h4>Optional Load Messages</h4>
 
-      <p>You can also provide optional messages for your crew based on the type of car and load.
-      The messages can be useful if you have visible car loads that need to be added or removed by
-      your crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
-      attributes</a> if you want these messages on your Manifests and switch lists.</p>
+      You can also provide optional messages for your crew based on the type of car and load. The
+      messages can be useful if you have visible car loads that need to be added or removed by your
+      crew. You must select the "PickUp Msg" and "SetOut Msg"
+      <a href="#MessageFormats">car attributes</a> if you want these messages on your Manifests and
+      switch lists.
 
       <h3 id="CarsSet">Set Car</h3>
-      After creating a car, you can set the car's location, and optionally the car's destination
-      and train by using the "Set" button found for each car in the <a href="#Cars">Cars</a>
-      window. Normally the car's destination and assigned train are generated by the program, but
-      you can use these fields to force a car to a specific destination using the specified train.
+      After creating a car, you can set the car's location, and optionally the car's destination and
+      train by using the "Set" button found for each car in the
+      <a href="#Cars">Cars</a> window. Normally the car's destination and assigned train are
+      generated by the program, but you can use these fields to force a car to a specific
+      destination using the specified train.
       <p>You can remove a car that has been assigned to a train by simply pressing the "Save"
-      button. You can also add a car to an already built train that hasn't departed its first
-      location. Select a destination, track and train for the car, then press the "Save"
-      button.</p>
+        button. You can also add a car to an already built train that hasn't departed its first
+        location. Select a destination, track and train for the car, then press the "Save" button.</p>
 
       <p><img src="images/SetCarLocation.png" alt="">
       </p>
@@ -5071,7 +5096,9 @@
       This action can display a message when executed. Use the "Add" button under the "Messages"
       column to add a message. This can be helpful when debugging an automation by displaying
       messages when appropriate. Also useful if you need to communicate a manual step in your
-      automation. Otherwise the action does nothing, or for programmers a NOP or no operation.
+      automation. If you do create a message, you have the options of either continuing with the
+      automation by pressing the "OK" button, or stopping the automation by pressing the "Halt" button.
+      Without a message the action does nothing, or for programmers a NOP or no operation.
       <h5>Build Train</h5>
       This action will build the train selected in the "Train" menu adjacent to the "Build Train"
       column. This action will report "Failed" if the train fails to build or if you haven't
@@ -5209,13 +5236,26 @@
       the <a href="#SwitchListByLocation">Switch Lists by Location</a> window for this action to
       succeed.
       <h5>Run Automation</h5>
-      This action can run any automation. You must select an automation from the "Automation" menu.
+   This action can start an automation from the beginning. You must select an automation from the "Automation" menu.
+   <h5>Resume Automation</h5>
+   This action can resume an automation that has been stopped or halted. The current pointer for the
+   selected automation determines where the program resumes execution. You must select an automation from the
+   "Automation" menu.
+   <h5>Stop Automation</h5>
+      This action can stop an automation that is running. You must select an automation from the "Automation" menu.
+      <h5>Message Yes or No</h5>
+      This action can be used to ask a question to which the answer is Yes or No.  Use the "If Success GOTO" action
+      to branch if the answer is Yes. Use the "If failure GOTO" action to branch if the answer is No.
       <h5>GOTO</h5>
       This action allows you to jump to any action in the table. You must select the action id you
       want to goto from the "Automation" menu.
       <h5>If Success GOTO</h5>
       This action will cause the automation to jump to the action id selected from the "Automation"
-      menu when the previous action is successful. If the previous action failed, the automation
+      menu when the previous action was successful. If the previous action failed, the automation
+      continues to the next action in the table.
+      <h5>If Failure GOTO</h5>
+      This action will cause the automation to jump to the action id selected from the "Automation"
+      menu when the previous action has failed. If the previous action was successful, the automation
       continues to the next action in the table.
       <h5>Halt</h5>
       This action stops the execution of the automation. You can use the "Step Automation" or

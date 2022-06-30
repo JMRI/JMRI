@@ -293,21 +293,23 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertTrue(tcis.outbound.isEmpty());
 
         l.updateAll();
-        JUnitUtil.waitFor(() -> ( 2 == tcis.outbound.size()));
+        JUnitUtil.waitFor(() -> ( 2 == tcis.outbound.size()),"2 messages sent");
         Assert.assertEquals(2, tcis.outbound.size());
 
         Sensor t3 = l.provideSensor("MSX0A;X5E6DEEF4");
         tcis.outbound.clear();
         l.updateAll();
-        JUnitUtil.waitFor(() -> ( 3 == tcis.outbound.size()));
+        JUnitUtil.waitFor(() -> ( 3 == tcis.outbound.size()),"3 messages sent");
         Assert.assertEquals(3, tcis.outbound.size());
         Assert.assertNotNull("exists", t1);
         Assert.assertNotNull("exists", t2);
         Assert.assertNotNull("exists", t3);
     }
 
+    @Override
     @Test
-    public void testgetEntryToolTip() {
+    public void testGetEntryToolTip() {
+        super.testGetEntryToolTip();
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
 
@@ -360,11 +362,11 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void testSimpleNext() throws JmriException {
         Sensor t =  l.provideSensor("MS+17");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MS+18");
+        Assert.assertEquals("MS+18", next);
 
         t =  l.provideSensor("MS+N45E22");
         next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MS+N45E23");
+        Assert.assertEquals("MS+N45E23", next);
 
     }
 
@@ -372,7 +374,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     public void testDoubleNext() throws JmriException {
         Sensor t =  l.provideSensor("MS+18;-21");
         String next = l.getNextValidSystemName(t);
-        Assert.assertEquals(next, "MS+19;-22");
+        Assert.assertEquals("MS+19;-22", next);
     }
 
     @Test

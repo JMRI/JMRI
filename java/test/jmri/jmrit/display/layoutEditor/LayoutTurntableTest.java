@@ -57,7 +57,6 @@ public class LayoutTurntableTest extends LayoutTrackTest {
         lt = null;
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

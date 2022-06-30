@@ -299,8 +299,9 @@ public class JmriMouseEvent {
      */
     public boolean isPopupTrigger() {
         if (SystemType.isWindows()) {
-            // event.isPopupTrigger() returns false on mousePressed() on Windows
-            return SwingUtilities.isRightMouseButton(event);
+            // event.isPopupTrigger() returns false on mousePressed() on Windows.
+            // The bad news is that SwingUtilities.isRightMouseButton(event) doesn't work either.
+            return (event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
         } else {
             return event.isPopupTrigger();
         }

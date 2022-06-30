@@ -96,7 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Rewrite and expansion of documentation.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -238,11 +238,6 @@
             <ul>
                 <li></li>
             </ul>
-
-        <h4>Massoth</h4>
-             <ul>
-                <li>New decoder definition for "Pulsed Smoker for round boilers" (product nr 8415001</li>
-             </ul>
 
         <h4>MD Electronics</h4>
              <ul>
@@ -421,8 +416,17 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
-        </ul>
+  <li>Enhanced passenger blocking. Negative blocking numbers place passenger cars in front of
+    freight cars.</li>
+  <li>Added hazardous classification to car loads. Now a car can be classified as hazardous
+    depending on the car's load.</li>
+  <li>Improved car blocking when car is hazardous. The program will attempt to place
+    non-hazardous cars in front of hazardous cars.</li>
+  <li>New automation feature. Users can now select an automation to run at startup. See under
+    Tools in the operations Automations window.</li>
+  <li>Improved Manifest and switch list formating when using tabular and load set out and pick
+    up messages.</li>
+</ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
@@ -473,7 +477,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed a spurious error message when creating some internal items.</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -585,7 +589,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Minor changes to resolve Spotbug OS_OPEN_STREAM_EXCEPTION_PATH </li>
-            <li>Minor changes to resolve Spotbug ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD </li>
+            <li></li>
         </ul>
 

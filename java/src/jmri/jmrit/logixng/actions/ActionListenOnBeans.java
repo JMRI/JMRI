@@ -38,6 +38,9 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionListenOnBeans copy = new ActionListenOnBeans(sysName, userName);
         copy.setComment(getComment());
+        copy.setLocalVariableNamedBean(_localVariableNamedBean);
+        copy.setLocalVariableEvent(_localVariableEvent);
+        copy.setLocalVariableNewValue(_localVariableNewValue);
         for (NamedBeanReference reference : _namedBeanReferences.values()) {
             copy.addReference(reference);
         }

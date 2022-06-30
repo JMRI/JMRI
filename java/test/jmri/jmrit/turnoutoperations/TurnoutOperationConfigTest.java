@@ -17,6 +17,13 @@ public class TurnoutOperationConfigTest {
         TurnoutOperationConfig t = new TurnoutOperationConfig(to);
         Assert.assertNotNull("exists",t);
     }
+    
+    @Test
+    public void testRawOperator() {
+        jmri.TurnoutOperation to = new jmri.RawTurnoutOperation();
+        TurnoutOperationConfig t = new TurnoutOperationConfig(to);
+        Assert.assertNotNull("exists",t);
+    }
 
     @BeforeEach
     public void setUp() {
