@@ -111,7 +111,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 if (oldType != ref.getType()) ref.setName("");
                 break;
             case COLUMN_BEAN_NAME:
-                ref.setName(((NamedBean) value).getDisplayName());
+                ref.setName((NamedBean) value);
                 break;
             case COLUMN_BEAN_ALL:
                 ref.setListenOnAllProperties((boolean) value);
