@@ -22,14 +22,16 @@ public class SignalMastAddPaneTest {
         // group these in a single test, as the services can only be loaded once.
         Assert.assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection());
         Assert.assertNotNull(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap());
-        Assert.assertTrue(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().size() > 0); // found at least one service
+        Assert.assertFalse(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().isEmpty()); // found at least one service
         Assert.assertEquals(SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap().size(), SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection().size()); // same size
         
         // check map is in sorted order; also check lookup works
         Map<String, SignalMastAddPane.SignalMastAddPaneProvider> map = SignalMastAddPane.SignalMastAddPaneProvider.getInstancesMap();
         Collection<SignalMastAddPane.SignalMastAddPaneProvider> collection = SignalMastAddPane.SignalMastAddPaneProvider.getInstancesCollection();
         String last = "";
-        for (String name : map.keySet()) {
+        
+        for ( Map.Entry<String,?> entry : map.entrySet() ) {
+            String name = entry.getKey();
             Assert.assertTrue(name.compareTo(last) > 0);  // no identical ones
             Assert.assertTrue(collection.contains(map.get(name)));
             last = name;
@@ -59,10 +61,11 @@ public class SignalMastAddPaneTest {
         // check all the classes
         for (SignalMastAddPane.SignalMastAddPaneProvider pane : collection) {
         
-                Assert.assertTrue(pane.getPaneName() != null);
-                Assert.assertTrue(! pane.getPaneName().isEmpty());
+                Assert.assertFalse( pane.getPaneName().isBlank());
 
-               if (pane.isAvailable()) Assert.assertTrue(pane.getPaneName() != null);         
+               if (pane.isAvailable()) {
+                   Assert.assertFalse(pane.getPaneName().isBlank());
+                }
         }
 
     }
