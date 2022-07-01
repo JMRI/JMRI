@@ -284,9 +284,11 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _type = type;
             _listenOnAllProperties = all;
 
-            NamedBean bean = _type.getManager().getNamedBean(name);
-            if (bean != null) {
-                _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
+            if (_type != null) {
+                NamedBean bean = _type.getManager().getNamedBean(name);
+                if (bean != null) {
+                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
+                }
             }
         }
 
@@ -317,7 +319,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
 
         private void updateHandle() {
-            if (!_name.isEmpty()) {
+            if (_type != null && _name != null && !_name.isEmpty()) {
                 NamedBean bean = _type.getManager().getNamedBean(_name);
                 if (bean != null) {
                     _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
