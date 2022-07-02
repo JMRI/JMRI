@@ -589,6 +589,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Reduce the verbosity of MDNS logging.</li>
         </ul>
 
