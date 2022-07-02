@@ -108,7 +108,11 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             case COLUMN_BEAN_TYPE:
                 NamedBeanType oldType = ref.getType();
                 ref.setType((NamedBeanType) value);
-                if (oldType != ref.getType()) ref.setName("");
+                if (oldType != ref.getType()) {
+                    ref.setName("");
+                    // When the type changes, the name is set to null, so the name cell needs to be updated
+                    fireTableCellUpdated(rowIndex, COLUMN_BEAN_NAME);
+                }
                 break;
             case COLUMN_BEAN_NAME:
                 ref.setName((NamedBean) value);
@@ -266,7 +270,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
 
             String name = _namedBeanReference.get(row).getName();
             Manager manager = _namedBeanReference.get(row).getType().getManager();
-            NamedBean selection = manager.getNamedBean(name);
+            NamedBean selection = name != null ? manager.getNamedBean(name) : null;
             NamedBeanComboBox<NamedBean> namedBeanComboBox =
                     new NamedBeanComboBox<>(manager, selection, NamedBean.DisplayOptions.DISPLAYNAME);
             namedBeanComboBox.setAllowNull(true);
@@ -274,7 +278,6 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
 
             namedBeanComboBox.addActionListener(this);
 
-            System.out.format("namedBeanComboBox: %s%n", namedBeanComboBox);
             return namedBeanComboBox;
         }
 

@@ -329,7 +329,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 type = NamedBeanType.Turnout;
             }
             _type = type;
-            updateHandle();
+            _handle = null;
         }
 
         public NamedBeanHandle<? extends NamedBean> getHandle() {
