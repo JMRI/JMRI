@@ -5,16 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Date;
 
-import jmri.BasicRosterEntry;
-import jmri.CommandStation;
-import jmri.LocoAddress;
-import jmri.SpeedStepMode;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.SystemConnectionMemo;
-import jmri.Throttle;
-import jmri.ThrottleListener;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 
 import javax.annotation.Nonnull;
@@ -208,6 +199,19 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
+     * Get Function Number without warning if Throttle does not support.
+     * When sending a whole function group, a function number may not be present.
+     * @param fN Function number.
+     * @return Function value, else false if does not exist.
+     */
+    private boolean getFunctionNoWarning(int fN) {
+        if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
+            return false;
+        }
+        return FUNCTION_BOOLEAN_ARRAY[fN];
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -388,6 +392,9 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             case 5:
                 if (momentary) sendMomentaryFunctionGroup5(); else sendFunctionGroup5();
                 break;
+            case 6:
+                if (momentary) sendMomentaryFunctionGroup6(); else sendFunctionGroup6();
+                break;
             default:
                 break;
         }
@@ -539,6 +546,40 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
+     * Send the message to set the state of functions F29, F30, F31, F32, F33,
+     * F34, F35, F36.
+     * <p>
+     * This is used in the setFn implementations provided in this class.
+     */
+    protected void sendFunctionGroup6() {
+        DccLocoAddress a = (DccLocoAddress) getLocoAddress();
+        
+        byte[] result = NmraPacket.function29Through36Packet(
+                a.getNumber(), a.isLongAddress(),
+                getFunctionNoWarning(29), getFunctionNoWarning(30),
+                getFunctionNoWarning(31), getFunctionNoWarning(32),
+                getFunctionNoWarning(33), getFunctionNoWarning(34), 
+                getFunctionNoWarning(35), getFunctionNoWarning(36));
+        //if the result returns as null, we should quit.
+        if (result == null) {
+            return;
+        }
+        CommandStation c;
+        if ((adapterMemo != null) && (adapterMemo.get(CommandStation.class) != null)) {
+            c = adapterMemo.get(CommandStation.class);
+        } else {
+            c = InstanceManager.getNullableDefault(CommandStation.class);
+        }
+
+        // send it 3 times
+        if (c != null) {
+            c.sendPacket(result, 3);
+        } else {
+            log.error("Can't send F29-F36 since no command station defined");
+        }
+    }
+
+    /**
      * Sets Momentary Function and sends to layout.
      * {@inheritDoc}
      */
@@ -606,6 +647,17 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup5() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F29, F30, F31,
+     * F32, F33, F34, F35, F36
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup6() {
     }
 
     /**
