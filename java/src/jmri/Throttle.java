@@ -52,35 +52,65 @@ public interface Throttle extends PropertyChangeProvider {
 
     /**
      * Constants to represent the functions F0 through F28.
+     * @deprecated Use {@code getFunctionString(int momentFunctionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F0 = "F0"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F1 = "F1"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F2 = "F2"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F3 = "F3"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F4 = "F4"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F5 = "F5"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F6 = "F6"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F7 = "F7"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F8 = "F8"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F9 = "F9"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F10 = "F10"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F11 = "F11"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F12 = "F12"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F13 = "F13"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F14 = "F14"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F15 = "F15"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F16 = "F16"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F17 = "F17"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F18 = "F18"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F19 = "F19"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F20 = "F20"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F21 = "F21"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F22 = "F22"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F23 = "F23"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F24 = "F24"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F25 = "F25"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F26 = "F26"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F27 = "F27"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F28 = "F28"; // NOI18N
 
     /**
@@ -96,35 +126,65 @@ public interface Throttle extends PropertyChangeProvider {
 
     /**
      * Constants to represent the functions F0 through F28.
+     * @deprecated Use {@code getFunctionMomentaryString(int momentFunctionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F0Momentary = "F0Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F1Momentary = "F1Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F2Momentary = "F2Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F3Momentary = "F3Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F4Momentary = "F4Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F5Momentary = "F5Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F6Momentary = "F6Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F7Momentary = "F7Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F8Momentary = "F8Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F9Momentary = "F9Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F10Momentary = "F10Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F11Momentary = "F11Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F12Momentary = "F12Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F13Momentary = "F13Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F14Momentary = "F14Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F15Momentary = "F15Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F16Momentary = "F16Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F17Momentary = "F17Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F18Momentary = "F18Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F19Momentary = "F19Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F20Momentary = "F20Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F21Momentary = "F21Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F22Momentary = "F22Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F23Momentary = "F23Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F24Momentary = "F24Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F25Momentary = "F25Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F26Momentary = "F26Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F27Momentary = "F27Momentary"; // NOI18N
+    @Deprecated(since="5.1.2", forRemoval=false)
     public static final String F28Momentary = "F28Momentary"; // NOI18N
 
     /**
@@ -260,7 +320,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 0 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF0() {
         return getFunction(0);
     }
@@ -268,7 +330,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 1 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF1() {
         return getFunction(1);
     }
@@ -276,7 +340,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 2 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF2() {
         return getFunction(2);
     }
@@ -284,7 +350,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 3 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF3() {
         return getFunction(3);
     }
@@ -292,7 +360,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 4 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF4() {
         return getFunction(4);
     }
@@ -300,7 +370,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 5 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF5() {
         return getFunction(5);
     }
@@ -308,7 +380,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 6 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF6() {
         return getFunction(6);
     }
@@ -316,7 +390,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 7 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF7() {
         return getFunction(7);
     }
@@ -324,7 +400,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 8 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF8() {
         return getFunction(8);
     }
@@ -332,7 +410,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 9 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF9() {
         return getFunction(9);
     }
@@ -340,7 +420,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 10 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF10() {
         return getFunction(10);
     }
@@ -348,7 +430,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 11 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF11() {
         return getFunction(11);
     }
@@ -356,7 +440,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 12 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF12() {
         return getFunction(12);
     }
@@ -364,7 +450,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 13 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF13() {
         return getFunction(13);
     }
@@ -372,7 +460,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 14 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF14() {
         return getFunction(14);
     }
@@ -380,7 +470,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 15 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF15() {
         return getFunction(15);
     }
@@ -388,7 +480,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 16 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF16() {
         return getFunction(16);
     }
@@ -396,7 +490,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 17 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF17() {
         return getFunction(17);
     }
@@ -404,7 +500,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 18 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF18() {
         return getFunction(18);
     }
@@ -412,7 +510,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 19 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF19() {
         return getFunction(19);
     }
@@ -420,7 +520,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 20 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF20() {
         return getFunction(20);
     }
@@ -428,7 +530,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 21 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF21() {
         return getFunction(21);
     }
@@ -436,7 +540,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 22 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF22() {
         return getFunction(22);
     }
@@ -444,7 +550,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 23 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF23() {
         return getFunction(23);
     }
@@ -452,7 +560,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 24 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF24() {
         return getFunction(24);
     }
@@ -460,7 +570,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 25 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF25() {
         return getFunction(25);
     }
@@ -468,7 +580,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 26 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF26() {
         return getFunction(26);
     }
@@ -476,7 +590,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 27 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF27() {
         return getFunction(27);
     }
@@ -484,7 +600,9 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Function 28 Status.
      * @return true for Function On, false for Function Off.
+     * @deprecated Use {@code getFunction(int functionNum) } instead.
      */
+    @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF28() {
         return getFunction(28);
     }
