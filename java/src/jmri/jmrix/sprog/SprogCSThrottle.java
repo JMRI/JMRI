@@ -70,11 +70,11 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup1() {
         commandStation.function0Through4Packet(address,
-                getFunction(0), getF0Momentary(),
-                getFunction(1), getF1Momentary(),
-                getFunction(2), getF2Momentary(),
-                getFunction(3), getF3Momentary(),
-                getFunction(4), getF4Momentary());
+                getFunction(0), getFunctionMomentary(0),
+                getFunction(1), getFunctionMomentary(1),
+                getFunction(2), getFunctionMomentary(2),
+                getFunction(3), getFunctionMomentary(3),
+                getFunction(4), getFunctionMomentary(4));
 
     }
 
@@ -85,10 +85,10 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup2() {
         commandStation.function5Through8Packet(address,
-                getFunction(5), getF5Momentary(),
-                getFunction(6), getF6Momentary(),
-                getFunction(7), getF7Momentary(),
-                getFunction(8), getF8Momentary());
+                getFunction(5), getFunctionMomentary(5),
+                getFunction(6), getFunctionMomentary(6),
+                getFunction(7), getFunctionMomentary(7),
+                getFunction(8), getFunctionMomentary(8));
     }
 
     /**
@@ -98,10 +98,10 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup3() {
         commandStation.function9Through12Packet(address,
-                getFunction(9), getF9Momentary(),
-                getFunction(10), getF10Momentary(),
-                getFunction(11), getF11Momentary(),
-                getFunction(12), getF12Momentary());
+                getFunction(9), getFunctionMomentary(9),
+                getFunction(10), getFunctionMomentary(10),
+                getFunction(11), getFunctionMomentary(11),
+                getFunction(12), getFunctionMomentary(12));
     }
 
     /**
@@ -111,14 +111,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup4() {
         commandStation.function13Through20Packet(address,
-                getFunction(13), getF13Momentary(),
-                getFunction(14), getF14Momentary(),
-                getFunction(15), getF15Momentary(),
-                getFunction(16), getF16Momentary(),
-                getFunction(17), getF17Momentary(),
-                getFunction(18), getF18Momentary(),
-                getFunction(19), getF19Momentary(),
-                getFunction(20), getF20Momentary());
+                getFunction(13), getFunctionMomentary(13),
+                getFunction(14), getFunctionMomentary(14),
+                getFunction(15), getFunctionMomentary(15),
+                getFunction(16), getFunctionMomentary(16),
+                getFunction(17), getFunctionMomentary(17),
+                getFunction(18), getFunctionMomentary(18),
+                getFunction(19), getFunctionMomentary(19),
+                getFunction(20), getFunctionMomentary(20));
     }
 
     /**
@@ -128,14 +128,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup5() {
         commandStation.function21Through28Packet(address,
-                getFunction(21), getF21Momentary(),
-                getFunction(22), getF22Momentary(),
-                getFunction(23), getF23Momentary(),
-                getFunction(24), getF24Momentary(),
-                getFunction(25), getF25Momentary(),
-                getFunction(26), getF26Momentary(),
-                getFunction(27), getF27Momentary(),
-                getFunction(28), getF28Momentary());
+                getFunction(21), getFunctionMomentary(21),
+                getFunction(22), getFunctionMomentary(22),
+                getFunction(23), getFunctionMomentary(23),
+                getFunction(24), getFunctionMomentary(24),
+                getFunction(25), getFunctionMomentary(25),
+                getFunction(26), getFunctionMomentary(26),
+                getFunction(27), getFunctionMomentary(27),
+                getFunction(28), getFunctionMomentary(28));
     }
 
     /**

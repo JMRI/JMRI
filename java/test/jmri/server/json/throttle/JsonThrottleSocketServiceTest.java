@@ -48,7 +48,7 @@ public class JsonThrottleSocketServiceTest {
     /**
      * Test that opens a throttle using an address (not a RosterEntry), runs it,
      * and releases it.
-     * 
+     *
      * @throws JsonException if an unexpected exception occurs
      * @throws JmriException if an unexpected exception occurs
      * @throws IOException   if an unexpected exception occurs
@@ -143,7 +143,7 @@ public class JsonThrottleSocketServiceTest {
     /**
      * Test that opens a throttle using a RosterEntry ID, presses function keys,
      * and closes it without releasing it.
-     * 
+     *
      * @throws JsonException if an unexpected exception occurs
      * @throws JmriException if an unexpected exception occurs
      * @throws IOException   if an unexpected exception occurs
@@ -172,8 +172,8 @@ public class JsonThrottleSocketServiceTest {
         Throttle throttle = manager.get(new DccLocoAddress(3, false)).getThrottle();
         throttle.setF0Momentary(!re.getFunctionLockable(0));
         throttle.setF1Momentary(!re.getFunctionLockable(1));
-        Assert.assertFalse("F0 is not momentary", throttle.getF0Momentary());
-        Assert.assertTrue("F1 is momentary", throttle.getF1Momentary());
+        Assert.assertFalse("F0 is not momentary", throttle.getFunctionMomentary(0));
+        Assert.assertTrue("F1 is momentary", throttle.getFunctionMomentary(1));
         JsonNode message = connection.getMessage();
         Assert.assertNotNull(message);
         Assert.assertEquals("Address", 3, message.path(JSON.DATA).path(JSON.ADDRESS).asInt());
@@ -234,7 +234,7 @@ public class JsonThrottleSocketServiceTest {
      * service, verifies both services receive updates to changes made by the
      * other service; then test that one service gets correct messages when
      * other service throws IOException
-     * 
+     *
      * @throws JsonException if an unexpected exception occurs
      * @throws JmriException if an unexpected exception occurs
      * @throws IOException   if an unexpected exception occurs
