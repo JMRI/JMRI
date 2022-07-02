@@ -90,7 +90,8 @@ public interface Throttle extends PropertyChangeProvider {
      */
     public static final int[] FUNCTION_GROUPS = new int[]{ 1, 1, 1, 1, 1, /** 0-4 */
         2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
-        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 21-28 */
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5, /** 21-28 */
+        6, 6, 6, 6, 6, 6, 6, 6 /** 29-36 */
 
     };
 
