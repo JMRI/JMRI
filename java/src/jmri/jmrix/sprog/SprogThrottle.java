@@ -55,7 +55,7 @@ public class SprogThrottle extends AbstractThrottle {
     protected void sendFunctionGroup1() {
         byte[] result = jmri.NmraPacket.function0Through4Packet(
                 address.getNumber(), address.isLongAddress(),
-                getF0(), getF1(), getF2(), getF3(), getF4());
+                getFunction(0), getFunction(1), getFunction(2), getFunction(3), getFunction(4));
 
         station.sendPacket(result, 1);
     }
@@ -68,7 +68,7 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function5Through8Packet(
                 address.getNumber(), address.isLongAddress(),
-                getF5(), getF6(), getF7(), getF8());
+                getFunction(5), getFunction(6), getFunction(7), getFunction(8));
 
         station.sendPacket(result, 1);
     }
@@ -81,7 +81,7 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(
                 address.getNumber(), address.isLongAddress(),
-                getF9(), getF10(), getF11(), getF12());
+                getFunction(9), getFunction(10), getFunction(11), getFunction(12));
 
         station.sendPacket(result, 1);
     }
@@ -94,8 +94,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function13Through20Packet(
                 address.getNumber(), address.isLongAddress(),
-                getF13(), getF14(), getF15(), getF16(),
-                getF17(), getF18(), getF19(), getF20());
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         station.sendPacket(result, 1);
     }
@@ -108,8 +108,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function21Through28Packet(
                 address.getNumber(), address.isLongAddress(),
-                getF21(), getF22(), getF23(), getF24(),
-                getF25(), getF26(), getF27(), getF28());
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
 
         station.sendPacket(result, 1);
     }

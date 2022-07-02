@@ -25,7 +25,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      */
     public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
         super(memo);
-        
+
         if (address instanceof DccLocoAddress) {
             this.address = ((DccLocoAddress) address);
         }
@@ -40,10 +40,10 @@ public class SprogCSThrottle extends AbstractThrottle {
         // Functions default to false
         this.isForward = true;
         this.speedStepMode = SpeedStepMode.NMRA_DCC_128;
-        
+
 
         //@TODO - this needs a little work. Current implementation looks like it
-        //should support other modes, but doesn't in practice.  
+        //should support other modes, but doesn't in practice.
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
         if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
@@ -70,11 +70,11 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup1() {
         commandStation.function0Through4Packet(address,
-                getF0(), getF0Momentary(),
-                getF1(), getF1Momentary(),
-                getF2(), getF2Momentary(),
-                getF3(), getF3Momentary(),
-                getF4(), getF4Momentary());
+                getFunction(0), getF0Momentary(),
+                getFunction(1), getF1Momentary(),
+                getFunction(2), getF2Momentary(),
+                getFunction(3), getF3Momentary(),
+                getFunction(4), getF4Momentary());
 
     }
 
@@ -85,10 +85,10 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup2() {
         commandStation.function5Through8Packet(address,
-                getF5(), getF5Momentary(),
-                getF6(), getF6Momentary(),
-                getF7(), getF7Momentary(),
-                getF8(), getF8Momentary());
+                getFunction(5), getF5Momentary(),
+                getFunction(6), getF6Momentary(),
+                getFunction(7), getF7Momentary(),
+                getFunction(8), getF8Momentary());
     }
 
     /**
@@ -98,10 +98,10 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup3() {
         commandStation.function9Through12Packet(address,
-                getF9(), getF9Momentary(),
-                getF10(), getF10Momentary(),
-                getF11(), getF11Momentary(),
-                getF12(), getF12Momentary());
+                getFunction(9), getF9Momentary(),
+                getFunction(10), getF10Momentary(),
+                getFunction(11), getF11Momentary(),
+                getFunction(12), getF12Momentary());
     }
 
     /**
@@ -111,14 +111,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup4() {
         commandStation.function13Through20Packet(address,
-                getF13(), getF13Momentary(),
-                getF14(), getF14Momentary(),
-                getF15(), getF15Momentary(),
-                getF16(), getF16Momentary(),
-                getF17(), getF17Momentary(),
-                getF18(), getF18Momentary(),
-                getF19(), getF19Momentary(),
-                getF20(), getF20Momentary());
+                getFunction(13), getF13Momentary(),
+                getFunction(14), getF14Momentary(),
+                getFunction(15), getF15Momentary(),
+                getFunction(16), getF16Momentary(),
+                getFunction(17), getF17Momentary(),
+                getFunction(18), getF18Momentary(),
+                getFunction(19), getF19Momentary(),
+                getFunction(20), getF20Momentary());
     }
 
     /**
@@ -128,14 +128,14 @@ public class SprogCSThrottle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup5() {
         commandStation.function21Through28Packet(address,
-                getF21(), getF21Momentary(),
-                getF22(), getF22Momentary(),
-                getF23(), getF23Momentary(),
-                getF24(), getF24Momentary(),
-                getF25(), getF25Momentary(),
-                getF26(), getF26Momentary(),
-                getF27(), getF27Momentary(),
-                getF28(), getF28Momentary());
+                getFunction(21), getF21Momentary(),
+                getFunction(22), getF22Momentary(),
+                getFunction(23), getF23Momentary(),
+                getFunction(24), getF24Momentary(),
+                getFunction(25), getF25Momentary(),
+                getFunction(26), getF26Momentary(),
+                getFunction(27), getF27Momentary(),
+                getFunction(28), getF28Momentary());
     }
 
     /**
@@ -150,7 +150,7 @@ public class SprogCSThrottle extends AbstractThrottle {
     public synchronized void setSpeedSetting(float speed) {
         SpeedStepMode mode = getSpeedStepMode();
         if (mode == SpeedStepMode.NMRA_DCC_28) {
-            // 28 step mode speed commands are 
+            // 28 step mode speed commands are
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
             this.speedSetting = speed;

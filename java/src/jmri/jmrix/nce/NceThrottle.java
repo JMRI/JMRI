@@ -20,7 +20,7 @@ public class NceThrottle extends AbstractThrottle {
     /* Note the NCE USB doesn't support the NMRA packet format.
      * Before April 2010, this code would send NMRA packets if connected
      * to the NCE command station.  Now it always sends the A2 loco
-     * commands if the command station eprom was built after 2004. 
+     * commands if the command station eprom was built after 2004.
      */
     private boolean sendA2command = true;
 
@@ -83,11 +83,11 @@ public class NceThrottle extends AbstractThrottle {
 
             NceMessage m = NceMessage.sendLocoCmd(tc, locoAddr, NceMessage.LOCO_CMD_FG1, (byte) data);
             tc.sendNceMessage(m, null);
-            
+
         } else {
             byte[] result = jmri.NmraPacket.function0Through4Packet(address
-                    .getNumber(), address.isLongAddress(), getF0(), getF1(),
-                    getF2(), getF3(), getF4());
+                    .getNumber(), address.isLongAddress(), getFunction(0), getFunction(1),
+                    getFunction(2), getFunction(3), getFunction(4));
             NceMessage m = NceMessage.sendPacketMessage(tc, result);
             tc.sendNceMessage(m, null);
         }
@@ -267,7 +267,7 @@ public class NceThrottle extends AbstractThrottle {
             }
             value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
             if (value > 126) {
-                value = 126;    // max possible speed, 127 can crash PowerCab! 
+                value = 126;    // max possible speed, 127 can crash PowerCab!
             }   // emergency stop?
             if (value < 0) {
 
