@@ -232,21 +232,23 @@ public interface Throttle extends PropertyChangeProvider {
 
     /**
      * Set Loco Function and send to Layout.
-     * @param functionNum Function Number, 0-28
+     * May warn if function out of range for Throttle type.
+     * @param functionNum Function Number, 0 - maximum hardware Throttle.
      * @param newState New Function State. True on, false off.
      */
     public abstract void setFunction(int functionNum, boolean newState);
 
     /**
      * Get Loco Function status.
-     * @param functionNum Function Number, 0-28
+     * May warn if function out of range for Throttle type.
+     * @param functionNum Function Number, 0 - maximum hardware Throttle.
      * @return Function State. True on, false off.
      */
     public boolean getFunction(int functionNum);
 
     /**
      * Set Momentary Loco Function and send to Layout.
-     * @param momFuncNum Momentary Function Number, 0-28
+     * @param momFuncNum Momentary Function Number, 0 - maximum hardware Throttle.
      * @param state New Function State. True on, false off.
      */
     public abstract void setFunctionMomentary(int momFuncNum, boolean state);
