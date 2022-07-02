@@ -370,8 +370,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     public Object getValueAt(int row, int col) {
         Warrant w = getWarrantAt(row);
         // some error checking
-        if (w == null) {
-            log.warn("getValueAt row= {}, Warrant is null!", row);
+        if (w == null) { // if NXWarrant is aborted while save/edit frame is open, closing frame causes update
+//            log.warn("getValueAt row= {}, Warrant is null!", row);
             return "";
         }
         JRadioButton allocButton = new JRadioButton();
@@ -645,12 +645,16 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     private void fireTableRowDeleted(Warrant w, int row, boolean all) {
         ThreadingUtil.runOnGUIEventually(()-> {
             removeWarrant(w, all);  // true any warrant, false NX only  
-            fireTableRowsDeleted(row, row);
+        	if (row < _warList.size()) {
+                fireTableRowsDeleted(row, row);
+        	}
         });
     }
 
     private void fireTableRowUpdated(Warrant w, int row) {
-        ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
+    	if (row < _warList.size()) {
+            ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
+    	}
     }
 
     private String _lastProperty;

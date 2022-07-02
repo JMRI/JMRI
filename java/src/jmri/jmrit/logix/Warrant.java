@@ -2889,7 +2889,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * if there is sufficient room calculate a wait time, otherwise ramp immediately.
      */
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification="Write unexpected error and fall through")
-    private boolean doDelayRamp(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
+    synchronized private boolean doDelayRamp(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
         String pendingSpeedType = _engineer.getSpeedType(true); // current or pending speed type
         if (pendingSpeedType.equals(speedType)) {
             return true;
@@ -3114,7 +3114,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
            }
         }
         if (_delayCommand != null) {
-            if (_delayCommand.isDuplicate(speedType, waitTime, idxSpeedChange - 1)) {
+            if (_delayCommand.isDuplicate(speedType, waitTime, endBlockIdx)) {
                 return;
             }
             cancelDelayRamp(true);
@@ -3127,9 +3127,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         String blkName = getBlockAt(endBlockIdx).getDisplayName();
         if (_trace || log.isDebugEnabled()) {
-            log.info(Bundle.getMessage("RampBegin", getTrainName(), reason, blkName));
+            log.info(Bundle.getMessage("RampBegin", getTrainName(), reason, blkName, speedType));
         }
-        fireRunStatus("RampBegin", reason, blkName);
     }
 
     protected void downRampBegun(int endBlockIdx) {
