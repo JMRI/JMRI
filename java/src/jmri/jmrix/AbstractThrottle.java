@@ -499,8 +499,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         DccLocoAddress a = (DccLocoAddress) getLocoAddress();
         byte[] result = jmri.NmraPacket.function13Through20Packet(
                 a.getNumber(), a.isLongAddress(),
-                getF13(), getF14(), getF15(), getF16(),
-                getF17(), getF18(), getF19(), getF20());
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         //if the result returns as null, we should quit.
         if (result == null) {
@@ -532,8 +532,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         DccLocoAddress a = (DccLocoAddress) getLocoAddress();
         byte[] result = jmri.NmraPacket.function21Through28Packet(
                 a.getNumber(), a.isLongAddress(),
-                getF21(), getF22(), getF23(), getF24(),
-                getF25(), getF26(), getF27(), getF28());
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
         //if the result returns as null, we should quit.
         if (result == null) {
             return;
