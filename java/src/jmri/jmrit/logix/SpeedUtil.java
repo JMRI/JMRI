@@ -803,7 +803,7 @@ public class SpeedUtil {
             long time = ts.getTime();
             blkTime += time;
             if (time > 0) {
-                calcDist += getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);;
+                calcDist += getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);
             }
             if (command.equals(Command.SPEED)) {
                 speed = cmdVal.getFloat();
@@ -816,7 +816,7 @@ public class SpeedUtil {
             if (command.equals(Command.NOOP)) {
                 // make map entry. First measure distance to end of block
                 if (time > 0) {
-                    calcDist += getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);;
+                    calcDist += getDistanceOfSpeedChange(intStartSpeed, intEndSpeed, time);
                 }               
                 boolean trace = false;
                 if (calcDist<= 0) {

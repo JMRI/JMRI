@@ -120,5 +120,5 @@ public class RampData {
         return _timeInterval;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RampData.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RampData.class);
 }
