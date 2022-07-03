@@ -25,7 +25,7 @@ public class SprogThrottle extends AbstractThrottle {
      * @param address Loco address.
      */
     public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
-        super(memo);
+        super(memo, SprogConstants.MAX_FUNCTIONS);
         station = memo.getCommandStation();
 
         // cache settings.
@@ -87,7 +87,7 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     /**
-     * Send the message to set the state of functions F13 F14, F15, F16.
+     * Send the message to set the state of functions F13 - F20.
      */
     @Override
     protected void sendFunctionGroup4() {
@@ -101,7 +101,7 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     /**
-     * Send the message to set the state of functions F17 F18, F19, F20.
+     * Send the message to set the state of functions F21 - F28.
      */
     @Override
     protected void sendFunctionGroup5() {
@@ -110,6 +110,81 @@ public class SprogThrottle extends AbstractThrottle {
                 address.getNumber(), address.isLongAddress(),
                 getF21(), getF22(), getF23(), getF24(),
                 getF25(), getF26(), getF27(), getF28());
+
+        station.sendPacket(result, 1);
+    }
+
+    /**
+     * Send the message to set the state of functions F29 - F36.
+     */
+    @Override
+    protected void sendFunctionGroup6() {
+
+        byte[] result = jmri.NmraPacket.function29Through36Packet(
+                address.getNumber(), address.isLongAddress(),
+                getFunction(29), getFunction(30), getFunction(31), getFunction(32),
+                getFunction(33), getFunction(34), getFunction(35), getFunction(36)
+        );
+
+        station.sendPacket(result, 1);
+    }
+
+    /**
+     * Send the message to set the state of functions F37 - F44.
+     */
+    @Override
+    protected void sendFunctionGroup7() {
+
+        byte[] result = jmri.NmraPacket.function37Through44Packet(
+                address.getNumber(), address.isLongAddress(),
+                getFunction(37), getFunction(38), getFunction(39), getFunction(40),
+                getFunction(41), getFunction(42), getFunction(43), getFunction(44)
+        );
+
+        station.sendPacket(result, 1);
+    }
+
+    /**
+     * Send the message to set the state of functions F45 - F52.
+     */
+    @Override
+    protected void sendFunctionGroup8() {
+
+        byte[] result = jmri.NmraPacket.function45Through52Packet(
+                address.getNumber(), address.isLongAddress(),
+                getFunction(45), getFunction(46), getFunction(47), getFunction(48),
+                getFunction(49), getFunction(50), getFunction(51), getFunction(52)
+        );
+
+        station.sendPacket(result, 1);
+    }
+
+    /**
+     * Send the message to set the state of functions F53 - F60.
+     */
+    @Override
+    protected void sendFunctionGroup9() {
+
+        byte[] result = jmri.NmraPacket.function53Through60Packet(
+                address.getNumber(), address.isLongAddress(),
+                getFunction(53), getFunction(54), getFunction(55), getFunction(56),
+                getFunction(57), getFunction(58), getFunction(59), getFunction(60)
+        );
+
+        station.sendPacket(result, 1);
+    }
+
+    /**
+     * Send the message to set the state of functions F61 - F68.
+     */
+    @Override
+    protected void sendFunctionGroup10() {
+
+        byte[] result = jmri.NmraPacket.function61Through68Packet(
+                address.getNumber(), address.isLongAddress(),
+                getFunction(61), getFunction(62), getFunction(63), getFunction(64),
+                getFunction(65), getFunction(66), getFunction(67), getFunction(68)
+        );
 
         station.sendPacket(result, 1);
     }
