@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
 /**
  * Represents the loads that cars can have.
@@ -406,6 +407,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String oldComment = cl.getPickupComment();
                 cl.setPickupComment(comment);
                 if (!oldComment.equals(comment)) {
+                    maxCommentLength = 0;
                     setDirtyAndFirePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
                 }
             }
@@ -435,6 +437,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 String oldComment = cl.getDropComment();
                 cl.setDropComment(comment);
                 if (!oldComment.equals(comment)) {
+                    maxCommentLength = 0;
                     setDirtyAndFirePropertyChange(LOAD_COMMENT_CHANGED_PROPERTY, oldComment, comment);
                 }
             }
@@ -473,6 +476,40 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
             log.info("Max car load name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;
+    }
+    
+    int maxCommentLength = 0;
+    
+    public int getMaxLoadCommentLength() {
+        if (maxCommentLength == 0) {
+            String maxComment = "";
+            String carLoadName = "";
+            Enumeration<String> en = listCarLoads.keys();
+            while (en.hasMoreElements()) {
+                String key = en.nextElement();
+                List<CarLoad> loads = listCarLoads.get(key);
+                for (CarLoad load : loads) {
+                    if (load.getDropComment().length() > maxCommentLength) {
+                        maxComment = load.getDropComment();
+                        maxCommentLength = load.getDropComment().length();
+                        carLoadName = load.getName();
+                    }
+                    if (load.getPickupComment().length() > maxCommentLength) {
+                        maxComment = load.getPickupComment();
+                        maxCommentLength = load.getPickupComment().length();
+                        carLoadName = load.getName();
+                    }
+                }
+            }
+            if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Drop_Comment().length()) {
+                maxCommentLength = TrainManifestHeaderText.getStringHeader_Drop_Comment().length();
+            }
+            if (maxCommentLength < TrainManifestHeaderText.getStringHeader_Pickup_Comment().length()) {
+                maxCommentLength = TrainManifestHeaderText.getStringHeader_Pickup_Comment().length();
+            }
+            log.info("Max car load comment ({}) length {}, load name ({})", maxComment, maxCommentLength, carLoadName);
+        }
+        return maxCommentLength;
     }
 
     private List<CarLoad> getSortedList(String type) {
