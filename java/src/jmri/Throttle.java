@@ -1,8 +1,7 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
-import java.util.List;
 import javax.annotation.Nonnull;
+
 import jmri.beans.PropertyChangeProvider;
 
 /**
@@ -90,7 +89,10 @@ public interface Throttle extends PropertyChangeProvider {
      */
     public static final int[] FUNCTION_GROUPS = new int[]{ 1, 1, 1, 1, 1, /** 0-4 */
         2, 2, 2, 2, /** 5-8 */   3, 3, 3, 3, /** 9-12 */
-        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5 /** 21-28 */
+        4, 4, 4, 4, 4, 4, 4, 4, /** 13-20 */ 5, 5, 5, 5, 5, 5, 5, 5, /** 21-28 */
+        6, 6, 6, 6, 6, 6, 6, 6, /** 29-36 */ 7, 7, 7, 7, 7, 7, 7, 7, /** 37-44 */
+        8, 8, 8, 8, 8, 8, 8, 8, /** 45-52 */ 9, 9, 9, 9, 9, 9, 9, 9, /** 53-60 */
+        10, 10, 10, 10, 10, 10, 10, 10,  /** 61-68 */
 
     };
 

@@ -323,6 +323,17 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
+     * Test of setFxx method for Fns above F28
+     */
+    @Test
+    public void testSetHigherFns() {
+        for(int i=29; i<maxFns; i++) {
+            instance.setFunction(i, true);
+            Assert.assertEquals(true, instance.getFunction(i));
+        }
+    }
+    
+    /**
      * Test of sendFunctionGroup1 method, of class AbstractThrottle.
      */
     @Test
