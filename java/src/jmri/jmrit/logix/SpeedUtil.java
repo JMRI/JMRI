@@ -320,8 +320,11 @@ public class SpeedUtil {
     }
 
     protected int getRampTimeIncrement() {
-        if (_rampTimeIncrement <= 0) {
+        if (_rampTimeIncrement < 500) {
             _rampTimeIncrement = WarrantPreferences.getDefault().getTimeIncrement();
+            if (_rampTimeIncrement <= 500) {
+                _rampTimeIncrement = 500;
+            }
         }
         return _rampTimeIncrement;
     }
@@ -449,16 +452,6 @@ public class SpeedUtil {
                 }
             }
         }
-        // even with instant speed change, changing speed must take some amount of time
-        if (_ma < 50) {
-            _ma = 50;
-        }
-        if (_md < 50) {
-            _md = 50;
-        }
-        if (_rampTimeIncrement < _ma || _rampTimeIncrement < _md) {
-            _rampTimeIncrement = (int)_ma;
-        }
         if (log.isDebugEnabled()) {
             log.debug("makeRampParameters for {}, addr={}. _ma= {}ms/step, _md= {}ms/step. rampStepIncr= {} timeIncr= {} throttleStep= {}",
                     _rosterId, getAddress(), _ma, _md, _rampThrottleIncrement, _rampTimeIncrement, getThrottleSpeedStepIncrement());
@@ -580,7 +573,7 @@ public class SpeedUtil {
         float stepIncrement = _throttle.getSpeedIncrement();
         _rampThrottleIncrement = stepIncrement * Math.round(getRampThrottleIncrement()/stepIncrement);
         if (log.isDebugEnabled()) {
-        	log.debug("User's Ramp increment modified to {} ({} speed steps)",
+            log.debug("User's Ramp increment modified to {} ({} speed steps)",
                     _rampThrottleIncrement, Math.round(_rampThrottleIncrement/stepIncrement));
         }
     }
@@ -914,7 +907,7 @@ public class SpeedUtil {
         // assume a linear change of speed
         if (speedTime <= momentumTime ) {
             // perhaps will be too far since currSpeed may not be attained
-        	dist = getTrackSpeed((prevSpeed + currSpeed)/2) * speedTime;
+            dist = getTrackSpeed((prevSpeed + currSpeed)/2) * speedTime;
         } else {
             dist = getTrackSpeed((prevSpeed + currSpeed)/2) * momentumTime;
             if (speedTime > momentumTime) { // time remainder at changed speed

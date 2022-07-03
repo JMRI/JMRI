@@ -629,13 +629,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void fireCellUpdate(int row, int col) {
-        if (row < getRowCount()) {
-            ThreadingUtil.runOnGUIEventually(()-> {
-                if (row < getRowCount()) {  // when Aborted, row may be gone by now
-                    fireTableCellUpdated(row, col);
-                }
-            });
-        }
+        ThreadingUtil.runOnGUIEventually(()-> {
+            if (row < _warList.size()) {  // when Aborted, row may be gone by now
+                fireTableCellUpdated(row, col);
+            }
+        });
     }
 
     private void fireTableUpdate() {
@@ -647,14 +645,14 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             removeWarrant(w, all);  // true any warrant, false NX only  
         	if (row < _warList.size()) {
                 fireTableRowsDeleted(row, row);
-        	}
+            }
         });
     }
 
     private void fireTableRowUpdated(Warrant w, int row) {
-    	if (row < _warList.size()) {
+        if (row < _warList.size()) {
             ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
-    	}
+        }
     }
 
     private String _lastProperty;

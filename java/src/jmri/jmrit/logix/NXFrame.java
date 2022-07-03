@@ -761,10 +761,10 @@ public class NXFrame extends WarrantRoute {
         }
         while (iter.hasNext()) {       // ramp up loop
 
-        	float dist = 0;
+            float dist = 0;
             while (iter.hasNext()) {
                 // interval distance up to speed change
-            	dist = _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, speedTime);
+                dist = _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, speedTime);
                 if (blkDistance + dist >= blockLen) {
                     break;
                 }
@@ -807,12 +807,12 @@ public class NXFrame extends WarrantRoute {
                 if (noopTime > timeInterval) {
                     speedTime = 0;
                 } else {
-                    speedTime = timeInterval - noopTime;   // time to next speed change
+                    speedTime = timeInterval - noopTime; // time to next speed change
                 }
                 if (blkDistance >= blockLen) {
-                	curDistance += blockLen;  // noop distance
+                    curDistance += blockLen; // noop distance
                 } else {
-                	curDistance += blockLen - blkDistance;  // noop distance
+                    curDistance += blockLen - blkDistance; // noop distance
                 }
             }
 
@@ -837,7 +837,7 @@ public class NXFrame extends WarrantRoute {
         }
 
         if (Math.abs(curThrottle - _maxThrottle) > 0.001) {
-        	log.error("curThrottle = {} _maxThrottle = {} prevThrottle= {}", curThrottle, _maxThrottle, prevThrottle);
+            log.error("curThrottle = {} _maxThrottle = {} prevThrottle= {}", curThrottle, _maxThrottle, prevThrottle);
         }
 
         prevThrottle = curThrottle; // travel at curThrottle for a period of time
@@ -845,7 +845,7 @@ public class NXFrame extends WarrantRoute {
         float maxSpeedDist = totalLen - upRampLength - dnRampLength;
 
         if (remTotal - blockLen > dnRampLength) {    // At maxThrottle, remainder of block at max speed
-        	curDistance += blockLen - blkDistance;
+            curDistance += blockLen - blkDistance;
             if (nextIdx < orders.size()) {    // not the last block
                 remTotal -= blockLen;
                 bo = orders.get(nextIdx++);
@@ -894,9 +894,9 @@ public class NXFrame extends WarrantRoute {
                 }
             }
             float remMaxSpeedDist = remTotal - dnRampLength;
-        	blkDistance = remMaxSpeedDist;
+            blkDistance = remMaxSpeedDist;
             speedTime =_speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist);
-        	curDistance += remMaxSpeedDist;  // noop distance
+            curDistance += remMaxSpeedDist; // noop distance
        } else {
             // else Start ramp down in block where ramp up ended
             blkDistance += maxSpeedDist;
@@ -930,7 +930,7 @@ public class NXFrame extends WarrantRoute {
             while (iter.hasPrevious()) {
                 dist = _speedUtil.getDistanceOfSpeedChange(prevThrottle, curThrottle, speedTime);
                 if (blkDistance + dist>= blockLen) {
-                	break;
+                    break;
                 }
                 // interval distance up to speed change
                 blkDistance += dist;
@@ -976,9 +976,9 @@ public class NXFrame extends WarrantRoute {
                     speedTime = timeInterval - noopTime;   // time to next speed change
                 }
                 if (blkDistance >= blockLen) {
-                	curDistance += blockLen;  // noop distance
+                    curDistance += blockLen; // noop distance
                 } else {
-                	curDistance += blockLen - blkDistance;  // noop distance
+                    curDistance += blockLen - blkDistance; // noop distance
                 }
             }
             remTotal -= blockLen;
@@ -986,7 +986,7 @@ public class NXFrame extends WarrantRoute {
             if (nextIdx < orders.size()) {
                 bo = orders.get(nextIdx++);
                 if (nextIdx == orders.size()) {
-                	blockLen = _stopDist;
+                    blockLen = _stopDist;
                 } else {
                     blockLen = getPathLength(bo);
                 }

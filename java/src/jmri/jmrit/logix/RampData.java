@@ -72,7 +72,7 @@ public class RampData {
             if (iter.hasNext()) {
                 prevSetting = iter.next();
             }
-			while (iter.hasNext()) {
+            while (iter.hasNext()) {
                 nextSetting = iter.next().floatValue();
                 rampLength += _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
                 prevSetting = nextSetting;
