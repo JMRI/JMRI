@@ -7,9 +7,6 @@ import java.beans.PropertyVetoException;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Tests for the SerialLightManager class
@@ -23,7 +20,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     @BeforeEach
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         // replace the SerialTrafficController
         memo = new GrapevineSystemConnectionMemo();
@@ -49,22 +46,12 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     public void testAsAbstractFactory() {
         // ask for a Light, and check type
         Light o = l.newLight("GL1105", "my name");
-
-        if (log.isDebugEnabled()) {
-            log.debug("received light value {}", o);
-        }
-        Assert.assertTrue(null != (SerialLight) o);
+        Assert.assertNotNull( o);
+        Assert.assertTrue(o instanceof SerialLight);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("GL1105"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("GL1105"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull( l.getBySystemName("GL1105"));
+        Assert.assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -98,14 +85,12 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
         return 1107;
     }
 
-
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
-
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialLightManagerTest.class);
 
 }
