@@ -16,9 +16,12 @@ import jmri.managers.DefaultProgrammerManager;
  *
  */
 public class Mx1ProgrammerManager extends DefaultProgrammerManager {
+    
+    private Mx1SystemConnectionMemo _memo = null;
 
     public Mx1ProgrammerManager(Programmer serviceModeProgrammer, Mx1SystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
+        _memo = memo;
     }
 
     /**
@@ -28,7 +31,14 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
      */
     @Override
     public boolean isAddressedModePossible() {
-        return false;
+        if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
@@ -38,7 +48,14 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
 
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return null;
+        if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
+        {
+            return new Mx1OpsModeProgrammer(pAddress, pLongAddress, _memo.getMx1TrafficController());
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
