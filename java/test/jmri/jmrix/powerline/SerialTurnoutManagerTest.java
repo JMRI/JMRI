@@ -10,8 +10,6 @@ import java.beans.PropertyVetoException;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SerialTurnoutManagerTest.java
@@ -54,22 +52,12 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("PTB1", "my name");
-
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value {}", o);
-        }
-        Assert.assertTrue(null != (SerialTurnout) o);
+        Assert.assertNotNull( o );
+        Assert.assertTrue( o instanceof SerialTurnout );
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("PTB1"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("PTB1"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull( l.getBySystemName("PTB1"));
+        Assert.assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -79,7 +67,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // create
         Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -89,7 +77,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // create
         Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -132,6 +120,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }
