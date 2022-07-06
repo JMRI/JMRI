@@ -92,13 +92,13 @@ public abstract class BackupBase {
      * @param setName The name of the new backup set
      * @throws java.io.IOException Due to trouble writing files
      */
-    public void backupFilesToSetName(String setName) throws IOException {
+    public void backupFilesToSetName(String setName) throws IOException, IllegalArgumentException {
         validateNotNullOrEmpty(setName);
 
         copyBackupSet(getOperationsRoot(), new File(getBackupRoot(), setName));
     }
 
-    private void validateNotNullOrEmpty(String s) {
+    private void validateNotNullOrEmpty(String s) throws IllegalArgumentException {
         if (s == null || s.trim().length() == 0) {
             throw new IllegalArgumentException(
                     "string cannot be null or empty."); // NOI18N
@@ -167,9 +167,9 @@ public abstract class BackupBase {
      */
     public boolean checkIfBackupSetExists(String setName) {
         // This probably needs to be simplified, but leave for now.
-        validateNotNullOrEmpty(setName);
 
         try {
+            validateNotNullOrEmpty(setName);
             File file = new File(getBackupRoot(), setName);
 
             if (file.exists()) {

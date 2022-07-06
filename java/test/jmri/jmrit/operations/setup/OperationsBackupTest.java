@@ -73,14 +73,14 @@ public class OperationsBackupTest {
     private String[] regularBackupSetFileNames;
 
     public String[] getRegularBackupSetFileNames() {
-        return regularBackupSetFileNames;
+        return java.util.Arrays.copyOf(regularBackupSetFileNames, regularBackupSetFileNames.length);
     }
 
-    private String[] testBackupSetFileNames;
+    // private String[] testBackupSetFileNames;
 
-    public String[] getTestBackupSetFileNames() {
-        return testBackupSetFileNames;
-    }
+    // public String[] getTestBackupSetFileNames() {
+    //    return testBackupSetFileNames;
+    // }
 
     /**
      * Test-by test initialization.
@@ -167,8 +167,8 @@ public class OperationsBackupTest {
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
         deleteTestFiles();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // Some private helper methods......
@@ -178,15 +178,15 @@ public class OperationsBackupTest {
         // Could roll up into setup() if not used elsewhere.
 
         if (!operationsRoot.exists()) {
-            operationsRoot.mkdirs();
+            assertTrue(operationsRoot.mkdirs());
         }
 
         if (!autoBackupRoot.exists()) {
-            autoBackupRoot.mkdirs();
+            assertTrue(autoBackupRoot.mkdirs());
         }
 
         if (!defaultBackupRoot.exists()) {
-            defaultBackupRoot.mkdirs();
+            assertTrue(defaultBackupRoot.mkdirs());
         }
 
         for (String name : regularBackupSetFileNames) {
@@ -197,10 +197,9 @@ public class OperationsBackupTest {
     private void createDummyXmlFile(File dir, String name) throws IOException {
         // Creates a single dummy XML file in the given directory
         File file = new File(dir, name);
-        FileWriter out = new FileWriter(file);
-        out.write("This is a dummy version of the " + name + " file...");
-
-        out.close();
+        try (FileWriter out = new FileWriter(file)) {
+            out.write("This is a dummy version of the " + name + " file...");
+        }
     }
 
     private Boolean existsFile(File dir, String name) {
@@ -217,7 +216,7 @@ public class OperationsBackupTest {
         if (operationsRoot.exists()) {
             for (File f : operationsRoot.listFiles()) {
                 if (f.isFile()) {
-                    f.delete();
+                    assertTrue(f.delete());
                 }
             }
         }
@@ -231,11 +230,11 @@ public class OperationsBackupTest {
         for (File f : dir.listFiles()) {
             // Delete files first
             if (f.isFile()) {
-                f.delete();
+                assertTrue(f.delete());
             }
         }
 
-        dir.delete();
+        assertTrue(dir.delete());
     }
 
     public void verifyBackupSetAgainst(File srcDir, String srcSet, File dstDir,
@@ -321,8 +320,8 @@ public class OperationsBackupTest {
     @Test
     @Disabled("Disabled in JUnit 3")
     public void testTestBackupSetFileNames() {
-        String[] names = testBackupSetFileNames;
-
+        // String[] names = testBackupSetFileNames;
+        String[] names = new String[]{"Disabled","in","junit","3","",""};
         Assert.assertEquals("Test Backup set file name count", 6, names.length);
 
         Assert.assertEquals("NEW_TEST_Operations.xml", names[0]);
@@ -476,10 +475,9 @@ public class OperationsBackupTest {
 
         try {
             backup.backupFilesToDirectory(dir);
-
             fail("Expected exception to be thrown.");
-        } catch (Exception ex) {
-            // Maybe we should check what type of exception was caught???
+        } catch (IOException ex) {
+            assertEquals("Test Currently Disabled", ex.getMessage());
         }
     }
     
@@ -564,7 +562,7 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testDefaultBackupWithName() throws IOException {
+    public void testDefaultBackupWithName() throws IOException, IllegalArgumentException {
         // Does a backup to the backups directory
         // The name of the backup set is given.
         BackupBase backup = new DefaultBackup();
@@ -577,7 +575,7 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testDefaultBackupWithName2() throws IOException {
+    public void testDefaultBackupWithName2() throws IOException, IllegalArgumentException {
         // Does a backup to the backups directory
         // The name of the backup set is given.
         BackupBase backup = new DefaultBackup();
@@ -596,9 +594,10 @@ public class OperationsBackupTest {
         BackupBase backup = new DefaultBackup();
 
         try {
-            backup.backupFilesToSetName((String) null);
+            backup.backupFilesToSetName( null);
             fail("Expected exception to be thrown.");
-        } catch (Exception ex) {
+        } catch (IOException | IllegalArgumentException ex) {
+            assertTrue( ex instanceof IllegalArgumentException);
         }
     }
 
@@ -612,12 +611,13 @@ public class OperationsBackupTest {
         try {
             backup.backupFilesToSetName("");
             fail("Expected exception to be thrown.");
-        } catch (Exception ex) {
+        } catch (IOException | IllegalArgumentException ex) {
+            assertTrue( ex instanceof IllegalArgumentException);
         }
     }
 
     @Test
-    public void testSuggestedDefaultBackupName() throws IOException {
+    public void testSuggestedDefaultBackupName() throws IOException, IllegalArgumentException {
         // Tests creating the suggested backup set names that account for
         // existing backup sets.
         // This probably should test for what happens after 99, but I'll leave
@@ -662,7 +662,7 @@ public class OperationsBackupTest {
     // Test restores by doing a backup, deleting the source files, doing a
     // restore and verifying the new source files.
     @Test
-    public void testRestoreFilesFromDefault() throws IOException {
+    public void testRestoreFilesFromDefault() throws IOException, IllegalArgumentException {
         BackupBase backup = new DefaultBackup();
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
@@ -675,16 +675,16 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testDefaultBackupSetList() throws IOException {
+    public void testDefaultBackupSetList() throws IOException, IllegalArgumentException {
 
         // confirm that all directories have been deleted
         Assert.assertTrue("Default directory exists", defaultBackupRoot.exists());
-        Assert.assertEquals("Confirm directory is empty", defaultBackupRoot.list().length, 0);
-        Assert.assertEquals("Confirm auto back up directory is empty", autoBackupRoot.list().length, 0);
+        assertEquals("Confirm directory is empty", 0, defaultBackupRoot.list().length);
+        assertEquals("Confirm auto back up directory is empty", 0, autoBackupRoot.list().length );
 
         // Make three backups and then get the list of set names
         BackupBase backup = new DefaultBackup();
-        Assert.assertEquals("Confirm directory is empty", backup.getBackupSetList().length, 0);
+        assertEquals("Confirm directory is empty", 0, backup.getBackupSetList().length );
 
         String[] expectedList = new String[3];
 
@@ -695,9 +695,9 @@ public class OperationsBackupTest {
             backup.backupFilesToSetName(setName);
         }
 
-        Assert.assertEquals("Confirm default directory has the right number of files", defaultBackupRoot.list().length, 3);
-        Assert.assertEquals("Confirm default directory has the right number of files", backup.getBackupSetList().length, 3);
-        Assert.assertEquals("Confirm auto back up directory is empty", autoBackupRoot.list().length, 0);
+        assertEquals("Confirm default directory has the right number of files", 3, defaultBackupRoot.list().length );
+        assertEquals("Confirm default directory has the right number of files", 3, backup.getBackupSetList().length );
+        assertEquals("Confirm auto back up directory is empty", 0, autoBackupRoot.list().length );
 
         String[] actualList = backup.getBackupSetList();
 
@@ -708,7 +708,7 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testIfDefaultBackupSetExists() throws IOException {
+    public void testIfDefaultBackupSetExists() throws IOException, IllegalArgumentException {
         // Create a default backup set then see if it exists.
         BackupBase backup = new DefaultBackup();
 
@@ -747,7 +747,7 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testAutoBackupWithName() throws IOException {
+    public void testAutoBackupWithName() throws IOException, IllegalArgumentException {
         // Does a backup to the autoBackups directory
         // The name of the backup set is given.
         BackupBase backup = new AutoBackup();
@@ -816,7 +816,7 @@ public class OperationsBackupTest {
     // Test restores by doing a backup, deleting the source files, doing a
     // restore and verifying the new source files.
     @Test
-    public void testRestoreFilesFromAuto() throws IOException {
+    public void testRestoreFilesFromAuto() throws IOException, IllegalArgumentException {
         BackupBase backup = new AutoBackup();
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
@@ -829,16 +829,16 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testAutoBackupSetList() throws IOException {
+    public void testAutoBackupSetList() throws IOException, IllegalArgumentException {
 
         // confirm that all directories have been deleted
-        Assert.assertTrue("Auto backup directory exists", autoBackupRoot.exists());
-        Assert.assertEquals("Confirm directory is empty", autoBackupRoot.list().length, 0);
-        Assert.assertEquals("Confirm default backup directory is empty", defaultBackupRoot.list().length, 0);
+        assertTrue("Auto backup directory exists", autoBackupRoot.exists());
+        assertEquals("Confirm directory is empty", 0, autoBackupRoot.list().length );
+        assertEquals("Confirm default backup directory is empty", 0, defaultBackupRoot.list().length );
 
         // Make three backups and then get the list of set names
         BackupBase backup = new AutoBackup();
-        Assert.assertEquals("Confirm directory is empty", backup.getBackupSetList().length, 0);
+        assertEquals("Confirm directory is empty", 0, backup.getBackupSetList().length );
 
         String[] expectedList = new String[3];
 
@@ -849,13 +849,13 @@ public class OperationsBackupTest {
             backup.backupFilesToSetName(setName);
         }
 
-        Assert.assertEquals("Auto backup directory has the right number of files", autoBackupRoot.list().length, 3);
-        Assert.assertEquals("Auto backup directory has the right number of files", backup.getBackupSetList().length, 3);
-        Assert.assertEquals("Confirm default backup directory is empty", defaultBackupRoot.list().length, 0);
+        assertEquals("Auto backup directory has the right number of files", 3, autoBackupRoot.list().length );
+        assertEquals("Auto backup directory has the right number of files", 3, backup.getBackupSetList().length );
+        assertEquals("Confirm default backup directory is empty", 0, defaultBackupRoot.list().length );
 
         String[] actualList = backup.getBackupSetList();
 
-        Assert.assertEquals("Confirm actual list length", actualList.length, 3);
+        assertEquals("Confirm actual list length", 3, actualList.length );
 
         for (int i = 0; i < 3; i++) {
             Assert.assertEquals("Default set list", expectedList[i],
@@ -864,7 +864,7 @@ public class OperationsBackupTest {
     }
 
     @Test
-    public void testIfAutoBackupSetExists() throws IOException {
+    public void testIfAutoBackupSetExists() throws IOException, IllegalArgumentException {
         // Create a auto backup set then see if it exists.
         BackupBase backup = new AutoBackup();
 
