@@ -1,7 +1,6 @@
 package jmri.util;
 
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 
 import javax.swing.ImageIcon;
@@ -12,7 +11,8 @@ import javax.swing.SwingUtilities;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -24,6 +24,7 @@ import jmri.util.JUnitSwingUtil.Pixel;
  *
  * @author Bob Jacobsen Copyright 2009
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class JUnitSwingUtilTest {
 
     /**
@@ -32,7 +33,6 @@ public class JUnitSwingUtilTest {
      */
     @Test
     public void testCheckBox() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a little GUI with a single check box
         JFrame f = new JFrame("SwingTextCaseTest");
         f.setSize(100, 100); // checkbox must be visible for test to work
@@ -73,7 +73,6 @@ public class JUnitSwingUtilTest {
 
     @Test
     public void testAssertImageNinePoints() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // special target to make sure we're doing the right points
         JFrame f = new JFrame();
         f.getContentPane().setBackground(java.awt.Color.blue);
@@ -104,7 +103,6 @@ public class JUnitSwingUtilTest {
      */
     @Test
     public void testGetDisplayedContentGreen() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
@@ -121,9 +119,9 @@ public class JUnitSwingUtilTest {
 
         JUnitSwingUtil.assertPixel("icon first", Pixel.GREEN, val[0]);
         JUnitSwingUtil.assertPixel("icon middle", Pixel.GREEN,
-                val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width +
-                        (int) Math.floor(wIcon.getSize().width / 2) -
-                        1]);
+                val[((wIcon.getSize().height / 2) * wIcon.getSize().width ) 
+                    + (wIcon.getSize().width / 2) 
+                    -1 ]);
         JUnitSwingUtil.assertPixel("icon last", Pixel.GREEN, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
 
         Assert.assertEquals("icon first", "0xff00ff00", JUnitSwingUtil.formatPixel(val[0])); // compare strings to make error readable
@@ -142,7 +140,6 @@ public class JUnitSwingUtilTest {
      */
     @Test
     public void testGetDisplayedContentRedTransparentBkg() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
@@ -161,9 +158,9 @@ public class JUnitSwingUtilTest {
 
         JUnitSwingUtil.assertPixel("icon first", Pixel.RED, val[0]);
         JUnitSwingUtil.assertPixel("icon middle", Pixel.BLUE,
-                val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width +
-                        (int) Math.floor(wIcon.getSize().width / 2) -
-                        1]);
+                val[(wIcon.getSize().height / 2 * wIcon.getSize().width)
+                        + ( wIcon.getSize().width / 2 )
+                        - 1]);
         JUnitSwingUtil.assertPixel("icon last", Pixel.RED, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
 
         Assert.assertEquals("icon first", "0xffff0000", JUnitSwingUtil.formatPixel(val[0])); // compare strings to make error readable
@@ -178,7 +175,6 @@ public class JUnitSwingUtilTest {
 
     @Test
     public void testGetDisplayedContentRedTransparentTransp() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.getContentPane().setBackground(java.awt.Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
