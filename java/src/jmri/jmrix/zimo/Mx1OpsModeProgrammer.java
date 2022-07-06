@@ -11,16 +11,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Programmer support for Zimo MXULF.  
+ * Programmer support for Zimo MXULF operations mode.  
  * Provide an Ops Mode Programmer via a wrapper that works with the
- * EasyDccCommandStation object.
+ * MX1Programmer object.
  * <p>
- * Functionally, this just creates packets to send via the Command Station.
+ * Functionally, this just creates packets to send via the MXULF.
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (c) 2002
  *
- * Adapted by Alger Pike for use with zimo MXULF
+ * Adapted by
+ * @author Alger Pike Copyright (c) 2022
+ * for use with zimo MXULF
  *
  */
 public class Mx1OpsModeProgrammer extends Mx1Programmer implements AddressedProgrammer {
