@@ -116,7 +116,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fix a problem with the OpenLCB hub at high data rates. Overlapping
+                    messages and replies would be echoed out incorrectly.
+                </li>
             </ul>
 
         <h4>RFID</h4>

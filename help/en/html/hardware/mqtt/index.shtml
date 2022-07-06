@@ -135,7 +135,7 @@
 
       <h3 id="prefs">Additional MQTT Connection Preferences</h3>
 
-      <p>Many paramters related to MQTT communication can be seen and changed
+      <p>Many parameters related to MQTT communication can be seen and changed
       by selecting "Additional Connection Settings" on the MQTT Connection page under
       Preferences, as shown in the picture below.</p>
 
@@ -160,7 +160,7 @@
       here</a> about Last Will and Testament.</li>
       
       <li><strong>MQTT Channel</strong>: MQTT Channel is prefixed to the topic of any MQTT messages published or subscribed 
-      by JMRI. When first loaded, MQTT Channel contains a simple default but it is recommeneded that you change
+      by JMRI. When JMRI is first installed, MQTT Channel contains "/trains/" but it is recommeneded that you change
       that.  Note that current guidance from the MQTT community is not to have a leading slash in the MQTT Channel
       (maintained here for historical compatibility). 
       <br>[Since "/trains/" is the default for all users of JMRI, anyone keeping the default and using a public MQTT message
@@ -176,7 +176,7 @@
       same except for advanced usage (typically involving custom programmed microcontrollers used on the layout).
 
       <br><em>Advanced Usage</em>: If you want the object's system name suffix to be in the topic string at some place other
-      than at the end, you can use a "wild card" of "{0}" within the string to put the object's
+      than at the end, you can use a placeholder of "{0}" within the string to put the object's
       system name suffix at that place. This allows you to set up topics like
       "track/turnout/{0}/state" so JMRI will generate "/trains/track/turnout/abc123/state" for
       turnout "MTabc123".
@@ -203,7 +203,8 @@
       <h2 id="topics">MQTT Topics</h2>  
     
       <p>JMRI publishes and receives MQTT messages on specific "topics." An MQTT topic is the label
-      or headline for a message that is broadcast or subscribed to. While MQTT treats a topic as
+      or headline for published messages.  It is the label that other processes subscribe to to receive messages. 
+      While MQTT treats a topic as
       a single string, JMRI forms a topic by concatenating two or three strings, as is described under the
       sections for each type of use (<a href="#objects">MQTT-connected objects</a>, <a href="#LNG">LogixNG</a>,
       <a href="#scripts">scripts</a>).</p>
@@ -226,7 +227,7 @@
 
       <p>For MQTT-connected objects, MQTT message contents to be published are prescribed and automatically created (see 
       following). For both LogixNG and scripts, MQTT message contents can be any arbitrary string you create. How that message
-      contents is interpreted is up to the objects that subscribe to the topic of the message. See the following sections for more details.</p>
+      contents is interpreted is up to the processes that subscribe to the topic of the message. See the following sections for more details.</p>
 
 
 <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
@@ -237,7 +238,7 @@
 
       <p>Older versions of JMRI (4.12 and earlier) directly support Turnouts only. Sensors and
       Lights were added in version 4.21.1. Support for Signal Masts were made available in 4.26.
-      Support for Reporters is not yet available.</p>
+      Direct support for Reporters and Signal Heads is not yet available.</p>
 
       <ul>
         <li><strong>Sensors</strong>: JMRI expects to receive sensor state on the "Sensor receive
@@ -427,16 +428,16 @@
       "https://www.jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttAdapter.html">MQTT Adapter object and
       methods.</a></p>
 
-      <h4>Example: Publishing Object Status (Signal Head Appearance)</h4>
-      <span class="since">Since JMRI 4.99.9</span>
-      <p><a href="../../../../../jython/MQTT/MqttSignalHead.py">This script</a> provides an example of using
-      JMRI's MQTT "publish" method to publish signal head appearance changes </p>
-
       <h4>Publishing Messages</h4>
 
       <p>The <a href="../../../../../jython/MQTT/SendMqttMessage.py">SendMqttMessage.py</a> is an
       example of how to send any message on any topic (automatically prefixed with the JMRI MQTT
       channel) for processing by other devices.</p>
+
+      <h4>Example: Publishing Object Status (Signal Head Appearance)</h4>
+      <span class="since">Since JMRI 4.99.9</span>
+      <p><a href="../../../../../jython/MQTT/MqttSignalHead.py">This script</a> provides an example of using
+      JMRI's MQTT "publish" method to publish signal head appearance changes </p>
 
       <h4>Subscribing to (Receiving) Messages</h4>
 
@@ -490,7 +491,7 @@
       <p><a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target=
       "_blank">Retained Messages</a> indicates to the MQTT message broker whether to retain the
       last message received for a certain topic. JMRI publishes messages with the retain option on.
-      This allows any new subscriber to automatically receive the last message send to a topic
+      This allows any new subscriber to automatically receive the last message sent to a topic
       (often the state of a JMRI object) when that new subscriber starts up.</p>
 
       <p>Both of these parameters can be changed using the <a href=
@@ -512,30 +513,17 @@
       <p>A popular message broker is provided by the 
       mosquito.org foundation.  Enter "test.mosquitto.org" as the Host Name on the Preferences Connections
       page to connect to this message broker (for more information, type 
-      <a href="https://test.mosquitto.org" target="_blank">test.mosquitto.org</a> into a browser.</p>
+      <a href="https://test.mosquitto.org" target="_blank">test.mosquitto.org</a> into a browser).</p>
 
-      <pre>
-    mosquitto_sub -h test.mosquitto.org -v -t '/trains/#'
-      </pre>
-    to subscribe and print all JMRI messages as they are published to JMRI's MQTT Channel "/trains/". 
-    To publish messages for JMRI to subscribe to:
-
-      <pre>
-    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "CLOSED"
-    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
-      </pre>
-    These commands can be run on the same machine as JMRI, or from a separate machine.
     
     <p>You can also install the <a href="https://mosquitto.org/download/" target=
-      "_blank">mosquitto broker and tools</a> on your own machine. You can start the message broker and then publish
-      and subscribe to messages by specifying "localhost" as the Host Name on the MQTT Connection Preference page.
-      You install a copy of the mosquitto message broker by typing:</p>
+      "_blank">mosquitto broker and tools</a> on your own machine. After downloading the tools, enter one of
+      the following command lines from the directory where they now reside:</p>
 
       <pre>
     mosquitto -v
       </pre>
-    and enter "localhost" as the Host Name on the JMRI Connection for MQTT. If you are using
-    version 2.0 of mosquitto or later, you will need to provide a "configuration file":
+    If you are using version 2.0 of mosquitto or later, you will need to provide a "configuration file":
 
       <pre>
     mosquitto -c "[location of your config file]/mosquitto.conf"
@@ -549,8 +537,26 @@
     allow_anonymous true         #Allows JMRI to subscribe without an ID or password
       </pre>
 
-   See the <a href="https://mosquitto.org/man/mosquitto-conf-5.html" target="_blank">mosquitto
-   documentation</a> for more information.
+   Now enter "localhost" as the Host Name on the MQTT JMRI Connection Preferences page. You are now connected!
+
+   <p>To subscribe and print all JMRI messages as they are published to JMRI's MQTT Channel "/trains/", enter 
+    this from the directory where you have the mosquitto tools: </p>
+      
+      <pre>
+    mosquitto_sub -h test.mosquitto.org -v -t '/trains/#'
+      </pre>
+    
+   To publish messages for JMRI to subscribe to:
+
+      <pre>
+    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "CLOSED"
+    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
+      </pre>
+    These commands can be run on the same machine as JMRI, or from a separate machine.
+    
+    
+    <p>See the <a href="https://mosquitto.org/man/mosquitto-conf-5.html" target="_blank">mosquitto
+   documentation</a> for more information.</p>
    
       <p>There are also MQTT tools available for <a href=
       "https://www.google.com/search?q=apple+app+store+mqtt&amp;oq=apple+app+store+mqtt" target=

@@ -132,63 +132,63 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case DISPCOLUMN:
                 return "";     // no heading, as button is clear
             case F0COLUMN:
-                return Throttle.F0;
+                return Throttle.getFunctionString(0);
             case F1COLUMN:
-                return Throttle.F1;
+                return Throttle.getFunctionString(1);
             case F2COLUMN:
-                return Throttle.F2;
+                return Throttle.getFunctionString(2);
             case F3COLUMN:
-                return Throttle.F3;
+                return Throttle.getFunctionString(3);
             case F4COLUMN:
-                return Throttle.F4;
+                return Throttle.getFunctionString(4);
             case F5COLUMN:
-                return Throttle.F5;
+                return Throttle.getFunctionString(5);
             case F6COLUMN:
-                return Throttle.F6;
+                return Throttle.getFunctionString(6);
             case F7COLUMN:
-                return Throttle.F7;
+                return Throttle.getFunctionString(7);
             case F8COLUMN:
-                return Throttle.F8;
+                return Throttle.getFunctionString(8);
             case F9COLUMN:
-                return Throttle.F9;
+                return Throttle.getFunctionString(9);
             case F10COLUMN:
-                return Throttle.F10;
+                return Throttle.getFunctionString(10);
             case F11COLUMN:
-                return Throttle.F11;
+                return Throttle.getFunctionString(11);
             case F12COLUMN:
-                return Throttle.F12;
+                return Throttle.getFunctionString(12);
             case F13COLUMN:
-                return Throttle.F13;
+                return Throttle.getFunctionString(13);
             case F14COLUMN:
-                return Throttle.F14;
+                return Throttle.getFunctionString(14);
             case F15COLUMN:
-                return Throttle.F15;
+                return Throttle.getFunctionString(15);
             case F16COLUMN:
-                return Throttle.F16;
+                return Throttle.getFunctionString(16);
             case F17COLUMN:
-                return Throttle.F17;
+                return Throttle.getFunctionString(17);
             case F18COLUMN:
-                return Throttle.F18;
+                return Throttle.getFunctionString(16);
             case F19COLUMN:
-                return Throttle.F19;
+                return Throttle.getFunctionString(19);
             case F20COLUMN:
-                return Throttle.F20;
+                return Throttle.getFunctionString(20);
             case F21COLUMN:
-                return Throttle.F21;
+                return Throttle.getFunctionString(21);
             case F22COLUMN:
-                return Throttle.F22;
+                return Throttle.getFunctionString(22);
             case F23COLUMN:
-                return Throttle.F23;
+                return Throttle.getFunctionString(23);
             case F24COLUMN:
-                return Throttle.F24;
+                return Throttle.getFunctionString(24);
             case F25COLUMN:
-                return Throttle.F25;
+                return Throttle.getFunctionString(25);
             case F26COLUMN:
-                return Throttle.F26;
+                return Throttle.getFunctionString(26);
             case F27COLUMN:
-                return Throttle.F27;
+                return Throttle.getFunctionString(27);
             case F28COLUMN:
-                return Throttle.F28;
+                return Throttle.getFunctionString(28);
             case THROTCOLUMN:
                 return Bundle.getMessage("ThrottleIDCol");
             default:

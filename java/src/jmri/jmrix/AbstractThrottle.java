@@ -388,6 +388,21 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             case 5:
                 if (momentary) sendMomentaryFunctionGroup5(); else sendFunctionGroup5();
                 break;
+            case 6:
+                if (momentary) sendMomentaryFunctionGroup6(); else sendFunctionGroup6();
+                break;
+            case 7:
+                if (momentary) sendMomentaryFunctionGroup7(); else sendFunctionGroup7();
+                break;
+            case 8:
+                if (momentary) sendMomentaryFunctionGroup8(); else sendFunctionGroup8();
+                break;
+            case 9:
+                if (momentary) sendMomentaryFunctionGroup9(); else sendFunctionGroup9();
+                break;
+            case 10:
+                if (momentary) sendMomentaryFunctionGroup10(); else sendFunctionGroup10();
+                break;
             default:
                 break;
         }
@@ -484,8 +499,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         DccLocoAddress a = (DccLocoAddress) getLocoAddress();
         byte[] result = jmri.NmraPacket.function13Through20Packet(
                 a.getNumber(), a.isLongAddress(),
-                getF13(), getF14(), getF15(), getF16(),
-                getF17(), getF18(), getF19(), getF20());
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         //if the result returns as null, we should quit.
         if (result == null) {
@@ -517,8 +532,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         DccLocoAddress a = (DccLocoAddress) getLocoAddress();
         byte[] result = jmri.NmraPacket.function21Through28Packet(
                 a.getNumber(), a.isLongAddress(),
-                getF21(), getF22(), getF23(), getF24(),
-                getF25(), getF26(), getF27(), getF28());
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
         //if the result returns as null, we should quit.
         if (result == null) {
             return;
@@ -536,6 +551,56 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         } else {
             log.error("Can't send F21-F28 since no command station defined");
         }
+    }
+
+    /**
+     * Send the message to set the state of functions F29 - F36.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup6() {
+        log.error("sendFunctionGroup6 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F37 - F44.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup7() {
+        log.error("sendFunctionGroup7 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F45 - F52.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup8() {
+        log.error("sendFunctionGroup8 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F53 - F60.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup9() {
+        log.error("sendFunctionGroup9 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F61 - F68.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup10() {
+        log.error("sendFunctionGroup10 needs to be implemented if invoked");
     }
 
     /**
@@ -606,6 +671,56 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup5() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F29 - F36
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup6() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F37 - F44
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup7() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F45 - 52
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup8() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F53 - F60
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup9() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F61 - F68
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup10() {
     }
 
     /**
