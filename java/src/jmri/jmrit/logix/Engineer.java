@@ -71,7 +71,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         _speedUtil = warrant.getSpeedUtil();
         _commands = _warrant.getThrottleCommands();
         _idxCurrentCommand = 0;
-        _currentCommand = _commands.get(_idxCurrentCommand);        
+        _currentCommand = _commands.get(_idxCurrentCommand);
         _idxSkipToSpeedCommand = 0;
         _waitForSensor = false;
         setName("Engineer(" + _warrant.getTrainName() +")");
@@ -370,7 +370,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
         if (log.isDebugEnabled()) {
             log.debug("{}: clearWaitForSync from block \"{}\". _synchBlock= {} SpeedState={} _atClear={} _atHalt={}",
-                    _warrant.getDisplayName(), block.getDisplayName(), 
+                    _warrant.getDisplayName(), block.getDisplayName(),
                     (_synchBlock==null?"null":_synchBlock.getDisplayName()), getSpeedState(), _atClear, _atHalt);
         }
     }
@@ -780,10 +780,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 }
                 setSpeed(0.0f);
                 if (turnOffFunctions) {
-                    _throttle.setF0(false);
-                    _throttle.setF1(false);
-                    _throttle.setF2(false);
-                    _throttle.setF3(false);
+                    _throttle.setFunction(0, false);
+                    _throttle.setFunction(1, false);
+                    _throttle.setFunction(2, false);
+                    _throttle.setFunction(3, false);
                 }
             }
             _warrant.releaseThrottle(_throttle);
@@ -1353,7 +1353,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                                     setSpeed(endSpeed);
                                     stop = true;
                                     log.warn("\"{}\" Ramp to speed \"{}\" ended due to overrun into block \"{}\". throttle {} set to {}.\"{}\"",
-                                            _warrant.getTrainName(), _endSpeedType, _warrant.getBlockAt(curIdx).getDisplayName(), 
+                                            _warrant.getTrainName(), _endSpeedType, _warrant.getBlockAt(curIdx).getDisplayName(),
                                             speed, endSpeed, _warrant.getDisplayName());
                                 } else if ( curIdx < _endBlockIdx &&
                                         _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
@@ -1471,15 +1471,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             if (!stop) {
                 _warrant.fireRunStatus("RampDone", _halt, _endSpeedType);   // normal completion of ramp
                 if (_warrant._trace || log.isDebugEnabled()) {
-                    log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(), 
+                    log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(),
                         _endSpeedType, _warrant.getCurrentBlockName()));
                 }
             } else {
                 if (_warrant._trace || log.isDebugEnabled()) {
-                    log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(), 
+                    log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(),
                             _endSpeedType, _warrant.getCurrentBlockName()) + "-Interrupted!");
                 }
-                
+
             }
             stop = false;
 

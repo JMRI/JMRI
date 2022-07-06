@@ -69,7 +69,7 @@ public class Pr2Throttle extends AbstractThrottle {
      * This implementation does not support 128 speed steps.
      */
     @Override
-    // This is a specific implementation for the PR2 that seems to 
+    // This is a specific implementation for the PR2 that seems to
     // return different values from the super class.  Not sure whether
     // that's required by the hardware or not.  If so, please edit this comment
     // to confirm.  If not, this should use the superclass implementation after
@@ -82,7 +82,7 @@ public class Pr2Throttle extends AbstractThrottle {
                 return (int) ((fSpeed * 28) * 4) + 12;
             case NMRA_DCC_14:
                 return (int) ((fSpeed * 14) * 8) + 8;
-                
+
             default:
                 // includes the 128 case
                 log.warn("Unhandled speed step mode: {}", this.getSpeedStepMode());
@@ -98,19 +98,19 @@ public class Pr2Throttle extends AbstractThrottle {
             speed = intSpeed(speedSetting);
         }
         int dirf = 0; // contains dir, f0, f4-1
-        if (getF0()) {
+        if (getFunction(0)) {
             dirf |= (1 << 4);
         }
-        if (getF1()) {
+        if (getFunction(1)) {
             dirf |= (1 << 0);
         }
-        if (getF2()) {
+        if (getFunction(2)) {
             dirf |= (1 << 1);
         }
-        if (getF3()) {
+        if (getFunction(3)) {
             dirf |= (1 << 2);
         }
-        if (getF4()) {
+        if (getFunction(4)) {
             dirf |= (1 << 3);
         }
         if (!getIsForward()) {
@@ -118,25 +118,25 @@ public class Pr2Throttle extends AbstractThrottle {
         }
         // contains f11-5
         int f11 = 0;
-        if (getF5()) {
+        if (getFunction(5)) {
             f11 |= (1 << 0);
         }
-        if (getF6()) {
+        if (getFunction(6)) {
             f11 |= (1 << 1);
         }
-        if (getF7()) {
+        if (getFunction(7)) {
             f11 |= (1 << 2);
         }
-        if (getF8()) {
+        if (getFunction(8)) {
             f11 |= (1 << 3);
         }
-        if (getF9()) {
+        if (getFunction(9)) {
             f11 |= (1 << 4);
         }
-        if (getF10()) {
+        if (getFunction(10)) {
             f11 |= (1 << 5);
         }
-        if (getF11()) {
+        if (getFunction(11)) {
             f11 |= (1 << 6);
         }
 
@@ -148,7 +148,7 @@ public class Pr2Throttle extends AbstractThrottle {
 
         // contains F28, F20, F12
         int f28 = 0;
-        if (getF12()) {
+        if (getFunction(12)) {
             f28 |= (1 << 4);
         }
 

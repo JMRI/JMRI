@@ -228,12 +228,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup1() {
-        int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR) |
-                (getF0() ? LnConstants.DIRF_F0 : 0) |
-                (getF1() ? LnConstants.DIRF_F1 : 0) |
-                (getF2() ? LnConstants.DIRF_F2 : 0) |
-                (getF3() ? LnConstants.DIRF_F3 : 0) |
-                (getF4() ? LnConstants.DIRF_F4 : 0));
+        int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR)
+                | (getFunction(0) ? LnConstants.DIRF_F0 : 0)
+                | (getFunction(1) ? LnConstants.DIRF_F1 : 0)
+                | (getFunction(2) ? LnConstants.DIRF_F2 : 0)
+                | (getFunction(3) ? LnConstants.DIRF_F3 : 0)
+                | (getFunction(4) ? LnConstants.DIRF_F4 : 0));
         log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
@@ -247,10 +247,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_snd = ((getF8() ? LnConstants.SND_F8 : 0) |
-                (getF7() ? LnConstants.SND_F7 : 0) |
-                (getF6() ? LnConstants.SND_F6 : 0) |
-                (getF5() ? LnConstants.SND_F5 : 0));
+        int new_snd = ((getFunction(8) ? LnConstants.SND_F8 : 0)
+                | (getFunction(7) ? LnConstants.SND_F7 : 0)
+                | (getFunction(6) ? LnConstants.SND_F6 : 0)
+                | (getFunction(5) ? LnConstants.SND_F5 : 0));
         log.debug("sendFunctionGroup2 sending {} to LocoNet slot {}", new_snd, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SND);
@@ -267,7 +267,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void sendFunctionGroup3() {
         // LocoNet practice is to send F9-F12 as a DCC packet
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 128),
-                getF9(), getF10(), getF11(), getF12());
+                getFunction(9), getFunction(10), getFunction(11), getFunction(12));
 
         log.debug("sendFunctionGroup3 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
@@ -281,8 +281,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void sendFunctionGroup4() {
         // LocoNet practice is to send F13-F20 as a DCC packet
         byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address >= 128),
-                getF13(), getF14(), getF15(), getF16(),
-                getF17(), getF18(), getF19(), getF20());
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         log.debug("sendFunctionGroup4 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
@@ -296,8 +296,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void sendFunctionGroup5() {
         // LocoNet practice is to send F21-F28 as a DCC packet
         byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address >= 128),
-                getF21(), getF22(), getF23(), getF24(),
-                getF25(), getF26(), getF27(), getF28());
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
 
         log.debug("sendFunctionGroup5 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
@@ -308,12 +308,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * functions F0, F1, F2, F3, F4, F5, F6
      */
     protected void sendExpFunctionGroup1() {
-            int new_F0F6 = ((getF5() ? 0b00100000 : 0) | (getF6() ? 0b01000000 : 0)
-                | (getF0() ? LnConstants.DIRF_F0 : 0)
-                | (getF1() ? LnConstants.DIRF_F1 : 0)
-                | (getF2() ? LnConstants.DIRF_F2 : 0)
-                | (getF3() ? LnConstants.DIRF_F3 : 0)
-                | (getF4() ? LnConstants.DIRF_F4 : 0));
+            int new_F0F6 = ((getFunction(5) ? 0b00100000 : 0) | (getFunction(6) ? 0b01000000 : 0)
+                | (getFunction(0) ? LnConstants.DIRF_F0 : 0)
+                | (getFunction(1) ? LnConstants.DIRF_F1 : 0)
+                | (getFunction(2) ? LnConstants.DIRF_F2 : 0)
+                | (getFunction(3) ? LnConstants.DIRF_F3 : 0)
+                | (getFunction(4) ? LnConstants.DIRF_F4 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
             msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK );
@@ -327,12 +327,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Send the Expanded LocoNet message to set the state of functions F7, F8, F8, F9, F10, F11, F12, F13
      */
     protected void sendExpFunctionGroup2() {
-            int new_F7F13 = ((getF7() ? 0b00000001 : 0) | (getF8() ? 0b00000010 : 0)
-                    | (getF9()  ? 0b00000100 : 0)
-                    | (getF10() ? 0b00001000 : 0)
-                    | (getF11() ? 0b00010000 : 0)
-                    | (getF12() ? 0b00100000 : 0)
-                    | (getF13() ? 0b01000000 : 0));
+            int new_F7F13 = ((getFunction(7) ? 0b00000001 : 0) | (getFunction(8) ? 0b00000010 : 0)
+                    | (getFunction(9)  ? 0b00000100 : 0)
+                    | (getFunction(10) ? 0b00001000 : 0)
+                    | (getFunction(11) ? 0b00010000 : 0)
+                    | (getFunction(12) ? 0b00100000 : 0)
+                    | (getFunction(13) ? 0b01000000 : 0));
                 LocoNetMessage msg = new LocoNetMessage(6);
                 msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
                 msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK );
@@ -347,12 +347,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Message.
      */
     protected void sendExpFunctionGroup3() {
-        int new_F14F20 = ((getF14() ? 0b00000001 : 0) | (getF15() ? 0b00000010 : 0)
-                | (getF16()  ? 0b00000100 : 0)
-                | (getF17() ? 0b00001000 : 0)
-                | (getF18() ? 0b00010000 : 0)
-                | (getF19() ? 0b00100000 : 0)
-                | (getF20() ? 0b01000000 : 0));
+        int new_F14F20 = ((getFunction(14) ? 0b00000001 : 0) | (getFunction(15) ? 0b00000010 : 0)
+                | (getFunction(16)  ? 0b00000100 : 0)
+                | (getFunction(17) ? 0b00001000 : 0)
+                | (getFunction(18) ? 0b00010000 : 0)
+                | (getFunction(19) ? 0b00100000 : 0)
+                | (getFunction(20) ? 0b01000000 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
             msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
             msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK );
@@ -366,23 +366,23 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Sends Expanded loconet message F21 thru F28 Message.
      */
     protected void sendExpFunctionGroup4() {
-        int new_F14F20 = ((getF21() ? 0b00000001 : 0) |
-                (getF22() ? 0b00000010 : 0) |
-                (getF23() ? 0b00000100 : 0) |
-                (getF24() ? 0b00001000 : 0) |
-                (getF25() ? 0b00010000 : 0) |
-                (getF26() ? 0b00100000 : 0) |
-                (getF27() ? 0b01000000 : 0));
+        int new_F2128 = ((getFunction(21) ? 0b00000001 : 0) |
+                (getFunction(22) ? 0b00000010 : 0) |
+                (getFunction(23) ? 0b00000100 : 0) |
+                (getFunction(24) ? 0b00001000 : 0) |
+                (getFunction(25) ? 0b00010000 : 0) |
+                (getFunction(26) ? 0b00100000 : 0) |
+                (getFunction(27) ? 0b01000000 : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-        if (!getF28()) {
+        if (!getFunction(28)) {
             msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
         } else {
             msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
         }
         msg.setElement(2, slot.getSlot() & 0b01111111);
         msg.setElement(3, slot.id() & 0x7F);
-        msg.setElement(4, new_F14F20);
+        msg.setElement(4, new_F2128);
         network.sendLocoNetMessage(msg);
     }
 
