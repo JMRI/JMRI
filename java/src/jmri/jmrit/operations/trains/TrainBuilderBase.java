@@ -1068,7 +1068,7 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildExcludeCarTypeAtLoc"),
                                 new Object[] { car.toString(), car.getTypeName(),
-                                        (car.getLocationName() + ", " + car.getTrackName()) }));
+                                        car.getLocationName(), car.getTrackName() }));
                 // code check, should never be staging
                 if (car.getTrack() == _departStageTrack) {
                     throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging"); // NOI18N
@@ -1206,7 +1206,7 @@ public class TrainBuilderBase extends TrainCommon {
                         car.getLastRouteId().equals(_train.getRoute().getId())) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
-                                    new Object[] { car.toString(), _train.getRoute().getName(), car.getLocationName(),
+                                    new Object[] { car.toString(), car.getTypeName(), _train.getRoute().getName(), car.getLocationName(),
                                             car.getTrackName() }));
                     _carList.remove(car);
                     i--;
@@ -1222,7 +1222,7 @@ public class TrainBuilderBase extends TrainCommon {
                     } else {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("buildExcludeCarByTrain"),
-                                        new Object[] { car.toString(), car.getTrack().getTrackTypeName(),
+                                        new Object[] { car.toString(), car.getTypeName(), car.getTrack().getTrackTypeName(),
                                                 car.getLocationName(), car.getTrackName() }));
                         _carList.remove(car);
                         i--;
@@ -1235,7 +1235,7 @@ public class TrainBuilderBase extends TrainCommon {
                     } else {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("buildExcludeCarByRoute"),
-                                        new Object[] { car.toString(), car.getTrack().getTrackTypeName(),
+                                        new Object[] { car.toString(), car.getTypeName(), car.getTrack().getTrackTypeName(),
                                                 car.getLocationName(), car.getTrackName() }));
                         _carList.remove(car);
                         i--;
@@ -1387,7 +1387,7 @@ public class TrainBuilderBase extends TrainCommon {
                     }
                 } else {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarAtLoc"),
-                            new Object[] { car.toString(), (car.getLocationName() + ", " + car.getTrackName()) }));
+                            new Object[] { car.toString(), car.getTypeName(), car.getLocationName(), car.getTrackName() }));
                     _carList.remove(car);
                     i--;
                 }

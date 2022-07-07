@@ -989,7 +989,7 @@ class processXML():
         # MoveTo icon
         icon_text = block_name[:9]
         icon_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
-        sensor_location = "IS98"+str(index).zfill(4)  
+        sensor_location = "IS99"+str(index).zfill(4)
         icon_tooltip = icon_sensor_name + sensor_location
         wide_icon_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/wide_icon.xml')
         self.doc_MoveTo = ElementTree(file=wide_icon_xml)
