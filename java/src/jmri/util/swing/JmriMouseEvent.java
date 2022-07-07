@@ -303,7 +303,8 @@ public class JmriMouseEvent {
                 case MouseEvent.MOUSE_CLICKED:
                     // event.isPopupTrigger() returns false on mousePressed() on Windows.
                     // The bad news is that SwingUtilities.isRightMouseButton(event) doesn't work either.
-                    return (event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
+                    return (event.getModifiersEx() & InputEvent.META_DOWN_MASK) != 0
+                            || (event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
 
                 default:
                     return event.isPopupTrigger();
