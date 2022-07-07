@@ -3,8 +3,6 @@
 # Author: Bill Fitch, copyright 2020
 # Part of the JMRI distribution
 
-
-#from elementtree.ElementTree import ElementTree
 from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import SubElement
@@ -16,10 +14,7 @@ class processXML():
 
     logLevel = 0
 
-    # doc = None
-    # doc_moveTo_sensor = None
-    # doc_moveTo_sensor_stored = None
-    # doc_MoveTo_stored = 1
+    doc = None
     iter = None
     list_of_stopping_points = []
     output = None
@@ -27,23 +22,31 @@ class processXML():
     def __init__(self,filename,finalPanelFilename):
         if self.logLevel > 0: print "filename",filename
         self.doc = ET.parse(filename)
-         
+        if self.logLevel > 3:  print "self.doc 1", self.doc
         if self.perform_initial_checks() == True:
             self.remove_old_sensors_and_icons()
+            if self.logLevel > 3:  print "self.doc 2", self.doc
             self.remove_old_memories()
+            if self.logLevel > 3:  print "self.doc 3", self.doc
             self.remove_old_transits()
-            # if self.logLevel > 0: print "removed oldsensors"
+            if self.logLevel > 3:  print "self.doc 4", self.doc
+            self.remove_old_logix()
+            if self.logLevel > 0: print "removed oldlogix"
             self.get_list_of_stopping_points()
             # if self.logLevel > 0: print "got stopping points"
+            #self.remove_stopping_point_sensors()
+            self.remove_non_stopping_point_sensors()
             self.add_required_sensors_and_icons()
+            if self.logLevel > 3:  print "self.doc 5", self.doc
             # if self.logLevel > 0: print "about to add_required_logix1"
             self.add_required_logix()
+            if self.logLevel > 3:  print "self.doc 6", self.doc
             # if self.logLevel > 0: print "got add_required_logix1"
-            self.add_required_memories()
+            self.add_required_blockcontents()
+            if self.logLevel > 3:  print "self.doc 7", self.doc
             # if self.logLevel > 0: print "added sensors and icons"
             #self.associate_blocks_with_memories()
             self.write(finalPanelFilename)
-            if self.logLevel > 0: print "wrote panel",finalPanelFilename
             msg = "Wrote panel to:\n" + finalPanelFilename + "\nPlease \n - restart JMRI and \n - load the file " + finalPanelFilename + "\n - instead of " + filename + "\n - and run Stage 2 of the Dispatcher System to set up the transits"
             JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
         
@@ -70,7 +73,7 @@ class processXML():
             self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg)
             if myAnswer == JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
+                #JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
                 pass
             elif myAnswer == JOptionPane.NO_OPTION:
                 msg = 'Stopping'
@@ -91,7 +94,7 @@ class processXML():
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg1)
             if self.logLevel > 0: print(1)
             if myAnswer == JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
+                #JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
                 pass
             elif myAnswer == JOptionPane.NO_OPTION:
                 msg = 'Stopping'
@@ -113,7 +116,7 @@ class processXML():
             if self.logLevel > 0: print(3)
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg2)
             if myAnswer == JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
+                #JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
                 pass
             elif myAnswer == JOptionPane.NO_OPTION:
                 msg = 'Stopping'
@@ -136,7 +139,7 @@ class processXML():
             if self.logLevel > 0: print(3)
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg5)
             if myAnswer == JOptionPane.YES_OPTION:
-                JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
+                #JOptionPane.showMessageDialog(None, 'OK continuing', "As you wish", JOptionPane.WARNING_MESSAGE)
                 pass
             elif myAnswer == JOptionPane.NO_OPTION:
                 msg = 'Stopping'
@@ -207,8 +210,6 @@ class processXML():
         
         
     def get_duplicate_values_in_dict(self, dict):  
-        # if self.logLevel > 0: printing initial_dictionary 
-        #if self.logLevel > 0: print("initial_dictionary", str(dict)) 
           
         # finding duplicate values 
         # from dictionary 
@@ -220,9 +221,6 @@ class processXML():
               
         result = ["blocks " +', '.join(values) + " have the same sensor " + str( key) for key, values in rev_dict.items() 
                                       if len(values) > 1] 
-          
-        # if self.logLevel > 0: printing result 
-        #msg = (', '.join(result))
         return result
 
     def check_sufficient_number_of_blocks(self):
@@ -256,13 +254,9 @@ class processXML():
             success = True
         self.msg2 = " - "
         self.msg2 = self.msg2 + '\n - '.join(list_of_stops)
-        # for message in list_of_stops:
-            # self.ms2 = self.msg2 +"\n" + message
         if self.logLevel > 0: print self.msg2
         self.msg3 = ""
         self.msg3 = '\n - '.join(list_of_blocks)
-        # for message in list_of_blocks:
-            # self.ms3 = self.msg3 +"\n" + message
         if self.logLevel > 0: print self.msg3
         if no_stops == 0:
             self.msg2 = " - there are no stops"
@@ -311,6 +305,9 @@ class processXML():
         #moveToxx and MoveToxx_stored sensors
         self.remove_memories()
         self.remove_blockcontent()
+        
+    def remove_old_logix(self):
+        self.remove_logix_with_string_in_name("Run Dispatcher") 
 
     # **************************************************
     # remove existing transits
@@ -337,15 +334,121 @@ class processXML():
                 if string_to_look_for in sensor:
                     LayoutEditor.remove(sensoricon)
                     
+    def remove_labels_with_string_in_name(self, string_to_look_for ):
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+            for lable in LayoutEditor.findall('positionablelabel'):
+                #if self.logLevel > 0: print sensor
+                text = lable.get('text')
+                if string_to_look_for in text:
+                    LayoutEditor.remove(lable)                    
+                    
+    def remove_sensor_icon_with_string_in_name(self, string_to_look_for):
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+            for sensoricon in LayoutEditor.findall('sensoricon'):
+                sensor_name = sensoricon.get('sensor')
+                if string_to_look_for in sensor_name:
+                    LayoutEditor.remove(sensoricon)
+
+    def remove_sensor_icon_with_name(self, string_to_look_for):
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+            for sensoricon in LayoutEditor.findall('sensoricon'):
+                sensor_name = sensoricon.get('sensor')
+                if string_to_look_for == sensor_name:
+                    LayoutEditor.remove(sensoricon)
+            
+    def remove_sensor_icon_with_string_in_name_old(self, sensor_name):
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+            for sensoricon in LayoutEditor.findall('sensoricon'):
+                if sensoricon.find('sensor') != None:
+                    sensorName = sensoricon.find('sensor').text
+                    if sensorName != None:
+                        if string_to_look_for in sensorName:
+                            if self.logLevel > 3:  print "deleting sensoricon " , string_to_look_for, "in" , LayouEditor
+                            LayoutEditor.remove(sensoricon) 
+                        else:
+                            if self.logLevel > 3:  print "not deleting sensoricon " , string_to_look_for, "in" , LayouEditor                            
+                    
     def remove_old_icons(self):
         #moveTo icons
         self.remove_icons_with_string_in_name("MoveTo")
         #moveInProgress icons
-        self.remove_icons_with_string_in_name("MoveInProgress") 
+        self.remove_icons_with_string_in_name("MoveInProgress")
+        #control icons
+        self.remove_control_icons()
         
+    def remove_icons_with_sensor_in_name(self):
+        for sensors in self.doc.findall('sensors'):
+            for sensor in sensors.findall('sensor'):
+                if sensor.find('userName') != None:
+                    userName = sensor.find('userName').text
+                    if userName != None:
+                        self.remove_icons_with_string_in_name(userName) 
+    
+    def remove_control_icons(self):
+        self.remove_sensor_icon_with_string_in_name("startDispatcherSensor")            
+        self.remove_labels_with_string_in_name("Run Dispatcher System")
+       
+        self.remove_sensor_icon_with_string_in_name("stopMasterSensor")        
+        self.remove_labels_with_string_in_name("Stop Dispatcher System")
+           
+        self.remove_sensor_icon_with_string_in_name("Express")              
+        self.remove_labels_with_string_in_name("Express Train (no stopping)")
+        
+        self.remove_sensor_icon_with_string_in_name("newTrainSensor")      
+        self.remove_labels_with_string_in_name("Setup Train in Section")
+        
+        self.remove_sensor_icon_with_string_in_name("soundSensor")       
+        self.remove_labels_with_string_in_name("Enable Announcements")
+        
+        self.remove_sensor_icon_with_string_in_name("simulateSensor")
+        self.remove_labels_with_string_in_name("Simulate Dispatched Trains")
+            
+        self.remove_sensor_icon_with_string_in_name("setDispatchSensor")
+        self.remove_labels_with_string_in_name("Run Dispatch")
+        
+        self.remove_sensor_icon_with_string_in_name("setRouteSensor")
+        self.remove_labels_with_string_in_name("Setup Route")  
+        
+        self.remove_sensor_icon_with_string_in_name("runRouteSensor")
+        self.remove_labels_with_string_in_name("Run Route")
+        
+        self.remove_sensor_icon_with_string_in_name("editRoutesSensor")
+        self.remove_labels_with_string_in_name("View/Edit Routes")
+        
+        self.remove_sensor_icon_with_string_in_name("viewScheduledSensor")
+        self.remove_labels_with_string_in_name("View/Edit Scheduled Trains")
+        
+        self.remove_sensor_icon_with_string_in_name("schedulerStartTimeSensor")
+        self.remove_labels_with_string_in_name("Set Scheduler Start Time")
+        
+        self.remove_sensor_icon_with_string_in_name("showClockSensor")
+        self.remove_labels_with_string_in_name("Show Analog Clock")
+        
+        self.remove_sensor_icon_with_string_in_name("startSchedulerSensor")      
+        self.remove_labels_with_string_in_name("Start Scheduler")
+
+        self.remove_sensor_icon_with_string_in_name("setStoppingDistanceSensor")
+        self.remove_labels_with_string_in_name("Set Stopping Length")
+                
     # **************************************************
     # remove existing sensors which willbe added later
     # ************************************************** 
+    
+    def remove_logix_with_string_in_name(self, string_to_look_for):
+        for logixs in self.doc.findall('logixs'):
+            for logix in logixs.findall('logix'):
+                if logix.find('userName') != None:
+                    userName = logix.find('userName').text
+                    if userName != None:
+                        if string_to_look_for in userName:
+                            logixs.remove(logix) 
+        for conditionals in self.doc.findall('conditionals'):
+            for conditional in conditionals.findall('conditional'):
+                if conditional.find('userName') != None:
+                    userName = conditional.find('userName').text
+                    if userName != None:
+                        if string_to_look_for in userName:
+                            conditionals.remove(conditional)
 
     def remove_sensors_with_string_in_name(self, string_to_look_for):
         for sensors in self.doc.findall('sensors'):
@@ -354,13 +457,25 @@ class processXML():
                     userName = sensor.find('userName').text
                     if userName != None:
                         if string_to_look_for in userName:
-                            sensors.remove(sensor)                         
+                            sensors.remove(sensor) 
+
+    def remove_sensors_with_string_in_system_name(self, string_to_look_for):
+        for sensors in self.doc.findall('sensors'):
+            for sensor in sensors.findall('sensor'):
+                if sensor.find('userName') != None:
+                    systemName = sensor.find('systemName').text
+                    if systemName != None:
+                        if string_to_look_for in systemName:
+                            sensors.remove(sensor)                            
                     
     def remove_old_sensors(self):
         #moveToxx and MoveToxx_stored sensors
         self.remove_sensors_with_string_in_name("MoveTo" ) 
         #moveTo sensors
         self.remove_sensors_with_string_in_name("MoveInProgress" ) 
+        self.remove_sensors_with_string_in_system_name("IS960")
+        
+    
         
     # **************************************************
     # remove existing sensors and icons which will be added later
@@ -369,6 +484,14 @@ class processXML():
     def remove_old_sensors_and_icons(self):
         self.remove_old_sensors()
         self.remove_old_icons()
+        #block sensors
+        #self.remove_block_sensors()
+        
+    def remove_block_sensors(self):
+        SectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
+        for section in SectionManager.getNamedBeanSet():
+            section_user_name = section.getUserName()
+            self.remove_sensors_with_string_in_system_name(section_user_name)
                 
     # **************************************************
     # gets the list of stopping points (stations, sidings etc.)
@@ -387,6 +510,17 @@ class processXML():
                 if comment != None:
                     if "stop" in comment.lower():
                         self.list_of_stopping_points.append(block.getUserName())
+
+    def remove_stopping_point_sensors(self):
+        for stop_name in self.list_of_stopping_points:
+            self.remove_sensor_icon_with_name(str(stop_name))
+
+    def remove_non_stopping_point_sensors(self):
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+        # get all blocks in the current LayoutEditor
+            block_names = self.get_block_names(LayoutEditor)
+            for block_name in block_names:
+                self.remove_sensor_icon_with_name(str(block_name))
                 
     # **************************************************
     # adds the sensors and icon xml code for each block to the main panel xml code
@@ -394,41 +528,68 @@ class processXML():
     
     # self.list_of_stopping_points has been set up in get_stopping points()
     def add_required_sensors_and_icons(self):           
-        index=0
-        for block_name in self.list_of_stopping_points:
-            # track_segment_ident = p.get_track_segments(block_name)
-            if self.logLevel > 0: print "block_name " ,block_name 
-            
-            #, "track_segment_ident = ", track_segment_ident
-            
-            block_coordinate = self.get_block_coordinates(block_name)
-            if self.logLevel > 0: print "block_coordinate = ", block_coordinate
-            if block_coordinate != None:
-                if self.logLevel > 0: print "block_coordinate = ", block_coordinate
-                self.set_up_all_icons(block_name,block_coordinate,index)
-                self.set_up_all_sensors(block_name, index)
-                index+=1
-                
-        #icons at non-stopping sections        
-        for block in blocks.getNamedBeanSet():
-            block_name = block.getUserName()
-            if block_name != None:
-                if block_name not in self.list_of_stopping_points:
-                    # track_segment_ident = p.get_track_segments(block_name)
-                    if self.logLevel > 0: print "!!!!!!!block_name " ,block_name 
-                    
-                    #, "track_segment_ident = ", track_segment_ident
-                    
-                    block_coordinate = self.get_block_coordinates(block_name)
-                    if self.logLevel > 0: print "block_coordinate = ", block_coordinate
+                        
+        # account for different layout editors
+        # iterate over the layout editors in the main document
+        # get the block coordinate for the track segments in the appropriate 
+
+        index = 0   # used for setting up the sensor number
+        stopping_point_sensors_tally=[]
+        if self.logLevel > 3:  print "self.doc aa", self.doc
+        for LayoutEditor in self.doc.findall('LayoutEditor'):
+            # get all blocks in the current LayoutEditor
+            block_names = self.get_block_names(LayoutEditor)
+            track_ident_block_name_pairs = self.get_track_ident_block_name_pairs(LayoutEditor)
+            #print "block_names =" ,block_names
+            # find block_coordinates
+            for track_ident_block_name_pair in track_ident_block_name_pairs:
+                track_ident, block_name = track_ident_block_name_pair
+                block_coordinate = self.get_block_coordinates(block_name, LayoutEditor)
+                if block_name in self.list_of_stopping_points:
                     if block_coordinate != None:
                         if self.logLevel > 0: print "block_coordinate = ", block_coordinate
-                        self.set_up_all_block_icons(block_name,block_coordinate,index)
+                        if self.logLevel > 3:  print "block_name ", block_name, "stopping_point_sensors_tally", stopping_point_sensors_tally
+                        self.set_up_all_stopping_point_icons(block_name, block_coordinate, index, LayoutEditor)
+                        if block_name not in stopping_point_sensors_tally:     #ensure sensors are not added multiple times
+                            if self.logLevel > 3:  print "tally", block_name, block_coordinate, index, LayoutEditor
+                            self.set_up_all_stopping_point_sensors(block_name, index)
+                            stopping_point_sensors_tally.append(block_name)
                         index+=1
-                    
-        #control icons            
-        self.set_up_control_items()
-        
+                else:
+                    if block_coordinate != None:
+                        if self.logLevel > 0: print "block_coordinate = ", block_coordinate
+                        self.set_up_all_non_stopping_point_block_icons(block_name, block_coordinate, index, LayoutEditor)
+                        self.set_up_all_non_stopping_point_block_icon_codes(block_name, block_coordinate, index)
+                        index+=1
+
+            #set up stopping point sensors for blocks with no track segments, only turnouts
+            block_names = self.get_turnout_block_names(LayoutEditor)
+            turnout_ident_block_name_pairs = self.get_turnout_ident_block_name_pairs(LayoutEditor)
+            # find block_coordinates
+            for turnout_ident_block_name_pair in turnout_ident_block_name_pairs:
+                turnout_ident, block_name = turnout_ident_block_name_pair
+                block_coordinate = self.get_block_coordinates(block_name, LayoutEditor)
+                if block_name in self.list_of_stopping_points:
+                    if block_coordinate != None:
+                        if self.logLevel > 0: print "block_coordinate = ", block_coordinate
+                        if self.logLevel > 3:  print "block_name ", block_name, "stopping_point_sensors_tally", stopping_point_sensors_tally
+                        self.set_up_all_stopping_point_icons(block_name, block_coordinate, index, LayoutEditor)
+                        if block_name not in stopping_point_sensors_tally:     #ensure sensors are not added multiple times
+                            if self.logLevel > 3:  print "tally", block_name, block_coordinate, index, LayoutEditor
+                            self.set_up_all_stopping_point_sensors(block_name, index)
+                            stopping_point_sensors_tally.append(block_name)
+                        index+=1
+                else:
+                    if block_coordinate != None:
+                        if self.logLevel > 0: print "block_coordinate = ", block_coordinate
+                        self.set_up_all_non_stopping_point_block_icons(block_name, block_coordinate, index, LayoutEditor)
+                        self.set_up_all_non_stopping_point_block_icon_codes(block_name, block_coordinate, index)
+                        index+=1
+                        #control icons
+            self.set_up_control_items(LayoutEditor)
+        self.set_up_control_sensors()
+               
+               
     def add_required_logix(self):
         if self.logLevel > 0: print "about to setup_Logix"
         self.set_up_logix_code()
@@ -436,14 +597,52 @@ class processXML():
         if self.logLevel > 0: print "about to insert_logix"
         self.insert_logixandconditionals()
 
+    def get_block_names(self, LayoutEditorElementMainDocument):
+        block_names = []
+        tracksegments = LayoutEditorElementMainDocument.findall('tracksegment')
+        for tracksegment in tracksegments:
+            block_name = tracksegment.get("blockname")
+            if block_name not in block_names:
+                block_names.append(block_name) 
+        return block_names
         
+    def get_track_ident_block_name_pairs(self, LayoutEditorElementMainDocument):
+        track_idents_block_names = []
+        tracksegments = LayoutEditorElementMainDocument.findall('tracksegment')
+        for tracksegment in tracksegments:
+            track_ident = tracksegment.get("ident")
+            block_name = tracksegment.get("blockname")
+            track_ident_block_name = [track_ident,block_name]
+            if track_ident_block_name not in track_idents_block_names:
+                track_idents_block_names.append(track_ident_block_name)
+        return track_idents_block_names
+
+    def get_turnout_block_names(self, LayoutEditorElementMainDocument):
+        block_names = []
+        layoutturnouts = LayoutEditorElementMainDocument.findall('layoutturnout')
+        for layoutturnout in layoutturnouts:
+            block_name = layoutturnout.get("blockname")
+            if block_name not in block_names:
+                block_names.append(block_name)
+        return block_names
+
+    def get_turnout_ident_block_name_pairs(self, LayoutEditorElementMainDocument):
+        turnout_idents_block_names = []
+        layoutturnouts = LayoutEditorElementMainDocument.findall('layoutturnout')
+        for layoutturnout in layoutturnouts:
+            turnout_ident = layoutturnout.get("ident")
+            block_name = layoutturnout.get("blockname")
+            turnout_ident_block_name = [turnout_ident, block_name]
+            if turnout_ident_block_name not in turnout_idents_block_names:
+                turnout_idents_block_names.append(turnout_ident_block_name)
+        return turnout_idents_block_names
 
     # **************************************************
     # adds the sensors and icon xml code for each block to the main panael xml code
     # **************************************************                 
     
     # self.list_of_stopping_points has been set up in get_stopping points()
-    def add_required_memories(self):           
+    def add_required_blockcontents(self):           
         index=0
         #for block in blocks:
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
@@ -451,61 +650,23 @@ class processXML():
         for block in BlockManager.getNamedBeanSet():
             #exclude blocks with no sensors
             if block.getSensor() != None:
-                block_name = block.getUserName()
-                if self.logLevel > 0: print "block_name = ", block_name
-                block_coordinate = self.get_block_coordinates(block_name)
-                if block_coordinate != None:
-                    if self.logLevel > 0: print "block_coordinate = ", block_coordinate
-                    #self.set_up_all_memory_icons(block_name,block_coordinate,index)
-                    #self.set_up_all_memories(block_name, index)
-                    self.set_up_all_blockcontent_icons(block_name,block_coordinate,index)
+                for LayoutEditor in self.doc.findall('LayoutEditor'):
+                    block_name = block.getUserName()
+                    if self.logLevel > 0: print "block_name = ", block_name
+                    block_coordinate = self.get_block_coordinates(block_name, LayoutEditor)
+                    if block_coordinate != None:
+                        if self.logLevel > 0: print "block_coordinate = ", block_coordinate
+                        #self.set_up_all_memory_icons(block_name,block_coordinate,index)
+                        #self.set_up_all_memories(block_name, index)
+                        self.set_up_all_blockcontent_icons(block_name,block_coordinate,index)
                 
                 index+=1             
                 
     # **************************************************
     # Get the coordinates of a track segment in the block, so that the icons can be positioned on i
     # **************************************************                
-            
-        # iter=self.doc.getiterator('tracksegment')
-        # ident_list =[]
-        # i=0
-        # for element in iter:
-            # if element.get("blockname") == block_name:
-                # ident_list.append(element.get("ident"))
-                # i+=1        
-        # if len(ident_list) >0:  # there may be some unused blocks
-            # min_dist = 99999
-            # mid_segment = None
-            # for element in ident_list:
-                # other_segments = copy.copy(ident_list)
-                # other_segments.remove(segment)
-                # for os in other_segments:
-                    # distance = hop_distance(segment, os)
-                    # if distance < min_dist:
-                        # min_dist =distance
-                        # mid_segment = Track_segment
-                        # ident = element.get("ident")
-                        # mid_element = element
-        
-            # connect1 = mid_element.get("connect1name")
-            # type1 = mid_element.get("type1")
-            # connect2 = mid_element.get("connect2name")
-            # type2 = mid_element.get("type2")
-            # if self.logLevel > 0: print "connect1 = ",connect1
-            # if self.logLevel > 0: print "connect2 = ",connect2
-            # x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
-            # x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
-            # x_button = int((float(x1)+float(x2))/2.0)
-            # y_button = int((float(y1)+float(y2))/2.0)-10      #-10 to raise the button up a bit on the track
-            # button_coordinates = [x_button,y_button]
-            # if self.logLevel > 0: print "button coordinate = " , button_coordinates
-            # return button_coordinates 
-
-    # def hop_distance(self, from_track_segment,to_track_segment):
-        # hop_dist = 
-
-            
-    def get_block_coordinates(self, block_name):
+                       
+    def get_block_coordinates(self, block_name, LayoutEditorElementMainDocument):
     
         if self.logLevel > 0: print "getting block coordinates ", block_name
     
@@ -514,11 +675,13 @@ class processXML():
         # but life isn't perfect, and anyway people will want to move the icons around
         
         # but try this (assume the tracksegments are in order, and get the mid one)
+        
+        tracksegment = LayoutEditorElementMainDocument.findall('tracksegment')
           
-        iter=self.doc.getiterator('tracksegment')
+        # iter=.getiterator('tracksegment')
         ident_list =[]
         i=0
-        for element in iter:
+        for element in tracksegment:
             if element.get("blockname") == block_name:
                 ident_list.append(element.get("ident"))
                 i+=1
@@ -526,9 +689,8 @@ class processXML():
             required_track_segment_index = int(len(ident_list)/2)
             if self.logLevel > 0: print "required_track_segment_index = ", required_track_segment_index
             # now with the mid track index it might just work
-            
-            iter=self.doc.getiterator('tracksegment')
-            for element in iter:
+            tracksegment = LayoutEditorElementMainDocument.findall('tracksegment')
+            for element in tracksegment:
                 #if self.logLevel > 0: print element.get("blockname"), element.get("ident"), required_track_segment_index, ident_list[required_track_segment_index]
                 if element.get("blockname") == block_name and element.get("ident") == ident_list[required_track_segment_index]:
                     #if self.logLevel > 0: print "got here"
@@ -540,8 +702,8 @@ class processXML():
                     type2 = element.get("type2")
                     if self.logLevel > 0: print "connect1 = ",connect1
                     if self.logLevel > 0: print "connect2 = ",connect2
-                    x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
-                    x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
+                    x1,y1 = self.get_positionable_point_coordinate(connect1,type1,LayoutEditorElementMainDocument)
+                    x2,y2 = self.get_positionable_point_coordinate(connect2,type2,LayoutEditorElementMainDocument)
                     x_button = int((float(x1)+float(x2))/2.0)
                     y_button = int((float(y1)+float(y2))/2.0)-10      #-10 to raise the button up a bit on the track
                     button_coordinates = [x_button,y_button]
@@ -549,10 +711,11 @@ class processXML():
                     return button_coordinates
         else:
             #check for turnouts
-            iter=self.doc.getiterator('layoutturnout')
+            #iter=self.doc.getiterator('layoutturnout')
+            layoutturnout = LayoutEditorElementMainDocument.findall('layoutturnout')
             ident_list =[]
             i=0
-            for element in iter:
+            for element in layoutturnout:
                 if element.get("blockname") == block_name:
                     ident_list.append(element.get("ident"))
                     i+=1
@@ -562,8 +725,9 @@ class processXML():
                 if self.logLevel > 0: print "required_turnout_index = ", required_turnout_index
                 # now with the mid track index it might just work
                 
-                iter=self.doc.getiterator('layoutturnout')
-                for element in iter:
+                #iter=self.doc.getiterator('layoutturnout')
+                layoutturnout = LayoutEditorElementMainDocument.findall('layoutturnout')
+                for element in layoutturnout:
                     #if self.logLevel > 0: print element.get("blockname"), element.get("ident"), required_turnout_index, ident_list[required_turnout_index]
                     if element.get("blockname") == block_name and element.get("ident") == ident_list[required_turnout_index]:
                         #if self.logLevel > 0: print "got here"
@@ -571,8 +735,12 @@ class processXML():
                         if self.logLevel > 0: print "ident = ",  ident
                         xcen = element.get("xcen")
                         ycen = element.get("ycen")
-                        #x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
-                        #x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
+                        # type = element.get("type")
+                        # connectaname = element.get("CONNECTANAME")
+                        # connectbname = element.get("CONNECTBNAME")
+                        # connectcname = element.get("CONNECTBNAME")
+                        #x1,y1 = self.get_positionable_point_coordinate(connectAname,type1)
+                        #x2,y2 = self.get_positionable_point_coordinate(connectBName,type2)
                         x_button = int(float(xcen))
                         y_button = int(float(ycen))-10      #-10 to raise the button up a bit on the track
                         button_coordinates = [x_button,y_button]
@@ -581,7 +749,8 @@ class processXML():
         
         return None
                 
-    def get_positionable_point_coordinate(self, connection_name,type):
+    def get_positionable_point_coordinate(self, connection_name,type,insertion_point):
+        if self.logLevel > 3:  print type[:9]
         if type == "TURNOUT_A":
             connection = "layoutturnout"
             x_ident="xa"
@@ -598,10 +767,19 @@ class processXML():
             connection = "positionablepoint"
             x_ident="x"
             y_ident="y"
+        elif type[:9] == "TURNTABLE":
+            connection = "layoutturntable"
+            x_ident="xcen"
+            y_ident="ycen"
+            if self.logLevel > 3:  print "in turntable", "connection", connection ,"type", type
+        elif type[0] == "A":   #anchor
+            connection = "positionablepoint"
+            x_ident="x"
+            y_ident="y"
         else: 
             raise NameError('Unsupported track type, need to modify code for X-overs:' + type)
-        # if self.logLevel > 0: print "connection " , connection
-        iter=self.doc.getiterator(connection)
+        if self.logLevel > 0: print "connection " , connection, "type", type
+        iter=insertion_point.getiterator(connection)
         for element in iter:
             if element.get("ident") == connection_name:
                 # if self.logLevel > 0: print "here"
@@ -610,6 +788,7 @@ class processXML():
                 coordinates = [x,y]
                 # if self.logLevel > 0: print coordinates
                 return coordinates
+        if self.logLevel > 3:  print "returning none", "connection", connection ,"type", type
         return None
         
     # **************************************************
@@ -650,7 +829,7 @@ class processXML():
         icon_offset = [-5,-30]
         icon_coordinates_withoffset = [a + b for a, b in zip(icon_coordinates, icon_offset)]
         self.set_up_blockcontent_icon_code(icon_blockcontent_name, icon_tooltip, icon_coordinates_withoffset, self.doc_blockcontent)
-                 
+
     def set_up_memory_icon_code(self, icon_memory_name, icon_tooltip, icon_coordinates, element_tree):
         if self.logLevel > 0: print "set_up_memory_icon_code"
         if self.logLevel > 0: print element_tree
@@ -690,66 +869,55 @@ class processXML():
     # Insert the above XML code for the icons in the main document
     # **************************************************
     
-    def insert_blockcontent_icon_code(self, main_document_element_tree, icon_element_tree):
+    def insert_blockcontent_icon_code(self, block_name, main_document_element_tree, icon_element_tree):
 
         # find the insertion point in main document
-        if self.logLevel > 0: print "inserting bloccontent code"
-        iter=main_document_element_tree.getiterator('LayoutEditor')
-        for result in iter:
-            xml_element_tree = main_document_element_tree 
-            insertion_point = xml_element_tree.findall("./LayoutEditor")[0]
-                        
-        # now we have found the insetion point, insert the button data
-        iter_icon = icon_element_tree.getiterator('LayoutEditor')
-        for result in iter_icon:
-            insertion_point.extend(result) 
-        #self.output = xml_element_tree
-        return xml_element_tree    
+        if self.logLevel > 0: print "inserting blockcontent code"
+        iter=main_document_element_tree.findall('LayoutEditor')
+        i = 0
+        for insertion_point in iter:  
+            # now we have found the insertion points, insert the blockcontent_icon data
+            # if the appropriate LayoutEditor includes a track element containing that block
+            if self.track_elements_for_block_name(insertion_point, block_name):
+                iter_icon = icon_element_tree.getiterator('LayoutEditor')
+                for result in iter_icon:
+                    insertion_point.extend(result) 
+        return main_document_element_tree
 
-   
+    def insert_sensor_code_for_block(self, block_name, data, data1):
+        # if self.logLevel > 0: print "insert_sensor_code","data",data
+        iter=data.findall('LayoutEditor')
+        for insertion_point in iter:
+            if self.track_elements_for_block_name(insertion_point, block_name):
+                iter_sensor=data1.getiterator('LayoutEditor')
+                for result in iter_sensor:
+                    insertion_point.extend(result) 
+        return data        
+
+    def track_elements_for_block_name(self, insertion_point, block_name): 
+        for tracksegment in insertion_point.findall('tracksegment'):
+            #print tracksegment
+            #print str(tracksegment.get('blockname')) + " : " + block_name
+            if block_name == tracksegment.get('blockname'):
+                return True
+        for layoutturnout in insertion_point.findall('layoutturnout'):
+            if block_name == layoutturnout.get('blockname'):
+                return True
+        return False
         
-    def insert_all_blockcontent_icon_codes(self):
+    def insert_all_blockcontent_icon_codes(self, block_name):
         #blockcontent icon
-        self.doc = self.insert_blockcontent_icon_code(self.doc, self.doc_blockcontent)
-    
-    def insert_memory_icon_code(self, main_document_element_tree, icon_element_tree):
-
-        # find the insertion point in main document
-        iter=main_document_element_tree.getiterator('LayoutEditor')
-        for result in iter:
-            xml_element_tree = main_document_element_tree 
-            insertion_point = xml_element_tree.findall("./LayoutEditor")[0]
-                        
-        # now we have found the insetion point, insert the button data
-        iter_icon = icon_element_tree.getiterator('LayoutEditor')
-        for result in iter_icon:
-            insertion_point.extend(result) 
-        #self.output = xml_element_tree
-        return xml_element_tree    
-
-   
-        
-    def insert_all_memory_icon_codes(self):
-        #memory icon
-        self.doc = self.insert_memory_icon_code(self.doc, self.doc_Memory)
-        
+        self.doc = self.insert_blockcontent_icon_code(block_name, self.doc, self.doc_blockcontent)
+            
     # **************************************************
     # Create and insert icons in the main document
     # **************************************************    
-
-    def set_up_all_memory_icons(self, block_name, button_coordinate, index):
-        if self.logLevel > 0: print "********mem icon set up*****************"
-        self.set_up_all_memory_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
-        if self.logLevel > 0: print "********mem icon code set up finished*****************"
-        self.insert_all_memory_icon_codes()
-        if self.logLevel > 0: print "icon set up", block_name
-        if self.logLevel > 0: print "*************************"
         
     def set_up_all_blockcontent_icons(self, block_name, button_coordinate, index):
         if self.logLevel > 0: print "********mem icon set up*****************"
         self.set_up_all_blockcontent_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
         if self.logLevel > 0: print "********mem icon code set up finished*****************"
-        self.insert_all_blockcontent_icon_codes()
+        self.insert_all_blockcontent_icon_codes(block_name)
         if self.logLevel > 0: print "icon set up", block_name
         if self.logLevel > 0: print "*************************"
            
@@ -816,12 +984,12 @@ class processXML():
         except Exception as e:
             if self.logLevel > 0: print e
             
-    def set_up_all_icon_codes(self, block_name, icon_coordinates, index):
+    def set_up_all_stopping_point_block_icon_codes(self, block_name, icon_coordinates, index):
     
         # MoveTo icon
         icon_text = block_name[:9]
         icon_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
-        sensor_location = "IS98"+str(index).zfill(4)  
+        sensor_location = "IS99"+str(index).zfill(4)
         icon_tooltip = icon_sensor_name + sensor_location
         wide_icon_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/wide_icon.xml')
         self.doc_MoveTo = ElementTree(file=wide_icon_xml)
@@ -845,35 +1013,44 @@ class processXML():
         sensor = block.getSensor()
         if sensor != None:
             icon_sensor_name = sensor.getUserName()
-            sensor_location = sensor.getSystemName() 
-            #icon_tooltip = icon_sensor_name + sensor_location
+            icon_sensor_user_name = sensor.getSystemName() 
+            icon_tooltip = icon_sensor_name + icon_sensor_user_name
             icon_offset = [-20,10]
             icon_coordinates_withoffset = [a + b for a, b in zip(icon_coordinates, icon_offset)]
-            self.doc_BlockSensor = ElementTree(file=small_icon_xml)
+            self.doc_BlockSensor = ElementTree(file=small_icon_xml)    
             self.set_up_small_icon_code(icon_sensor_name, icon_coordinates_withoffset, self.doc_BlockSensor)
             
-    def set_up_all_block_icon_codes(self, block_name, icon_coordinates, index):
+    def set_up_all_non_stopping_point_block_icon_codes(self, block_name, icon_coordinates, index):
         # Block Sensor icon
         layoutBlock = layoutblocks.getLayoutBlock(block_name)
         block = layoutBlock.getBlock()
         sensor = block.getSensor()
         if sensor != None:
             icon_sensor_name = sensor.getUserName()
-            sensor_location = sensor.getSystemName() 
-            #icon_tooltip = icon_sensor_name + sensor_location
+            icon_sensor_user_name = sensor.getSystemName() 
+            icon_tooltip = icon_sensor_name + icon_sensor_user_name
             icon_offset = [-20,10]
             icon_coordinates_withoffset = [a + b for a, b in zip(icon_coordinates, icon_offset)]
             small_icon_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/small_icon.xml')
             self.doc_BlockSensor = ElementTree(file=small_icon_xml)
             self.set_up_small_icon_code(icon_sensor_name, icon_coordinates_withoffset, self.doc_BlockSensor)
             
-    def set_control_icon_coordinates(self):
+    def delete_block_icons(self, block_name, lay):
+        layoutBlock = layoutblocks.getLayoutBlock(block_name)
+        block = layoutBlock.getBlock()
+        sensor = block.getSensor()
+        if sensor != None:
+            icon_sensor_name = sensor.getUserName()
+            self.remove_sensor_icon_with_string_in_name(icon_sensor_name)
+            
+    def set_control_icon_coordinates(self, LayoutEditor):
     
         max_x = 0
         min_x = 0
         max_y = 0
         min_y = 0
-        iter=self.doc.getiterator('tracksegment')
+        if self.logLevel > 3:  print "**************************************************"
+        iter=LayoutEditor.findall('tracksegment')
         for element in iter:
             ident = element.attrib["ident"]
             if self.logLevel > 0: print "ident = ",  ident
@@ -883,8 +1060,8 @@ class processXML():
             type2 = element.get("type2")
             if self.logLevel > 0: print "connect1 = ",connect1
             if self.logLevel > 0: print "connect2 = ",connect2
-            x1,y1 = self.get_positionable_point_coordinate(connect1,type1)
-            x2,y2 = self.get_positionable_point_coordinate(connect2,type2)
+            x1,y1 = self.get_positionable_point_coordinate(connect1,type1,LayoutEditor)
+            x2,y2 = self.get_positionable_point_coordinate(connect2,type2,LayoutEditor)
             x1 = int(float(x1))
             x2 = int(float(x2))
             y1 = int(float(y1))
@@ -901,11 +1078,12 @@ class processXML():
         x_coord =  max_x + 30       # put a bit to the right of the tracks near the top
         y_coord =  30
         icon_coordinates = [x_coord, y_coord]
+        if self.logLevel > 3:  print "**************************************************"
         return icon_coordinates
         
-    def set_up_control_icon_codes(self):
+    def set_up_control_icon_codes(self,LayoutEditor):
         
-        icon_coordinates = self.set_control_icon_coordinates()
+        icon_coordinates = self.set_control_icon_coordinates(LayoutEditor)   #iterate througout the track segments, get their coordinates, and position the control icons to the right of them
         #icon_coordinates = [600,30]   #my best guess
         label_offset = [25,0]
         icon_offset = [0,20]
@@ -997,6 +1175,15 @@ class processXML():
         
         # unindent for one buttons on a line
         icon_coordinates = [a + b for a, b in zip(icon_coordinates, unindentALot)]
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
+        icon_sensor_name = "setStoppingDistanceSensor"
+        self.doc_set_stopping_length_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_set_stopping_length_icon)
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
+        icon_label = "Set Stopping Length"
+        self.doc_set_stopping_length_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_set_stopping_length_label)
+
         # indent
         icon_coordinates = [a + b for a, b in zip(icon_coordinates, indent)] 
         # next icon
@@ -1091,8 +1278,12 @@ class processXML():
                     insertionNode.append(element)
         return ans
         
+    def insert_icon_code(self, insertion_point, icon_element_tree):
+        insertion_point.append(icon_element_tree) 
+        #return data
+        
 
-    def insert_icon_code(self, main_document_element_tree, icon_element_tree):
+    def insert_icon_code_old(self, main_document_element_tree, icon_element_tree):
     
         parent = "layout-config"
         child = "LayoutEditor"
@@ -1102,7 +1293,37 @@ class processXML():
 
         return main_document_element_tree
 
-    def insert_label_code(self, main_document_element_tree, icon_element_tree):
+        
+    def insert_icon_code_for_block(self, block_name, main_document_element_tree, icon_element_tree):
+    
+        parent = "layout-config"
+        child = "LayoutEditor"
+        
+        root1 = main_document_element_tree.getroot()
+        iter=root1.getiterator(parent)
+        for insertion_point in iter:
+            
+            if self.track_elements_for_block_name(insertion_point, block_name):
+                root2 = icon_element_tree.getroot()
+                self.insertChildFromRoot2InRoot1(insertion_point, root2,parent,child)
+
+        return main_document_element_tree
+
+    def insert_code_for_block(self, block_name, data, data1):
+        if self.logLevel > 0: print "insert_sensor_code","data",data
+        iter=data.findall('LayoutEditor')
+        for insertion_point in iter:
+            if self.track_elements_for_block_name(insertion_point, block_name):
+                iter_sensor=data1.getiterator('LayoutEditor')
+                for result in iter_sensor:
+                    insertion_point.extend(result) 
+        return data          
+        
+
+    def insert_label_code(self, insertion_point, icon_element_tree):
+        insertion_point.append(icon_element_tree)
+
+    def insert_label_code_old(self, main_document_element_tree, icon_element_tree):
     
         parent = "layout-config"
         child = "LayoutEditor"
@@ -1110,7 +1331,10 @@ class processXML():
         root2 = icon_element_tree.getroot()
         self.insertChildFromRoot2InRoot1(root1, root2,parent,child)
 
-        return main_document_element_tree      
+        #return main_document_element_tree 
+
+    def insert_logix_code_new(self, insertion_point, icon_element_tree):
+        insertion_point.append(icon_element_tree)
 
     def insert_logix_code(self, main_document_element_tree, icon_element_tree):
     
@@ -1120,7 +1344,10 @@ class processXML():
         root2 = icon_element_tree.getroot()
         self.insertChildFromRoot2InRoot1(root1, root2,parent,child)
         
-        return main_document_element_tree        
+        return main_document_element_tree     
+
+    def insert_conditionals_code_new(self, insertion_point, icon_element_tree):
+        insertion_point.append(icon_element_tree)        
 
     def insert_conditionals_code(self, main_document_element_tree, icon_element_tree):
     
@@ -1133,157 +1360,107 @@ class processXML():
         
         return main_document_element_tree 
         
-    def insert_all_icon_codes(self):
+    def insert_all_stopping_point_block_icon_codes(self, LayoutEditor):
         #wide_MoveTo icon
-        self.doc = self.insert_icon_code(self.doc, self.doc_MoveTo)
-        #wstandard_MoveInProgess icon
-        self.doc = self.insert_icon_code(self.doc, self.doc_MoveInProgress)
+        self.insert_code(self.doc_MoveTo, LayoutEditor)
+        #standard_MoveInProgress icon
+        self.insert_code(self.doc_MoveInProgress, LayoutEditor)
         #Block Sensor icon
-        self.doc = self.insert_icon_code(self.doc, self.doc_BlockSensor)
+        self.insert_code(self.doc_BlockSensor, LayoutEditor)
+        #return LayoutEditor
         
-    def insert_all_block_icon_codes(self):
-        #Block Sensor icon
-        self.doc = self.insert_icon_code(self.doc, self.doc_BlockSensor)
+    def insert_all_non_stopping_point_block_icon_codes(self, LayoutEditor):       
+        self.insert_code(self.doc_BlockSensor, LayoutEditor)
+        return LayoutEditor
         
+    def insert_code(self, inserted_doc, LayoutEditorInsertionPoint):
+        scraps_to_be_inserted = inserted_doc.find("LayoutEditor")  #scraps to be inserted ae below this point
+        LayoutEditorInsertionPoint.extend(scraps_to_be_inserted)
+        return LayoutEditorInsertionPoint
         
-    def insert_control_icons(self):
-        self.doc = self.insert_icon_code(self.doc, self.doc_Express_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_new_train_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_start_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_stop_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_sound_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_simulate_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_view_scheduled_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_set_scheduler_time_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_start_scheduler_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_set_route_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_set_dispatch_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_run_route_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_show_clock_icon)
-        self.doc = self.insert_icon_code(self.doc, self.doc_edit_routes_icon)          
+    def insert_control_icons(self, LayoutEditor):
+        # print "LayoutEditor a" , LayoutEditor
+        # insertion_point = LayoutEditor.find('sensoricon')
+        # if insertion_point == None:
+        insertion_point = LayoutEditor
+        self.insert_code(self.doc_Express_icon, insertion_point)
+        self.insert_code(self.doc_Express_icon, insertion_point)
+        self.insert_code(self.doc_new_train_icon, insertion_point)
+        self.insert_code(self.doc_start_icon, insertion_point)
+        self.insert_code(self.doc_stop_icon, insertion_point)
+        self.insert_code(self.doc_sound_icon, insertion_point)
+        self.insert_code(self.doc_simulate_icon, insertion_point)
+        self.insert_code(self.doc_view_scheduled_icon, insertion_point)
+        self.insert_code(self.doc_set_scheduler_time_icon, insertion_point)
+        self.insert_code(self.doc_start_scheduler_icon, insertion_point)
+        self.insert_code(self.doc_set_route_icon, insertion_point)
+        self.insert_code(self.doc_set_dispatch_icon, insertion_point)
+        self.insert_code(self.doc_set_stopping_length_icon, insertion_point)
+        self.insert_code(self.doc_run_route_icon, insertion_point)
+        self.insert_code(self.doc_show_clock_icon, insertion_point)
+        self.insert_code(self.doc_edit_routes_icon, insertion_point)
+        # print "LayoutEditor b" , LayoutEditor
+        # insertion_point = LayoutEditor.find('positionablelabel')
+        # if insertion_point == None:
+        insertion_point = LayoutEditor
+        self.insert_code(self.doc_Express_label, insertion_point)
+        self.insert_code(self.doc_new_train_label, insertion_point)
+        self.insert_code(self.doc_start_label, insertion_point)
+        self.insert_code(self.doc_stop_label, insertion_point)
+        self.insert_code(self.doc_sound_label, insertion_point)
+        self.insert_code(self.doc_simulate_label, insertion_point)
+        self.insert_code(self.doc_view_scheduled_label, insertion_point)
+        self.insert_code(self.doc_set_scheduler_time_label, insertion_point)
+        self.insert_code(self.doc_start_scheduler_label, insertion_point)
+        self.insert_code(self.doc_set_route_label, insertion_point)
+        self.insert_code(self.doc_set_dispatch_label, insertion_point)
+        self.insert_code(self.doc_set_stopping_length_label, insertion_point)
+        self.insert_code(self.doc_run_route_label, insertion_point) 
+        self.insert_code(self.doc_show_clock_label, insertion_point) 
+        self.insert_code(self.doc_edit_routes_label, insertion_point) 
         
-        self.doc = self.insert_label_code(self.doc, self.doc_Express_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_new_train_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_start_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_stop_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_sound_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_simulate_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_view_scheduled_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_set_scheduler_time_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_start_scheduler_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_set_route_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_set_dispatch_label)
-        self.doc = self.insert_label_code(self.doc, self.doc_run_route_label) 
-        self.doc = self.insert_label_code(self.doc, self.doc_show_clock_label) 
-        self.doc = self.insert_label_code(self.doc, self.doc_edit_routes_label) 
+    def insert_logixandconditionals_new(self):
+        if self.logLevel > 0: print "insert_logix"
+        insertion_point = self.doc.find('logixs')
+        self.insert_logix_code(insertion_point, self.doc_logix)
+        self.insert_conditionals_code(insertion_point, self.doc_conditionals)
         
     def insert_logixandconditionals(self):
         if self.logLevel > 0: print "insert_logix"
         self.doc = self.insert_logix_code(self.doc, self.doc_logix)
-        self.doc = self.insert_conditionals_code(self.doc, self.doc_conditionals)
+        self.doc = self.insert_conditionals_code(self.doc, self.doc_conditionals)        
         
     # **************************************************
     # Create and insert icons in the main document
     # **************************************************    
 
-    def set_up_all_icons(self, block_name, button_coordinate, index):
-        self.set_up_all_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
-        self.insert_all_icon_codes()                                           #inserts the stored code
+    def set_up_all_stopping_point_icons(self, block_name, button_coordinate, index, LayoutEditor):
+        self.set_up_all_stopping_point_block_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
+        self.insert_all_stopping_point_block_icon_codes(LayoutEditor)                                           #inserts the stored code
         
-        
-    def set_up_control_items(self):
-        self.set_up_control_icon_codes()
-        self.insert_control_icons()
-        self.set_up_control_sensors()
-        
-    def set_up_all_block_icons(self, block_name, button_coordinate, index):
-        self.set_up_all_block_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
-        self.insert_all_block_icon_codes()
-        
-        
-    # **************************************************
-    # Create XML code for Memories, and store temporarily
-    # **************************************************                
-                
-    def set_up_all_memory_codes(self,block_name, index):
-    
-        # movetoxx_stored sensor: store temorarily in self.doc_moveTo_sensor_stored
-        memory_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/memory.xml')
-        self.doc_memory = ElementTree(file = memory_xml)
-        iter=self.doc_memory.getiterator('memory')
-        for element in iter:
-            for child in element.getchildren():
-                if child.tag == "systemName": child.text = "IM" + str(99000+index) #hopefully IM99xxx will not be used
-                if child.tag == "userName": child.text = "M_"+block_name.replace(" ","_")      
-        
-    # **************************************************
-    # Insert XML code for Memories, from stored values
-    # **************************************************                
-                
-    def insert_memory_code(self, data, data1):
+    def set_up_control_items(self, LayoutEditor):
 
-        iter=data.getiterator('memories')
-        for result in iter:
-            xml_element_tree = data 
-            insertion_point = xml_element_tree.findall("./memories")[0]
-                        
-        #now we have found the insetion point, insert the memory data
+        if self.logLevel > 3:  print "self.doc a", self.doc
+        if self.logLevel > 3:  print "LayoutEditor a" , LayoutEditor
+        self.set_up_control_icon_codes(LayoutEditor)
+        if self.logLevel > 3:  print "self.doc b", self.doc
+        if self.logLevel > 3:  print "LayoutEditor b" , LayoutEditor
+        self.insert_control_icons(LayoutEditor)
+        if self.logLevel > 3:  print "self.doc c", self.doc
+        if self.logLevel > 3:  print "LayoutEditor c" , LayoutEditor
+        #self.set_up_control_sensors()
         
-        iter_memory=data1.getiterator('memories')
-        for result in iter_memory:
-            insertion_point.extend(result) 
-            
-        return xml_element_tree#               
-                
-    def insert_all_memory_codes(self):
-        # MoveToxx_stored sensor
-        if self.logLevel > 0: print "insert_all_memory_codes"
-        self.doc = self.insert_memory_code(self.doc, self.doc_memory)
-        if self.logLevel > 0: print "end insert_all_memory_codes"
-        
-    def associate_blocks_with_memories(self):
-        if self.logLevel > 0: print "associate_blocks_with_memories"
-        # need to associate layout blocks with memory system name           
-        layoutblocks_iter = self.doc.getiterator('layoutblocks')
-        for layoutblocks1 in layoutblocks_iter:
-            layoutblock_iter = layoutblocks1.getiterator('layoutblock')     
-            for layoutblock in layoutblock_iter:
-                if self.logLevel > 0: print layoutblock.tag   #if self.logLevel > 0: prints 'layoutblock'
-                block_system_name = layoutblock.get("systemName")
-                if self.logLevel > 0: print block_system_name
-
-                lblock =layoutblocks.getLayoutBlock(block_system_name)
-                block_user_name = lblock.getBlock().getUserName()
-                memory_name = "M_"+block_user_name.replace(" ","_")
-                layoutblock.set("memory", memory_name)
-                memory = layoutblock.get("memory")
-                if self.logLevel > 0: print memory
-
-                
-            # block_system_name = layoutblock.get('systemName').text
-            # if block_system_name != None:
-                # if self.logLevel > 0: print block_system_name
-                # fred=layoutblocks.getLayoutBlock(block_system_name)
-                # if self.logLevel > 0: print fred
-                # block_name = fred.getBlock().getUserName()
-                # if self.logLevel > 0: print block_name
-                # memory_name = "M_"+block_name.replace(" ","_")
-                # element.set("memory", memory_name)
- 
-
-    def set_up_all_memories(self, block_name, index):
-    
-        self.set_up_all_memory_codes(block_name, index)  #stores the code temporarily
-        self.insert_all_memory_codes()
-        #self.associate_blocks_with_memories(block_name)
-        #inserts the stored code         
-    
+    def set_up_all_non_stopping_point_block_icons(self, block_name, button_coordinate, index, LayoutEditor):
+        #self.delete_block_icons(block_name)    # in case we are processing a 'run' panel
+        #print"YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+        self.set_up_all_non_stopping_point_block_icon_codes(block_name, button_coordinate, index)       #stores the code temporarily
+        self.insert_all_non_stopping_point_block_icon_codes(LayoutEditor)
 
     # **************************************************
     # Create XML code for Sensors, and store temporarily
     # **************************************************                
                 
-    def set_up_all_sensor_codes(self,block_name, index):
+    def set_up_all_sensor_codes(self, block_name, index):
     
         # movetoxx_stored sensor: store temorarily in self.doc_moveTo_sensor_stored
         
@@ -1412,12 +1589,26 @@ class processXML():
         for element in iter:
             for child in element.getchildren():
                 if child.tag == "systemName": child.text = "IS" + str(96000+14) #hopefully IS96xxx will not be used
-                if child.tag == "userName": child.text = "runRouteSensor"                 
-        
+                if child.tag == "userName": child.text = "runRouteSensor"
+
+        self.doc_set_stopping_length_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_set_stopping_length_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+15) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "setStoppingDistanceSensor"
+
     # **************************************************
     # Insert XML code for Sensors, from stored values
-    # **************************************************                
-                
+    # ************************************************** 
+
+    def insert_code_before_item(self, item_name, insertion_tree, code_to_be_inserted):
+        iter=data.iter(item_name)
+        for result in iter:
+            search_text = "./" + item_name    
+            insertion_point = insertion_tree.findall(search_text)[0]       
+        insertion_point.extend(code_to_be_inserted)
+                    
     def insert_sensor_code(self, data, data1):
         #read in the the button code#
         #data = self.output
@@ -1436,108 +1627,51 @@ class processXML():
             insertion_point.extend(result) 
             
         return xml_element_tree#
-        #self.output = xml_element_tree
-        
-        # data = self.doc_moveTo_sensor_stored
-        # iter_sensor_stored=data.getiterator('sensors')
-        # for result in iter_sensor_stored:
-            # insertion_point.extend(result) 
-        # self.output = xml_element_tree                
-                
-    def insert_all_sensor_codes(self):
+                      
+    def insert_all_sensor_codes(self, block_name):
         # MoveToxx_stored sensor
         # if self.logLevel > 0: print "insert_all_sensor_codes","self.doc",self.doc
         self.doc = self.insert_sensor_code(self.doc, self.doc_moveTo_sensor_stored)
         # MoveToxx icon
         self.doc = self.insert_sensor_code(self.doc, self.doc_moveTo_sensor)
-        #wstandard_MoveInProgess icon
+        #wstandard_MoveInProgress icon
         self.doc = self.insert_sensor_code(self.doc, self.doc_moveInProgress)       
 
     def insert_control_sensor_codes(self):
         # express_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_express_sensor)
+        self.insert_sensor_code(self.doc, self.doc_express_sensor)
         # new_train_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_new_train_sensor)
+        self.insert_sensor_code(self.doc, self.doc_new_train_sensor)
         #stop_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_stop_sensor) 
+        self.insert_sensor_code(self.doc, self.doc_stop_sensor) 
         #start_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_start_sensor) 
+        self.insert_sensor_code(self.doc, self.doc_start_sensor) 
         #sound_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_sound_sensor)
+        self.insert_sensor_code(self.doc, self.doc_sound_sensor)
         #simulate_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_simulate_sensor)
+        self.insert_sensor_code(self.doc, self.doc_simulate_sensor)
         #view_scheduled_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_view_scheduled_sensor)
+        self.insert_sensor_code(self.doc, self.doc_view_scheduled_sensor)
         #set_scheduler_time_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_set_scheduler_time_sensor)
+        self.insert_sensor_code(self.doc, self.doc_set_scheduler_time_sensor)
         #start_scheduler_sensor
-        self.doc = self.insert_sensor_code(self.doc, self.doc_start_scheduler_sensor)
+        self.insert_sensor_code(self.doc, self.doc_start_scheduler_sensor)
         
-        self.doc = self.insert_sensor_code(self.doc, self.doc_set_route_sensor)
-        self.doc = self.insert_sensor_code(self.doc, self.doc_set_dispatch_sensor)
-        self.doc = self.insert_sensor_code(self.doc, self.doc_run_route_sensor)
+        self.insert_sensor_code(self.doc, self.doc_set_route_sensor)
+        self.insert_sensor_code(self.doc, self.doc_set_dispatch_sensor)
+        self.insert_sensor_code(self.doc, self.doc_run_route_sensor)
+        self.insert_sensor_code(self.doc, self.doc_set_stopping_length_sensor)
         
-        self.doc = self.insert_sensor_code(self.doc, self.doc_show_clock_sensor)
-        self.doc = self.insert_sensor_code(self.doc, self.doc_edit_route_sensor)
-        
+        self.insert_sensor_code(self.doc, self.doc_show_clock_sensor)
+        self.insert_sensor_code(self.doc, self.doc_edit_route_sensor)
 
-        
-
-    def set_up_all_sensors(self, block_name, index):
-        self.set_up_all_sensor_codes(block_name, index)  #stores the code temporarily
-        self.insert_all_sensor_codes()                   #inserts the stored code 
+    def set_up_all_stopping_point_sensors(self, block_name, index):
+        self.set_up_all_sensor_codes(block_name, index)             #stores the code temporarily
+        self.insert_all_sensor_codes(block_name)                    #inserts the stored code
               
         
     def set_up_control_sensors(self):
+        if self.logLevel > 3:  print "self.doc 1", self.doc
         self.set_up_control_sensor_codes()
+        if self.logLevel > 3:  print "self.doc 2", self.doc
         self.insert_control_sensor_codes()
-    
-    # **************************************************
-    # Main Program
-    # **************************************************     
-
-#create an ElementTree instance from an XML file
-
-#doc = ElementTree("D:\\bill\\Documents\\ElementTree\\WR2working.xml")
-
-# Start with list of blocks
-# Find a track segment in the block
-# If there are 3 trck segments take the middle one
-# Get the anchor points
-# Get the mid point
-# Add the sensor
-# Add  the movetostored<BlockName> sendor
-
-
-# Note for this to work the required stopping points (blocks) must be marked in the comments
-# field of the blocks table with the word 'stop' (lower or upper case)
-
-
-if __name__ == "__main__":
-    initialPanelFilename = "Z:\\WallRunDevl.jmri\\dispatcher\\Automation\\test.xml"
-    finalPanelFilename = "Z:\\WallRunDevl.jmri\\dispatcher\\Automation\\test_out.xml"
-
-    msg = "About to create file " + finalPanelFilename + "\n from " + initialPanelFilename 
-    msg = msg + "\n  *****************************************************"
-    msg = msg + "\nPanel " + initialPanelFilename + " should be open for this stage to work" 
-    msg = msg + "\n  *****************************************************"
-    msg = msg + "\nContinue?"
-    myAnswer = JOptionPane.showConfirmDialog(None, msg)
-    if myAnswer == JOptionPane.YES_OPTION:
-        p = processXML(initialPanelFilename, finalPanelFilename)
-    elif myAnswer == JOptionPane.NO_OPTION:
-        msg = 'Stopping'
-        JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
-        
-    elif myAnswer == JOptionPane.CANCEL_OPTION:
-        msg = 'Stopping'
-        JOptionPane.showMessageDialog(None, msg, 'Stopping', JOptionPane.WARNING_MESSAGE)
-        
-    elif myAnswer == JOptionPane.CLOSED_OPTION:
-        if self.logLevel > 0: print "You closed the window. How rude!"
-
-    
-
-
-
-
