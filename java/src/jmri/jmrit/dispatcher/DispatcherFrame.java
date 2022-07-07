@@ -1100,6 +1100,28 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return numErrors;
     }
 
+    private int validateConnectivity(Transit t, List<LayoutEditor> panels) {
+        for (LayoutEditor panel: panels) {
+            if (panel == null) {
+                log.error("validateConnectivity called with a null LayoutEditor panel");
+                return -1;
+            }
+        }
+        int numErrors = 0;
+        for (int i = 0; i < t.getTransitSectionList().size(); i++) {
+            String s = "";
+            for (LayoutEditor panel: panels) {
+                s = t.getTransitSectionList().get(i).getSection().validate(panel);
+                if (s.equals(""))
+                    break;
+            }
+            if (!s.equals("")) {
+                log.error(s);
+                numErrors++;
+            }
+        }
+        return numErrors;
+    }
     /**
      * Validates connectivity through a Transit. Returns the number of errors
      * found. Sends log messages detailing the errors if break in connectivity
@@ -1359,7 +1381,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             // check/set Transit specific items for automatic running
             // validate connectivity for all Sections in this transit
-            int numErrors = validateConnectivity(t, _LE);
+            // check all layout editors        
+            List<LayoutEditor> layoutEditors = new ArrayList <LayoutEditor>();
+            jmri.jmrit.display.EditorManager EditorManager = InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class);
+            for (jmri.jmrit.display.layoutEditor.LayoutEditor le : EditorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor.class)) {
+                layoutEditors.add(le);
+            }                  
+            int numErrors = validateConnectivity(t, layoutEditors);
             if (numErrors != 0) {
                 if (showErrorMessages) {
                     JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
@@ -2091,11 +2119,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (_AutoTurnouts || at.getAutoRun()) {
             // automatically set the turnouts for this section before allocation
             turnoutsOK = autoTurnouts.setTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _LE, _TrustKnownTurnouts, prevSection);
+                    at, _TrustKnownTurnouts, prevSection);
         } else {
             // check that turnouts are correctly set before allowing allocation to proceed
             turnoutsOK = autoTurnouts.checkTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _LE, prevSection);
+                    at, prevSection);
         }
         if (turnoutsOK == null) {
             if (_AutoAllocate) {

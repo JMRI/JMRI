@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -96,6 +97,15 @@ final public class ConnectivityUtil {
         return getTurnoutList(currBlock, prevBlock, nextBlock, false);
     }
 
+    @Nonnull
+    public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(
+            @CheckForNull Block currBlock,
+            @CheckForNull Block prevBlock,
+            @CheckForNull Block nextBlock,
+            boolean suppress) {
+        AtomicBoolean notFound1 = new AtomicBoolean(true);
+        return getTurnoutList(currBlock, prevBlock, nextBlock, suppress, notFound1);
+    }
     /**
      * Provide a list of LayoutTurnouts in the specified Block, in order,
      * beginning at the connection to the specified previous Block and
@@ -119,7 +129,9 @@ final public class ConnectivityUtil {
             @CheckForNull Block currBlock,
             @CheckForNull Block prevBlock,
             @CheckForNull Block nextBlock,
-            boolean suppress) {
+            boolean suppress,
+            AtomicBoolean notFound1 ) {
+        notFound1.set(false);  //notfound1 is set true if notfound is true later in code and returned to calling routine
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
 
         // initialize
@@ -150,13 +162,20 @@ final public class ConnectivityUtil {
 
         turnoutConnectivity = true;
         if ((prevLayoutBlock == null) || (nextLayoutBlock == null)) {
+
             // special search with partial information - not as good, order not assured
             List<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlock(currLayoutBlock);
+                        if (allTurnouts.isEmpty()){
+                notFound1.set(false);
+            }
             for (LayoutTurnout lt : allTurnouts) {
                 result.add(new LayoutTrackExpectedState<>(lt,
                         lt.getConnectivityStateForLayoutBlocks(
                                 currLayoutBlock, prevLayoutBlock, nextLayoutBlock, true)));
             }
+
+
+            log.warn("special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result);
             return result;
         }
 
@@ -275,6 +294,7 @@ final public class ConnectivityUtil {
             } else if (!suppress) {
                 log.warn("Could not find connection between Blocks {}, prevBock is null!", currUserName);
             }
+            notFound1.set(true);                                       
             return result;
         }
         // search connectivity for turnouts by following TrackSegments to end of Block
@@ -528,6 +548,35 @@ final public class ConnectivityUtil {
                 // Declare arrival at a turntable ray to be the end of the block
                 trackSegment = null;
             }
+        }
+
+        if (result.size() != 0) {
+            log.warn("non special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result.get(result.size()-1).getObject().getName());
+        }else{
+            log.warn("non special search for block {} result null ", currLayoutBlock.getBlock().getUserName());
+        }
+        if (nextLayoutBlock != null) {
+            log.warn("    nextblock {} ", nextLayoutBlock.getBlock().getUserName() );
+        }
+        if (nextLayoutBlock != null) {
+            log.warn("    prevblock {} ", prevLayoutBlock.getBlock().getUserName() );
+        }
+
+        // with multiple panels the next or prev block may be on another panel, so try the search with just the current block
+        if (result.size() == 0){
+            // special search with partial information - not as good, order not assured
+            List<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlockAllPanels(currLayoutBlock);
+            if (allTurnouts.isEmpty()){
+                notFound1.set(false);
+            }
+            for (LayoutTurnout lt : allTurnouts) {
+                result.add(new LayoutTrackExpectedState<>(lt,
+                        lt.getConnectivityStateForLayoutBlocks(
+                                currLayoutBlock, prevLayoutBlock, nextLayoutBlock, true)));
+            }
+
+
+            log.warn("special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result);
         }
         return result;
     }
@@ -2823,6 +2872,18 @@ final public class ConnectivityUtil {
                 || (lt.getLayoutBlockD() == currLayoutBlock)))
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<LayoutTurnout> getAllTurnoutsThisBlockAllPanels(
+            @Nonnull LayoutBlock currLayoutBlock) {
+        jmri.jmrit.display.EditorManager EditorManager = InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class);
+        ArrayList<LayoutTurnout> collect = new ArrayList<LayoutTurnout>();
+        for (jmri.jmrit.display.layoutEditor.LayoutEditor le : EditorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor.class)) {
+            ArrayList<LayoutTurnout> collect1 = le.getLayoutTracks().stream().filter((o) -> (o instanceof LayoutTurnout)) // this includes LayoutSlips
+                    .map(LayoutTurnout.class::cast).filter((lt) -> ((lt.getLayoutBlock() == currLayoutBlock) || (lt.getLayoutBlockB() == currLayoutBlock) || (lt.getLayoutBlockC() == currLayoutBlock) || (lt.getLayoutBlockD() == currLayoutBlock))).map(LayoutTurnout.class::cast).collect(Collectors.toCollection(ArrayList::new));
+            collect.addAll(collect1);
+        }
+        return collect;
     }
 
     // initialize logging

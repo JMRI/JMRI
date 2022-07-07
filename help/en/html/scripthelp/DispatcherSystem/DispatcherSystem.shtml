@@ -1,6 +1,13 @@
-<p>&nbsp;</p>
-<!--#include virtual="/Style.shtml" --><!--#include virtual="/Header.shtml" -->
-<div id="mBody">
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+   <title>JMRI: Dispatcher System</title>
+   <!--#include virtual="/Style.shtml" -->
+ </head>
+ <body>
+   <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
   <div id="mainContent" class="no-sidebar">
     <h1>Dispatcher System</h1>
     <p>The Dispatcher System is a set of Python tools to extend the capabilities of the Dispatcher.</p>
@@ -265,5 +272,9 @@
       <li>The Dispatcher system is designed to run trains from station to station. The system has been set up with a network graph which allows the system to get the shortest path between two stations, and this is used to get the route between the two stations. At present if a train is in a station en route, the system will not re-route to avoid the train, and the train may get stuck. Care must be taken when running trains.</li>
       <!--#include virtual="/Footer.shtml" --></ol>
   </div>
-  <!-- closes #mainContent--></div>
-<!-- closes #mBody-->
+  <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+   <script src="/js/main.js"></script>
+ </body>
+ </html>
