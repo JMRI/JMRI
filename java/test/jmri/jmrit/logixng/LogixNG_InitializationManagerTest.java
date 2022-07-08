@@ -82,12 +82,12 @@ public class LogixNG_InitializationManagerTest {
         
         String expectedResult =
                 // These are registered in the init manager
-                "LogixNG 7: start\n" +
-                "LogixNG 7: end\n" +
-                "LogixNG 2: start\n" +
-                "LogixNG 2: end\n" +
-                "LogixNG 8: start\n" +
-                "LogixNG 8: end\n";
+                "LogixNG 7: start" + System.lineSeparator() +
+                "LogixNG 7: end" + System.lineSeparator() +
+                "LogixNG 2: start" + System.lineSeparator() +
+                "LogixNG 2: end" + System.lineSeparator() +
+                "LogixNG 8: start" + System.lineSeparator() +
+                "LogixNG 8: end";
         Assert.assertTrue(stringWriter.toString().startsWith(expectedResult));
     }
     
