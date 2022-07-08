@@ -10,7 +10,6 @@ import jmri.*;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -35,7 +34,9 @@ public class LogixNG_InitializationManagerTest {
     
     private boolean checkAB() {
         for (AtomicBoolean ab : abList) {
-            if (!ab.get()) return false;
+            if (!ab.get()) {
+                return false;
+            }
         }
         return true;
     }
@@ -116,7 +117,7 @@ public class LogixNG_InitializationManagerTest {
         private final PrintWriter _printWriter;
         private final long _delay;
         
-        public MyAction(
+        MyAction(
                 String userName,
                 AtomicBoolean ab,
                 PrintWriter printWriter,
@@ -132,14 +133,14 @@ public class LogixNG_InitializationManagerTest {
         @Override
         public void execute() {
 //            System.out.format("%s: start\n", getUserName());
-            _printWriter.format("%s: start\n", getUserName());
+            _printWriter.format("%s: start%n", getUserName());
             try {
                 Thread.sleep(_delay);
             } catch (InterruptedException ex) {
                 ex.printStackTrace(_printWriter);
             }
 //            System.out.format("%s: end\n", getUserName());
-            _printWriter.format("%s: end\n", getUserName());
+            _printWriter.format("%s: end%n", getUserName());
             _printWriter.flush();
             _ab.set(true);
         }
