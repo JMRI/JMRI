@@ -97,6 +97,9 @@
         <h4>MQTT</h4>
             <ul>
                 <li>Rewrite and expansion of documentation.</li>
+                <li>The default value of the channel is now "", the null string.
+                    The channel name is prefixed to all of JMRI's publish and subscribe
+                    operations.  The previous default was "/trains/"
             </ul>
 
         <h4>MRC</h4>
