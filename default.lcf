@@ -112,3 +112,6 @@ log4j.category.javax.jmdns.impl.DNSIncoming$MessageInputStream=ERROR
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO
 
+#log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
+#log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG
+#log4j.category.jmri.jmrit.operations=DEBUG

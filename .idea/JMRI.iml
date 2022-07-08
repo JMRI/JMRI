@@ -7,7 +7,7 @@
   </component>
   <component name="FacetManager">
     <facet type="Python" name="Python">
-      <configuration sdkName="Jython 2.7 (JMRI-1)" />
+      <configuration sdkName="Python 2.7" />
     </facet>
   </component>
   <component name="NewModuleRootManager">
@@ -52,6 +52,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="Jython 2.7 (JMRI-1) interpreter library" level="application" />
+    <orderEntry type="library" name="Python 2.7 interpreter library" level="application" />
   </component>
 </module>
