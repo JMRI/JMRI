@@ -104,39 +104,6 @@ public class AutoTurnouts {
         return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection);
     }
 
-    /**
-     * Set all turnouts for travel in the designated Section to the next
-     * Section.
-     *
-     * Checks that all turnouts are correctly set for travel in this Section to
-     * the next Section, and sets any turnouts that are not correct. The Section
-     * must be FREE to set its turnouts. Testing for FREE only occurs if a
-     * command needs to be issued. For a command to be issued to set a turnout,
-     * the Block containing that turnout must be unoccupied. NOTE: This method
-     * does not wait for turnout feedback--it assumes the turnout will be set
-     * correctly if a command is issued.
-     *
-     * NOTE: This method requires use of the connectivity stored in a Layout
-     * Editor panel.
-     *
-     * @param s                  the section to check
-     * @param seqNum             sequence number for the section
-     * @param nextSection        the following section
-     * @param at                 the associated train
-     * @param le                 the associated layout panel
-     * @param trustKnownTurnouts true to trust known turnouts
-     * @param prevSection        the prior section
-     *
-     * @return list of turnouts and their expected states if affected turnouts are correctly set or commands have been
-     *         issued to set any that aren't set correctly; null if a needed
-     *         command could not be issued because the turnout's Block is
-     *         occupied
-     */
-//    protected List<LayoutTrackExpectedState<LayoutTurnout>> setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-//            ActiveTrain at, LayoutEditor le, boolean trustKnownTurnouts, Section prevSection) {
-//        return turnoutUtil(s, seqNum, nextSection, at, le, trustKnownTurnouts, true, prevSection);
-//    }
-
     protected Turnout checkStateAgainstList(List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList) {
         if (turnoutList != null) {
             for (LayoutTrackExpectedState<LayoutTurnout> tes : turnoutList) {
