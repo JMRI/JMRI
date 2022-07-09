@@ -264,6 +264,19 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
+        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
+            if (namedBeanReference._handle != null) {
+                if (bean.equals(namedBeanReference._handle.getBean())) {
+                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+                }
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void disposeMe() {
     }
 
@@ -319,6 +332,16 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             }
         }
 
+        public void setName(NamedBeanHandle handle) {
+            if (handle != null) {
+                _handle = handle;
+                _name = _handle.getName();
+            } else {
+                _name = null;
+                _handle = null;
+            }
+        }
+
         public NamedBeanType getType() {
             return _type;
         }
@@ -357,18 +380,12 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         public void setListenOnAllProperties(boolean listenOnAllProperties) {
             _listenOnAllProperties = listenOnAllProperties;
         }
-    }
 
-    /** {@inheritDoc} */
-    @Override
-    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
-        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (bean.equals(namedBeanReference._handle.getBean())) {
-                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-                }
-            }
+        // This method is used by ListenOnBeansTableModel
+        @Override
+        public String toString() {
+            if (_handle != null) return _handle.getName();
+            else return null;
         }
     }
 

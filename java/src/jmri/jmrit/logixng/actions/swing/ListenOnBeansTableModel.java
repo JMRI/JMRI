@@ -81,7 +81,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             case COLUMN_BEAN_TYPE:
                 return NamedBeanType.class;
             case COLUMN_BEAN_NAME:
-                return NamedBean.class;
+                return NamedBeanReference.class;
             case COLUMN_BEAN_ALL:
                 return Boolean.class;
             case COLUMN_DELETE:
@@ -115,7 +115,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 }
                 break;
             case COLUMN_BEAN_NAME:
-                ref.setName((NamedBean) value);
+                ref.setName(((NamedBeanReference) value).getHandle());
                 break;
             case COLUMN_BEAN_ALL:
                 ref.setListenOnAllProperties((boolean) value);
@@ -139,8 +139,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             case COLUMN_BEAN_TYPE:
                 return _namedBeanReference.get(rowIndex).getType();
             case COLUMN_BEAN_NAME:
-                var handle = _namedBeanReference.get(rowIndex).getHandle();
-                return handle != null ? handle.getBean() : null;
+                return _namedBeanReference.get(rowIndex);
             case COLUMN_BEAN_ALL:
                 return _namedBeanReference.get(rowIndex).getListenOnAllProperties();
             case COLUMN_DELETE:
@@ -252,11 +251,11 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
     public class NamedBeanCellEditor extends AbstractCellEditor
             implements TableCellEditor, ActionListener {
 
-        private NamedBean _namedBean;
+        private NamedBeanReference _namedBeanRef;
 
         @Override
         public Object getCellEditorValue() {
-            return this._namedBean;
+            return this._namedBeanRef;
         }
 
         @SuppressWarnings({"unchecked", "rawtypes"})    // The actual types are not known by this class.
@@ -264,13 +263,13 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
 
-            if ((value != null) && (! (value instanceof NamedBean))) {
-                throw new IllegalArgumentException("value is not a Bean: " + value.getClass().getName());
+            if ((value != null) && (! (value instanceof NamedBeanReference))) {
+                throw new IllegalArgumentException("value is not a NamedBeanReference: " + value.getClass().getName());
             }
 
-            String name = _namedBeanReference.get(row).getName();
-            Manager manager = _namedBeanReference.get(row).getType().getManager();
-            NamedBean selection = name != null ? manager.getNamedBean(name) : null;
+            _namedBeanRef = _namedBeanReference.get(row);
+            Manager manager = _namedBeanRef.getType().getManager();
+            NamedBean selection = _namedBeanRef.getHandle() != null ? _namedBeanRef.getHandle().getBean() : null;
             NamedBeanComboBox<NamedBean> namedBeanComboBox =
                     new NamedBeanComboBox<>(manager, selection, NamedBean.DisplayOptions.DISPLAYNAME);
             namedBeanComboBox.setAllowNull(true);
@@ -289,7 +288,8 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
             }
             NamedBeanComboBox<NamedBean> namedBeanComboBox = (NamedBeanComboBox<NamedBean>) event.getSource();
             int index = namedBeanComboBox.getSelectedIndex();
-            _namedBean = (index != -1) ? namedBeanComboBox.getItemAt(index) : null;
+            NamedBean namedBean = (index != -1) ? namedBeanComboBox.getItemAt(index) : null;
+            _namedBeanRef.setName(namedBean);
         }
 
     }

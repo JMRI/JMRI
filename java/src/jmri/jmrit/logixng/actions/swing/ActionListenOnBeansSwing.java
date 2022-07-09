@@ -11,7 +11,6 @@ import javax.swing.*;
 import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.NamedBeanType;
@@ -71,7 +70,8 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
                 new ListenOnBeansTableModel.CellRenderer());
         _listenOnBeansTable.setDefaultEditor(NamedBeanType.class,
                 new ListenOnBeansTableModel.NamedBeanTypeCellEditor());
-        _listenOnBeansTable.setDefaultEditor(NamedBean.class,
+        _listenOnBeansTable.setDefaultEditor(
+                ActionListenOnBeans.NamedBeanReference.class,
                 _listenOnBeansTableModel.getNamedBeanCellEditor());
         _listenOnBeansTableModel.setColumnsForComboBoxes(_listenOnBeansTable);
         _listenOnBeansTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
