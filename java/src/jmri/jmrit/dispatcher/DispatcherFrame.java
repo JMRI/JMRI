@@ -1122,32 +1122,32 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         return numErrors;
     }
-    /**
-     * Validates connectivity through a Transit. Returns the number of errors
-     * found. Sends log messages detailing the errors if break in connectivity
-     * is detected. Checks all Sections before quitting.
-     *
-     * <p>
-     * Moved from Transit in JMRI 4.19.7
-     *
-     * @param panel the panel containing Sections to validate
-     * @return number of invalid sections or -1 if panel if null
-     */
-    private int validateConnectivity(Transit t, LayoutEditor panel) {
-        if (panel == null) {
-            log.error("validateConnectivity called with a null LayoutEditor panel");
-            return -1;
-        }
-        int numErrors = 0;
-        for (int i = 0; i < t.getTransitSectionList().size(); i++) {
-            String s = t.getTransitSectionList().get(i).getSection().validate(panel);
-            if (!s.equals("")) {
-                log.error(s);
-                numErrors++;
-            }
-        }
-        return numErrors;
-    }
+//    /**
+//     * Validates connectivity through a Transit. Returns the number of errors
+//     * found. Sends log messages detailing the errors if break in connectivity
+//     * is detected. Checks all Sections before quitting.
+//     *
+//     * <p>
+//     * Moved from Transit in JMRI 4.19.7
+//     *
+//     * @param panel the panel containing Sections to validate
+//     * @return number of invalid sections or -1 if panel if null
+//     */
+//    private int validateConnectivity(Transit t, LayoutEditor panel) {
+//        if (panel == null) {
+//            log.error("validateConnectivity called with a null LayoutEditor panel");
+//            return -1;
+//        }
+//        int numErrors = 0;
+//        for (int i = 0; i < t.getTransitSectionList().size(); i++) {
+//            String s = t.getTransitSectionList().get(i).getSection().validate(panel);
+//            if (!s.equals("")) {
+//                log.error(s);
+//                numErrors++;
+//            }
+//        }
+//        return numErrors;
+//    }
 
     // allocate the next section for an ActiveTrain at dispatcher's request
     void allocateNextRequested(int index) {
