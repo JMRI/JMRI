@@ -161,7 +161,7 @@ final public class ConnectivityUtil {
             }
 
 
-            log.warn("special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result);
+            //log.warn("special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result);
             return result;
         }
 
@@ -536,15 +536,15 @@ final public class ConnectivityUtil {
         }
 
         if (result.size() != 0) {
-            log.warn("non special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result.get(result.size()-1).getObject().getName());
+            log.debug("non special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result.get(result.size()-1).getObject().getName());
         }else{
-            log.warn("non special search for block {} result null ", currLayoutBlock.getBlock().getUserName());
+            log.debug("non special search for block {} result null ", currLayoutBlock.getBlock().getUserName());
         }
         if (nextLayoutBlock != null) {
-            log.warn("    nextblock {} ", nextLayoutBlock.getBlock().getUserName() );
+            log.debug("    nextblock {} ", nextLayoutBlock.getBlock().getUserName() );
         }
         if (nextLayoutBlock != null) {
-            log.warn("    prevblock {} ", prevLayoutBlock.getBlock().getUserName() );
+            log.debug("    prevblock {} ", prevLayoutBlock.getBlock().getUserName() );
         }
 
         // with multiple panels the next or prev block may be on another panel, so try the search with just the current block
@@ -558,7 +558,7 @@ final public class ConnectivityUtil {
             }
 
 
-            log.warn("special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result);
+            log.debug("special search for block {} result {} ", currLayoutBlock.getBlock().getUserName(), result);
         }
         return result;
     }

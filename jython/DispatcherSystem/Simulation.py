@@ -70,7 +70,7 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
             active_trains_list.clear()
             active_train_name_list.clear()
             for activeTrain in DF.getActiveTrainsList():
-                print "activeTrain", activeTrain.getActiveTrainName()
+                #print "activeTrain", activeTrain.getActiveTrainName()
                 if activeTrain not in active_trains_list:
                     activeTrainName = activeTrain.getActiveTrainName()
                     active_trains_list.add(activeTrain)

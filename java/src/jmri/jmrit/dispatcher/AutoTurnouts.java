@@ -293,22 +293,7 @@ public class AutoTurnouts {
                         log.debug("tried layout editor {}", le);
                     }
                 }
-
-                String currUserName = null;
-                if (curBlock != null) {
-                    currUserName = curBlock.getUserName();
-                }
-                log.debug("notFound1 {} turnoutList {} ", notfound, turnoutList);
-
-                if (notfound == true){
-                    if (prevBlock != null) {    // could not initialize the connectivity search
-                        log.warn("3 Could not find connection between Blocks {} and {}", currUserName, prevBlock.getUserName());
-                    } else {
-                        log.warn("4 Could not find connection between Blocks {}, prevBock is null!", currUserName);
-                    }
-                }else{
-                    log.debug("Could find connection between Blocks {} and {}", currUserName, prevBlock.getUserName());
-                }
+                log.debug("notFound {} turnoutList {} ", notfound, turnoutList);
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
