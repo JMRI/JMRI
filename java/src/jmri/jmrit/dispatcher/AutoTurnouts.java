@@ -206,7 +206,7 @@ public class AutoTurnouts {
                         at.getActiveTrainName(),at.isAllocationReversed(),s.getDisplayName(USERSYS),
                         at.getStartBlock().getUserName(),at.getEndBlock().getDisplayName(USERSYS));
             } catch (Exception ex ) {
-                log.warn(ex.getLocalizedMessage());
+                log.warn("Exception while creating log error : {}", ex.getLocalizedMessage());
             }
             return turnoutListForAllocatedSection;
         }
