@@ -97,15 +97,6 @@ final public class ConnectivityUtil {
         return getTurnoutList(currBlock, prevBlock, nextBlock, false);
     }
 
-    @Nonnull
-    public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(
-            @CheckForNull Block currBlock,
-            @CheckForNull Block prevBlock,
-            @CheckForNull Block nextBlock,
-            boolean suppress) {
-        AtomicBoolean notFound1 = new AtomicBoolean(true);
-        return getTurnoutList(currBlock, prevBlock, nextBlock, suppress, notFound1);
-    }
     /**
      * Provide a list of LayoutTurnouts in the specified Block, in order,
      * beginning at the connection to the specified previous Block and
@@ -129,9 +120,7 @@ final public class ConnectivityUtil {
             @CheckForNull Block currBlock,
             @CheckForNull Block prevBlock,
             @CheckForNull Block nextBlock,
-            boolean suppress,
-            AtomicBoolean notFound1 ) {
-        notFound1.set(false);  //notfound1 is set true if notfound is true later in code and returned to calling routine
+            boolean suppress ) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
 
         // initialize
@@ -165,9 +154,6 @@ final public class ConnectivityUtil {
 
             // special search with partial information - not as good, order not assured
             List<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlock(currLayoutBlock);
-                        if (allTurnouts.isEmpty()){
-                notFound1.set(false);
-            }
             for (LayoutTurnout lt : allTurnouts) {
                 result.add(new LayoutTrackExpectedState<>(lt,
                         lt.getConnectivityStateForLayoutBlocks(
@@ -294,7 +280,6 @@ final public class ConnectivityUtil {
             } else if (!suppress) {
                 log.warn("Could not find connection between Blocks {}, prevBock is null!", currUserName);
             }
-            notFound1.set(true);                                       
             return result;
         }
         // search connectivity for turnouts by following TrackSegments to end of Block
@@ -566,9 +551,6 @@ final public class ConnectivityUtil {
         if (result.size() == 0){
             // special search with partial information - not as good, order not assured
             List<LayoutTurnout> allTurnouts = getAllTurnoutsThisBlockAllPanels(currLayoutBlock);
-            if (allTurnouts.isEmpty()){
-                notFound1.set(false);
-            }
             for (LayoutTurnout lt : allTurnouts) {
                 result.add(new LayoutTrackExpectedState<>(lt,
                         lt.getConnectivityStateForLayoutBlocks(

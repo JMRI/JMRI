@@ -277,15 +277,16 @@ public class AutoTurnouts {
              been set correctly for the train to have arrived in the first place.
              */
 
-            AtomicBoolean notFound1 = new AtomicBoolean(true);
+            boolean notfound = true;
             if (prevBlock != null) {
                 jmri.jmrit.display.EditorManager EditorManager = InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class);
                 for (jmri.jmrit.display.layoutEditor.LayoutEditor le : EditorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor.class)) {
                     ConnectivityUtil ct = le.getConnectivityUtil();
                     boolean suppress = true;
-                    notFound1.set(true);
-                    turnoutList = ct.getTurnoutList(curBlock, prevBlock, nextBlock, suppress, notFound1);
-                    if (notFound1.get() == false) {
+                    notfound = true;
+                    turnoutList = ct.getTurnoutList(curBlock, prevBlock, nextBlock, suppress);
+                    notfound = turnoutList.isEmpty();
+                    if (notfound == false) {
                         log.debug("breaking: layout editor {}",le);
                         break;
                     }else{
@@ -297,9 +298,9 @@ public class AutoTurnouts {
                 if (curBlock != null) {
                     currUserName = curBlock.getUserName();
                 }
-                log.debug("notFound1 {} turnoutList {} ", notFound1.get(), turnoutList);
+                log.debug("notFound1 {} turnoutList {} ", notfound, turnoutList);
 
-                if (notFound1.get() == true){
+                if (notfound == true){
                     if (prevBlock != null) {    // could not initialize the connectivity search
                         log.warn("3 Could not find connection between Blocks {} and {}", currUserName, prevBlock.getUserName());
                     } else {
