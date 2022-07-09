@@ -385,7 +385,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         @Override
         public String toString() {
             if (_handle != null) return _handle.getName();
-            else return null;
+            else return "";
         }
     }
 
