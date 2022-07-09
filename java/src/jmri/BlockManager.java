@@ -106,7 +106,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     public Block createNewBlock(@Nonnull String systemName, @CheckForNull String userName) {
         // Check that Block does not already exist
         Block r;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             r = getByUserName(userName);
             if (r != null) {
                 return null;
@@ -141,7 +141,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      *         exists, or if there is trouble creating a new Block.
      */
     @CheckForNull
-    public Block createNewBlock(@Nonnull String userName) {
+    public Block createNewBlock(@CheckForNull String userName) {
         return createNewBlock(getAutoSystemName(), userName);
     }
 
