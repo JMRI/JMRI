@@ -332,7 +332,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             }
         }
 
-        public void setName(NamedBeanHandle handle) {
+        public void setName(NamedBeanHandle<? extends NamedBean> handle) {
             if (handle != null) {
                 _handle = handle;
                 _name = _handle.getName();
