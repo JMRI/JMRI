@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 /**
- * Test simple functioning of CbusNodeInfoPane
+ * Test for Pi-SPROG 3 pane provider
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
