@@ -182,8 +182,7 @@ public class StringUtilTest {
     public void testparenQuote() {
         String sample;
 
-        sample = null;
-        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+        Assert.assertNull("null String", StringUtil.parenQuote(null));
 
         sample = "";
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
@@ -217,8 +216,7 @@ public class StringUtilTest {
     public void testparenUnQuote() {
         String sample;
 
-        sample = null;
-        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+        Assert.assertNull( "Null String", StringUtil.parenUnQuote(null));
 
         sample = "";
         Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
@@ -348,17 +346,15 @@ public class StringUtilTest {
         String expResultNoHtml = baseText + extraText;
         String expResultHtml = "<html>" + expResultNoHtml + "</html>";
 
-        String result;
-
         // test null cases
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, null), null);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(baseText, null), baseText);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, extraText), extraText);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(baseTextHtml, null), baseTextHtml);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, extraTextHtml), extraTextHtml);
+        Assert.assertNull( StringUtil.concatTextHtmlAware(null, null));
+        Assert.assertEquals(baseText, StringUtil.concatTextHtmlAware(baseText, null));
+        Assert.assertEquals(extraText, StringUtil.concatTextHtmlAware(null, extraText));
+        Assert.assertEquals(baseTextHtml, StringUtil.concatTextHtmlAware(baseTextHtml, null));
+        Assert.assertEquals(extraTextHtml, StringUtil.concatTextHtmlAware(null, extraTextHtml));
 
         // test with no HTML
-        result = StringUtil.concatTextHtmlAware(baseText, extraText);
+        String result = StringUtil.concatTextHtmlAware(baseText, extraText);
         Assert.assertEquals(expResultNoHtml, result);
 
         // test with baseText HTML
