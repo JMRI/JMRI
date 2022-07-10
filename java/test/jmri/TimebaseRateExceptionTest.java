@@ -14,12 +14,12 @@ import org.junit.Assert;
 public class TimebaseRateExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
       Assert.assertNotNull("TimebaseRateException constructor",new TimebaseRateException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("TimebaseRateException string constructor",new TimebaseRateException("test exception"));
    }
 
