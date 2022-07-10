@@ -180,7 +180,7 @@ This is the next release in the 5.2 cycle. It's intended to be created from the 
         git checkout master
         git pull
         cp jmri5.1.2.shtml jmri5.1.3.shtml
-        $EDITOR jmri5.1.2.shtml
+        $EDITOR jmri5.1.3.shtml
 
             (edit the new release note accordingly)
                 change numbers throughout
@@ -253,13 +253,13 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/4.99.10-SNAPSHOT/5.1.2-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.1.1-SNAPSHOT/5.1.2-SNAPSHOT/g pom.xml
         git commit -m"5.1.2 until next release" pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=10/release.build=1/g release.properties
+        sed -i .bak s/release.build=1/release.build=2/g release.properties
         git commit -m"5.1.2 until next release" release.properties
         git push github
 ```
@@ -383,7 +383,9 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 ================================================================================
 ## Further Changes to Contents Before Release
 
-These instructions result in the initial release-5.1.2 branch label being attached to the master branch sequence.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to add something to release-5.1.2 and _not_ include other additions to master, you have to branch the contents of release-5.1.2 away from master.  This section describes how to do that.
+These instructions result in the initial release-5.1.2 branch label being attached to the master branch sequence.  If somebody commits to master after that, master will move along with additional contents. Once that happens, if you want to include _all_ merges to master to date, you can just move the release-5.1.2 branch forward on master to the current head (and update the release note, decoderIndex and help files as needed)
+
+If you want to add something to release-5.1.2 and _not_ include other additions to master, you have to branch the contents of release-5.1.2 away from master.  This section describes how to do that.
 
 - Ideally, start the work on either the release-5.1.2 branch (if working after that was started) or on a branch-from-master that's _before_ the release-5.1.2 branch was created.  That way, the change can be cleanly included in the release branch, and also directly onto master.
 
@@ -482,9 +484,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.1.2+Redc443cff0.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.2/JMRI.5.1.2+Redc443cff0.dmg) | 26fad20009292be1a1b3a875693589543257b568900c72becf2a87ea7452a4af
-[JMRI.5.1.2+Redc443cff0.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.2/JMRI.5.1.2+Redc443cff0.exe) | 820024d28f03eea95dd4fd969c51546a30118df8705dd161dd50382f4a36048c
-[JMRI.5.1.2+Redc443cff0.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.2/JMRI.5.1.2+Redc443cff0.tgz) | 03802d775868f754af71b975b5657cc76354865707e50952f458e76827c65754
+[JMRI.5.1.2+Ra3b171c8ba.dmg](https://github.com/JMRI/JMRI/releases/download/v5.1.2/JMRI.5.1.2+Ra3b171c8ba.dmg) | 7f0bd10626eee2a98c605e7db6b1a8fab88039dbc47abd85fc1d2571420714b0
+[JMRI.5.1.2+Ra3b171c8ba.exe](https://github.com/JMRI/JMRI/releases/download/v5.1.2/JMRI.5.1.2+Ra3b171c8ba.exe) | 6aa5b39c01dfcba9db9f6796478f1d36c2a272a426820071f11a18a64810f045
+[JMRI.5.1.2+Ra3b171c8ba.tgz](https://github.com/JMRI/JMRI/releases/download/v5.1.2/JMRI.5.1.2+Ra3b171c8ba.tgz) | b9926ff5727f6225eb90f6e54d098e53c20be822f7c4671c3a82a779586e78f8
 
 ```
 
