@@ -85,7 +85,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
 
         int number = 0;
-        String normName = systemName;
+        String normName;
         try {
             // see if this is a valid address
             String address = systemName.substring(getSystemPrefix().length() + 1);
