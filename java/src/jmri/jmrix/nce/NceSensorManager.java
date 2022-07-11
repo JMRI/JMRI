@@ -85,10 +85,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
 
         int number = 0;
+        String normName = systemName;
         try {
             // see if this is a valid address
             String address = systemName.substring(getSystemPrefix().length() + 1);
-            String normName = createSystemName(address, getSystemPrefix());
+            normName = createSystemName(address, getSystemPrefix());
             // parse converted system name
             number = Integer.parseInt(normName.substring(getSystemPrefix().length() + 1));
         } catch (NumberFormatException | JmriException e) {
@@ -96,7 +97,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                     systemName.substring(getSystemPrefix().length() + 1) +
                     " to NCE sensor address"); // NOI18N
         }
-        Sensor s = new NceSensor(systemName);
+        Sensor s = new NceSensor(normName);
         s.setUserName(userName);
 
         // ensure the AIU exists
