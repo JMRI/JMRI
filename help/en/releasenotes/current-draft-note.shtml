@@ -580,6 +580,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li><i>jmri.util.ConnectionUtil</i> has a utility method to find a connection by its connection name.<br>
+            <code>LocoNetSystemConnectionMemo memo = ConnectionUtil.getConnection("L2", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>MqttSystemConnectionMemo memo = ConnectionUtil.getConnection("M", MqttSystemConnectionMemo.class);</code>
+            </li>
         </ul>
 
