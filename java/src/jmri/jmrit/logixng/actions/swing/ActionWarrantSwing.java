@@ -14,9 +14,12 @@ import jmri.jmrit.logixng.actions.ActionWarrant;
 import jmri.jmrit.logixng.actions.ActionWarrant.DirectOperation;
 import jmri.jmrit.logixng.actions.ActionWarrant.ControlAutoTrain;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
+import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -41,8 +44,11 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
     private JTextField _warrantDataFormulaTextField;
 
     private JPanel _panelControlTrainCombo;
+    private JPanel _panelTrainData;
     private JTextField _trainIdNameTextField;
     private JComboBox<ControlAutoTrain> _controlTrainComboBox;
+    private BeanSelectPanel<Memory> _memoryBeanPanel;
+    private JPanel _memoryPanel;
 
 
     public ActionWarrantSwing() {
@@ -62,6 +68,7 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
+        _memoryPanel = new JPanel();
 
         // Left and center section
         JPanel _tabbedPaneNamedBean;
@@ -93,6 +100,9 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _trainIdNameTextField.setColumns(30);
         _panelDataDirect.add(_trainIdNameTextField);
 
+        _memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _memoryPanel.add(_memoryBeanPanel);
+
         _controlTrainComboBox = new JComboBox<>();
         for (ControlAutoTrain e : ControlAutoTrain.values()) {
             _controlTrainComboBox.addItem(e);
@@ -102,8 +112,10 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _panelControlTrainCombo.add(_controlTrainComboBox);
         _panelDataDirect.add(_panelControlTrainCombo);
 
+        _panelTrainData = new JPanel();
         _warrantDataReferenceTextField = new JTextField();
         _warrantDataReferenceTextField.setColumns(30);
+        _panelTrainData.add(_warrantDataReferenceTextField);
         _panelDataReference.add(_warrantDataReferenceTextField);
 
         _warrantDataLocalVariableTextField = new JTextField();
@@ -114,8 +126,9 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _warrantDataFormulaTextField.setColumns(30);
         _panelDataFormula.add(_warrantDataFormulaTextField);
 
-        setDataPanelState();
-
+//        setDataPanelState();
+        _panelTrainData.setVisible(false);
+        _panelControlTrainCombo.setVisible(false);
 
         if (action != null) {
             switch (action.getDataAddressing()) {
@@ -129,8 +142,26 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
             _warrantDataLocalVariableTextField.setText(action.getDataLocalVariable());
             _warrantDataFormulaTextField.setText(action.getDataFormula());
 
-            _trainIdNameTextField.setText(action.getTrainIdName());
+            _trainIdNameTextField.setText(action.getTrainData());
             _controlTrainComboBox.setSelectedItem(action.getControlAutoTrain());
+            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _memoryBeanPanel.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
+            }
+
+            LogixNG_SelectEnum<DirectOperation> selectEnum = action.getSelectEnum();
+            if (selectEnum.getEnum() != null) {
+                switch (selectEnum.getEnum()) {
+                    case GetTrainLocation:
+                    case SetTrainId:
+                    case SetTrainName:
+                    	_panelTrainData.setVisible(true);
+                        break;
+                    case ControlAutoTrain:
+                    	_panelControlTrainCombo.setVisible(true);
+                    	break;
+                    default:
+                }
+            }
         }
 
         JComponent[] components = new JComponent[]{
@@ -148,6 +179,7 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         boolean newState =
                 _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainId) ||
                 _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainName) ||
+                _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetTrainLocation) ||
                 _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.ControlAutoTrain);
         _tabbedPaneData.setEnabled(newState);
         _warrantDataReferenceTextField.setEnabled(newState);
@@ -157,14 +189,14 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _controlTrainComboBox.setEnabled(newState);
         _trainIdNameTextField.setEnabled(newState);
 
-        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
+/*        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
                 DirectOperation.ControlAutoTrain)) {
             _controlTrainComboBox.setVisible(true);
             _trainIdNameTextField.setVisible(false);
         } else {
             _controlTrainComboBox.setVisible(false);
             _trainIdNameTextField.setVisible(true);
-        }
+        }*/
     }
 
     /** {@inheritDoc} */
@@ -242,7 +274,7 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
                 // Handle optional data field
                 if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainId)
                         || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainName)) {
-                    action.setTrainIdName(_trainIdNameTextField.getText());
+                    action.setTrainData(_trainIdNameTextField.getText());
                 } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.ControlAutoTrain)) {
                     action.setControlAutoTrain((ControlAutoTrain) _controlTrainComboBox.getSelectedItem());
                 }

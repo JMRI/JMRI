@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.ActionSignalMast.OperationType;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
@@ -34,13 +35,19 @@ public class ActionWarrant extends AbstractDigitalAction
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
             new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.AllocateWarrantRoute, this);
 
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
+//    private DirectOperation _operationType = DirectOperation.AllocateWarrantRoute;
     private String _dataReference = "";
     private String _dataLocalVariable = "";
     private String _dataFormula = "";
     private ExpressionNode _dataExpressionNode;
+    private boolean _listenToMemory = true;
 
-    private String _trainIdName = "";
+    private String _trainData = "";	// Train Name, RosterEntry/address, locationMemory, 
     private ControlAutoTrain _controlAutoTrain = ControlAutoTrain.Halt;
 
     public ActionWarrant(String sys, String user)
@@ -57,21 +64,28 @@ public class ActionWarrant extends AbstractDigitalAction
         ActionWarrant copy = new ActionWarrant(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         _selectEnum.copy(copy._selectEnum);
+//        copy.setOperationType(_operationType);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
         copy.setDataLocalVariable(_dataLocalVariable);
         copy.setDataFormula(_dataFormula);
 
-        copy.setTrainIdName(_trainIdName);
+        copy.setTrainData(_trainData);
         copy.setControlAutoTrain(_controlAutoTrain);
+        copy.setListenToMemory(_listenToMemory);
 
         return manager.registerAction(copy);
     }
 
     public LogixNG_SelectNamedBean<Warrant> getSelectNamedBean() {
         return _selectNamedBean;
+    }
+
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
 
     public LogixNG_SelectEnum<DirectOperation> getSelectEnum() {
@@ -85,6 +99,14 @@ public class ActionWarrant extends AbstractDigitalAction
 
     public NamedBeanAddressing getDataAddressing() {
         return _dataAddressing;
+    }
+
+/*    public void setOperationType(DirectOperation operationType) {
+        _operationType = operationType;
+    }
+*/
+    public DirectOperation getOperationType() {
+        return _selectEnum.getEnum();
     }
 
     public void setDataReference(@Nonnull String reference) {
@@ -126,13 +148,16 @@ public class ActionWarrant extends AbstractDigitalAction
         }
     }
 
-
-    public void setTrainIdName(@Nonnull String trainIdName) {
-        _trainIdName = trainIdName;
+    public void setListenToMemory(boolean listenToMemory) {
+        this._listenToMemory = listenToMemory;
     }
 
-    public String getTrainIdName() {
-        return _trainIdName;
+    public void setTrainData(@Nonnull String trainIdName) {
+        _trainData = trainIdName;
+    }
+
+    public String getTrainData() {
+        return _trainData;
     }
 
     public void setControlAutoTrain(ControlAutoTrain controlAutoTrain) {
@@ -157,7 +182,7 @@ public class ActionWarrant extends AbstractDigitalAction
                 switch(theOper) {
                     case SetTrainId:
                     case SetTrainName:
-                        return _trainIdName;
+                        return _trainData;
                     case ControlAutoTrain:
                         return _controlAutoTrain.name();
                     default:
@@ -195,10 +220,10 @@ public class ActionWarrant extends AbstractDigitalAction
             return;
         }
 
-        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
+//        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
         // Variables used in lambda must be effectively final
-        DirectOperation theOper = oper;
+        DirectOperation theOper = _selectEnum.evaluateEnum(getConditionalNG());
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             String msg;
@@ -278,10 +303,19 @@ public class ActionWarrant extends AbstractDigitalAction
                         if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
                             throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
                         }
-                    }
+                    }	// else ignore. cannot change address when warrant is running
                     break;
                 case SetTrainName:
                     warrant.setTrainName(getNewData(theOper));
+                    break;
+
+                case GetTrainLocation:
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (memory != null) {
+                        memory.setValue(warrant.getCurrentBlockName());
+                    } else {
+                        log.warn("setMemory should copy memory to memory but other memory is null");
+                    }
                     break;
 
                 default:
@@ -309,16 +343,19 @@ public class ActionWarrant extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
         String state = _selectEnum.getDescription(locale);
+        String getLocationMemory = _selectMemoryNamedBean.getDescription(locale);
 
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
             if (_selectEnum.getEnum() != null) {
                 switch (_selectEnum.getEnum()) {
                     case SetTrainId:
-                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainIdName);
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainData);
                     case SetTrainName:
-                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainData);
                     case ControlAutoTrain:
                         return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
+                    case GetTrainLocation:
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Location", namedBean, getLocationMemory);      	
                     default:
                         // Fall thru and handle it in the end of the method
                 }
@@ -354,6 +391,9 @@ public class ActionWarrant extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
         _selectEnum.registerListeners();
+        if (_listenToMemory) {
+            _selectMemoryNamedBean.addPropertyChangeListener("value", this);
+        }
     }
 
     /** {@inheritDoc} */
@@ -361,6 +401,9 @@ public class ActionWarrant extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
         _selectEnum.unregisterListeners();
+        if (_listenersAreRegistered && _listenToMemory) {
+            _selectMemoryNamedBean.removePropertyChangeListener("value", this);
+        }
     }
 
     /** {@inheritDoc} */
@@ -377,7 +420,8 @@ public class ActionWarrant extends AbstractDigitalAction
         ManuallyRunTrain(Bundle.getMessage("ActionWarrant_ManuallyRunTrain")),
         ControlAutoTrain(Bundle.getMessage("ActionWarrant_ControlAutoTrain")),
         SetTrainId(Bundle.getMessage("ActionWarrant_SetTrainId")),
-        SetTrainName(Bundle.getMessage("ActionWarrant_SetTrainName"));
+        SetTrainName(Bundle.getMessage("ActionWarrant_SetTrainName")),
+        GetTrainLocation(Bundle.getMessage("ActionWarrant_SetTrainLocation"));
 
         private final String _text;
 
@@ -418,6 +462,7 @@ public class ActionWarrant extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     /** {@inheritDoc} */

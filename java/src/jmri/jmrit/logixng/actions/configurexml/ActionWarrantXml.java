@@ -53,8 +53,11 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
         element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
 
-        element.addContent(new Element("trainIdName").addContent(p.getTrainIdName()));
+        element.addContent(new Element("trainIdName").addContent(p.getTrainData()));
         element.addContent(new Element("controlAutoTrain").addContent(p.getControlAutoTrain().name()));
+
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
 
         return element;
     }
@@ -99,12 +102,15 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
 
 
             elem = shared.getChild("trainIdName");
-            if (elem != null) h.setTrainIdName(elem.getTextTrim());
+            if (elem != null) h.setTrainData(elem.getTextTrim());
 
             elem = shared.getChild("controlAutoTrain");
             if (elem != null) {
                 h.setControlAutoTrain(ActionWarrant.ControlAutoTrain.valueOf(elem.getTextTrim()));
             }
+
+            var selectOtherMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+            selectOtherMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);

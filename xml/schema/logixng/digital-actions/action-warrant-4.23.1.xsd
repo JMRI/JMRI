@@ -66,6 +66,7 @@
                     <xs:enumeration value="ControlAutoTrain"/>
                     <xs:enumeration value="SetTrainId"/>
                     <xs:enumeration value="SetTrainName"/>
+                    <xs:enumeration value="GetTrainLocation"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
