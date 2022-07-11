@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.util;
 
 import jmri.jmrix.loconet.LnTrafficController;
@@ -63,14 +58,6 @@ public class ConnectionUtilTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
 
-//        JUnitUtil.initInternalSignalHeadManager();
-//        JUnitUtil.initDefaultSignalMastManager();
-//        JUnitUtil.initSignalMastLogicManager();
-//        JUnitUtil.initOBlockManager();
-//        JUnitUtil.initWarrantManager();
-
-//        JUnitUtil.initLogixNGManager();
-
         // The class under test uses LocoNet connections that it pulls from the InstanceManager.
         lnMemo1 = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis1 = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(lnMemo1);
@@ -98,14 +85,6 @@ public class ConnectionUtilTest {
         lnis1 = null;
         lnis2 = null;
 
-        // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-
-//        JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
-//        JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
-//        JUnitUtil.removeMatchingThreads("LocoNetThrottledTransmitter");
-
-//        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
-//        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
