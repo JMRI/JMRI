@@ -96,7 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Rewrite and expansion of documentation.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -416,17 +416,8 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-  <li>Enhanced passenger blocking. Negative blocking numbers place passenger cars in front of
-    freight cars.</li>
-  <li>Added hazardous classification to car loads. Now a car can be classified as hazardous
-    depending on the car's load.</li>
-  <li>Improved car blocking when car is hazardous. The program will attempt to place
-    non-hazardous cars in front of hazardous cars.</li>
-  <li>New automation feature. Users can now select an automation to run at startup. See under
-    Tools in the operations Automations window.</li>
-  <li>Improved Manifest and switch list formating when using tabular and load set out and pick
-    up messages.</li>
-</ul>
+            <li></li>
+        </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
@@ -589,6 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Reduce the verbosity of MDNS logging.</li>
+            <li></li>
         </ul>
 

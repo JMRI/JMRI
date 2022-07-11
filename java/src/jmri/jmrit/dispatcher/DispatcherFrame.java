@@ -432,7 +432,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (dispatcherFrame == null) {
             if (_LE != null && autoAllocate == null) {
                 autoAllocate = new AutoAllocate(this, allocationRequests);
-                autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator ");
+                autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator openDispatcherWindow ");
                 autoAllocateThread.start();
             }
             dispatcherFrame = this;
@@ -2591,7 +2591,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (_LE != null) {
                 if (autoAllocate == null) {
                     autoAllocate = new AutoAllocate(this,allocationRequests);
-                    autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator ");
+                    autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator stopStartAutoAllocateRelease ");
                     autoAllocateThread.start();
                 }
             } else {

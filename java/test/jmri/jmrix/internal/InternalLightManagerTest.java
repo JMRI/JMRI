@@ -5,9 +5,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Tests for the jmri.jmrix.internal.InternalLightManager class.
@@ -32,21 +29,15 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         Light tl = lm.newLight("IL21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received light value {}", tl);
-        }
-        Assert.assertTrue(null != tl);
+        Assert.assertNotNull( tl);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", lm.getBySystemName("IL21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", lm.getByUserName("my name"));
-        }
 
-        Assert.assertTrue(null != lm.getBySystemName("IL21"));
-        Assert.assertTrue(null != lm.getByUserName("my name"));
+        Assert.assertNotNull( lm.getBySystemName("IL21"));
+        Assert.assertNotNull( lm.getByUserName("my name"));
+        
+        Assert.assertTrue( tl == lm.getBySystemName("IL21") );
+        Assert.assertTrue( tl == lm.getByUserName("my name") );
 
     }
 
@@ -82,5 +73,5 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
+    // private final static import org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalLightManagerTest.class);
 }
