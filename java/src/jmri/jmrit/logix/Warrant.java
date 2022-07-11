@@ -849,7 +849,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student = null;
         }
         _curSignalAspect = null;
-        cancelDelayRamp(true);
+        cancelDelayRamp();
 
         if (_engineer != null) {
             if (!_engineer.getState().equals(Thread.State.TERMINATED)) {
@@ -1880,7 +1880,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             log.info(Bundle.getMessage("StopBlockCleared",
                     getTrainName(), getDisplayName(), reason, name));
         }
-        cancelDelayRamp(true);
+        cancelDelayRamp();
         int time = 1000;
         if (_waitForBlock) {
             _waitForBlock = false;
@@ -2065,7 +2065,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             log.debug("{}: restoreRunning(): rampSpeedTo to \"{}\"",
                     getDisplayName(), speedType);
         }
-        cancelDelayRamp(false); // interrupts any down ramp
+        cancelDelayRamp(); // interrupts any down ramp
         rampSpeedTo(speedType, -1);
         // continue, there may be blocks ahead that need a speed decrease before entering them
         if (!_overrun && _idxCurrentOrder < _orders.size() - 1) {
@@ -2495,7 +2495,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _waitTime = startWait;
             _waitSpeed = waitSpeed;
             _endBlockIdx = endBlockIdx;
-            setName("CommandDelay(" + getTrainName() +")");
+            setName("CommandDelay(" + getTrainName() + "-" + speedType +")");
         }
 
         // check if request for a duplicate CommandDelay can be cancelled
@@ -2548,10 +2548,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
-    synchronized private void cancelDelayRamp(boolean quit) {
+    synchronized private void cancelDelayRamp() {
         if (_delayCommand != null) {
-            log.debug("{}: cancelDelayRamp({}) called. _speedType= {}", getDisplayName(), quit, _delayCommand._speedType);
-            _delayCommand.quit = quit;
+            log.debug("{}: cancelDelayRamp({}) called. _speedType= {}", getDisplayName(), _delayCommand._speedType);
+            _delayCommand.quit = true;
             _delayCommand.interrupt();
             _delayCommand = null;
         }
@@ -2562,7 +2562,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     private void rampSpeedTo(String speedType, int idx) {
-        cancelDelayRamp(true);
+        cancelDelayRamp();
         if (log.isDebugEnabled()) {
             if (idx < 0) {
                 log.debug("{}: Ramp up to \"{}\" from block \"{}\"", getDisplayName(), speedType, getCurrentBlockName());
@@ -2578,7 +2578,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     private void setSpeedToType(String speedType) {
-        cancelDelayRamp(true);
+        cancelDelayRamp();
         _engineer.setSpeedToType(speedType);
         
     }
@@ -2846,7 +2846,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         if (changeDist <= availDist) {
-            cancelDelayRamp(true); // interrupts down ramping
+            cancelDelayRamp(); // interrupts down ramping
             clearWaitFlags(false);
             return;
         }
@@ -3117,7 +3117,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (_delayCommand.isDuplicate(speedType, waitTime, endBlockIdx)) {
                 return;
             }
-            cancelDelayRamp(true);
+            cancelDelayRamp();
         }
         _delayCommand = new CommandDelay(speedType, waitTime, waitSpeed, endBlockIdx);
         _delayCommand.start();
