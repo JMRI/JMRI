@@ -2550,7 +2550,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     synchronized private void cancelDelayRamp() {
         if (_delayCommand != null) {
-            log.debug("{}: cancelDelayRamp({}) called. _speedType= {}", getDisplayName(), _delayCommand._speedType);
+            log.debug("{}: cancelDelayRamp() called. _speedType= {}", getDisplayName(), _delayCommand._speedType);
             _delayCommand.quit = true;
             _delayCommand.interrupt();
             _delayCommand = null;
