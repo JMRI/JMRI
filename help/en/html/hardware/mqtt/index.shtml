@@ -152,24 +152,21 @@
       <a href="#testing">Testing</a> for further information about using a broker without a user name
       and password.</li>      
       
-      <li><span class="since">Since 4.25.3</span><strong>Last Will</strong>: JMRI can specify its "last will" topic and 
-      message when it connects to a broker. The broker stores the message and topic and sends it as a normal MQTT message
-      to clients who have subscribed to that topic if and when it finds that JMRI has disconnected in an abnormal manner.
-      Find more information
-      <a href="https://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament/" target="_blank">
-      here</a> about Last Will and Testament.</li>
-      
       <li><strong>MQTT Channel</strong>: MQTT Channel is prefixed to the topic of any MQTT messages published or subscribed 
-      by JMRI. When JMRI is first installed, MQTT Channel contains "/trains/" but it is recommeneded that you change
-      that.  Note that current guidance from the MQTT community is not to have a leading slash in the MQTT Channel
-      (maintained here for historical compatibility). 
-      <br>[Since "/trains/" is the default for all users of JMRI, anyone keeping the default and using a public MQTT message
+      by JMRI. Prior to JMRI release 5.1.2, MQTT Channel contained "/trains/" as a default.
+      <br><span class="since">Since 5.1.2</span> MQTT Channel now deaults to blank but you can change it to 
+      anything you want.<br>
+      
+      Note that current guidance from the MQTT community is not to have a leading slash in the MQTT Channel. A trailing
+      slash should be provided for non-blank strings for convenience in organizing topics. 
+      <br>[Prior to JMRI Rel. 5.1.2, since the default of "/trains/" was for all users of JMRI, anyone keeping the default and using a public MQTT message
       broker (such as htttp://test.mosquitto.org, <a href="#testing">see below</a>) will show their messages (and see messages
       from) every other JMRI user anywhere in the world who is doing the same thing!] </li>
       
       <li><strong>MQTT-connected object topics</strong>: MQTT-connected objects such as sensors, lights, 
       turnouts, and signal masts use a unique three-part topic (<a href="#topics">see below</a>).  The fields 
-      listed here comprise the middle part (MQTT Channel is the first part and the object system name is generally the third part).
+      listed here comprise the middle part (MQTT Channel is the first part and the hardware name portion of the object's
+      system name is generally the third part).
       
       <br><em>Advanced Usage</em>: While there are fields for specifying separate topics for publishing (the "send" field) and 
       subscribing (receiving back from the layout) for some objects, it is recommended that send and receive topics be set the 
@@ -185,6 +182,13 @@
       described <a href="#scripts">below.</a>
       </li>
 
+      <li><span class="since">Since 4.25.3</span><strong>Last Will</strong>: JMRI can specify its "last will" topic and 
+      message when it connects to a broker. The broker stores the message and topic and sends it as a normal MQTT message
+      to clients who have subscribed to that topic if and when it finds that JMRI has disconnected in an abnormal manner.
+      Find more information
+      <a href="https://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament/" target="_blank">
+      here</a> about Last Will and Testament.</li>
+      
       </ul>
       
       <p>Two other parameters that control the way the MQTT Message Broker interacts with JMRI can be changed via script.
@@ -204,16 +208,25 @@
     
       <p>JMRI publishes and receives MQTT messages on specific "topics." An MQTT topic is the label
       or headline for published messages.  It is the label that other processes subscribe to to receive messages. 
-      While MQTT treats a topic as
-      a single string, JMRI forms a topic by concatenating two or three strings, as is described under the
-      sections for each type of use (<a href="#objects">MQTT-connected objects</a>, <a href="#LNG">LogixNG</a>,
-      <a href="#scripts">scripts</a>).</p>
+      MQTT treats a topic as
+      a single string, although topics are typically organized with slashes to create multiple levels.  JMRI, however,
+      forms an MQTT topic by concatenating two or three strings, each with or without slashes as desired, as is described
+      under the sections for each type of use (<a href="#objects">MQTT-connected objects</a>, <a href="#LNG">LogixNG</a>,
+      <a href="#scripts">scripts</a>). MQTT Channel (see above in <a href="#prefs">Preferences</a>) is always the 
+      first (prefix) part of the topic sent to the MQTT Broker (but may be blank, as of JMRI relesae 5.1.2).</p>
       
       <p>Topics used in Subscribe messages can optionally have a wild card character.  The plus sign ("+") mateches any string
       only in the level (between slashes) where it appears.  The hash sign ("#") must appear at the end of a topic string
       and will match to any string and any number of levels.  See <a href="https://mosquitto.org/man/mqtt-7.html" target="_blank">
       this mosquitto.org page</a> for more information.</p>
+
+      <p><span class="since">Since 5.1.2</span>Setting the MQTT Channel to blank means that the user has complete control over topic strings both for publish and
+      subscribe.  This provides great flexibility, especially in communicating with devices that do not have much
+      flexibility to set their topic strings, such as some home automation devices.</p>
       
+      <p><a href=
+      "images/MQTTSchematic2.jpg"><img src="images/MQTTSchematic2.jpg" alt="MQTT schematic specific"></a></p>
+   
       <p>Any message topic, defined or custom, can be subscribed to and processed by a <a href="#LNG">LogixNG</a>
       or a custom <a href="#scripts">script</a>. These messages
       can further be used to trigger <a href="../../tools/Logix.shtml">Logix,</a> populate <a href=
@@ -296,11 +309,12 @@
      those objects: 
      
      <ol>
-       <li>MQTT Channel is prefixed to the...</li>
+       <li>MQTT Channel (may be blank as of JMRI Release 5.1.2) is prefixed to the...</li>
        <li>MQTT topic for that object type as defined in the Connection Preferences 
        (<em>Advanced Usage</em>: may be different for publishing and subscribing),</li>
-       <li>followed by the object's system name suffix. 
-       [<em>Advanced Usage</em>: the object's system name may be inserted in the middle of the object type topic if
+       <li>followed by the hardware name portion of the object's system name (system name stripped of the connection
+       and object type characters). 
+       [<em>Advanced Usage</em>: the object's hardware name may be inserted in the middle of the object type topic if
         so defined in Preferences, <a href="prefs">as discussed above.</a></li>
       </ol>
 
@@ -319,7 +333,7 @@
       <p>yielding the complete MQTT message topic: "<em>mytrains/Jsend/to/abcd1</em>".</p>
      
       <p><em>Advanced Usage</em>: If you want the object's system name suffix to be in the topic string at some place other
-      than at the end, you can use a placeeholder of "{0}" within the string to put the object's
+      than at the end, you can use a placeholder of "{0}" within the string to put the object's
       system name suffix at that place. This allows you to set up topics like
       "Jsend/to/{0}/state" so JMRI will generate "<em>mytrains/Jsend/to/abcd1/state</em>" for
       turnout "MTabcd1".</p>
@@ -374,8 +388,8 @@
       
       <p>In a LogixNG conditional, any string defined by you as the "topic" is concatenated to the MQTT Channel to 
       form the MQTT topic that will be published or subscribed. If you specify "mytrains/someobject" as the topic, 
-      JMRI will publish and subscribe on "<em>[MQTT Channel]/mytrains/someobject</em>" using the MQTT Channel specified in
-      the MQTT Connection Preferences.</p>
+      JMRI will publish and subscribe on "<em>[MQTT Channel]mytrains/someobject</em>" using the MQTT Channel specified in
+      the MQTT Connection Preferences. Slashes can be inserted for convenience. JMRI does not automatically insert any slashes.</p>
 
  
       <h3>LogixNG MQTT Publish</h3>
@@ -418,8 +432,8 @@
       <p>In a script, any string defined by you as the "topic" in a reference to an MQTT 
        Adapter object is concatenated to the MQTT Channel to form the MQTT topic that will be published or subscribed.
       If you define "mytrains/someobject" as the topic, JMRI will publish and subscribe on
-      "<em>[MQTT Channel]/mytrains/someobject</em>" using the MQTT Channel specified in
-      the MQTT Connection Preferences..</p>
+      "<em>[MQTT Channel]mytrains/someobject</em>" using the MQTT Channel specified in
+      the MQTT Connection Preferences.  Slashes can be inserted for convenience. JMRI does not automatically insert any slashes.</p>
 
       <p>All the scripts discussed here can be found in <a href="../../../../../jython/MQTT/">the
       JMRI distribution jython directory under "MQTT."</a> More information about scripting with

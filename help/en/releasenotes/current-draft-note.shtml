@@ -96,10 +96,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Rewrite and expansion of documentation.</li>
-                <li>The default value of the channel is now "", the null string.
-                    The channel name is prefixed to all of JMRI's publish and subscribe
-                    operations.  The previous default was "/trains/"
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -119,9 +116,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fix a problem with the OpenLCB hub at high data rates. Overlapping
-                    messages and replies would be echoed out incorrectly.
-                </li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -409,7 +404,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <i>Listen On Beans</i> now sorts the named beans when selecting a bean to listen on.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -421,17 +416,8 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-  <li>Enhanced passenger blocking. Negative blocking numbers place passenger cars in front of
-    freight cars.</li>
-  <li>Added hazardous classification to car loads. Now a car can be classified as hazardous
-    depending on the car's load.</li>
-  <li>Improved car blocking when car is hazardous. The program will attempt to place
-    non-hazardous cars in front of hazardous cars.</li>
-  <li>New automation feature. Users can now select an automation to run at startup. See under
-    Tools in the operations Automations window.</li>
-  <li>Improved Manifest and switch list formating when using tabular and load set out and pick
-    up messages.</li>
-</ul>
+            <li></li>
+        </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
@@ -594,6 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Reduce the verbosity of MDNS logging.</li>
+            <li></li>
         </ul>
 
