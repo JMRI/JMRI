@@ -643,7 +643,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     private void fireTableRowDeleted(Warrant w, int row, boolean all) {
         ThreadingUtil.runOnGUIEventually(()-> {
             removeWarrant(w, all);  // true any warrant, false NX only  
-        	if (row < _warList.size()) {
+            if (row < _warList.size()) {
                 fireTableRowsDeleted(row, row);
             }
         });
