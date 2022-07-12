@@ -2547,6 +2547,19 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        SimulateTurnoutFeedback simulateTurnoutFeedback =
+                new SimulateTurnoutFeedback(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(simulateTurnoutFeedback);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        simulateTurnoutFeedback = new SimulateTurnoutFeedback(digitalActionManager.getAutoSystemName(), null);
+        simulateTurnoutFeedback.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(simulateTurnoutFeedback);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setRowOrColumn(TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);
