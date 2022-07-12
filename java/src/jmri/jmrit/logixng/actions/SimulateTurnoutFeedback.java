@@ -138,7 +138,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
                 _timerTasks.remove(t);
             }
             TurnoutTimerTask task = new TurnoutTimerTask(t, newState);
-            TimerUtil.schedule(task, _delay * 1000);
+            TimerUtil.schedule(task, _delay * 1000L);
         }
 
         @Override
