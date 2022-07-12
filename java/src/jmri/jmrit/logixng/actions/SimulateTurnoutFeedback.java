@@ -15,6 +15,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private final TurnoutListener _turnoutListener = new TurnoutListener();
+    private final Map<Turnout, TurnoutTimerTask> _timerTasks = new HashMap<>();
 
     private int _delay = 3;     // Delay in seconds
     private final Map<String, Turnout> _turnouts = new HashMap<>();
@@ -129,16 +130,17 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     private class TurnoutListener implements PropertyChangeListener {
 
-        private final Map<Turnout, TurnoutTimerTask> _timerTasks = new HashMap<>();
-
         private void manageTurnout(Turnout t, int newState) {
-            if (_timerTasks.containsKey(t)) {
-                TurnoutTimerTask task = _timerTasks.get(t);
-                task.cancel();
-                _timerTasks.remove(t);
+            synchronized (_timerTasks) {
+                if (_timerTasks.containsKey(t)) {
+                    TurnoutTimerTask task = _timerTasks.get(t);
+                    task.cancel();
+                    _timerTasks.remove(t);
+                }
+                TurnoutTimerTask task = new TurnoutTimerTask(t, newState);
+                _timerTasks.put(t, task);
+                TimerUtil.schedule(task, _delay * 1000L);
             }
-            TurnoutTimerTask task = new TurnoutTimerTask(t, newState);
-            TimerUtil.schedule(task, _delay * 1000L);
         }
 
         @Override
@@ -179,7 +181,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     }
 
-    private static class TurnoutTimerTask extends java.util.TimerTask {
+    private class TurnoutTimerTask extends java.util.TimerTask {
 
         private final Turnout _turnout;
         private final int _newState;
@@ -285,6 +287,9 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
         @Override
         public void run() {
+            synchronized (_timerTasks) {
+                _timerTasks.remove(_turnout);
+            }
             stopMove();
         }
     }
