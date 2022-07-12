@@ -580,6 +580,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li><i>jmri.jmrix.SystemConnectionMemoManager</i> has new utility methods to find a connection by its connection name.<br>
+            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("L2", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("LocoNet", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("M", MqttSystemConnectionMemo.class);</code>
+            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("MQTT", MqttSystemConnectionMemo.class);</code>
+            </li>
         </ul>
 
