@@ -1776,6 +1776,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     if (speedType.equals(Warrant.Stop)) {
                         _waitForSignal = true;
                     }
+                    if (_noRamp) {
+                        setSpeedToType(speedType);
+                        return;
+                    }
                     int cmdStartIdx = _engineer.getCurrentCommandIndex(); // blkSpeedInfo.getFirstIndex();
                     if (!doDelayRamp(availDist, changeDist, _idxProtectSignal, speedType, cmdStartIdx)) {
                         log.info("No room for train {} to ramp to \"{}\" from \"{}\" for signal \"{}\"!. availDist={}, changeDist={} on warrant {}",
@@ -2064,6 +2068,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (log.isDebugEnabled()) {
             log.debug("{}: restoreRunning(): rampSpeedTo to \"{}\"",
                     getDisplayName(), speedType);
+        }
+        if (_noRamp) {
+            setSpeedToType(speedType);
+            return true;
         }
         cancelDelayRamp(); // interrupts any down ramp
         rampSpeedTo(speedType, -1);
@@ -2670,7 +2678,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_noRamp) {
             if (_idxCurrentOrder < _orders.size() - 1) {
                 entrySpeedType = BlockOrder.getPermissibleSpeedAt(getBlockOrderAt(_idxCurrentOrder + 1));
-                if (_speedUtil.secondGreaterThanFirst(entrySpeedType, currentSpeedType)) {
+                if (entrySpeedType != null && _speedUtil.secondGreaterThanFirst(entrySpeedType, currentSpeedType)) {
                     if (log.isDebugEnabled()) {
                         log.debug("{}: noRamping speed change of \"{}\" from \"{}\" in block \"{}\"",
                               getDisplayName(), entrySpeedType, currentSpeedType, curBlock.getDisplayName());
