@@ -43,7 +43,9 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testSetValue() throws JmriException {
         ConditionalNG conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
-        
+
+        double TOLERANCE = 0.0001; 
+
         MyAnalogAction action = new MyAnalogAction("IQAA321");
         action.setParent(conditionalNG);
         
@@ -57,11 +59,11 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         action.je = null;
         action.re = null;
         socket.setValue(9.121);
-        Assert.assertTrue(9.121 == action._value);
+        Assert.assertEquals(9.121, action._value, TOLERANCE);
         socket.setValue(572.1);
-        Assert.assertTrue(572.1 == action._value);
+        Assert.assertEquals(572.1, action._value, TOLERANCE);
         socket.setValue(0.0);
-        Assert.assertTrue(0.0 == action._value);
+        Assert.assertEquals(0.0 , action._value, TOLERANCE);
         
         action.je = new JmriException("Test JmriException");
         action.re = null;
@@ -98,11 +100,11 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         config._dontExecute = true;
         action._value = 19.23;
         socket.setValue(32.11);
-        Assert.assertTrue(19.23 == action._value);
+        Assert.assertEquals(19.23, action._value, TOLERANCE);
         config._dontExecute = false;
         action._value = 23.111;
         socket.setValue(9.23);
-        Assert.assertTrue(9.23 == action._value);
+        Assert.assertEquals(9.23, action._value, TOLERANCE);
     }
     
     @Test
@@ -224,7 +226,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
      * This action is different from AnalogActionMemory and is used to test the
      * male socket.
      */
-    private class MyAnalogAction extends AbstractAnalogAction {
+    private static class MyAnalogAction extends AbstractAnalogAction {
         
         JmriException je = null;
         RuntimeException re = null;
