@@ -30,7 +30,7 @@ public class XNetMonActionTest {
 
     @AfterEach
     public void tearDown() {
-        memo.dispose(); // deregisters from inastance manager
+        memo.dispose(); // deregisters from instance manager
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
