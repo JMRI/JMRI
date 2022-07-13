@@ -15,10 +15,10 @@ import org.junit.Assume;
  * @author Bob Milhaupt Copyright (C) 2018
  */
 public class LnIPLImplementationTest {
-    jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
-    jmri.jmrix.loconet.LnTrafficController lnis;
-    LnIPLImplementation iplImplementation;
-    LocoNetMessage m;
+    private jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
+    private jmri.jmrix.loconet.LnTrafficController lnis;
+    private LnIPLImplementation iplImplementation;
+    private LocoNetMessage m;
 
     @Test
     public void testCtor() {
@@ -1063,6 +1063,8 @@ public class LnIPLImplementationTest {
 
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DB_DUPLICATE_SWITCH_CLAUSES",
+        justification = "keep device order")
     @Test
     public void checkInterpretHostManufacturerDevice() {
         for (int dev = 0; dev < 128; ++dev) {
@@ -1534,16 +1536,13 @@ public class LnIPLImplementationTest {
 
     @Test
     public void testConnectMethod() {
-        java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ((e.getPropertyName().equals("IplDeviceTypeQuery"))) {
-                    propChangeQueryFlag = true;
-                } else if (e.getPropertyName().equals("IplDeviceTypeReport")) {
-                    propChangeReportFlag = true;
-                }
-                propChangeFlag = true;
+        java.beans.PropertyChangeListener l = (java.beans.PropertyChangeEvent e) -> {
+            if ((e.getPropertyName().equals("IplDeviceTypeQuery"))) {
+                propChangeQueryFlag = true;
+            } else if (e.getPropertyName().equals("IplDeviceTypeReport")) {
+                propChangeReportFlag = true;
             }
+            propChangeFlag = true;
         };
         iplImplementation.addPropertyChangeListener(l);
         LocoNetMessage m2;
@@ -1639,7 +1638,7 @@ public class LnIPLImplementationTest {
         JUnitUtil.resetProfileManager();
 
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
+        lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
         memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
@@ -1652,6 +1651,7 @@ public class LnIPLImplementationTest {
 
     @AfterEach
     public void tearDown() {
+        lnis.dispose();
         memo.dispose();
         JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
         JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
