@@ -10,8 +10,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SerialTrafficController class
@@ -44,11 +42,31 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         Assert.assertEquals("no more Nodes after del", null, c.getNode(3));
     }
 
+    @Test
+    public void testListenerScaffold() {
+        SerialListener listener = new SerialListenerScaffold();
+        ((SerialTrafficController)tc).addSerialListener(listener);
+        ((SerialTrafficController)tc).removeSerialListener(listener);
+        Assert.assertNotNull(listener); // just checking no exceptions thrown
+    }
 
+    @Test
+    public void testScaffold() throws java.io.IOException {
+        SerialPortControllerScaffold scaff = new SerialPortControllerScaffold();
+
+        Assertions.assertNotNull(scaff);
+        Assertions.assertNotNull(tostream);
+        Assertions.assertNotNull(ostream);
+        Assertions.assertNotNull(istream);
+        Assertions.assertNotNull(tistream);
+
+        scaff.dispose();
+    }
+    
     // internal class to simulate a Listener
-    class SerialListenerScaffold implements jmri.jmrix.maple.SerialListener {
+    private static class SerialListenerScaffold implements jmri.jmrix.maple.SerialListener {
 
-        public SerialListenerScaffold() {
+        SerialListenerScaffold() {
         }
 
         @Override
@@ -61,7 +79,18 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     }
 
     // internal class to simulate a PortController
-    class SerialPortControllerScaffold extends SerialPortController {
+    private class SerialPortControllerScaffold extends SerialPortController {
+
+        SerialPortControllerScaffold() throws java.io.IOException {
+            super(memo);
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
 
         @Override
         public Vector<String> getPortNames() {
@@ -87,17 +116,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             return new int[] {};
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
-            super(null);
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        }
-
         // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
@@ -116,22 +134,31 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
             return true;
         }
     }
-    static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream; // so we can read it from this
 
-    static DataOutputStream tistream; // tests write to this
-    static DataInputStream istream;  // so the traffic controller can read from this
+    private DataOutputStream ostream;  // Traffic controller writes to this
+    private DataInputStream tostream; // so we can read it from this
+
+    private DataOutputStream tistream; // tests write to this
+    private DataInputStream istream;  // so the traffic controller can read from this
+
+    private MapleSystemConnectionMemo memo;
 
     @Override
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        memo = new MapleSystemConnectionMemo();
         tc = new SerialTrafficController();
+        memo.setTrafficController((SerialTrafficController)tc);
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        if ( memo !=null ) {
+            memo.dispose();
+            memo = null;
+        }
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
