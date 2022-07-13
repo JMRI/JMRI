@@ -6,9 +6,9 @@ import jmri
 
 import java
 
-# set the intended LocoNet connection by its index.  When you have just 1
-# connection, set  the connectionIndex = 0
-connectionIndex = 0
+# Set the intended LocoNet connection by its name.
+# It's usual "L".
+connectionName = "L"
 
 class SIGNM20receiver(jmri.jmrix.loconet.LocoNetListener):
     def message(self, msg):
@@ -47,5 +47,5 @@ class SIGNM20receiver(jmri.jmrix.loconet.LocoNetListener):
 lnListener = SIGNM20receiver()
 
 # install the LocoNet listener
-tc = jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController()
+tc = jmri.jmrix.SystemConnectionMemoManager.getConnection(connectionName, jmri.jmrix.loconet.LocoNetSystemConnectionMemo).getLnTrafficController()
 tc.addLocoNetListener(0xFF, lnListener)
