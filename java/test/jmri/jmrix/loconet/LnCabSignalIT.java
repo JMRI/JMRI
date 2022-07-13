@@ -27,17 +27,21 @@ public class LnCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
 
     @Override
     protected void checkBlock(jmri.CabSignal lcs, String currentBlock, String nextBlock, String mastName) {
+        if ( lnis==null ){
+            Assertions.fail("No lnis");
+            return;
+        }
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
         Assert.assertEquals("Block set", bm.getBlock(currentBlock), lcs.getBlock());
         Assert.assertEquals("next Block set", bm.getBlock(nextBlock), lcs.getNextBlock());
         Assert.assertEquals("Mast set", smm.getSignalMast(mastName), lcs.getNextMast());
-        if (mastName != "") {
+        if (!mastName.isBlank()) {
             new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
             // mast expected, so check the aspect.
             JUnitUtil.waitFor(() -> {
-                return "Clear".equals(lcs.getNextMast().getAspect().toString());
-            });
+                return "Clear".equals(lcs.getNextMast().getAspect());
+            },"mast did not go clear " + mastName);
             Assert.assertEquals("Mast " + mastName + " Aspect clear", "Clear", lcs.getNextMast().getAspect());
             //for a clear aspect, the semaphore value sent should be 18
             Assert.assertEquals("E5 10 7F 00 00 00 09 52 18 00 70 00 00 00 00 00",
@@ -70,6 +74,8 @@ public class LnCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
     @AfterEach
     public void tearDown() {
         cs.dispose(); // verify no exceptions
+        lnis.dispose();
+        lnis = null;
         cs = null;
 
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
