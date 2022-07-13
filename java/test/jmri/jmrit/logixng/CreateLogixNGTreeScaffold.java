@@ -4312,7 +4312,7 @@ public class CreateLogixNGTreeScaffold {
 
 
     private static final PrimitiveIterator.OfInt iterator =
-            new Random(215).ints('a', 'z'+10).iterator();
+            JUnitUtil.getRandom().ints('a', 'z'+10).iterator();
 
     private static String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
