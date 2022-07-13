@@ -41,13 +41,13 @@ public class LayoutFunctionsTest {
     private final ExpressionNode exprLightOff = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.INACTIVE), 0));
     private final ExpressionNode exprLightOn = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(Sensor.ACTIVE), 0));
     
-    private final int SignalHead_Red = 1;
-    private final int SignalHead_Green = 2;
+    private final static int SIGNAL_HEAD_RED = 1;
+    private final static int SIGNAL_HEAD_GREEN = 2;
     
     private final ExpressionNode exprSignalHeadIH1 = new ExpressionNodeString(new Token(TokenType.NONE, "IH1", 0));
     private final ExpressionNode exprSignalHeadMySignalHead = new ExpressionNodeString(new Token(TokenType.NONE, "My signal head", 0));
-    private final ExpressionNode exprSignalHeadRed = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(SignalHead_Red), 0));
-    private final ExpressionNode exprSignalHeadGreen = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(SignalHead_Green), 0));
+    private final ExpressionNode exprSignalHeadRed = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(SIGNAL_HEAD_RED), 0));
+    private final ExpressionNode exprSignalHeadGreen = new ExpressionNodeString(new Token(TokenType.NONE, Integer.toString(SIGNAL_HEAD_GREEN), 0));
     
     private final ExpressionNode exprSignalMastIF1 = new ExpressionNodeString(new Token(TokenType.NONE, "IF1", 0));
     private final ExpressionNode exprSignalMastMySignalMast = new ExpressionNodeString(new Token(TokenType.NONE, "My signal mast", 0));
@@ -470,68 +470,68 @@ public class LayoutFunctionsTest {
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
         Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("SignalHead has correct appearance", SignalHead_Green,
+            Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
                     (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
         });
         
         Assertions.assertThrows(CalculateException.class, () -> {
-            Assert.assertEquals("SignalHead has correct appearance", SignalHead_Green,
+            Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
                     (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
         });
         
         MySignalHead sh = new MySignalHead();
         InstanceManager.getDefault(SignalHeadManager.class).register(sh);
         sh.setState(SignalHead.UNKNOWN);
-        sh.setState(SignalHead_Red);
+        sh.setState(SIGNAL_HEAD_RED);
         
         sh._lastAppearance = -1;
-        sh._appearance = SignalHead_Green;
-        Assert.assertEquals("SignalHead has correct appearance", SignalHead_Green,
+        sh._appearance = SIGNAL_HEAD_GREEN;
+        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
                 (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
         Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
         
-        sh._appearance = SignalHead_Green;
-        Assert.assertEquals("SignalHead has correct appearance", SignalHead_Green,
+        sh._appearance = SIGNAL_HEAD_GREEN;
+        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_GREEN,
                 (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
         Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
         
-        sh._appearance = SignalHead_Red;
-        Assert.assertEquals("SignalHead has correct appearance", SignalHead_Red,
+        sh._appearance = SIGNAL_HEAD_RED;
+        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_RED,
                 (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadIH1)));
         Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
         
-        sh._appearance = SignalHead_Red;
-        Assert.assertEquals("SignalHead has correct appearance", SignalHead_Red,
+        sh._appearance = SIGNAL_HEAD_RED;
+        Assert.assertEquals("SignalHead has correct appearance", SIGNAL_HEAD_RED,
                 (int)getSignalHeadStateFunction.calculate(symbolTable, getParameterList(exprSignalHeadMySignalHead)));
         Assert.assertEquals("SignalHead is not set", -1, sh._lastAppearance);
         
         sh._lastAppearance = -1;
-        sh._appearance = SignalHead_Green;
+        sh._appearance = SIGNAL_HEAD_GREEN;
         Assert.assertEquals("SignalHead has correct appearance", -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
                         getParameterList(exprSignalHeadIH1, exprSignalHeadGreen)));
-        Assert.assertEquals("SignalHead is set", SignalHead_Green, sh._lastAppearance);
+        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_GREEN, sh._lastAppearance);
         
         sh._lastAppearance = -1;
-        sh._appearance = SignalHead_Green;
+        sh._appearance = SIGNAL_HEAD_GREEN;
         Assert.assertEquals("SignalHead has correct appearance", -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
                         getParameterList(exprSignalHeadMySignalHead, exprSignalHeadGreen)));
-        Assert.assertEquals("SignalHead is set", SignalHead_Green, sh._lastAppearance);
+        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_GREEN, sh._lastAppearance);
         
         sh._lastAppearance = -1;
-        sh._appearance = SignalHead_Red;
+        sh._appearance = SIGNAL_HEAD_RED;
         Assert.assertEquals("SignalHead has correct appearance", -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
                         getParameterList(exprSignalHeadIH1, exprSignalHeadRed)));
-        Assert.assertEquals("SignalHead is set", SignalHead_Red, sh._lastAppearance);
+        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_RED, sh._lastAppearance);
         
         sh._lastAppearance = -1;
-        sh._appearance = SignalHead_Red;
+        sh._appearance = SIGNAL_HEAD_RED;
         Assert.assertEquals("SignalHead has correct appearance", -1,
                 (int)setSignalHeadStateFunction.calculate(symbolTable,
                         getParameterList(exprSignalHeadMySignalHead, exprSignalHeadRed)));
-        Assert.assertEquals("SignalHead is set", SignalHead_Red, sh._lastAppearance);
+        Assert.assertEquals("SignalHead is set", SIGNAL_HEAD_RED, sh._lastAppearance);
     }
     
     @Test
@@ -667,10 +667,10 @@ public class LayoutFunctionsTest {
     
     private static class MyTurnout extends jmri.implementation.AbstractTurnout {
 
-        private int _knownState = Turnout.UNKNOWN;
-        private int _lastSetState = Turnout.UNKNOWN;
+        int _knownState = Turnout.UNKNOWN;
+        int _lastSetState = Turnout.UNKNOWN;
 
-        public MyTurnout() {
+        MyTurnout() {
             super("IT1", "My turnout");
         }
 
@@ -697,9 +697,9 @@ public class LayoutFunctionsTest {
     
     private static class MySensor extends jmri.implementation.AbstractSensor {
 
-        private int _lastSetState = Sensor.UNKNOWN;
+        int _lastSetState = Sensor.UNKNOWN;
 
-        public MySensor() {
+        MySensor() {
             super("IS1", "My sensor");
         }
 
@@ -729,10 +729,10 @@ public class LayoutFunctionsTest {
     
     private static class MyLight extends jmri.implementation.AbstractLight {
 
-        private int _knownState = Turnout.UNKNOWN;
-        private int _lastSetState = Sensor.UNKNOWN;
+        int _knownState = Turnout.UNKNOWN;
+        int _lastSetState = Sensor.UNKNOWN;
 
-        public MyLight() {
+        MyLight() {
             super("IL1", "My light");
         }
 
@@ -762,10 +762,10 @@ public class LayoutFunctionsTest {
     
     private static class MySignalHead extends jmri.implementation.VirtualSignalHead {
 
-        private int _lastAppearance = -1;
-        private int _appearance = -1;
+        int _lastAppearance = -1;
+        int _appearance = -1;
 
-        public MySignalHead() {
+        MySignalHead() {
             super("IH1", "My signal head");
         }
 
@@ -796,10 +796,10 @@ public class LayoutFunctionsTest {
     
     private static class MySignalMast extends jmri.implementation.AbstractSignalMast {
 
-        private String _lastAspect = null;
-        private String _aspect = null;
+        String _lastAspect = null;
+        String _aspect = null;
 
-        public MySignalMast() {
+        MySignalMast() {
             super("IF1", "My signal mast");
         }
 
