@@ -18,6 +18,7 @@ import org.junit.jupiter.api.*;
  */
 public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
+    @Test
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController)tc;
         SerialNode b = new SerialNode(1, SerialNode.DAUGHTER,c);
@@ -46,6 +47,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         Assert.assertEquals("no more Nodes after del2", null, c.getNode(2));
     }
 
+    @Test
+    @Disabled("Test requires further setup")
     public void testSerialOutput() {
         SerialTrafficController c = (SerialTrafficController)tc;
         SerialNode a = new SerialNode(c);
