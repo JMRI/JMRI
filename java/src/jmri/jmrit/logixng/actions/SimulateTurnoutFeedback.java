@@ -88,14 +88,12 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         if (!_turnouts.containsKey(turnout.getSystemName())) {
             _turnouts.put(turnout.getSystemName(), turnout);
             turnout.addPropertyChangeListener("CommandedState", _turnoutListener);
-//            System.out.format("Turnout: add prop: %s%n", turnout.getDisplayName());
         }
     }
 
     private void removeTurnoutListener(Turnout turnout) {
         _turnouts.remove(turnout.getSystemName());
         turnout.removePropertyChangeListener("CommandedState", _turnoutListener);
-//        System.out.format("Turnout: remove prop: %s%n", turnout.getDisplayName());
     }
 
     /** {@inheritDoc} */
@@ -118,8 +116,6 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
                 }
             }
         }
-
-        System.out.format("Source: %s, name: %s, old: %s, new: %s%n", evt.getSource(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
     }
 
     /** {@inheritDoc} */
@@ -145,8 +141,6 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            System.out.format("Turnout: Source: %s, name: %s, old: %s, new: %s%n", evt.getSource(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-
             if (evt.getPropertyName().equals("CommandedState")) {
                 String sysName = evt.getSource().toString();
                 TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
@@ -193,8 +187,6 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         }
 
         private void startMove() {
-            System.out.format("Start move turnout %s%n", _turnout.getDisplayName());
-
             Sensor sensor1;
             Sensor sensor2;
 
@@ -232,8 +224,6 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         }
 
         private void stopMove() {
-            System.out.format("Stop move turnout %s%n", _turnout.getDisplayName());
-
             Sensor sensor;
 
             switch (_turnout.getFeedbackMode()) {
