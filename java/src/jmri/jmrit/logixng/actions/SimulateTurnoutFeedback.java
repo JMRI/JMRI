@@ -130,7 +130,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
         turnout.removePropertyChangeListener("turnoutFeedbackSecondSensorChange", this);
         if (ti != null && ti._hasListener) {
             turnout.removePropertyChangeListener("CommandedState", _turnoutListener);
-            ti._hasListener = true;
+            ti._hasListener = false;
         }
     }
 
