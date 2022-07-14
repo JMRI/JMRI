@@ -9,12 +9,7 @@ import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.implementation.AbstractNamedBean;
-
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-
-import jmri.util.JmriJFrame;
-import jmri.util.NonNullArrayList;
 
 /**
  * Sections represent a group of one or more connected Blocks that may be
