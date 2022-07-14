@@ -10,8 +10,7 @@ import javax.swing.JPanel;
 import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.util.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -130,6 +129,7 @@ public class TestSwingClasses {
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         JUnitUtil.tearDown();
     }
 
