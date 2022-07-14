@@ -19,6 +19,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     private int _delay = 3;     // Delay in seconds
     private final Map<String, TurnoutInfo> _turnouts = new HashMap<>();
+    private boolean _hasBeenExecuted = false;
 
 
     public SimulateTurnoutFeedback(String sys, String user)
@@ -55,7 +56,18 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     @Override
     public void execute() throws JmriException {
-        // Do nothing
+        if (!_hasBeenExecuted && _listenersAreRegistered) {
+            registerTurnoutListeners();
+        }
+        _hasBeenExecuted = true;
+    }
+
+    private void registerTurnoutListeners() {
+        TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        for (Turnout t : tm.getNamedBeanSet()) {
+            addTurnoutListener(t);
+        }
+        tm.addPropertyChangeListener("beans", this);
     }
 
     /** {@inheritDoc} */
@@ -63,11 +75,9 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
     public synchronized void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
-            TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-            for (Turnout t : tm.getNamedBeanSet()) {
-                addTurnoutListener(t);
+            if (_hasBeenExecuted) {
+                registerTurnoutListeners();
             }
-            tm.addPropertyChangeListener("beans", this);
         }
     }
 

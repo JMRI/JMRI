@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
@@ -22,6 +23,7 @@ public class SimulateTurnoutFeedbackSwing extends AbstractDigitalActionSwing {
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
+        panel.add(new JLabel(Bundle.getMessage("SimulateTurnoutFeedback_Info")));
     }
 
     /** {@inheritDoc} */
