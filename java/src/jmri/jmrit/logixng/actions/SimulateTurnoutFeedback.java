@@ -208,7 +208,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            System.out.format("Source: %s, name: %s, old: %s, new: %s%n", evt.getSource(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+//            System.out.format("Source: %s, name: %s, old: %s, new: %s%n", evt.getSource(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
 
             if (evt.getPropertyName().equals("CommandedState")) {
                 String sysName = evt.getSource().toString();
