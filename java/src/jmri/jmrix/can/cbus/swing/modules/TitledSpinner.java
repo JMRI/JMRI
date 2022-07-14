@@ -47,7 +47,13 @@ public class TitledSpinner extends JPanel implements ChangeListener {
      * @param step  Step
      */
     public void init(double init, double min, double max, double step) {
-        SpinnerNumberModel spinModel = new SpinnerNumberModel(init, min, max, step);
+        SpinnerNumberModel spinModel;
+        if (init >= 0.0) {
+            spinModel = new SpinnerNumberModel(init, min, max, step);
+        } else {
+            // NV hasn't been initialsed yet (maybe still reading from hardware) so init to min value.
+            spinModel = new SpinnerNumberModel(min, min, max, step);
+        }
         init(spinModel);
     }
 
@@ -60,7 +66,13 @@ public class TitledSpinner extends JPanel implements ChangeListener {
      * @param step Step size for spinner adjustments
      */
     public void init(int init, int min, int max, int step) {
-        SpinnerNumberModel spinModel = new SpinnerNumberModel(init, min, max, step);
+        SpinnerNumberModel spinModel;
+        if (init >= 0.0) {
+            spinModel = new SpinnerNumberModel(init, min, max, step);
+        } else {
+            // NV hasn't been initialsed yet (maybe still reading from hardware) so init to min value.
+            spinModel = new SpinnerNumberModel(min, min, max, step);
+        }
         init(spinModel);
     }
 
