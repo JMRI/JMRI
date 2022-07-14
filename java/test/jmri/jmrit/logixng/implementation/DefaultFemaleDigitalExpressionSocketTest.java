@@ -119,6 +119,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         map.put(Category.COMMON, classes);
 
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ConnectionName.class);
         classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);
@@ -169,6 +170,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
 //        JUnitAppender.clearBacklog();   // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         JUnitUtil.tearDown();
     }
 

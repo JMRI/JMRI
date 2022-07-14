@@ -179,6 +179,7 @@ public class SocketOperationTest {
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         CreateLogixNGTreeScaffold.tearDown();
     }
 

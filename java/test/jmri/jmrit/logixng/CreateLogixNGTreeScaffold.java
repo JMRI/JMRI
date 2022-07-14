@@ -2735,6 +2735,17 @@ public class CreateLogixNGTreeScaffold {
         and.getChild(indexExpr++).connect(maleSocket);
 
 
+        ConnectionName connectionType = new ConnectionName(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(connectionType);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        connectionType = new ConnectionName(digitalExpressionManager.getAutoSystemName(), null);
+        connectionType.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(connectionType);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
         jmri.jmrit.logixng.expressions.DigitalCallModule expressionCallModule = new jmri.jmrit.logixng.expressions.DigitalCallModule(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionCallModule);
         maleSocket.setEnabled(false);

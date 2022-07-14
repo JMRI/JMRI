@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.expressions.StringExpressionConstant;
 import jmri.jmrit.logixng.expressions.StringExpressionMemory;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -430,6 +431,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         JUnitUtil.tearDown();
     }
 
