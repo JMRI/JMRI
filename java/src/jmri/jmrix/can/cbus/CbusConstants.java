@@ -28,16 +28,18 @@ public final class CbusConstants {
 
     /**
      * SPROG DCC module types
+     * 
+     * Must agree with firmware cbusdefs.h include file from MERGDEV repo
      */
-    public static final int MTYP_CANPiSPRG3 = 1;
-    public static final int MTYP_CANSPROG3P = 2;
+    public static final int MTYP_CANPiSPRG3 = 1;    // Pi-SPROG 3 (not v2) firmware on Pi-SPROG One hardware
+    public static final int MTYP_CANSPROG3P = 2;    // Sprog 3 Plus, Pi-SPROG 3v2 and Pi-SPROG 3 Plus common firmware
     public static final int MTYP_CANSPROG = 3;
     public static final int MTYP_SBOOST = 4;
     //public static final int Unsupported = 5;
     public static final int MTYP_CANISB = 6;
     public static final int MTYP_CANCBUSIO = 7;
-    public static final int MTYP_CANSERVOIO = 8;
-    public static final int MTYP_CANSOLIO = 9;
+    public static final int MTYP_CANSERVOIO = 8;    // Servo I/O module similar to MERG CANSERVO
+    public static final int MTYP_CANSOLIO = 9;      // Solenoid I/O module similar to MERG CANSOL
 
     /**
      * CBUS Opcodes
