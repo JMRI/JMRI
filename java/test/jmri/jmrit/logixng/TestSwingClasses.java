@@ -129,7 +129,6 @@ public class TestSwingClasses {
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         JUnitUtil.tearDown();
     }
 

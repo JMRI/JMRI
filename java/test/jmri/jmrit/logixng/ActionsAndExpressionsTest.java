@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 // import org.apache.log4j.Level;
@@ -318,7 +317,6 @@ public class ActionsAndExpressionsTest {
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         JUnitUtil.tearDown();
     }
 

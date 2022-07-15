@@ -7,7 +7,6 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
-import jmri.util.*;
 
 import org.junit.*;
 
@@ -179,7 +178,6 @@ public class SocketOperationTest {
     @After
     public void tearDown() {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
-        jmri.util.JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         CreateLogixNGTreeScaffold.tearDown();
     }
 

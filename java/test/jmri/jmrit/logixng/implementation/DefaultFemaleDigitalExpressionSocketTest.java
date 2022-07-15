@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -170,7 +169,6 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
 //        JUnitAppender.clearBacklog();   // REMOVE THIS!!!
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitAppender.suppressErrorMessage("Expected to run on Raspberry PI, but does not appear to be.");
         JUnitUtil.tearDown();
     }
 
