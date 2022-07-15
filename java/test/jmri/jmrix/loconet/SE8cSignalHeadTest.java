@@ -199,7 +199,7 @@ public class SE8cSignalHeadTest {
 
         Assert.assertEquals("number of listeners", 0, sh1.getListenerRefs().size());
 
-        propChangeFlag=false;
+        Assert.assertFalse(propChangeFlag);
         PropertyChangeListener pcl = new java.beans.PropertyChangeListener() {
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {

@@ -560,6 +560,10 @@
                 <li>
                   <a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a>
                 </li>
+                
+                <li>
+                  <a href="#ExportRoutes">Export Routes</a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -4345,7 +4349,8 @@
       facilitate a facing point set out. If you want to change the blocking order for a train, you
       can use this tool to modify how the program blocks the cars for a location. Use the "Up" or
       "Down" buttons to change the blocking order, and press the "Save" button to complete the
-      change. Use the reset button to restore the blocking order.</p>
+      change. Use the reset button to restore the blocking order. You can find this tool in
+      the <a href="#EditRoute">Edit Route</a> window.</p>
 
       <p>You can also modify the order cars are set out for a location, see <a href=
       "#TrackBlockingOrder">Track Blocking Order</a>.</p>
@@ -4359,12 +4364,20 @@
 
       <h4 id="SetTrainIconCoordinates">Set Train Icon Coordinates</h4>
 
-      <p>Use this tool to set the default X and Y coordinates of your train icons for each
-      location. The tool allows you to specify the icon coordinates based on the train's direction.
-      You can also update all of your existing routes and locations with these new coordinates. As
-      an alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route"
-      to create coordinates unique to a specific route. Enter the name of the <a href=
-      "#PanelOptionsTrainIcons">panel</a> you wish to use in the Settings window.</p>
+      <p>
+        Use this tool to set the default X and Y coordinates of your train icons for each location.
+        The tool allows you to specify the icon coordinates based on the train's direction. You can
+        also update all of your existing routes and locations with these new coordinates. As an
+        alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" in
+        the <a href="#EditRoute">Edit Route</a> window to create coordinates unique to a specific
+        route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a> you wish to use in
+        the Settings window.
+      </p>
+      
+      <h4 id="ExportRoutes">Export Routes</h4>
+
+      The "Export Routes" tool produces a comma separated values (.csv) file called
+      "ExportOperationsRoutes.csv" containing details of the existing routes.
 
       <h2 id="Trains">Trains</h2>
       Now that we've created our <a href="#Routes">Routes</a> we need trains to move cars! Create a
