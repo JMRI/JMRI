@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.ConnectionName;
 import jmri.jmrix.*;
 import static jmri.jmrix.JmrixConfigPane.NONE_SELECTED;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ConnectionName object with a Swing JPanel.
@@ -84,6 +85,9 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
         });
 
         updateConnectionComboBox(action);
+
+        JComboBoxUtil.setupComboBoxMaxRows(_manufacturerComboBox);
+        JComboBoxUtil.setupComboBoxMaxRows(_connectionComboBox);
 
 
         panel.add(manufacturerPanel);
