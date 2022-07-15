@@ -66,6 +66,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Assert.assertEquals("Byte 1", 0x21, 0xFF & tostream.readByte());
         Assert.assertEquals("Byte 2", 0x44, 0xFF & tostream.readByte());
         Assert.assertEquals("remaining ", 0, tostream.available());
+
+        Assert.assertTrue( m == rcvdMsg );
     }
 
     @Test
@@ -108,9 +110,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         tistream.write(0x02);
 
         // wait for state transition
-        synchronized (this) {
-            wait(100);
-        }
+        JUnitUtil.waitFor(100);
 
         // drive the mechanism
         c.handleOneIncomingReply();
@@ -159,9 +159,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         tistream.write(0xF0);
 
         // wait for state transition
-        synchronized (this) {
-            wait(100);
-        }
+        JUnitUtil.waitFor(100);
 
         // drive the mechanism
         c.handleOneIncomingReply();
@@ -197,6 +195,17 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     // internal class to simulate a PortController
     private class SerialPortControllerScaffold extends SerialPortController {
 
+        SerialPortControllerScaffold() throws java.io.IOException {
+            super(scm);
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
+
         @Override
         public java.util.Vector<String> getPortNames() {
             return null;
@@ -222,17 +231,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return new int[] {};
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
-            super(scm);
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        }
-
         // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
@@ -251,11 +249,12 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             return true;
         }
     }
-    static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream;  // so we can read it from this
 
-    static DataOutputStream tistream; // Tests write to this
-    static DataInputStream istream;   // so the traffic controller can read from this
+    private DataOutputStream ostream;  // Traffic controller writes to this
+    private DataInputStream tostream;  // so we can read it from this
+
+    private DataOutputStream tistream; // Tests write to this
+    private DataInputStream istream;   // so the traffic controller can read from this
 
     @BeforeEach
     @Override
