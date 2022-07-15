@@ -6,6 +6,8 @@ import static jmri.Turnout.CLOSED;
 import static jmri.Turnout.THROWN;
 import static jmri.Turnout.UNKNOWN;
 import static jmri.Turnout.INCONSISTENT;
+
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -34,15 +36,15 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
      * some previous test?
      */
     @Override
-    public void checkClosedMsgSent() throws InterruptedException {
+    public void checkClosedMsgSent() {
         // Make sure that timed message has fired by waiting
         JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
         // check results
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 2).toString(),
-                "B0 14 30 00");  // CLOSED/ON loconet message
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 14 20 00");  // CLOSED/OFF loconet message
+        Assert.assertEquals( "B0 14 30 00", // CLOSED/ON loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 2).toString());
+        Assert.assertEquals( "B0 14 20 00",  // CLOSED/OFF loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         // clear message stack
         lnis.clearReceivedMessages();
     }
@@ -51,16 +53,16 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
      * Check that last two messages correspond to thrown/on, then thrown/off
      */
     @Override
-    public void checkThrownMsgSent() throws InterruptedException {
+    public void checkThrownMsgSent() {
         // Make sure that timed message has fired by waiting
         JUnitUtil.waitFor(()->{return lnis.outbound.size() == 2;},"just two messages");
 
         // check results
         Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 2).toString(),
-                "B0 14 10 00");  // THROWN/ON loconet message
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 14 00 00");  // THROWN/OFF loconet message
+        Assert.assertEquals("B0 14 10 00", // THROWN/ON loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 2).toString());
+        Assert.assertEquals("B0 14 00 00", // THROWN/OFF loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         // clear message stack
         lnis.clearReceivedMessages();
     }
@@ -84,6 +86,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt.messageFromManager(m);
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
+
     @Test
     public void checkIncomingWithAck() {
         // notify the Ln that somebody else changed it...using OPC_SW_ACK
@@ -294,19 +297,17 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     // test that only one message is sent when binaryOutput is set
     @Test
-    public void testBasicSet() throws InterruptedException {
+    public void testBasicSet() {
         t.setBinaryOutput(true);
         t.setCommandedState(THROWN);
 
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 14 10 00");  // THROWN/ON loconet message
+        Assert.assertEquals("B0 14 10 00", // THROWN/ON loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
@@ -318,52 +319,46 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         t.setCommandedState(THROWN);
 
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 14 10 00");  // THROWN/ON loconet message
+        Assert.assertEquals("B0 14 10 00", // THROWN/ON loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
     // test that only two messages are sent when property SendOnAndOff is true.
     @Test
-    public void testPropertySet1() throws InterruptedException {
+    public void testPropertySet1() {
         t.setBinaryOutput(false);
         t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, true);
         t.setCommandedState(THROWN);
 
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
         Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 14 00 00");  // THROWN/OFF loconet message
+        Assert.assertEquals("B0 14 00 00",  // THROWN/OFF loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
     // test that only two messages are sent when property SendOnAndOff is true, even if (ulenbook) binary set.
     @Test
-    public void testPropertySet2() throws InterruptedException {
+    public void testPropertySet2() {
         t.setBinaryOutput(true);
         t.setProperty(LnTurnoutManager.SENDONANDOFFKEY, true);
         t.setCommandedState(THROWN);
 
         // Make sure that timed message has fired by waiting
-        synchronized (this) {
-            this.wait(LnTurnout.METERINTERVAL + 25);
-        }
+        JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // check for messages
         Assert.assertTrue("just two messages", lnis.outbound.size() == 2);
-        Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 14 00 00");  // THROWN/OFF loconet message
+        Assert.assertEquals("B0 14 00 00",  // THROWN/OFF loconet message
+            lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertTrue(t.getCommandedState() == THROWN);
     }
 
@@ -445,28 +440,20 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     @Test
     public void testCtorNumberOutOfBounds() {
-        LnTurnout t;
+
+        Exception ex = Assert.assertThrows( java.lang.IllegalArgumentException.class,
+            () -> new LnTurnout("L", 0, lnis) );
+        Assert.assertEquals("Turnout value: 0 not in the range 1 to 2048", ex.getMessage());
+
+        ex = Assert.assertThrows( java.lang.IllegalArgumentException.class,
+            () -> new LnTurnout("L", 2049, lnis) );
+        Assert.assertEquals("Turnout value: 2049 not in the range 1 to 2048", ex.getMessage());
+
         boolean excep = false;
-        try {
-            t = new LnTurnout("L", 0, lnis);
-        } catch (java.lang.IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertTrue("expected exception happened (1)", excep);
-
-        excep = false;
-        try {
-            t = new LnTurnout("L", 2049, lnis);
-        } catch (java.lang.IllegalArgumentException e) {
-            excep = true;
-        }
-        Assert.assertTrue("expected exception happened (2)", excep);
-
-        excep = false;
         int value = -999;
         try {
-            t = new LnTurnout("L", 2048, lnis);
-            value = t._number;
+            LnTurnout validTurnout = new LnTurnout("L", 2048, lnis);
+            value = validTurnout._number;
         } catch (java.lang.IllegalArgumentException e) {
             excep = true;
         }
@@ -533,7 +520,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertFalse("Did not expect or get an exception (7)", excep);
         Assert.assertEquals("Check direct feedback mode set (7)", "ONESENSOR", t.getFeedbackModeName());
 
-        jmri.util.JUnitAppender.assertWarnMessage("expected Sensor 1 not defined - LT21");
+        JUnitAppender.assertWarnMessage("expected Sensor 1 not defined - LT21");
 
 
         try {
@@ -543,8 +530,8 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         }
         Assert.assertFalse("Did not expect or get an exception (8)", excep);
         Assert.assertEquals("Check direct feedback mode set (8)", "TWOSENSOR", t.getFeedbackModeName());
-        jmri.util.JUnitAppender.assertWarnMessage("expected Sensor 1 not defined - LT21");
-        jmri.util.JUnitAppender.assertWarnMessage("expected Sensor 2 not defined - LT21");
+        JUnitAppender.assertWarnMessage("expected Sensor 1 not defined - LT21");
+        JUnitAppender.assertWarnMessage("expected Sensor 2 not defined - LT21");
     }
 
     @Test
@@ -569,7 +556,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testSetStateClosedAndThrown() {
         Assert.assertEquals("checking initial known state", UNKNOWN, t.getKnownState());
         t.setCommandedState(CLOSED + THROWN);
-        jmri.util.JUnitAppender.assertErrorMessage("LocoNet turnout logic can't handle both THROWN and CLOSED yet");
+        JUnitAppender.assertErrorMessage("LocoNet turnout logic can't handle both THROWN and CLOSED yet");
         Assert.assertEquals("checking commanded state is Unknown after trying to send THROWN AND CLOSED", UNKNOWN, t.getKnownState());
         Assert.assertEquals("checking known state is Unknown after trying to send THROWN AND CLOSED", UNKNOWN, t.getKnownState());
         Assert.assertEquals("Checking to see if a LocoNet message was generated", 1, lnis.outbound.size());
@@ -582,7 +569,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testWarningSendingOffWhenUsingOffAsConfirmation() {
         lnt._useOffSwReqAsConfirmation = true;
         lnt.sendOpcSwReqMessage(CLOSED, false);
-        jmri.util.JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
+        JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
         Assert.assertEquals("check message sent", 1, lnis.outbound.size());
     }
 
@@ -597,7 +584,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("check initial message element 1", 20, lnis.outbound.get(0).getElement(1));
         Assert.assertEquals("check initial message element 2", 0x30, lnis.outbound.get(0).getElement(2));
         JUnitUtil.waitFor(()->{return lnis.outbound.size()==2;},"2nd message not received");
-        jmri.util.JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
+        JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
         Assert.assertEquals("check second message Opcode", 0xB0, lnis.outbound.get(1).getOpCode());
         Assert.assertEquals("check second message element 1", 20, lnis.outbound.get(1).getElement(1));
         Assert.assertEquals("check second message element 2", 0x20, lnis.outbound.get(1).getElement(2));
@@ -623,7 +610,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         lnt.messageFromManager(new LocoNetMessage(new int[] {0xB1, 0x14, 0x60, 0x00}));
         Assert.assertEquals("check known state got updated", THROWN, t.getKnownState());
         JUnitUtil.waitFor(()->{return lnis.outbound.size()==2;},"2nd message not received (2)");
-        jmri.util.JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
+        JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
         Assert.assertEquals("check second message Opcode", 0xB0, lnis.outbound.get(1).getOpCode());
         Assert.assertEquals("check second message element 1", 20, lnis.outbound.get(1).getElement(1));
         Assert.assertEquals("check second message element 2", 0x20, lnis.outbound.get(1).getElement(2));
@@ -825,12 +812,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         memo.setLnTrafficController(lnis);
 
         // outwait any pending delayed sends
-        try {
-            synchronized (this) {
-                this.wait(LnTurnout.METERINTERVAL + 25);
-            }
-        } catch (InterruptedException e) {
-        }
+        JUnitUtil.waitFor( LnTurnout.METERINTERVAL + 25 );
 
         // create object under test
         t = new LnTurnout("L", 21, lnis);
@@ -838,6 +820,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown(){
         t.dispose();
         JUnitUtil.tearDown();

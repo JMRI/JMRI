@@ -21,7 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
+                <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -106,7 +107,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem adding sensors with names like NS50:1
+                </li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -136,7 +138,8 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
+                <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -585,6 +588,15 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li><i>jmri.jmrix.SystemConnectionMemoManager</i> has new utility methods to find a connection by its connection name.<br>
+            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("L2", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("LocoNet", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("M", MqttSystemConnectionMemo.class);</code>
+            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("MQTT", MqttSystemConnectionMemo.class);</code>
+            </li>
+            <li>The PlantUML library has been updated to the current version.  This is used for
+                developer documentation.
+            </li>
             <li></li>
         </ul>
 
