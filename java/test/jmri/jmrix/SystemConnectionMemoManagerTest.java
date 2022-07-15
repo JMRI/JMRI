@@ -93,7 +93,7 @@ public class SystemConnectionMemoManagerTest {
         lnMemo1 = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis1 = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(lnMemo1);
         lnMemo1.setLnTrafficController(lnis1);
-        lnMemo1.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
+        lnMemo1.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false, false);
         lnMemo1.configureManagers();
         jmri.InstanceManager.store(lnMemo1, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
@@ -101,7 +101,7 @@ public class SystemConnectionMemoManagerTest {
         lnMemo2 = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo("L2", "LocoNet2");
         lnis2 = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(lnMemo2);
         lnMemo2.setLnTrafficController(lnis2);
-        lnMemo2.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
+        lnMemo2.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false, false);
         lnMemo2.configureManagers();
         jmri.InstanceManager.store(lnMemo2, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
