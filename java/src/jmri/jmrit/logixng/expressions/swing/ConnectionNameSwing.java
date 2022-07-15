@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.expressions.swing;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.awt.Dimension;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -13,8 +12,8 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.ConnectionName;
-import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
 import jmri.jmrix.*;
+import static jmri.jmrix.JmrixConfigPane.NONE_SELECTED;
 
 /**
  * Configures an ConnectionName object with a Swing JPanel.
@@ -23,7 +22,12 @@ import jmri.jmrix.*;
  */
 public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
 
-    private LogixNG_SelectStringSwing _selectConnectionNameSwing;
+    private final ConnectionConfigManager manager =
+            InstanceManager.getDefault(ConnectionConfigManager.class);
+
+    private JComboBox<String> _manufacturerComboBox;
+    private JComboBox<String> _connectionComboBox;
+    private ConnectionConfig[] _connectionConfigs;
 
     public ConnectionNameSwing() {
     }
@@ -34,110 +38,112 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        ConnectionName action = (ConnectionName) object;
-        if (action == null) {
-            // Create a temporary action
-            action = new ConnectionName("IQDE1", null);
-        }
-
-        _selectConnectionNameSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
-
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        JPanel tabbedPaneTopic = _selectConnectionNameSwing.createPanel(action.getSelectConnectionName());
-        panel.add(tabbedPaneTopic);
-
-
-        ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
-
-        JPanel connections = new JPanel();
-
-        JPanel currentConnections = new JPanel();
-        currentConnections.setLayout(new BoxLayout(currentConnections, BoxLayout.Y_AXIS));
-
-        currentConnections.add(new JLabel("Current connections"));
-        StringBuilder sb = new StringBuilder();
-        JTextArea currentConnectionsTextBox = new JTextArea();
-        currentConnectionsTextBox.setEditable(false);
-        JScrollPane connectionsScrollPane = new JScrollPane(currentConnectionsTextBox);
-        connectionsScrollPane.setPreferredSize(new Dimension(400, 300));
-        currentConnections.add(connectionsScrollPane);
-        for (ConnectionConfig cc : manager.getConnections()) {
-            sb.append(cc.name());
-            sb.append('\n');
-        }
-        currentConnectionsTextBox.setText(sb.toString());
-        currentConnectionsTextBox.setCaretPosition(0);
-        connections.add(currentConnections);
-
-
-        JPanel availableConnections = new JPanel();
-        availableConnections.setLayout(new BoxLayout(availableConnections, BoxLayout.Y_AXIS));
-
-        availableConnections.add(new JLabel("Available connections"));
-        sb = new StringBuilder();
-        JTextArea availableConnectionsTextBox = new JTextArea();
-        availableConnectionsTextBox.setEditable(false);
-        JScrollPane availableConnectionsScrollPane = new JScrollPane(availableConnectionsTextBox);
-        availableConnectionsScrollPane.setPreferredSize(new Dimension(400, 300));
-        availableConnections.add(availableConnectionsScrollPane);
+        // Create a temporary action if object is null
+        final ConnectionName action = (object != null)
+                ? (ConnectionName) object
+                : new ConnectionName("IQDE1", null);
 
         String[] manufactureNameList = manager.getConnectionManufacturers();
-        for (String manuName : manufactureNameList) {
-            if (sb.length() != 0) {
-                sb.append("\n===============================\n\n");
+        _connectionConfigs = manager.getConnections();
+
+        panel = new JPanel();
+
+        String selectedManufacturer = action.getManufacturer();
+        if (selectedManufacturer == null
+                || selectedManufacturer.isBlank()
+                || NONE_SELECTED.equals(selectedManufacturer)) {
+            if (_connectionConfigs.length > 0) {
+                selectedManufacturer = _connectionConfigs[0].getManufacturer();
             }
+        }
 
-            sb.append(manuName);
-            sb.append("\n-------------------------------\n");
+        JPanel manufacturerPanel = new JPanel();
+        manufacturerPanel.setLayout(new BoxLayout(manufacturerPanel, BoxLayout.Y_AXIS));
+        manufacturerPanel.add(new JLabel("System manufacturer"));
+        _manufacturerComboBox = new JComboBox<>();
+        manufacturerPanel.add(_manufacturerComboBox);
 
-            String[] classConnectionNameList;
-            classConnectionNameList = manager.getConnectionTypes(manuName);
+        for (String manuName : manufactureNameList) {
+            _manufacturerComboBox.addItem(manuName);
+            if (manuName.equals(selectedManufacturer)) {
+                _manufacturerComboBox.setSelectedItem(selectedManufacturer);
+            }
+        }
+        if (_manufacturerComboBox.getSelectedIndex() == -1) {
+            _manufacturerComboBox.setSelectedIndex(0);
+        }
 
-            for (String className : classConnectionNameList) {
-                try {
-                    ConnectionConfig config;
-                    Class<?> cl = Class.forName(className);
-                    config = (ConnectionConfig) cl.getDeclaredConstructor().newInstance();
-                    if( !(config instanceof StreamConnectionConfig)) {
-                        // only include if the connection is not a
-                        // StreamConnection.  Those connections require
-                        // additional context.
-                        if (config != null) {
-                            sb.append(config.name());
-                            sb.append('\n');
-                        }
-                    }
-                } catch (NullPointerException e) {
-                    log.error("Attempt to load {} failed.", className, e);
-                } catch (InvocationTargetException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-                    log.error("Attempt to load {} failed", className, e);
+        JPanel connectionNamePanel = new JPanel();
+        connectionNamePanel.setLayout(new BoxLayout(connectionNamePanel, BoxLayout.Y_AXIS));
+        connectionNamePanel.add(new JLabel("System connection"));
+        _connectionComboBox = new JComboBox<>();
+        connectionNamePanel.add(_connectionComboBox);
+
+        _manufacturerComboBox.addActionListener((evt) -> {
+            updateConnectionComboBox(action);
+        });
+
+        updateConnectionComboBox(action);
+
+
+        panel.add(manufacturerPanel);
+        panel.add(connectionNamePanel);
+    }
+
+    private void updateConnectionComboBox(ConnectionName action) {
+        String selectedManufacturer = (String) _manufacturerComboBox.getSelectedItem();
+        String[] classConnectionNameList = manager.getConnectionTypes(selectedManufacturer);
+
+        String selectedConnectionName = null;
+
+        if (selectedManufacturer.equals(action.getManufacturer())) {
+            selectedConnectionName = action.getConnectionName();
+        }
+        if (selectedConnectionName == null
+                || selectedConnectionName.isBlank()
+                || NONE_SELECTED.equals(selectedConnectionName)) {
+            for (int i=0; i < _connectionConfigs.length; i++) {
+                if (_connectionConfigs[i].getManufacturer().equals(selectedManufacturer)) {
+                    selectedConnectionName = _connectionConfigs[i].name();
                 }
             }
         }
 
-        for (ConnectionConfig cc : manager.getConnections()) {
-            sb.append(cc.name());
-            sb.append('\n');
+        _connectionComboBox.removeAllItems();
+        _connectionComboBox.addItem(NONE_SELECTED);
+
+        for (String className : classConnectionNameList) {
+            try {
+                Class<?> cl = Class.forName(className);
+                ConnectionConfig config = (ConnectionConfig) cl.getDeclaredConstructor().newInstance();
+                if( !(config instanceof StreamConnectionConfig)) {
+                    // only include if the connection is not a
+                    // StreamConnection.  Those connections require
+                    // additional context.
+                    if (config != null) {
+                        _connectionComboBox.addItem(config.name());
+                        if (config.name().equals(selectedConnectionName)) {
+                            _connectionComboBox.setSelectedItem(selectedConnectionName);
+                        }
+                    }
+                }
+            } catch (NullPointerException e) {
+                log.error("Attempt to load {} failed.", className, e);
+            } catch (InvocationTargetException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
+                log.error("Attempt to load {} failed", className, e);
+            }
         }
-        availableConnectionsTextBox.setText(sb.toString());
-        availableConnectionsTextBox.setCaretPosition(0);
-        connections.add(availableConnections);
 
-
-        panel.add(connections);
+        // Resize panel if needed
+        panel.doLayout();
+//        JDialog dialog = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, _manufacturerComboBox);
+//        if (dialog != null) dialog.doLayout();
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ConnectionName action = new ConnectionName("IQDE1", null);
-
-        _selectConnectionNameSwing.validate(action.getSelectConnectionName(), errorMessages);
-
-        return errorMessages.isEmpty();
+        return true;
     }
 
     /** {@inheritDoc} */
@@ -156,7 +162,12 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
         }
         ConnectionName action = (ConnectionName) object;
 
-        _selectConnectionNameSwing.updateObject(action.getSelectConnectionName());
+        if (_manufacturerComboBox.getSelectedIndex() != -1) {
+            action.setManufacturer(_manufacturerComboBox.getItemAt(_manufacturerComboBox.getSelectedIndex()));
+        }
+        if (_connectionComboBox.getSelectedIndex() != -1) {
+            action.setConnectionName(_connectionComboBox.getItemAt(_connectionComboBox.getSelectedIndex()));
+        }
     }
 
     /** {@inheritDoc} */
@@ -167,7 +178,6 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     public void dispose() {
-        _selectConnectionNameSwing.dispose();
     }
 
 

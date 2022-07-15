@@ -8,9 +8,9 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.LogixNG_SelectString;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.*;
+import static jmri.jmrix.JmrixConfigPane.NONE_SELECTED;
 
 /**
  * Returns true if there is a connection of specified type.
@@ -20,15 +20,13 @@ import jmri.jmrix.*;
 public class ConnectionName extends AbstractDigitalExpression
         implements PropertyChangeListener {
 
-    private final LogixNG_SelectString _connectionName =
-            new LogixNG_SelectString(this, this);
+    private String _manufacturer = NONE_SELECTED;
+    private String _connectionName = NONE_SELECTED;
 
 
     public ConnectionName(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-
-        _connectionName.setValue("LocoNet Simulator");
     }
 
     @Override
@@ -39,11 +37,24 @@ public class ConnectionName extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ConnectionName copy = new ConnectionName(sysName, userName);
         copy.setComment(getComment());
-        _connectionName.copy(copy._connectionName);
+        copy._manufacturer = _manufacturer;
+        copy._connectionName = _connectionName;
         return manager.registerExpression(copy);
     }
 
-    public LogixNG_SelectString getSelectConnectionName() {
+    public void setManufacturer(String manufacturer) {
+        _manufacturer = manufacturer;
+    }
+
+    public String getManufacturer() {
+        return _manufacturer;
+    }
+
+    public void setConnectionName(String name) {
+        _connectionName = name;
+    }
+
+    public String getConnectionName() {
         return _connectionName;
     }
 
@@ -56,10 +67,9 @@ public class ConnectionName extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        String connectionName = _connectionName.evaluateValue(getConditionalNG());
         ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
         for (ConnectionConfig cc : manager.getConnections()) {
-            if (cc.name().equals(connectionName)) {
+            if (cc.getManufacturer().equals(_manufacturer) && cc.name().equals(_connectionName)) {
                 return true;
             }
         }
@@ -83,7 +93,7 @@ public class ConnectionName extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ConnectionName_Long", _connectionName.getDescription(locale));
+        return Bundle.getMessage(locale, "ConnectionName_Long", _manufacturer, _connectionName);
     }
 
     /** {@inheritDoc} */

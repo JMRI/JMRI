@@ -40,7 +40,8 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="connectionName" type="LogixNG_SelectStringType" minOccurs="1" maxOccurs="1" />
+              <xs:element name="manufacturer" type="xs:string" minOccurs="1" maxOccurs="1" />
+              <xs:element name="connectionName" type="xs:string" minOccurs="1" maxOccurs="1" />
 
 			  <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

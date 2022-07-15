@@ -31,15 +31,14 @@ public class ConnectionNameXml extends jmri.managers.configurexml.AbstractNamedB
     public Element store(Object o) {
         ConnectionName p = (ConnectionName) o;
 
-        var selectConnectionNameXml = new LogixNG_SelectStringXml();
-
         Element element = new Element("ConnectionName");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-        element.addContent(selectConnectionNameXml.store(p.getSelectConnectionName(), "connectionName"));
+        element.addContent(new Element("manufacturer").addContent(p.getManufacturer()));
+        element.addContent(new Element("connectionName").addContent(p.getConnectionName()));
 
         return element;
     }
@@ -52,9 +51,12 @@ public class ConnectionNameXml extends jmri.managers.configurexml.AbstractNamedB
 
         loadCommon(h, shared);
 
-        var selectConnectionNameXml = new LogixNG_SelectStringXml();
-
-        selectConnectionNameXml.load(shared.getChild("connectionName"), h.getSelectConnectionName());
+        if (shared.getChild("manufacturer") != null) {
+            h.setManufacturer(shared.getChild("manufacturer").getTextTrim());
+        }
+        if (shared.getChild("connectionName") != null) {
+            h.setConnectionName(shared.getChild("connectionName").getTextTrim());
+        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
