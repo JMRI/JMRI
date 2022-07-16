@@ -432,7 +432,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (dispatcherFrame == null) {
             if (_LE != null && autoAllocate == null) {
                 autoAllocate = new AutoAllocate(this, allocationRequests);
-                autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator openDispatcherWindow ");
+                autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator ");
                 autoAllocateThread.start();
             }
             dispatcherFrame = this;
@@ -1108,18 +1108,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * <p>
      * Moved from Transit in JMRI 4.19.7
      *
-     * @param panel the panel containing Sections to validate
-     * @return number of invalid sections or -1 if panel if null
+     * To support multiple panel dispatching, this version uses a null panel reference to bypass
+     * the Section layout block connectivity checks. The assumption is that the existing block / path
+     * relationships are valid.  When a section does not span panels, the layout block process can
+     * result in valid block paths being removed.
+     *
+     * @return number of invalid sections
      */
-    private int validateConnectivity(Transit t, LayoutEditor panel) {
-        if (panel == null) {
-            log.error("validateConnectivity called with a null LayoutEditor panel");
-            return -1;
-        }
+    private int validateConnectivity(Transit t) {
         int numErrors = 0;
         for (int i = 0; i < t.getTransitSectionList().size(); i++) {
-            String s = t.getTransitSectionList().get(i).getSection().validate(panel);
-            if (!s.equals("")) {
+            String s = t.getTransitSectionList().get(i).getSection().validate(null);
+            if (!s.isEmpty()) {
                 log.error(s);
                 numErrors++;
             }
@@ -1359,7 +1359,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             // check/set Transit specific items for automatic running
             // validate connectivity for all Sections in this transit
-            int numErrors = validateConnectivity(t, _LE);
+            int numErrors = validateConnectivity(t);
+
             if (numErrors != 0) {
                 if (showErrorMessages) {
                     JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
@@ -2091,11 +2092,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (_AutoTurnouts || at.getAutoRun()) {
             // automatically set the turnouts for this section before allocation
             turnoutsOK = autoTurnouts.setTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _LE, _TrustKnownTurnouts, prevSection);
+                    at, _TrustKnownTurnouts, prevSection);
         } else {
             // check that turnouts are correctly set before allowing allocation to proceed
             turnoutsOK = autoTurnouts.checkTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _LE, prevSection);
+                    at, prevSection);
         }
         if (turnoutsOK == null) {
             if (_AutoAllocate) {
@@ -2591,7 +2592,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (_LE != null) {
                 if (autoAllocate == null) {
                     autoAllocate = new AutoAllocate(this,allocationRequests);
-                    autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator stopStartAutoAllocateRelease ");
+                    autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator ");
                     autoAllocateThread.start();
                 }
             } else {

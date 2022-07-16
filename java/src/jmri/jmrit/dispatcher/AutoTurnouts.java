@@ -52,18 +52,21 @@ public class AutoTurnouts {
      * Section to the next Section. NOTE: This method requires use of the
      * connectivity stored in a Layout Editor panel.
      *
+     * NOTE: This method removes the need to specify the Layout
+     * Editor panel. Required for dispatches over multiple layout editor panels.
+     *
      * @param s           the section to check
      * @param seqNum      sequence number for the section
      * @param nextSection the following section
      * @param at          the associated train
-     * @param le          the associated layout panel
      * @param prevSection the prior section
      * @return list of turnouts and their expected states if affected turnouts are correctly set; null otherwise.
      */
     protected List<LayoutTrackExpectedState<LayoutTurnout>> checkTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, LayoutEditor le, Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, le, false, false, prevSection);
+            ActiveTrain at, Section prevSection) {
+        return turnoutUtil(s, seqNum, nextSection, at, false, false, prevSection);
     }
+
 
     /**
      * Set all turnouts for travel in the designated Section to the next
@@ -77,14 +80,14 @@ public class AutoTurnouts {
      * does not wait for turnout feedback--it assumes the turnout will be set
      * correctly if a command is issued.
      *
-     * NOTE: This method requires use of the connectivity stored in a Layout
-     * Editor panel.
+     * NOTE: This method removes the need to specify the Layout
+     * Editor panel. Required for dispatches over multiple layout editor panels.
+     *
      *
      * @param s                  the section to check
      * @param seqNum             sequence number for the section
      * @param nextSection        the following section
      * @param at                 the associated train
-     * @param le                 the associated layout panel
      * @param trustKnownTurnouts true to trust known turnouts
      * @param prevSection        the prior section
      *
@@ -93,9 +96,11 @@ public class AutoTurnouts {
      *         command could not be issued because the turnout's Block is
      *         occupied
      */
+
     protected List<LayoutTrackExpectedState<LayoutTurnout>> setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, LayoutEditor le, boolean trustKnownTurnouts, Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, le, trustKnownTurnouts, true, prevSection);
+            ActiveTrain at, boolean trustKnownTurnouts,  Section prevSection) {
+
+        return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection);
     }
 
     protected Turnout checkStateAgainstList(List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList) {
@@ -121,6 +126,7 @@ public class AutoTurnouts {
         }
         return null;
     }
+
     /**
      * Internal method implementing the above two methods Returns 'true' if
      * turnouts are set correctly, 'false' otherwise If 'set' is 'true' this
@@ -128,12 +134,12 @@ public class AutoTurnouts {
      * finds.
      */
     private List<LayoutTrackExpectedState<LayoutTurnout>> turnoutUtil(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, LayoutEditor le, boolean trustKnownTurnouts, boolean set, Section prevSection) {
+          ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection ) {
         // initialize response structure
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
         Transit tran = at.getTransit();
-        if ((s == null) || (seqNum > tran.getMaxSequence()) || (!tran.containsSection(s)) || (le == null)) {
+        if ((s == null) || (seqNum > tran.getMaxSequence()) || (!tran.containsSection(s))) {
             log.error("Invalid argument when checking or setting turnouts in Section.");
             return null;
         }
@@ -151,7 +157,6 @@ public class AutoTurnouts {
             return turnoutListForAllocatedSection;
         }
         // initialize connectivity utilities and beginning block pointers
-        ConnectivityUtil ct = le.getConnectivityUtil();
         EntryPoint entryPt = null;
         if (prevSection != null) {
             entryPt = s.getEntryPointFromSection(prevSection, direction);
@@ -196,11 +201,11 @@ public class AutoTurnouts {
             // this is an error but is it? It only happens when system is under stress
             // which would point to a threading issue.
             try {
-            log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block[{}] and Section[{}] mismatch",
-                    at.getActiveTrainName(),at.isAllocationReversed(),s.getDisplayName(USERSYS),
-                    at.getStartBlock().getUserName(),at.getEndBlock().getDisplayName(USERSYS));
+                log.error("[{}]direction[{}] Section[{}]Error in turnout check/set request - initial Block[{}] and Section[{}] mismatch",
+                        at.getActiveTrainName(),at.isAllocationReversed(),s.getDisplayName(USERSYS),
+                        at.getStartBlock().getUserName(),at.getEndBlock().getDisplayName(USERSYS));
             } catch (Exception ex ) {
-                log.warn("Exception while creating log error : {}", ex.getMessage());
+                log.warn("Exception while creating log error : {}", ex.getLocalizedMessage());
             }
             return turnoutListForAllocatedSection;
         }
@@ -232,13 +237,27 @@ public class AutoTurnouts {
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = new ArrayList<>();
         // get turnouts by Block
         boolean turnoutsOK = true;
+
+        var layoutBlockManger = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         while (curBlock != null) {
             /*No point in getting the list if the previous block is null as it will return empty and generate an error,
              this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
+
+            boolean notfound = true;
             if (prevBlock != null) {
-                turnoutList = ct.getTurnoutList(curBlock, prevBlock, nextBlock);
+                var blockName = curBlock.getUserName();
+                if (blockName != null) {
+                    var lblock = layoutBlockManger.getLayoutBlock(blockName);
+                    if (lblock != null) {
+                        var panel = lblock.getMaxConnectedPanel();
+                        if (panel != null) {
+                            var connection = new ConnectivityUtil(panel);
+                            turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
+                        }
+                    }
+                }
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {

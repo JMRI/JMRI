@@ -372,7 +372,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Support transits and sections that use multiple panels connected by edge
+             connectors.  Note: A panel still has to be selected in Dispatcher Options.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
