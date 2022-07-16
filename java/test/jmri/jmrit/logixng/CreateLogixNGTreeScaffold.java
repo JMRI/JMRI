@@ -1870,7 +1870,7 @@ public class CreateLogixNGTreeScaffold {
         actionWarrant.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetTrainName);
 
         actionWarrant.setDataAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setTrainIdName("ABC");
+        actionWarrant.setTrainData("ABC");
 
         maleSocket = digitalActionManager.registerAction(actionWarrant);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);

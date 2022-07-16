@@ -24,6 +24,7 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
+ * @author Pete Cressman Copyright (C) 2022
  */
 public class ActionWarrant extends AbstractDigitalAction
         implements PropertyChangeListener {
@@ -40,7 +41,6 @@ public class ActionWarrant extends AbstractDigitalAction
                     this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
 
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
-//    private DirectOperation _operationType = DirectOperation.AllocateWarrantRoute;
     private String _dataReference = "";
     private String _dataLocalVariable = "";
     private String _dataFormula = "";
@@ -66,7 +66,6 @@ public class ActionWarrant extends AbstractDigitalAction
         _selectNamedBean.copy(copy._selectNamedBean);
         _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         _selectEnum.copy(copy._selectEnum);
-//        copy.setOperationType(_operationType);
 
         copy.setDataAddressing(_dataAddressing);
         copy.setDataReference(_dataReference);
@@ -101,10 +100,6 @@ public class ActionWarrant extends AbstractDigitalAction
         return _dataAddressing;
     }
 
-/*    public void setOperationType(DirectOperation operationType) {
-        _operationType = operationType;
-    }
-*/
     public DirectOperation getOperationType() {
         return _selectEnum.getEnum();
     }
@@ -152,8 +147,8 @@ public class ActionWarrant extends AbstractDigitalAction
         this._listenToMemory = listenToMemory;
     }
 
-    public void setTrainData(@Nonnull String trainIdName) {
-        _trainData = trainIdName;
+    public void setTrainData(@Nonnull String trainData) {
+        _trainData = trainData;
     }
 
     public String getTrainData() {
@@ -219,8 +214,6 @@ public class ActionWarrant extends AbstractDigitalAction
         if (warrant == null) {
             return;
         }
-
-//        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
 
         // Variables used in lambda must be effectively final
         DirectOperation theOper = _selectEnum.evaluateEnum(getConditionalNG());
@@ -295,7 +288,7 @@ public class ActionWarrant extends AbstractDigitalAction
                             throw new IllegalArgumentException("invalid train control action: " + _controlAutoTrain);
                     }
                     if (!warrant.controlRunTrain(controlAction)) {
-                        log.warn("Train {} not running  - {}", warrant.getSpeedUtil().getRosterId(), warrant.getDisplayName());  // NOI18N
+                        log.info("Train {} not running  - {}", warrant.getSpeedUtil().getRosterId(), warrant.getDisplayName());  // NOI18N
                     }
                     break;
                 case SetTrainId:
@@ -303,10 +296,16 @@ public class ActionWarrant extends AbstractDigitalAction
                         if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
                             throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
                         }
-                    }	// else ignore. cannot change address when warrant is running
+                    } else {
+                        log.info("Cannot SetTrainId when warrant {} is running", warrant.getDisplayName());  // NOI18N
+                    }
                     break;
                 case SetTrainName:
-                    warrant.setTrainName(getNewData(theOper));
+                    if (warrant.getRunMode() == Warrant.MODE_NONE) {
+                        warrant.setTrainName(getNewData(theOper));
+                    } else {
+                        log.info("Cannot SetTrainName when warrant {} is running", warrant.getDisplayName());  // NOI18N
+                    }
                     break;
 
                 case GetTrainLocation:
@@ -314,7 +313,7 @@ public class ActionWarrant extends AbstractDigitalAction
                     if (memory != null) {
                         memory.setValue(warrant.getCurrentBlockName());
                     } else {
-                        log.warn("setMemory should copy memory to memory but other memory is null");
+                        log.warn("Memory for GetTrainLocation is null for warrant {}", warrant.getDisplayName());  // NOI18N
                     }
                     break;
 
