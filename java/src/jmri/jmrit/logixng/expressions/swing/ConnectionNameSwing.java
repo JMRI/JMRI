@@ -138,10 +138,9 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
             }
         }
 
-        // Resize panel if needed
-        panel.doLayout();
-//        JDialog dialog = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, _manufacturerComboBox);
-//        if (dialog != null) dialog.doLayout();
+        // Resize dialog if needed
+        JDialog dialog = (JDialog) SwingUtilities.getAncestorOfClass(JDialog.class, _manufacturerComboBox);
+        if (dialog != null) dialog.pack();
     }
 
     /** {@inheritDoc} */
