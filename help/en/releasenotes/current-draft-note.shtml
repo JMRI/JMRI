@@ -408,9 +408,9 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>The action <i>Simulate turnout feedback</i> has been added.
-          It's useful to simulate a layout when a simulator connection is
-          used, for example the LocoNet simulator.</li>
-          <li>The action <i>Connection name</i> has been added.
+          It's useful to simulate feedback based turnout actions when a
+          simulator connection is used, for example the LocoNet simulator.</li>
+          <li>The expression <i>Connection name</i> has been added.
           It's useful together with <i>Simulate turnout feedback</i> so
           that simulation only happens for simulated connections.</li>
         </ul>
