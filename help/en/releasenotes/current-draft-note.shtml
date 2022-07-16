@@ -589,5 +589,9 @@
             <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("M", MqttSystemConnectionMemo.class);</code>
             <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("MQTT", MqttSystemConnectionMemo.class);</code>
             </li>
+            <li>The PlantUML library has been updated to the current version.  This is used for
+                developer documentation.
+            </li>
+            <li></li>
         </ul>
 
