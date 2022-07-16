@@ -10,8 +10,7 @@ import javax.swing.JPanel;
 import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.util.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
