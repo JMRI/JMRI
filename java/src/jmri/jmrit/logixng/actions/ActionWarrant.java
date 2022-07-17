@@ -222,7 +222,7 @@ public class ActionWarrant extends AbstractDigitalAction
             if (warrant.getRunMode() == Warrant.MODE_RUN && !theOper.equals(DirectOperation.ControlAutoTrain)) {
 //                throw new JmriException("Cannot \"" + theOper.toString() + "\" when warrant is running - " + warrant.getDisplayName());  // NOI18N
             	log.info("Cannot \"{}\" when warrant is running - {}", theOper.toString(), warrant.getDisplayName());
-            	return;
+                return;
             }
         }
 
@@ -294,10 +294,10 @@ public class ActionWarrant extends AbstractDigitalAction
                     }
                     if (!warrant.controlRunTrain(controlAction)) {
 //                        throw new JmriException("Warrant " + warrant.getDisplayName() + " "
-//                        		+ theOper.toString() +"(" + _controlAutoTrain.toString() + ") failed. "
-//                        		+ warrant.getMessage());
-                        log.info("Warrant {} {}({}) failed. - {}", warrant.getDisplayName(), 
-                        		theOper.toString(), _controlAutoTrain.toString(), warrant.getMessage());
+//                              + theOper.toString() +"(" + _controlAutoTrain.toString() + ") failed. "
+//                              + warrant.getMessage());
+                        log.info("Warrant {} {}({}) failed. - {}", warrant.getDisplayName(),
+                                theOper.toString(), _controlAutoTrain.toString(), warrant.getMessage());
                     }
                     break;
 
@@ -316,7 +316,7 @@ public class ActionWarrant extends AbstractDigitalAction
                     if (memory != null) {
                         memory.setValue(warrant.getCurrentBlockName());
                     } else {
-                    	throw new JmriException("Memory for GetTrainLocation is null for warrant - " + warrant.getDisplayName());  // NOI18N
+                        throw new JmriException("Memory for GetTrainLocation is null for warrant - " + warrant.getDisplayName());  // NOI18N
                     }
                     break;
 

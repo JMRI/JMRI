@@ -543,7 +543,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     public String getMessage() {
-    	return _message;
+        return _message;
     }
 
     /* ************* Methods for running trains *****************/
