@@ -542,6 +542,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return false;
     }
 
+    public String getMessage() {
+    	return _message;
+    }
+
     /* ************* Methods for running trains *****************/
 /*
     protected void setWaitingForSignal(Boolean set) {

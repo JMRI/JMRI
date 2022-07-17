@@ -155,15 +155,15 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
             if (selectEnum.getEnum() != null) {
                 switch (selectEnum.getEnum()) {
                     case GetTrainLocation:
-                    	_panelMemoryBean.setVisible(true);
-                    	break;
+                        _panelMemoryBean.setVisible(true);
+                        break;
                     case SetTrainId:
                     case SetTrainName:
-                    	_panelTrainData.setVisible(true);
+                        _panelTrainData.setVisible(true);
                         break;
                     case ControlAutoTrain:
-                    	_panelControlTrainCombo.setVisible(true);
-                    	break;
+                        _panelControlTrainCombo.setVisible(true);
+                        break;
                     default:
                 }
             }
@@ -186,21 +186,21 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
     }
 
     private void setDataPanelState() {
-    	_panelControlTrainCombo.setVisible(false);
+        _panelControlTrainCombo.setVisible(false);
         _panelTrainData.setVisible(false);
-    	_panelMemoryBean.setVisible(false);
+        _panelMemoryBean.setVisible(false);
 
         boolean newState = false;
 
         if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.ControlAutoTrain)) {
-        	_panelControlTrainCombo.setVisible(true);
+            _panelControlTrainCombo.setVisible(true);
             newState = true;
         } else if ( _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetTrainLocation)) {
-        	_panelMemoryBean.setVisible(true);
+            _panelMemoryBean.setVisible(true);
             newState = true;
         } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainId) ||
                 _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainName)) {
-        	_panelTrainData.setVisible(true);
+            _panelTrainData.setVisible(true);
             newState = true;
         }
 

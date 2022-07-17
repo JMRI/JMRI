@@ -47,7 +47,7 @@ public class ActionWarrant extends AbstractDigitalAction
     private ExpressionNode _dataExpressionNode;
     private boolean _listenToMemory = true;
 
-    private String _trainData = "";	// Train Name, RosterEntry/address, locationMemory, 
+    private String _trainData = "";
     private ControlAutoTrain _controlAutoTrain = ControlAutoTrain.Halt;
 
     public ActionWarrant(String sys, String user)
@@ -218,16 +218,21 @@ public class ActionWarrant extends AbstractDigitalAction
         // Variables used in lambda must be effectively final
         DirectOperation theOper = _selectEnum.evaluateEnum(getConditionalNG());
 
+        if (!theOper.equals(DirectOperation.GetTrainLocation)) {
+            if (warrant.getRunMode() == Warrant.MODE_RUN && !theOper.equals(DirectOperation.ControlAutoTrain)) {
+//                throw new JmriException("Cannot \"" + theOper.toString() + "\" when warrant is running - " + warrant.getDisplayName());  // NOI18N
+            	log.info("Cannot \"{}\" when warrant is running - {}", theOper.toString(), warrant.getDisplayName());
+            	return;
+            }
+        }
+
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             String msg;
             String err;
 
             switch (theOper) {
                 case AllocateWarrantRoute:
-                    msg = warrant.allocateRoute(false, null);
-                    if (msg != null) {
-                        log.warn("Warrant {} - {}", warrant.getDisplayName(), msg);  // NOI18N
-                    }
+                    warrant.allocateRoute(false, null);
                     break;
 
                 case DeallocateWarrant:
@@ -288,24 +293,22 @@ public class ActionWarrant extends AbstractDigitalAction
                             throw new IllegalArgumentException("invalid train control action: " + _controlAutoTrain);
                     }
                     if (!warrant.controlRunTrain(controlAction)) {
-                        log.info("Train {} not running  - {}", warrant.getSpeedUtil().getRosterId(), warrant.getDisplayName());  // NOI18N
+//                        throw new JmriException("Warrant " + warrant.getDisplayName() + " "
+//                        		+ theOper.toString() +"(" + _controlAutoTrain.toString() + ") failed. "
+//                        		+ warrant.getMessage());
+                        log.info("Warrant {} {}({}) failed. - {}", warrant.getDisplayName(), 
+                        		theOper.toString(), _controlAutoTrain.toString(), warrant.getMessage());
                     }
                     break;
+
                 case SetTrainId:
-                    if (warrant.getRunMode() == Warrant.MODE_NONE) {
-                        if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
-                            throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
-                        }
-                    } else {
-                        log.info("Cannot SetTrainId when warrant {} is running", warrant.getDisplayName());  // NOI18N
+                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
+                        throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
                     }
                     break;
+
                 case SetTrainName:
-                    if (warrant.getRunMode() == Warrant.MODE_NONE) {
-                        warrant.setTrainName(getNewData(theOper));
-                    } else {
-                        log.info("Cannot SetTrainName when warrant {} is running", warrant.getDisplayName());  // NOI18N
-                    }
+                    warrant.setTrainName(getNewData(theOper));
                     break;
 
                 case GetTrainLocation:
@@ -313,7 +316,7 @@ public class ActionWarrant extends AbstractDigitalAction
                     if (memory != null) {
                         memory.setValue(warrant.getCurrentBlockName());
                     } else {
-                        log.warn("Memory for GetTrainLocation is null for warrant {}", warrant.getDisplayName());  // NOI18N
+                    	throw new JmriException("Memory for GetTrainLocation is null for warrant - " + warrant.getDisplayName());  // NOI18N
                     }
                     break;
 
@@ -354,7 +357,7 @@ public class ActionWarrant extends AbstractDigitalAction
                     case ControlAutoTrain:
                         return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
                     case GetTrainLocation:
-                        return getLongDataDescription(locale, "ActionWarrant_Long_Location", namedBean, getLocationMemory);      	
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Location", namedBean, getLocationMemory);
                     default:
                         // Fall thru and handle it in the end of the method
                 }
