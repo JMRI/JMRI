@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-// import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 // import org.apache.log4j.Level;

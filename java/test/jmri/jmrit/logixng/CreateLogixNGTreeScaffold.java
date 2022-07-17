@@ -2547,6 +2547,19 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        SimulateTurnoutFeedback simulateTurnoutFeedback =
+                new SimulateTurnoutFeedback(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(simulateTurnoutFeedback);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        simulateTurnoutFeedback = new SimulateTurnoutFeedback(digitalActionManager.getAutoSystemName(), null);
+        simulateTurnoutFeedback.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(simulateTurnoutFeedback);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setRowOrColumn(TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);
@@ -2719,6 +2732,17 @@ public class CreateLogixNGTreeScaffold {
         antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(antecedent);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.ThrowException);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+
+        ConnectionName connectionType = new ConnectionName(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(connectionType);
+        maleSocket.setEnabled(false);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        connectionType = new ConnectionName(digitalExpressionManager.getAutoSystemName(), null);
+        connectionType.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(connectionType);
         and.getChild(indexExpr++).connect(maleSocket);
 
 

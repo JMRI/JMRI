@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
  */
 public abstract class AbstractVariableValueTestBase {
 
-    ProgDebugger p = new ProgDebugger();
+    ProgDebugger p;
 
     abstract VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -205,8 +205,6 @@ public abstract class AbstractVariableValueTestBase {
     // check a read operation
     @Test
     public void testVariableValueRead() {
-        log.debug("testVariableValueRead base starts");
-
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         v.put("81", cv);
@@ -227,8 +225,6 @@ public abstract class AbstractVariableValueTestBase {
     // check a write operation to the variable
     @Test
     public void testVariableValueWrite() {
-        log.debug("testVariableValueWrite base starts");
-
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         v.put("81", cv);
@@ -251,10 +247,6 @@ public abstract class AbstractVariableValueTestBase {
     // check synch during a write operation to the CV
     @Test
     public void testVariableCvWrite() {
-        if (log.isDebugEnabled()) {
-            log.debug("start testVariableCvWrite test");
-        }
-
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
@@ -273,9 +265,6 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
         Assert.assertEquals("value written ", 5 * 4 + 3, p.lastWrite()); // includes initial value bits
         Assert.assertEquals("status label ", "OK", statusLabel.getText());
-        if (log.isDebugEnabled()) {
-            log.debug("end testVariableCvWrite test");
-        }
     }
 
     // check the state diagram
@@ -413,9 +402,6 @@ public abstract class AbstractVariableValueTestBase {
     // check synchronization of two vars during a write
     @Test
     public void testWriteSynch2() {
-        if (log.isDebugEnabled()) {
-            log.debug("start testWriteSynch2 test");
-        }
 
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -435,9 +421,7 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("1st variable state ", AbstractValue.STORED, var1.getState());
         Assert.assertEquals("2nd variable state ", AbstractValue.STORED, var2.getState());
         Assert.assertEquals("value written to programmer ", 5 * 4 + 3, p.lastWrite()); // includes initial value bits
-        if (log.isDebugEnabled()) {
-            log.debug("end testWriteSynch2 test");
-        }
+
     }
 
     // end of common tests
@@ -446,6 +430,7 @@ public abstract class AbstractVariableValueTestBase {
     @Test
     @Disabled("Disabled in JUnit 3")
     public void testSpaceUsage() {
+        /* // Avoid being picked up by code linting tools
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
@@ -479,21 +464,27 @@ public abstract class AbstractVariableValueTestBase {
         System.out.println("free, total memory after gc = " + Runtime.getRuntime().freeMemory()
                 + " " + Runtime.getRuntime().totalMemory());
         System.out.println("used & kept = " + (usedAfterGC - usedStart) + " used before reclaim = " + (usedAfter - usedStart));
+        */
     }
 
     protected HashMap<String, CvValue> createCvMap() {
-        HashMap<String, CvValue> m = new HashMap<String, CvValue>();
+        HashMap<String, CvValue> m = new HashMap<>();
         return m;
     }
 
     public void setUp() {
         JUnitUtil.setUp();
+        p = new ProgDebugger();
     }
 
     public void tearDown() {
+        if ( p != null ) {
+            p.dispose();
+            p = null;
+        }
         JUnitUtil.tearDown();
     }
 
-    private final static  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
+    // private final static  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
 
 }
