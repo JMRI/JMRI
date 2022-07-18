@@ -240,7 +240,6 @@ public class AutoTurnouts {
              been set correctly for the train to have arrived in the first place.
              */
 
-            boolean notfound = true;
             if (prevBlock != null) {
                 var blockName = curBlock.getUserName();
                 if (blockName != null) {
