@@ -37,6 +37,7 @@ import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -86,6 +87,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     public DispatcherFrame() {
         super(true, true); // remember size a position.
+        editorManager = InstanceManager.getDefault(EditorManager.class);
         initializeOptions();
         openDispatcherWindow();
         autoTurnouts = new AutoTurnouts(this);
@@ -380,6 +382,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private AutoAllocate autoAllocate = null;
     private OptionsMenu optionsMenu = null;
     private ActivateTrainFrame atFrame = null;
+    private EditorManager editorManager = null;
 
     public ActivateTrainFrame getActiveTrainFrame() {
         if (atFrame == null) {
@@ -430,7 +433,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     void openDispatcherWindow() {
         if (dispatcherFrame == null) {
-            if (_LE != null && autoAllocate == null) {
+            if (editorManager.getAll(LayoutEditor.class).size() > 0 && autoAllocate == null) {
                 autoAllocate = new AutoAllocate(this, allocationRequests);
                 autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator ");
                 autoAllocateThread.start();
@@ -1333,7 +1336,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             if (_autoTrainsFrame == null) {
                 // This is the first automatic active train--check if all required options are present
                 //   for automatic running.  First check for layout editor panel
-                if (!_UseConnectivity || (_LE == null)) {
+                if (!_UseConnectivity || (editorManager.getAll(LayoutEditor.class).size() == 0)) {
                     if (showErrorMessages) {
                         JOptionPane.showMessageDialog(frame, Bundle.getMessage("Error33"),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -1350,10 +1353,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 }
                 // get Maximum line speed once. We need to use this when the current signal mast is null.
-                for (int iSM = 0; iSM <_LE.getSignalMastList().size();  iSM++ )  {
-                    float msl = _LE.getSignalMastList().get(iSM).getSignalMast().getSignalSystem().getMaximumLineSpeed();
-                    if ( msl > maximumLineSpeed ) {
-                        maximumLineSpeed = msl;
+                for (var panel : editorManager.getAll(LayoutEditor.class)) {
+                    for (int iSM = 0; iSM < panel.getSignalMastList().size();  iSM++ )  {
+                        float msl = panel.getSignalMastList().get(iSM).getSignalMast().getSignalSystem().getMaximumLineSpeed();
+                        if ( msl > maximumLineSpeed ) {
+                            maximumLineSpeed = msl;
+                        }
                     }
                 }
             }
@@ -1371,17 +1376,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             // check/set direction sensors in signal logic for all Sections in this Transit.
             if (getSignalType() == SIGNALHEAD && getSetSSLDirectionalSensors()) {
-                numErrors = checkSignals(t, _LE);
-                if (numErrors == 0) {
-                    t.initializeBlockingSensors();
-                }
-                if (numErrors != 0) {
-                    if (showErrorMessages) {
-                        JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
-                                "Error36"), new Object[]{("" + numErrors)}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                for (var panel : editorManager.getAll(LayoutEditor.class)) {
+                    numErrors = checkSignals(t, panel);
+                    if (numErrors == 0) {
+                        t.initializeBlockingSensors();
                     }
-                    return null;
+                    if (numErrors != 0) {
+                        if (showErrorMessages) {
+                            JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
+                                    "Error36"), new Object[]{("" + numErrors)}),
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        }
+                        return null;
+                    }
                 }
             }
             // TODO: Need to check signalMasts as well
@@ -1391,20 +1398,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             } else {
                 _autoTrainsFrame.setVisible(true);
             }
-        } else if (_UseConnectivity && (_LE != null)) {
+        } else if (_UseConnectivity && (editorManager.getAll(LayoutEditor.class).size() > 0)) {
             // not auto run, set up direction sensors in signals since use connectivity was requested
             if (getSignalType() == SIGNALHEAD) {
-                int numErrors = checkSignals(t, _LE);
-                if (numErrors == 0) {
-                    t.initializeBlockingSensors();
-                }
-                if (numErrors != 0) {
-                    if (showErrorMessages) {
-                        JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
-                                "Error36"), new Object[]{("" + numErrors)}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                for (var panel : editorManager.getAll(LayoutEditor.class)) {
+                    int numErrors = checkSignals(t, panel);
+                    if (numErrors == 0) {
+                        t.initializeBlockingSensors();
                     }
-                    return null;
+                    if (numErrors != 0) {
+                        if (showErrorMessages) {
+                            JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
+                                    "Error36"), new Object[]{("" + numErrors)}),
+                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                        }
+                        return null;
+                    }
                 }
             }
         }
@@ -2173,12 +2182,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.error("null argument to 'containsLevelCrossing'");
             return _levelXingList;
         }
-        for (Block blk: s.getBlockList()) {
-            for (LevelXing temLevelXing: getLayoutEditor().getConnectivityUtil().getLevelCrossingsThisBlock(blk)) {
-                // it is returned if the block is in the crossing or connected to the crossing
-                // we only need it if it is in the crossing
-                if (temLevelXing.getLayoutBlockAC().getBlock() == blk || temLevelXing.getLayoutBlockBD().getBlock() == blk ) {
-                    _levelXingList.add(temLevelXing);
+
+        for (var panel : editorManager.getAll(LayoutEditor.class)) {
+            for (Block blk: s.getBlockList()) {
+                for (LevelXing temLevelXing: panel.getConnectivityUtil().getLevelCrossingsThisBlock(blk)) {
+                    // it is returned if the block is in the crossing or connected to the crossing
+                    // we only need it if it is in the crossing
+                    if (temLevelXing.getLayoutBlockAC().getBlock() == blk || temLevelXing.getLayoutBlockBD().getBlock() == blk ) {
+                        _levelXingList.add(temLevelXing);
+                    }
                 }
             }
         }
@@ -2589,7 +2601,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void stopStartAutoAllocateRelease() {
         if (_AutoAllocate || _AutoRelease) {
-            if (_LE != null) {
+            if (editorManager.getAll(LayoutEditor.class).size() > 0) {
                 if (autoAllocate == null) {
                     autoAllocate = new AutoAllocate(this,allocationRequests);
                     autoAllocateThread = jmri.util.ThreadingUtil.newThread(autoAllocate, "Auto Allocator ");

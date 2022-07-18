@@ -10,7 +10,6 @@ import jmri.Transit;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -52,8 +51,7 @@ public class AutoTurnouts {
      * Section to the next Section. NOTE: This method requires use of the
      * connectivity stored in a Layout Editor panel.
      *
-     * NOTE: This method removes the need to specify the Layout
-     * Editor panel. Required for dispatches over multiple layout editor panels.
+     * NOTE: This method removes the need to specify the LayoutEditor panel.
      *
      * @param s           the section to check
      * @param seqNum      sequence number for the section
@@ -80,8 +78,7 @@ public class AutoTurnouts {
      * does not wait for turnout feedback--it assumes the turnout will be set
      * correctly if a command is issued.
      *
-     * NOTE: This method removes the need to specify the Layout
-     * Editor panel. Required for dispatches over multiple layout editor panels.
+     * NOTE: This method removes the need to specify the LayoutEditor panel.
      *
      *
      * @param s                  the section to check
@@ -96,10 +93,8 @@ public class AutoTurnouts {
      *         command could not be issued because the turnout's Block is
      *         occupied
      */
-
     protected List<LayoutTrackExpectedState<LayoutTurnout>> setTurnoutsInSection(Section s, int seqNum, Section nextSection,
             ActiveTrain at, boolean trustKnownTurnouts,  Section prevSection) {
-
         return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection);
     }
 
