@@ -129,7 +129,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @Override
     @API(status=API.Status.INTERNAL)
     public void connect() throws IOException {
-        log.debug("Doing connect with MQTTchannel = \"{}\"", getOptionState(option2Name));
+        log.info("MQTT starting connect with MQTTchannel = \"{}\"", getOptionState(option2Name));
 
         try {
             if ( getOptionState(option2Name)!= null && ! getOptionState(option2Name).trim().isEmpty()) {
@@ -142,10 +142,10 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
                 options.put(option2Name, new Option("MQTT channel: ", new String[]{baseTopic, DEFAULT_BASETOPIC}));
             }
 
-            //generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
+            // generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
             String clientID = jmri.util.node.NodeIdentity.networkIdentity() + getSystemPrefix();
 
-            //ensure that only valid characters are included in the client ID
+            // ensure that only valid characters are included in the client ID
             clientID = clientID.replaceAll("[^A-Za-z0-9]", "");
             //ensure the length of the client ID doesn't exceed the guaranteed acceptable length of 23
             if (clientID.length() > 23) {
