@@ -140,6 +140,7 @@
             <ul>
                 <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
                 <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
+                <li>Added F29+ support to SPROG Command Station mode.</li>
             </ul>
 
         <h4>TAMS</h4>
