@@ -373,7 +373,10 @@
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li>Support transits and sections that use multiple panels connected by edge
-             connectors.  Note: A panel still has to be selected in Dispatcher Options.</li>
+             connectors.</li>
+             <li>The "Use connectivity from Layout Editor panels" option in Dispatcher Options
+             no longer uses a specified panel.  All Layout Editor panels are used for layout
+             connectivity.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
