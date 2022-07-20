@@ -27,6 +27,12 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     private boolean _includeCellsWithoutHeader = false;
     private boolean _listenOnAllProperties = false;
     private final List<Map.Entry<NamedBean, String>> _namedBeansEntries = new ArrayList<>();
+    private String _localVariableNamedBean;
+    private String _localVariableEvent;
+    private String _localVariableNewValue;
+    private String _lastNamedBean;
+    private String _lastEvent;
+    private String _lastNewValue;
 
     public ActionListenOnBeansTable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -47,6 +53,10 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         copy.setTableRowOrColumn(_tableRowOrColumn);
         copy.setRowOrColumnName(_rowOrColumnName);
         copy.setIncludeCellsWithoutHeader(_includeCellsWithoutHeader);
+
+        copy.setLocalVariableNamedBean(_localVariableNamedBean);
+        copy.setLocalVariableEvent(_localVariableEvent);
+        copy.setLocalVariableNewValue(_localVariableNewValue);
 
         for (var entry : _namedBeansEntries) {
             copy._namedBeansEntries.add(
@@ -139,6 +149,42 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         _includeCellsWithoutHeader = includeCellsWithoutHeader;
     }
 
+    public void setLocalVariableNamedBean(String localVariableNamedBean) {
+        if ((localVariableNamedBean != null) && (!localVariableNamedBean.isEmpty())) {
+            this._localVariableNamedBean = localVariableNamedBean;
+        } else {
+            this._localVariableNamedBean = null;
+        }
+    }
+
+    public String getLocalVariableNamedBean() {
+        return _localVariableNamedBean;
+    }
+
+    public void setLocalVariableEvent(String localVariableEvent) {
+        if ((localVariableEvent != null) && (!localVariableEvent.isEmpty())) {
+            this._localVariableEvent = localVariableEvent;
+        } else {
+            this._localVariableEvent = null;
+        }
+    }
+
+    public String getLocalVariableEvent() {
+        return _localVariableEvent;
+    }
+
+    public void setLocalVariableNewValue(String localVariableNewValue) {
+        if ((localVariableNewValue != null) && (!localVariableNewValue.isEmpty())) {
+            this._localVariableNewValue = localVariableNewValue;
+        } else {
+            this._localVariableNewValue = null;
+        }
+    }
+
+    public String getLocalVariableNewValue() {
+        return _localVariableNewValue;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -148,10 +194,25 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        // Do nothing.
         // The purpose of this action is only to listen on property changes
         // of the registered beans and execute the ConditionalNG when it
         // happens.
+
+        synchronized(this) {
+            SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+            if (_localVariableNamedBean != null) {
+                symbolTable.setValue(_localVariableNamedBean, _lastNamedBean);
+            }
+            if (_localVariableEvent != null) {
+                symbolTable.setValue(_localVariableEvent, _lastEvent);
+            }
+            if (_localVariableNewValue != null) {
+                symbolTable.setValue(_localVariableNewValue, _lastNewValue);
+            }
+            _lastNamedBean = null;
+            _lastEvent = null;
+            _lastNewValue = null;
+        }
     }
 
     @Override
@@ -281,6 +342,11 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 //        System.out.format("Table: Property: %s, Bean: %s, Listen: %b%n", evt.getPropertyName(), ((NamedBean)evt.getSource()).getDisplayName(), _listenOnAllProperties);
+        synchronized(this) {
+            _lastNamedBean = ((NamedBean)evt.getSource()).getDisplayName();
+            _lastEvent = evt.getPropertyName();
+            _lastNewValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+        }
         getConditionalNG().execute();
     }
 
