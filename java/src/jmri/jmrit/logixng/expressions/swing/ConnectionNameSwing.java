@@ -60,7 +60,11 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
 
         JPanel manufacturerPanel = new JPanel();
         manufacturerPanel.setLayout(new BoxLayout(manufacturerPanel, BoxLayout.Y_AXIS));
-        manufacturerPanel.add(new JLabel("System manufacturer"));
+
+        var mLabel = new JPanel();
+        mLabel.add(new JLabel(Bundle.getMessage("ExpressionConnection_Manufacturer")));
+        manufacturerPanel.add(mLabel);
+
         _manufacturerComboBox = new JComboBox<>();
         manufacturerPanel.add(_manufacturerComboBox);
 
@@ -76,7 +80,11 @@ public class ConnectionNameSwing extends AbstractDigitalExpressionSwing {
 
         JPanel connectionNamePanel = new JPanel();
         connectionNamePanel.setLayout(new BoxLayout(connectionNamePanel, BoxLayout.Y_AXIS));
-        connectionNamePanel.add(new JLabel("System connection"));
+
+        var cLabel = new JPanel();
+        cLabel.add(new JLabel(Bundle.getMessage("ExpressionConnection_Connection")));
+        connectionNamePanel.add(cLabel);
+
         _connectionComboBox = new JComboBox<>();
         connectionNamePanel.add(_connectionComboBox);
 
