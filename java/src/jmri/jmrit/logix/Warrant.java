@@ -2536,8 +2536,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 }
 
                 if (!quit && _engineer != null) {
-                	if (_noRamp) {
-                	    setSpeedToType(_speedType);
+                    if (_noRamp) {
+                        setSpeedToType(_speedType);
                     } else {
                         _engineer.rampSpeedTo(_speedType, _endBlockIdx);
                     }
@@ -2563,7 +2563,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private void rampSpeedTo(String speedType, int idx) {
         cancelDelayRamp();
         if (_noRamp) {
-        	_engineer.setSpeedToType(speedType);
+            _engineer.setSpeedToType(speedType);
             _engineer.setWaitforClear(speedType.equals(Stop) || speedType.equals(EStop));
             if (log.isDebugEnabled()) {
                 log.debug("{}: No Ramp to \"{}\" from block \"{}\"", getDisplayName(), speedType, getCurrentBlockName());
