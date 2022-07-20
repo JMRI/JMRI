@@ -152,6 +152,7 @@ public class ForEach extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("unchecked")
     public void execute() throws JmriException {
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
