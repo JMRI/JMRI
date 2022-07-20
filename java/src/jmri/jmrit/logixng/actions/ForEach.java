@@ -155,7 +155,7 @@ public class ForEach extends AbstractDigitalAction
     public void execute() throws JmriException {
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
-        AtomicReference<Collection> collectionRef = new AtomicReference<>();
+        AtomicReference<Collection<? extends Object>> collectionRef = new AtomicReference<>();
         AtomicReference<JmriException> ref = new AtomicReference<>();
 
         final ConditionalNG conditionalNG = getConditionalNG();
@@ -198,7 +198,7 @@ public class ForEach extends AbstractDigitalAction
                 if (value instanceof Manager) {
                     collectionRef.set(((Manager<? extends NamedBean>) value).getNamedBeanSet());
                 } else if (value instanceof Collection) {
-                    collectionRef.set((Collection) value);
+                    collectionRef.set((Collection<? extends Object>) value);
                 } else {
                     log.warn("ForEach value is neither a Collection nor a Manager");
                 }
