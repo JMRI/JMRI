@@ -296,7 +296,7 @@ public class SpeedUtil {
             }
         }
         if (!setDccAddress(num, type)) {
-            log.error("setDccAddress failed for  number={} type={}", num, type);
+            log.error("setDccAddress failed for ID= {} number={} type={}", id, num, type);
             return false;
         } else if (log.isTraceEnabled()) {
             log.debug("setDccAddress({}): _rosterId= {}, _dccAddress= {}",
