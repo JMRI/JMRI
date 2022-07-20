@@ -24,7 +24,7 @@ public class SprogCSThrottle extends AbstractThrottle {
      * @param address Loco Address.
      */
     public SprogCSThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
-        super(memo);
+        super(memo, SprogConstants.MAX_FUNCTIONS);
 
         if (address instanceof DccLocoAddress) {
             this.address = ((DccLocoAddress) address);
@@ -136,6 +136,91 @@ public class SprogCSThrottle extends AbstractThrottle {
                 getFunction(26), getFunctionMomentary(26),
                 getFunction(27), getFunctionMomentary(27),
                 getFunction(28), getFunctionMomentary(28));
+    }
+
+    /**
+     * Send the message to set the state of functions F29 - F36
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup6() {
+        commandStation.function29Through36Packet(address,
+                getFunction(29), getFunctionMomentary(29),
+                getFunction(30), getFunctionMomentary(30),
+                getFunction(31), getFunctionMomentary(32),
+                getFunction(32), getFunctionMomentary(32),
+                getFunction(33), getFunctionMomentary(33),
+                getFunction(34), getFunctionMomentary(34),
+                getFunction(35), getFunctionMomentary(35),
+                getFunction(36), getFunctionMomentary(36));
+    }
+
+    /**
+     * Send the message to set the state of functions F37 - F44
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup7() {
+        commandStation.function37Through44Packet(address,
+                getFunction(37), getFunctionMomentary(37),
+                getFunction(38), getFunctionMomentary(38),
+                getFunction(39), getFunctionMomentary(39),
+                getFunction(40), getFunctionMomentary(40),
+                getFunction(41), getFunctionMomentary(41),
+                getFunction(42), getFunctionMomentary(42),
+                getFunction(43), getFunctionMomentary(43),
+                getFunction(44), getFunctionMomentary(44));
+    }
+
+    /**
+     * Send the message to set the state of functions F45 - F52
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup8() {
+        commandStation.function45Through52Packet(address,
+                getFunction(45), getFunctionMomentary(45),
+                getFunction(46), getFunctionMomentary(46),
+                getFunction(47), getFunctionMomentary(47),
+                getFunction(48), getFunctionMomentary(48),
+                getFunction(49), getFunctionMomentary(49),
+                getFunction(50), getFunctionMomentary(50),
+                getFunction(51), getFunctionMomentary(51),
+                getFunction(52), getFunctionMomentary(52));
+    }
+
+    /**
+     * Send the message to set the state of functions F53 - F60
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup9() {
+        commandStation.function53Through60Packet(address,
+                getFunction(53), getFunctionMomentary(53),
+                getFunction(54), getFunctionMomentary(54),
+                getFunction(55), getFunctionMomentary(55),
+                getFunction(56), getFunctionMomentary(56),
+                getFunction(57), getFunctionMomentary(57),
+                getFunction(58), getFunctionMomentary(58),
+                getFunction(59), getFunctionMomentary(59),
+                getFunction(60), getFunctionMomentary(60));
+    }
+
+    /**
+     * Send the message to set the state of functions F61 - F68
+     * adding it to the S queue
+     */
+    @Override
+    protected void sendFunctionGroup10() {
+        commandStation.function61Through68Packet(address,
+                getFunction(61), getFunctionMomentary(61),
+                getFunction(62), getFunctionMomentary(62),
+                getFunction(63), getFunctionMomentary(63),
+                getFunction(64), getFunctionMomentary(64),
+                getFunction(65), getFunctionMomentary(65),
+                getFunction(66), getFunctionMomentary(66),
+                getFunction(67), getFunctionMomentary(67),
+                getFunction(68), getFunctionMomentary(68));
     }
 
     /**
