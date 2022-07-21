@@ -126,8 +126,7 @@ public class JavaFunctions implements FunctionFactory {
 
             List<String> paramList = new ArrayList<>();
             for (Object o : params) paramList.add(String.format("%s:%s", o, o != null ? o.getClass().getName() : "null"));
-//            throw new CannotCallMethodException(String.format("Can not create new instance of class %s with parameters %s(%s)", clazz.getName(), String.join(", ", paramList)));
-            throw new RuntimeException("Daniel");
+            throw new CannotCreateInstanceException(String.format("Can not create new instance of class %s with parameters %s", clazz.getName(), String.join(", ", paramList)), clazz.getName());
         }
 
         @Override
@@ -147,7 +146,9 @@ public class JavaFunctions implements FunctionFactory {
 
             try {
                 return createInstance(className, list);
-            } catch (ClassNotFoundException | InstantiationException e) {
+            } catch (ClassNotFoundException e) {
+                throw new ClassIsNotFoundException(String.format("The class %s is not found", className), className);
+            } catch (InstantiationException e) {
                 throw new ReflectionException("Reflection exception", e);
             }
         }
