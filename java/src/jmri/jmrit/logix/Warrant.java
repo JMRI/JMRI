@@ -715,7 +715,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 speed = _engineer.getSpeedSetting() * 100;
                 float scriptSpeed = _engineer.getScriptSpeed();
                 scriptSpeed = (scriptSpeed > 0 ? (speed/scriptSpeed) : 0);
-                units = Bundle.getMessage("percentNormal", Math.round(scriptSpeed));
+                units = Bundle.getMessage("percentNormalScript", Math.round(scriptSpeed));
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
                 units = Bundle.getMessage("percentThrottle");
