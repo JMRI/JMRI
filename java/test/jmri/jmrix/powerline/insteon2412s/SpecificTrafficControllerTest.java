@@ -15,8 +15,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SpecificTrafficController class.
@@ -28,12 +26,12 @@ import org.slf4j.LoggerFactory;
 public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
 
     SerialTrafficController t = null;
-    SerialSystemConnectionMemo m = null;
+    SerialSystemConnectionMemo memo = null;
 
     // inner class to give access to protected endOfMessage method
-    class TestSerialTC extends SpecificTrafficController {
+    private static class TestSerialTC extends SpecificTrafficController {
 
-        public TestSerialTC(SerialSystemConnectionMemo m) {
+        TestSerialTC(SerialSystemConnectionMemo m) {
             super(m);
         }
 
@@ -48,7 +46,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
     @Test
     public void testReceiveStates1() {
-        TestSerialTC c = new TestSerialTC(m);
+        TestSerialTC c = new TestSerialTC(memo);
         SerialReply r = new SpecificReply(t);
 
         r.setElement(0, Constants.HEAD_STX);
@@ -61,7 +59,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     @Test
     public void testReceiveStatesRead() {
         // build a dim for address 11.22.33 to 50%
-        TestSerialTC c = new TestSerialTC(m);
+        TestSerialTC c = new TestSerialTC(memo);
         SerialReply r = new SpecificReply(t);
 
         r.setElement(0, Constants.HEAD_STX);
@@ -151,30 +149,33 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     /*         Assert.assertEquals("byte 4 hi nibble", 0x70, m.getElement(8) );       */
     /*     } */
 
-    // internal class to simulate a Listener
-    class SerialListenerScaffold implements SerialListener {
+    @Test
+    public void testScaffold() throws java.io.IOException {
+        SerialPortControllerScaffold scaff = new SerialPortControllerScaffold(memo);
 
-        public SerialListenerScaffold() {
-            rcvdReply = null;
-            rcvdMsg = null;
-        }
+        Assertions.assertNotNull(scaff);
+        Assertions.assertNotNull(tostream);
+        Assertions.assertNotNull(ostream);
+        Assertions.assertNotNull(istream);
+        Assertions.assertNotNull(tistream);
 
-        @Override
-        public void message(SerialMessage m) {
-            rcvdMsg = m;
-        }
-
-        @Override
-        public void reply(SerialReply r) {
-            rcvdReply = r;
-        }
+        scaff.dispose();
     }
-    SerialReply rcvdReply;
-    SerialMessage rcvdMsg;
 
     // internal class to simulate a PortController
-    class SerialPortControllerScaffold extends SerialPortController {
+    private class SerialPortControllerScaffold extends SerialPortController {
 
+        SerialPortControllerScaffold(SerialSystemConnectionMemo memo ) throws java.io.IOException {
+            super(memo);
+            PipedInputStream tempPipe;
+            tempPipe = new PipedInputStream();
+            tostream = new DataInputStream(tempPipe);
+            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            tempPipe = new PipedInputStream();
+            istream = new DataInputStream(tempPipe);
+            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        }
+        
         @Override
         public java.util.Vector<String> getPortNames() {
             return null;
@@ -200,17 +201,6 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             return new int[] {};
         }
 
-        protected SerialPortControllerScaffold() throws Exception {
-            super(null);
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
-        }
-
         // returns the InputStream from the port
         @Override
         public DataInputStream getInputStream() {
@@ -229,23 +219,28 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
             return true;
         }
     }
-    static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream; // so we can read it from this
 
-    static DataOutputStream tistream; // tests write to this
-    static DataInputStream istream;  // so the traffic controller can read from this
+    private DataOutputStream ostream;  // Traffic controller writes to this
+    private DataInputStream tostream; // so we can read it from this
+
+    private DataOutputStream tistream; // tests write to this
+    private DataInputStream istream;  // so the traffic controller can read from this
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        m = new SpecificSystemConnectionMemo();
-        tc = t = new SpecificTrafficController(m);
+        memo = new SpecificSystemConnectionMemo();
+        tc = t = new SpecificTrafficController(memo);
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        if ( memo != null ) {
+            memo.dispose();
+            memo = null;
+        }
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 

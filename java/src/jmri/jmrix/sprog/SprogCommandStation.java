@@ -269,6 +269,66 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         return (null);
     }
 
+    private SprogSlot findF29to36Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF29to36Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF37to44Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF37to44Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF45to52Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF45to52Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF53to60Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF53to60Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF61to68Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF61to68Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < numSlots) {
+            return findFree();
+        }
+        return (null);
+    }
+
     public void forwardCommandChangeToLayout(int address, boolean closed) {
 
         SprogSlot s = this.findFree();
@@ -342,6 +402,86 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         s.f21to28packet(address.getNumber(), address.isLongAddress(),
                 f21, f21Momentary, f22, f22Momentary, f23, f23Momentary, f24, f24Momentary,
                 f25, f25Momentary, f26, f26Momentary, f27, f27Momentary, f28, f28Momentary);
+        notifySlotListeners(s);
+    }
+
+    public void function29Through36Packet(DccLocoAddress address,
+            boolean a, boolean am,
+            boolean b, boolean bm,
+            boolean c, boolean cm,
+            boolean d, boolean dm,
+            boolean e, boolean em,
+            boolean f, boolean fm,
+            boolean g, boolean gm,
+            boolean h, boolean hm) {
+        SprogSlot s = this.findF29to36Packet(address);
+        s.f29to36packet(address.getNumber(), address.isLongAddress(),
+                a, am, b, bm, c, cm, d, dm,
+                e, em, f, fm, g, gm, h, hm);
+        notifySlotListeners(s);
+    }
+
+    public void function37Through44Packet(DccLocoAddress address,
+            boolean a, boolean am,
+            boolean b, boolean bm,
+            boolean c, boolean cm,
+            boolean d, boolean dm,
+            boolean e, boolean em,
+            boolean f, boolean fm,
+            boolean g, boolean gm,
+            boolean h, boolean hm) {
+        SprogSlot s = this.findF37to44Packet(address);
+        s.f37to44packet(address.getNumber(), address.isLongAddress(),
+                a, am, b, bm, c, cm, d, dm,
+                e, em, f, fm, g, gm, h, hm);
+        notifySlotListeners(s);
+    }
+
+    public void function45Through52Packet(DccLocoAddress address,
+            boolean a, boolean am,
+            boolean b, boolean bm,
+            boolean c, boolean cm,
+            boolean d, boolean dm,
+            boolean e, boolean em,
+            boolean f, boolean fm,
+            boolean g, boolean gm,
+            boolean h, boolean hm) {
+        SprogSlot s = this.findF45to52Packet(address);
+        s.f45to52packet(address.getNumber(), address.isLongAddress(),
+                a, am, b, bm, c, cm, d, dm,
+                e, em, f, fm, g, gm, h, hm);
+        notifySlotListeners(s);
+    }
+
+    public void function53Through60Packet(DccLocoAddress address,
+            boolean a, boolean am,
+            boolean b, boolean bm,
+            boolean c, boolean cm,
+            boolean d, boolean dm,
+            boolean e, boolean em,
+            boolean f, boolean fm,
+            boolean g, boolean gm,
+            boolean h, boolean hm) {
+        SprogSlot s = this.findF53to60Packet(address);
+        s.f53to60packet(address.getNumber(), address.isLongAddress(),
+                a, am, b, bm, c, cm, d, dm,
+                e, em, f, fm, g, gm, h, hm);
+        notifySlotListeners(s);
+    }
+
+    public void function61Through68Packet(DccLocoAddress address,
+            boolean a, boolean am,
+            boolean b, boolean bm,
+            boolean c, boolean cm,
+            boolean d, boolean dm,
+            boolean e, boolean em,
+            boolean f, boolean fm,
+            boolean g, boolean gm,
+            boolean h, boolean hm) {
+        SprogSlot s = this.findF61to68Packet(address);
+        s.f61to68packet(address.getNumber(), address.isLongAddress(),
+                a, am, b, bm, c, cm, d, dm,
+                e, em, f, fm, g, gm, h, hm);
         notifySlotListeners(s);
     }
 

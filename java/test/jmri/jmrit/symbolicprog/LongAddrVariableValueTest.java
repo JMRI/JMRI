@@ -127,7 +127,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         v.put("17", cv17);
         v.put("18", cv18);
         // create a variable pointed at CV 17&18, check name
-        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, null, null, cv18);
+        LongAddrVariableValue var = new LongAddrVariableValue("label", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, jlabel, "stdname", cv18);
         Assert.assertSame("label", var.label());
         // pretend you've edited the value, check its in same object
         ((JTextField) var.getCommonRep()).setText("4797");
@@ -150,7 +150,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         v.put("17", cv17);
         v.put("18", cv18);
         // create a variable pointed at CV 17 & 18
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, null, null, cv18);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, v, jlabel, "stdname", cv18);
         ((JTextField) var.getCommonRep()).setText("1029");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -176,7 +176,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         v.put("17", cv17);
         v.put("18", cv18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, null, null, cv18);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, jlabel, "stdname", cv18);
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
             @Override
@@ -187,7 +187,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         };
-        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
+        evtList = new ArrayList<>();
         var.addPropertyChangeListener(listen);
 
         // set to specific value
@@ -224,7 +224,7 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         v.put("17", cv17);
         v.put("18", cv18);
 
-        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, null, null, cv18);
+        LongAddrVariableValue var = new LongAddrVariableValue("name", "comment", "", false, false, false, false, "17", "XXVVVVXX", 0, 255, v, jlabel, "stdname", cv18);
         ((JTextField) var.getCommonRep()).setText("4797");
         var.actionPerformed(new java.awt.event.ActionEvent(var, 0, ""));
 
@@ -240,16 +240,20 @@ public class LongAddrVariableValueTest extends AbstractVariableValueTestBase {
         // how do you check separation of the two writes?  State model?
     }
 
+    private JLabel jlabel; 
+    
     @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
+        jlabel = new JLabel();
     }
     
     @AfterEach
     @Override
     public void tearDown() {
         super.tearDown();
+        jlabel = null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class);
