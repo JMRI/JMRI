@@ -83,6 +83,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         for (NamedBeanType item : NamedBeanType.values()) {
             _namedBeanTypeComboBox.addItem(item);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_namedBeanTypeComboBox);
         namedBeanTypePanel.add(_namedBeanTypeComboBox);
         panel.add(namedBeanTypePanel);
 
