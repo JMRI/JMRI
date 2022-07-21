@@ -74,7 +74,6 @@ public class ActionWarrant extends AbstractDigitalAction
 
         copy.setTrainData(_trainData);
         copy.setControlAutoTrain(_controlAutoTrain);
-        copy.setListenToMemory(_listenToMemory);
 
         return manager.registerAction(copy);
     }
@@ -98,10 +97,6 @@ public class ActionWarrant extends AbstractDigitalAction
 
     public NamedBeanAddressing getDataAddressing() {
         return _dataAddressing;
-    }
-
-    public DirectOperation getOperationType() {
-        return _selectEnum.getEnum();
     }
 
     public void setDataReference(@Nonnull String reference) {
@@ -141,10 +136,6 @@ public class ActionWarrant extends AbstractDigitalAction
         } else {
             _dataExpressionNode = null;
         }
-    }
-
-    public void setListenToMemory(boolean listenToMemory) {
-        this._listenToMemory = listenToMemory;
     }
 
     public void setTrainData(@Nonnull String trainData) {
@@ -220,9 +211,9 @@ public class ActionWarrant extends AbstractDigitalAction
 
         if (!theOper.equals(DirectOperation.GetTrainLocation)) {
             if (warrant.getRunMode() == Warrant.MODE_RUN && !theOper.equals(DirectOperation.ControlAutoTrain)) {
-//                throw new JmriException("Cannot \"" + theOper.toString() + "\" when warrant is running - " + warrant.getDisplayName());  // NOI18N
-            	log.info("Cannot \"{}\" when warrant is running - {}", theOper.toString(), warrant.getDisplayName());
-                return;
+                throw new JmriException("Cannot \"" + theOper.toString() + "\" when warrant is running - " + warrant.getDisplayName());  // NOI18N
+//                log.info("Cannot \"{}\" when warrant is running - {}", theOper.toString(), warrant.getDisplayName());
+//                return;
             }
         }
 
@@ -423,7 +414,7 @@ public class ActionWarrant extends AbstractDigitalAction
         ControlAutoTrain(Bundle.getMessage("ActionWarrant_ControlAutoTrain")),
         SetTrainId(Bundle.getMessage("ActionWarrant_SetTrainId")),
         SetTrainName(Bundle.getMessage("ActionWarrant_SetTrainName")),
-        GetTrainLocation(Bundle.getMessage("ActionWarrant_SetTrainLocation"));
+        GetTrainLocation(Bundle.getMessage("ActionWarrant_GetTrainLocation"));
 
         private final String _text;
 
