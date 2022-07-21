@@ -6,10 +6,8 @@ import jmri.MemoryManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
@@ -18,14 +16,6 @@ import org.junit.jupiter.api.BeforeAll;
 public class NamedBeanExpectedValueTest {
 
     public NamedBeanExpectedValueTest() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
     }
 
     @BeforeEach
@@ -60,8 +50,8 @@ public class NamedBeanExpectedValueTest {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         NamedBeanExpectedValue<Memory, Sensor> instance = new NamedBeanExpectedValue<>(mm.provideMemory("IMTEST"), sm.provideSensor("IS12"));
         Assert.assertEquals(sm.getSensor("IS12"), instance.getExpectedState());
-        instance.setExpectedState(null);
-        Assert.assertNull(instance.getExpectedState());
+        instance.setExpectedState(sm.provideSensor("IS99"));
+        Assert.assertEquals(sm.provideSensor("IS99"), instance.getExpectedState());
         Assert.assertNotEquals(sm.getSensor("IS12"), instance.getExpectedState());
         instance.setExpectedState(sm.provideSensor("IS21"));
         Assert.assertEquals(sm.getSensor("IS21"), instance.getExpectedState());
