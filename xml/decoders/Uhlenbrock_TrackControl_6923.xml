@@ -113,7 +113,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Wartezeit auf Programmiertaste in 0,5 Sek. Schritten</tooltip>
               <tooltip xml:lang="nl">Pauze na het indrukken van de Programmeerknop in stappen van 0,5 s</tooltip>
             </variable>
-            <variable CV="6923.7" item="Go Stop Key" default="0">
+            <variable CV="6923.7" item="Go Stop Key" mask="VVVVVVVVVVVVVV" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Fahrt/Halt-Taste: </label>
               <label xml:lang="nl">Rijden/Stop Toets: </label>
@@ -122,7 +122,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Magnetartikeladresse Fahrt/Halt-Taste (grün=FaGT, rot=HaGT)</tooltip>
               <tooltip xml:lang="nl">Wisseladres Rijden/Stop-toets (groen=FaGT, rood=HaGT)</tooltip>
             </variable>
-            <variable CV="6923.8" item="Shunting Key" default="0">
+            <variable CV="6923.8" item="Shunting Key" mask="VVVVVVVVVVVVVV" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Fahrt/Halt-Taste: </label>
               <label xml:lang="nl">Rijden/Stop Toets: </label>
@@ -131,8 +131,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Magnetartikeladresse Rangierfahrt/Fahrstraßen (grün=SGT, rot=FHT)</tooltip>
               <tooltip xml:lang="nl">Wisseladres Rangeren/Wisselstraten (groen=SGT, rood=FHT)</tooltip>
             </variable>
-            <!-- CV 21-28 Path Indication -->
-            <variable CV="6923.21" item="Turnout Address Indic EL" default="0">
+            <!-- CV 21-28 Path Indication TODO add 12 bit mask to all CV's below to accept longer dec values -->
+            <variable CV="6923.21" item="Turnout Address Indic EL" mask="VVVVVVVVVVVVVV" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Adresse Fahrwegausl. ext. li.: </label>
               <label xml:lang="nl">Wisseladres Aanduiding ext. li.: </label>

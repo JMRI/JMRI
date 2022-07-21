@@ -114,6 +114,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Wartezeit auf Programmiertaste in 0,5 Sek. Schritten</tooltip>
               <tooltip xml:lang="nl">Pauze na het indrukken van de Programmeerknop in stappen van 0,5 s</tooltip>
             </variable>
+<!--          TODO add 12 bit mask to all CV's below to accept longer dec values -->
             <variable CV="6922.7" item="Go Stop Key" default="0">
               <decVal max="1997"/>
               <label xml:lang="de">Fahrt/Halt-Taste: </label>
