@@ -74,10 +74,10 @@
                 </xs:simpleType>
               </xs:element>
 
-			  <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
-              <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+			  <xs:element name="otherVariable" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			  <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
 			  <xs:element name="localVariable" type="xs:string" />

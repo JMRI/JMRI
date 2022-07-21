@@ -21,6 +21,9 @@ import jmri.util.ThreadingUtil;
 public class ForEach extends AbstractDigitalAction
         implements FemaleSocketListener, PropertyChangeListener {
 
+    private final LogixNG_SelectString _selectVariable =
+            new LogixNG_SelectString(this, this);
+
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
                     this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
@@ -28,10 +31,8 @@ public class ForEach extends AbstractDigitalAction
     private boolean _useCommonSource = true;
     private CommonManager _commonManager = CommonManager.Sensors;
     private UserSpecifiedSource _userSpecifiedSource = UserSpecifiedSource.Variable;
-    private String _otherLocalVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
-    private boolean _listenToMemory = false;
     private String _variableName = "";
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
@@ -53,12 +54,15 @@ public class ForEach extends AbstractDigitalAction
         copy.setUseCommonSource(_useCommonSource);
         copy.setCommonManager(_commonManager);
         copy.setUserSpecifiedSource(_userSpecifiedSource);
+        _selectVariable.copy(copy._selectVariable);
         _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
-        copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setFormula(_formula);
-        copy.setListenToMemory(_listenToMemory);
         copy.setLocalVariableName(_variableName);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+
+    public LogixNG_SelectString getSelectVariable() {
+        return _selectVariable;
     }
 
     public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
@@ -91,15 +95,6 @@ public class ForEach extends AbstractDigitalAction
         return _userSpecifiedSource;
     }
 
-    public void setOtherLocalVariable(@Nonnull String localVariable) {
-        assertListenersAreNotRegistered(log, "setOtherLocalVariable");
-        _otherLocalVariable = localVariable;
-    }
-
-    public String getOtherLocalVariable() {
-        return _otherLocalVariable;
-    }
-
     public void setFormula(String formula) throws ParserException {
         _formula = formula;
         parseFormula();
@@ -107,14 +102,6 @@ public class ForEach extends AbstractDigitalAction
 
     public String getFormula() {
         return _formula;
-    }
-
-    public void setListenToMemory(boolean listenToMemory) {
-        this._listenToMemory = listenToMemory;
-    }
-
-    public boolean isListenToMemory() {
-        return _listenToMemory;
     }
 
     private void parseFormula() throws ParserException {
@@ -170,8 +157,9 @@ public class ForEach extends AbstractDigitalAction
 
                 switch (_userSpecifiedSource) {
                     case Variable:
+                        String otherLocalVariable = _selectVariable.evaluateValue(getConditionalNG());
                         Object variableValue = conditionalNG
-                                        .getSymbolTable().getValue(_otherLocalVariable);
+                                        .getSymbolTable().getValue(otherLocalVariable);
 
                         value = variableValue;
                         break;
@@ -201,7 +189,7 @@ public class ForEach extends AbstractDigitalAction
                 } else if (value instanceof Collection) {
                     collectionRef.set((Collection<? extends Object>) value);
                 } else {
-                    log.warn("ForEach value is neither a Collection nor a Manager");
+                    throw new JmriException(Bundle.getMessage("ForEach_InvalidValue"));
                 }
             });
         }
@@ -256,8 +244,6 @@ public class ForEach extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String copyToMemoryName = _selectMemoryNamedBean.getDescription(locale);
-
         if (_useCommonSource) {
             return Bundle.getMessage(locale, "ForEach_Long_Common",
                     _commonManager.toString(), _variableName, _socket.getName());
@@ -265,11 +251,11 @@ public class ForEach extends AbstractDigitalAction
             switch (_userSpecifiedSource) {
                 case Variable:
                     return Bundle.getMessage(locale, "ForEach_Long_LocalVariable",
-                            _otherLocalVariable, _variableName, _socket.getName());
+                            _selectVariable.getDescription(locale), _variableName, _socket.getName());
 
                 case Memory:
                     return Bundle.getMessage(locale, "ForEach_Long_Memory",
-                            copyToMemoryName, _variableName, _socket.getName());
+                            _selectMemoryNamedBean.getDescription(locale), _variableName, _socket.getName());
 
                 case Formula:
                     return Bundle.getMessage(locale, "ForEach_Long_Formula",
@@ -328,11 +314,9 @@ public class ForEach extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            if (_listenToMemory
-                    && (_userSpecifiedSource == UserSpecifiedSource.Memory)) {
-                _selectMemoryNamedBean.addPropertyChangeListener("value", this);
+            if (_userSpecifiedSource == UserSpecifiedSource.Memory) {
+                _selectMemoryNamedBean.registerListeners();
             }
-            _selectMemoryNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -341,11 +325,9 @@ public class ForEach extends AbstractDigitalAction
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            if (_listenToMemory
-                    && (_userSpecifiedSource == UserSpecifiedSource.Memory)) {
-                _selectMemoryNamedBean.removePropertyChangeListener("value", this);
+            if (_userSpecifiedSource == UserSpecifiedSource.Memory) {
+                _selectMemoryNamedBean.unregisterListeners();
             }
-            _selectMemoryNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }

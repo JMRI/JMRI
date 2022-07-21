@@ -12,7 +12,8 @@ import jmri.jmrit.logixng.actions.ForEach;
 import jmri.jmrit.logixng.actions.ForEach.CommonManager;
 import jmri.jmrit.logixng.actions.ForEach.UserSpecifiedSource;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -22,17 +23,17 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ForEachSwing extends AbstractDigitalActionSwing {
 
+    private LogixNG_SelectStringSwing _selectVariableSwing;
+    private LogixNG_SelectNamedBeanSwing<Memory> _selectMemorySwing;
+
     private JTabbedPane _commonOrUserSpecifiedPane;
     private JPanel _commonPanel;
     private JComboBox<CommonManager> _commonManagersComboBox;
 
     private JTabbedPane _tabbedPaneUserSpecifiedSource;
-    private BeanSelectPanel<Memory> _copyMemoryBeanPanel;
-    private JCheckBox _listenOnMemory;
-    private JPanel _copyMemory;
-    private JPanel _copyVariable;
+    JPanel _tabbedPaneMemoryBean;
+    JPanel _tabbedPaneVariable;
     private JPanel _calculateFormula;
-    private JTextField _copyLocalVariableTextField;
     private JTextField _calculateFormulaTextField;
 
     private JTextField _localVariable;
@@ -45,9 +46,21 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
 
         ForEach action = (ForEach)object;
 
+        _selectVariableSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
+
+        _selectMemorySwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(MemoryManager.class), getJDialog(), this);
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        if (action != null) {
+            _tabbedPaneMemoryBean = _selectMemorySwing.createPanel(action.getSelectMemoryNamedBean());
+            _tabbedPaneVariable = _selectVariableSwing.createPanel(action.getSelectVariable());
+        } else {
+            _tabbedPaneMemoryBean = _selectMemorySwing.createPanel(null);
+            _tabbedPaneVariable = _selectVariableSwing.createPanel(null);
+        }
 
         _commonOrUserSpecifiedPane = new JTabbedPane();
 
@@ -65,21 +78,11 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
         _tabbedPaneUserSpecifiedSource = new JTabbedPane();
         _commonOrUserSpecifiedPane.addTab(Bundle.getMessage("ForEachSwing_UserSpecified"), _tabbedPaneUserSpecifiedSource);
 
-        _copyMemory = new JPanel();
-        _copyVariable = new JPanel();
         _calculateFormula = new JPanel();
 
-        _tabbedPaneUserSpecifiedSource.addTab(UserSpecifiedSource.Memory.toString(), _copyMemory);
-        _tabbedPaneUserSpecifiedSource.addTab(UserSpecifiedSource.Variable.toString(), _copyVariable);
+        _tabbedPaneUserSpecifiedSource.addTab(UserSpecifiedSource.Memory.toString(), _tabbedPaneMemoryBean);
+        _tabbedPaneUserSpecifiedSource.addTab(UserSpecifiedSource.Variable.toString(), _tabbedPaneVariable);
         _tabbedPaneUserSpecifiedSource.addTab(UserSpecifiedSource.Formula.toString(), _calculateFormula);
-
-        _copyMemoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenOnMemory = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnMemory"));
-        _copyMemory.add(_copyMemoryBeanPanel);
-        _copyMemory.add(_listenOnMemory);
-
-        _copyLocalVariableTextField = new JTextField(30);
-        _copyVariable.add(_copyLocalVariableTextField);
 
         _calculateFormulaTextField = new JTextField(30);
         _calculateFormula.add(_calculateFormulaTextField);
@@ -97,19 +100,13 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
             }
             _commonManagersComboBox.setSelectedItem(action.getCommonManager());
 
-            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
-                _copyMemoryBeanPanel.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
-            }
             switch (action.getUserSpecifiedSource()) {
-                case Memory: _tabbedPaneUserSpecifiedSource.setSelectedComponent(_copyMemory); break;
-                case Variable: _tabbedPaneUserSpecifiedSource.setSelectedComponent(_copyVariable); break;
+                case Memory: _tabbedPaneUserSpecifiedSource.setSelectedComponent(_tabbedPaneMemoryBean); break;
+                case Variable: _tabbedPaneUserSpecifiedSource.setSelectedComponent(_tabbedPaneVariable); break;
                 case Formula: _tabbedPaneUserSpecifiedSource.setSelectedComponent(_calculateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getUserSpecifiedSource().name());
             }
-            _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getFormula());
-
-            _listenOnMemory.setSelected(action.isListenToMemory());
 
             _localVariable.setText(action.getLocalVariableName());
         }
@@ -125,17 +122,24 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
         // Create a temporary action to test formula
         ForEach action = new ForEach("IQDA1", null);
 
-        try {
-            action.setUserSpecifiedSource(UserSpecifiedSource.Formula);
-            action.setFormula(_calculateFormulaTextField.getText());
-        } catch (ParserException e) {
-            errorMessages.add(e.getMessage());
-        }
+        if (_commonOrUserSpecifiedPane.getSelectedComponent() == _tabbedPaneUserSpecifiedSource) {
+            // If using the Memory tab, validate the memory variable selection.
+            if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _tabbedPaneMemoryBean) {
+                _selectMemorySwing.validate(action.getSelectMemoryNamedBean(), errorMessages);
+            }
 
-        // If using the Memory tab, validate the memory variable selection.
-        if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _copyMemory) {
-            if (_copyMemoryBeanPanel.getNamedBean() == null) {
-                errorMessages.add(Bundle.getMessage("ForEach_ErrorMemory"));
+            // If using the Variable tab, validate the memory variable selection.
+            if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _tabbedPaneVariable) {
+                _selectVariableSwing.validate(action.getSelectVariable(), errorMessages);
+            }
+
+            if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _calculateFormula) {
+                try {
+                    action.setUserSpecifiedSource(UserSpecifiedSource.Formula);
+                    action.setFormula(_calculateFormulaTextField.getText());
+                } catch (ParserException e) {
+                    errorMessages.add(e.getMessage());
+                }
             }
         }
 
@@ -170,24 +174,13 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
 
                 action.setUseCommonSource(false);
 
-                if (!_copyMemoryBeanPanel.isEmpty()
-                        && (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _copyMemory)) {
-                    Memory memory = _copyMemoryBeanPanel.getNamedBean();
-                    if (memory != null) {
-                        NamedBeanHandle<Memory> handle
-                                = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                        .getNamedBeanHandle(memory.getDisplayName(), memory);
-                        action.getSelectMemoryNamedBean().setNamedBean(handle);
-                    }
-                }
-                action.setListenToMemory(_listenOnMemory.isSelected());
-
                 try {
-                    if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _copyMemory) {
+                    if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _tabbedPaneMemoryBean) {
                         action.setUserSpecifiedSource(UserSpecifiedSource.Memory);
-                    } else if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _copyVariable) {
+                        _selectMemorySwing.updateObject(action.getSelectMemoryNamedBean());
+                    } else if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _tabbedPaneVariable) {
                         action.setUserSpecifiedSource(UserSpecifiedSource.Variable);
-                        action.setOtherLocalVariable(_copyLocalVariableTextField.getText());
+                        _selectVariableSwing.updateObject(action.getSelectVariable());
                     } else if (_tabbedPaneUserSpecifiedSource.getSelectedComponent() == _calculateFormula) {
                         action.setUserSpecifiedSource(UserSpecifiedSource.Formula);
                         action.setFormula(_calculateFormulaTextField.getText());

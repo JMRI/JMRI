@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.actions.ForEach;
 import jmri.jmrit.logixng.actions.ForEach.CommonManager;
 import jmri.jmrit.logixng.actions.ForEach.UserSpecifiedSource;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
@@ -40,6 +41,7 @@ public class ForEachXml extends jmri.managers.configurexml.AbstractNamedBeanMana
 
         storeCommon(p, element);
 
+        var selectVariableXml = new LogixNG_SelectStringXml();
         var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
 
         element.addContent(new Element("useCommonSource").addContent(p.isUseCommonSource()? "yes" : "no"));
@@ -47,10 +49,10 @@ public class ForEachXml extends jmri.managers.configurexml.AbstractNamedBeanMana
 
         element.addContent(new Element("operation").addContent(p.getUserSpecifiedSource().name()));   // NOI18N
 
-        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
-        element.addContent(new Element("listenToMemory").addContent(p.isListenToMemory() ? "yes" : "no"));
+        element.addContent(selectVariableXml.store(p.getSelectVariable(), "otherVariable"));
 
-        element.addContent(new Element("otherVariable").addContent(p.getOtherLocalVariable())); // NOI18N
+        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
+
         element.addContent(new Element("formula").addContent(p.getFormula()));  // NOI18N
 
         element.addContent(new Element("localVariable").addContent(p.getLocalVariableName()));
@@ -81,6 +83,7 @@ public class ForEachXml extends jmri.managers.configurexml.AbstractNamedBeanMana
 
         loadCommon(h, shared);
 
+        var selectVariableXml = new LogixNG_SelectStringXml();
         var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
 
         Element useCommonSourceElem = shared.getChild("useCommonSource");
@@ -106,17 +109,9 @@ public class ForEachXml extends jmri.managers.configurexml.AbstractNamedBeanMana
             }
         }
 
+        selectVariableXml.load(shared.getChild("otherVariable"), h.getSelectVariable());
+
         selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
-
-        Element listenToMemoryElem = shared.getChild("listenToMemory");
-        if (listenToMemoryElem != null) {
-            h.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
-        }
-
-        Element otherVariable = shared.getChild("otherVariable");   // NOI18N
-        if (otherVariable != null) {
-            h.setOtherLocalVariable(otherVariable.getTextTrim());
-        }
 
         Element formula = shared.getChild("formula");   // NOI18N
         if (formula != null) {
