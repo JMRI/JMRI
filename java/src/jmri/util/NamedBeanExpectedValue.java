@@ -1,6 +1,9 @@
 package jmri.util;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
+
 import jmri.ExpectedState;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -53,6 +56,7 @@ public class NamedBeanExpectedValue<T extends NamedBean, S extends Object> exten
 
     @Override
     public void setExpectedState(@Nonnull S state) throws UnsupportedOperationException {
+        Objects.requireNonNull(state, "state Integer must not be null");
         S old = this.state;
         this.state = state;
         this.propertyChangeSupport.firePropertyChange(EXPECTED_STATE, old, state);
