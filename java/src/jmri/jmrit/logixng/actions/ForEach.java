@@ -5,8 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
@@ -40,7 +38,7 @@ public class ForEach extends AbstractDigitalAction
     public ForEach(String sys, String user) {
         super(sys, user);
         _socket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, "A1");
+                .createFemaleSocket(this, this, "A");
     }
 
     @Override
@@ -188,8 +186,11 @@ public class ForEach extends AbstractDigitalAction
                     collectionRef.set(((Manager<? extends NamedBean>) value).getNamedBeanSet());
                 } else if (value instanceof Collection) {
                     collectionRef.set((Collection<? extends Object>) value);
+                } else if (value instanceof Map) {
+                    collectionRef.set(((Map<?,?>) value).entrySet());
                 } else {
-                    throw new JmriException(Bundle.getMessage("ForEach_InvalidValue"));
+                    throw new JmriException(Bundle.getMessage("ForEach_InvalidValue",
+                                    value != null ? value.getClass().getName() : null));
                 }
             });
         }
