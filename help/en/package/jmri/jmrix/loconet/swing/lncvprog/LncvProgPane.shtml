@@ -86,7 +86,7 @@
 
       <p>If your device responded to a general call but is not yet found in the Decoder Index,
       the button will read [No Match in Roster].<br>
-      <span class="since">since 5.0.1</span>Click the button to get a dialog to recreate the
+      <span class="since">since 5.1.3</span>Click the button to get a dialog to recreate the
       Decoder Index, as a new decoder file that was copied to the user files /decoder folder
       might not yet be part of the Index.<br>
       If that doesn't fix it, report your device on the jmri_users group or create an Issue in
