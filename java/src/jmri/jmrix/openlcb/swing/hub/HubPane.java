@@ -87,7 +87,9 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             for (int i = 0; i < m.line.length(); i++) {
                 msg.setElement(i, bytes[i]);
             }
+
             workingReply = msg.createReply();
+            workingReplySet.add(workingReply);  // save for later recognition
 
             CanMessage result = new CanMessage(workingReply.getNumDataElements(), workingReply.getHeader());
             for (int i = 0; i < workingReply.getNumDataElements(); i++) {
@@ -115,7 +117,8 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    CanReply workingReply;
+    CanReply workingReply = null;
+    java.util.ArrayList<CanReply> workingReplySet = new java.util.ArrayList<>(); // collection of self-sent replies
 
     void advertise(int port) {
         jmri.util.zeroconf.ZeroConfService.create("_openlcb-can._tcp.local.", port).publish();
@@ -142,10 +145,17 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     @Override
     public synchronized void reply(CanReply reply) {
-        if (reply != workingReply) {
+        if ( workingReplySet.contains(reply)) {
+            // ours, don't send
+            workingReplySet.remove(reply);
+            log.trace("suppress forward of reply {}", reply);
+        } else {
+            // not ours, forward
             GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
-            log.debug("reply {}", gm.toString());
+            log.debug("forward reply {}", gm.toString());
             hub.putLine(gm.toString());
+
+            workingReply = null;
         }
     }
 

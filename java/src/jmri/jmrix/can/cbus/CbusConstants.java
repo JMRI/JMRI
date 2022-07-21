@@ -28,16 +28,18 @@ public final class CbusConstants {
 
     /**
      * SPROG DCC module types
+     * 
+     * Must agree with firmware cbusdefs.h include file from MERGDEV repo
      */
-    public static final int MTYP_CANPiSPRG3 = 1;
-    public static final int MTYP_CANSPROG3P = 2;
+    public static final int MTYP_CANPiSPRG3 = 1;    // Pi-SPROG 3 (not v2) firmware on Pi-SPROG One hardware
+    public static final int MTYP_CANSPROG3P = 2;    // Sprog 3 Plus, Pi-SPROG 3v2 and Pi-SPROG 3 Plus common firmware
     public static final int MTYP_CANSPROG = 3;
     public static final int MTYP_SBOOST = 4;
     //public static final int Unsupported = 5;
     public static final int MTYP_CANISB = 6;
     public static final int MTYP_CANCBUSIO = 7;
-    public static final int MTYP_CANSERVOIO = 8;
-    public static final int MTYP_CANSOLIO = 9;
+    public static final int MTYP_CANSERVOIO = 8;    // Servo I/O module similar to MERG CANSERVO
+    public static final int MTYP_CANSOLIO = 9;      // Solenoid I/O module similar to MERG CANSOL
 
     /**
      * CBUS Opcodes
@@ -333,11 +335,24 @@ public final class CbusConstants {
     public static final int CBUS_F27 = 0x40;
     public static final int CBUS_F28 = 0x80;
 
+    /**
+     * Function bits for group6
+     */
+    public static final int CBUS_F29 = 1;
+    public static final int CBUS_F30 = 2;
+    public static final int CBUS_F31 = 4;
+    public static final int CBUS_F32 = 8;
+    public static final int CBUS_F33 = 16;
+    public static final int CBUS_F34 = 32;
+    public static final int CBUS_F35 = 64;
+    public static final int CBUS_F36 = 128;
+
     static final int[] CBUS_FUNCTION_BITS = new int[]{ CBUS_F0,
         CBUS_F1, CBUS_F2, CBUS_F3, CBUS_F4, CBUS_F5, CBUS_F6, CBUS_F7,
         CBUS_F8, CBUS_F9, CBUS_F10, CBUS_F11, CBUS_F12, CBUS_F13, CBUS_F14,
         CBUS_F15, CBUS_F16, CBUS_F17, CBUS_F18, CBUS_F19, CBUS_F20, CBUS_F21,
-        CBUS_F22, CBUS_F23, CBUS_F24, CBUS_F25, CBUS_F26, CBUS_F27, CBUS_F28 };
+        CBUS_F22, CBUS_F23, CBUS_F24, CBUS_F25, CBUS_F26, CBUS_F27, CBUS_F28,
+        CBUS_F29, CBUS_F30, CBUS_F31, CBUS_F32, CBUS_F33, CBUS_F34, CBUS_F35, CBUS_F36 };
 
     /**
      * Throttle modes
@@ -347,6 +362,11 @@ public final class CbusConstants {
     public static final int CBUS_SS_28_INTERLEAVE = 2;
     public static final int CBUS_SS_28 = 3;
 
+    /**
+     * Number of function buttons on a throttle
+     */
+    public static int MAX_FUNCTIONS = 32; 
+    
     /**
      * Number of slots supported by the command station
      */

@@ -2448,7 +2448,7 @@
     function preprocessRFC2822(s) {
         // Remove comments and folding whitespace and replace multiple-spaces with a single space
         return s
-            .replace(/\([^)]*\)|[\n\t]/g, ' ')
+            .replace(/\([^()]*\)|[\n\t]/g, ' ')
             .replace(/(\s\s+)/g, ' ')
             .replace(/^\s\s*/, '')
             .replace(/\s\s*$/, '');
@@ -5629,7 +5629,7 @@
 
     //! moment.js
 
-    hooks.version = '2.29.2';
+    hooks.version = '2.29.4';
 
     setHookCallback(createLocal);
 
@@ -15766,7 +15766,8 @@
             return wordKey[2];
         },
         translate: function (number, withoutSuffix, key, isFuture) {
-            var wordKey = translator$1.words[key];
+            var wordKey = translator$1.words[key],
+                word;
 
             if (key.length === 1) {
                 // Nominativ
@@ -15774,7 +15775,7 @@
                 return isFuture || withoutSuffix ? wordKey[0] : wordKey[1];
             }
 
-            const word = translator$1.correctGrammaticalCase(number, wordKey);
+            word = translator$1.correctGrammaticalCase(number, wordKey);
             // Nominativ
             if (key === 'yy' && withoutSuffix && word === 'годину') {
                 return number + ' година';
@@ -15888,7 +15889,8 @@
             return wordKey[2];
         },
         translate: function (number, withoutSuffix, key, isFuture) {
-            var wordKey = translator$2.words[key];
+            var wordKey = translator$2.words[key],
+                word;
 
             if (key.length === 1) {
                 // Nominativ
@@ -15896,7 +15898,7 @@
                 return isFuture || withoutSuffix ? wordKey[0] : wordKey[1];
             }
 
-            const word = translator$2.correctGrammaticalCase(number, wordKey);
+            word = translator$2.correctGrammaticalCase(number, wordKey);
             // Nominativ
             if (key === 'yy' && withoutSuffix && word === 'godinu') {
                 return number + ' godina';

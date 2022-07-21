@@ -5,7 +5,7 @@ package jmri.jmrix.easydcc;
  *
  * @author Bob Jacobsen
  */
-class EasyDccListenerScaffold implements EasyDccListener {
+public class EasyDccListenerScaffold implements EasyDccListener {
 
     public EasyDccListenerScaffold() {
         rcvdReply = null;
@@ -22,7 +22,7 @@ class EasyDccListenerScaffold implements EasyDccListener {
         rcvdReply = r;
     }
 
-    EasyDccReply rcvdReply;
-    EasyDccMessage rcvdMsg;
+    public EasyDccReply rcvdReply;
+    public EasyDccMessage rcvdMsg;
 
 }

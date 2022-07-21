@@ -7,7 +7,7 @@ import jmri.jmrit.entryexit.PointDetails;
 import jmri.jmrit.entryexit.Source;
 import jmri.util.JUnitAppender;
 
-import org.junit.Test;
+import org.junit.Assert;
 
 /**
  * Test import of Logix to LogixNG.
@@ -60,7 +60,12 @@ public class ImportExpressionEntryExitTest extends ImportExpressionTestBase {
     @Override
     public ConditionalVariable newConditionalVariable() {
         InstanceManager.setDefault(EntryExitPairs.class, new MyEntryExitPairs());
-        dp = (MyDestinationPoints) InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
+        DestinationPoints destP = InstanceManager.getDefault(EntryExitPairs.class).getBySystemName("DP1");
+        if (!( destP instanceof MyDestinationPoints )) {
+            Assert.fail("Destination point not MyDestinationPoints");
+            return null;
+        }
+        dp = (MyDestinationPoints) destP;
         cv = new ConditionalVariable();
         cv.setName("DP1");
         return cv;

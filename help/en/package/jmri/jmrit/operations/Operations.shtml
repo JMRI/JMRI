@@ -171,11 +171,23 @@
                 </li>
 
                 <li>
+                  <a href="#BackupDirectory">Backup to Directory</a>
+                </li>
+                
+                <li>
+                  <a href="#RestoreDirectory">Restore from Directory</a>
+                </li>
+                
+                <li>
                   <a href="#demo">Load Demo Files</a>
                 </li>
 
                 <li>
                   <a href="#ResetDatabase">Reset Database</a>
+                </li>
+                
+                <li>
+                  <a href="#ManageAutoBackups">Manage Auto Backups</a>
                 </li>
               </ul>
             </li>
@@ -547,6 +559,10 @@
 
                 <li>
                   <a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a>
+                </li>
+                
+                <li>
+                  <a href="#ExportRoutes">Export Routes</a>
                 </li>
               </ul>
             </li>
@@ -1206,6 +1222,8 @@
       recommended that the names of backup sets made for archive purposes be given a meaningful
       name, especially if you are managing data for more than one railroad. For example, if today
       is August 29, 2012, the program will create a backup directory named "2012_08_29_00".</p>
+      
+      <p>You can also select which directory to use for backups by selecting "Backup" from the "Tools" Menu.</p>
 
       <h4>What isn't backed up by OperationsPro&trade;</h4>
 
@@ -1287,7 +1305,7 @@
 
       <h3 id="SettingsTools">Settings Tools</h3>
 
-      <h2 id="SettingsOptions">Options</h2>
+      <h3 id="SettingsOptions">Options</h3>
       OperationsPro&trade; has several options that can be modified by selecting
       Operations-&gt;Settings-&gt;Tools-&gt;Options.
       <p><img src="images/SettingsOptions.png" alt="">
@@ -1899,7 +1917,8 @@
       <h4 id="EnableVirtualSoundDecoder">Enable physical locations for Virtual Sound Decoder</h4>
       If you're using Virtual Sound Decoder, you can enter the physical coordinates of your
       locations by enabling this option.
-      <h2 id="PrintOptions">Manifest Print Options</h2>
+      
+      <h3 id="PrintOptions">Manifest Print Options</h3>
       You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
       lists. From the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to
       open the window. Press the "Save" button located at the bottom of the window to enable your
@@ -2101,7 +2120,7 @@
       color="red"&gt; at the start of the line, where "red" is the color text you want. Complete
       the color change by placing &lt;/FONT&gt; at the end of the line.</p>
 
-      <h2 id="BuildReportDetails">Build Report Options</h2>
+      <h3 id="BuildReportDetails">Build Report Options</h3>
       From the "Operations-&gt;Settings-&gt;Tools" or "Operations-&gt;Trains-&gt;Tools" menu select
       "Build Report Options" to open the build report options window.
       <p>The program when building a train produces a <a href="#BuildReports">build report</a> for
@@ -2144,7 +2163,22 @@
       and "Very Detailed" modes can create many extra lines of text in the build report, and unless
       you have a routing issue, it is best to keep the "Router Detail Level" set to "Normal".</p>
 
-      <h2 id="ResetDatabase">Reset Database</h2>
+      <h3 id="BackupDirectory">Backup</h3>
+
+      From the "Tools" menu in the <a href="#Settings">Settings</a> window, the backup option allows
+      you to select any directory to save the operations files. See <a href="#Backup">Backup</a> for
+      more information.
+
+      <h3 id="RestoreDirectory">Restore</h3>
+
+      From the "Tools" menu in the <a href="#Settings">Settings</a> window, the restore option
+      allows you to navigate to any directory to restore the operations files. See
+      <a href="#Restore">Restore</a> for more information.
+
+      <h3>Load Demo files</h3>
+      See <a href="#demo">Operations Demo Files</a>.
+
+      <h3 id="ResetDatabase">Reset Database</h3>
 
       <p>To reset the operation database and remove all operation files, use the "Reset Database"
       option on the "Tools" menu of the Operations <a href="#Settings">Settings</a> window. An
@@ -2156,6 +2190,12 @@
       a previous backup. To do this, open the Operations Settings page by selecting the "Settings"
       option in the Tools-&gt;Operations menu of the main page. From there you can do either a
       restore or a load of the demo files in the usual way.</p>
+
+      <h3 id="ManageAutoBackups">Manage Auto Backups</h3>
+
+      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled, OperationsPro
+      will create a backup of the operations files each time the program is started. To delete older
+      obsolete files, use this tool.
 
       <h2 id="Locations">Locations</h2>
       Locations are places on your railroad that trains visit to pick up or set out cars and
@@ -3529,24 +3569,17 @@
       cars with coal, and HopCoal-E for the empties, the program can use this information to assign
       and deliver cars to their appropriate trains and locations respectively.</p>
 
-   <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility,
-    and Hazardous Checkboxes</h4>
-   If the car is used in passenger service select the passenger
-   checkbox. The program will place passenger cars towards the rear of a
-   mixed service (combination of passenger and freight cars) train when
-   the "Car Blocking Order" numbers are positive, and at the front of
-   the train if the blocking numbers are negative. If the car is a
-   caboose, has a FRED (Flashing Rear End Device), or is hazardous
-   independent of the car's load, select the proper checkbox. The
-   program uses the caboose and FRED functions to place the car at the
-   end of a train when the train requires a caboose or car with FRED.
-   The hazardous checkbox will cause the program to add a
-   <a href="#HazardousComment">Hazardous Comment</a> to the switch list that the car
-   is transporting hazardous materials. You can also classify a car's
-   <a href="#EditCarLoads">load</a> as hazardous. Your railroad's policy
-   regarding hazardous materials can than be applied to this car!
+      <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</h4>
+      
+      If the car is used in passenger service select the passenger checkbox. The program will place
+      passenger cars towards the rear of a mixed service (combination of passenger and freight cars)
+      train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
+      blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device),
+      or is hazardous independent of the car's load, select the proper checkbox. The program uses
+      the caboose and FRED functions to place the car at the end of a train when the train requires
+      a caboose or car with FRED.
 
-   <p>When the passenger checkbox is selected, a new field called
+      <p>When the passenger checkbox is selected, a new field called
     "Car Blocking Order" will appear. The text box allows you to enter a
     number between -100 and 100 and this gives you control where in the
     train's Manifest a car will be placed. Lower numbers will place the
@@ -3559,7 +3592,12 @@
     could use "50". Later you can fine tune your passenger trains by
     using the other numbers that are available.</p>
 
-   <p>When the utility checkbox is selected, it instructions the program when printing Manifests
+      <p>The program allows passenger cars, cabooses, and cars with FRED to return to their
+        original location and track. The passenger option is also useful for any car that needs to
+        ride a train. For example MOW and buffer cars can use the passenger option to ride and
+        return to their original track.</p>
+
+      <p>When the utility checkbox is selected, it instructions the program when printing Manifests
       and switch lists to not show the individual car's road and number, but rather the quantity of
       cars needed of that type. For example, prototype unit trains when shipping coal don't
       normally list the cars in the train by the car's road number but instead it shows the number
@@ -3571,6 +3609,12 @@
       Manifests and switch list, any car of that type can be placed into a train. Later if you try
       and find a car by its road number, it could very well have been shipped out on an earlier
       train. So you have to decide, use road numbers or not for a given type of car.</p>
+      
+      <p>The hazardous checkbox will cause the program to add a
+      <a href="#HazardousComment">Hazardous Comment</a> to the switch list that the car is
+      transporting hazardous materials. You can also classify a car's
+      <a href="#EditCarLoads">load</a> as hazardous. The program when blocking a train will attempt to
+      place non-hazardous cars in front of hazardous cars.</p>
 
       <h4>Location and Track</h4>
 
@@ -4305,7 +4349,8 @@
       facilitate a facing point set out. If you want to change the blocking order for a train, you
       can use this tool to modify how the program blocks the cars for a location. Use the "Up" or
       "Down" buttons to change the blocking order, and press the "Save" button to complete the
-      change. Use the reset button to restore the blocking order.</p>
+      change. Use the reset button to restore the blocking order. You can find this tool in
+      the <a href="#EditRoute">Edit Route</a> window.</p>
 
       <p>You can also modify the order cars are set out for a location, see <a href=
       "#TrackBlockingOrder">Track Blocking Order</a>.</p>
@@ -4319,12 +4364,20 @@
 
       <h4 id="SetTrainIconCoordinates">Set Train Icon Coordinates</h4>
 
-      <p>Use this tool to set the default X and Y coordinates of your train icons for each
-      location. The tool allows you to specify the icon coordinates based on the train's direction.
-      You can also update all of your existing routes and locations with these new coordinates. As
-      an alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route"
-      to create coordinates unique to a specific route. Enter the name of the <a href=
-      "#PanelOptionsTrainIcons">panel</a> you wish to use in the Settings window.</p>
+      <p>
+        Use this tool to set the default X and Y coordinates of your train icons for each location.
+        The tool allows you to specify the icon coordinates based on the train's direction. You can
+        also update all of your existing routes and locations with these new coordinates. As an
+        alternative, you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" in
+        the <a href="#EditRoute">Edit Route</a> window to create coordinates unique to a specific
+        route. Enter the name of the <a href="#PanelOptionsTrainIcons">panel</a> you wish to use in
+        the Settings window.
+      </p>
+      
+      <h4 id="ExportRoutes">Export Routes</h4>
+
+      The "Export Routes" tool produces a comma separated values (.csv) file called
+      "ExportOperationsRoutes.csv" containing details of the existing routes.
 
       <h2 id="Trains">Trains</h2>
       Now that we've created our <a href="#Routes">Routes</a> we need trains to move cars! Create a

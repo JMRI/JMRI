@@ -18,7 +18,7 @@ public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase 
     OBlock oblock;
     ConditionalVariable cv;
     
-    private enum OBlockEnum {
+    protected enum OBlockEnum {
         EqualsUnoccupied(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.Unoccupied),
         EqualsOccupied(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Unoccupied, OBlock.OBlockStatus.Occupied),
         EqualsAllocated(OBlock.OBlockStatus.TrackError, OBlock.OBlockStatus.Occupied, OBlock.OBlockStatus.Allocated),
@@ -39,12 +39,12 @@ public class ImportExpressionOBlockTest extends ImportExpressionComplexTestBase 
     }
     
     @Override
-    public Enum[] getEnums() {
+    protected Enum<OBlockEnum>[] getEnums() {
         return OBlockEnum.values();
     }
     
     @Override
-    public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
+    public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException {
         OBlockEnum me = OBlockEnum.valueOf(e.name());
         
         cv.setType(Conditional.Type.BLOCK_STATUS_EQUALS);

@@ -99,8 +99,8 @@ row0.setLayout(BoxLayout(row0, BoxLayout.X_AXIS))
 txt = JTextField(140)
 txt.setMaximumSize( txt.getPreferredSize() );
 txt.setBorder(BorderFactory.createCompoundBorder(
-                   BorderFactory.createLineBorder(Color.red),
-                   txt.getBorder()));
+    BorderFactory.createLineBorder(Color.red),
+    txt.getBorder()));
 label_panel_location = JLabel()
 btnpanelLocation = JButton("Set Panel Location", actionPerformed = btnpanelLocation_action)
 row0.add(Box.createVerticalGlue())
@@ -272,7 +272,7 @@ def CreateIcons_action(event):
     p = processXML(initialPanelFilename, finalPanelFilename )
 
 
-def initialise_panel_location():
+def initialise_panel_location(stage1Button, stage2Button, stage3Button):
     global icons_file
     global run_file
     global start_file
@@ -287,19 +287,19 @@ def initialise_panel_location():
     KeyEvent = java.awt.event.KeyEvent
     #button.requestFocus();
     #robot.delay(1000)
-    robot.keyPress(KeyEvent.VK_TAB)
-    robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_TAB)
-    robot.delay(10)
-    robot.keyPress(KeyEvent.VK_SPACE)
-    robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_SPACE)
-    robot.delay(10)
-    robot.keyPress(KeyEvent.VK_ENTER)
-    robot.delay(10)
-    robot.keyRelease(KeyEvent.VK_ENTER)
-    robot.delay(10)
-    returnVal = chooser.showOpenDialog(frame)
+    # robot.keyPress(KeyEvent.VK_TAB)
+    # robot.delay(10)
+    # robot.keyRelease(KeyEvent.VK_TAB)
+    # robot.delay(10)
+    # robot.keyPress(KeyEvent.VK_SPACE)
+    # robot.delay(10)
+    # robot.keyRelease(KeyEvent.VK_SPACE)
+    # robot.delay(10)
+    # robot.keyPress(KeyEvent.VK_ENTER)
+    # robot.delay(10)
+    # robot.keyRelease(KeyEvent.VK_ENTER)
+    # robot.delay(10)
+    #returnVal = chooser.showOpenDialog(frame)
     current_file = str(chooser.getSelectedFile())
     #print current_file
     filepath = os.path.dirname(current_file)
@@ -342,6 +342,24 @@ def initialise_panel_location():
 
     row15b1.text = "When finished you need to restart JMRI and load the file created in Stage1: " + start_filename + "_icons" + filetype + " instead of " + start_filename + filetype
     row45b1.text = "When finished you need to restart JMRI and load the file created in Stage2: " + start_filename + "_run" + filetype + " instead of " + start_filename + "_icons" + filetype
+    if stage_to_run == "Stage 1":
+        #inhibit Stage 1 button
+        stage1Button.setEnabled(True)
+        stage2Button.setEnabled(False)
+        stage3Button.setEnabled(False)
+
+    elif stage_to_run == "Stage 2":
+        #inhibit Stage 2 button
+        stage1Button.setEnabled(False)
+        stage2Button.setEnabled(True)
+        stage3Button.setEnabled(False)
+
+    elif stage_to_run == "Stage 3 then operate the trains":
+        #inhibit Stage 3 button
+        stage1Button.setEnabled(False)
+        stage2Button.setEnabled(False)
+        stage3Button.setEnabled(True)
+
 
 
 row1 = JPanel()
@@ -350,6 +368,8 @@ row1b1 = JLabel("Insert Icons:           Runs file CreateIcons.py")
 row1b1.add( Box.createHorizontalGlue() );
 row1b1.setAlignmentX( row1b1.LEFT_ALIGNMENT )
 row1b2 = JButton("Stage1", actionPerformed = CreateIcons_action)
+stage1Button = row1b2
+
 
 row1.add(Box.createVerticalGlue())
 row1.add(Box.createRigidArea(Dimension(20, 0)))
@@ -396,7 +416,7 @@ row45.add(row45b1)
 row45.add(Box.createRigidArea(Dimension(20, 0)))
 row45.add(row45b2)
 
-initialise_panel_location()
+#initialise_panel_location(stage1Button, stage2Button, stage3Button)
 robot = java.awt.Robot()
 KeyEvent = java.awt.event.KeyEvent
 
@@ -412,8 +432,8 @@ def CreateTransits_action(event):
     global le
     global DisplayProgress_global
     global logLevel
-    
-    
+
+
     #the displayProgress is in CreateTransits
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
     exec(open (CreateTransits).read())
@@ -433,22 +453,22 @@ def CreateTransits_action(event):
     exec(open (CreateGraph).read())
     le = LabelledEdge
     g = StationGraph()
-    
+
     progress = 10
     dpg.Update(str(progress)+ "% complete")
-    
+
     if logLevel > 0: print "updating logic"
     CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
     exec(open (CreateSignalLogic).read())
     usl = Update_Signal_Logic()
     #print "updating logic stage1"
-    
+
     ans = usl.create_autologic_and_sections()
-     
-    if ans == True: 
-        print "updating logic stage2"
+
+    if ans == True:
+        #print "updating logic stage2"
         usl.update_logic(run_file)
-        
+
         progress = 15
         dpg.Update(str(progress)+ "% complete")
 
@@ -458,7 +478,7 @@ def CreateTransits_action(event):
 
         #print "about to run CreateTransits"
         ct = CreateTransits()
-        
+
         ct.run_transits(icons_file, run_file)
         #print "ran CreateTransits"
 
@@ -499,8 +519,6 @@ def show_options_pane():
     robot.keyRelease(KeyEvent.VK_SPACE)
     robot.delay(10)
 
-
-
 def ChangeOptions_action(event):
 
     y = threading.Timer(0.1, function = show_options_pane)
@@ -517,6 +535,7 @@ row2b1.add( Box.createHorizontalGlue() );
 row2b1.setAlignmentX( row2b1.LEFT_ALIGNMENT )
 
 row2b2 = JButton("Stage2", actionPerformed = CreateTransits_action)
+stage2Button = row2b2
 
 row2.add(Box.createVerticalGlue())
 row2.add(Box.createRigidArea(Dimension(20, 0)))
@@ -531,6 +550,7 @@ row4b1.add( Box.createHorizontalGlue() );
 row4b1.setAlignmentX( row4b1.LEFT_ALIGNMENT )
 
 row4b2 = JButton("Stage3", actionPerformed = ChangeOptions_action)
+stage3Button = row4b2
 
 row4.add(Box.createVerticalGlue())
 row4.add(Box.createRigidArea(Dimension(20, 0)))
@@ -550,6 +570,8 @@ row14.add(Box.createRigidArea(Dimension(20, 0)))
 row14.add(row14b1)
 row14.add(Box.createRigidArea(Dimension(20, 0)))
 row14.add(row14b2)
+
+initialise_panel_location(stage1Button, stage2Button, stage3Button)
 
 ###top panel
 def RunDispatcher_action(event):

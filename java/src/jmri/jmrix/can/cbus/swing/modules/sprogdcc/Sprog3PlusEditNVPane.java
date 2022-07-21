@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Node Variable edit frame for a MERG CANACC8 CBUS module
+ * Node Variable edit frame for a SPROG DCC [Pi-]SPROG 3 [v2|Plus] module
  *
  * @author Andrew Crosland Copyright (C) 2021
  */

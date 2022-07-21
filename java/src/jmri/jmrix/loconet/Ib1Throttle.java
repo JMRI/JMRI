@@ -110,9 +110,9 @@ public class Ib1Throttle extends LocoNetThrottle {
         // Intellibox-II uses another implementation for these functions
         // Functions F9 to F11
         log.debug("IB1 sendFunctionGroup3");
-        int new_IB1_F9_F11 = ((getF11() ? LnConstants.RE_IB1_F11_MASK : 0)
-                | (getF10() ? LnConstants.RE_IB1_F10_MASK : 0)
-                | (getF9() ? LnConstants.RE_IB1_F9_MASK : 0));
+        int new_IB1_F9_F11 = ((getFunction(11) ? LnConstants.RE_IB1_F11_MASK : 0)
+                | (getFunction(10) ? LnConstants.RE_IB1_F10_MASK : 0)
+                | (getFunction(9) ? LnConstants.RE_IB1_F9_MASK : 0));
         LocoNetMessage msg1 = new LocoNetMessage(6);
         msg1.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
         msg1.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
@@ -122,9 +122,9 @@ public class Ib1Throttle extends LocoNetThrottle {
         network.sendLocoNetMessage(msg1);
 
         // Function F12 (and F20 and F28)
-        int new_IB2_F20_F28 = ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
-                | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
-                | (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
+        int new_IB2_F20_F28 = ((getFunction(12) ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
+                | (getFunction(20) ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
+                | (getFunction(28) ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
         LocoNetMessage msg2 = new LocoNetMessage(6);
         msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
         msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
@@ -139,13 +139,13 @@ public class Ib1Throttle extends LocoNetThrottle {
         // Special LocoNet message for Uhlenbrock (IB-I and IB-II) implementation
         // Functions F13 to F19
         log.debug("IB1 sendFunctionGroup4");
-        int new_IB2_F13_F19 = ((getF19() ? LnConstants.RE_IB2_F19_MASK : 0)
-                | (getF18() ? LnConstants.RE_IB2_F18_MASK : 0)
-                | (getF17() ? LnConstants.RE_IB2_F17_MASK : 0)
-                | (getF16() ? LnConstants.RE_IB2_F16_MASK : 0)
-                | (getF15() ? LnConstants.RE_IB2_F15_MASK : 0)
-                | (getF14() ? LnConstants.RE_IB2_F14_MASK : 0)
-                | (getF13() ? LnConstants.RE_IB2_F13_MASK : 0));
+        int new_IB2_F13_F19 = ((getFunction(19) ? LnConstants.RE_IB2_F19_MASK : 0)
+                | (getFunction(18) ? LnConstants.RE_IB2_F18_MASK : 0)
+                | (getFunction(17) ? LnConstants.RE_IB2_F17_MASK : 0)
+                | (getFunction(16) ? LnConstants.RE_IB2_F16_MASK : 0)
+                | (getFunction(15) ? LnConstants.RE_IB2_F15_MASK : 0)
+                | (getFunction(14) ? LnConstants.RE_IB2_F14_MASK : 0)
+                | (getFunction(13) ? LnConstants.RE_IB2_F13_MASK : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
         msg.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
@@ -156,9 +156,9 @@ public class Ib1Throttle extends LocoNetThrottle {
 
         // Function F20 (and F28)
         // F12 is also controlled from this message though IB-II uses RE_OPC_IB2_F9_F12 OPS code for F12 - needed to avoid overridding F12 value
-        int new_IB2_F20_F28 = ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
-                | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
-                | (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
+        int new_IB2_F20_F28 = ((getFunction(12) ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
+                | (getFunction(20) ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
+                | (getFunction(28) ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
         LocoNetMessage msg2 = new LocoNetMessage(6);
         msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
         msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
@@ -173,13 +173,13 @@ public class Ib1Throttle extends LocoNetThrottle {
         // Special LocoNet message for Uhlenbrock (IB-I and IB-II) implementation
         // Functions F21 to F27
         log.debug("IB1 sendFunctionGroup5");
-        int new_IB2_F21_F27 = ((getF27() ? LnConstants.RE_IB2_F27_MASK : 0)
-                | (getF26() ? LnConstants.RE_IB2_F26_MASK : 0)
-                | (getF25() ? LnConstants.RE_IB2_F25_MASK : 0)
-                | (getF24() ? LnConstants.RE_IB2_F24_MASK : 0)
-                | (getF23() ? LnConstants.RE_IB2_F23_MASK : 0)
-                | (getF22() ? LnConstants.RE_IB2_F22_MASK : 0)
-                | (getF21() ? LnConstants.RE_IB2_F21_MASK : 0));
+        int new_IB2_F21_F27 = ((getFunction(27) ? LnConstants.RE_IB2_F27_MASK : 0)
+                | (getFunction(26) ? LnConstants.RE_IB2_F26_MASK : 0)
+                | (getFunction(25) ? LnConstants.RE_IB2_F25_MASK : 0)
+                | (getFunction(24) ? LnConstants.RE_IB2_F24_MASK : 0)
+                | (getFunction(23) ? LnConstants.RE_IB2_F23_MASK : 0)
+                | (getFunction(22) ? LnConstants.RE_IB2_F22_MASK : 0)
+                | (getFunction(21) ? LnConstants.RE_IB2_F21_MASK : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
         msg.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
         msg.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);
@@ -190,9 +190,9 @@ public class Ib1Throttle extends LocoNetThrottle {
 
         // Function F28 (and F20)
         // F12 is also controlled from this message though IB-II uses RE_OPC_IB2_F9_F12 OPS code for F12 - needed to avoid overridding F12 value
-        int new_IB2_F20_F28 = ((getF12() ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
-                | (getF20() ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
-                | (getF28() ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
+        int new_IB2_F20_F28 = ((getFunction(12) ? LnConstants.RE_IB2_SPECIAL_F12_MASK : 0)
+                | (getFunction(20) ? LnConstants.RE_IB2_SPECIAL_F20_MASK : 0)
+                | (getFunction(28) ? LnConstants.RE_IB2_SPECIAL_F28_MASK : 0));
         LocoNetMessage msg2 = new LocoNetMessage(6);
         msg2.setOpCode(LnConstants.RE_OPC_IB2_SPECIAL);
         msg2.setElement(1, LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN);

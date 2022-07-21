@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
 import org.junit.Assert;
@@ -95,19 +96,19 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse("Direction Reverse", t.getIsForward());
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getF0());
-        Assert.assertFalse("F1 off", t.getF1());
-        Assert.assertFalse("F2 off", t.getF2());
-        Assert.assertFalse("F3 off", t.getF3());
-        Assert.assertFalse("F4 off", t.getF4());
-        Assert.assertFalse("F5 off", t.getF5());
-        Assert.assertFalse("F6 off", t.getF6());
-        Assert.assertFalse("F7 off", t.getF7());
-        Assert.assertFalse("F8 off", t.getF8());
-        Assert.assertFalse("F9 off", t.getF9());
-        Assert.assertFalse("F10 off", t.getF10());
-        Assert.assertFalse("F11 off", t.getF11());
-        Assert.assertFalse("F12 off", t.getF12());
+        Assert.assertFalse("F0 off", t.getFunction(0));
+        Assert.assertFalse("F1 off", t.getFunction(1));
+        Assert.assertFalse("F2 off", t.getFunction(2));
+        Assert.assertFalse("F3 off", t.getFunction(3));
+        Assert.assertFalse("F4 off", t.getFunction(4));
+        Assert.assertFalse("F5 off", t.getFunction(5));
+        Assert.assertFalse("F6 off", t.getFunction(6));
+        Assert.assertFalse("F7 off", t.getFunction(7));
+        Assert.assertFalse("F8 off", t.getFunction(8));
+        Assert.assertFalse("F9 off", t.getFunction(9));
+        Assert.assertFalse("F10 off", t.getFunction(10));
+        Assert.assertFalse("F11 off", t.getFunction(11));
+        Assert.assertFalse("F12 off", t.getFunction(12));
         t.throttleDispose();
     }
 
@@ -150,7 +151,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle send a
         // request for the high function status information.
@@ -164,11 +165,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -185,18 +186,18 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse("Direction Reverse", t.getIsForward());
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getF0());
-        Assert.assertFalse("F1 off", t.getF1());
-        Assert.assertFalse("F2 off", t.getF2());
-        Assert.assertFalse("F3 off", t.getF3());
-        Assert.assertFalse("F4 off", t.getF4());
-        Assert.assertFalse("F5 off", t.getF5());
-        Assert.assertFalse("F6 off", t.getF6());
-        Assert.assertFalse("F7 off", t.getF7());
-        Assert.assertFalse("F8 off", t.getF8());
-        Assert.assertFalse("F9 off", t.getF9());
-        Assert.assertFalse("F10 off", t.getF10());
-        Assert.assertFalse("F11 off", t.getF11());
+        Assert.assertFalse("F0 off", t.getFunction(0));
+        Assert.assertFalse("F1 off", t.getFunction(1));
+        Assert.assertFalse("F2 off", t.getFunction(2));
+        Assert.assertFalse("F3 off", t.getFunction(3));
+        Assert.assertFalse("F4 off", t.getFunction(4));
+        Assert.assertFalse("F5 off", t.getFunction(5));
+        Assert.assertFalse("F6 off", t.getFunction(6));
+        Assert.assertFalse("F7 off", t.getFunction(7));
+        Assert.assertFalse("F8 off", t.getFunction(8));
+        Assert.assertFalse("F9 off", t.getFunction(9));
+        Assert.assertFalse("F10 off", t.getFunction(10));
+        Assert.assertFalse("F11 off", t.getFunction(11));
         t.throttleDispose();
     }
 
@@ -237,7 +238,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle send a
         // request for the high function status information.
@@ -251,11 +252,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -313,7 +314,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle send a
         // request for the high function status information.
@@ -327,11 +328,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -348,18 +349,18 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse("Direction Reverse", t.getIsForward());
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getF0());
-        Assert.assertFalse("F1 off", t.getF1());
-        Assert.assertFalse("F2 off", t.getF2());
-        Assert.assertFalse("F3 off", t.getF3());
-        Assert.assertFalse("F4 off", t.getF4());
-        Assert.assertFalse("F5 off", t.getF5());
-        Assert.assertFalse("F6 off", t.getF6());
-        Assert.assertFalse("F7 off", t.getF7());
-        Assert.assertFalse("F8 off", t.getF8());
-        Assert.assertFalse("F9 off", t.getF9());
-        Assert.assertFalse("F10 off", t.getF10());
-        Assert.assertFalse("F11 off", t.getF11());
+        Assert.assertFalse("F0 off", t.getFunction(0));
+        Assert.assertFalse("F1 off", t.getFunction(1));
+        Assert.assertFalse("F2 off", t.getFunction(2));
+        Assert.assertFalse("F3 off", t.getFunction(3));
+        Assert.assertFalse("F4 off", t.getFunction(4));
+        Assert.assertFalse("F5 off", t.getFunction(5));
+        Assert.assertFalse("F6 off", t.getFunction(6));
+        Assert.assertFalse("F7 off", t.getFunction(7));
+        Assert.assertFalse("F8 off", t.getFunction(8));
+        Assert.assertFalse("F9 off", t.getFunction(9));
+        Assert.assertFalse("F10 off", t.getFunction(10));
+        Assert.assertFalse("F11 off", t.getFunction(11));
         t.throttleDispose();
     }
 
@@ -404,7 +405,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle send a
         // request for the high function status information.
@@ -418,11 +419,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -439,18 +440,18 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertFalse("Direction Reverse", t.getIsForward());
 
         // function getters return the right values (f0-f12).
-        Assert.assertFalse("F0 off", t.getF0());
-        Assert.assertFalse("F1 off", t.getF1());
-        Assert.assertFalse("F2 off", t.getF2());
-        Assert.assertFalse("F3 off", t.getF3());
-        Assert.assertFalse("F4 off", t.getF4());
-        Assert.assertFalse("F5 off", t.getF5());
-        Assert.assertFalse("F6 off", t.getF6());
-        Assert.assertFalse("F7 off", t.getF7());
-        Assert.assertFalse("F8 off", t.getF8());
-        Assert.assertFalse("F9 off", t.getF9());
-        Assert.assertFalse("F10 off", t.getF10());
-        Assert.assertFalse("F11 off", t.getF11());
+        Assert.assertFalse("F0 off", t.getFunction(0));
+        Assert.assertFalse("F1 off", t.getFunction(1));
+        Assert.assertFalse("F2 off", t.getFunction(2));
+        Assert.assertFalse("F3 off", t.getFunction(3));
+        Assert.assertFalse("F4 off", t.getFunction(4));
+        Assert.assertFalse("F5 off", t.getFunction(5));
+        Assert.assertFalse("F6 off", t.getFunction(6));
+        Assert.assertFalse("F7 off", t.getFunction(7));
+        Assert.assertFalse("F8 off", t.getFunction(8));
+        Assert.assertFalse("F9 off", t.getFunction(9));
+        Assert.assertFalse("F10 off", t.getFunction(10));
+        Assert.assertFalse("F11 off", t.getFunction(11));
         t.throttleDispose();
     }
 
@@ -478,7 +479,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(4, 0x00);
         m.setElement(5, 0xE0);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -509,7 +510,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(3, 0x00);
         m.setElement(4, 0xB3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -539,7 +540,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(3, 0x00);
         m.setElement(4, 0xB3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -570,7 +571,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(3, 0x00);
         m.setElement(4, 0xB3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -599,7 +600,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -629,7 +630,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -659,7 +660,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -689,7 +690,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -739,7 +740,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -790,7 +791,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -820,7 +821,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -850,7 +851,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -880,7 +881,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -910,7 +911,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -965,7 +966,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -997,7 +998,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -1029,7 +1030,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
         t.throttleDispose();
@@ -1058,7 +1059,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -1092,7 +1093,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -1126,7 +1127,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -1160,7 +1161,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
 
@@ -1524,7 +1525,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle send a
         // request for the high function status information.
@@ -1538,11 +1539,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -1583,11 +1584,11 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(1, 0x82);
         m.setElement(2, 0xE3);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // consume the error messge.
-        jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
+        JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
 
         // Sending the not supported message should make the throttle change
         // state to idle, and then we can test what we really want to.
@@ -1597,7 +1598,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());

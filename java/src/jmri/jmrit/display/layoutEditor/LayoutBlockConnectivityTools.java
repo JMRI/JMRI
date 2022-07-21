@@ -515,6 +515,9 @@ final public class LayoutBlockConnectivityTools {
 
                 directionOfTravel = currentLBlock.getRouteDirectionAtIndex(nextBlockIndex);
 
+                //allow for routes that contain more than one occurrence of a block in a route to allow change of direction.
+                Block prevBlock = currentBlock;
+                LayoutBlock prevLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(prevBlock);
                 currentBlock = nextBlock;
                 nextBlock = currentLBlock.getRouteNextBlockAtIndex(nextBlockIndex);
                 LayoutBlock nextLBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(nextBlock);
@@ -525,7 +528,7 @@ final public class LayoutBlockConnectivityTools {
                 if (nextBlock == currentBlock) {
                     nextBlock = currentLBlock.getRouteDestBlockAtIndex(nextBlockIndex);
                     log.debug("the next block to our destination we are looking for is directly connected to this one");
-                } else if (protectingLayoutBlock != nextLBlock) {
+                } else if (!((protectingLayoutBlock == prevLBlock)&&(protectingLayoutBlock == nextLBlock))) {
                     if (nextLBlock != null) {
                         log.debug("Add block {}", nextLBlock.getDisplayName());
                     }

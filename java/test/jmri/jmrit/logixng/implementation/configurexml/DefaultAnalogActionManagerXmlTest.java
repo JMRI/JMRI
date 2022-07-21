@@ -211,6 +211,8 @@ public class DefaultAnalogActionManagerXmlTest {
     
     class MyManager extends DefaultAnalogActionManager {
         
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "We don't want to save config for this class")
         @Override
         protected void registerSelf() {
             // We don't want to save config for this class
