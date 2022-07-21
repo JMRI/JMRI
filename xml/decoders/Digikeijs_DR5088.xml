@@ -41,7 +41,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip>Enter as decimal value (1-9999)</tooltip>
               <tooltip xml:lang="cs">Zadejte desítkovou hodnotu (1-9999)</tooltip>
             </variable>
-            <variable CV="5088.1" item="Decoder Version" readOnly="yes">
+            <variable CV="5088.1" item="Decoder Version" mask="VVVVVVVVVVVVVV" readOnly="yes">
               <decVal/>
               <label xml:lang="it">Versione: </label>
               <label xml:lang="fr">Version: </label>
@@ -83,8 +83,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label>RailCom Report of Direction:</label>
             </variable>
 
-            <!-- next 11 items in LNCV4? not documented, so read only for now awaiting hardware -->
-            <variable CV="5088.4" item="Configuration" readOnly="yes">
+            <!-- next 11 items in LNCV4 not documented, so read only for now awaiting hardware -->
+            <variable CV="5088.4" item="Configuration" mask="VVVVVVVVVVVVVV" readOnly="yes">
 <!--              <decVal min="0" max="9999"/>-->
               <decVal/>
               <label xml:lang="de">Zusätzl. Konfiguration CV4:</label>
@@ -101,6 +101,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 <!--              <label xml:lang="nl">Meld alle ingangen na Power On</label>-->
 <!--            </variable>-->
 <!--            <variable CV="5088.4" mask="XVXXXXXXXXXXXX" item="Use channel 2" default="0" readOnly="yes">-->
+<!--              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>-->
 <!--              <label>Use Channel 2 for Address</label>-->
 <!--              <label xml:lang="de">Verwende Kanal 2 für Adr.Erkennung</label>-->
 <!--              <label xml:lang="nl">Gebruik Kanaal 2 voor Adresmelding</label>-->
@@ -111,9 +112,11 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 <!--              <label xml:lang="de">'Langsame Module' timing</label>-->
 <!--              <label xml:lang="nl">'Langzame module' Timing'</label>-->
 <!--            </variable>-->
-<!--            <variable CV="5088.4" mask="XXXVXXXXXXXXXX" item="Baudrate tuning" default="0" readOnly="yes">-->
-<!--              <label>Baudrate tuning</label>-->
-<!--            </variable>-->
+            <variable CV="5088.4" mask="XXXXXXXVVVVVVV" item="Baudrate tuning" default="0" readOnly="yes">
+              <!--              <decVal min="0" max="9999"/>-->
+              <decVal/>
+              <label>Baudrate tuning</label>
+            </variable>
 <!--            <variable CV="5088.4" mask="XXXXVXXXXXXXXX" item="Short address format" default="1" readOnly="yes">-->
 <!--              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>-->
 <!--              <label>Short Address Format (0x7D)</label>-->
@@ -149,14 +152,14 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 <!--              </enumVal>-->
 <!--              <label>RailCom Report Format:</label>-->
 <!--            </variable>-->
-            <variable CV="5088.4" mask="XXXXXXXXVVVV" item="Comparator tuning" default="0" readOnly="yes">
-              <decVal min="0" max="15"/>
+            <variable CV="5088.4" mask="VVVVVVVXXXXXXX" item="Comparator tuning" default="11" readOnly="yes">
+              <decVal/>
               <label>Comparator tuning (V)</label>
               <tooltip>in 0.1V steps (11 = 1.1V)</tooltip>
             </variable>
           <!-- end of experimental/undocumented vars -->
 
-          <variable CV="5088.5" item="Power-on delay" default="1000">
+          <variable CV="5088.5" item="Power-on delay" mask="VVVVVVVVVVVVVV" default="1000">
             <decVal min="0" max="8000"/>
             <label xml:lang="de">Wartezeit nach dem Einschalten (ms):</label>
             <label xml:lang="nl">Vertraging na aanzetten (ms):</label>
@@ -180,7 +183,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="cs">Polarity detection count:</label>
             <label>Polarity detection count:</label>
           </variable>
-          <variable CV="5088.8" item="Polarity detection delay" default="250">
+          <variable CV="5088.8" item="Polarity detection delay" mask="VVVVVVVVVVVV" default="250">
             <decVal min="15" max="2000"/>
             <label xml:lang="de">Verzögerung der Polaritätserkennung (ms):</label>
             <label xml:lang="nl">Vertraging Richtingsherkenning (ms):</label>
@@ -222,8 +225,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
           </variable>
 
           <!-- CV 5088.100 to .117 feedback addresses per output -->
-          <variable CV="5088.100" item="Quick setup feedback addresses" default="1" writeOnly="yes">
-            <decVal min="1" max="2048"/>
+          <variable CV="5088.100" item="Quick setup feedback addresses" mask="VVVVVVVVVVVV" writeOnly="yes">
+            <decVal min="0" max="2047"/>
             <label xml:lang="de">Schnelles Setup:</label>
             <label xml:lang="nl">Snelinstelling:</label>
             <label xml:lang="cs">Quick setup:</label>
@@ -234,7 +237,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="nl">Snelinstelling Terugmelders met automatisch nummeren vanaf het ingevoerde beginadres</tooltip>
             <tooltip xml:lang="fr">Configuration rapide des adresses de retrosignalisation avec une numérotation automatique</tooltip>
           </variable>
-          <variable CV="5088.101" item="Feedback address input 1" default="0">
+          <variable CV="5088.101" item="Feedback address input 1" mask="VVVVVVVVVVVV" default="0">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 1:</label>
             <label xml:lang="nl">Ingang 1:</label>
@@ -243,7 +246,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 1:</label>
             <tooltip>Enter as address - 1</tooltip>
           </variable>
-          <variable CV="5088.102" item="Feedback address input 2" default="1">
+          <variable CV="5088.102" item="Feedback address input 2" mask="VVVVVVVVVVVV" default="1">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 2:</label>
             <label xml:lang="nl">Ingang 2:</label>
@@ -251,7 +254,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 2:</label>
             <label>Input 2:</label>
           </variable>
-          <variable CV="5088.103" item="Feedback address input 3" default="2">
+          <variable CV="5088.103" item="Feedback address input 3" mask="VVVVVVVVVVVV" default="2">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 3:</label>
             <label xml:lang="nl">Ingang 3:</label>
@@ -259,7 +262,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 3:</label>
             <label>Input 3:</label>
           </variable>
-          <variable CV="5088.104" item="Feedback address input 4" default="3">
+          <variable CV="5088.104" item="Feedback address input 4" mask="VVVVVVVVVVVV" default="3">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 4:</label>
             <label xml:lang="nl">Ingang 4:</label>
@@ -267,7 +270,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 4:</label>
             <label>Input 4:</label>
           </variable>
-          <variable CV="5088.105" item="Feedback address input 5" default="4">
+          <variable CV="5088.105" item="Feedback address input 5" mask="VVVVVVVVVVVV" default="4">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 5:</label>
             <label xml:lang="nl">Ingang 5:</label>
@@ -275,7 +278,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 5:</label>
             <label>Input 5:</label>
           </variable>
-          <variable CV="5088.106" item="Feedback address input 6" default="5">
+          <variable CV="5088.106" item="Feedback address input 6" mask="VVVVVVVVVVVV" default="5">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 6:</label>
             <label xml:lang="nl">Ingang 6:</label>
@@ -283,7 +286,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 6:</label>
             <label>Input 6:</label>
           </variable>
-          <variable CV="5088.107" item="Feedback address input 7" default="6">
+          <variable CV="5088.107" item="Feedback address input 7" mask="VVVVVVVVVVVV" default="6">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 7:</label>
             <label xml:lang="nl">Ingang 7:</label>
@@ -291,7 +294,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 7:</label>
             <label>Input 7:</label>
           </variable>
-          <variable CV="5088.108" item="Feedback address input 8" default="7">
+          <variable CV="5088.108" item="Feedback address input 8" mask="VVVVVVVVVVVV" default="7">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 8:</label>
             <label xml:lang="nl">Ingang 8:</label>
@@ -299,7 +302,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 8:</label>
             <label>Input 8:</label>
           </variable>
-          <variable CV="5088.109" item="Feedback address input 9" default="8">
+          <variable CV="5088.109" item="Feedback address input 9" mask="VVVVVVVVVVVV" default="8">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 9:</label>
             <label xml:lang="nl">Ingang 9:</label>
@@ -307,7 +310,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 9:</label>
             <label>Input 9:</label>
           </variable>
-          <variable CV="5088.110" item="Feedback address input 10" default="9">
+          <variable CV="5088.110" item="Feedback address input 10" mask="VVVVVVVVVVVV" default="9">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>
@@ -315,7 +318,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 10:</label>
             <label>Input 10:</label>
           </variable>
-          <variable CV="5088.111" item="Feedback address input 11" default="10">
+          <variable CV="5088.111" item="Feedback address input 11" mask="VVVVVVVVVVVV" default="10">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 11:</label>
             <label xml:lang="nl">Ingang 11:</label>
@@ -323,7 +326,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 11:</label>
             <label>Input 11:</label>
           </variable>
-          <variable CV="5088.112" item="Feedback address input 12" default="11">
+          <variable CV="5088.112" item="Feedback address input 12" mask="VVVVVVVVVVVV" default="11">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 12:</label>
             <label xml:lang="nl">Ingang 12:</label>
@@ -331,7 +334,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 12:</label>
             <label>Input 12:</label>
           </variable>
-          <variable CV="5088.113" item="Feedback address input 13" default="12">
+          <variable CV="5088.113" item="Feedback address input 13" mask="VVVVVVVVVVVV" default="12">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 13:</label>
             <label xml:lang="nl">Ingang 13:</label>
@@ -339,7 +342,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 13:</label>
             <label>Input 13:</label>
           </variable>
-          <variable CV="5088.114" item="Feedback address input 14" default="13">
+          <variable CV="5088.114" item="Feedback address input 14" mask="VVVVVVVVVVVV" default="13">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 14:</label>
             <label xml:lang="nl">Ingang 14:</label>
@@ -347,7 +350,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 14:</label>
             <label>Input 14:</label>
           </variable>
-          <variable CV="5088.115" item="Feedback address input 15" default="14">
+          <variable CV="5088.115" item="Feedback address input 15" mask="VVVVVVVVVVVV" default="14">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 15:</label>
             <label xml:lang="nl">Ingang 15:</label>
@@ -355,7 +358,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 15:</label>
             <label>Input 15:</label>
           </variable>
-          <variable CV="5088.116" item="Feedback address input 16" default="15">
+          <variable CV="5088.116" item="Feedback address input 16" mask="VVVVVVVVVVVV" default="15">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 16:</label>
             <label xml:lang="nl">Ingang 16:</label>
@@ -363,7 +366,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 16:</label>
             <label>Input 16:</label>
           </variable>
-          <variable CV="5088.117" item="Feedback address input globalRC" default="1000">
+          <variable CV="5088.117" item="Feedback address input globalRC" mask="VVVVVVVVVVVV" default="1000">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
@@ -374,8 +377,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
           </variable>
 
           <!-- CV 5088.200 to .217 block addresses per output -->
-          <variable CV="5088.200" item="Quick setup block addresses" default="1" writeOnly="yes">
-            <decVal min="1" max="2048"/>
+          <variable CV="5088.200" item="Quick setup block addresses" mask="VVVVVVVVVVVV" writeOnly="yes">
+            <decVal min="0" max="2047"/>
             <label xml:lang="de">Schnelles Setup:</label>
             <label xml:lang="nl">Snelinstelling:</label>
             <label xml:lang="cs">Quick setup:</label>
@@ -383,10 +386,10 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Quick setup:</label>
             <tooltip>Quick setup for block addresses with autonumbering starting from this value + 1</tooltip>
             <tooltip xml:lang="de">Schnelles Setup für Blockadressen mit automatischer Nummerierung ab</tooltip>
-            <tooltip xml:lang="nl">Snelinstelling voor Blokadressen met autonummering vanaf het ingevoerde beginadres + 1</tooltip>
+            <tooltip xml:lang="nl">Snelinstelling voor Blokadressen met autonummering vanaf het ingevoerde getal + 1</tooltip>
             <tooltip xml:lang="fr">Configuration rapide pour l’adressage des blocs avec une numérotation automatique</tooltip>
           </variable>
-          <variable CV="5088.201" item="Block address input 1" default="0">
+          <variable CV="5088.201" item="Block address input 1" mask="VVVVVVVVVVVV" default="0">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 1:</label>
             <label xml:lang="nl">Ingang 1:</label>
@@ -395,7 +398,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 1:</label>
             <tooltip>Enter as address - 1</tooltip>
           </variable>
-          <variable CV="5088.202" item="Block address input 2" default="1">
+          <variable CV="5088.202" item="Block address input 2" mask="VVVVVVVVVVVV" default="1">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 2:</label>
             <label xml:lang="nl">Ingang 2:</label>
@@ -403,7 +406,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 2:</label>
             <label>Input 2:</label>
           </variable>
-          <variable CV="5088.203" item="Block address input 3" default="2">
+          <variable CV="5088.203" item="Block address input 3" mask="VVVVVVVVVVVV" default="2">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 3:</label>
             <label xml:lang="nl">Ingang 3:</label>
@@ -411,7 +414,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 3:</label>
             <label>Input 3:</label>
           </variable>
-          <variable CV="5088.204" item="Block address input 4" default="3">
+          <variable CV="5088.204" item="Block address input 4" mask="VVVVVVVVVVVV" default="3">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 4:</label>
             <label xml:lang="nl">Ingang 4:</label>
@@ -419,7 +422,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 4:</label>
             <label>Input 4:</label>
           </variable>
-          <variable CV="5088.205" item="Block address input 5" default="4">
+          <variable CV="5088.205" item="Block address input 5" mask="VVVVVVVVVVVV" default="4">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 5:</label>
             <label xml:lang="nl">Ingang 5:</label>
@@ -427,7 +430,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 5:</label>
             <label>Input 5:</label>
           </variable>
-          <variable CV="5088.206" item="Block address input 6" default="5">
+          <variable CV="5088.206" item="Block address input 6" mask="VVVVVVVVVVVV" default="5">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 6:</label>
             <label xml:lang="nl">Ingang 6:</label>
@@ -435,7 +438,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 6:</label>
             <label>Input 6:</label>
           </variable>
-          <variable CV="5088.207" item="Block address input 7" default="6">
+          <variable CV="5088.207" item="Block address input 7" mask="VVVVVVVVVVVV" default="6">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 7:</label>
             <label xml:lang="nl">Ingang 7:</label>
@@ -443,7 +446,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 7:</label>
             <label>Input 7:</label>
           </variable>
-          <variable CV="5088.208" item="Block address input 8" default="7">
+          <variable CV="5088.208" item="Block address input 8" mask="VVVVVVVVVVVV" default="7">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 8:</label>
             <label xml:lang="nl">Ingang 8:</label>
@@ -451,7 +454,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 8:</label>
             <label>Input 8:</label>
           </variable>
-          <variable CV="5088.209" item="Block address input 9" default="8">
+          <variable CV="5088.209" item="Block address input 9" mask="VVVVVVVVVVVV" default="8">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 9:</label>
             <label xml:lang="nl">Ingang 9:</label>
@@ -459,7 +462,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 9:</label>
             <label>Input 9:</label>
           </variable>
-          <variable CV="5088.210" item="Block address input 10" default="9">
+          <variable CV="5088.210" item="Block address input 10" mask="VVVVVVVVVVVV" default="9">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>
@@ -467,7 +470,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 10:</label>
             <label>Input 10:</label>
           </variable>
-          <variable CV="5088.211" item="Block address input 11" default="10">
+          <variable CV="5088.211" item="Block address input 11" mask="VVVVVVVVVVVV" default="10">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 11:</label>
             <label xml:lang="nl">Ingang 11:</label>
@@ -475,7 +478,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 11:</label>
             <label>Input 11:</label>
           </variable>
-          <variable CV="5088.212" item="Block address input 12" default="11">
+          <variable CV="5088.212" item="Block address input 12" mask="VVVVVVVVVVVV" default="11">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 12:</label>
             <label xml:lang="nl">Ingang 12:</label>
@@ -483,7 +486,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 12:</label>
             <label>Input 12:</label>
           </variable>
-          <variable CV="5088.213" item="Block address input 13" default="12">
+          <variable CV="5088.213" item="Block address input 13" mask="VVVVVVVVVVVV" default="12">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 13:</label>
             <label xml:lang="nl">Ingang 13:</label>
@@ -491,7 +494,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 13:</label>
             <label>Input 13:</label>
           </variable>
-          <variable CV="5088.214" item="Block address input 14" default="13">
+          <variable CV="5088.214" item="Block address input 14" mask="VVVVVVVVVVVV" default="13">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 14:</label>
             <label xml:lang="nl">Ingang 14:</label>
@@ -499,7 +502,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 14:</label>
             <label>Input 14:</label>
           </variable>
-          <variable CV="5088.215" item="Block address input 15" default="14">
+          <variable CV="5088.215" item="Block address input 15" mask="VVVVVVVVVVVV" default="14">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 15:</label>
             <label xml:lang="nl">Ingang 15:</label>
@@ -507,7 +510,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 15:</label>
             <label>Input 15:</label>
           </variable>
-          <variable CV="5088.216" item="Block address input 16" default="15">
+          <variable CV="5088.216" item="Block address input 16" mask="VVVVVVVVVVVV" default="15">
             <decVal min="0" max="2047"/>
             <label xml:lang="de">Detektor 16:</label>
             <label xml:lang="nl">Ingang 16:</label>
@@ -516,7 +519,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label>Input 16:</label>
           </variable>
 
-          <variable CV="5088.217" item="Block address input globalRC" default="1000">
+          <variable CV="5088.217" item="Block address input globalRC" mask="VVVVVVVVVVVV" default="1000">
             <decVal min="1" max="2048"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
@@ -526,7 +529,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
           </variable>
 
           <!-- CV 5088.300 to .317 exit delay per output -->
-          <variable CV="5088.300" item="Quick setup exit delay" default="750" writeOnly="yes">
+          <variable CV="5088.300" item="Quick setup exit delay" mask="VVVVVVVVVVVV" writeOnly="yes">
             <decVal min="150" max="1200"/>
             <label xml:lang="de">Schnelles Setup:</label>
             <label xml:lang="nl">Snelinstelling:</label>
@@ -538,7 +541,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="nl">Snelinstelling Vrijgavevertraging (voor alle ingangen)</tooltip>
             <tooltip xml:lang="fr">Configuration rapide pour le délai d'extinction de tous les détecteurs</tooltip>
           </variable>
-          <variable CV="5088.301" item="Exit delay input 1" default="750">
+          <variable CV="5088.301" item="Exit delay input 1" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 1:</label>
             <label xml:lang="nl">Ingang 1:</label>
@@ -546,7 +549,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 1:</label>
             <label>Input 1:</label>
           </variable>
-          <variable CV="5088.302" item="Exit delay input 2" default="750">
+          <variable CV="5088.302" item="Exit delay input 2" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 2:</label>
             <label xml:lang="nl">Ingang 2:</label>
@@ -554,7 +557,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 2:</label>
             <label>Input 2:</label>
           </variable>
-          <variable CV="5088.303" item="Exit delay input 3" default="750">
+          <variable CV="5088.303" item="Exit delay input 3" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 3:</label>
             <label xml:lang="nl">Ingang 3:</label>
@@ -562,7 +565,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 3:</label>
             <label>Input 3:</label>
           </variable>
-          <variable CV="5088.304" item="Exit delay input 4" default="750">
+          <variable CV="5088.304" item="Exit delay input 4" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 4:</label>
             <label xml:lang="nl">Ingang 4:</label>
@@ -570,7 +573,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 4:</label>
             <label>Input 4:</label>
           </variable>
-          <variable CV="5088.305" item="Exit delay input 5" default="750">
+          <variable CV="5088.305" item="Exit delay input 5" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 5:</label>
             <label xml:lang="nl">Ingang 5:</label>
@@ -578,7 +581,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 5:</label>
             <label>Input 5:</label>
           </variable>
-          <variable CV="5088.306" item="Exit delay input 6" default="750">
+          <variable CV="5088.306" item="Exit delay input 6" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 6:</label>
             <label xml:lang="nl">Ingang 6:</label>
@@ -586,7 +589,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 6:</label>
             <label>Input 6:</label>
           </variable>
-          <variable CV="5088.307" item="Exit delay input 7" default="750">
+          <variable CV="5088.307" item="Exit delay input 7" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 7:</label>
             <label xml:lang="nl">Ingang 7:</label>
@@ -594,7 +597,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 7:</label>
             <label>Input 7:</label>
           </variable>
-          <variable CV="5088.308" item="Exit delay input 8" default="750">
+          <variable CV="5088.308" item="Exit delay input 8" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 8:</label>
             <label xml:lang="nl">Ingang 8:</label>
@@ -602,7 +605,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 8:</label>
             <label>Input 8:</label>
           </variable>
-          <variable CV="5088.309" item="Exit delay input 9" default="750">
+          <variable CV="5088.309" item="Exit delay input 9" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 9:</label>
             <label xml:lang="nl">Ingang 9:</label>
@@ -610,7 +613,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 9:</label>
             <label>Input 9:</label>
           </variable>
-          <variable CV="5088.310" item="Exit delay input 10" default="750">
+          <variable CV="5088.310" item="Exit delay input 10" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 10:</label>
             <label xml:lang="nl">Ingang 10:</label>
@@ -618,7 +621,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 10:</label>
             <label>Input 10:</label>
           </variable>
-          <variable CV="5088.311" item="Exit delay input 11" default="750">
+          <variable CV="5088.311" item="Exit delay input 11" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 11:</label>
             <label xml:lang="nl">Ingang 11:</label>
@@ -626,7 +629,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 11:</label>
             <label>Input 11:</label>
           </variable>
-          <variable CV="5088.312" item="Exit delay input 12" default="750">
+          <variable CV="5088.312" item="Exit delay input 12" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 12:</label>
             <label xml:lang="nl">Ingang 12:</label>
@@ -634,7 +637,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 12:</label>
             <label>Input 12:</label>
           </variable>
-          <variable CV="5088.313" item="Exit delay input 13" default="750">
+          <variable CV="5088.313" item="Exit delay input 13" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 13:</label>
             <label xml:lang="nl">Ingang 13:</label>
@@ -642,7 +645,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 13:</label>
             <label>Input 13:</label>
           </variable>
-          <variable CV="5088.314" item="Exit delay input 14" default="750">
+          <variable CV="5088.314" item="Exit delay input 14" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 14:</label>
             <label xml:lang="nl">Ingang 14:</label>
@@ -650,7 +653,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 14:</label>
             <label>Input 14:</label>
           </variable>
-          <variable CV="5088.315" item="Exit delay input 15" default="750">
+          <variable CV="5088.315" item="Exit delay input 15" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 15:</label>
             <label xml:lang="nl">Ingang 15:</label>
@@ -658,7 +661,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 15:</label>
             <label>Input 15:</label>
           </variable>
-          <variable CV="5088.316" item="Exit delay input 16" default="750">
+          <variable CV="5088.316" item="Exit delay input 16" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Detektor 16:</label>
             <label xml:lang="nl">Ingang 16:</label>
@@ -666,7 +669,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="fr">Entrée 16:</label>
             <label>Input 16:</label>
           </variable>
-          <variable CV="5088.317" item="Exit delay input globalRC" default="750">
+          <variable CV="5088.317" item="Exit delay input globalRC" mask="VVVVVVVVVVVV" default="750">
             <decVal min="150" max="2000"/>
             <label xml:lang="de">Globaler Detektor:</label>
             <label xml:lang="nl">Global Terugmelder:</label>
