@@ -74,7 +74,7 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
 
         Assert.assertEquals("Init sent for 8 events", 32, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         // confirm that setting again doesn't resend
         t.setLitEventId("1.2.3.4.5.6.7.1");
@@ -91,12 +91,12 @@ public class OlcbSignalMastTest {
         // but a different event does
         t.setOutputForAppearance("Stop", "11.2.3.4.5.6.7.13");
         Assert.assertEquals("Init for single new event", 4, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         // and zero doesn't
         t.setOutputForAppearance("Stop", "0.0.0.0.0.0.0.0");
         Assert.assertEquals("Init sent nothing", 0, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         Assert.assertTrue("lit defaults true", t.getLit());
 
@@ -126,7 +126,7 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
 
         Assert.assertEquals("Init sent for 8 events", 32, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         Assert.assertTrue("lit defaults true", t.getLit());
 
@@ -153,7 +153,7 @@ public class OlcbSignalMastTest {
         t.setOutputForAppearance("Stop", "1.2.3.4.5.6.7.13");
 
         Assert.assertEquals("Init sent for 8 events", 32, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         Assert.assertTrue("lit defaults true", t.getLit());
 
@@ -199,7 +199,7 @@ public class OlcbSignalMastTest {
         machine.setEventForState(States2.B, "01.00.00.00.00.00.02.00");
 
         Assert.assertEquals("Init sent for 2 events", 8, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         Assert.assertEquals("A event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 1, 0}), machine.getEventIDForState(States2.A));
         Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventIDForState(States2.B));
@@ -224,7 +224,7 @@ public class OlcbSignalMastTest {
         machine.setEventForState(States2.B, "01.00.00.00.00.00.02.00");
 
         Assert.assertEquals("Init sent for 2 events", 8, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         machine.handleIdentifyEventsAddressed( new IdentifyEventsAddressedMessage(new NodeID(),
                 new NodeID()), null);
@@ -239,7 +239,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
         Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
         Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         machine.handleIdentifyEventsGlobal( new IdentifyEventsGlobalMessage(new NodeID()),
                 null);
@@ -249,7 +249,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("msg 1", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(1).toString());
         Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
         Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null);
         Assert.assertEquals("no reply", 0, messages.size());
@@ -259,7 +259,7 @@ public class OlcbSignalMastTest {
         // check by string comparison as a short cut
         Assert.assertEquals("reply", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
 
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null);
         Assert.assertEquals("no reply", 0, messages.size());
@@ -285,7 +285,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("B event", new EventID(new byte[]{1, 0, 0, 0, 0, 0, 2, 0}), machine.getEventIDForState("B"));
 
         Assert.assertEquals("Init sent for 2 events", 8, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         machine.setState("A");
         Assert.assertEquals("still starting state", "B", machine.getState());
@@ -307,7 +307,7 @@ public class OlcbSignalMastTest {
         machine.setEventForState("B", "01.00.00.00.00.00.02.00");
 
         Assert.assertEquals("Init sent for 2 events", 8, messages.size());
-        messages = new java.util.ArrayList<>(); // reset test message queue
+        resetMessages(); // reset test message queue
 
         machine.handleIdentifyEventsAddressed( new IdentifyEventsAddressedMessage(new NodeID(),
                 new NodeID()), null);
@@ -322,7 +322,7 @@ public class OlcbSignalMastTest {
         Assert.assertEquals("msg 2", "01.00.00.00.00.00                     Consumer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(2).toString());
         Assert.assertEquals("msg 3", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.01.00", messages.get(3).toString());
 
-        messages = new java.util.ArrayList<>();
+        resetMessages();
 
         machine.handleIdentifyProducers( new IdentifyProducersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null);
         Assert.assertEquals("no reply", 0, messages.size());
@@ -332,7 +332,7 @@ public class OlcbSignalMastTest {
         // check by string comparison as a short cut
         Assert.assertEquals("reply", "01.00.00.00.00.00                     Producer Identified Unknown for EventID:01.00.00.00.00.00.02.00", messages.get(0).toString());
 
-        messages = new java.util.ArrayList<>();
+        resetMessages();
 
         machine.handleIdentifyConsumers( new IdentifyConsumersMessage(new NodeID(), new EventID(new byte[]{11, 0, 0, 0, 0, 0, 2, 0})), null);
         Assert.assertEquals("no reply", 0, messages.size());
@@ -350,9 +350,13 @@ public class OlcbSignalMastTest {
     static NodeID nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
     static java.util.ArrayList<Message> messages;
 
+    private static void resetMessages(){
+        messages = new java.util.ArrayList<>();
+    }
+
     @BeforeEach
     public void setUp() {
-        messages = new java.util.ArrayList<>();
+        resetMessages();
     }
 
     @BeforeAll
@@ -362,7 +366,7 @@ public class OlcbSignalMastTest {
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
 
-        messages = new java.util.ArrayList<>();
+        resetMessages();
         connection = new AbstractConnection() {
             @Override
             public void put(Message msg, Connection sender) {
@@ -379,18 +383,18 @@ public class OlcbSignalMastTest {
             }
         });
 
-        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
+        JUnitUtil.waitFor(()-> (!messages.isEmpty()),"Initialization Complete message");
     }
 
     @AfterEach
     public void tearDown() {
-        messages = null;
     }
 
     @AfterAll
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
+           memo.dispose();
         }
         memo = null;
         connection = null;
