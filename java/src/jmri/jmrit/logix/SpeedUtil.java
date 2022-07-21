@@ -464,7 +464,7 @@ public class SpeedUtil {
         float num = 0;
         if (attr != null) {
             try {
-                 /*  .896sec per  is NMRA spec for each CV value
+                 /*  .896sec per (throttle Speed Step Increment) is NMRA spec for each CV value
                  CV#3
                  Determines the decoder's acceleration rate. The formula for the acceleration rate shall be equal to (the contents 
                  of CV#3*.896)/(number of speed steps in use). For example, if the contents of CV#3 =2, then the acceleration 
