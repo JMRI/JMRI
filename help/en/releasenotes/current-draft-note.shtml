@@ -414,6 +414,13 @@
           <li>The expression <i>Connection name</i> has been added.
           It's useful together with <i>Simulate turnout feedback</i> so
           that simulation only happens for simulated connections.</li>
+          <li>The action <i>For each</i> has been added. It's useful when
+          you want to loop thru all items in a list, for example all the
+          sensors in the sensor manager.</li>
+          <li>The formula function <i>new</i> has been added. It allows
+          you to create a new instance of a class.</li>
+          <li>Several formula constants have been added. See the modules
+          <i>Java</i> and <i>Layout</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
