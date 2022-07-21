@@ -77,7 +77,7 @@ public class JavaFunctions implements FunctionFactory {
             return ((type == Float.TYPE) && (param instanceof Double));
         }
 
-        private boolean canCall(Constructor constructor, Object[] params) {
+        private boolean canCall(Constructor<?> constructor, Object[] params) {
             Class<?>[] paramTypes = constructor.getParameterTypes();
             if (paramTypes.length != params.length) return false;
             for (int i=0; i < paramTypes.length; i++) {
@@ -86,7 +86,7 @@ public class JavaFunctions implements FunctionFactory {
             return true;
         }
 
-        private Object callConstructor(Constructor constructor, Object[] params)
+        private Object callConstructor(Constructor<?> constructor, Object[] params)
                 throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 
             Class<?>[] paramTypes = constructor.getParameterTypes();
@@ -109,12 +109,12 @@ public class JavaFunctions implements FunctionFactory {
 
             if (className == null) throw new NullPointerException("Class name is null");
 
-            Class clazz = Class.forName(className);
-            Constructor[] constructors = clazz.getConstructors();
+            Class<?> clazz = Class.forName(className);
+            Constructor<?>[] constructors = clazz.getConstructors();
             Object[] params = parameters.toArray();
 
             Exception exception = null;
-            for (Constructor c : constructors) {
+            for (Constructor<?> c : constructors) {
                 try {
                     if (canCall(c, params)) return callConstructor(c, params);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
