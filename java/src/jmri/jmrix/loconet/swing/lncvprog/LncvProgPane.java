@@ -114,7 +114,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
                     if ((Objects.equals(toolFrame.getTitle(), this.getTitle()) &&
                             !toolFrame.isVisible())) { // it was closed/hidden a moment ago
                         handleCloseEvent();
-                        log.debug("Component hidden: " + comp);
+                        log.debug("Component hidden: {}", comp);
                     }
                 }
             }
