@@ -420,7 +420,11 @@
           <li>The formula function <i>new</i> has been added. It allows
           you to create a new instance of a class.</li>
           <li>Several formula constants have been added. See the modules
-          <i>Java</i> and <i>Layout</i>.</li>
+          <i>Java</i> and <i>Layout</i>. Examples are constants like
+          <i>sensors</i> and <i>turnouts</i> that gives you direct access
+          to the managers. And <i>InstanceManager</i> that gives you direct
+          access to the instance manager. The constants <i>null</i> and
+          <i>None</i> has the null value in Java, the None value in Jython.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
