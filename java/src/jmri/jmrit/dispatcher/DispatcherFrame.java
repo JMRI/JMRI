@@ -1087,18 +1087,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * <p>
      * Moved from Transit in JMRI 4.19.7
      *
-     * @param panel the panel to check against
+     * @param t The transit being checked.
      * @return 0 if all Sections have all required signals or the number of
      *         Sections missing required signals; -1 if the panel is null
      */
-    private int checkSignals(Transit t, LayoutEditor panel) {
-        if (panel == null) {
-            log.error("checkSignals called with a null LayoutEditor panel");
-            return -1;
-        }
+    private int checkSignals(Transit t) {
         int numErrors = 0;
         for (TransitSection ts : t.getTransitSectionList() ) {
-            numErrors = numErrors + ts.getSection().placeDirectionSensors(panel);
+            numErrors = numErrors + ts.getSection().placeDirectionSensors();
         }
         return numErrors;
     }
@@ -1121,7 +1117,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private int validateConnectivity(Transit t) {
         int numErrors = 0;
         for (int i = 0; i < t.getTransitSectionList().size(); i++) {
-            String s = t.getTransitSectionList().get(i).getSection().validate(null);
+            String s = t.getTransitSectionList().get(i).getSection().validate();
             if (!s.isEmpty()) {
                 log.error(s);
                 numErrors++;
@@ -1376,19 +1372,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             // check/set direction sensors in signal logic for all Sections in this Transit.
             if (getSignalType() == SIGNALHEAD && getSetSSLDirectionalSensors()) {
-                for (var panel : editorManager.getAll(LayoutEditor.class)) {
-                    numErrors = checkSignals(t, panel);
-                    if (numErrors == 0) {
-                        t.initializeBlockingSensors();
+                numErrors = checkSignals(t);
+                if (numErrors == 0) {
+                    t.initializeBlockingSensors();
+                }
+                if (numErrors != 0) {
+                    if (showErrorMessages) {
+                        JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
+                                "Error36"), new Object[]{("" + numErrors)}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     }
-                    if (numErrors != 0) {
-                        if (showErrorMessages) {
-                            JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
-                                    "Error36"), new Object[]{("" + numErrors)}),
-                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                        }
-                        return null;
-                    }
+                    return null;
                 }
             }
             // TODO: Need to check signalMasts as well
@@ -1401,19 +1395,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         } else if (_UseConnectivity && (editorManager.getAll(LayoutEditor.class).size() > 0)) {
             // not auto run, set up direction sensors in signals since use connectivity was requested
             if (getSignalType() == SIGNALHEAD) {
-                for (var panel : editorManager.getAll(LayoutEditor.class)) {
-                    int numErrors = checkSignals(t, panel);
-                    if (numErrors == 0) {
-                        t.initializeBlockingSensors();
+                int numErrors = checkSignals(t);
+                if (numErrors == 0) {
+                    t.initializeBlockingSensors();
+                }
+                if (numErrors != 0) {
+                    if (showErrorMessages) {
+                        JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
+                                "Error36"), new Object[]{("" + numErrors)}),
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     }
-                    if (numErrors != 0) {
-                        if (showErrorMessages) {
-                            JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
-                                    "Error36"), new Object[]{("" + numErrors)}),
-                                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                        }
-                        return null;
-                    }
+                    return null;
                 }
             }
         }
