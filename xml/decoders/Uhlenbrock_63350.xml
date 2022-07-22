@@ -8,7 +8,7 @@
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
 Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
-The Feedback Module 63340 has an Article number 6334, which was registered with Uhlenbrock.
+The Feedback Module 63350 has an Article number 6335, which was registered with Uhlenbrock.
 Older LNCV devices may not have their own address, or even no article. They can be programmed using
 Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
 programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
@@ -16,11 +16,11 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
     <version author="Egbert Broerse" version="1.0" lastUpdated="20220722"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
-    <!-- compare to 63350. Because of the way LNCV includes the art.nr. in the CV they could not be combined in one file -->
+    <!-- compare to 63340. Because of the way LNCV includes the art.nr. in the CV they could not be combined in one file -->
 
     <decoder>
         <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary">
-            <model model="Feedback Module 2-rail 63340" productID="6334" formFactor="Stationary" comment="LocoNet 8 block feedback module 2-rail">
+            <model model="Feedback Module 3-rail 63350" productID="6335" formFactor="Stationary" comment="LocoNet 8 block feedback module 3-rail">
               <versionCV />
             </model>
         </family>
@@ -30,7 +30,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         </programming>
 
         <variables>
-            <variable CV="6334.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
+            <variable CV="6335.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
               <decVal min="1" max="65535"/>
               <label xml:lang="it">Indirizzo Primario: </label>
               <label xml:lang="fr">Adresse décodeur: </label>
@@ -41,56 +41,56 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
 
             <!-- Feedback Address for inputs/sections 1-8-->
-            <variable CV="6334.1" mask="VVVVVVVVVVVV" item="Feedback 1 Address" default="1">
+            <variable CV="6335.1" mask="VVVVVVVVVVVV" item="Feedback 1 Address" default="1">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 1 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.2" mask="VVVVVVVVVVVV" item="Feedback 2 Address" default="2">
+            <variable CV="6335.2" mask="VVVVVVVVVVVV" item="Feedback 2 Address" default="2">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 2 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.3" mask="VVVVVVVVVVVV" item="Feedback 3 Address" default="3">
+            <variable CV="6335.3" mask="VVVVVVVVVVVV" item="Feedback 3 Address" default="3">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 3 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.4" mask="VVVVVVVVVVVV" item="Feedback 4 Address" default="4">
+            <variable CV="6335.4" mask="VVVVVVVVVVVV" item="Feedback 4 Address" default="4">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 4 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.5" mask="VVVVVVVVVVVV" item="Feedback 5 Address" default="5">
+            <variable CV="6335.5" mask="VVVVVVVVVVVV" item="Feedback 5 Address" default="5">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 5 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.6" mask="VVVVVVVVVVVV" item="Feedback 6 Address" default="6">
+            <variable CV="6335.6" mask="VVVVVVVVVVVV" item="Feedback 6 Address" default="6">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 6 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.7" mask="VVVVVVVVVVVV" item="Feedback 7 Address" default="7">
+            <variable CV="6335.7" mask="VVVVVVVVVVVV" item="Feedback 7 Address" default="7">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
               <label>Feedback Address:</label>
               <tooltip>Address of occupancy block 7 (1-2048)</tooltip>
             </variable>
-            <variable CV="6334.8" mask="VVVVVVVVVVVV" item="Feedback 8 Address" default="8">
+            <variable CV="6335.8" mask="VVVVVVVVVVVV" item="Feedback 8 Address" default="8">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Rückmeldeadresse:</label>
               <label xml:lang="nl">Terugmeldadres:</label>
@@ -98,7 +98,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip>Address of occupancy block 8 (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6334.17" mask="VVVVVVVVVVVV" item="Reporting Address" default="1017">
+            <variable CV="6335.17" mask="VVVVVVVVVVVV" item="Reporting Address" default="1017">
               <decVal min="0" max="2048"/>
               <label xml:lang="de">Adresse für Rapportage:</label>
               <label xml:lang="fr">Adresse pour Rapportage:</label>
@@ -108,7 +108,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
 
             <!-- Module Configuration (3 bits) -->
-            <variable CV="6334.20" mask="XXXXXXXV" item="Configuration 1" default="0">
+            <variable CV="6335.20" mask="XXXXXXXV" item="Configuration 1" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label>Individual Addressing</label>
               <label xml:lang="de">Adresse individuell eingeben</label>
@@ -117,7 +117,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Aus = 8 Adressen automatisch zuweisen ab Eingabe für Gleis 1</tooltip>
               <tooltip xml:lang="nl">Uit = Wijs de 8 adressen oplopend toe vanaf ingevulde waarde voor sectie 1</tooltip>
             </variable>
-          <variable CV="6334.20" mask="XXXXXXVX" item="Configuration 2" default="0">
+          <variable CV="6335.20" mask="XXXXXXVX" item="Configuration 2" default="0">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
             <label>Set Delay per Section</label>
             <label xml:lang="de">Verzögerung pro Gleis eingeben</label>
@@ -126,7 +126,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <tooltip xml:lang="de">Aus = Nutze Eingabe für Gleis 1 für alle Gleise</tooltip>
             <tooltip xml:lang="nl">Uit = Pas voor alle secties de ingevulde waarde voor sectie 1 toe</tooltip>
           </variable>
-            <variable CV="6334.20" mask="XXXXXVXX" item="Configuration 3" default="0">
+            <variable CV="6335.20" mask="XXXXXVXX" item="Configuration 3" default="0">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label>Send report at Startup</label>
               <label xml:lang="de">Belegtmeldung berichten</label>
@@ -137,7 +137,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
 
             <!-- Occupied Reporting Delay for sections 1-8-->
-            <variable CV="6334.21" item="Occupied Delay Track 1" default="3">
+            <variable CV="6335.21" item="Occupied Delay Track 1" default="3">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -148,7 +148,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.22" item="Occupied Delay Track 2">
+            <variable CV="6335.22" item="Occupied Delay Track 2">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -159,7 +159,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.23" item="Occupied Delay Track 3">
+            <variable CV="6335.23" item="Occupied Delay Track 3">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -170,7 +170,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.24" item="Occupied Delay Track 4">
+            <variable CV="6335.24" item="Occupied Delay Track 4">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -181,7 +181,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.25" item="Occupied Delay Track 5">
+            <variable CV="6335.25" item="Occupied Delay Track 5">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -192,7 +192,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.26" item="Occupied Delay Track 6">
+            <variable CV="6335.26" item="Occupied Delay Track 6">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -203,7 +203,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.27" item="Occupied Delay Track 7">
+            <variable CV="6335.27" item="Occupied Delay Track 7">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -214,7 +214,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.28" item="Occupied Delay Track 8">
+            <variable CV="6335.28" item="Occupied Delay Track 8">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -227,7 +227,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
 
             <!-- Unoccupied Reporting Delay for sections 1-8-->
-            <variable CV="6334.41" item="Free Delay Track 1" default="30">
+            <variable CV="6335.41" item="Free Delay Track 1" default="30">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -238,7 +238,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.42" item="Free Delay Track 2">
+            <variable CV="6335.42" item="Free Delay Track 2">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -249,7 +249,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.43" item="Free Delay Track 3">
+            <variable CV="6335.43" item="Free Delay Track 3">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -260,7 +260,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.44" item="Free Delay Track 4">
+            <variable CV="6335.44" item="Free Delay Track 4">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -271,7 +271,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.45" item="Free Delay Track 5">
+            <variable CV="6335.45" item="Free Delay Track 5">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -282,7 +282,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.46" item="Free Delay Track 6">
+            <variable CV="6335.46" item="Free Delay Track 6">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -293,7 +293,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.47" item="Free Delay Track 7">
+            <variable CV="6335.47" item="Free Delay Track 7">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
@@ -304,7 +304,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
               <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
             </variable>
-            <variable CV="6334.48" item="Free Delay Track 8">
+            <variable CV="6335.48" item="Free Delay Track 8">
               <decVal/>
               <label xml:lang="de">Belegtverzögerung: </label>
               <label xml:lang="fr">Réaction Occupé: </label>
