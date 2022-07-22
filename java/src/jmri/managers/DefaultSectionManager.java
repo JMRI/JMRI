@@ -183,7 +183,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         for (Section section : set) {
             String s = section.validate();
             if (!s.isEmpty()) {
-                log.error(s);
+                log.error("{}", s);
                 numErrors++;
             }
             numSections++;
