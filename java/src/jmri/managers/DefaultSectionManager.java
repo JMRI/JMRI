@@ -171,8 +171,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      *
      * @return number or validation errors; -2 is returned if there are no sections
      */
-//     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-//         justification = "passing section validation text")
     public int validateAllSections() {
         Set<Section> set = getNamedBeanSet();
         int numSections = 0;
@@ -183,7 +181,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         for (Section section : set) {
             String s = section.validate();
             if (!s.isEmpty()) {
-                log.error("{}", s);
+                log.error("Validate result for section {}: {}", section.getDisplayName(), s);
                 numErrors++;
             }
             numSections++;
