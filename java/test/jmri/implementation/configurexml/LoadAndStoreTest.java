@@ -31,7 +31,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         return getFiles(new File("java/test/jmri/implementation/configurexml"), false, true);
     }
 
-    @ParameterizedTest(name = "{index}: {0} (pass={1})")
+    @ParameterizedTest(name = "[{index}] {arguments}")
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         super.loadLoadStoreFileCheck(file);
@@ -42,7 +42,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     }
 
     @BeforeEach
-    public void localSetUp() {
+    @Override
+    public void setUp() {
+        super.setUp();
         // for DCC Signals
         InstanceManager.store(new MockCommandStation("N"), CommandStation.class);
     }
