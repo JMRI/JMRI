@@ -1101,7 +1101,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case RESUME:
                 case RETRY_FWD:
                 case RETRY_BKWD:
-//                case RAMP_HALT:
                 case SPEED_UP:
                     break;
                 case STOP:
@@ -1118,7 +1117,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     break;
                 default:
             }
-            return ret;
+            return true;
         }
         int runState = _engineer.getRunState();
         if (_trace || log.isDebugEnabled()) {

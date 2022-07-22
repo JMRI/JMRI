@@ -227,7 +227,7 @@ public class ActionOBlock extends AbstractDigitalAction
                     if (memory != null) {
                     	Object obj = oblock.getValue();
                     	if (obj instanceof String) {
-                            memory.setValue((String)obj);
+                            memory.setValue(obj);
                     	} else {
                             memory.setValue("");
                     	}
