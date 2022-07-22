@@ -330,7 +330,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added a decoder definition to configure the 63810 Mobile Station Adapter.<br>
+                Use the LNCV tool to program.</li>
             </ul>
 
         <h4>Umelec</h4>
