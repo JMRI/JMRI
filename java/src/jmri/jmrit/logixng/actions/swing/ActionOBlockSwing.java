@@ -82,6 +82,7 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
 
         _tabbedPaneData = new JTabbedPane();
         _panelDataDirect = new javax.swing.JPanel();
+        _panelDataDirect.setLayout(new BoxLayout(_panelDataDirect, BoxLayout.Y_AXIS));
         _panelDataReference = new javax.swing.JPanel();
         _panelDataLocalVariable = new javax.swing.JPanel();
         _panelDataFormula = new javax.swing.JPanel();
@@ -173,16 +174,16 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         boolean newState = false;
 
         if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
-            _valuePanel.setVisible(false);
+            _valuePanel.setVisible(true);
             newState = true;
         } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant) ||
                 _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
-            _panelMemoryBean.setVisible(false);
+            _panelMemoryBean.setVisible(true);
             newState = true;
         }
 
         _tabbedPaneData.setEnabled(newState);
-        _oblockDataDirectTextField.setEnabled(newState);
+//        _oblockDataDirectTextField.setEnabled(newState);
         _oblockDataReferenceTextField.setEnabled(newState);
         _oblockDataLocalVariableTextField.setEnabled(newState);
         _oblockDataFormulaTextField.setEnabled(newState);
@@ -230,9 +231,14 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         }
 
         if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
-            if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
+            if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant)
+                    || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+                if (_panelMemoryBean.isEmpty() || _panelMemoryBean.getNamedBean() == null) {
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorMemory"));
+                }
+            } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
                 if (_oblockDataDirectTextField.getText().isEmpty()) {
-                    errorMessages.add(Bundle.getMessage("ActionOBlock_ErrorValue"));
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorValue"));
                 }
             }
         }

@@ -45,7 +45,6 @@ public class ActionWarrant extends AbstractDigitalAction
     private String _dataLocalVariable = "";
     private String _dataFormula = "";
     private ExpressionNode _dataExpressionNode;
-    private boolean _listenToMemory = true;
 
     private String _trainData = "";
     private ControlAutoTrain _controlAutoTrain = ControlAutoTrain.Halt;
@@ -284,11 +283,11 @@ public class ActionWarrant extends AbstractDigitalAction
                             throw new IllegalArgumentException("invalid train control action: " + _controlAutoTrain);
                     }
                     if (!warrant.controlRunTrain(controlAction)) {
-//                        throw new JmriException("Warrant " + warrant.getDisplayName() + " "
-//                              + theOper.toString() +"(" + _controlAutoTrain.toString() + ") failed. "
-//                              + warrant.getMessage());
                         log.info("Warrant {} {}({}) failed. - {}", warrant.getDisplayName(),
                                 theOper.toString(), _controlAutoTrain.toString(), warrant.getMessage());
+                        throw new JmriException("Warrant " + warrant.getDisplayName() + " "
+                              + theOper.toString() +"(" + _controlAutoTrain.toString() + ") failed. "
+                              + warrant.getMessage());
                     }
                     break;
 
@@ -384,9 +383,7 @@ public class ActionWarrant extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
         _selectEnum.registerListeners();
-        if (_listenToMemory) {
-            _selectMemoryNamedBean.addPropertyChangeListener("value", this);
-        }
+        _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -394,9 +391,7 @@ public class ActionWarrant extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
         _selectEnum.unregisterListeners();
-        if (_listenersAreRegistered && _listenToMemory) {
-            _selectMemoryNamedBean.removePropertyChangeListener("value", this);
-        }
+        _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */

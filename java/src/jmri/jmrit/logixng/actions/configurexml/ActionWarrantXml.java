@@ -75,10 +75,10 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         var selectEnumXml = new LogixNG_SelectEnumXml<ActionWarrant.DirectOperation>();
 
         var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
-        selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
 
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "warrant");
+        selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
 
         selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
         selectEnumXml.loadLegacy(

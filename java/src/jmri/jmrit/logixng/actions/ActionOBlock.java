@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Bundle;
 import jmri.jmrit.logixng.util.*;
@@ -211,7 +212,12 @@ public class ActionOBlock extends AbstractDigitalAction
                 case GetBlockWarrant:
                     Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
                     if (memory != null) {
-                        memory.setValue(oblock.getWarrant());
+                    	Warrant w = oblock.getWarrant();
+                    	if (w != null) {
+                            memory.setValue(w.getDisplayName());
+                    	} else {
+                            memory.setValue("unallocated");
+                    	}
                     } else {
                         throw new JmriException("Memory for GetBlockWarrant is null for oblock - " + oblock.getDisplayName());  // NOI18N
                     }
@@ -219,9 +225,14 @@ public class ActionOBlock extends AbstractDigitalAction
                 case GetBlockValue:
                     memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
                     if (memory != null) {
-                        memory.setValue(oblock.getValue());
+                    	Object obj = oblock.getValue();
+                    	if (obj instanceof String) {
+                            memory.setValue((String)obj);
+                    	} else {
+                            memory.setValue("");
+                    	}
                     } else {
-                        throw new JmriException("Memory for GetBlockWarrant is null for oblock - " + oblock.getDisplayName());  // NOI18N
+                        throw new JmriException("Memory for GetBlockValue is null for oblock - " + oblock.getDisplayName());  // NOI18N
                     }
                     break;
                 default:
@@ -295,6 +306,7 @@ public class ActionOBlock extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
         _selectEnum.registerListeners();
+        _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -302,6 +314,7 @@ public class ActionOBlock extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
         _selectEnum.unregisterListeners();
+        _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
