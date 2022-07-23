@@ -414,6 +414,7 @@
           <li>The expression <i>Connection name</i> has been added.
           It's useful together with <i>Simulate turnout feedback</i> so
           that simulation only happens for simulated connections.</li>
+          <li>The action <i>Listen On Beans - Table</i> is improved.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

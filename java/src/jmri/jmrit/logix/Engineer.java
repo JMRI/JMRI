@@ -576,6 +576,9 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         } else {
             _speedType = speedType;     // set speedType regardless
             setSpeedRatio(speedType);
+            float speedMod = _speedUtil.modifySpeed(_normalSpeed, _speedType);
+            _speedUtil.speedChange(speedMod);  // call before this setting to compute travel of last setting
+            setSpeed(speedMod);
         }
     }
 
