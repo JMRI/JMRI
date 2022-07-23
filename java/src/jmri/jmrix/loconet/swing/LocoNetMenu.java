@@ -262,18 +262,23 @@ public class LocoNetMenu extends JMenu {
     public final java.util.ArrayList<JMenu> getExtensionMenuItems(
             boolean isConnectionWithHardwareInterface, WindowInterface wi, 
             LocoNetSystemConnectionMemo memo) {
+        ArrayList<JMenu> locoNetMenuItems = new ArrayList<>();
         log.trace("searching for extensions for the canonical name {}",
                 this.getClass().getCanonicalName());
         MenuItemsService lnMenuItemServiceInstance;
         lnMenuItemServiceInstance = MenuItemsService.getInstance();
-        ArrayList<JMenu> locoNetMenuItems = new ArrayList<>(lnMenuItemServiceInstance.getMenuExtensionsItems(isConnectionWithHardwareInterface, wi, memo));
+        locoNetMenuItems.addAll(
+                lnMenuItemServiceInstance.getMenuExtensionsItems(
+                        isConnectionWithHardwareInterface, wi, memo));
         log.trace("LocoNetItems size is {}", locoNetMenuItems.size());
         return locoNetMenuItems;
     }
 
     private void processItems(JMenu menu, ArrayList<LocoNetMenuItem> items, boolean isLocoNetInterface,
             WindowInterface wi, LocoNetSystemConnectionMemo memo) {
-        items.forEach(item -> processAnItem(menu, item, isLocoNetInterface, wi, memo));
+        items.forEach(item -> {
+            processAnItem(menu, item, isLocoNetInterface, wi, memo);
+        });
     }
         
     private void processAnItem(JMenu menu, LocoNetMenuItem item, boolean isLocoNetInterface,
