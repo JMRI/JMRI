@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-// import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 // import org.apache.log4j.Level;
@@ -24,7 +23,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.Assert;
 
 /**
- * Test that all the action and expression classes are registed and have
+ * Test that all the action and expression classes are registered and have
  * configurexml and swing classes.
  * <P>
  * Requirements that this class checks for:
@@ -56,7 +55,7 @@ public class ActionsAndExpressionsTest {
                 .filter(p -> p.getFileName().toString().contains("_"))
                 .forEach(p -> {
                     String file = p.getFileName().toString();
-                    languages.add(file.substring(file.indexOf("_")+1, file.length()-".properties".length()));
+                    languages.add(file.substring(file.indexOf('_')+1, file.length()-".properties".length()));
                 });
 
         for (String lang : languages) {
@@ -78,12 +77,16 @@ public class ActionsAndExpressionsTest {
 
         filesLoop:
         for (String file : files) {
-            if (file.endsWith(".properties")) continue;
+            if (file.endsWith(".properties")) {
+                continue;
+            }
 
-            file = file.substring(0, file.indexOf('.'));
+            String firstPartOfFileName = file.substring(0, file.indexOf('.'));
 
             for (String c : classesToIgnore) {
-                if (file.equals(c)) continue filesLoop;
+                if (firstPartOfFileName.equals(c)) {
+                    continue filesLoop;
+                }
             }
 
             // Check that all actions and expressions is registered in its manager
@@ -92,7 +95,9 @@ public class ActionsAndExpressionsTest {
             for (Map.Entry<Category, List<Class<? extends Base>>> entry : registeredClasses.entrySet()) {
                 for (Class<? extends Base> c : entry.getValue()) {
 //                    System.out.format("Registered class: %s%n", c.getName());
-                    if (c.getName().equals(packageName+"."+file)) isRegistered = true;
+                    if (c.getName().equals(packageName+"."+firstPartOfFileName)) {
+                        isRegistered = true;
+                    }
 
                     Assert.assertFalse(String.format("Class %s is registered more than once in the manager", packageName+"."+c.getName()), setOfClasses.contains(c));
 
@@ -107,10 +112,10 @@ public class ActionsAndExpressionsTest {
             }
 
 //            if (!isRegistered) {
-//                System.out.format("Class %s.%s is not registered in the manager%n", packageName, file);
+//                System.out.format("Class %s.%s is not registered in the manager%n", packageName, firstPartOfFileName);
 //                errorsFound = true;
 //            }
-            Assert.assertTrue(String.format("Class %s is registred%n", file), isRegistered);
+            Assert.assertTrue(String.format("Class %s is registred%n", firstPartOfFileName), isRegistered);
 
             String fullConfigName;
 
@@ -118,7 +123,7 @@ public class ActionsAndExpressionsTest {
 
             // Check that all actions and expressions has a xml class
             Object configureXml = null;
-            fullConfigName = packageName + ".configurexml." + file + "Xml";
+            fullConfigName = packageName + ".configurexml." + firstPartOfFileName + "Xml";
             log.debug("getAdapter looks for {}", fullConfigName);
             try {
                 Class<?> configClass = Class.forName(fullConfigName);
@@ -126,16 +131,16 @@ public class ActionsAndExpressionsTest {
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
             if (configureXml == null) {
-                System.out.format("Class %s.%s has no configurexml class%n", packageName, file);
+                System.out.format("Class %s.%s has no configurexml class%n", packageName, firstPartOfFileName);
                 errorsFound = true;
             }
 
             // Disable for now
-//            Assert.assertNotNull(String.format("Class %s has xml class%n", file), configureXml);
+//            Assert.assertNotNull(String.format("Class %s has xml class%n", firstPartOfFileName), configureXml);
 
             // Check that all actions and expressions has a swing class
             SwingConfiguratorInterface configureSwing;
-            fullConfigName = packageName + ".swing." + file + "Swing";
+            fullConfigName = packageName + ".swing." + firstPartOfFileName + "Swing";
             log.debug("getAdapter looks for {}", fullConfigName);
 
             Class<?> configClass = Class.forName(fullConfigName);
@@ -145,13 +150,16 @@ public class ActionsAndExpressionsTest {
 
             MaleSocket socket = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
             MaleSocket lastMaleSocket = socket;
+            Assert.assertNotNull(lastMaleSocket);
             Base base = socket;
-            while ((base != null) && (base instanceof MaleSocket)) {
+            Assert.assertNotNull(base);
+            
+            while ((base instanceof MaleSocket)) {
                 lastMaleSocket = (MaleSocket) base;
                 base = ((MaleSocket)base).getObject();
             }
             Assert.assertNotNull(base);
-            Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", base.getClass().getName(), packageName+"."+file);
+            Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", base.getClass().getName(), packageName+"."+firstPartOfFileName);
 //                System.out.format("Swing: %s, Class: %s, class: %s%n", configureSwing.toString(), socket.getShortDescription(), socket.getObject().getClass().getName());
             Assert.assertEquals("Swing class has correct name", socket.getShortDescription(), configureSwing.toString());
 //                System.out.format("MaleSocket class: %s, socket class: %s%n",
@@ -169,16 +177,16 @@ public class ActionsAndExpressionsTest {
             Locale.setDefault(DEFAULT_LOCALE);
 
 //            if (configureSwing == null) {
-//                System.out.format("Class %s.%s has no swing class%n", packageName, file);
+//                System.out.format("Class %s.%s has no swing class%n", packageName, firstPartOfFileName);
 //                errorsFound = true;
 //            }
-            Assert.assertNotNull(String.format("Class %s has swing class%n", file), configureSwing);
+            Assert.assertNotNull(String.format("Class %s has swing class%n", firstPartOfFileName), configureSwing);
 
             // Ignore for now
 /*
             // Check that all actions and expressions has a test class for the swing class
 //            Class configureSwingTest = null;
-            fullConfigName = packageName + ".swing." + file + "SwingTest";
+            fullConfigName = packageName + ".swing." + firstPartOfFileName + "SwingTest";
             log.debug("getAdapter looks for {}", fullConfigName);
             Class<?> configClass = null;
             try {
@@ -186,14 +194,14 @@ public class ActionsAndExpressionsTest {
             } catch (ClassNotFoundException e) {
             }
             if (configClass == null) {
-                System.out.format("Class %s.%s has no test class for its swing class%n", packageName, file);
+                System.out.format("Class %s.%s has no test class for its swing class%n", packageName, firstPartOfFile);
                 errorsFound = true;
             }
 //            Assert.assertNotNull("The swing class has a test class", configClass);
 */
 
 /*
-            System.out.format("Class: %s%n", packageName+"."+file);
+            System.out.format("Class: %s%n", packageName+"."+firstPartOfFileName);
             Level severity = Level.ERROR; // level at or above which we'll complain
             boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
             String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);

@@ -612,7 +612,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 0 Status.
      * @param f0 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF0(boolean f0) {
@@ -622,7 +622,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 1 Status.
      * @param f1 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF1(boolean f1) {
@@ -632,7 +632,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 2 Status.
      * @param f2 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF2(boolean f2) {
@@ -642,7 +642,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 3 Status.
      * @param f3 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF3(boolean f3) {
@@ -652,7 +652,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 4 Status.
      * @param f4 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF4(boolean f4) {
@@ -662,7 +662,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 5 Status.
      * @param f5 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF5(boolean f5) {
@@ -672,7 +672,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 6 Status.
      * @param f6 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF6(boolean f6) {
@@ -682,7 +682,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 7 Status.
      * @param f7 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF7(boolean f7) {
@@ -692,7 +692,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 8 Status.
      * @param f8 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF8(boolean f8) {
@@ -702,7 +702,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 9 Status.
      * @param f9 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF9(boolean f9) {
@@ -712,7 +712,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 10 Status.
      * @param f10 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF10(boolean f10) {
@@ -722,7 +722,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 11 Status.
      * @param f11 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF11(boolean f11) {
@@ -732,7 +732,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 12 Status.
      * @param f12 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF12(boolean f12) {
@@ -742,7 +742,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 13 Status.
      * @param f13 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF13(boolean f13) {
@@ -752,7 +752,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 14 Status.
      * @param f14 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF14(boolean f14) {
@@ -762,7 +762,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 15 Status.
      * @param f15 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF15(boolean f15) {
@@ -772,7 +772,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 16 Status.
      * @param f16 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF16(boolean f16) {
@@ -782,7 +782,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 17 Status.
      * @param f17 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF17(boolean f17) {
@@ -792,7 +792,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 18 Status.
      * @param f18 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF18(boolean f18) {
@@ -802,7 +802,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 19 Status.
      * @param f19 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF19(boolean f19) {
@@ -812,7 +812,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 20 Status.
      * @param f20 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF20(boolean f20) {
@@ -822,7 +822,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 21 Status.
      * @param f21 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF21(boolean f21) {
@@ -832,7 +832,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 22 Status.
      * @param f22 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF22(boolean f22) {
@@ -842,7 +842,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 23 Status.
      * @param f23 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF23(boolean f23) {
@@ -852,7 +852,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 24 Status.
      * @param f24 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF24(boolean f24) {
@@ -862,7 +862,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 25 Status.
      * @param f25 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF25(boolean f25) {
@@ -872,7 +872,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 26 Status.
      * @param f26 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF26(boolean f26) {
@@ -882,7 +882,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 27 Status.
      * @param f27 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF27(boolean f27) {
@@ -892,7 +892,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Function 28 Status.
      * @param f28 true for Function On, false for Function Off.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunction(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF28(boolean f28) {
@@ -906,7 +906,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 0 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF0Momentary() {
@@ -916,7 +916,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 1 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF1Momentary() {
@@ -926,7 +926,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 2 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF2Momentary() {
@@ -936,7 +936,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 3 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF3Momentary() {
@@ -946,7 +946,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 4 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF4Momentary() {
@@ -956,7 +956,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 5 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF5Momentary() {
@@ -966,7 +966,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 6 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF6Momentary() {
@@ -976,7 +976,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 7 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF7Momentary() {
@@ -986,7 +986,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 8 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF8Momentary() {
@@ -996,7 +996,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 9 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF9Momentary() {
@@ -1006,7 +1006,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 10 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF10Momentary() {
@@ -1016,7 +1016,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 11 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF11Momentary() {
@@ -1026,7 +1026,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 12 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF12Momentary() {
@@ -1036,7 +1036,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 13 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF13Momentary() {
@@ -1046,7 +1046,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 14 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF14Momentary() {
@@ -1056,7 +1056,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 15 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF15Momentary() {
@@ -1066,7 +1066,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 16 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF16Momentary() {
@@ -1076,7 +1076,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 17 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF17Momentary() {
@@ -1086,7 +1086,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 18 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF18Momentary() {
@@ -1096,7 +1096,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 19 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF19Momentary() {
@@ -1106,7 +1106,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 20 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF20Momentary() {
@@ -1116,7 +1116,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 21 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF21Momentary() {
@@ -1126,7 +1126,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 22 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF22Momentary() {
@@ -1136,7 +1136,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 23 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF23Momentary() {
@@ -1146,7 +1146,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 24 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF24Momentary() {
@@ -1156,7 +1156,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 25 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF25Momentary() {
@@ -1166,7 +1166,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 26 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF26Momentary() {
@@ -1176,7 +1176,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 27 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF27Momentary() {
@@ -1186,7 +1186,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Get Momentary Function 28 Status.
      * @return true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code getFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default boolean getF28Momentary() {
@@ -1196,7 +1196,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 0 Status.
      * @param f0Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF0Momentary(boolean f0Momentary) {
@@ -1206,7 +1206,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 1 Status.
      * @param f1Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF1Momentary(boolean f1Momentary) {
@@ -1216,7 +1216,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 2 Status.
      * @param f2Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF2Momentary(boolean f2Momentary) {
@@ -1226,7 +1226,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 3 Status.
      * @param f3Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF3Momentary(boolean f3Momentary) {
@@ -1236,7 +1236,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 4 Status.
      * @param f4Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF4Momentary(boolean f4Momentary) {
@@ -1246,7 +1246,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 5 Status.
      * @param f5Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF5Momentary(boolean f5Momentary) {
@@ -1256,7 +1256,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 6 Status.
      * @param f6Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF6Momentary(boolean f6Momentary) {
@@ -1266,7 +1266,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 7 Status.
      * @param f7Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF7Momentary(boolean f7Momentary) {
@@ -1276,7 +1276,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 8 Status.
      * @param f8Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF8Momentary(boolean f8Momentary) {
@@ -1286,7 +1286,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 9 Status.
      * @param f9Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF9Momentary(boolean f9Momentary) {
@@ -1296,7 +1296,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 10 Status.
      * @param f10Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF10Momentary(boolean f10Momentary) {
@@ -1306,7 +1306,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 11 Status.
      * @param f11Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF11Momentary(boolean f11Momentary) {
@@ -1316,7 +1316,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 12 Status.
      * @param f12Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF12Momentary(boolean f12Momentary) {
@@ -1326,7 +1326,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 13 Status.
      * @param f13Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF13Momentary(boolean f13Momentary) {
@@ -1336,7 +1336,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 14 Status.
      * @param f14Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF14Momentary(boolean f14Momentary) {
@@ -1346,7 +1346,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 15 Status.
      * @param f15Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF15Momentary(boolean f15Momentary) {
@@ -1356,7 +1356,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 16 Status.
      * @param f16Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF16Momentary(boolean f16Momentary) {
@@ -1366,7 +1366,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 17 Status.
      * @param f17Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF17Momentary(boolean f17Momentary) {
@@ -1376,7 +1376,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 18 Status.
      * @param f18Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF18Momentary(boolean f18Momentary) {
@@ -1386,7 +1386,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 19 Status.
      * @param f19Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF19Momentary(boolean f19Momentary) {
@@ -1396,7 +1396,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 20 Status.
      * @param f20Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF20Momentary(boolean f20Momentary) {
@@ -1406,7 +1406,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 21 Status.
      * @param f21Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF21Momentary(boolean f21Momentary) {
@@ -1416,7 +1416,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 22 Status.
      * @param f22Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF22Momentary(boolean f22Momentary) {
@@ -1426,7 +1426,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 23 Status.
      * @param f23Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF23Momentary(boolean f23Momentary) {
@@ -1436,7 +1436,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 24 Status.
      * @param f24Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF24Momentary(boolean f24Momentary) {
@@ -1446,7 +1446,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 25 Status.
      * @param f25Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF25Momentary(boolean f25Momentary) {
@@ -1456,7 +1456,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 26 Status.
      * @param f26Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF26Momentary(boolean f26Momentary) {
@@ -1466,7 +1466,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 27 Status.
      * @param f27Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF27Momentary(boolean f27Momentary) {
@@ -1476,7 +1476,7 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Set Momentary Function 28 Status.
      * @param f28Momentary true for Momentary Function On, else false.
-     * @deprecated Use {@code getFunction(int functionNum) } instead.
+     * @deprecated Use {@code setFunctionMomentary(int functionNum) } instead.
      */
     @Deprecated(since="5.1.2", forRemoval=false)
     public default void setF28Momentary(boolean f28Momentary) {

@@ -58,6 +58,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.COMMON, Sequence.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, ShowDialog.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, ShutdownComputer.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, SimulateTurnoutFeedback.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, TableForEach.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, Timeout.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, TriggerRoute.class),

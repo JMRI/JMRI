@@ -57,7 +57,6 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     self.station_block_list.append(station_block_name)
                     self.station_blk_list.append(self.get_layout_block(station_block_name))
         if self.logLevel > 0: print 'self.station_block_list' , self.station_block_list
-        if self.logLevel > 0: print 'PPPPPPPPPPP'
         
     def get_layout_block(self, block_name):
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -74,6 +73,221 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
             self.g_express.addVertex(station_block_name)
             self.g_stopping.addVertex(station_block_name)
         if self.logLevel > 0: print 'end setup_graph_vertices"
+        
+    # def setup_graph_edges_test(self):
+        # if self.logLevel > 0: print "*****************************"
+        # if self.logLevel > 0: print "****setup_graph_edges********"
+        # if self.logLevel > 0: print "*****************************"
+        # LayoutBlockConnectivityTools=jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
+        # index = 0
+        # # stations = [station for station in self.station_block_list]
+        # # print "station_block_list", stations
+        # for station in self.station_block_list:
+            # station_block = self.get_layout_block(station)
+            # station_block_name = station_block.getUserName()
+            # # if station_block_name != 'SP-MLU':
+                # # continue                                  
+            # if self.logLevel > 0: print "*********************"
+            # if self.logLevel > 0: print "station = " ,station
+            # if self.logLevel > 0: print "*********************"
+
+            # if self.logLevel > 0: print "no neighbors", station_block.getNumberOfNeighbours()
+            # for i in range(station_block.getNumberOfNeighbours()):
+                # if self.logLevel > 0: print "+++++++++++++++++++++++++"
+                # neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
+                # # if neighbor_name != 'DownLineExit':
+                    # # continue
+                # if self.logLevel > 0: print "neighbor_name",neighbor_name
+                # other_stations = [block for block in self.station_block_list if block not in [station]]
+                # if self.logLevel > 0: print "other_stations",other_stations
+                # for destination in other_stations:
+                    # index +=1
+                    # # if destination != 'ML-MLU':
+                        # # continue                           
+                    # if self.logLevel > 0: print "--------------------------"
+                    # if self.logLevel > 0: print "destination",destination
+                    # if self.logLevel > 0: print "--------------------------"
+                    # sourceLayoutBlock = station_block
+                    # destinationLayoutBlock  = self.get_layout_block(destination)
+                    # protectingLayoutBlock = self.get_layout_block(neighbor_name)
+                    # validateOnly = True
+                    # pathMethod = LayoutBlockConnectivityTools.Routing.NONE
+                    # path = []
+                    # path = self.getLayoutBlocks(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)
+                    # if self.logLevel > 0: print "path", path
+                    # try:
+                        # path = LayoutBlockConnectivityTools.getLayoutBlocks(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)
+                        # #path = self.getLayoutBlocks(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)
+                        # if self.logLevel > 0: print path
+                    # except jmri.JmriException as e:
+                        # if self.logLevel > 0: print "got here 2b"
+                        # if self.logLevel > 0: print (e)
+                        # continue
+                    # finally:
+                        # if self.logLevel > 0: print "got here 3"
+                        # if path != [] and path != None:
+                            # if self.logLevel > 0: print "got here 4a"
+                            # #add an edge for all paths to form the express train graph
+                            # path_name = [str(x.getUserName()) for x in path]
+                            # if self.logLevel > 0: print path_name
+                            
+    # class BlocksTested:
+
+        # block = None
+        # indexNumber = java.util.ArrayList()
+
+        # def __init__ (self, block) :
+            # self.block = block
+        
+
+        # def addIndex(self, x) :
+            # self.indexNumber.add(x)
+        
+
+        # def getLastIndex(self) :
+            # return self.indexNumber.get(indexNumber.size() - 1) # get the last one in the list
+        
+
+        # def getTestedIndexes(self) :
+            # return self.indexNumber;
+        
+
+        # def getBlock(self) :
+            # return self.block
+        
+              
+                            
+    # def getLayoutBlocks(self,sourceLayoutBlock, destinationLayoutBlock,  protectingLayoutBlock, validateOnly, pathMethod):
+        # if self.logLevel > 0: print "************** getLayoutBlocks***************"
+        # ttlSize = 50
+        
+        # if self.logLevel > 0: print "calling getLayoutBlocks " ,"sourceLayoutBlock",sourceLayoutBlock.getDisplayName(),"destinationLayoutBlock",destinationLayoutBlock.getDisplayName(),"protectingLayoutBlock",protectingLayoutBlock.getDisplayName()
+    
+        # lastErrorMessage = "Unknown Error Occured"
+        # lbm = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager);
+        
+        # if not lbm.isAdvancedRoutingEnabled():
+            # print("Advanced routing has not been enabled therefore we cannot use this function");
+        
+
+        # directionOfTravel = sourceLayoutBlock.getNeighbourDirection(protectingLayoutBlock)
+        # currentBlock = sourceLayoutBlock.getBlock()
+
+        # destBlock = destinationLayoutBlock.getBlock()
+        # if self.logLevel > 0: print("Destination Block {} {}", destinationLayoutBlock.getDisplayName(), destBlock)
+
+        # nextBlock = protectingLayoutBlock.getBlock()
+        # if self.logLevel > 0: print("s:{} p:{} d:{}", sourceLayoutBlock.getDisplayName(), protectingLayoutBlock.getDisplayName(), destinationLayoutBlock.getDisplayName())
+        
+        
+        # blocksInRoute = java.util.ArrayList()
+        # blocksInRoute.add(self.BlocksTested(sourceLayoutBlock))
+
+        # if (not validateOnly) :
+            # if (canLBlockBeUsed(protectingLayoutBlock)) :
+                # blocksInRoute.add(jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.BlocksTested(protectingLayoutBlock))
+            # else:
+                # lastErrorMessage = "Block we are protecting is already occupied or reserved";
+                # if self.logLevel > 0: print("will throw {}", lastErrorMessage)
+                # #throw new jmri.JmriException(lastErrorMessage)
+            
+            # if (!canLBlockBeUsed(destinationLayoutBlock)) :
+                # lastErrorMessage = "Destination Block is already occupied or reserved";
+                # if self.logLevel > 0: print("will throw {}", lastErrorMessage)
+                # #throw new jmri.JmriException(lastErrorMessage)
+            
+        # else:
+            # blocksInRoute.add(self.BlocksTested(protectingLayoutBlock))
+        
+        # if (destinationLayoutBlock == protectingLayoutBlock) :
+            # returnBlocks = java.util.ArrayList()
+            # for blocksTested in blocksInRoute:
+                # returnBlocks.add(blocksTested.getBlock())
+                
+            # return returnBlocks
+
+        # bt = blocksInRoute.get(blocksInRoute.size() - 1)
+
+        # ttl = 1
+        # offSet = java.util.ArrayList()
+        # while (ttl < ttlSize): # value should be higher but low for test!
+            # if self.logLevel > 0: print("===== Ttl value = {} ======", ttl);
+            # if self.logLevel > 0: print("Looking for next block");
+            # lbctools= jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
+            # nextBlockIndex = lbctools.findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, pathMethod)
+            # if self.logLevel > 0: print "nextBlockIndex",nextBlockIndex
+            # if (nextBlockIndex != -1) :
+                # if self.logLevel > 0: print "about to add index", nextBlockIndex
+                # bt.addIndex(nextBlockIndex)
+                # if self.logLevel > 0: print("block index returned {} Blocks in route size {}", nextBlockIndex, blocksInRoute.size())
+                
+                # # Sets the old next block to be our current block.
+                # currentLBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getLayoutBlock(nextBlock)
+                # if (currentLBlock == None):
+                    # if self.logLevel > 0: print("Unable to get block :{}: from instancemanager", nextBlock)
+                    # continue
+                
+                # offSet.clear()
+
+                # directionOfTravel = currentLBlock.getRouteDirectionAtIndex(nextBlockIndex)
+
+                # currentBlock = nextBlock
+                # nextBlock = currentLBlock.getRouteNextBlockAtIndex(nextBlockIndex)
+                # nextLBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager).getLayoutBlock(nextBlock);
+                # if self.logLevel > 0: print("Blocks in route size {}", blocksInRoute.size());
+                # if self.logLevel > 0: print("next: ",nextBlock.getDisplayName(), "dest: ", destBlock.getDisplayName())
+                # if self.logLevel > 0: print "currentBlock",currentBlock.getDisplayName(),"protectingLayoutBlock",protectingLayoutBlock.getDisplayName(),"nextLBlock",nextLBlock.getDisplayName()
+                # if (nextBlock == currentBlock) :
+                    # nextBlock = currentLBlock.getRouteDestBlockAtIndex(nextBlockIndex)
+                    # if self.logLevel > 0: print("the next block to our destination we are looking for is directly connected to this one")
+                # elif (not (protectingLayoutBlock == nextLBlock and ttl> -1)) :
+                    # if (nextLBlock != None) :
+                        # if self.logLevel > 0: print ("Add block {}", nextLBlock.getDisplayName())
+                    
+                    # bt = self.BlocksTested(nextLBlock)
+                    # blocksInRoute.add(bt)
+                
+                # if (nextBlock == destBlock) :
+                    # if (not validateOnly and !checkForLevelCrossing(destinationLayoutBlock)) :
+                        # if self.logLevel > 0: print("Destination block is in conflict on a crossover")
+                    
+                    # returnBlocks = java.util.ArrayList()
+                    # for blocksTested in blocksInRoute:
+                        # returnBlocks.add(blocksTested.getBlock())
+                    # returnBlocks.add(destinationLayoutBlock)
+                    # if self.logLevel > 0: print("Adding destination Block {}", destinationLayoutBlock.getDisplayName())
+                    # if self.logLevel > 0: print("arrived at destination block")
+                    # if self.logLevel > 0: print("{} Return as Long", sourceLayoutBlock.getDisplayName())
+                    # for returnBlock in returnBlocks:
+                        # if self.logLevel > 0: print("  return block {}", returnBlock.getDisplayName())
+                        # if self.logLevel > 0: print("Finished List")
+                    # return returnBlocks
+                
+            # else:
+                # #-1 is returned when there are no more valid besthop valids found
+                # # Block index is -1, so we need to go back a block and find another way.
+
+                # # So we have gone back as far as our starting block so we better return.
+                # birSize = blocksInRoute.size()
+                # if self.logLevel > 0: print("block in route size {}", birSize)
+                # if (birSize <= 2) :
+                    # if self.logLevel > 0: print("drop out here with ttl");
+                    # ttl = ttlSize + 1
+                # else :
+                    # for t in range(0,blocksInRoute.size()):
+                        # if self.logLevel > 0: print("index {} block {}", t, blocksInRoute.get(t).getBlock().getDisplayName());
+                        # if self.logLevel > 0: print("To remove last block {}", blocksInRoute.get(birSize - 1).getBlock().getDisplayName());
+                    # currentBlock = blocksInRoute.get(birSize - 3).getBlock().getBlock()
+                    # nextBlock = blocksInRoute.get(birSize - 2).getBlock().getBlock()
+                    # offSet = blocksInRoute.get(birSize - 2).getTestedIndexes()
+                    # bt = blocksInRoute.get(birSize - 2)
+                    # blocksInRoute.remove(birSize - 1)
+                    # ttl += -1
+            # ttl += -1
+        # if (ttl == ttlSize) :
+            # lastErrorMessage = "ttlExpired"
+        # # we exited the loop without either finding the destination or we had error.
+        # if self.logLevel > 0: print "Exception",lastErrorMessage         
     
         
     def setup_graph_edges(self):
@@ -123,7 +337,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                         continue
                     finally:
                         if self.logLevel > 0: print "got here 3"
-                        if path != []:
+                        if path != [] and path != None:
                             if self.logLevel > 0: print "got here 4a"
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
@@ -167,7 +381,6 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             if self.logLevel > 0: print "self.g_express",self.g_express
                             
                             #add only edges for paths that do not go through a station for stopping train graph
-                            if self.logLevel > 0: print "a","b",a,b
                             through_stations = [str(block_name) for block_name in self.station_block_list if block_name not in [station,destination]]
                             # if self.logLevel > 0: print "path", path_name
                             # if self.logLevel > 0: print "all through_stations not at start and end", through_stations
@@ -308,8 +521,7 @@ class LabelledEdge(DefaultWeightedEdge):
             item_list = item_list + str(item) + " = " + str(value) +" : "
             if self.logLevel > 0: print "item_list", item_list
         if self.logLevel > 0: print item_list    
-    
-        #return self.toString() + " : " + item_list 
+     
         return "*****to_string*****(" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")"    
 
     def to_string(self):
@@ -319,11 +531,5 @@ class LabelledEdge(DefaultWeightedEdge):
             if self.logLevel > 0: print "item_list", item_list
         if self.logLevel > 0: print item_list    
     
-        #return self.toString() + " : " + item_list 
         return "*****to_string*****(\n" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")*****to_string end*******"
         
-#if __name__ == "__main__":        
-    #g =StationGraph()
-    #print "Graph = ", g
-    #for v in vertices:
-        #print("Station "+str(v)+" --> "+ str(Graphs.neighborListOf(self.g_name,v)))

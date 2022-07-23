@@ -6,16 +6,16 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.jmrix.can.cbus.swing.modules.*;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
-import jmri.jmrix.can.cbus.simulator.moduletypes.SprogPiSprog3;
+import jmri.jmrix.can.cbus.simulator.moduletypes.SprogPiSprog3Plus;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 /**
- * Test simple functioning of CbusNodeInfoPane
+ * Test for [Pi]-SPROG 3 (v2|Plus) pane provider
  *
- * @author Andrew Crosland Copyright (C) 2021
+ * @author Andrew Crosland Copyright (C) 2022
  */
 public class Sprog3PlusPaneProviderTest {
     
@@ -28,7 +28,7 @@ public class Sprog3PlusPaneProviderTest {
     
     @Test
     public void testPaneFound() {
-        CbusDummyNode node = new SprogPiSprog3().getNewDummyNode(memo, 65534);
+        CbusDummyNode node = new SprogPiSprog3Plus().getNewDummyNode(memo, 65534);
         CbusConfigPaneProvider t = CbusConfigPaneProvider.getProviderByNode(node);
 
         Assertions.assertNotNull(t);

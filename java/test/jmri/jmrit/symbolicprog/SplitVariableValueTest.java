@@ -27,11 +27,12 @@ import jmri.util.JUnitUtil;
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
  * @author Dave Heap Copyright 2019
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
+    justification = "passing known null variables for clarity in constructors")
 public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
     final String lowCV = "12";
     final String highCV = "18";
-    ProgDebugger p = new ProgDebugger();
 
     // Local tests version of makeVar with settable parameters and cvList support.
     SplitVariableValue makeVar(String label, String comment, String cvName,
@@ -42,7 +43,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
             String extra1, String extra2, String extra3, String extra4) {
         ProgDebugger pp = new ProgDebugger();
 
-        if (!cvNum.equals("")) { // some variables have no CV per se
+        if (!cvNum.isEmpty()) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
                 CvValue cvNext = new CvValue(cvNum, pp);
@@ -56,7 +57,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         }
-        if (highCV != null && !highCV.equals("")) {
+        if (highCV != null && !highCV.isEmpty()) {
             CvValue cvNext = new CvValue(highCV, pp);
             cvNext.setValue(0);
             v.put(highCV, cvNext);
