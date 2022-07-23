@@ -43,9 +43,10 @@ public class PositionableShapeTest extends PositionableJComponentTest {
             }
 
             @Override
+            @javax.annotation.Nonnull
             protected Shape makeShape() {
                 // bogus body, not used in tests
-                return null;
+                throw new UnsupportedOperationException();
             }
 
             @Override
