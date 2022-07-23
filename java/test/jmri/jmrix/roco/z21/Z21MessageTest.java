@@ -52,7 +52,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     //Test some canned messages.
     @Test
-    public void SerialNumberRequest() {
+    public void testSerialNumberRequest() {
         msg = Z21Message.getSerialNumberRequestMessage();
         Assert.assertEquals("length", 4, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x04, msg.getElement(0) & 0xFF);
@@ -62,13 +62,13 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void toMonitorStringSerialNumberRequest() {
+    public void testToMonitorStringSerialNumberRequest() {
         msg = Z21Message.getSerialNumberRequestMessage();
         Assert.assertEquals("Monitor String", "Z21 Serial Number Request", msg.toMonitorString());
     }
 
     @Test
-    public void GetHardwareInfoRequest() {
+    public void testGetHardwareInfoRequest() {
         msg = Z21Message.getLanGetHardwareInfoRequestMessage();
         Assert.assertEquals("length", 4, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x04, msg.getElement(0) & 0xFF);
@@ -78,13 +78,13 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void toMonitorStringGetHardwareInfoRequest() {
+    public void testToMonitorStringGetHardwareInfoRequest() {
         msg = Z21Message.getLanGetHardwareInfoRequestMessage();
         Assert.assertEquals("Monitor String", "Z21 Version Request", msg.toMonitorString());
     }
 
     @Test
-    public void LanLogoffRequest() {
+    public void testLanLogoffRequest() {
         msg = Z21Message.getLanLogoffRequestMessage();
         Assert.assertEquals("length", 4, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x04, msg.getElement(0) & 0xFF);
@@ -101,7 +101,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void GetBroadCastFlagsRequest() {
+    public void testGetBroadCastFlagsRequest() {
         msg = Z21Message.getLanGetBroadcastFlagsRequestMessage();
         Assert.assertEquals("length", 4, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x04, msg.getElement(0) & 0xFF);
@@ -117,7 +117,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void SetBroadCastFlagsRequest() {
+    public void testSetBroadCastFlagsRequest() {
         msg = Z21Message.getLanSetBroadcastFlagsRequestMessage(0x01020304);
         Assert.assertEquals("length", 8, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x08, msg.getElement(0) & 0xFF);
@@ -138,7 +138,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void GetRailComDataRequest() {
+    public void testGetRailComDataRequest() {
         msg = Z21Message.getLanRailComGetDataRequestMessage();
         Assert.assertEquals("length", 4, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x04, msg.getElement(0) & 0xFF);
@@ -154,7 +154,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void GetSystemStateDataChangedRequest() {
+    public void testGetSystemStateDataChangedRequest() {
         msg = Z21Message.getLanSystemStateDataChangedRequestMessage();
         Assert.assertEquals("length", 4, msg.getNumDataElements());
         Assert.assertEquals("0th byte", 0x04, msg.getElement(0) & 0xFF);
@@ -164,13 +164,13 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void toMonitorStringSystemStateDataChangedRequest() {
+    public void testToMonitorStringSystemStateDataChangedRequest() {
         msg = Z21Message.getLanSystemStateDataChangedRequestMessage();
         Assert.assertEquals("Monitor String", "04 00 85 00", msg.toMonitorString());
     }
 
     @Test
-    public void getLocoNetMessage() {
+    public void testGetLocoNetMessage() {
         byte message[] = {
             (byte) 0xEF, (byte) 0x0E, (byte) 0x03, (byte) 0x00, (byte) 0x03,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -187,14 +187,14 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void getNullLocoNetMessage() {
+    public void testGetNullLocoNetMessage() {
         byte message[] = {(byte) 0x11, (byte) 0x00, (byte) 0x88, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x01, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
-        Z21Message msg = new Z21Message(message, 17);
-        Assert.assertNull("non-LocoNetTunnel LocoNet Message", msg.getLocoNetMessage());
+        Z21Message z21msg = new Z21Message(message, 17);
+        Assert.assertNull("non-LocoNetTunnel LocoNet Message", z21msg.getLocoNetMessage());
     }
 
     @Test
-    public void MonitorStringLocoNetMessage() {
+    public void testMonitorStringLocoNetMessage() {
         byte message[] = {
             (byte) 0xEF, (byte) 0x0E, (byte) 0x03, (byte) 0x00, (byte) 0x03,
             (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -205,7 +205,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void MonitorStringLocoNetMessage2() {
+    public void testMonitorStringLocoNetMessage2() {
         byte message[] = {
             (byte) 0xD0, (byte) 0x20, (byte) 0x04,
             (byte) 0x7D, (byte) 0x0A, (byte) 0x7C};
@@ -215,13 +215,13 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void toMonitorStringLanRMBusGetDataRequest() {
+    public void testToMonitorStringLanRMBusGetDataRequest() {
         msg = Z21Message.getLanRMBusGetDataRequestMessage(0);
         Assert.assertEquals("Monitor String", "Z21 RM Bus Data Request for group 0", msg.toMonitorString());
     }
 
     @Test
-    public void toMonitorStringLanRMBusProgramModule() {
+    public void testToMonitorStringLanRMBusProgramModule() {
         msg = Z21Message.getLanRMBusProgramModuleMessage(0);
         Assert.assertEquals("Monitor String", "Z21 RM Bus Program Module to Address 0", msg.toMonitorString());
     }
@@ -234,6 +234,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         m = msg = null;
         JUnitUtil.tearDown();
