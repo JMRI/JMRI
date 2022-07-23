@@ -11,7 +11,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.Bundle;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -212,12 +211,12 @@ public class ActionOBlock extends AbstractDigitalAction
                 case GetBlockWarrant:
                     Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
                     if (memory != null) {
-                    	Warrant w = oblock.getWarrant();
-                    	if (w != null) {
+                        Warrant w = oblock.getWarrant();
+                        if (w != null) {
                             memory.setValue(w.getDisplayName());
-                    	} else {
+                        } else {
                             memory.setValue("unallocated");
-                    	}
+                        }
                     } else {
                         throw new JmriException("Memory for GetBlockWarrant is null for oblock - " + oblock.getDisplayName());  // NOI18N
                     }
@@ -225,13 +224,13 @@ public class ActionOBlock extends AbstractDigitalAction
                 case GetBlockValue:
                     memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
                     if (memory != null) {
-                    	Object obj = oblock.getValue();
-                    	if (obj instanceof String) {
+                        Object obj = oblock.getValue();
+                        if (obj instanceof String) {
                             memory.setValue(obj);
-                    	} else {
+                        } else {
                             memory.setValue("");
-                    	}
-                    } else {
+                        }
+             } else {
                         throw new JmriException("Memory for GetBlockValue is null for oblock - " + oblock.getDisplayName());  // NOI18N
                     }
                     break;
