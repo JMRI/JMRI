@@ -553,24 +553,24 @@ public interface UserPreferencesManager {
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
      if (p.getProperty("thisClass", "routeSaveMsg") { // NOI18N
          final JDialog dialog = new JDialog();
-         dialog.setTitle("Reminder"); // I18N
+         dialog.setTitle(Bundle.getMessage(""ReminderTitle")); // I18N
          dialog.setLocationRelativeTo(null);
          dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
          JPanel container = new JPanel();
          container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
          container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-         JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER);
+         JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER); // I18N
          question.setAlignmentX(Component.CENTER_ALIGNMENT);
          container.add(question);
 
-         JButton okButton = new JButton("Okay");
-         JPanel button = new JPanel();
+         JButton okButton = new JButton(Bundle.getMessage("ButtonOK");
+         JPanel buttons = new JPanel();
          button.setAlignmentX(Component.CENTER_ALIGNMENT);
-         button.add(okButton);
-         container.add(button);
+         buttons.add(okButton);
+         container.add(buttons);
 
-         final JCheckBox remember = new JCheckBox("Do not remind me again");
+         final JCheckBox remember = new JCheckBox(Bundle.getMessage("DontRemind");
          remember.setAlignmentX(Component.CENTER_ALIGNMENT);
          remember.setFont(remember.getFont().deriveFont(10f));
          container.add(remember);
@@ -598,23 +598,23 @@ public interface UserPreferencesManager {
      p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
      if (p.getProperty("thisClass", "QuitAfterSave") == 0x00) { // NOI18N
          final JDialog dialog = new JDialog();
-         dialog.setTitle(rb.getString("MessageShortQuitWarning")); // I18N
+         dialog.setTitle(Bundle.getMessage("MessageShortQuitWarning")); // I18N
          dialog.setLocationRelativeTo(null);
          dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
          JPanel container = new JPanel();
          container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
          container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-         JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
+         JLabel question = new JLabel(Bundle.getMessage("MessageLongQuitWarning")); // resource is in # AppsConfigBundle.properties
          question.setAlignmentX(Component.CENTER_ALIGNMENT);
          container.add(question);
 
-         final JCheckBox remember = new JCheckBox("Remember this setting for next time");
+         final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting")); // I18N
          remember.setFont(remember.getFont().deriveFont(10f));
          remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-         JButton yesButton = new JButton("Yes");
-         JButton noButton = new JButton("No");
+         JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+         JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
          JPanel buttons = new JPanel();
          buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
          buttons.add(yesButton);
