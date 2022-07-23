@@ -333,7 +333,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added decoder definitions for Occupancy Feedback modules #63340 (2-rail) and #63350 (3-rail).<br>
+                Use the LNCV Tool for programming.</li>
             </ul>
 
         <h4>Umelec</h4>
