@@ -222,7 +222,7 @@ public class WarrantTest {
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(() -> {
-            return warrant.getRunningMessage().equals("Idle");
+            return warrant.getRunningMessage().equals(Bundle.getMessage("Idle"));
         }, "warrant not done");
 
     }
