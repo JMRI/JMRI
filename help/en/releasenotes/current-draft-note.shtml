@@ -425,6 +425,7 @@
           to the managers. And <i>InstanceManager</i> that gives you direct
           access to the instance manager. The constants <i>null</i> and
           <i>None</i> has the null value in Java, the None value in Jython.</li>
+          <li>The action <i>Listen On Beans - Table</i> is improved.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

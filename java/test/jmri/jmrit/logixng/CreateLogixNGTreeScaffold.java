@@ -824,6 +824,9 @@ public class CreateLogixNGTreeScaffold {
         actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Row);
         actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
         actionListenOnBeansTable.setListenOnAllProperties(false);
+        actionListenOnBeansTable.setLocalVariableNamedBean("variableNamedBean");
+        actionListenOnBeansTable.setLocalVariableEvent("variableEvent");
+        actionListenOnBeansTable.setLocalVariableNewValue("variableNewValue");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
