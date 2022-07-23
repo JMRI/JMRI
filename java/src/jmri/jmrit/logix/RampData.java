@@ -67,16 +67,22 @@ public class RampData {
         float rampLength = 0;
         float nextSetting;
         if (_upRamp) {
-            float prevSetting = _fromSpeed;
             ListIterator<Float> iter = speedIterator(true);
+            float prevSetting = 0.0f;
+            if (iter.hasNext()) {
+                prevSetting = iter.next();
+            }
             while (iter.hasNext()) {
                 nextSetting = iter.next().floatValue();
                 rampLength += _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
                 prevSetting = nextSetting;
             }
         } else {
-            float prevSetting = _fromSpeed;
-            ListIterator<Float> iter = speedIterator(false);
+            ListIterator<Float> iter =speedIterator(false);
+            float prevSetting = 1.0f;
+            if (iter.hasPrevious()) {
+                prevSetting = iter.previous();
+            }
             while (iter.hasPrevious()) {
                 nextSetting = iter.previous().floatValue();
                 rampLength += _speedUtil.getDistanceOfSpeedChange(prevSetting, nextSetting, _timeInterval);
@@ -87,7 +93,7 @@ public class RampData {
     }
 
     protected int getNumSteps() {
-        return _settings.size();
+        return _settings.size() - 1;
     }
 
     protected int getRamptime() {
@@ -113,4 +119,6 @@ public class RampData {
     protected int getRampTimeIncrement() {
         return _timeInterval;
     }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RampData.class);
 }

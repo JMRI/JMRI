@@ -140,6 +140,7 @@
             <ul>
                 <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
                 <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
+                <li>Added F29+ support to SPROG Command Station mode.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -411,7 +412,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action <i>Simulate turnout feedback</i> has been added.
+          It's useful to simulate feedback based turnout actions when a
+          simulator connection is used, for example the <i>LocoNet simulator</i>.</li>
+          <li>The expression <i>Connection name</i> has been added.
+          It's useful together with <i>Simulate turnout feedback</i> so
+          that simulation only happens for simulated connections.</li>
+          <li>The action <i>Listen On Beans - Table</i> is improved.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

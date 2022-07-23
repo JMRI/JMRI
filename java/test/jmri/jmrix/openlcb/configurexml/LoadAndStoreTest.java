@@ -41,6 +41,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     public LoadAndStoreTest() {
         super(SaveType.Config, false);
+        messages = new ArrayList<>();
     }
 
     // from here down is testing infrastructure
@@ -51,7 +52,9 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     @BeforeEach
     @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
-    public void localSetUp() {
+    @Override
+    public void setUp() {
+        super.setUp();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
 
         messages = new ArrayList<>();
@@ -75,13 +78,15 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     }
 
     @AfterEach
-    public void localTearDown() {
+    @Override
+    public void tearDown() {
         if (memo != null && memo.getInterface() != null) {
             memo.getInterface().dispose();
         }
         memo = null;
         connection = null;
         nodeID = null;
+        super.tearDown();
     }
 
 }
