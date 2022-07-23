@@ -2,7 +2,7 @@
 #
 # class OptionDialog
 # Some Swing dialogs
-# 
+#
 # class NewTrainMaster *
 # Sets up a train in a section
 #
@@ -14,7 +14,7 @@
 # a) toggles the Setupdispatch SetupRoute buttons
 #
 # class ResetButtonMaster *
-# if a button is turned on, this class turns off all the others.  
+# if a button is turned on, this class turns off all the others.
 # allows only one station button to be active at a time
 #
 # class MoveTrain
@@ -42,7 +42,7 @@ from javax.swing import JOptionPane
 import os
 import imp
 import copy
-import org 
+import org
 
 from javax.swing import JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList
 
@@ -73,7 +73,7 @@ time_to_stop_in_station = 10000   # time to stop in station in stopping mode(mse
 
 # FileMoveTrain has to go before CreateScheduler
 FileMoveTrain = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/MoveTrain.py')
-execfile(FileMoveTrain) 
+execfile(FileMoveTrain)
 
 CreateScheduler = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Scheduler.py')
 execfile(CreateScheduler)
@@ -87,7 +87,7 @@ execfile(CreateSimulation)
 class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     CLOSED_OPTION = False
     logLevel = 0
-    
+
     def List(self, title, list_items):
         list = JList(list_items)
         list.setSelectedIndex(0)
@@ -111,8 +111,8 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         index = i[0]
         return list_items[index]
 
-        
-    #list and option buttons 
+
+    #list and option buttons
     def ListOptions(self, list_items, title, options):
         list = JList(list_items)
         list.setSelectedIndex(0)
@@ -127,22 +127,22 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             options[1])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
-            return 
+            return
         index = list.getSelectedIndices()[0]
         return [list_items[index], options[s]]
-        
+
         # call using
         # list_items = ["list1","list2"]
         # options = ["opt1", "opt2", "opt3"]
         # title = "title"
-        # result = OptionDialog().ListOptions(list_items, title, options) 
+        # result = OptionDialog().ListOptions(list_items, title, options)
         # list= result[0]
         # option = result[1]
-        # print "option= " ,option, " list = ",list 
-    
+        # print "option= " ,option, " list = ",list
+
     def variable_combo_box(self, options, default, msg, title = None, type = JOptionPane.QUESTION_MESSAGE):
-    
-    
+
+
         result = JOptionPane.showInputDialog(
             None,                                   # parentComponent
             msg,                                    # message text
@@ -152,11 +152,11 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             options,                                # selectionValues
             default                                 # initialSelectionValue
             )
-        
-        return result  
-        
+
+        return result
+
     def displayMessage(self, msg, title = ""):
-        
+
         s = JOptionPane.showOptionDialog(None,
                 msg,
                 title,
@@ -167,7 +167,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                 None)
         #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
         return s
-        
+
     def customQuestionMessage(self, msg, title, opt1, opt2, opt3):
         self.CLOSED_OPTION = False
         options = [opt1, opt2, opt3]
@@ -181,7 +181,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         options[2])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
-            return        
+            return
         return s
 
     def customQuestionMessage3str(self, msg, title, opt1, opt2, opt3):
@@ -205,7 +205,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         else:
             s1 = opt3
         return s1
-        
+
     def customQuestionMessage2(self, msg, title, opt1, opt2):
         self.CLOSED_OPTION = False
         options = [opt1, opt2]
@@ -220,8 +220,8 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return
-        return s 
-        
+        return s
+
     def customQuestionMessage2str(self, msg, title, opt1, opt2):
         self.CLOSED_OPTION = False
         options = [opt1, opt2]
@@ -240,7 +240,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             s1 = opt1
         else:
             s1 = opt2
-        return s1 
+        return s1
 
     def customMessage(self, msg, title, opt1):
         self.CLOSED_OPTION = False
@@ -255,9 +255,9 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         options[0])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
-            return 
-        return s 
-        
+            return
+        return s
+
     def input(self,msg, title, default_value):
         options = None
         x = JOptionPane.showInputDialog( None, msg,title, JOptionPane.QUESTION_MESSAGE, None, options, default_value);
@@ -267,7 +267,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
 
 
 
-                    
+
 class modifiableJComboBox:
 
     def __init__(self,list, msg):
@@ -276,14 +276,14 @@ class modifiableJComboBox:
         jcb.setEditable(True)
         JOptionPane.showMessageDialog( None, jcb, msg, JOptionPane.QUESTION_MESSAGE)
         self.ans = str(jcb.getSelectedItem())
-         
+
     def return_val(self):
         return self.ans
-        
 
-            
+
+
 class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
-    
+
     def init(self):
         self.logLevel = 0
         if self.logLevel > 0: print 'Create Stop Thread'
@@ -293,7 +293,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.stop_master_sensor is None:
             return False
         self.stop_master_sensor.setKnownState(INACTIVE)
-        
+
         self.start_scheduler = sensors.getSensor("startSchedulerSensor")
         self.start_scheduler.setKnownState(INACTIVE)
         return True
@@ -334,7 +334,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         #         else:
         #             #need this for scheduler in wait state
         #             thread.stop()
-        #optionally remove all transits 
+        #optionally remove all transits
         # msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
         # title = "Transits"
         # opt1 = "do not delete transits"
@@ -438,14 +438,14 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             return False
         else:
             return False
-            
+
     def delete_active_transits(self):
-    
+
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         activeTrainsList = DF.getActiveTrainsList()
         for i in range(0, activeTrainsList.size()) :
             activeTrain = activeTrainsList.get(i)
-            DF.terminateActiveTrain(activeTrain)       
+            DF.terminateActiveTrain(activeTrain)
 
 # End of class StopMaster
 
@@ -454,23 +454,22 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
     button_sensors_to_watch = []
     def __init__(self):
         self.logLevel = 0
-        
+
     def init(self):
         if self.logLevel > 0: print 'Create OffActionMaster Thread'
         self.get_run_buttons()
         self.get_route_dispatch_buttons()
-        
-        self.button_sensors_to_watch = self.run_stop_sensors 
+
+        self.button_sensors_to_watch = self.run_stop_sensors
         if self.logLevel > 0: print "button to watch" , str(self.button_sensors_to_watch)
         #wait for one to go inactive
-        button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)      
+        button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
         self.waitSensorState(button_sensors_to_watch_JavaList, INACTIVE)
-        
+
         if self.logLevel > 0: print "button went inactive"
         sensor_that_went_inactive = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == INACTIVE][0]
         if self.logLevel > 0: print "sensor_that_went_inactive" , sensor_that_went_inactive
         start_sensor = sensors.getSensor("startDispatcherSensor")
-        #start_sensor = sensors.getSensor("IS96004")
         stop_sensor =  sensors.getSensor("stopMasterSensor")
         if self.logLevel > 0: print "start_sensor" , start_sensor
         if self.logLevel > 0: print "stop_sensor" , stop_sensor
@@ -493,7 +492,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # self.waitMsec(5000)
                 # start_sensor.setKnownState(ACTICE)
                 pass#
-                
+
         if self.logLevel > 0: print "finished OffActionMaster setup"
 
     def setup(self):
@@ -502,23 +501,22 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         #self.get_route_dispatch_buttons()
 
         return True
-        
+
     def handle(self):
         if self.logLevel > 0: print "started handle"
         #for pairs of buttons, if one goes off the other is set on
         #self.button_sensors_to_watch = self.run_sensor_to_look_for
         if self.logLevel > 0: print "button to watch" , str(self.button_sensors_to_watch)
         #wait for one to go active
-        button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)      
+        button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
         self.waitSensorState(button_sensors_to_watch_JavaList, INACTIVE)
         #determine which one changed
         if self.logLevel > 0: print "sensor went inactive"
         sensor_that_went_inactive = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == INACTIVE][0]
-        
+
         if sensor_that_went_inactive in self.run_stop_sensors:
             if self.logLevel > 0: print "run stop sensor went inactive"
             start_sensor = sensors.getSensor("startDispatcherSensor")
-            #start_sensor = sensors.getSensor("IS96004")
             stop_sensor =  sensors.getSensor("stopMasterSensor")
             if sensor_that_went_inactive == start_sensor:
                 self.sensor_to_look_for = stop_sensor
@@ -533,18 +531,17 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "stop sensor went inactive"
                 if self.logLevel > 0: print "setting start sensor active"
                 start_sensor.setKnownState(ACTIVE)
-                
+
         if self.logLevel > 0: print "end handle"
         #self.waitMsec(20000)
         return False
     def get_route_dispatch_buttons(self):
         self.setup_route_or_run_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor","setStoppingDistanceSensor"]]
         #self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.setup_route_or_run_dispatch_sensors]
-        pass        
-        
+        pass
+
     def get_run_buttons(self):
-        #self.run_stop_sensors = [sensors.getSensor(sensorName) for sensorName in ["IS96004","stopMasterSensor"]]
-        self.run_stop_sensors = [sensors.getSensor(sensorName) for sensorName in ["IS96004"]]
+        self.run_stop_sensors = [sensors.getSensor(sensorName) for sensorName in ["startDispatcherSensor"]]
 
 
 
@@ -552,13 +549,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     # if a button is turned on, this routing turns it off
     # another class will actually respond to the button and do something
-    
+
     # also monitors Setup Dispatch and Setup Route and also Run Route
-    
+
     button_sensors_to_watch = []
     def __init__(self):
         self.logLevel = 0
-        
+
     def init(self):
         if self.logLevel > 0: print 'Create ResetButtonMaster Thread'
         self.od = OptionDialog()
@@ -573,10 +570,10 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         #set all move_to buttons inactive
         for sensor in self.button_sensors:
             sensor.setKnownState(INACTIVE)
-            
+
         for sensor in self.setup_route_or_run_dispatch_sensors:
             sensor.setKnownState(INACTIVE)
-            
+
         for sensor in self.route_run_sensor:
             sensor.setKnownState(INACTIVE)
 
@@ -590,7 +587,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.sensor_active_run_dispatch = None
         self.sensor_active_old = None
         self.sensor_active_route_dispatch_old = None
-        
+
         if self.logLevel > 0: print "finished ResetButtonMaster setup"
         return True
 
@@ -598,22 +595,22 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         #wait for a sensor to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
         self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
-        
+
         #determine which one changed
-        if self.logLevel > 0: print "self.button_sensors_to_watch",self.button_sensors_to_watch    
+        if self.logLevel > 0: print "self.button_sensors_to_watch",self.button_sensors_to_watch
         sensor_active_all_array = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE]
-        
+
         #reset button_sensors_to_watch
         self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setup_route_or_run_dispatch_sensors
-        
+
         # 1) modify button_sensors_to_watch so we don't keep triggering same senosr active
         # 2) perform the correct action if a new button has been triggered
         #    note we have to see whether a new sensor has been triggered by looking at old values
-        
+
         if self.logLevel > 0: print "sensor_active_all_array" , sensor_active_all_array
         if self.logLevel > 0: print "self.sensor_active_route_dispatch_old" , self.sensor_active_route_dispatch_old
         if self.logLevel > 0: print "self.sensor_active_route_dispatch" , self.sensor_active_route_dispatch
-        if self.logLevel > 0: print "self.sensor_active", self.sensor_active 
+        if self.logLevel > 0: print "self.sensor_active", self.sensor_active
         if self.logLevel > 0: print "self.sensor_active_old", self.sensor_active_old
 
         if self.sensor_active_route_dispatch_old != None:
@@ -632,9 +629,9 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if len(sensor_active_all_array) > 0:
             sensor_active_all = sensor_active_all_array[0]   # there should be only one or zero items in this array, and that not in self.setup_route_or_run_dispatch_sensors
-        else:   
+        else:
             sensor_active_all = None
-            
+
         #the sensor can be in self.button_sensors or in self.route_run_sensor
         if sensor_active_all in self.button_sensors:
             self.sensor_active = sensor_active_all
@@ -642,21 +639,21 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.process_button_sensors(self.sensor_active)
                 self.sensor_active_old = self.sensor_active
             self.button_sensors_to_watch.remove(self.sensor_active)
-        elif sensor_active_all in self.route_run_sensor: 
+        elif sensor_active_all in self.route_run_sensor:
             self.sensor_active_run_dispatch = sensor_active_all
             self.process_run_route()
         elif sensor_active_all in self.setup_route_or_run_dispatch_sensors:
             if self.logLevel > 0: print "there is an error"  #we have eliminated this case already
         else:
-            pass    
+            pass
 
         return True
 
 
-        
+
     def process_button_sensors(self, sensor_changed):
         [sensor.setKnownState(INACTIVE) for sensor in self.button_sensors if sensor != sensor_changed]
-       
+
     def  process_setup_route_or_run_dispatch_sensors(self, sensor_changed):
         if self.logLevel > 0: print "sensor_changed", sensor_changed
         if sensor_changed == sensors.getSensor("setDispatchSensor"):
@@ -685,20 +682,20 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
     def process_run_route(self):
         self.run_route()
         sensors.getSensor("runRouteSensor").setKnownState(INACTIVE)
-            
-    def get_buttons(self):    
+
+    def get_buttons(self):
         self.button_sensors = [self.get_button_sensor_given_block_name(station_block_name) for station_block_name in g.station_block_list]
         self.button_sensor_states = [self.check_sensor_state(button_sensor) for button_sensor in self.button_sensors]
         # for button_sensor in self.button_sensors:
             # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
-            
+
     def get_route_dispatch_buttons(self):
         self.setup_route_or_run_dispatch_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor","setRouteSensor","setStoppingDistanceSensor"]]
         self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.setup_route_or_run_dispatch_sensors]
-        
+
     def get_route_run_button(self):
-        self.route_run_sensor = [sensors.getSensor(sensorName) for sensorName in ["runRouteSensor"]]   
-            
+        self.route_run_sensor = [sensors.getSensor(sensorName) for sensorName in ["runRouteSensor"]]
+
     def check_sensor_state(self, sensor):
         #if self.logLevel > 0: print("check_sensor_state",sensor)
         if sensor == None :
@@ -711,17 +708,17 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         currentState = True if sensor.getKnownState() == ACTIVE else False
         #if self.logLevel > 0: print("check_sensor_state {}".format(currentState))
         return currentState
-       
+
     def store_button_states(self):
         self.button_sensor_states_old = self.button_sensor_states
         if self.logLevel > 0: print "self.button_sensor_states_old",self.button_sensor_states_old
         #self.button_dict_old = dict(self.button_dict)
-        
+
     def get_button_sensor_given_block_name(self, block_name):
         button_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
         button_sensor = sensors.getSensor(button_sensor_name)
-        return button_sensor        
-        
+        return button_sensor
+
     def run_route(self):
         # list_items = ("Run Route", "Cancel")
         # title = "choose option"
@@ -738,7 +735,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         routeName = str(s)
         if self.logLevel > 0: print "routeName", routeName
         route = RouteManager.getRouteByName(routeName)
-        
+
         list_items = self.get_list_of_engines_to_move()
                 # msg = "trains_to_choose" + str(trains_to_choose)
         if list_items == []:
@@ -748,7 +745,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.od.CLOSED_OPTION == True:
             return
         station_from = self.get_position_of_train(engine)
-        
+
         list_items = ["stop at end of route", "return to start position", "return to start position and repeat", "cancel"]
         title = "What do you want to do"
         option = self.od.List(title, list_items)
@@ -784,8 +781,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_list_of_engines_to_move(self):
         global trains_allocated
-        global trains_dispatched 
-        
+        global trains_dispatched
+
         #find what train we want to move
         #select only from available trains  %%%%todo%%%%%
         all_trains = self.get_all_roster_entries_with_speed_profile()
@@ -799,7 +796,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "removing" ,train
                 trains_to_choose.remove(train)
                 if self.logLevel > 0: print "trains_to_choose",trains_to_choose
-                
+
         # JOptionPane.showMessageDialog(None,msg)
         if trains_to_choose == []:
             str_trains_dispatched= (' '.join(trains_dispatched))
@@ -811,35 +808,35 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if result == "reset all allocations":
                 trains_dispatched = []
         return trains_to_choose
-        
+
     def get_position_of_train(self, train_to_move):
         ## Check the pressed button
         for station_block_name in g.station_block_list:
             if self.logLevel > 0: print "station_block_name", station_block_name
-            
+
             #get a True if the block block_value has the train name in it
             block_value_state = self.check_train_in_block(station_block_name, train_to_move)
             if self.logLevel > 0: print "block_value_state= ",block_value_state
-            
+
             #get a True if the block is occupied
             block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
             if self.logLevel > 0: print "block_occupied_state= ",block_occupied_state
             if self.logLevel > 0: print ("station block name {} : {}". format(station_block_name, str(block_occupied_state)))
-            
+
             # # do not attempt to move to where you are
             # button_pressed_in_occupied_station = (button_station_name == station_block_name)
-            
-            #check if the block is occupied and has the required train in it  
+
+            #check if the block is occupied and has the required train in it
             if block_value_state == True and block_occupied_state == True:
                 # and button_pressed_in_occupied_station == False:
                 return station_block_name
         return None
-        
+
     def get_blockcontents(self, block_name):
         block = blocks.getBlock(block_name)
         value =  block.getValue()
-        return value        
-        
+        return value
+
     def check_train_in_block(self, block_name, train_name):
         mem_val = self.get_blockcontents(block_name)
         if train_name == mem_val:
@@ -850,13 +847,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
     def check_sensor_state_given_block_name(self, station_block_name):
         #if self.logLevel > 0: print("station block name {}".format(station_block_name))
         layoutBlock = layoutblocks.getLayoutBlock(station_block_name)
-        station_sensor = layoutBlock.getOccupancySensor() 
+        station_sensor = layoutBlock.getOccupancySensor()
         if station_sensor is None:
             OptionDialog().displayMessage(' Sensor in block {} not found'.format(station_block_name))
             return
         currentState = True if station_sensor.getKnownState() == ACTIVE else False
-        return currentState              
-            
+        return currentState
+
     def get_all_roster_entries_with_speed_profile(self):
         roster_entries_with_speed_profile = []
         r = jmri.jmrit.roster.Roster.getDefault()
@@ -865,16 +862,16 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if roster_entry.getSpeedProfile() != None:
                 roster_entries_with_speed_profile.append(roster_entry.getId())
                 if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
-        return roster_entries_with_speed_profile        
+        return roster_entries_with_speed_profile
 
 
-DF = None          
+DF = None
 
 class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
-    
+
     button_sensors_to_watch = []
     button_dict = {}
-    
+
     def __init__(self):
         self.logLevel = 0
         global trains_dispatched
@@ -883,15 +880,15 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         for block in blocks.getNamedBeanSet():
             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
             if LayoutBlockManager.getLayoutBlock(block) != None:
-                block.setValue(None)                                
-    
+                block.setValue(None)
+
     def init(self):
         if self.logLevel > 0: print 'Create DispatchMaster Thread'
-        
+
 
     def setup(self):
         global DF
-        
+
         if self.logLevel > 0: print "starting DispatchMaster setup"
 
         #get dictionary of buttons self.button_dict
@@ -908,40 +905,40 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         self.sensor_active = None
         if self.logLevel > 0: print "finished DispatchMaster setup"
-        
+
         #DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         self.od = OptionDialog()
         return True
 
     def  handle(self):
-    
+
         global trains_allocated
-        global trains_dispatched   
-    
+        global trains_dispatched
+
         #only one button is active. We will keep it that way
-        
+
         if self.logLevel > 0: print "**********************"
         if self.logLevel > 0: print "handle DispatchMaster1"
         #if self.logLevel > 0: print "buttons to watch",[str(sensor.getUserName()) for sensor in self.button_sensors_to_watch]
-        if self.logLevel > 0: print "**********************" 
+        if self.logLevel > 0: print "**********************"
         #wait for one to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
         self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
-        
+
         #determine the button
         if self.logLevel > 0: print "sensor went active"
         sensor_changed = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
         if self.logLevel > 0: print "sensor_changed",sensor_changed.getUserName()
-        
+
         #find location of that want to move to
         button_sensor_name = sensor_changed.getUserName()
         button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
         if self.logLevel > 0: print "button_sensor_name",button_sensor_name
         if self.logLevel > 0: print "button_station_name",button_station_name
-        
+
         #set up route, dispatch train or run route
         if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!"
-        setup_dispatch_sensor = sensors.getSensor("setDispatchSensor") 
+        setup_dispatch_sensor = sensors.getSensor("setDispatchSensor")
         set_route_sensor = sensors.getSensor("setRouteSensor")
         run_route_sensor = sensors.getSensor("runRouteSensor")
         modify_stopping_length_sensor = sensors.getSensor("setStoppingDistanceSensor")
@@ -965,8 +962,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             #if run_route_sensor is active - do nothing from here
             pass
-            
-        if self.logLevel > 0: print "end handle" 
+
+        if self.logLevel > 0: print "end handle"
         self.waitMsec(1000)
         return True
 
@@ -975,21 +972,21 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         for button in button_sensors_to_watch_JavaList:
             button.setKnownState(INACTIVE)
 
-        
+
     def set_route(self, sensor_changed, button_sensor_name, button_station_name):
-    
-        msg = "selected station " + button_station_name + ". \nHave you more stations on route?" 
+
+        msg = "selected station " + button_station_name + ". \nHave you more stations on route?"
         title = "Continue selecting stations"
-        
+
         opt1 = "Select another station"
         opt2 = "Cancel Route"
-        
+
         s = self.od.customQuestionMessage2(msg,title,opt1,opt2)
-    
+
         if self.od.CLOSED_OPTION == True:
             return False
         if s == JOptionPane.NO_OPTION:
-            return False 
+            return False
         if self.logLevel > 0: print "button_station_name", button_station_name
         if self.logLevel > 0: print "button_sensor_name", button_sensor_name
         #set name of route
@@ -999,15 +996,15 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         #create route
         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
         route = RouteManager.newRoute("temp_name")
-        
+
         LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
         #if self.logLevel > 0: print "button_station_name", button_station_name
         location = LocationManager.newLocation(button_station_name)
         first_station = button_station_name
         last_station = first_station
-        route.addLocation(location)       
+        route.addLocation(location)
         self.button_sensors_to_watch = copy.copy(self.button_sensors)
-        self.button_sensors_to_watch.remove(sensor_changed) 
+        self.button_sensors_to_watch.remove(sensor_changed)
         complete = False
         while complete == False:
             if self.logLevel > 0: print ("In loop")
@@ -1020,18 +1017,18 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             location = LocationManager.newLocation(button_station_name)
             route.addLocation(location)
             last_station = button_station_name
-            
-            msg = "selected station " + button_station_name + ". \nHave you more stations on route?" 
+
+            msg = "selected station " + button_station_name + ". \nHave you more stations on route?"
             title = "Continue selecting stations"
-            
+
             opt1 = "Select another station"
             opt2 = "Complete Route"
             opt3 = "Cancel Route"
-            
+
             s = self.od.customQuestionMessage(msg,title,opt1,opt2,opt3)
             if self.od.CLOSED_OPTION == True:
                 sensor_changed.setKnownState(INACTIVE)
-                RouteManager.deregister(route)
+                RouteManager. deregister(route)
                 return
             if s == JOptionPane.NO_OPTION:
                 complete = True
@@ -1043,14 +1040,14 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.get_buttons()
             self.button_sensors_to_watch = copy.copy(self.button_sensors)
             self.button_sensors_to_watch.remove(sensor_changed)
-            
+
         route_name_prefix = first_station + "_to_" + last_station
         route_name = route_name_prefix
         i = 0
         while RouteManager.getRouteByName(route_name) != None:
             i+=1
             route_name = route_name_prefix + "_" + str(i)
-        route.setName(route_name)            
+        route.setName(route_name)
         msg = "completed route  " + route_name + ". you may see the route by clicking View/Edit Routes."
         opt1 = "Finish"
         opt2 = "View Route"
@@ -1060,7 +1057,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.show_routes()
         if self.logLevel > 0: print ("terminated dispatch")
         return True
-        
+
     def show_routes(self):
         a = jmri.jmrit.operations.routes.RoutesTableAction()
         a.actionPerformed(None)
@@ -1268,8 +1265,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def dispatch_train(self, sensor_changed, button_sensor_name, button_station_name):
         global trains_allocated
-        global trains_dispatched 
-        
+        global trains_dispatched
+
         #find what train we want to move
         #select only from available trains  %%%%todo%%%%%
         all_trains = self.get_all_roster_entries_with_speed_profile()
@@ -1284,14 +1281,14 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 trains_to_choose.remove(train)
                 if self.logLevel > 0: print "trains_to_choose",trains_to_choose
         if trains_to_choose == []:
-            str_trains_dispatched= (' '.join(trains_dispatched))           
+            str_trains_dispatched= (' '.join(trains_dispatched))
             msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\nYou have to wait 20 secs after a train has stopped\nbefore dispatching it again"
             title = "Cannot move train"
             opt1 = "continue"
             opt2 = "reset all allocations"
             result = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
             if result == "reset all allocations":
-                trains_dispatched = []                      
+                trains_dispatched = []
             sensor_changed.setKnownState(INACTIVE)
         else:
             #####################################################
@@ -1313,7 +1310,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 options = ["stopping", "express"]
                 default = "stopping"
             title = "title"
-            result = self.od.ListOptions(list_items, msg, options) 
+            result = self.od.ListOptions(list_items, msg, options)
             if self.od.CLOSED_OPTION == False:
                 list = result[0]
                 option = result[1]
@@ -1321,34 +1318,34 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 train_to_move = str(list)
                 train_type = str(option)
 
-                if self.logLevel > 0: print "train_to_move",train_to_move 
+                if self.logLevel > 0: print "train_to_move",train_to_move
                 if self.logLevel > 0: print "train_type" , train_type
-                
+
                 if train_type is None or train_to_move is None:
                     if self.logLevel > 0: print ("train_type is None or train_to_move is None")
                 else:
                     for station_block_name in g.station_block_list:
-                    
+
                         # choose the block in station_block_list that has the required train in it
                         # block_value_state must be true
                         block_value_state = self.check_train_in_block(station_block_name, train_to_move)
-                        
+
                         # the block must be occupied
                         # block_occupied_state must be true
                         block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
-                        
+
                         # do not attempt to move to where you are
                         # button_pressed_in_occupied_station must be false
                         button_pressed_in_occupied_station = (button_station_name == station_block_name)
-                        
+
                         if block_value_state == True and block_occupied_state == True and button_pressed_in_occupied_station == False:
                             if train_type == "express":
-                                if self.logLevel > 0: print "moving express"                                          
+                                if self.logLevel > 0: print "moving express"
                                 if g == None:
                                     if self.logLevel > 0: print "G IS NONE"
-                                    
+
                                 move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_express)
-                                
+
                                 instanceList.append(move_train)
                                 if move_train.setup():
                                     move_train.setName(train_to_move)
@@ -1360,9 +1357,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 if self.logLevel > 0: print "moving slow"
                                 if g == None:
                                     if self.logLevel > 0: print "G IS NONE"
-                                    
+
                                 move_train = MoveTrain(station_block_name, button_station_name, train_to_move, g.g_stopping)
-                                
+
                                 instanceList.append(move_train)
                                 if move_train.setup():
                                     move_train.setName(train_to_move)
@@ -1377,7 +1374,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 #express flag not set up
                                 pass
                             break
-                  
+
                     #set old button which activated the same train to inactive
                     if self.button_dict != {}:
                         if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -1393,7 +1390,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 0: print "sensor_changed", sensor_changed
                     if self.logLevel > 0: print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
                     self.button_dict[train_to_move] = sensor_changed
-                    if self.logLevel > 0: print "self.button_dict = ",self.button_dict 
+                    if self.logLevel > 0: print "self.button_dict = ",self.button_dict
         self.waitMsec(1000)
 
     def get_block_name_from_button_sensor_name(self, button_sensor_name):
@@ -1405,7 +1402,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def get_button_sensor_given_block_name(self, block_name):
         button_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
         button_sensor = sensors.getSensor(button_sensor_name)
-        return button_sensor 
+        return button_sensor
 
     def get_express_flag(self):
         self.express_sensor = sensors.getSensor("Express")
@@ -1421,7 +1418,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             express_flag = False
         return express_flag
-        
+
     def get_blockcontents(self, block_name):
         block = blocks.getBlock(block_name)
         value =  block.getValue()
@@ -1437,12 +1434,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def check_sensor_state_given_block_name(self, station_block_name):
         #if sellayoutBlockf.logLevel > 0: print("station block name {}".format(station_block_name))
         layoutBlock = layoutblocks.getLayoutBlock(station_block_name)
-        station_sensor = layoutBlock.getOccupancySensor() 
+        station_sensor = layoutBlock.getOccupancySensor()
         if station_sensor is None:
             OptionDialog().displayMessage(' Sensor in block {} not found'.format(station_block_name))
             return
         currentState = True if station_sensor.getKnownState() == ACTIVE else False
-        return currentState    
+        return currentState
 
     def get_all_roster_entries_with_speed_profile(self):
         roster_entries_with_speed_profile = []
@@ -1453,15 +1450,15 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 roster_entries_with_speed_profile.append(roster_entry.getId())
                 if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
                 if self.logLevel > 0: print "roster_entries_with_speed_profile",roster_entries_with_speed_profile
-        return roster_entries_with_speed_profile      
- 
-    def get_buttons(self):    
+        return roster_entries_with_speed_profile
+
+    def get_buttons(self):
         self.button_sensors = [self.get_button_sensor_given_block_name(station_block_name) for station_block_name in g.station_block_list]
         self.button_sensor_states = [self.check_sensor_state(button_sensor) for button_sensor in self.button_sensors]
         # for button_sensor in self.button_sensors:
             # self.button_dict[button_sensor] = self.check_sensor_state(button_sensor)
-        
-            
+
+
     def check_sensor_state(self, sensor):
         #if self.logLevel > 0: print("check_sensor_state",sensor)
         if sensor == None :
@@ -1474,17 +1471,17 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         currentState = True if sensor.getKnownState() == ACTIVE else False
         #if self.logLevel > 0: print("check_sensor_state {}".format(currentState))
         return currentState
-       
+
     def store_button_states(self):
         self.button_sensor_states_old = self.button_sensor_states
         if self.logLevel > 0: print "self.button_sensor_states_old",self.button_sensor_states_old
         #self.button_dict_old = dict(self.button_dict)
-        
+
     def get_button_sensor_given_block_name(self, block_name):
         button_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
         button_sensor = sensors.getSensor(button_sensor_name)
-        return button_sensor        
-           
+        return button_sensor
+
     def show_operations_trains(self):
         a = jmri.jmrit.operations.trains.TrainsTableAction()
         a.actionPerformed(None)
@@ -1760,7 +1757,7 @@ class RunDispatcherMaster():
         instanceList.append(new_train_master)
         if new_train_master.setup():
             new_train_master.setName('New Train Master')
-            new_train_master.start()  
+            new_train_master.start()
 
         stop_master = StopMaster()
         if stop_master.setup():
@@ -1784,8 +1781,8 @@ class RunDispatcherMaster():
         instanceList.append(simulation_master)
         if simulation_master.setup():
             simulation_master.setName('Simulation Master')
-            simulation_master.start()             
-                    
+            simulation_master.start()
+
         scheduler_master = SchedulerMaster()
         instanceList.append(scheduler_master)
         if scheduler_master.setup():
@@ -1797,23 +1794,23 @@ class RunDispatcherMaster():
         if monitorTrack_master.setup():
             monitorTrack_master.setName('Monitor Track Master')
             monitorTrack_master.start()
-            
+
         off_action_master = OffActionMaster()
         instanceList.append(off_action_master)
-        
+
         if off_action_master.setup():
             off_action_master.setName('Off-Action Master')
-            off_action_master.start() 
+            off_action_master.start()
         else:
             if self.logLevel > 0: print("Off-Action Master not started")
-            
+
         #set default valus of buttons
         sensors.getSensor("Express").setKnownState(ACTIVE)
         sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
         sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
-            
-            
+
+
 if __name__ == '__builtin__':
     RunDispatcherMaster()
-    # NewTrainMaster checksfor the new train in siding. Needs to inform what station we are in 
-    #DispatchMaster checks all button sensors 
+    # NewTrainMaster checksfor the new train in siding. Needs to inform what station we are in
+    #DispatchMaster checks all button sensors

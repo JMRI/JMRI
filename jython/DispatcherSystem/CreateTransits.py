@@ -20,29 +20,32 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         pass
 
-    def run_transits(self, filename_icon, filename_run):
+    def run_transits(self, filename, backupfile):
         if self.logLevel > 1: print "will store new panel in filename" , filename_run
         self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
-        self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
-        myAnswer = JOptionPane.showConfirmDialog(None, self.msg)
-        if myAnswer == JOptionPane.YES_OPTION:
-            JOptionPane.showMessageDialog(None, 'OK continuing\nThis will take about 30 secs on fast machine for small layout', "As you wish", JOptionPane.WARNING_MESSAGE)
-            pass
-        elif myAnswer == JOptionPane.NO_OPTION:
-            msg = 'Stopping'
-            JOptionPane.showMessageDialog(None, 'Stopping', "Fix Error" , JOptionPane.WARNING_MESSAGE)
-            return
-        elif myAnswer == JOptionPane.CANCEL_OPTION:
-            msg = 'Stopping'
-            JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
-            return
-        elif myAnswer == JOptionPane.CLOSED_OPTION:
-            if self.logLevel > 1: print "You closed the window. How rude!"
+        #self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
+        #JOptionPane.showMessageDialog(None, self.msg)
+        # if myAnswer == JOptionPane.YES_OPTION:
+        #     #JOptionPane.showMessageDialog(None, 'OK continuing\nThis will take about 30 secs on fast machine for small layout', "As you wish", JOptionPane.WARNING_MESSAGE)
+        #     pass
+        # elif myAnswer == JOptionPane.NO_OPTION:
+        #     msg = 'Stopping'
+        #     JOptionPane.showMessageDialog(None, 'Stopping', "Fix Error" , JOptionPane.WARNING_MESSAGE)
+        #     return
+        # elif myAnswer == JOptionPane.CANCEL_OPTION:
+        #     msg = 'Stopping'
+        #     JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
+        #     return
+        # elif myAnswer == JOptionPane.CLOSED_OPTION:
+        #     if self.logLevel > 1: print "You closed the window. How rude!"
         self.process_panels()
-        filename_icon = filename_run.replace("run","icon")
-        msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
+        #filename_icon = filename_run.replace("run","icon")
+        #msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
+        msg = "All Transits and TrainInfo Files produced\n and saved in current file " + filename +"\n"
+        msg = msg + "A backup of the original file has been saved in " + backupfile
         self.displayMessage(msg)
-        self.store_panel(filename_run)
+        #self.store_panel(filename_run)
+        self.store_panel(filename)
 
     def store_panel(self, filename):
         if self.logLevel > 1: print "storing file"
@@ -759,7 +762,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         interval_count_total = interval_count
 
         dpg=DisplayProgress_global()
-        dpg.Update(str(progress)+ "% complete")
+        dpg.Update("creating transits: " + str(progress) + "% complete")
 
 
         for e in g.g_express.edgeSet():
@@ -774,7 +777,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 1: print progress, i
                     p = int(min(progress, 100))
                     if self.logLevel > 1: print "p" , p
-                    dpg.Update(str(progress)+ "% complete")
+                    dpg.Update("creating transits: " + str(progress)+ "% complete")
 
                 if self.logLevel > 1: print "creating",i
                 filename_fwd = self.get_filename(e, "fwd")
@@ -1408,7 +1411,7 @@ class DisplayProgress:
 
     def __init__(self):
         #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
-        self.frame1 = JFrame('Hello, World!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(300, 50), locationRelativeTo=None)
+        self.frame1 = JFrame('Hello, World!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(500, 50), locationRelativeTo=None)
 
         self.frame1.setVisible(True)
 
