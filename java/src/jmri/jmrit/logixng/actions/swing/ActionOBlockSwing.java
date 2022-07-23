@@ -143,7 +143,7 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
                         _panelMemoryBean.setVisible(true);
                         break;
                     case SetValue:
-                    	_valuePanel.setVisible(true);
+                        _valuePanel.setVisible(true);
                         break;
                     default:
                 }
@@ -272,7 +272,7 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
                 if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
                     action.setOBlockValue(_oblockDataDirectTextField.getText());
                 } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant)
-                		|| _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+                        || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
                     Memory memory = _panelMemoryBean.getNamedBean();
                     if (memory != null) {
                         NamedBeanHandle<Memory> handle
