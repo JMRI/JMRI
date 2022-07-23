@@ -200,7 +200,10 @@
 
         <h4>Digikeijs (Digirails)</h4>
             <ul>
-                <li></li>
+                <li>New decoder definition for DR5088RC with LNCV programming capabilities.<br>
+                  Thanks to Dennis Cherry for testing on actual hardware.<br>
+                Awaiting response from Digikeijs to complete the settings stored in LNCV4.</li>
+              <li>The Stationary family of decoders was renamed to Feedback (Inputs).</li>
             </ul>
 
         <h4>Digitrax</h4>
