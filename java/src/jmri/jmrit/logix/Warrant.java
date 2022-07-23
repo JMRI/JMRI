@@ -1113,7 +1113,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     break;
                 case DEBUG:
-                    ret = debugInfo();
+                    debugInfo();
                     break;
                 default:
             }
