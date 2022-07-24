@@ -29,9 +29,10 @@
       the type of device it supports, as summarized in the table below.</p>
 
       <h2 id="tools">JMRI LocoNet Tools</h2>
-      Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI
+      <p>Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI
       is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>-based DCC system, or to a
-      <a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>.
+      <a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
+
       <p>In the table below, each tool name is a link to a tool-specific help page.</p>
 
       <table border="2">
@@ -202,7 +203,7 @@
         <tr class="ctr">
           <td>
             <a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure
-            LocoIO</a> (deprecated)
+            LocoIO</a>
           </td>
           <td>
           </td>
@@ -213,7 +214,7 @@
           </td>
           <td>
           </td>
-          <td>LocoIO, LocoServo, LocoBooster</td>
+          <td>LocoIO, LocoServo, HDL LocoBooster, LocoRCD</td>
         </tr>
 
         <tr class="ctr">
@@ -280,6 +281,25 @@
             UR92(Duplex), UR92CE(Duplex), some aspects of LNWI<br>
             (See <a href="#TableNote5">Note 5</a>)
           </td>
+        </tr>
+
+        <tr class="ctr">
+          <td>
+          <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Configure
+            LNCV Modules</a>
+          </td>
+          <td>&bull;</td>
+          <td>
+          </td>
+          <td>&bull;</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            Uhlenbrock and Digikeijs stationary modules
+          </td>
+
         </tr>
 
         <tr class="ctr">
@@ -369,79 +389,71 @@
           <td>&bull;</td>
           <td>Digitrax Mobile Sound Decoders</td>
         </tr>
+      </table>
 
-        <tr>
-          <td colspan='7'><strong>Notes</strong>
-          </td>
-        </tr>
+        <h3>
+          Notes
+        </h3>
 
-        <tr>
-          <td>
+      <dl>
+          <dt>
             <a id="TableNote1">Note 1</a>
-          </td>
-          <td colspan="6">The JMRI Roster allows users to configure these devices in approximately
+          </dt>
+          <dd>
+          The JMRI Roster allows users to configure these devices in approximately
           the same way as the standalone tool. The Roster method has the advantage that the user
-          may save the each individual device's settings to a unique file on the computer's storage
+          may save each individual device's settings to a unique file on the computer's storage
           media, and later read from the computer's storage media for restoring the individual
-          device's saved settings.</td>
-        </tr>
+          device's saved settings.</dd>
 
-        <tr>
-          <td>
+          <dt>
             <a id="TableNote2">Note 2</a>
-          </td>
-          <td colspan="6">The JMRI Roster mechanism does not allow configuration of the turnout
+          </dt>
+          <dd>The JMRI Roster mechanism does not allow configuration of the turnout
           numbers which control the DS64 output, and cannot access in any way the DS64
-          "Routes".</td>
-        </tr>
+          "Routes".</dd>
 
-        <tr>
-          <td>
+          <dt>
             <a id="TableNote3">Note 3</a>
-          </td>
-          <td colspan="6">Configuring these devices is only possible when the device is acting as
+          </dt>
+          <dd>Configuring these devices is only possible when the device is acting as
           the command station. The specific LocoNet mechanism used by both the Roster mechanisms
           and by the "Command Station Configuration" tool cannot perform configuration operations
-          on these devices when they are acting in "booster" mode.</td>
-        </tr>
+          on these devices when they are acting in "booster" mode.</dd>
 
-        <tr>
-          <td>
+          <dt>
             <a id="TableNote4">Note 4</a>
-          </td>
-          <td colspan="6">The Roster mechanism can access the various known OpSw settings for these
+          </dt>
+          <dd>The Roster mechanism can access the various known OpSw settings for these
           command stations where the "Configure Command Station" tool can only access those OpSw
           settings which were implemented in previous command stations. The Roster mechanism is
-          strongly preferred for these command station models.</td>
-        </tr>
+          strongly preferred for these command station models.</dd>
 
-        <tr>
-          <td>
+          <dt>
             <a id="TableNote5">Note 5</a>
-          </td>
-          <td colspan="6">
+          </dt>
+          <dd>
             Using this tool can have an effect on both the Duplex radio settings (if one or more
             UR92 is present on LocoNet) <strong>and</strong> the some aspects of LNWI configuration
             (if one or more LNWI is present on LocoNet). See the <a href=
             "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#LNWISideEffects">
             Duplex Group Configuration Tool</a> help page discussion of its influence on the LNWI
             settings for more information.
-          </td>
-        </tr>
+          </dd>
 
-        <tr>
-          <td>
+          <dt>
             <a id="TableNote6">Note 6</a>
-          </td>
-          <td colspan="6">The Firmware Download tool can only update those devices which use
+          </dt>
+          <dd>The Firmware Download tool can only update those devices which use
           firmware which is provided in the original firmware format. Newer Digitrax devices use a
           different firmware format and require a different firmware update methodology which is
-          not currently supported in JMRI.</td>
-        </tr>
-      </table>
+          not currently supported in JMRI.</dd>
+
+      </dl>
 
       <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

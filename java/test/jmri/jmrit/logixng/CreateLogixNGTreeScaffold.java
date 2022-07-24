@@ -2262,6 +2262,52 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ForEach actionForEach =
+                new ForEach(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+        actionForEach.setComment("A comment");
+        actionForEach.setUseCommonSource(false);
+        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Variable);
+        actionForEach.setFormula("turnouts");
+        actionForEach.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+        actionForEach.setComment("A comment");
+        actionForEach.setUseCommonSource(false);
+        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Memory);
+        actionForEach.setFormula("turnouts");
+        actionForEach.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+        actionForEach.setComment("A comment");
+        actionForEach.setUseCommonSource(false);
+        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Formula);
+        actionForEach.setFormula("turnouts");
+        actionForEach.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        for (ForEach.CommonManager manager : ForEach.CommonManager.values()) {
+            actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+            actionForEach.setComment("A comment");
+            actionForEach.setUseCommonSource(true);
+            actionForEach.setCommonManager(manager);
+            maleSocket = digitalActionManager.registerAction(actionForEach);
+            actionManySocket.getChild(indexAction++).connect(maleSocket);
+        }
+
+
         IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         maleSocket.setEnabled(false);

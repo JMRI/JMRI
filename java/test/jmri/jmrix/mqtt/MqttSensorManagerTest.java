@@ -13,14 +13,14 @@ import org.junit.jupiter.api.*;
 public class MqttSensorManagerTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         Assert.assertNotNull("constructor", new MqttSensorManager(new MqttSystemConnectionMemo()));
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach
