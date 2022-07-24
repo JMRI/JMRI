@@ -39,8 +39,13 @@ public class Control {
     public static final int panelHeight100 = 100;
 
     // Train build parameters
-    @SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // allow access for testing
-    public static boolean fullTrainOnly = false;
+    // allow access for testing
+    public static volatile boolean fullTrainOnly = false;
+
+    // allow access for testing
+    public static synchronized void setFullTrainOnly( boolean newVal ) {
+        fullTrainOnly = newVal;
+    }
 
     // Car and Engine attribute maximum string length
     public static int max_len_string_attibute = 12;
