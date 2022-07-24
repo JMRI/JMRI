@@ -14,7 +14,8 @@
   /* Create three equal columns that float next to each other */
   .column {
   float: left;
-  width: 33.33%;
+  width: 30%;
+  /* allows for padding within 100% */
   padding: 10px;
   }
 
@@ -46,7 +47,7 @@
         <!-- TOC -->
 
         <li>
-          <a href="#catalpha">Category/Alphabetic Index</a>
+          <a href="#catalpha">Category/Alphabetical Index</a>
         </li>
 
         <li>Hardware Supported:
@@ -95,12 +96,12 @@
       for New Hardware</a>.</p>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h2 id="catalpha">Category/Alphabetic Index</h2>
+      <h2 id="catalpha">Category/Alphabetical Index</h2>
 
       <p>This index cross-references hardware and products by the categories under which they
       appear on this page. Click on a category to go to that category on this page. Click on a
-      hardware item to go to the JMRI Help page for that product or family. The sidebar provides an
-      alphabetic list.</p>
+      hardware item to go to the JMRI Help page for that product or family. Note the sidebar provides a
+      single alphabetical list.</p>
 
       <div class="row">
         <div class="column">
@@ -301,7 +302,7 @@
         </div>
 
         <div class="column">
-          <em style="padding-left: 1em;"><a href="#other">Accessories/Other Devices:</a></em>
+          <em style="padding-left: 1em;"><a href="#other">Accessories/<wbr>Other Devices:</a></em>
           <ul>
             <li>
               <a href="anyma/index.shtml">Anyma DMX</a>

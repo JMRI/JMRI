@@ -50,15 +50,15 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
     @Test
     public void testParserUpdate() {
         MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
-            private final String closedText = "BAR";
-            private final String thrownText = "FOO";
+            private final static String CLOSED_TEXT = "BAR";
+            private final static String THROWN_TEXT = "FOO";
             @Override
             public void beanFromPayload(@Nonnull Turnout bean, @Nonnull String payload, @Nonnull String topic) {
                 switch (payload) {
-                    case closedText:                
+                    case CLOSED_TEXT:                
                         ((MqttTurnout)t).newKnownState(Turnout.CLOSED);
                         break;
-                    case thrownText:
+                    case THROWN_TEXT:
                         ((MqttTurnout)t).newKnownState(Turnout.THROWN);
                         break;
                     default:
@@ -76,11 +76,11 @@ public class MqttTurnoutTest extends AbstractTurnoutTestBase {
                         throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
                     } else {
                         // send a CLOSED command
-                        return closedText;
+                        return CLOSED_TEXT;
                     }
                 } else {
                     // send a THROWN command
-                    return thrownText;
+                    return THROWN_TEXT;
                 }
             }
         };

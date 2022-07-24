@@ -73,11 +73,8 @@
 
       <h3>Installing Java</h3>
 
-      <p><a href="Installing_JMRI.shtml#InstallJMRI">Versions of JMRI&reg;</a> can run on any computer
-      system that will run Java 1.6.0 or later, whether it is Macintosh, Windows, or Linux based.
-      It does require that Java be installed on the computer. You can get Java as a free (but
-      large) download at: <a href="http://java.com/download/" target=
-      "_blank">java.com/download/</a></p>
+      <p>JMRI&reg; can run on any computer system running Java, whether it is Macintosh, Windows, or Linux based.
+      See our <a href="/java/index.shtml">Java installer page</a>.</p>
 
       <h3 id="InstallJMRI">Installing the JMRI software</h3>
 

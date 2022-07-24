@@ -37,6 +37,7 @@ public class LoadAtStartUpTest {
     // Only one aat at a time
     private AutoActiveTrain aat = null;
     private static final double TOLERANCE = 0.0001;
+    private static final int TRAIN_MOVE_TIME = 200; // ms
 
     @SuppressWarnings("null")  // spec says cannot happen, everything defined in test data.
     @Test
@@ -66,7 +67,7 @@ public class LoadAtStartUpTest {
         }
         // place train on layout
         sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(100);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.ACTIVE); // set blocker
         
         // and load. only one of 2 trains will load
@@ -94,6 +95,7 @@ public class LoadAtStartUpTest {
         float speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
 
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> {
@@ -107,7 +109,9 @@ public class LoadAtStartUpTest {
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.provideSensor("Occ West Block").setState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ South Platform").setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ West Platform Switch").setState(Sensor.INACTIVE);
         JUnitUtil.waitFor(() -> {
             return smm.provideSignalMast("South To East").getAspect().equals("Clear");
@@ -132,6 +136,7 @@ public class LoadAtStartUpTest {
         assertThat(speed).isEqualTo(0.6f); //The signal head indicates 1.0f but train is limited to a max of 0.6f
 
         sm.provideSensor("Occ West Block").setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
 
         JUnitUtil.waitFor(() -> {
@@ -145,6 +150,7 @@ public class LoadAtStartUpTest {
         assertThat(speed).isEqualTo(speedRestricted);
 
         sm.provideSensor("Occ South Block").setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return smm.provideSignalMast("East End Throat").getAspect().equals("Stop");
@@ -155,6 +161,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("6 East End Throat Signal Red").isEqualTo("Stop");
         speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
 
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
         // No change
@@ -164,6 +171,7 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
         speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
+        
 
         sm.provideSensor("Occ South Platform").setState(Sensor.ACTIVE);
         // signals no change, speed changes
@@ -173,8 +181,10 @@ public class LoadAtStartUpTest {
         assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
         speed = aat.getThrottle().getSpeedSetting();
         assertThat(speed).isEqualTo(speedRestricted);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
 
         sm.provideSensor("Occ East Block").setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
         // signals no change, speed changes to stop
         assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("9 West End Div Signal Red").isEqualTo("Stop");
@@ -198,9 +208,11 @@ public class LoadAtStartUpTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedRestricted ) < TOLERANCE );
         }, "Started to move");
         sm.provideSensor("Occ East Block").setState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ South Platform").setState(Sensor.INACTIVE);
-//      JUnitUtil.waitFor(200);
+
        JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedRestricted ) < TOLERANCE );
         }, "Continueing");
@@ -210,12 +222,13 @@ public class LoadAtStartUpTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedRestricted ) < TOLERANCE );
         }, "Prepare to stop");
         sm.provideSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(TRAIN_MOVE_TIME);
         sm.provideSensor("Occ East Block").setState(Sensor.INACTIVE);
         // train slows to stop
 //      JUnitUtil.waitFor(200);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
-        }, "Stopped " + at.getActiveTrainName());
+        }, "Did not Stop " + at.getActiveTrainName() + " with throttle SpeedSetting " + aat.getThrottle().getSpeedSetting());
         //terminates at end
         // wait for cleanup to finish
         JUnitUtil.waitFor(200);
@@ -334,12 +347,12 @@ public class LoadAtStartUpTest {
         } catch  (IOException e) {
             // doesnt matter its gonezo
         }
-
+        JUnitUtil.tearDown();
     }
 
     @BeforeEach
     public void setUp() throws Exception {
-        JUnitUtil.setUp();
+        // JUnitUtil.setUp(); // already called in @BeforeAll
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();
@@ -352,6 +365,6 @@ public class LoadAtStartUpTest {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
-        JUnitUtil.tearDown();
+        // JUnitUtil.tearDown(); called in @AfterAll
     }
 }
