@@ -269,7 +269,7 @@ public class ActionOBlock extends AbstractDigitalAction
                     case GetBlockWarrant:
                         return getLongDataDescription(locale, "ActionOBlock_Long_GetWarrant", namedBean, getLocationMemory);
                     case GetBlockValue:
-                        return getLongDataDescription(locale, "ActionWarrant_Long_Location", namedBean, getLocationMemory);
+                        return getLongDataDescription(locale, "ActionOBlock_Long_GetTrain", namedBean, getLocationMemory);
                     default:
                         // Fall thru and handle it in the end of the method
                 }
