@@ -92,13 +92,12 @@ you do make aren't recorded until you commit them, see below.
       <p>There are two things you should be careful of:</p>
 
       <ul>
-        <li>You have to tell git about new files that you create:
-
-          <pre style="font-family: monospace;">
-                    git add java/src/jmri/util/MyNewFile.java
-</pre>If you don't do that, by default git ignores a new file. This can be very confusing with a
-new file doesn't end up in the git repository. Also, create new files as "readable by anybody"; if
-you create them in a protected or locked mode, git can have trouble processing them.
+        <li>You have to tell git about new files that you create:<br>
+        <code>git add java/src/jmri/util/MyNewFile.java</code><br>
+        If you don't do that, by default git ignores a new file. This
+        can be very confusing with a
+        new file doesn't end up in the git repository. Also, create new files as "readable by anybody"; if
+        you create them in a protected or locked mode, git can have trouble processing them.
         </li>
 
         <li>Never, really never, copy files out of or into a git-managed directory. Just don't do
@@ -156,23 +155,27 @@ understand what you've done.
       <p>If you're using the command line, the next step is to connect it to your local repository.
       (IDE users will do this next part in their IDE, see those instructions) On the web page for
       your repository, right side, is a "HTTPS Clone URL". Copy that. In your repository directory
-      on your local computer, do</p>
-
-      <pre style="font-family: monospace;">
+      on your local computer, do:</p>
+      <div class="wide">
+<pre style="font-family: monospace;">
   git remote set-url --push origin https://github.com/yourname/JMRI.git
   git remote add yourname https://github.com/yourname/JMRI.git
-</pre>(With the appropriate URL, changing "yourname" to your GitHub account name in three places)
+</pre>
+      </div>
+      <p>(With the appropriate URL, changing "yourname" to your GitHub account name in three places)
       <p>After this, doing a "git push" will push your changes up to your repository. "git pull"
       will still pull from the main repository so that you can get the most recent updates from
       others. To check this, do a "git remote -v" which should show: (OK if it shows others or the
       order is different)</p>
-
-      <pre style="font-family: monospace;">
-   % git remote -v<br>
-   origin       https://github.com/JMRI/JMRI.git (fetch)<br>
-   origin       https://github.com/yourname/JMRI.git (push)
-   yourname     https://github.com/yourname/JMRI.git
+      <div class="wide">
+<pre style="font-family: monospace;">
+  % git remote -v<br>
+  origin    https://github.com/JMRI/JMRI.git (fetch)<br>
+  origin    https://github.com/yourname/JMRI.git (push)
+  yourname  https://github.com/yourname/JMRI.git
 </pre>
+      </div>
+
       <h3 id="push">Push Your Changes to Your GitHub Repository</h3>
       Now that you have a consistent set of changes committed locally, you can move them up to your
       repository on GitHub. That makes them visible to everybody else.
@@ -184,32 +187,35 @@ understand what you've done.
       Sometimes, git will tell you that you need a more complicated push comment, with some options
       that start with - or --. Just copy and paste that line to execute it. For example, you might
       get an error message like:
-
+      <div class="wide">
       <pre style="font-family: monospace;">
 % git push
 fatal: The current branch my-branch has no upstream branch.
 To push the current branch and set the remote as upstream, use
 
-    git push --set-upstream origin my-branch
-</pre>Just go ahead and do what it says:
+  git push --set-upstream origin my-branch
+      </pre>
+      </div>
+      <p>Just go ahead and do what it says:</p>
+      <pre style="font-family: monospace;">
+  git push --set-upstream origin my-branch
+</pre>
+      <p>And occasionally, your local repository can be out of sync with your GitHub repository. If
+      you get a message about "failed to push some refs" or similar, without specific commands to fix it,
+      do (the first command here is why we created that remote with your name above; make sure it's
+      there, and substitute your GitHub name in the first line):</p>
 
       <pre style="font-family: monospace;">
-    git push --set-upstream origin my-branch
-</pre>And occasionally, your local repository can be out of sync with your GitHub repository. If
-you get a message about "failed to push some refs" or similar, without specific commands to fix it,
-do (the first command here is why we created that remote with your name above; make sure it's
-there, and substitute your GitHub name in the first line):
-
-      <pre style="font-family: monospace;">
-    git pull yourname
+  git pull yourname
 </pre>(If any lines are flagged as conflicts, edit those to remove the conflicts, then "git add"
 them to resolve the conflict)
 
       <pre style="font-family: monospace;">
-    git commit -m "merging pull back"
-    git push
+  git commit -m "merging pull back"
+  git push
 </pre>It is definitely easier to do this if you have no modified files in your repository, e.g.
 you've committed all your local changes.
+
       <h3 id="pull">Submit a Pull Request</h3>
       Once your changes are complete and ready to go, the last step is to make your changes,
       already visible in your GitHub repository, known to the JMRI maintainers so that one of them
@@ -236,7 +242,7 @@ you've committed all your local changes.
 
         <li>One of the JMRI maintainers will check over your code and the test results, and then
         either contact you for more info (occasionally), or merge it into the master branch in the
-        the main repository (more often). You are automatically signed up for notifications when
+        main repository (more often). You are automatically signed up for notifications when
         things happens.</li>
 
         <li>
