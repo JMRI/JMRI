@@ -278,7 +278,7 @@ def CreateTransits():
         #print "about to run CreateTransits"
         ct = CreateTransits()
 
-        ct.run_transits(start_file, backup_file)
+        ct.run_transits(start_file, backup_file, backup_filename)
         #print "ran CreateTransits"
 
     dpg.killLabel()

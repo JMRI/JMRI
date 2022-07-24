@@ -20,15 +20,20 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         pass
 
-    def run_transits(self, filename, backupfile):
+    def run_transits(self, filename, backupfile, backupfilename):
         if self.logLevel > 1: print "will store new panel in filename" , filename_run
-        self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
+        #self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
 
-        self.process_panels()#msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
-        msg = "All Sections, Transits and TrainInfo Files produced.\n Panel saved in current file " + filename +"\n"
-        msg = msg + "A backup of the original file has been saved in " + backupfile
+        self.process_panels()
+        #msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
+        msg = "All Sections, Transits and TrainInfo Files produced.\n\n"
+        msg = msg + "A backup of the original file has been saved in " + backupfilename + "\n\n"
+
+        #self.displayMessage(msg)
+
+        msg = msg + 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
         self.displayMessage(msg)
-        self.store_panel(filename)
+        #self.store_panel(filename)
 
     def store_panel(self, filename):
         if self.logLevel > 1: print "storing file"
