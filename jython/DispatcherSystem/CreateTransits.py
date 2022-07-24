@@ -23,28 +23,11 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     def run_transits(self, filename, backupfile):
         if self.logLevel > 1: print "will store new panel in filename" , filename_run
         self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
-        #self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
-        #JOptionPane.showMessageDialog(None, self.msg)
-        # if myAnswer == JOptionPane.YES_OPTION:
-        #     #JOptionPane.showMessageDialog(None, 'OK continuing\nThis will take about 30 secs on fast machine for small layout', "As you wish", JOptionPane.WARNING_MESSAGE)
-        #     pass
-        # elif myAnswer == JOptionPane.NO_OPTION:
-        #     msg = 'Stopping'
-        #     JOptionPane.showMessageDialog(None, 'Stopping', "Fix Error" , JOptionPane.WARNING_MESSAGE)
-        #     return
-        # elif myAnswer == JOptionPane.CANCEL_OPTION:
-        #     msg = 'Stopping'
-        #     JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
-        #     return
-        # elif myAnswer == JOptionPane.CLOSED_OPTION:
-        #     if self.logLevel > 1: print "You closed the window. How rude!"
-        self.process_panels()
-        #filename_icon = filename_run.replace("run","icon")
-        #msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
-        msg = "All Transits and TrainInfo Files produced\n and saved in current file " + filename +"\n"
+
+        self.process_panels()#msg = "All Transits and TrainInfo Files produced\n and saved in " + filename_run +"\n - Restart JMRI and \n - load the file " + filename_run + "\n - instead of " + filename_icon + "\nThen run Stage3 to set the dispatcher options\nand run the dispatcher system from the panel"
+        msg = "All Sections, Transits and TrainInfo Files produced.\n Panel saved in current file " + filename +"\n"
         msg = msg + "A backup of the original file has been saved in " + backupfile
         self.displayMessage(msg)
-        #self.store_panel(filename_run)
         self.store_panel(filename)
 
     def store_panel(self, filename):
@@ -57,7 +40,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         else:
             msg = "store failed"
         if self.logLevel > 1: print(msg)
-
 
     def process_panels(self):
         #self.g = StationGraph()

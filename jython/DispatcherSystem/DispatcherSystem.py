@@ -28,6 +28,7 @@ import time
 import webbrowser
 import os
 
+
 def strip_end(text, suffix):
     if not text.endswith(suffix):
         return text
@@ -38,6 +39,7 @@ def btnpanelLocation_action(event):
     global run_file
     global start_file
     #print "clicked"
+
     chooser = jmri.configurexml.LoadStoreBaseAction.getUserFileChooser()
     returnVal = chooser.showOpenDialog(frame)
     current_file = str(chooser.getSelectedFile())
@@ -101,8 +103,30 @@ def CreateIcons_action(event):
 def saveOrigPanel():
     global backup_file
     global backup_filename
-    [backup_filename, backup_file] = get_backup_filename()
+    get_backup_filename()
     store_panel(backup_file)
+
+def get_start_filename():
+    global start_filename
+    global start_file
+    chooser = jmri.configurexml.LoadStoreBaseAction.getUserFileChooser()
+    #returnVal = chooser.showOpenDialog(frame)
+    current_file = str(chooser.getSelectedFile())
+    #print current_file
+    filepath = os.path.dirname(current_file)
+    directory = filepath
+    root = os.path.splitext(os.path.basename(current_file))
+    old_filename = root[0]
+    filetype  = root[1]
+    #print old_filename
+    # if "run" not in old_filename and "icons" not in old_filename:
+    #print "run not in filepath"
+    start_file = current_file
+    icons_file = filepath + "/" + old_filename + "_icons" + filetype
+    run_file = filepath + "/" + old_filename + "_run" + filetype
+    start_filename = old_filename
+    loaded_filename = old_filename
+
 
 def get_backup_filename():
     global backup_file
@@ -125,7 +149,6 @@ def get_backup_filename():
     backup_file = orig_panel_path
     backup_filename = orig_panel_name
 
-    return [backup_filename, backup_file]
 
 def store_panel(filename):
     #if self.logLevel > 1: print "storing orig file in " + filename
@@ -184,51 +207,17 @@ def initialise_panel_location(stage1Button, stage3Button):
     start_filename = old_filename
     loaded_filename = old_filename
     stage_to_run = "Stage 1"
-    # else:
-    #     stripped_filename = strip_end(old_filename,"_icons")
-    #     stripped_filename = strip_end(stripped_filename,"_run")
-    #     start_filename = stripped_filename
-    #     start_file = filepath + "/" + stripped_filename + filetype
-    #     icons_file = filepath + "/" + stripped_filename + "_icons" + filetype
-    #     run_file = filepath + "/" + stripped_filename + "_run" + filetype
-    #     if "icons" in old_filename:
-    #         loaded_filename = stripped_filename + "_icons"
-    #         stage_to_run = "Stage 2"
-    #     else:
-    #         loaded_filename = stripped_filename + "_run"
-    #         stage_to_run = "Stage 3 then operate the trains"
+
     label_panel_location.text = start_file
-    #row13b2.text = icons_file
-    #row11b2.text = run_file
-    msg = "Panel Directory: " + str(directory)
-    rowTitle_1_2.text = msg
-    #row42b2.text = start_filename + filetype
-    [backup_filename, backup_file] = get_backup_filename()
+
+    #msg = "Panel Directory: " + str(directory)
+    #rowTitle_1_2.text = msg
+    get_backup_filename()
     #rowStage1Title_2.text = "Modifies: " + start_filename + "  Creates backup: " + backup_filename
     #row42b2.text = "Produces: " + start_filename + "_run" + filetype + " (from " + start_filename + "_icons" + filetype + ")"
     rowTitle_2_1.text = "You have " + loaded_filename + filetype + " loaded. You may run " + stage_to_run
     rowTitle_2_1.text = "Dispatcher System: Modifies current loaded panel to produce a running system"
     rowTitle_2_1.setFont(rowTitle_2_1.getFont().deriveFont(Font.BOLD, 13));
-
-    # row15b1.text = "When finished you need to restart JMRI and load the file created in Stage1: " + start_filename + "_icons" + filetype + " instead of " + start_filename + filetype
-    # row45b1.text = "When finished you need to restart JMRI and load the file created in Stage2: " + start_filename + "_run" + filetype + " instead of " + start_filename + "_icons" + filetype
-    # if stage_to_run == "Stage 1":
-    #     #inhibit Stage 1 button
-    #     stage1Button.setEnabled(True)
-    #     stage2Button.setEnabled(True)
-    #     stage3Button.setEnabled(True)
-    #
-    # elif stage_to_run == "Stage 2":
-    #     #inhibit Stage 2 button
-    #     stage1Button.setEnabled(True)
-    #     stage2Button.setEnabled(True)
-    #     stage3Button.setEnabled(True)
-    #
-    # elif stage_to_run == "Stage 3 then operate the trains":
-    #     #inhibit Stage 3 button
-    #     stage1Button.setEnabled(True)
-    #     stage2Button.setEnabled(True)
-    #     stage3Button.setEnabled(True)
 
 
 def CreateTransits_action(event):
@@ -357,7 +346,8 @@ def leftJustify( panel ):
 ################################################################################################################
 # main file
 ################################################################################################################
-
+global start_filename
+global backup_filename
 start_file = ""
 run_file = ""
 directory = ""
@@ -395,39 +385,12 @@ row0.add(Box.createRigidArea(Dimension(20, 0)))
 row0.add(label_panel_location)
 row0.add(Box.createRigidArea(Dimension(20, 0)))
 
-# rowTitle_1_old = JPanel()
-# rowTitle_1_old.setLayout(BoxLayout(rowTitle_1_old, BoxLayout.X_AXIS))
-# rowTitle_1_1 = JLabel("")
-# rowTitle_1_1.add(Box.createHorizontalGlue());
-# rowTitle_1_1.setAlignmentX(rowTitle_1_1.LEFT_ALIGNMENT)
-# msg = ""
-# rowTitle_1_2 = JLabel(msg)
-# rowTitle_1_2.setAlignmentX(rowTitle_1_1.RIGHT_ALIGNMENT)
-#
-# rowTitle_1_old.add(Box.createVerticalGlue())
-# rowTitle_1_old.add(Box.createRigidArea(Dimension(20, 0)))
-# rowTitle_1_old.add(rowTitle_1_1)
-# rowTitle_1_old.add(Box.createRigidArea(Dimension(20, 0)))
-# rowTitle_1_old.add(rowTitle_1_2)
-
-# row22 = JPanel()
-# row22.setLayout(BoxLayout(row22, BoxLayout.X_AXIS))
-# row22b1 = JLabel("We Start with the Original Panel")
-# row22b1.add( Box.createHorizontalGlue() );
-# row22b1.setAlignmentX( row22b1.LEFT_ALIGNMENT )
-# row22b2 = JLabel("")    #start_filename
-# row22b2.setAlignmentX( row22b2.RIGHT_ALIGNMENT )
-#
-# row22.add(Box.createVerticalGlue())
-# row22.add(Box.createRigidArea(Dimension(20, 0)))
-# row22.add(row22b1)
-# row22.add(Box.createRigidArea(Dimension(20, 0)))
-# row22.add(row22b2)
-
 
 rowTitle_22 = JPanel()
 rowTitle_22.setLayout(BoxLayout(rowTitle_22, BoxLayout.X_AXIS))
-rowStage1Title_1 = JLabel("Stage1x: ")
+rowStage1Title_1 = JLabel("Stage1: ")
+get_start_filename()
+get_backup_filename()
 rowStage1Title_1 = JLabel("    Modifies: " + start_filename + "  Creates backup: " + backup_filename)
 rowStage1Title_1.add(Box.createHorizontalGlue());
 rowStage1Title_1.setAlignmentX(rowStage1Title_1.LEFT_ALIGNMENT)
@@ -438,19 +401,6 @@ rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
 rowTitle_22.add(rowStage1Title_1)
 rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
 rowTitle_22.add(rowStage1Title_2)
-
-# row42 = JPanel()
-# row42.setLayout(BoxLayout(row42, BoxLayout.X_AXIS))
-# row42b1 = JLabel("Stage2: Add the transits and train-info files")
-# row42b1.add( Box.createHorizontalGlue() );
-# row42b1.setAlignmentX( row42b1.LEFT_ALIGNMENT )
-# row42b2 = JLabel("")     #start_filename + "_icons"
-#
-# row42.add(Box.createVerticalGlue())
-# row42.add(Box.createRigidArea(Dimension(20, 0)))
-# row42.add(row42b1)
-# row42.add(Box.createRigidArea(Dimension(20, 0)))
-# row42.add(row42b2)
 
 rowStage2Title = JPanel()
 rowStage2Title.setLayout(BoxLayout(rowStage2Title, BoxLayout.X_AXIS))
@@ -517,26 +467,6 @@ rowStage1Separator.add(rowStage1Separator_1)
 rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
 rowStage1Separator.add(rowStage1Separator_2)
 
-# row33 = JPanel()
-# row33.setLayout(BoxLayout(row33, BoxLayout.X_AXIS))
-# row33b1 = JLabel("*******************************************************************")
-# row33b1.add( Box.createHorizontalGlue() );
-# row33b1.setAlignmentX( row33b1.LEFT_ALIGNMENT )
-# row33b2 = JLabel("")
-#
-# row33.add(Box.createVerticalGlue())
-# row33.add(Box.createRigidArea(Dimension(20, 0)))
-# row33.add(row33b1)
-# row33.add(Box.createRigidArea(Dimension(20, 0)))
-# row33.add(row33b2)
-
-###row1L1
-
-
-
-
-
-
 rowStage1Button = JPanel()
 rowStage1Button.setLayout(BoxLayout(rowStage1Button, BoxLayout.X_AXIS))
 rowrowStage1Button_2 = JLabel("Sets Up everything to run trains using dispatcher")
@@ -554,65 +484,11 @@ rowStage1Button.add(rowStage1Button_1)
 rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
 rowStage1Button.add(rowrowStage1Button_2)
 
-# row11 = JPanel()
-# row11.setLayout(BoxLayout(row11, BoxLayout.X_AXIS))
-# row11b1 = JLabel("Stage2 just adds transits and traininfo files to the currently loaded system: ")
-# row11b1.add( Box.createHorizontalGlue() );
-# row11b1.setAlignmentX( row11b1.LEFT_ALIGNMENT )
-# row11b2 = JLabel("")
-#
-# row11.add(Box.createVerticalGlue())
-# row11.add(Box.createRigidArea(Dimension(20, 0)))
-# row11.add(row11b1)
-# row11.add(Box.createRigidArea(Dimension(20, 0)))
-# row11.add(row11b2)
-
-# row15 = JPanel()
-# row15.setLayout(BoxLayout(row15, BoxLayout.X_AXIS))
-# row15b1 = JLabel("You need to restart JMRI and load the file created in Stage 1: ")
-# row15b1.add( Box.createHorizontalGlue() );
-# row15b1.setAlignmentX( row15b1.LEFT_ALIGNMENT )
-# row15b2 = JLabel("")
-#
-# row15.add(Box.createVerticalGlue())
-# row15.add(Box.createRigidArea(Dimension(20, 0)))
-# ##row15.add(row15b1)
-# row15.add(Box.createRigidArea(Dimension(20, 0)))
-# ##row15.add(row15b2)
-
-# row45 = JPanel()
-# row45.setLayout(BoxLayout(row45, BoxLayout.X_AXIS))
-# row45b1 = JLabel("You need to restart JMRI and load the file created in Stage 1: ")
-# row45b1.add( Box.createHorizontalGlue() );
-# row45b1.setAlignmentX( row45b1.LEFT_ALIGNMENT )
-# row45b2 = JLabel("")
-#
-# row45.add(Box.createVerticalGlue())
-# row45.add(Box.createRigidArea(Dimension(20, 0)))
-# row45.add(row45b1)
-# row45.add(Box.createRigidArea(Dimension(20, 0)))
-# row45.add(row45b2)
-
 #initialise_panel_location(stage1Button, stage2Button, stage3Button)
 robot = java.awt.Robot()
 KeyEvent = java.awt.event.KeyEvent
 
 setAdvancedRouting()
-
-# row2 = JPanel()
-# row2.setLayout(BoxLayout(row2, BoxLayout.X_AXIS))
-# row2b1 = JLabel("Create Transits and TrainInfo Fies:           Runs file CreateTransits.py")
-# row2b1.add( Box.createHorizontalGlue() );
-# row2b1.setAlignmentX( row2b1.LEFT_ALIGNMENT )
-#
-# row2b2 = JButton("Stage2", actionPerformed = CreateTransits_action)
-# stage2Button_old = row2b2
-#
-# row2.add(Box.createVerticalGlue())
-# row2.add(Box.createRigidArea(Dimension(20, 0)))
-# row2.add(row2b2)
-# row2.add(Box.createRigidArea(Dimension(20, 0)))
-# row2.add(row2b1)
 
 rowStage2 = JPanel()
 rowStage2.setLayout(BoxLayout(rowStage2, BoxLayout.X_AXIS))
@@ -630,64 +506,21 @@ rowStage2.add(rowStage2_2)
 rowStage2.add(Box.createRigidArea(Dimension(20, 0)))
 rowStage2.add(rowStage2_1)
 
-# row14 = JPanel()
-# row14.setLayout(BoxLayout(row14, BoxLayout.X_AXIS))
-# row14b1 = JLabel("You should be now set up to run the dispatcher system")
-# row14b1.add( Box.createHorizontalGlue() );
-# row14b1.setAlignmentX( row14b1.LEFT_ALIGNMENT )
-# row14b2 = JLabel("")
-#
-# row14.add(Box.createVerticalGlue())
-# row14.add(Box.createRigidArea(Dimension(20, 0)))
-# row14.add(row14b1)
-# row14.add(Box.createRigidArea(Dimension(20, 0)))
-# row14.add(row14b2)
-
 initialise_panel_location(stage1Button, stage2Button)
+#rowStage1Title_1 = JLabel("    Modifies: " + start_filename + "  Creates backup: " + backup_filename)
 
-###top panel
-
-
-# row3 = JPanel()
-# row3.setLayout(BoxLayout(row3, BoxLayout.X_AXIS))
-# b1 = JLabel("You my now run the dispatcher system from the panel")
-# b1.setAlignmentX( b1.LEFT_ALIGNMENT )
-# #b2 = JButton("Run", actionPerformed = RunDispatcher_action)
-# row3.add(Box.createVerticalGlue())
-# #row3.add(Box.createRigidArea(Dimension(20, 0)))
-# #row3.add(b2)
-# row3.add(Box.createRigidArea(Dimension(20, 0)))
-# row3.add(b1)
-
-
-
-
-# panel.add(leftJustify(rowTitle_1_old))
+#Title
 panel.add(leftJustify(rowTitle_2))
 panel.add(leftJustify(rowTitle_22))
 panel.add(leftJustify(row_Title_3))
 
 #stage1
-
 panel.add(leftJustify(rowStage1Button))
-#panel.add(leftJustify(row15))
 panel.add(leftJustify(rowStage1Separator))
 
-#panel.add(leftJustify(row11))
-
 #stage2
-#panel.add(leftJustify(row42))
-#panel.add(leftJustify(row2))
-#panel.add(leftJustify(row45))
-#panel.add(leftJustify(row33))
-
-#stage3
-#panel.add(leftJustify(rowStage2Title))
 panel.add(leftJustify(rowStage2))
 panel.add(leftJustify(rowStage2Separator))
-
-#panel.add(leftJustify(row14))
-#panel.add(leftJustify(row3))
 
 frame.pack()
 frame.setVisible(True)
