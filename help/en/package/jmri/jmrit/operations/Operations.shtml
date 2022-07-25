@@ -330,6 +330,10 @@
                 <li>
                   <a href="#OffLayoutStorage">Off Layout Storage / Staging</a>
                 </li>
+                
+                <li>
+                  <a href="#ArrivalDepartureTracks">Arrival and Departure Tracks</a>
+                </li>
               </ul>
             </li>
 
@@ -800,17 +804,19 @@
       reduce car movement! So our advice is start off using the basic features of the program and
       later once you get good car movement, try the more advanced features.</p>
 
-      <p>One question that comes up often, is whether to enter the arrival and departure tracks
-      into the operations program, and the simple answer is that you don't need to enter them into
-      the program. Although it is possible to specify the A/D tracks in the program, it complicates
-      the car movement by requiring an "extra" session to move the car from arrival track to the
-      car's destination, and from the car's origin track to the departure track. Most find that
-      allowing the program to pull a car directly from a train sitting on the "arrival" track and
-      eventually spot the car to its destination, is the best method when using the program. Same
-      goes when building a train using the "departure" track, car pulls directly into the train
-      rather than to a specific departure track makes the operations run more smoothly. By not
-      specifying the A/D tracks, you're letting your crew, and not the program, decide which tracks
-      to use when servicing a train.</p>
+      <p>
+        One question that comes up often, is whether to enter the arrival and departure tracks into
+        the operations program, and the simple answer is that you don't need to enter them into the
+        program. Although it is possible to specify the A/D tracks in the program, it complicates
+        the car movement by requiring an "extra" session to move the car from arrival track to the
+        car's destination, and from the car's origin track to the departure track. Most find that
+        allowing the program to pull a car directly from a train sitting on the "arrival" track and
+        eventually spot the car to its destination, is the best method when using the program. Same
+        goes when building a train using the "departure" track, car pulls directly into the train
+        rather than to a specific departure track makes the operations run more smoothly. By not
+        specifying the <a href="#ArrivalDepartureTracks">A/D tracks</a>, you're letting your crew,
+        and not the program, decide which tracks to use when servicing a train.
+      </p>
 
       <h3 id="Display">Display and Help</h3>
       To adjust the display font size or appearance of the JMRI windows, select "Preferences..."
@@ -1370,23 +1376,26 @@
       one major drawback to increasing the number of passes, is that your train build reports will
       be longer since each pass by the program is documented.</p>
 
-   <h3 id="AllowLocalCarMovements">Switcher Service (Local)</h3>
-   The next set of options control local car movements when using a
-   <a href="#SwitcherService">switcher</a> to service a location. A switcher only services one
-   location. Normally it is better not to allow a car to move from one spur directly to another spur
-   at the same location when using a switcher. This type of move can be very unrealistic, picture
-   moving a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from
-   one yard track to another can have your crew wondering what kind of busy work is being generated!
-   We recommend that you leave all of the checkboxes deselected, but if you need these types of
-   moves for cars without a final destination or custom load, select the appropriate checkbox.
-   <p>
-    You should note that schedules and custom loads can override the switcher options. So if you
-    need certain car movements for a switcher, it's best to use <a href="#Schedules">schedules</a>
-    to define them. Also see <a href="#TrainLocalMoveOption">Allow local moves when a car has a
-     custom load or FD</a>.
-   </p>
+      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement)</h3>
+      The next three "Allow Local ..." options control car movements when using a
+      <a href="#SwitcherService">switcher</a> to service a location. A switcher only services one
+      location. The three options only apply to cars with the default "E" or "L"
+      <a href="#CarLoad">load</a>. Normally it is better not to allow a car to move from one spur
+      directly to another spur at the same location when using a switcher. This type of move can be
+      very unrealistic, picture moving a boxcar from a shoe manufacture directly to an auto
+      manufacture. Also moving a car from one yard track to another can have your crew wondering
+      what kind of busy work is being generated! We recommend that you leave all of the checkboxes
+      deselected, but if you need these types of moves for cars without a final destination or
+      custom load, select the appropriate checkbox.
 
-   <h3>Staging</h3>
+      <p>
+        You should note that schedules and custom loads can override the switcher options. So if you
+        need certain car movements for a switcher, it's best to use <a href="#Schedules">schedules</a>
+        to define them. Also see <a href="#TrainLocalMoveOption">Allow local moves when a car
+          has a custom load or FD</a>.
+      </p>
+
+      <h3>Staging Options</h3>
 
       <h4 id="TypeRoadLoadRestrictionsStaging">Enable Type, Road and Load Restrictions into
       Staging</h4>
@@ -1473,7 +1482,7 @@
       move the car to its final destination. If you want the program to also consider using yard
       tracks when routing, select this option.
       
-      <h4>Enable Car Routing through Staging</h4>
+      <h4 id="EnableRoutingStaging">Enable Car Routing through Staging</h4>
       Routing through staging is disabled by default. This is considered to be an advanced feature
       and shouldn't be used until you've become very familiar with the program. When enabled the
       program will try to route cars through staging if it couldn't find a route using C/I and yard
@@ -3106,6 +3115,24 @@
       control how many cars a box can hold by creating the right number of tracks of a certain
       length for the box. The "copy" location and track features make the creation of storage boxes
       a bit easier.</p>
+      
+      <h3 id="ArrivalDepartureTracks">Arrival and Departure Tracks</h3>
+
+      <p>
+        To create arrival or departure tracks for a location, the correct track type to use is
+        staging. To prevent any changes to a car's load, deselect all of the load options for the
+        staging track. If you want additional track types for the "same" location to break down or
+        build trains on your arrival or departure tracks, you will need to create a second location
+        using the <a href="#AddLocation">hyphen</a> feature. Normally you would also create a local
+        switcher to break down or build your arrival or departure trains. For the local switcher,
+        you would combine the "same" locations in the switcher's <a href="#RouteFeatures">route</a>.
+        If breaking down the arrival track, the first location in the switcher's route has to be the
+        location with the arrival staging track. And if the switcher is also building the departure
+        train, the staging departure track location has to be the last location in the switcher's
+        route. If you're using custom loads or final destinations when placing cars on your
+        "staging" departure track, you'll need to <a href="#EnableRoutingStaging">Enable Car
+          Routing through Staging</a>.
+      </p>
 
       <h3 id="TrackTools">Track Tools</h3>
 

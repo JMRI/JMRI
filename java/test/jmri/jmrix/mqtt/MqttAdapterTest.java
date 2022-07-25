@@ -18,7 +18,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MqttAdapterTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         MqttAdapter a = new MqttAdapter();
         Assert.assertNotNull("constructor", a);
     }
@@ -26,7 +26,8 @@ public class MqttAdapterTest {
     String lastTopic;
     String lastMessage;
     
-    class TestListener implements MqttEventListener {
+    private class TestListener implements MqttEventListener {
+        @Override
         public void notifyMqttMessage(String topic, String message){
             lastTopic = topic;
             lastMessage = message;
@@ -39,16 +40,14 @@ public class MqttAdapterTest {
         MqttAdapter a = new MqttAdapter();
         a.mqttEventListeners = new HashMap<>();
         
-        lastTopic = null;
-        lastMessage = null;
-        
         ArrayList<MqttEventListener> mels = new ArrayList<>();
         mels.add(new TestListener());
         a.mqttEventListeners.put("/trains/foo", mels);
         
         a.messageArrived("/trains/foo", new MqttMessage());
         
-        Assert.assertEquals(lastTopic, "/trains/foo");
+        Assert.assertEquals( "/trains/foo", lastTopic);
+        Assert.assertEquals("", lastMessage);
     }
 
     @Test
@@ -56,23 +55,23 @@ public class MqttAdapterTest {
     public void messageArrivedWildcardTest() throws Exception {
         MqttAdapter a = new MqttAdapter();
         a.mqttEventListeners = new HashMap<>();
-        
-        lastTopic = null;
-        lastMessage = null;
-        
+
         ArrayList<MqttEventListener> mels = new ArrayList<>();
         mels.add(new TestListener());
         a.mqttEventListeners.put("/trains/#", mels);
         
         a.messageArrived("/trains/foo", new MqttMessage());
         
-        Assert.assertEquals(lastTopic, "/trains/foo");
+        Assert.assertEquals("/trains/foo", lastTopic );
+        Assert.assertEquals("", lastMessage);
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        lastTopic = null;
+        lastMessage = null;
     }
 
     @AfterEach
