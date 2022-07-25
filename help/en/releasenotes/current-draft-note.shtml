@@ -333,6 +333,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
+                <li>Added a decoder definition to configure the 63810 Mobile Station Adapter.<br>
+                Use the LNCV tool to program.</li>
                 <li>Added decoder definitions for Occupancy Feedback modules #63340 (2-rail) and #63350 (3-rail).<br>
                 Use the LNCV Tool for programming.</li>
             </ul>
