@@ -419,6 +419,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             p31.setLayout(new FlowLayout());
             p31.add(new JLabel(rbx.getString("EntryPointTable")));
             addFrame.getContentPane().add(p31);
+
             JPanel p32 = new JPanel();
             p32.setLayout(new FlowLayout());
             entryPointOptions = new ButtonGroup();
@@ -443,6 +444,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             // djd debugging - temporarily hide these items until the automatic setting of entry point direction is ready
             //   addFrame.getContentPane().add(p32);
             // end djd debugging
+
             JPanel p33 = new JPanel();
             // initialize table of entry points
             entryPointTableModel = new EntryPointTableModel();
@@ -1087,8 +1089,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         toolsMenu.add(validate);
         validate.addActionListener((ActionEvent e) -> {
             if (sectionManager != null) {
-                initializeLayoutEditor(false);
-                int n = sectionManager.validateAllSections(frame, panel);
+                int n = sectionManager.validateAllSections();
                 if (n > 0) {
                     JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
                             rbx.getString("Message14"), new Object[]{"" + n}),
@@ -1106,19 +1107,17 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         toolsMenu.add(setDirSensors);
         setDirSensors.addActionListener((ActionEvent e) -> {
             if (sectionManager != null) {
-                if (initializeLayoutEditor(true)) {
-                    int n = sectionManager.setupDirectionSensors(panel);
-                    if (n > 0) {
-                        JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
-                                rbx.getString("Message27"), new Object[]{"" + n}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    } else if (n == -2) {
-                        JOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    } else if (n == 0) {
-                        JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
-                                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
-                    }
+                int n = sectionManager.setupDirectionSensors();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
+                            rbx.getString("Message27"), new Object[]{"" + n}),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                } else if (n == -2) {
+                    JOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                } else if (n == 0) {
+                    JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
+                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -1126,76 +1125,23 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         toolsMenu.add(removeDirSensors);
         removeDirSensors.addActionListener((ActionEvent e) -> {
             if (sectionManager != null) {
-                if (initializeLayoutEditor(true)) {
-                    int n = sectionManager.removeDirectionSensorsFromSSL(panel);
-                    if (n > 0) {
-                        JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
-                                rbx.getString("Message33"), new Object[]{"" + n}),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    } else if (n == -2) {
-                        JOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
-                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    } else if (n == 0) {
-                        JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
-                                Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
-                    }
+                int n = sectionManager.removeDirectionSensorsFromSSL();
+                if (n > 0) {
+                    JOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(
+                            rbx.getString("Message33"), new Object[]{"" + n}),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                } else if (n == -2) {
+                    JOptionPane.showMessageDialog(frame, rbx.getString("Message32"),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                } else if (n == 0) {
+                    JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
+                            Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
     }
 
     JmriJFrame frame = null;
-    LayoutEditor panel = null;
-
-    private boolean initializeLayoutEditor(boolean required) {
-        // Get a Layout Editor panel. Choose Layout Editor panel if more than one.
-        ArrayList<LayoutEditor> layoutEditorList
-                = new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class));
-        if (panel == null || !layoutEditorList.isEmpty()) {
-            if (layoutEditorList.size() > 1) {
-                // initialize for choosing between layout editors
-                Object choices[] = new Object[layoutEditorList.size()];
-                int index = 0;
-                for (int i = 0; i < layoutEditorList.size(); i++) {
-                    String txt = layoutEditorList.get(i).getTitle();
-                    choices[i] = txt;
-                    if (panel == layoutEditorList.get(i)) {
-                        index = i;
-                    }
-                }
-                // choose between Layout Editors
-                Object panelName = JOptionPane.showInputDialog(frame,
-                        (rbx.getString("Message11")), rbx.getString("ChoiceTitle"),
-                        JOptionPane.QUESTION_MESSAGE, null, choices, choices[index]);
-                if ((panelName == null) && required) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message12"));
-                    panel = null;
-                    return false;
-                }
-                if (panelName != null) {
-                    for (int j = 0; j < layoutEditorList.size(); j++) {
-                        if (panelName.equals(choices[j])) {
-                            panel = layoutEditorList.get(j);
-                            return true;
-                        }
-                    }
-                } else {
-                    log.error("panelName is null!");
-                }
-                return false;
-            } else if (layoutEditorList.size() == 1) {
-                panel = layoutEditorList.get(0);
-                return true;
-            } else {
-                if (required) {
-                    JOptionPane.showMessageDialog(frame, rbx.getString("Message13"));
-                    panel = null;
-                }
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
      * Table model for Blocks in Create/Edit Section window
