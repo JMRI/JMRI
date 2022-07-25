@@ -31,7 +31,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
         <variables>
             <variable CV="5033.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Board address" >
-              <decVal min="0" max="9999"/>
+              <decVal min="1" max="9999"/>
               <label xml:lang="it">Indirizzo Primario: </label>
               <label xml:lang="fr">Adresse décodeur: </label>
               <label xml:lang="de">Decoderadresse: </label>
