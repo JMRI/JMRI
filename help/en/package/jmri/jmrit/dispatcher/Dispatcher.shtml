@@ -71,6 +71,11 @@
         </ul>
       </div>
 
+      <div class="noted"><span class="since">since 5.1.3</span>
+        <p>The requirement to select a Layout Editor panel in Dispatcher Options has been removed.
+        All Layout Editor panels are now used for layout connectivity when running auto trains.</p>
+      </div>
+
       <h2 id="intro">Introduction to Dispatcher</h2>
       <span class="since">since 2.3.5</span>
       <p>JMRI <strong>Dispatcher</strong> provides functions and organizes information relating to
@@ -969,7 +974,7 @@
       <h3 id="autorequire">Requirements for Automatic Running</h3>
 
       <p>Automatic running of Active Trains requires the layout and the train have required
-      hardware and that a fully configured Layout Editor panel be present to provide layout
+      hardware and that one or more fully configured Layout Editor panels be present to provide layout
       connectivity information. Some of the automatic running requirements are strongly recommended
       for manual running also. Requirements include:</p>
 
@@ -992,20 +997,20 @@
         </li>
 
         <li>
-          <p>Blocks, turnouts, and signals must be configured on a Layout Editor panel that fully
-          describes the connectivity of the layout. The Layout Editor panel need not be displayed,
-          but must show up in the submenu of Panels/Show Panel. If multiple Layout Editor panels
-          are present, Dispatcher will use the Layout Editor panel selected in Dispatcher <a href=
-          "Options.shtml">Options</a>. The Layout Editor panel acts as a connectivity database,
-          supplying connectivity information as needed to Dispatcher or the Auto Active Train's
-          <em>virtual engineer</em>.</p>
+          <p>Blocks, turnouts, and signals must be configured on one or more Layout Editor panels
+          that fully describes the connectivity of the layout. The Layout Editor panels need not be
+          displayed, but must show up in the submenu of Panels/Show Panel. If multiple Layout Editor
+          panels are present, Dispatcher will use the combined connectivity.  This works best when
+          panels are connected using edge connectors.  The Layout Editor panels act as a connectivity
+          database, supplying connectivity information as needed to Dispatcher or the Auto Active
+          Train's <em>virtual engineer</em>.</p>
         </li>
 
         <li>
           <p>Auto Active Trains follow signals, requiring signals as part of the Layout Editor
-          panel. Hardware signals on the layout need not be physically present, but signals and
+          panels. Hardware signals on the layout need not be physically present, but signals and
           signal logic (Either SignalHeads & SSL or SignalMasts & SML) must be configured in the
-          Layout Editor panel, and must be connected to the track at the proper block transition
+          Layout Editor panels, and must be connected to the track at the proper block transition
           points.</p>
         </li>
 
@@ -1017,12 +1022,12 @@
 
         <li>
           <p>All entry points and exit points from Sections in the Transit must have signals on the
-          Layout Editor panel. If Using Signal Heads/SSL then boundaries between Blocks in Sections
-          should be signaled on the Layout Editor panel. Portions of the layout that are not in
+          Layout Editor panels. If Using Signal Heads/SSL then boundaries between Blocks in Sections
+          should be signaled on the Layout Editor panels. Portions of the layout that are not in
           Sections in Transits only need those signals that are necessary to allow setup of signal
           logic, either SSL (Simple Signal Logic) or SML (Signal Mast Logic) for signals in
           Sections of the Transit. <span class="since">since 3.3.5</span> Use of the Layout Editor
-          tools to configure signals on the Layout Editor panel is required (this is how Layout
+          tools to configure signals on the Layout Editor panels is required (this is how Layout
           Editor knows which signals apply to which turnout, block boundary, etc.). Use of these
           tools to set up signal logic is strongly recommended. When checking for direction sensors
           in signal logic, Dispatcher looks in the SSL of each signal head (see below). If signal
