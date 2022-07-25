@@ -64,10 +64,12 @@ public class CarRosterMenu extends JMenu {
         printAction.setEnabled(false);
         AbstractAction previewAction = new PrintCarRosterAction(true, carsTableFrame);
         previewAction.setEnabled(false);
+        
         add(importAction);
         add(exportAction);
         add(deleteAction);
         add(resetMovesAction);
+        addSeparator();
         add(printAction);
         add(previewAction);
 

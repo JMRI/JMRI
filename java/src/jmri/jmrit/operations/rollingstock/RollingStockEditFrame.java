@@ -63,7 +63,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     public JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // TODO have button state item to add
+    public JButton addButton = new JButton(); // add car or locomotive
 
     // check boxes
     public JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
