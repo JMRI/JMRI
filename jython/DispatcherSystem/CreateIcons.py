@@ -109,7 +109,7 @@ class processPanels():
 
 
 
-        #JOptionPane.showMessageDialog(None, "Performing some prelimiary checks to ensure the trains run correctly\nAll errors will need to be fixed for Dispatcher to run correctly\nSome errors will cause the panel to be set up incorrectly in this stage", 'Checks', JOptionPane.WARNING_MESSAGE)
+        #JOptionPane.showMessageDialog(None, "Performing some preliminary checks to ensure the trains run correctly\nAll errors will need to be fixed for Dispatcher to run correctly\nSome errors will cause the panel to be set up incorrectly in this stage", 'Checks', JOptionPane.WARNING_MESSAGE)
 
         # check all blocks have sensors
         if self.check_all_blocks_have_sensors() == False:
@@ -364,8 +364,9 @@ class processPanels():
     def removeIconsAndLabels(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             if self.editorManager.get("Dispatcher System") is not None:
-                # Skip the Dispatcher System control panel.
-                return
+                if panel == self.editorManager.get("Dispatcher System"):
+                    # Skip the Dispatcher System control panel.
+                    return
 
             self.removeBlockContentIcons(panel)
             self.removeLabels(panel)

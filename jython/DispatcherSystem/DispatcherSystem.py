@@ -8,7 +8,7 @@ from javax.swing import JButton, JFrame,JPanel,BoxLayout,Box
 from javax.swing import JLabel, JMenu, JMenuItem, JMenuBar
 from javax.swing import JFileChooser,JTextField, BorderFactory
 from javax.swing import SwingWorker, SwingUtilities
-from javax.swing import WindowConstants
+from javax.swing import WindowConstants, JDialog, JTextArea
 from java.awt import Color, Font
 import jmri
 
@@ -284,7 +284,15 @@ def CreateTransits():
     dpg.killLabel()
 
 def show_options_message(msg):
-    JOptionPane.showMessageDialog(None, msg);
+    dialog = JDialog(None, 'Confirm Dispatcher Options', False)
+
+    panel = JPanel();
+    panel.add(JTextArea(msg))
+
+    dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    dialog.getContentPane().add(panel);
+    dialog.pack();
+    dialog.setVisible(True);
 
 def show_options_pane():
     DispatcherFrame = jmri.jmrit.dispatcher.DispatcherFrame()
