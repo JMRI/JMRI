@@ -23,7 +23,6 @@ public class AllocationPlanTest {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         AutoAllocate aa = new AutoAllocate(d, new ArrayList<>() );
-        jmri.util.JUnitAppender.assertErrorMessage("null LayoutEditor when constructing AutoAllocate");
         AllocationPlan t = new AllocationPlan(aa,1);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(d);

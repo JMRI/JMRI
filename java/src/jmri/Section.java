@@ -329,11 +329,10 @@ public interface Section extends NamedBean {
      * If this method has trouble, an error message is placed in the log
      * describing the trouble.
      *
-     * @param panel the panel to place direction sensors on
      * @return the number or errors placing sensors; 1 is returned if no
      *         direction sensor is defined for this section
      */
-    public int placeDirectionSensors(LayoutEditor panel);
+    public int placeDirectionSensors();
 
     /**
      * Validate the Section. This checks block connectivity, warns of redundant
@@ -341,11 +340,9 @@ public interface Section extends NamedBean {
      * appropriate error message is logged if a problem is found. This method
      * assumes that Block Paths are correctly initialized.
      *
-     * @param lePanel panel containing blocks that will be checked to be
-     *                initialized; if null no blocks are checked
      * @return an error description or empty string if there are no errors
      */
-    public String validate(LayoutEditor lePanel);
+    public String validate();
 
     /**
      * Set/reset the display to use alternate color for unoccupied blocks in

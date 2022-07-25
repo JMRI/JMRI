@@ -13446,6 +13446,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13514,6 +13517,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13582,6 +13588,9 @@
       <rowOrColumnName>Signal before</rowOrColumnName>
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13650,6 +13659,9 @@
       <rowOrColumnName>2</rowOrColumnName>
       <tableRowOrColumn>Column</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13718,6 +13730,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13786,6 +13801,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
