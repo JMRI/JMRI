@@ -35,7 +35,6 @@ class processPanels():
 
     list_of_stopping_points = []
     blockPoints = {}   # Block center points used by direct access process
-    panelBounds = None # Panel rectangle
     editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
 
     # row number, user name, label name, x offset, y offset
@@ -364,6 +363,10 @@ class processPanels():
     # **************************************************
     def removeIconsAndLabels(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            if self.editorManager.get("Dispatcher System") is not None:
+                # Skip the Dispatcher System control panel.
+                return
+
             self.removeBlockContentIcons(panel)
             self.removeLabels(panel)
             self.removeSensorIcons(panel)
@@ -554,7 +557,6 @@ class processPanels():
     # **************************************************
     def addIcons(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
-            self.panelBounds = panel.getPanelBounds()
             self.getBlockCenterPoints(panel)
 
             self.addStopIcons(panel)
@@ -645,15 +647,25 @@ class processPanels():
     # control sensor icons and label
     # **************************************************
     def addControlIconsAndLabels(self, panel):
+        if self.editorManager.get("Dispatcher System") is not None:
+            return
+
+        panel = jmri.jmrit.display.layoutEditor.LayoutEditor("Dispatcher System")
+        self.editorManager.add(panel)
+
         for control in self.controlSensors:
             sensor = sensors.getSensor('IS:DSCT:' + str(control[0]))
             if sensor is not None:
-                x = self.panelBounds.getX() + self.panelBounds.getWidth() + control[3]
-                y = (control[0] * 20) + 30 + control[4]
+                x = 20 + control[3]
+                y = (control[0] * 20) + 20 + control[4]
                 self.addMediumIcon(panel, sensor, x, y)
 
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
+
+        panel.setSize(300, 400)
+        panel.setAllEditable(False)
+        panel.setVisible(True)
 
     # **************************************************
     # small icon
