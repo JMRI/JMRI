@@ -275,9 +275,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("mask") != null) {
             mask = e.getAttribute("mask").getValue();
         } else {
-            mask = "VVVVVVVV";
-            // default mask is 8 bits
-            // replaced by larger mask depending on maxVal in #processDecVal()
+            mask = "VVVVVVVV"; // default mask is 8 bits
+            // for DecVariableValue might be replaced by larger mask depending on maxVal in #processDecVal()
         }
 
         boolean readOnly = e.getAttribute("readOnly") != null && e.getAttribute("readOnly").getValue().equals("yes");
@@ -506,7 +505,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             maxVal = Integer.parseInt(a.getValue());
         }
         if (maxVal > 255 && Objects.equals(mask, "VVVVVVVV")) {
-            mask = VariableValue.getMaxMask(maxVal); // replaces default 8 bit mask without specifying a mask in xml
+            mask = VariableValue.getMaxMask(maxVal); // replaces default 8 bit mask when no mask is provided in xml
             log.debug("Created mask {} for CV {}", mask, name);
         }
         v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item);
@@ -1070,9 +1069,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         setFileDirty(true);
         char b = e.getActionCommand().charAt(0);
         int row = Integer.parseInt(e.getActionCommand().substring(1));
-        if (log.isDebugEnabled()) {
-            log.debug("event on {} row {}", b, row);
-        }
+        log.debug("event on {} row {}", b, row);
         if (b == 'R') {
             // read command
             read(row);
