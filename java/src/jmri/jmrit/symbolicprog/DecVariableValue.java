@@ -279,7 +279,7 @@ public class DecVariableValue extends VariableValue
     /**
      * Set a new value, including notification as needed.
      * <p>
-     * This does the conversion from string to int, so if the place where
+     * This does the conversion from string to int, so it's the place where
      * formatting needs to be applied.
      * @param value new value.
      */
@@ -292,9 +292,7 @@ public class DecVariableValue extends VariableValue
         }
         if (value < _minVal) value = _minVal;
         if (value > _maxVal) value = _maxVal;
-        if (log.isDebugEnabled()) {
-            log.debug("setValue with new value {} old value {}", value, oldVal);
-        }
+        log.debug("setValue with new value {} old value {}", value, oldVal);
         if (oldVal != value) {
             _value.setText(valueToText(value));
             updatedTextField();
@@ -335,9 +333,7 @@ public class DecVariableValue extends VariableValue
     @Override
     public boolean isChanged() {
         CvValue cv = _cvMap.get(getCvNum());
-        if (log.isDebugEnabled()) {
-            log.debug("isChanged for {} state {}", getCvNum(), cv.getState());
-        }
+        log.debug("isChanged for {} state {}", getCvNum(), cv.getState());
         return considerChanged(cv);
     }
 
@@ -428,17 +424,13 @@ public class DecVariableValue extends VariableValue
             addFocusListener(new java.awt.event.FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("focusGained");
-                    }
+                    log.debug("focusGained");
                     enterField();
                 }
 
                 @Override
                 public void focusLost(FocusEvent e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("focusLost");
-                    }
+                    log.debug("focusLost");
                     exitField();
                 }
             });
@@ -470,9 +462,7 @@ public class DecVariableValue extends VariableValue
     // clean up connections when done
     @Override
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
         if (_value != null) {
             _value.removeActionListener(this);
         }
