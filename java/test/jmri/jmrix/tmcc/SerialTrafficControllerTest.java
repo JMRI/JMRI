@@ -85,6 +85,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             @Override
             protected void portWarn(Exception e) {
             }
+
+            @Override
+            protected void unexpectedReplyStateError(int State, String msgString) {
+            }
+
         };
         scm.setTrafficController(c);
 
@@ -119,6 +124,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }, "reply received");
         Assert.assertEquals("first char of reply ", 0xFE, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 3, rcvdReply.getNumDataElements());
+        c.terminateThreads();
     }
 
     @Test
@@ -136,6 +142,11 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
             @Override
             protected void portWarn(Exception e) {
             }
+
+            @Override
+            protected void unexpectedReplyStateError(int State, String msgString) {
+            }
+            
         };
         scm.setTrafficController(c);
 
@@ -169,6 +180,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Assert.assertEquals("first char of reply ", 0xF0, rcvdReply.getOpCode() & 0xFF);
         Assert.assertEquals("length of reply ", 1, rcvdReply.getNumDataElements());
         jmri.util.JUnitAppender.assertWarnMessage("return short message as 1st byte is 240");
+        c.terminateThreads();
     }
 
     // internal class to simulate a Listener
