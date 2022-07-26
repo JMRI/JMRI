@@ -31,13 +31,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
         <variables>
             <variable CV="6381.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Module address">
-              <decVal min="1" max="65535"/>
+              <decVal min="1" max="65534"/>
               <label xml:lang="it">Indirizzo Modulo: </label>
               <label xml:lang="fr">Adresse Module: </label>
               <label xml:lang="de">Moduladresse: </label>
               <label xml:lang="nl">Module-adres: </label>
               <label>Module: </label>
-              <tooltip>Enter as decimal value (1-65535)</tooltip>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
             </variable>
 
             <!-- Loco-Ln address pairs 1-80 -->
