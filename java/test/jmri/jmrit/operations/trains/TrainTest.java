@@ -705,12 +705,8 @@ public class TrainTest extends OperationsTestCase {
         route.addLocation(middle, 2); // put location in middle of route
 
         // Build option require cars
-        Control.setFullTrainOnly(true);
-        Assert.assertFalse(train.build());
-        Assert.assertFalse("Train should not build, requires cars", train.isBuilt());
 
         // restore control
-        Control.setFullTrainOnly(false);
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, build doesn't require cars", train.isBuilt());
 
