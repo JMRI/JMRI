@@ -363,10 +363,9 @@ class processPanels():
     # **************************************************
     def removeIconsAndLabels(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
-            if self.editorManager.get("Dispatcher System") is not None:
-                if panel == self.editorManager.get("Dispatcher System"):
-                    # Skip the Dispatcher System control panel.
-                    return
+            if panel.getTitle() == 'Dispatcher System':
+                # Skip the Dispatcher System control panel if it exists
+                continue
 
             self.removeBlockContentIcons(panel)
             self.removeLabels(panel)
@@ -469,8 +468,10 @@ class processPanels():
     # **************************************************
     def removeSensors(self):
         controlName = []
-        for control in self.controlSensors:
-            controlName.append(control[1])
+        if self.editorManager.get("Dispatcher System") is None:
+            # OK to delete control sensors
+            for control in self.controlSensors:
+                controlName.append(control[1])
 
         deleteList = []     # Prevent concurrent modification
         for sensor in sensors.getNamedBeanSet():
@@ -651,6 +652,7 @@ class processPanels():
         if self.editorManager.get("Dispatcher System") is not None:
             return
 
+        # Create the Dispatcher System control panel
         panel = jmri.jmrit.display.layoutEditor.LayoutEditor("Dispatcher System")
         self.editorManager.add(panel)
 
