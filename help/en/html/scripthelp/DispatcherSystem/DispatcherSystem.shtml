@@ -47,20 +47,20 @@
     <p>There are two stages to set up the system for automatic train running:</p>
     <p>Fulfil the prerequisites, which include having speed profiled your locos that you wish to run with the system</p>
     <ul>
-      <li>Start JMRI with no panel displayed.</li>
+      <li>Start JMRI with a panel loaded.</li>
       <li>The panel should have:
         <ul>
           <li>SignalMasts</li>
-          <li>SignalMast Logic</li>
-          <li>No Transits (if there are any they will be deleted)</li>
-          <li>No Train Info Files (if there are any they will be deleted)</li>
+          <li>No SignalMast Logic (if there is any they will be deleted and replaced)</li>
+          <li>No Transits (if there are any they will be deleted and replaced)</li>
+          <li>No Train Info Files (if there are any they will be  and replaced)</li>
           <li>SignalMasts</li>
         </ul>
         <p>In addition the block table should have been edited to indicate the blocks where the train should stop</p>
       </li>
       <li>Bring up the Dispatcher System Panel</li>
-      <li>Run Stage1 to generate everything to run Dispatcher between stations</li>
-      <li>Run Stage3 to check the dispatcher options</li>
+      <li>Run Stage1 To generate everything to run Dispatcher between stations</li>
+      <li>Run Stage2 to check the dispatcher options</li>
       <li>Run the trains using the commands on a newly produced command panel</li>
     </ul>
     <h3 id="requirements">System Requirements</h3>
@@ -79,12 +79,12 @@
       <li>Typical blocks comments would be</li>
       <li><img src="images/NewItem31.png" alt="" /></li>
     </ul>
-    <h2 id="stage1">Running Stage1 &mdash; generate everything to run Dispatcher between stations</h2>
+    <h2 id="stage1">Running Stage1 &mdash; Editing the panel and producing the transits</h2>
     <p>Run DispatcherSystem.py in the main jython directory. You will get something like this:</p>
     <p><img style="padding: 1px;" src="images/NewItem3.png" alt="" /></p>
     <p>You are prompted to run Stage1 which adds all the icons required to run the system on a new pane, and
       generates transits</p>
-    <p>if the old panel name was WR.xml, the new panel will be backed up to WR_backup_xx.xml where _xx is an
+    <p>If the old panel name was WR.xml, the new panel will be backed up to WR_backup_xx.xml where _xx is an
       incremental number which is added if previous backups exist</p>
     <p>Some checks are done first, we check that:</p>
     <ul>
@@ -107,6 +107,8 @@
       <li>The transits and train info files required to move trains between stopping points</li>
     <p>The following confirmatory message appears:</p>
     <p><img style="padding: 1px;" src="images/NewItem7.png" alt="" /></p>
+    <p>It is recommended that the panel is saved after testing. The current filename can be used if desired as a
+      backup has been done automatically.</p>
 
     <h2 id="stage2">Running Stage2 Final Checks</h2>
     <p><img style="padding: 1px;" src="images/NewItem3.png" alt="" /></p>
@@ -257,7 +259,12 @@
     <p>To start the scheduler press 'Start Scheduler' and the clock will start and the trains set up to be dispatched will start when the fast clock gets to the correct time.</p>
     <h2 id="FeaturesSystem">Features of the Dispatcher System</h2>
     <ol>
-      <li>The Dispatcher system is designed to run trains from station to station. The system has been set up with a network graph which allows the system to get the shortest path between two stations, and this is used to get the route between the two stations. At present if a train is in a station en route, the system will not re-route to avoid the train, and the train may get stuck. Care must be taken when running trains.</li>
+      <li>The Dispatcher system is designed to run trains from station to station.
+        The system has been set up with a network graph which allows the system to get the shortest path between two stations,
+        and this is used to get the route between the two stations.
+        At present if a train is in a station en route, the system will not re-route to avoid the train,
+        and the train may get stuck.
+        Care must be taken when running trains.</li>
       <!--#include virtual="/Footer.shtml" --></ol>
   </div>
   <!-- closes #mainContent-->
