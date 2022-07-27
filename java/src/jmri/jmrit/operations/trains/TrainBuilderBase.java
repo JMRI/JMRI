@@ -358,11 +358,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected void showAndInitializeTrainRoute() throws BuildFailedException {
         int requestedCarMoves = 0; // how many cars were asked to be moved
         // TODO: DAB control minimal build by each train
-        if (_train.getTrainDepartsRouteLocation().getMaxCarMoves() > _departLocation.getNumberRS() &&
-                Control.fullTrainOnly) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCars"), new Object[] {
-                    Integer.toString(_departLocation.getNumberRS()), _train.getTrainDepartsName(), _train.getName() }));
-        }
+
         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildTrainRoute"),
                 new Object[] { _train.getName(), _train.getRoute().getName() }));
 
@@ -1100,11 +1096,7 @@ public class TrainBuilderBase extends TrainCommon {
         // get list of cars for this route
         _carList = carManager.getAvailableTrainList(_train);
         // TODO: DAB this needs to be controlled by each train
-        if (_train.getNumberCarsRequested() > _carList.size() && Control.fullTrainOnly) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNumReq"),
-                    new Object[] { Integer.toString(_train.getNumberCarsRequested()), _train.getName(),
-                            Integer.toString(_carList.size()) }));
-        }
+
         addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCars"));
         boolean showCar = true;
