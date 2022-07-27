@@ -1512,8 +1512,8 @@ public class Track extends PropertyChangeSupport {
                         ") " +
                         MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[] { getName() }); // no
             }
-            // does this track (interchange) accept cars without a final destination?
-            if (isInterchange() && isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
+            // does this track accept cars without a final destination?
+            if (isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
@@ -2535,13 +2535,16 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * When true the C/I track will only accept cars that have a final destination
+     * When true the track will only accept cars that have a final destination
      * that can be serviced by the track. See acceptsDestination(Location).
      * 
      * @return false if any car spotted, true if only cars with a FD.
      */
     public boolean isOnlyCarsWithFinalDestinationEnabled() {
-        return _onlyCarsWithFD;
+        if (isInterchange() || isStaging()) {
+            return _onlyCarsWithFD;
+        }
+        return false;
     }
 
     /**
@@ -3012,7 +3015,7 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
             e.setAttribute(Xml.HOLD_CARS_CUSTOM, isHoldCarsWithCustomLoadsEnabled() ? Xml.TRUE : Xml.FALSE);
         }
-        if (getTrackType().equals(INTERCHANGE)) {
+        if (isInterchange() || isStaging()) {
             e.setAttribute(Xml.ONLY_CARS_WITH_FD, isOnlyCarsWithFinalDestinationEnabled() ? Xml.TRUE : Xml.FALSE);
         }
         if (getAlternateTrack() != null) {

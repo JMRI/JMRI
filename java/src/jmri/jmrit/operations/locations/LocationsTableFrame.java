@@ -37,7 +37,7 @@ public class LocationsTableFrame extends OperationsFrame {
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton addButton = new JButton(Bundle.getMessage("AddLocation"));
 
     public LocationsTableFrame() {
         super(Bundle.getMessage("TitleLocationsTable"));
@@ -72,6 +72,9 @@ public class LocationsTableFrame extends OperationsFrame {
 
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
+        
+        // tool tips
+        addButton.setToolTipText(Bundle.getMessage("AddLocationTip"));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
