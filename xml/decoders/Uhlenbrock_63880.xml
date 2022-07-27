@@ -19,7 +19,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
     <decoder>
         <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter">
-            <model model="s88-Ln Interface 63880" productID="6388" formFactor="Stationary" comment="to connect 388 feedback bus to LocoNet">
+            <model model="s88-Ln Interface 63880" productID="6388" formFactor="Stationary" comment="to connect s88 feedback bus to LocoNet">
               <versionCV />
             </model>
         </family>
@@ -29,8 +29,8 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         </programming>
 
         <variables>
-            <variable CV="6388.0" item="Long Address" mask="VVVVVVVVVVVVVV" default="1" comment="Module address">
-              <decVal/>
+            <variable CV="6388.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Module address">
+              <decVal min="1" max="65534"/>
               <label xml:lang="it">Indirizzo Modulo: </label>
               <label xml:lang="fr">Adresse Module: </label>
               <label xml:lang="de">Moduladresse: </label>
