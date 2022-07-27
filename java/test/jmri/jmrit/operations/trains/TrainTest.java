@@ -69,7 +69,7 @@ public class TrainTest extends OperationsTestCase {
     RouteManager rmanager = null;
     LocationManager lmanager = null;
     EngineManager emanager = null;
-    CarManager cmanager = null;
+    // CarManager cmanager = null;
     CarTypes ct = null;
 
     // test Train creation
@@ -575,7 +575,7 @@ public class TrainTest extends OperationsTestCase {
 
     @Test
     public void testNoRouteBuild() {
-        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+
         Train train = tmanager.newTrain("Test");
 
         // build train without a route, should fail
@@ -650,6 +650,7 @@ public class TrainTest extends OperationsTestCase {
         route.deleteLocation(rl);
         terminate = lmanager.newLocation("terminate");
         rl = route.addLocation(terminate);
+        Assert.assertNotNull(rl);
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, route has been repaired", train.isBuilt());
 
@@ -704,12 +705,8 @@ public class TrainTest extends OperationsTestCase {
         route.addLocation(middle, 2); // put location in middle of route
 
         // Build option require cars
-        Control.fullTrainOnly = true;
-        Assert.assertFalse(train.build());
-        Assert.assertFalse("Train should not build, requires cars", train.isBuilt());
 
         // restore control
-        Control.fullTrainOnly = false;
         Assert.assertTrue(train.build());
         Assert.assertTrue("Train should build, build doesn't require cars", train.isBuilt());
 
@@ -4865,7 +4862,7 @@ public class TrainTest extends OperationsTestCase {
         rmanager = InstanceManager.getDefault(RouteManager.class);
         lmanager = InstanceManager.getDefault(LocationManager.class);
         emanager = InstanceManager.getDefault(EngineManager.class);
-        cmanager = InstanceManager.getDefault(CarManager.class);
+        // cmanager = InstanceManager.getDefault(CarManager.class);
         ct = InstanceManager.getDefault(CarTypes.class);
 
         // turn off build fail messages
