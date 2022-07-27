@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.implementation.AbstractNamedBean;
@@ -952,6 +954,21 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private int infoMessageCount = 0;
 
     /**
+     * Get the value of the block of the path.
+     * @param   path the path
+     * @return  the value of the block or null if path or block is null
+     */
+    @CheckForNull
+    @CheckReturnValue
+    public static Object getBlockValueFromPath(@CheckForNull Path path) {
+        if (path != null && path.getBlock() != null) {
+            return path.getBlock().getValue();
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Handles Block sensor going ACTIVE: this block is now occupied, figure out
      * from who and copy their value.
      */
@@ -1049,7 +1066,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                                 pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
                                 getDisplayName(), Path.decodeDirection(pFromDir[i]));
                         if ((pDir[i] & pFromDir[i]) > 0) { //use bitwise comparison to support combination directions such as "North, West"
-                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                            Object nextBlockValue = getBlockValueFromPath(next);
+                            if (nextBlockValue != null &&
+                                    ! nextBlockValue.equals(getBlockValueFromPath(pList[i]))) {
                                 allNeighborsAgree = false;
                             }
                             count++;
@@ -1063,7 +1082,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 if (next == null) {
                     for (int i = 0; i < currPathCnt; i++) {
                         if (isSet[i] && isActive[i]) {
-                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                            Object nextBlockValue = getBlockValueFromPath(next);
+                            if (nextBlockValue != null &&
+                                    ! nextBlockValue.equals(getBlockValueFromPath(pList[i]))) {
                                 allNeighborsAgree = false;
                             }
                             count++;
@@ -1074,15 +1095,16 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
                 if (next != null && count == 1) {
                     // found one block with proper direction, use it
-                    setValue(next.getBlock().getValue());
+                    Object nextBlockValue = getBlockValueFromPath(next);
+                    setValue(nextBlockValue);
                     setDirection(next.getFromBlockDirection());
                     log.debug("Block {} gets new value '{}' from {}, direction {}",
-                            getDisplayName(), next.getBlock().getValue(),
+                            getDisplayName(), nextBlockValue,
                             next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
                 } else {
                     // handle merging trains: All neighbors with same content (train ID)
                     if (allNeighborsAgree && next != null) {
-                        setValue(next.getBlock().getValue());
+                        setValue(getBlockValueFromPath(next));
                         setDirection(next.getFromBlockDirection());
                     } else {
                     // don't all agree, so can't determine unique value
