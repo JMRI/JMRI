@@ -629,7 +629,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
     /**
      * Create a "VVV" style mask matching the size of max value in bits.
-     * @param maxVal the maximum value to be stored in the cv
+     * @param maxVal the maximum value to be stored in the cv as decimal
      * @return a string of V's
      */
     protected static String getMaxMask(int maxVal) {
