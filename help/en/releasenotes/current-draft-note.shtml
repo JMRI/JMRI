@@ -170,7 +170,8 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>An include file enum-WeekdaysSun.xml that can be used to create a drop down of Weekdays was added to
+            xml/decoders/parts/</li>
         </ul>
 
         <h4>Arnold</h4>

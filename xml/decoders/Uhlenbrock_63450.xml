@@ -345,7 +345,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             </variable>
 
             <variable CV="6345.37" item="Weekday" default="2">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enumWeekdaysSun.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-WeekdaysSun.xml"/>
               <label xml:lang="de">Wochentag:</label>
               <label xml:lang="nl">Dag in de week:</label>
               <label>Weekday:</label>
