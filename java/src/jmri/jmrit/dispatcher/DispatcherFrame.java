@@ -1762,6 +1762,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 return null;   // return without allocating if "No" response
             }
         }
+
+        if (isUsingExtraColor(s)) {
+            log.warn("{}: section [{}] has one or more blocks using extra color", at.getTrainName(), s.getDisplayName(USERSYS));
+            return null;
+        }
+
         // check if train has reached its start time if delayed start
         if (checkOccupancy && (!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
             if (_AutoAllocate) {
@@ -1978,9 +1984,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
 
         as = allocateSection(at, s, ar.getSectionSeqNumber(), nextSection, nextSectionSeqNo, ar.getSectionDirection());
-        if (as != null) {
-            as.setAutoTurnoutsResponse(expectedTurnOutStates);
-        }
+        as.setAutoTurnoutsResponse(expectedTurnOutStates);
 
         if (intermediateSections.size() > 1 && mastHeldAtSection != s) {
             Section tmpcur = nextSection;
@@ -2077,6 +2081,31 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocatedSections.add(as);
         log.debug("{}: Allocated section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
         return as;
+    }
+
+    /**
+     * Check the section blocks to see if they have been logically allocated by an external
+     * process such as Entry/Exit or using LogixNG.
+     * @param section The section being checked.
+     * @return true if at least one layout block has use extra color enabled.
+     */
+    private boolean isUsingExtraColor(Section section) {
+        var lbManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        var extraColor = false;
+
+        for (var block : section.getBlockList()) {
+            var userName = block.getUserName();
+            if (userName != null) {
+                var lblock = lbManager.getByUserName(userName);
+                if (lblock != null) {
+                    if (lblock.getUseExtraColor()) {
+                        extraColor = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return extraColor;
     }
 
     /**
