@@ -42,6 +42,7 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
               <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="memoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
 
               <!-- These are for backwards compability up until JMRI 4.99.5 -->
               <xs:element name="oblock" type="beanNameType" minOccurs="0" maxOccurs="1"/>
