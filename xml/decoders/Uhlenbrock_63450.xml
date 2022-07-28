@@ -47,164 +47,164 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip>Select what buffer 1 shows. Some modes require an address.</tooltip>
             </variable>
             <variable CV="6345.2" item="Buffer 1 Address" default="1">
-              <decVal min="1" max="65535"/>
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address: </label>
               <tooltip>Address for Indicator Buffer 1 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.3" item="Buffer 2 Display Mode" default="1">
+            <variable CV="6345.3" item="Buffer 2 Display Mode" default="2">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 2 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.4" item="Buffer 2 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.4" item="Buffer 2 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 2 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.5" item="Buffer 3 Display Mode" default="1">
+            <variable CV="6345.5" item="Buffer 3 Display Mode" default="3">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 3 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.6" item="Buffer 3 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.6" item="Buffer 3 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 3 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.7" item="Buffer 4 Display Mode" default="1">
+            <variable CV="6345.7" item="Buffer 4 Display Mode" default="4">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 4 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.8" item="Buffer 4 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.8" item="Buffer 4 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 4 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.9" item="Buffer 5 Display Mode" default="1">
+            <variable CV="6345.9" item="Buffer 5 Display Mode" default="5">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 5 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.10" item="Buffer 5 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.10" item="Buffer 5 Address" default="0">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 5 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.11" item="Buffer 6 Display Mode" default="1">
+            <variable CV="6345.11" item="Buffer 6 Display Mode" default="5">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 6 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.12" item="Buffer 6 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.12" item="Buffer 6 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 6 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.13" item="Buffer 7 Display Mode" default="1">
+            <variable CV="6345.13" item="Buffer 7 Display Mode" default="6">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 7 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.14" item="Buffer 7 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.14" item="Buffer 7 Address" default="0">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 7 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.15" item="Buffer 8 Display Mode" default="1">
+            <variable CV="6345.15" item="Buffer 8 Display Mode" default="6">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 8 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.16" item="Buffer 8 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.16" item="Buffer 8 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 8 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.17" item="Buffer 9 Display Mode" default="1">
+            <variable CV="6345.17" item="Buffer 9 Display Mode" default="7">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 9 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.18" item="Buffer 9 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.18" item="Buffer 9 Address" default="0">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 9 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.19" item="Buffer 10 Display Mode" default="1">
+            <variable CV="6345.19" item="Buffer 10 Display Mode" default="7">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 10 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.20" item="Buffer 10 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.20" item="Buffer 10 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 10 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.21" item="Buffer 11 Display Mode" default="1">
+            <variable CV="6345.21" item="Buffer 11 Display Mode" default="8">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 11 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.22" item="Buffer 11 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.22" item="Buffer 11 Address" default="1">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 11 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.23" item="Buffer 12 Display Mode" default="1">
+            <variable CV="6345.23" item="Buffer 12 Display Mode" default="8">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
@@ -212,67 +212,67 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip>Select what buffer 12 shows. Some modes require an address.</tooltip>
             </variable>
             <variable CV="6345.24" item="Buffer 12 Address" default="2">
-              <decVal min="1" max="65535"/>
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 12 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.25" item="Buffer 13 Display Mode" default="1">
+            <variable CV="6345.25" item="Buffer 13 Display Mode" default="8">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 13 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.26" item="Buffer 13 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.26" item="Buffer 13 Address" default="3">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 13 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.27" item="Buffer 14 Display Mode" default="1">
+            <variable CV="6345.27" item="Buffer 14 Display Mode" default="8">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 14 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.28" item="Buffer 14 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.28" item="Buffer 14 Address" default="4">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 14 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.29" item="Buffer 15 Display Mode" default="1">
+            <variable CV="6345.29" item="Buffer 15 Display Mode" default="9">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 15 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.30" item="Buffer 15 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.30" item="Buffer 15 Address" default="0">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
               <tooltip>Address for Indicator Buffer 15 (1-65535)</tooltip>
             </variable>
 
-            <variable CV="6345.31" item="Buffer 16 Display Mode" default="1">
+            <variable CV="6345.31" item="Buffer 16 Display Mode" default="10">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumDisplayModeChoice.xml"/>
               <label xml:lang="de">Anzeigemodus: </label>
               <label xml:lang="nl">Weergave van: </label>
               <label>Display mode: </label>
               <tooltip>Select what buffer 16 shows. Some modes require an address.</tooltip>
             </variable>
-            <variable CV="6345.32" item="Buffer 16 Address" default="2">
-              <decVal min="1" max="65535"/>
+            <variable CV="6345.32" item="Buffer 16 Address" default="0">
+              <decVal min="0" max="65535"/>
               <label xml:lang="de">Adresse: </label>
               <label xml:lang="nl">Adres: </label>
               <label>Address:  </label>
