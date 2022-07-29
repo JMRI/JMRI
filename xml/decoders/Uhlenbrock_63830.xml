@@ -49,32 +49,32 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <variable CV="6383.3" item="Route Command" default="3">
               <enumVal>
                 <enumChoice choice="1" value="0">
-                  <choice>Numeric: Sensor|Presets: Sensor</choice>
-                  <choice xml:lang="de">Ziffereingabe: Melder|Presets: Melder)</choice>
-                  <choice xml:lang="nl">Nummerinvoer: Melder|Presets: Melder)</choice>
+                  <choice>Numeric: Sensor | Presets: Sensor</choice>
+                  <choice xml:lang="de">Ziffereingabe: Melder | Presets: Melder)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Melder | Presets: Melder)</choice>
                 </enumChoice>
                 <enumChoice choice="2" value="1">
-                  <choice>Numeric: Turnout|Presets: Sensor</choice>
-                  <choice xml:lang="de">Ziffereingabe: Weiche|Presets: Melder)</choice>
-                  <choice xml:lang="nl">Nummerinvoer: Wissel|Presets: Melder)</choice>
+                  <choice>Numeric: Turnout | Presets: Sensor</choice>
+                  <choice xml:lang="de">Ziffereingabe: Weiche | Presets: Melder)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Wissel | Presets: Melder)</choice>
                 </enumChoice>
                 <enumChoice choice="3" value="2">
-                  <choice>Numeric: Sensor|Presets: Turnout</choice>
-                  <choice xml:lang="de">Ziffereingabe: Melder|Presets: Weiche)</choice>
-                  <choice xml:lang="nl">Nummerinvoer: Melder|Presets: Wissel)</choice>
+                  <choice>Numeric: Sensor | Presets: Turnout</choice>
+                  <choice xml:lang="de">Ziffereingabe: Melder | Presets: Weiche)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Melder | Presets: Wissel)</choice>
                 </enumChoice>
                 <enumChoice choice="4" value="3">
-                  <choice>Numeric: Turnout|Presets: Turnout</choice>
-                  <choice xml:lang="de">Ziffereingabe: Weiche|Presets: Weiche)</choice>
-                  <choice xml:lang="nl">Nummerinvoer: Wissel|Presets: Wissel)</choice>
+                  <choice>Numeric: Turnout | Presets: Turnout</choice>
+                  <choice xml:lang="de">Ziffereingabe: Weiche | Presets: Weiche)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Wissel | Presets: Wissel)</choice>
                 </enumChoice>
               </enumVal>
               <label>To Trigger Route: </label>
               <label xml:lang="de">Fahrstraßenaufruf: </label>
               <label xml:lang="nl">Rijpaden oproep: </label>
-              <tooltip>What triggers CS Routes (numeric address entry, top) | IRIS presets (Red/Green buttons, bottom)</tooltip>
-              <tooltip xml:lang="de">Welche Art von Berichte löst eine Fahrstraße aus: Definiert in IB/JMRI (Ziffern, oben) | IRIS Presets (rot/grün unten)</tooltip>
-              <tooltip xml:lang="nl">Rijpad stellen met welk type bericht? Adres opgeslagen in IB/JMRI (cijferadres, boven) | De IRIS Presets (rood/groen, onder)</tooltip>
+              <tooltip>What triggers CS Routes (numeric address entry, top)  |  IRIS presets (Red/Green buttons, bottom)</tooltip>
+              <tooltip xml:lang="de">Welche Art von Berichte löst eine Fahrstraße aus: Definiert in IB/JMRI (Ziffern, oben)  |  IRIS Presets (rot/grün unten)</tooltip>
+              <tooltip xml:lang="nl">Rijpad stellen met welk type bericht? Adres opgeslagen in IB/JMRI (cijferadres, boven)  |  De IRIS Presets (rood/groen, onder)</tooltip>
             </variable>
 
             <variable CV="6383.4" item="Startup Wait" default="20">
