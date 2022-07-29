@@ -335,7 +335,8 @@
             <ul>
                 <li>Added a decoder definition to configure the 63810 Mobile Station Adapter.<br>
                 Use the LNCV tool to program.</li>
-                <li>Added decoder definitions for Occupancy Feedback modules #63340 (2-rail) and #63350 (3-rail).<br>
+                <li>Added decoder definitions for Occupancy Feedback modules #63320/40 (2-rail) and #63330/50
+                (3-rail).<br>
                 Use the LNCV Tool for programming.</li>
             </ul>
 
@@ -367,7 +368,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>To simplify writing a decoder definition, variable declarations for decimal and hex values without a
+              "mask"with max &gt; 255  now will get an appropriately sized mask assigned so that they store any
+              valid entry.<br>
+              Variables with a max &lt;= 255 or with an explicit mask are not affected.
+            </li>
         </ul>
 
     <h3>CTC Tool</h3>
