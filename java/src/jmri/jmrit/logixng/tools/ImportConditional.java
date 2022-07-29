@@ -1295,7 +1295,7 @@ public class ImportConditional {
                     action.setDataReference(ref);
                 } else {
                     action.setDataAddressing(NamedBeanAddressing.Direct);
-                    action.setTrainIdName(idData);
+                    action.setTrainData(idData);
                 }
                 break;
 
@@ -1313,7 +1313,26 @@ public class ImportConditional {
                     action.setDataReference(ref);
                 } else {
                     action.setDataAddressing(NamedBeanAddressing.Direct);
-                    action.setTrainIdName(nameData);
+                    action.setTrainData(nameData);
+                }
+                break;
+
+            case GET_TRAIN_LOCATION:
+                action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.GetTrainLocation);
+                String locData = ca.getActionString();
+                if (locData == null || locData.isEmpty()) {
+                    throw new InvalidConditionalActionException(
+                            Bundle.getMessage("ActionBadWarrantValue", ca.getType().toString()));
+                }
+                if (locData.startsWith("@")) {
+                    // indirect
+                    String ref = "{" + locData.substring(1) + "}";
+                    action.setDataAddressing(NamedBeanAddressing.Reference);
+                    action.setDataReference(ref);
+                } else {
+                    action.setDataAddressing(NamedBeanAddressing.Direct);
+                    action.getSelectMemoryNamedBean().setNamedBean(locData);
+//                    action.setTrainData(locData);
                 }
                 break;
 

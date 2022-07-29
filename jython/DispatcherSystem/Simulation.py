@@ -199,7 +199,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "response = " , response
                 if response == "Waiting":
                     if self.logLevel > 0: print "waiting"
-                    self.waitMsec(500)
+                    self.waitMsec(50)
 
         if response == "Finished":
             if self.logLevel > 0: print "FINISHED"
@@ -249,7 +249,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                 #JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)      # uncomment for debugging
                 if self.logLevel > 0: print "Waiting"
                 ret = "Waiting"
-        self.waitMsec(1500)     # to stop an error message
+        self.waitMsec(500)     # to stop an error message
         return ret
 
     def getPrintStatus(self, status):

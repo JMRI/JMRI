@@ -321,8 +321,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         to_station = self.get_station_name(toblockname)
 
         if speak_on == True:
-            self.speak("The train in "+ from_station + " is due to depart to " + to_station + " " + direction + " " + instruction )
-            #self.speak("The train in "+ from_station + " is due to depart to " + to_station )
+            #self.speak("The train in "+ from_station + " is due to depart to " + to_station + " " + direction + " " + instruction )
+            self.speak("The train in "+ from_station + " is due to depart to " + to_station )
 
     def get_station_name(self, block_name):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
