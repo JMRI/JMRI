@@ -27,7 +27,6 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -5854,7 +5853,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 528, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 529, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -5893,7 +5892,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 262, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 263, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -5957,7 +5956,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 635, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 636, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();

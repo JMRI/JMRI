@@ -19,9 +19,8 @@
             <li><a href="#requirements">System Requirements</a></li>
           </ul>
         </li>
-        <li><a href="#stage1">Running Stage 1 &mdash; Editing the panel</a></li>
-        <li><a href="#stage2">Running Stage 2 &mdash; Producing the transits</a></li>
-        <li><a href="#stage3">Running Stage 3 &mdash; Final checks</a></li>
+        <li><a href="#stage1">Running Stage 1 &mdash; Editing the panel and producing the transits</a></li>
+        <li><a href="#stage2">Running Stage 2 &mdash; Final checks</a></li>
         <li><a href="#runningprogram">Running the Program</a>
           <ul>
             <li><a href="#RegisteraTrain">Register a Train</a></li>
@@ -45,28 +44,24 @@
     <p>The train will either stop at all stations on the route, or travel without stopping at intermediate stops, depending on whether express or stopping mode is selected</p>
     <p>Provision is made for multiple train operation, the trains stopping for each other. This is a feature of Dispatcher, but the system allows easy selecting of each train to control each one.</p>
     <h3 id="steps">Steps in setting up the system</h3>
-    <p>There are several stages to set up the system for automatic train running:</p>
+    <p>There are two stages to set up the system for automatic train running:</p>
     <p>Fulfil the prerequisites, which include having speed profiled your locos that you wish to run with the system</p>
     <ul>
-      <li>Start JMRI with no panel displayed.</li>
+      <li>Start JMRI with a panel loaded.</li>
       <li>The panel should have:
         <ul>
           <li>SignalMasts</li>
-          <li>SignalMast Logic</li>
-          <li>No Transits (if there are any they will be deleted)</li>
-          <li>No Train Info Files (if there are any they will be deleted)</li>
+          <li>No SignalMast Logic (if there is any they will be deleted and replaced)</li>
+          <li>No Transits (if there are any they will be deleted and replaced)</li>
+          <li>No Train Info Files (if there are any they will be  and replaced)</li>
           <li>SignalMasts</li>
         </ul>
+        <p>In addition the block table should have been edited to indicate the blocks where the train should stop</p>
       </li>
       <li>Bring up the Dispatcher System Panel</li>
-      <li>Run Stage1 to generate an intermediate panel with icons to move trains</li>
-      <li>Restart</li>
-      <li>Run Stage2 to generate a run system panel</li>
-      <li>Restart</li>
-      <li>Run Stage3 to check the dispatcher options</li>
-      <li>Check the system logic produced automaticlly and modify by hand</li>
-      <li>Save in a modified run panel</li>
-      <li>Run the train</li>
+      <li>Run Stage1 To generate everything to run Dispatcher between stations</li>
+      <li>Run Stage2 to check the dispatcher options</li>
+      <li>Run the trains using the commands on a newly produced command panel</li>
     </ul>
     <h3 id="requirements">System Requirements</h3>
     <p>To use the Dispatcher System there are several prerequisites</p>
@@ -84,46 +79,41 @@
       <li>Typical blocks comments would be</li>
       <li><img src="images/NewItem31.png" alt="" /></li>
     </ul>
-    <h2 id="stage1">Running Stage1 &mdash; Editing the panel</h2>
+    <h2 id="stage1">Running Stage1 &mdash; Editing the panel and producing the transits</h2>
     <p>Run DispatcherSystem.py in the main jython directory. You will get something like this:</p>
     <p><img style="padding: 1px;" src="images/NewItem3.png" alt="" /></p>
-    <p>You are prompted to run Stage1 which adds all the icons required to run the system on a new panel.</p>
-    <p>if the old panel name was WR.xml, the new panel will be WR_icons.xml</p>
-    <p>Some checks are done first</p>
-    <p><img style="padding: 1px;" src="images/NewItem4.png" alt="" /></p>
-    <p>The following checks are made</p>
+    <p>You are prompted to run Stage1 which adds all the icons required to run the system on a new pane, and
+      generates transits</p>
+    <p>If the old panel name was WR.xml, the new panel will be backed up to WR_backup_xx.xml where _xx is an
+      incremental number which is added if previous backups exist</p>
+    <p>Some checks are done first, we check that:</p>
     <ul>
       <li>All blocks have a sensor</li>
       <li>No two blocks have the same sensor</li>
       <li>stops are set up</li>
       <li>all blocks have lengths</li>
     </ul>
-    <p>If no trains are present in the roster with speed profiles, this will be picked up, and can be corrected at run time.</p>
-    <p>When the icons file is produced, a message similar to the following will be produced:</p>
-    <p><img style="padding: 1px;" src="images/NewItem34.png" alt="" /></p>
-    <p>A new panel has been created. You should close down and load the new panel, instead of the original.</p>
-    <p>Note:</p>
-    <p>The panel will have been created by loading the original xml file (in this case WR.ml), editing the details and saving to a new file (WR_icons.xml).</p>
-    <p>If there were any unsaved edits in the original file these will not be present in the new file, but you will not lose them provided you save them either to the original file or another file once Stage1 has completed. We advise saving all edits before running Stage1, so they are picked up.</p>
-    <h2 id="stage2">Running Stage2 Producing the signal logic, transits and train info files</h2>
-    <p>PanelPro should be restarted and the icons file produced in stage 1 should be loaded.</p>
-    <p>A screen similar to the following will be produced:</p>
-    <p><img style="padding: 1px;" src="images/NewItem6.png" alt="" /></p>
-    <p>Once the Stage2 button is pressed one gets a confirmatory messages:</p>
-    <p><img style="padding: 1px;" src="images/NewItem55.png" alt="" /></p>
-    <p>The signal logic is produced, then the following confirmatory message appears:</p>
+    <p>If all checks pass we get a message:</p>
+    <p><img style="padding: 1px;" src="images/NewItem4.png" alt="" /></p>
+    <p>Further details of the checks can be viewed if required. If the checks do not pass detailsof the errors are
+      given</p>
+    <p>If no trains are present in the roster with speed profiles, this will be picked up at run time, and can be
+      corrected then.</p>
+    <p>The following items are then produced automatically, with countdown timwer showing the progression</p>
+      <li>A backup of the existing panel</li>
+      <li>The changes to the panel with the stopping points and stopping sensors</li>
+      <li>The signal logic to operate the signals</li>
+      <li>The required sections</li>
+      <li>The transits and train info files required to move trains between stopping points</li>
+    <p>The following confirmatory message appears:</p>
     <p><img style="padding: 1px;" src="images/NewItem7.png" alt="" /></p>
-    <p><img style="padding: 1px;" src="images/NewItem8.png" alt="" /></p>
-    <p>Transits required to move the train from stop to stop will be produced, and corresponding train-info files which contain the information required for running the train are produced. Some of the information is overwritten when the train-info files are used such as the train name, so train info files do not have to be produced for each train.</p>
-    <p>Train-info files are produced for each route allowed, and all routes are allowed which are physically possible to travel. Train-info files are produced for forward and reverse operation, so there can be quite a number produced.</p>
-    <p>Once the transits and train-info files are produced we get a message:</p>
-    <p><img style="padding: 1px;" src="images/NewItem35.png" alt="" /></p>
-    <p>You should then restart JMRI and load the run panel instead of the icons panel, in this example WR_run.xml</p>
-    <h2 id="stage3">Running Stage3 Final Checks</h2>
-    <p>Restart JMRI and load the newly produced run panel, in our example WR_run.xml</p>
-    <p>Run dispatcher System again to get</p>
-    <p><img style="padding: 1px;" src="images/NewItem11.png" alt="" /></p>
-    <p>Click Stage3 and one gets two screens opening,the Dispatcher options screen and another saying the options that need to be set for the Dispatcher system to work</p>
+    <p>It is recommended that the panel is saved after testing. The current filename can be used if desired as a
+      backup has been done automatically.</p>
+
+    <h2 id="stage2">Running Stage2 Final Checks</h2>
+    <p><img style="padding: 1px;" src="images/NewItem3.png" alt="" /></p>
+    <p>Click Stage2 and one gets two screens opening,the Dispatcher options screen and another saying the options
+      that need to be set for the Dispatcher system to work</p>
     <p><img style="padding: 1px;" src="images/NewItem12.png" alt="" /></p>
     <p><img style="padding: 1px;" src="images/NewItem13.png" alt="" /></p>
     <p>Set the required option and we get a message reminding you to save the changed options</p>
@@ -269,7 +259,12 @@
     <p>To start the scheduler press 'Start Scheduler' and the clock will start and the trains set up to be dispatched will start when the fast clock gets to the correct time.</p>
     <h2 id="FeaturesSystem">Features of the Dispatcher System</h2>
     <ol>
-      <li>The Dispatcher system is designed to run trains from station to station. The system has been set up with a network graph which allows the system to get the shortest path between two stations, and this is used to get the route between the two stations. At present if a train is in a station en route, the system will not re-route to avoid the train, and the train may get stuck. Care must be taken when running trains.</li>
+      <li>The Dispatcher system is designed to run trains from station to station.
+        The system has been set up with a network graph which allows the system to get the shortest path between two stations,
+        and this is used to get the route between the two stations.
+        At present if a train is in a station en route, the system will not re-route to avoid the train,
+        and the train may get stuck.
+        Care must be taken when running trains.</li>
       <!--#include virtual="/Footer.shtml" --></ol>
   </div>
   <!-- closes #mainContent-->

@@ -542,6 +542,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return false;
     }
 
+    public String getMessage() {
+        return _message;
+    }
+
     /* ************* Methods for running trains *****************/
 /*
     protected void setWaitingForSignal(Boolean set) {
@@ -1097,7 +1101,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case RESUME:
                 case RETRY_FWD:
                 case RETRY_BKWD:
-//                case RAMP_HALT:
                 case SPEED_UP:
                     break;
                 case STOP:
@@ -1110,11 +1113,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     break;
                 case DEBUG:
-                    ret = debugInfo();
+                    debugInfo();
                     break;
                 default:
             }
-            return ret;
+            return true;
         }
         int runState = _engineer.getRunState();
         if (_trace || log.isDebugEnabled()) {

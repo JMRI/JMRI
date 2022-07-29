@@ -20,6 +20,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright (C) 2021
+ * @author Pete Cressman Copyright (C) 2022
  */
 public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -43,9 +44,12 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         storeCommon(p, element);
 
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Warrant>();
-        var selectEnumXml = new LogixNG_SelectEnumXml<ActionWarrant.DirectOperation>();
-
         element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectMemoryNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
+
+        var selectEnumXml = new LogixNG_SelectEnumXml<ActionWarrant.DirectOperation>();
         element.addContent(selectEnumXml.store(p.getSelectEnum(), "operation"));
 
         element.addContent(new Element("dataAddressing").addContent(p.getDataAddressing().name()));
@@ -53,7 +57,7 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         element.addContent(new Element("dataLocalVariable").addContent(p.getDataLocalVariable()));
         element.addContent(new Element("dataFormula").addContent(p.getDataFormula()));
 
-        element.addContent(new Element("trainIdName").addContent(p.getTrainIdName()));
+        element.addContent(new Element("trainIdName").addContent(p.getTrainData()));
         element.addContent(new Element("controlAutoTrain").addContent(p.getControlAutoTrain().name()));
 
         return element;
@@ -70,8 +74,11 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Warrant>();
         var selectEnumXml = new LogixNG_SelectEnumXml<ActionWarrant.DirectOperation>();
 
+        var selectMemoryNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+
         selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "warrant");
+        selectMemoryNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
 
         selectEnumXml.load(shared.getChild("operation"), h.getSelectEnum());
         selectEnumXml.loadLegacy(
@@ -99,7 +106,7 @@ public class ActionWarrantXml extends jmri.managers.configurexml.AbstractNamedBe
 
 
             elem = shared.getChild("trainIdName");
-            if (elem != null) h.setTrainIdName(elem.getTextTrim());
+            if (elem != null) h.setTrainData(elem.getTextTrim());
 
             elem = shared.getChild("controlAutoTrain");
             if (elem != null) {

@@ -20407,6 +20407,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -20495,6 +20499,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -20583,6 +20591,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -20673,6 +20685,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetValue</enum>
@@ -20763,6 +20779,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>ClearError</enum>
@@ -20853,6 +20873,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>LocalVariable</addressing>
         <enum>Deallocate</enum>
@@ -20944,6 +20968,10 @@
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Formula</addressing>
         <enum>Deallocate</enum>
@@ -21035,6 +21063,10 @@
         <listenToMemory>no</listenToMemory>
         <formula>"IT"+index</formula>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Reference</addressing>
         <enum>Deallocate</enum>
@@ -21126,6 +21158,10 @@
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetOutOfService</enum>
@@ -26106,6 +26142,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26195,6 +26235,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26284,6 +26328,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26375,6 +26423,10 @@
         <name>IW99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetTrainName</enum>
@@ -26466,6 +26518,10 @@
         <name>IW99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>ControlAutoTrain</enum>
@@ -26557,6 +26613,10 @@
         <name>IW99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26648,6 +26708,10 @@
         <name>IW99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>LocalVariable</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26740,6 +26804,10 @@
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Formula</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26832,6 +26900,10 @@
         <listenToMemory>no</listenToMemory>
         <formula>"IT"+index</formula>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Reference</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -26924,6 +26996,10 @@
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>DeallocateWarrant</enum>
