@@ -471,6 +471,12 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS);
     }
 
+    public static final boolean isIplDcs240PlusIdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS);
+    }
+
     public static final boolean isIplDt500DIdentityReportMessage(LocoNetMessage m) {
         if (!isIplDt500IdentityReportMessage(m)) {
             return false;
@@ -1011,6 +1017,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             0,0, LnConstants.DIGITRAX_STRING, "BXPA1"),   // NOI18N
         DCS210plus(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS,
             0,0, LnConstants.DIGITRAX_STRING, "DCS210+"),   // NOI18N
+        DCS240plus(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS,
+                0,0, LnConstants.DIGITRAX_STRING, "DCS240+"),   // NOI18N
         RR_CKTS_TC64(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_TC64,
             0,0, LnConstants.RR_CIRKITS_STRING, "TC-64"),
         RR_CKTS_TC_MKII(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_TC64_MKII,

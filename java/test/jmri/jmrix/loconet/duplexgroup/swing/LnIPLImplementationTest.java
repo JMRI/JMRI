@@ -362,6 +362,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS210+ device", dev == 26,
                     LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS240+ device", dev == 26,
+                    LnIPLImplementation.isIplDcs240PlusIdentityReportMessage(m));
         }
         mfg = 1;
         msg[4]=mfg;
