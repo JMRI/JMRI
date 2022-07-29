@@ -362,7 +362,7 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS210+ device", dev == 26,
                     LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
-            Assert.assertEquals("IplIdentity device "+dev+" check is DCS240+ device", dev == 26,
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS240+ device", dev == 29,
                     LnIPLImplementation.isIplDcs240PlusIdentityReportMessage(m));
         }
         mfg = 1;
@@ -598,6 +598,13 @@ public class LnIPLImplementationTest {
                            "Digitrax (unknown Slave Device)",
                            LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
                    break;
+                case 29:
+                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DCS240+",
+                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                    Assert.assertEquals("extracting slave device from DCS240+ IPL report",
+                            "Digitrax (unknown Slave Device)",
+                            LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
+                    break;
                 case 35:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax PR3",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -685,13 +692,17 @@ public class LnIPLImplementationTest {
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 27:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS210",
-                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
-                   break;
+                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS210",
+                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                    break;
                 case 28:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS240",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 29:
+                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS240+",
+                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                    break;
                 case 35:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax PR3",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -780,9 +791,13 @@ public class LnIPLImplementationTest {
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 28:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS240",
-                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
-                   break;
+                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS240",
+                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                    break;
+                case 29:
+                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS240+",
+                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                    break;
                 case 35:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax PR3",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -874,6 +889,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS240",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 29:
+                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS240+",
+                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                    break;
                 case 35:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax PR3",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -1111,6 +1130,11 @@ public class LnIPLImplementationTest {
                            "Digitrax DCS240",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                    break;
+                case 29:
+                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
+                            "Digitrax DCS240+",
+                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
+                    break;
                 case 35:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
                            "Digitrax PR3",
@@ -1215,6 +1239,11 @@ public class LnIPLImplementationTest {
                            "Digitrax DCS240",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                    break;
+                case 29:
+                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
+                            "Digitrax DCS240+",
+                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                    break;
                 case 35:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
                            "Digitrax PR3",
