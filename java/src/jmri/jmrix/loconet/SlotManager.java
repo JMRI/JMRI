@@ -412,19 +412,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         } else {
             immedPacket = null;
         }
-        // detect protocol if not yet set
-        if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
-            if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
-                    (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
-                if ((m.getElement(7) & 0b01000000) == 0b01000000) {
-                    log.info("Setting protocol Loconet 2");
-                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_TWO);
-                } else {
-                    log.info("Setting protocol Loconet 1");
-                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_ONE);
-                }
-            }
-        }
 
         // slot specific message?
         int i = findSlotFromMessage(m);
@@ -433,6 +420,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
+            checkLoconetProtocol(m,i);
         }
 
         // LONG_ACK response?
@@ -469,6 +457,28 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 mo.setElement(1, (addr / 128) & 0x7F);
                 mo.setElement(2, addr & 0x7F);
                 tc.sendLocoNetMessage(mo);
+            }
+        }
+    }
+
+    /*
+     * If protocol not yet established use slot status for protocol support
+     * System slots , except zero, do not have this info
+     */
+    void checkLoconetProtocol(LocoNetMessage m , int slot) {
+        // detect protocol if not yet set
+        if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
+            if (slotMap.get(slot).slotType != SlotType.SYSTEM || slot == 0 ) {
+            if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
+                    (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
+                if ((m.getElement(7) & 0b01000000) == 0b01000000) {
+                    log.info("Setting protocol Loconet 2");
+                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_TWO);
+                } else {
+                    log.info("Setting protocol Loconet 1");
+                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_ONE);
+                }
+            }
             }
         }
     }
