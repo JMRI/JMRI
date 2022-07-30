@@ -884,8 +884,10 @@ public class TrainBuilder extends TrainBuilderBase {
      * @throws BuildFailedException
      */
     private void placeCars(int pass, boolean normal) throws BuildFailedException {
-        addLine(_buildReport, THREE, BLANK_LINE);
-        if (!normal) {
+        addLine(_buildReport, THREE, BLANK_LINE);      
+        if (normal) {
+            addLine(_buildReport, THREE, Bundle.getMessage("NormalModeWhenBuilding"));
+        } else {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildMultiplePass"),
                     new Object[]{pass, Setup.getNumberPasses()}));
         }
