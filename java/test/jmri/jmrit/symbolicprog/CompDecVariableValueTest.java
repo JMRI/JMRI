@@ -1,33 +1,34 @@
 package jmri.jmrit.symbolicprog;
 
+import jmri.progdebugger.ProgDebugger;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.util.HashMap;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import jmri.progdebugger.ProgDebugger;
-
-import org.junit.jupiter.api.*;
-
 /**
- * @author Bob Jacobsen Copyright 2003, 2006
+ * @author Egbert Broerse Copyright 2022
+ * Based on DecVariableValueTest
  */
-public class DecVariableValueTest extends AbstractVariableValueTestBase {
+public class CompDecVariableValueTest extends AbstractVariableValueTestBase {
 
     // Local tests version of makeVar with settable parameters and cvList support.
-    private DecVariableValue makeVarDec(String label, String comment, String cvName,
+    private CompDecVariableValue makeVarDec(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String item) {
+            HashMap<String, CvValue> v, JLabel status, String item, int offset, int factor) {
         ProgDebugger pp = new ProgDebugger();
 
         CvValue cvNext = new CvValue(cvNum, pp);
         cvNext.setValue(0);
         v.put(cvName, cvNext);
-        return new DecVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, item);
+        return new CompDecVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal, v, status, item, offset, factor);
     }
 
     // abstract members invoked by tests in parent AbstractVariableValueTestBase class
@@ -36,7 +37,8 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
-        return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
+        return new CompDecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal, v, status, item, 0, 1);
     }
 
     @Override
@@ -61,39 +63,41 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
     }
     // end of abstract members
 
-    // test the handling of radix masks
+    // test the handling of XXVVVXXX masks
     @Test
     public void testBaseMasks3() {
-        log.trace("testBaseMasks3");
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(0);
         v.put("81", cv);
         // create a variable pointed at CV 81
         //      Mask = 9, minVal = 0, maxVal = 2
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "9", 0, 2, v, null, null);
+        VariableValue variable = makeVar("label", "comment", "", false,
+                false, false, false, "81", "XXXVVVVX", 0, 1200,
+                v, null, null);
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify
         setValue(variable, "2");
         // check variable value
-        checkValue(variable, "value object contains ", "2");
+        checkValue(variable, "1 value object contains ", "2");
         // see if the CV was updated
-        Assertions.assertEquals(18, cv.getValue(), "cv value");
+        Assertions.assertEquals(20, cv.getValue(), "cv value 1");
 
         // now check that other parts are maintained
-        cv.setValue(3 + 2 * 9 + 81);
+        cv.setValue(1200);
         // check variable value
-        checkValue(variable, "value object contains ", "2");
+        checkValue(variable, "2 value object contains ", "1200");
         // see if the CV was updated
-        Assertions.assertEquals(3 + 2 * 9 + 81, cv.getValue(), "cv value");
+        Assertions.assertEquals(31200, cv.getValue(), "cv value 2");
 
         // and try setting another value
         setValue(variable, "1");
-        checkValue(variable, "value object contains ", "1");
-        Assertions.assertEquals(3 + 9 + 81, cv.getValue(), "cv value");
+        checkValue(variable, "3 value object contains ", "1200");
+        Assertions.assertEquals(43210, cv.getValue(), "cv value 3");
     }
 
+    // done
     @Test
     public void testBaseMasksDecimalValues() {
         log.trace("testBaseMasksDecimalValues");
@@ -102,33 +106,17 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         cv.setValue(0);
         v.put("81", cv);
         // create variables pointed at CV 81
-        //  Upper:  Mask = 10, minVal = 0, maxVal = 9
-        //  Lower:  Mask =  1, minVal = 0, maxVal = 9
         VariableValue variableU = makeVar("upper", "comment", "", false, false, false, false, "81", "10", 0, 9, v, null, null);
-        VariableValue variableL = makeVar("lower", "comment", "", false, false, false, false, "81", "1", 0, 9, v, null, null);
         checkValue(variableU, "upper initially contains ", "0");
-        checkValue(variableL, "lower initially contains ", "0");
         Assertions.assertEquals(0, cv.getValue(), "cv value");
-
         // pretend you've edited the upper value & manually notify
-        setValue(variableU, "2");
-        // see if the CV was updated
-        Assertions.assertEquals(20, cv.getValue(), "cv value");
-        // check variable values
-        checkValue(variableU, "value object contains ", "2");
-        checkValue(variableL, "value object contains ", "0");
+        variableU.getValueInCV(81, "10", 9);
+        // expect error messages
+        jmri.util.JUnitAppender.assertErrorMessage("Can't handle Radix mask");
 
-        // set CV value
-        cv.setValue(31);
-        checkValue(variableU, "value object contains ", "3");
-        checkValue(variableL, "value object contains ", "1");
-
-        setValue(variableL, "9");
-        // check variable values
-        checkValue(variableU, "value object contains ", "3");
-        checkValue(variableL, "value object contains ", "9");
-        // see if the CV was updated
-        Assertions.assertEquals(39, cv.getValue(), "cv value");
+        variableU.setValueInCV(0, 2, "10", 9);
+        // expect error messages
+        jmri.util.JUnitAppender.assertErrorMessage("Can't handle Radix mask on CompDecVariableValue");
     }
 
     // test handling of out of range entered value when focus is lost (e.g.tab key)
@@ -148,9 +136,11 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
+        int offset = 3;
+        int factor = 50;
         DecVariableValue var = makeVarDec(name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, stdname);
+                cvNum, mask, minVal, maxVal, v, status, stdname, offset, factor);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
@@ -227,9 +217,11 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
+        int offset = 3;
+        int factor = 50;
         DecVariableValue var = makeVarDec(name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, stdname);
+                cvNum, mask, minVal, maxVal, v, status, stdname, offset, factor);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         ActionEvent actionEvent = new ActionEvent(var.getCommonRep(), ActionEvent.ACTION_PERFORMED, name);
@@ -302,5 +294,5 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         super.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecVariableValueTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompDecVariableValueTest.class);
 }

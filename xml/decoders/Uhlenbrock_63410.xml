@@ -126,7 +126,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
 
             <variable CV="6341.1" item="Assist">
               <decVal/>
-              <label>Assist (test:</label>
+              <label>Assist (test):</label>
             </variable>
 
             <variable CV="6341.2" item="Blink Rate 1.1" default="10" >

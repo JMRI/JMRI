@@ -535,12 +535,12 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((a = child.getAttribute("offset")) != null) {
             offset = Integer.parseInt(a.getValue());
         }
-        int max = (maxVal+offset)*factor;
+        int max = (maxVal * factor) + offset;
         if (max > 255 && Objects.equals(mask, "VVVVVVVV")) {
-            mask = VariableValue.getMaxMask(max); // replaces the default 8 bit mask when no mask is provided in xml
+            mask = VariableValue.getMaxMask(max); // replace the default 8 bit mask when no mask is provided in xml
             log.debug("Created mask {} for CompDec CV {}", mask, name);
         }
-        v = new CompDecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, _cvModel.allCvMap(), _status, item, minVal, maxVal, offset, factor);
+        v = new CompDecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, offset, factor);
         return v;
     }
 
