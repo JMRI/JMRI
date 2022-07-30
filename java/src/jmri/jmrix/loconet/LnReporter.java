@@ -178,7 +178,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
             int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
             
             // train category - Perhaps add to idTag as property?
-            //int category = l.getElement(2) + 1;
+            int category = l.getElement(2) + 1;
     
             // get direction
             // north assumes loco is passing sensors S1->S2
@@ -186,7 +186,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
     
             notify(null); // set report to null to make sure listeners update
             // get loco address
-            IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
+            IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco+":"+category);
             if(north) {
                idTag.setProperty("seen", "seen northbound");
             } else {
