@@ -633,9 +633,9 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
 
             <column>
                 <label>
-                  <text layout="right">                               Channel A</text>
-                  <text layout="right" xml:lang="de">                         Kanal A</text>
-                  <text layout="right" xml:lang="nl">                         Kanaal A</text>
+                  <text>                               Channel A</text>
+                  <text xml:lang="de">                         Kanal A</text>
+                  <text xml:lang="nl">                         Kanaal A</text>
                 </label>
                 <display item="Channel A Last Loco Address"/>
                 <display item="Channel A Last Turnout Address"/>
