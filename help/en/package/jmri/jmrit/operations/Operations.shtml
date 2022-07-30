@@ -2522,7 +2522,7 @@
 
       <h4 id="RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</h4>
 
-   <p>If you wish to limit which trains or train routes are allowed to service to your spur,
+   <p>If you wish to limit which trains or train routes are allowed to service to your track,
     change the "Select trains or routes for set outs" or "Select trains or routes for pick up" from
     "Any" to one of the four options in the edit spur window. The "Trains" option allows you build a
     list of trains can set out or pick up from the track. The "Routes" option allows you to build a
@@ -2905,16 +2905,19 @@
 
       <h3 id="CreateClassificationYard">How to Create a Classification Yard</h3>
       A classification yard is used to sort cars into various destinations or trains. Normally a
-      yard track is assigned to a specific destination or train and cars are delivered to that
-      track until a train comes along to pull the cars. To create a working classification yard,
-      you don't need schedules or custom loads for your cars.
-      <p>To create a classification yard sorted by trains, you need to assign a <a href=
-      "#Interchange">classification/interchange track</a> to each of the trains that will depart
-      your yard. For each track, allow any train to set out cars, but assign only one train to pick
-      them up. You should configure the classification track to service the same car types, loads
-      and roads that the train services, otherwise you could end up with stranded cars. When
-      sorting cars in a yard by train, some use the label "Cars for train XYZ" as the track
-      name.</p>
+      yard track is assigned to a specific destination or train and cars are delivered to that track
+      until a train comes along to pull the cars. To create a working classification yard, you don't
+      need schedules or custom loads for your cars.
+      <p>
+        To create a classification yard sorted by trains, you need to assign a <a
+          href="#Interchange">classification/interchange track</a> to each of the trains that will
+        depart your yard. For each track, <a href="#RestrictingTrackToCertainTrains">allow</a> any
+        train to set out cars, but assign <a href="#RestrictingTrackToCertainTrains">only one
+          train</a> to pick them up. You should configure the classification track to service the same
+        car types, loads and roads that the train services, otherwise you could end up with stranded
+        cars. When sorting cars in a yard by train, some use the label "Cars for train XYZ" as the
+        track name.
+      </p>
 
       <p>You can also create a classification yard that sorts cars by destinations. Again using the
       C/I track type, there's an option under tools in the edit track window to set <a href=
@@ -3119,21 +3122,30 @@
       <h3 id="ArrivalDepartureTracks">Arrival and Departure Tracks</h3>
 
       <p>
-        To create arrival or departure tracks for a location, the correct track type to use is
-        staging. To prevent any changes to a car's load, deselect all of the load options for the
-        staging track. If you want additional track types for the "same" location to break down or
-        build trains on your arrival or departure tracks, you will need to create a second location
-        using the <a href="#AddLocation">hyphen</a> feature. Normally you would also create a local
-        switcher to break down or build your arrival or departure trains. For the local switcher,
-        you would combine the "same" locations in the switcher's <a href="#RouteFeatures">route</a>.
-        If breaking down the arrival track, the first location in the switcher's route has to be the
-        location with the arrival staging track. And if the switcher is also building the departure
-        train, the staging departure track location has to be the last location in the switcher's
-        route. If you're using custom loads or final destinations when placing cars on your
-        "staging" departure track, you'll need to <a href="#EnableRoutingStaging">Enable Car
-          Routing through Staging</a>. If you only want cars that are being routed by the program to use
-        your arrival track, select the option to only allow cars with final destination in the <a
-          href="#TrackDestinations">Track Destinations</a> tool.
+        To create several arrival or departure (A/D) tracks for a location, the correct track type
+        to use is staging. The staging track option will force the locomotives and cars to one
+        track. If you only need one arrival and one departure track, you could with proper
+        configuration use <a href="#Interchange">classification/interchange</a> tracks.
+      </p>
+      <p>
+        When using staging tracks for A/D you need to consider the following. To prevent any changes
+        to a car's load, deselect all of the load options for the staging track. If you want
+        additional track types for the "same staging" location to break down or build trains on your
+        arrival or departure tracks, you will need to create a second location using the <a
+          href="#AddLocation">hyphen</a> feature. Normally you would also create a local switcher to
+        break down or build your arrival or departure trains. For the local switcher, you would
+        combine the "same" locations in the switcher's <a href="#RouteFeatures">route</a>. You would
+        only <a href="#RestrictingTrackToCertainTrains">allow</a> the switcher to pull cars from the
+        arrival track, and only <a href="#RestrictingTrackToCertainTrains">allow</a> the switcher to
+        set out cars on the departure track. If breaking down the arrival track, the first location
+        in the switcher's route has to be the location with the arrival staging track. And if the
+        switcher is also building the departure train, the staging departure track location has to
+        be the last location in the switcher's route. If you're using custom loads or final
+        destinations when placing cars on your "staging" departure track, you'll need to <a
+          href="#EnableRoutingStaging">Enable Car Routing through Staging</a>. If you only want cars
+        that are being routed by the program to use your arrival track, select the option to only
+        allow cars with final destination in the <a href="#TrackDestinations">Track Destinations</a>
+        tool.
       </p>
 
       <h3 id="TrackTools">Track Tools</h3>
@@ -4945,17 +4957,15 @@
 
         <tr>
           <td>X (Dir Loc)</td>
-          <td>
-            Based on the train's departure direction, the <a href=
-            "#LocationServiceDirection">location</a> doesn't allow set outs or pick ups
+          <td>Based on the train's <a href="#EditRoute">departure direction</a>, the <a
+            href="#LocationServiceDirection">location</a> doesn't allow set outs or pick ups
           </td>
         </tr>
 
         <tr>
           <td>X (Dir Trk)</td>
-          <td>
-            Based on the train's departure direction, the <a href=
-            "#TrackServiceDirection">track</a> doesn't allow set outs or pick ups
+          <td>Based on the train's <a href="#EditRoute">departure direction</a>, the <a
+            href="#TrackServiceDirection">track</a> doesn't allow set outs or pick ups
           </td>
         </tr>
 
