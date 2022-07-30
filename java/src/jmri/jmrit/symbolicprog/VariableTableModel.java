@@ -321,6 +321,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if ((child = e.getChild("decVal")) != null) {
             v = processDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
+        } else if ((child = e.getChild("compDecVal")) != null) {
+            v = processCalculatedDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
+
         } else if ((child = e.getChild("hexVal")) != null) {
             v = processHexVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
@@ -332,7 +335,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             v = processCompositeVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ((child = e.getChild("speedTableVal")) != null) {
-
             v = processSpeedTableVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
         } else if ((child = e.getChild("longAddressVal")) != null) {
@@ -512,6 +514,36 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v;
     }
 
+    protected VariableValue processCalculatedDecVal(Element child, String name, String comment,
+        boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV,
+        String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.parseInt(a.getValue());
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        int max = (maxVal+offset)*factor;
+        if (max > 255 && Objects.equals(mask, "VVVVVVVV")) {
+            mask = VariableValue.getMaxMask(max); // replaces the default 8 bit mask when no mask is provided in xml
+            log.debug("Created mask {} for CompDec CV {}", mask, name);
+        }
+        v = new CompDecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, _cvModel.allCvMap(), _status, item, minVal, maxVal, offset, factor);
+        return v;
+    }
+
     protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
         int count = 0;
         IteratorIterable<Content> iterator = child.getDescendants();
@@ -586,7 +618,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v1.lastItem();
         return v;
     }
-        /**
+
+    /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
      *
@@ -618,6 +651,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.debug("element processed");
         }
     }
+
     /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.

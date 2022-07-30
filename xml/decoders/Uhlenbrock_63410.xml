@@ -11,7 +11,7 @@ Uhlenbrock and Digikeijs publish the Article number for each (new) device.
 The Uhlenbrock 63410 has an Article number 6341, which was registered with Uhlenbrock.
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
     <version author="Egbert Broerse" version="1.1" lastUpdated="20220729"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
     <!-- version 1.1 - corrected mask and max on LNCV1 (start address) -->
@@ -116,12 +116,17 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip xml:lang="nl">Kies instelling voor alle uitgangen (vanaf startadres):</tooltip>
             </variable>
 
-            <variable CV="6341.1" mask="VVVVVVVVVVVVXX" item="Start Address" default="1">
-              <decVal min="1" max="2048"/>
+            <variable CV="6341.1" item="Start Address" mask="XXXVVVVX" default="1">
+              <compDecVal min="1" max="2048" offset="0" factor="1"/>
               <label xml:lang="de">Anfangsadresse:</label>
               <label xml:lang="nl">Beginadres:</label>
               <label>Start Address:</label>
               <tooltip>Start Address for Module Setting (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6341.1" item="Assist">
+              <decVal/>
+              <label>Assist (test:</label>
             </variable>
 
             <variable CV="6341.2" item="Blink Rate 1.1" default="10" >
@@ -1484,15 +1489,16 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Configuratie-assistent Module&lt;/strong&gt;&lt;/html&gt;</text>
           </label>
           <row>
+            <display item="Assist"/>
             <display item="ProgramAssist"/>
-            <group>
-              <qualifier>
-                <variableref>ProgramAssist</variableref>
-                <relation>lt</relation>
-                <value>7</value>
-              </qualifier>
+<!--            <group>-->
+<!--              <qualifier>-->
+<!--                <variableref>ProgramAssist</variableref>-->
+<!--                <relation>lt</relation>-->
+<!--                <value>7</value>-->
+<!--              </qualifier>-->
               <display item="Start Address"/>
-            </group>
+<!--            </group>-->
           </row>
 
           <label>

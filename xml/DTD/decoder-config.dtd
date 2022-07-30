@@ -169,7 +169,7 @@
 
 <!-- Each variable element defines one item that the user will want to configure -->
 <!ELEMENT variable  (enumVal | decVal | hexVal | speedTableVal |
-                     longAddressVal | shortAddressVal | splitVal | compositeVal) >
+                     longAddressVal | shortAddressVal | splitVal | compositeVal | compDecVal) >
 <!ATTLIST variable label CDATA #REQUIRED>  <!-- name manufacturer used to identify this feature -->
 <!ATTLIST variable CV    CDATA #IMPLIED>   <!-- CV number containing value, if single CV -->
 <!ATTLIST variable mask  CDATA "VVVVVVVV"> <!-- mask of bits within CV -->
@@ -196,10 +196,11 @@
 <!-- variables come in a number of forms: -->
 <!--    decVal:          a decimal value is used, subject to mask and limit requirements -->
 <!--    hexVal:          a hexadecimal value is used, subject to mask and limit requirements -->
+<!--    compDecVal:      a decimal value is used, subject to mask on the digits (not bits), optional offset and factor -->
 <!--    enumVal:         a fixed set of choices is defined, each corresponding to a specific value -->
 <!--    splitVal:        a decimal value, but stored across two CVs using some simple calculations -->
-<!--    shortAddressVal: NMRA short address, including it's unique behaviors -->
-<!--    longAddressVal:  NMRA long address, including it's unique behaviors -->
+<!--    shortAddressVal: NMRA short address, including its unique behaviors -->
+<!--    longAddressVal:  NMRA long address, including its unique behaviors -->
 <!--    speedTableVal:   NMRA speed table -->
 
 
@@ -263,8 +264,8 @@
 <!ELEMENT ienumChoice EMPTY>
 <!ATTLIST ienumChoice choice   CDATA #REQUIRED >
 <!ATTLIST ienumChoice value    CDATA #IMPLIED >  <!-- if present, must be numeric -->
-<!ATTLIST ienumChoice include   CDATA #IMPLIED > <!-- comma-sep list of models that include this; must be empty or match for variable to be used -->
-<!ATTLIST ienumChoice exclude   CDATA #IMPLIED > <!-- comma-sep list of models that exclude this; must be empty or not for variable to be used -->
+<!ATTLIST ienumChoice include  CDATA #IMPLIED > <!-- comma-sep list of models that include this; must be empty or match for variable to be used -->
+<!ATTLIST ienumChoice exclude  CDATA #IMPLIED > <!-- comma-sep list of models that exclude this; must be empty or not for variable to be used -->
 <!ATTLIST ienumChoice comment  CDATA #IMPLIED >
 
 <!ELEMENT compositeVal (compositeChoice*) >
@@ -280,12 +281,11 @@
 <!ATTLIST compositeSetting label   CDATA #REQUIRED > <!-- label of the variable to set -->
 <!ATTLIST compositeSetting value   CDATA #REQUIRED > <!-- numerical value to set -->
 
-
 <!ELEMENT speedTableVal (speedTableEntry*) >
-<!ATTLIST speedTableVal entries CDATA "28">     <!-- number of entries/CVs in table -->
-<!ATTLIST speedTableVal comment CDATA #IMPLIED>
-<!ATTLIST speedTableVal min CDATA "0" >         <!-- smallest acceptable value -->
-<!ATTLIST speedTableVal max CDATA "255" >       <!-- largest acceptable value -->
+<!ATTLIST speedTableVal entries    CDATA "28">     <!-- number of entries/CVs in table -->
+<!ATTLIST speedTableVal comment    CDATA #IMPLIED>
+<!ATTLIST speedTableVal min        CDATA "0" >         <!-- smallest acceptable value -->
+<!ATTLIST speedTableVal max        CDATA "255" >       <!-- largest acceptable value -->
 
 <!ELEMENT speedTableEntry EMPTY>
 <!ATTLIST speedTableEntry step    CDATA #REQUIRED >
@@ -293,7 +293,7 @@
 <!ATTLIST speedTableEntry comment CDATA #IMPLIED>
 
 <!ELEMENT longAddressVal EMPTY >
-<!ATTLIST longAddressVal comment CDATA #IMPLIED>
+<!ATTLIST longAddressVal comment  CDATA #IMPLIED>
 
 <!ELEMENT shortAddressVal (shortAddressChanges*)>
 <!ATTLIST shortAddressVal comment CDATA #IMPLIED>
@@ -312,6 +312,12 @@
 <!ATTLIST splitVal offset  CDATA "0">
 <!ATTLIST splitVal comment CDATA #IMPLIED>
 <!ATTLIST splitVal upperMask CDATA "VVVVVVVV"> <!-- mask of bits within upper CV -->
+
+<!ELEMENT compDecVal EMPTY>
+<!ATTLIST compDecVal min CDATA "0" >           <!-- smallest acceptable value -->
+<!ATTLIST compDecVal factor  CDATA "1">        <!-- cv*factor+offset is variable value -->
+<!ATTLIST compDecVal offset  CDATA "0">
+<!ATTLIST compDecVal comment CDATA #IMPLIED>
 
 <!ELEMENT indexedVal EMPTY >
 <!ATTLIST indexedVal min CDATA "0" >          <!-- smallest acceptable value  -->
