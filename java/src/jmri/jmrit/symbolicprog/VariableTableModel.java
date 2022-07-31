@@ -330,6 +330,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         } else if ((child = e.getChild("enumVal")) != null) {
             v = processEnumVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
+        } else if ((child = e.getChild("compEnumVal")) != null) {
+            v = processCompEnumVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
+
         } else if ((child = e.getChild("compositeVal")) != null) {
             // loop over the choices
             v = processCompositeVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
@@ -565,7 +568,53 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v1.lastItem();
         return v;
     }
-    
+
+    protected VariableValue processCompEnumVal(Element child, String name, String comment,
+                                              boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV,
+                                              String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.parseInt(a.getValue());
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.parseInt(a.getValue());
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        int max = (maxVal * factor) + offset;
+        if (max > 255 && Objects.equals(mask, "VVVVVVVV")) {
+            mask = VariableValue.getMaxMask(max); // replace the default 8 bit mask when no mask is provided in xml
+            log.debug("Created mask {} for CompEnum CV {}", mask, name);
+        }
+        int count = 0;
+        IteratorIterable<Content> iterator = child.getDescendants();
+        while (iterator.hasNext()) {
+            Object ex = iterator.next();
+            if (ex instanceof Element) {
+                if (((Element) ex).getName().equals("enumChoice")) {
+                    count++;
+                }
+            }
+        }
+
+        EnumVariableValue v1 = new CompEnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, count, _cvModel.allCvMap(), _status, item, offset, factor);
+        v = v1; // v1 is of CompEnumVariableValue type, so doesn't need casts
+
+        v1.nItems(count);
+        handleEnumValChildren(child, v1);
+        v1.lastItem();
+        return v;
+    }
+
     protected VariableValue processSplitEnumVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
         VariableValue v;
         Attribute a;

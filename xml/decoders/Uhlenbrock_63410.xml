@@ -79,47 +79,42 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip xml:lang="nl">Inschakelvertraging (in stappen van 0,5 s)</tooltip>
             </variable>
 
-<!--            <variable CV="6341.1" item="ProgramAssist" mask="XXXXXXXXXXXXVV" default="0">-->
-<!--              <enumVal>-->
-<!--                <enumChoice choice="1" value="0">-->
-<!--                  <choice>Choose and write...</choice>-->
-<!--                  <choice xml:lang="nl">Kies optie en schrijf...</choice>-->
-<!--                </enumChoice>-->
-<!--                <enumChoice choice="2" value="1">-->
-<!--                  <choice>Paired for turnout control</choice>-->
-<!--                  <choice xml:lang="nl">2-Positie Servo's</choice>-->
-<!--                </enumChoice>-->
-<!--                <enumChoice choice="3" value="2">-->
-<!--                  <choice>Paired alternating outputs on/off</choice>-->
-<!--                  <choice xml:lang="nl">Per 2 wisselend aan/uit</choice>-->
-<!--                </enumChoice>-->
-<!--                <enumChoice choice="4" value="3">-->
-<!--                  <choice>Separate on/off outputs</choice>-->
-<!--                  <choice xml:lang="nl">Individueel aan/uit</choice>-->
-<!--                </enumChoice>-->
-<!--                <enumChoice choice="5" value="8">-->
-<!--                  <choice>Factory Reset</choice>-->
-<!--                  <choice xml:lang="nl">Zet terug naar fabrieksinstelling</choice>-->
-<!--                  <choice xml:lang="de">Zurück nach Werkseinstellungen</choice>-->
-<!--                </enumChoice>-->
-<!--                <enumChoice choice="6" value="9">-->
-<!--                  <choice>All Outputs Deactivated</choice>-->
-<!--                  <choice xml:lang="nl">Alle uitgangen inactief</choice>-->
-<!--                  <choice xml:lang="de">Alle Ausgänge Inaktiv</choice>-->
-<!--                </enumChoice>-->
-<!--              </enumVal>-->
-<!--              <label>All outputs choice:</label>-->
-<!--              <label xml:lang="de">Wahl für alle Ausgänge:</label>-->
-<!--              <label xml:lang="nl">Instelling alle uitgangen:</label>-->
-<!--              <tooltip>Configures all outputs (from start address) or Module Reset</tooltip>-->
-<!--              <tooltip xml:lang="de">Konfiguriert Modul für alle Ausgänge (von Anfangsadresse):</tooltip>-->
-<!--              <tooltip xml:lang="nl">Kies instelling voor alle uitgangen (vanaf startadres):</tooltip>-->
-<!--            </variable>-->
-
-          <variable CV="6341.1" item="ProgramAssist" mask="XXXXXXXV" default="0">
-            <compDecVal min="1" max="9" offset="0" factor="1"/>
-            <tooltip>A popup (1-9)</tooltip>
-          </variable>
+            <variable CV="6341.1" item="ProgramAssist" mask="XXXXXXXV" default="0">
+              <compEnumVal>
+                <enumChoice choice="1" value="0">
+                  <choice>Choose and write...</choice>
+                  <choice xml:lang="nl">Kies optie en schrijf...</choice>
+                </enumChoice>
+                <enumChoice choice="2" value="1">
+                  <choice>Paired for turnout control</choice>
+                  <choice xml:lang="nl">2-Positie Servo's</choice>
+                </enumChoice>
+                <enumChoice choice="3" value="2">
+                  <choice>Paired alternating outputs on/off</choice>
+                  <choice xml:lang="nl">Per 2 wisselend aan/uit</choice>
+                </enumChoice>
+                <enumChoice choice="4" value="3">
+                  <choice>Separate on/off outputs</choice>
+                  <choice xml:lang="nl">Individueel aan/uit</choice>
+                </enumChoice>
+                <enumChoice choice="5" value="8">
+                  <choice>Factory Reset</choice>
+                  <choice xml:lang="nl">Zet terug naar fabrieksinstelling</choice>
+                  <choice xml:lang="de">Zurück nach Werkseinstellungen</choice>
+                </enumChoice>
+                <enumChoice choice="6" value="9">
+                  <choice>All Outputs Deactivated</choice>
+                  <choice xml:lang="nl">Alle uitgangen inactief</choice>
+                  <choice xml:lang="de">Alle Ausgänge Inaktiv</choice>
+                </enumChoice>
+              </compEnumVal>
+              <label>All outputs choice:</label>
+              <label xml:lang="de">Wahl für alle Ausgänge:</label>
+              <label xml:lang="nl">Instelling alle uitgangen:</label>
+              <tooltip>Configures all outputs (from start address) or Module Reset</tooltip>
+              <tooltip xml:lang="de">Konfiguriert Modul für alle Ausgänge (von Anfangsadresse):</tooltip>
+              <tooltip xml:lang="nl">Kies instelling voor alle uitgangen (vanaf startadres):</tooltip>
+            </variable>
 
             <variable CV="6341.1" item="Start Address" mask="XXXVVVVX" default="1">
               <compDecVal min="1" max="2048" offset="0" factor="1"/>

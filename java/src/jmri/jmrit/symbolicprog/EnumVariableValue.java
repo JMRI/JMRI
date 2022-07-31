@@ -52,7 +52,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     @Override
     public CvValue[] usesCVs() {
-        return new CvValue[]{_cvMap.get(getCvNum())};
+        return new CvValue[] {_cvMap.get(getCvNum())};
     }
 
     public void nItems(int n) {
@@ -203,7 +203,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         }
         int oldCv = cv.getValue();
         int newVal = getIntValue();
-        int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal-1);
+        int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal - 1);
         if (newCv != oldCv) {
             cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
 
@@ -256,7 +256,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         if (_nstored > 0) {
             for (int i = 0; i < _nstored; i++) {
                 if (_valueArray[i] == value) {
-                    //found it, select it
+                    // found it, select it
                     _value.setSelectedIndex(i);
 
                     // now select in the tree
@@ -299,9 +299,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     @Override
     public int getIntValue() {
         if (_value.getSelectedIndex() >= _valueArray.length || _value.getSelectedIndex() < 0) {
-            log.error("trying to get value {} too large for array length {} in var {}", _value.getSelectedIndex(), _valueArray.length, label());
+            log.error("trying to get value {} too large for array length {} in var {}",
+                    _value.getSelectedIndex(), _valueArray.length, label());
         }
-        log.debug("SelectedIndex={}", _value.getSelectedIndex());
+        if (log.isDebugEnabled()) {
+            log.debug("SelectedIndex={}, Value={}",
+                    _value.getSelectedIndex(), _valueArray[_value.getSelectedIndex()]);
+        }
         return _valueArray[_value.getSelectedIndex()];
     }
 
@@ -312,6 +316,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     public void setValue(int value) {
         int oldVal = getIntValue();
+        log.debug("setValue in EnumVariableValue to {}", value);
         selectValue(value);
 
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
@@ -493,7 +498,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // notification from CV; check for Value being changed
         switch (e.getPropertyName()) {
             case "Busy":
-                if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+                if (e.getNewValue().equals(Boolean.FALSE)) {
                     setToRead(false);
                     setToWrite(false);  // some programming operation just finished
                     setBusy(false);
@@ -517,7 +522,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             case "Value": {
                 // update value of Variable
                 CvValue cv = _cvMap.get(getCvNum());
-                int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal-1); // _maxVal value is count of possibles, i.e. radix
+                int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal - 1); // _maxVal value is count of possibles, i.e. radix
                 setValue(newVal);  // check for duplicate done inside setValue
                 break;
             }
@@ -557,7 +562,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         }
 
         EnumVariableValue _var;
-        transient java.beans.PropertyChangeListener _l = null;
+        transient java.beans.PropertyChangeListener _l;
 
         void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
             // update this color from original state

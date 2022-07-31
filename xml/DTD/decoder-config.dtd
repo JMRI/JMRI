@@ -169,7 +169,7 @@
 
 <!-- Each variable element defines one item that the user will want to configure -->
 <!ELEMENT variable  (enumVal | decVal | hexVal | speedTableVal |
-                     longAddressVal | shortAddressVal | splitVal | compositeVal | compDecVal) >
+                     longAddressVal | shortAddressVal | splitVal | compositeVal | compDecVal | compEnumVal) >
 <!ATTLIST variable label CDATA #REQUIRED>  <!-- name manufacturer used to identify this feature -->
 <!ATTLIST variable CV    CDATA #IMPLIED>   <!-- CV number containing value, if single CV -->
 <!ATTLIST variable mask  CDATA "VVVVVVVV"> <!-- mask of bits within CV -->
@@ -198,6 +198,7 @@
 <!--    hexVal:          a hexadecimal value is used, subject to mask and limit requirements -->
 <!--    compDecVal:      a decimal value is used, subject to mask on the digits (not bits), optional offset and factor -->
 <!--    enumVal:         a fixed set of choices is defined, each corresponding to a specific value -->
+<!--    compEnumVal:     a fixed set of choices is defined, like enumVal, subject to mask on the digits (not bits), optional offset and factor -->
 <!--    splitVal:        a decimal value, but stored across two CVs using some simple calculations -->
 <!--    shortAddressVal: NMRA short address, including its unique behaviors -->
 <!--    longAddressVal:  NMRA long address, including its unique behaviors -->
@@ -249,6 +250,9 @@
 
 <!ELEMENT enumVal (enumChoice*) >
 <!ATTLIST enumVal comment CDATA #IMPLIED>
+
+<!ELEMENT compEnumVal (enumChoice*) >
+<!ATTLIST compEnumVal comment CDATA #IMPLIED>
 
 <!-- an enumVal variable can take on any of a number of specific choices, with -->
 <!-- each choice defined by a user-readable name, and a value -->

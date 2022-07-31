@@ -763,9 +763,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @return newVal with value inserted
      */
     protected int insertVal(int oldCv, int newVal, String maskString, int offset, int factor) {
-        // unpack String mask
+        // analyse String mask
         int decLength = maskDigits(maskString);
         int decOffset = offsetVal(maskString);
+        log.debug("insertVal l={} offset={}", decLength, decOffset);
         double keepLeftDiv = (oldCv / Math.pow(10, decOffset + decLength));
         int keepLeft1 = (int) keepLeftDiv;
         int keepLeft = (int) (keepLeft1 * Math.pow(10, decOffset + decLength));
@@ -789,6 +790,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         // unpack String mask
         int decLength = maskDigits(maskString);
         int decOffset = offsetVal(maskString);
+        log.debug("extractVal l={} offset={}", decLength, decOffset);
         int part = (int) ((Cv % Math.pow(10, decOffset + decLength)) / Math.pow(10, decOffset));
         return (part * factor) + offset;
     }
