@@ -14,15 +14,14 @@ import jmri.ShutDownTask;
 //import jmri.ShutDownManager;
 //import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.WindowOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -136,6 +135,10 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(100);     // waitEmpty(100) causes a lot of failures on Travis GUI
 //        new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
+        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 762.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB4 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
+
         frame._userNameBox.setText("SavedIt");
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
 
@@ -198,6 +201,7 @@ public class LearnWarrantTest {
             }
             throttle.setSpeedSetting(speed);
             OBlock blockNext = _OBlockMgr.getBySystemName(route[i]);
+            Assertions.assertNotNull(blockNext);
             Sensor sensorNext = blockNext.getSensor();
             NXFrameTest.setAndConfirmSensorAction(sensorNext, Sensor.ACTIVE, blockNext);
             NXFrameTest.setAndConfirmSensorAction(sensor, Sensor.INACTIVE, block);
