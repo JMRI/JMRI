@@ -444,6 +444,7 @@
           access to the instance manager. The constants <i>null</i> and
           <i>None</i> has the null value in Java, the None value in Jython.</li>
           <li>The action <i>Listen On Beans - Table</i> is improved.</li>
+          <li>The action <i>Route</i> can now trigger a reverse route.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
