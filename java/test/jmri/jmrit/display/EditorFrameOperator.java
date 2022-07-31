@@ -40,6 +40,8 @@ public class EditorFrameOperator extends JFrameOperator {
 
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DE_MIGHT_IGNORE",
+        justification = "exceptions in operator threads not considered an error")
     private void dismissClosingDialogs(){
         // the reminder dialog doesn't appear every time we close, so put
         // pressing the button in that dialog into a thread by itself.  If

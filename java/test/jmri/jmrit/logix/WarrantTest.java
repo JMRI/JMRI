@@ -196,29 +196,33 @@ public class WarrantTest {
             String m = warrant.getRunningMessage();
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+//        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sWest.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+        try {
+            sWest.setState(Sensor.ACTIVE);
+        } catch (jmri.JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sSouth.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        JUnitUtil.waitFor(100);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return bWest.isOccupied() == true;
+
+        }, "South not occupied");
+
+        try {
+            sSouth.setState(Sensor.ACTIVE);
+        } catch (jmri.JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
+
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return bSouth.isOccupied() == true;
+
+        }, "South not occupied");
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(() -> {
-            return warrant.getRunningMessage().equals("Idle");
+            return warrant.getRunningMessage().equals(Bundle.getMessage("Idle"));
         }, "warrant not done");
 
     }

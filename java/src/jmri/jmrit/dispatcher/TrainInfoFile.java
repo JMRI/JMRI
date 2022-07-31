@@ -139,6 +139,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setTrainFromUser(false);
                         }
                     }
+                    if (traininfo.getAttribute("trainfromsetlater") != null) {
+                        tInfo.setTrainFromSetLater(true);
+                        if (traininfo.getAttribute("trainfromuser").getValue().equals("no")) {
+                            tInfo.setTrainFromSetLater(false);
+                        }
+                    }
                     if (traininfo.getAttribute("priority") != null) {
                         tInfo.setPriority(Integer.parseInt(traininfo.getAttribute("priority").getValue()));
                     } else {
@@ -463,6 +469,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("trainfromroster", "" + (tf.getTrainFromRoster() ? "yes" : "no"));
         traininfo.setAttribute("trainfromtrains", "" + (tf.getTrainFromTrains() ? "yes" : "no"));
         traininfo.setAttribute("trainfromuser", "" + (tf.getTrainFromUser() ? "yes" : "no"));
+        traininfo.setAttribute("trainfromsetlater", "" + (tf.getTrainFromSetLater() ? "yes" : "no"));
         traininfo.setAttribute("priority", Integer.toString(tf.getPriority()));
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
         switch (tf.getDelayedRestart()) {

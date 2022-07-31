@@ -27,7 +27,6 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -44,7 +43,7 @@ import jmri.util.JUnitOperationsUtil;
  */
 public class TrainBuilderTest extends OperationsTestCase {
 
-    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+    private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
 
@@ -231,58 +230,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("Requested moves", rld.getCarMoves() <= 10);
         Assert.assertEquals("Requested moves", 0, rlm.getCarMoves());
         Assert.assertEquals("Requested moves", 0, rlt.getCarMoves());
-
-        JUnitOperationsUtil.checkOperationsShutDownTask();
-    }
-
-    /*
-     * The requires cars option isn't available to users
-     */
-    @Test
-    public void testBuildRequiresCars() {
-
-        // Change default for number of cars moved per location
-        Setup.setCarMoves(2);
-
-        // create train and give it a three location route
-        Train train = tmanager.newTrain("TestBuildRequiresCars");
-        Route route = JUnitOperationsUtil.createThreeLocationRoute();
-        train.setRoute(route);
-
-        // Build option require cars
-        Control.fullTrainOnly = true;
-        train.reset();
-        new TrainBuilder().build(train);
-        Assert.assertFalse("Train should not build, requires cars", train.isBuilt());
-
-        Location acton = route.getDepartsRouteLocation().getLocation();
-        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
-
-        // place two cars at start of route, changes where checks are made in
-        // TrainBuilder
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", actonSpur1, 0);
-        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", actonSpur1, 0);
-
-        train.reset();
-        new TrainBuilder().build(train);
-        Assert.assertFalse("Train should not build, requires more cars", train.isBuilt());
-
-        // only need three cars to build
-        Car c3 = JUnitOperationsUtil.createAndPlaceCar("A", "3", "Boxcar", "40", actonSpur1, 0);
-
-        train.reset();
-        new TrainBuilder().build(train);
-        Assert.assertTrue("Train should build, has the cars", train.isBuilt());
-
-        // restore control
-        Control.fullTrainOnly = false;
-        c1.setLocation(null, null);
-        c2.setLocation(null, null);
-        c3.setLocation(null, null);
-
-        train.reset();
-        new TrainBuilder().build(train);
-        Assert.assertTrue("Train should build, build doesn't require cars", train.isBuilt());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
@@ -5906,7 +5853,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 528, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 531, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -5945,7 +5892,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 262, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 265, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -6009,7 +5956,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 635, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 636, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();

@@ -7,7 +7,7 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
-import jmri.util.*;
+import jmri.util.JUnitUtil;
 
 import org.junit.*;
 
@@ -83,7 +83,7 @@ public class SocketOperationTest {
 
                 if (socket.getChildCount() > 0) {
                     FemaleSocket child = socket.getChild(
-                            random(socket.getChildCount()));
+                            JUnitUtil.getRandom().nextInt(socket.getChildCount()));
 
                     if (addRemoveChildren) {
                         testAddRemoveChild(child);
@@ -98,7 +98,7 @@ public class SocketOperationTest {
     }
 
     private void testAddRemoveChild(FemaleSocket child) throws SocketAlreadyConnectedException {
-        int oper = random(5);
+        int oper = JUnitUtil.getRandom().nextInt(5);
 
         switch (oper) {
             case 0:  // Add
@@ -132,14 +132,14 @@ public class SocketOperationTest {
         List<Class<? extends Base>> categoryList = null;
 
         while (count++ < 50 && (categoryList == null || categoryList.isEmpty())) {
-            Category category = Category.values().get(random(Category.values().size()));
+            Category category = Category.values().get(JUnitUtil.getRandom().nextInt(Category.values().size()));
             categoryList = connectableClasses.get(category);
         }
 
         Assert.assertNotNull(categoryList);
         Assert.assertFalse(categoryList.isEmpty());
 
-        Class<? extends Base> clazz = categoryList.get(random(categoryList.size()));
+        Class<? extends Base> clazz = categoryList.get(JUnitUtil.getRandom().nextInt(categoryList.size()));
 
         SwingConfiguratorInterface sci = sciSet.get(clazz);
         if (sci == null) {
@@ -159,17 +159,12 @@ public class SocketOperationTest {
 
     private void testFemaleSocketOperations(FemaleSocket child) {
         FemaleSocketOperation fso = FemaleSocketOperation.values()[
-                random(FemaleSocketOperation.values().length)];
+                JUnitUtil.getRandom().nextInt(FemaleSocketOperation.values().length)];
 
         if (child.isSocketOperationAllowed(fso)) {
             child.doSocketOperation(fso);
         }
     }
-
-    private int random(int count) {
-        return (int) (Math.random() * count);
-    }
-
 
     @Before
     public void setUp() {
@@ -181,7 +176,6 @@ public class SocketOperationTest {
 //        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         CreateLogixNGTreeScaffold.tearDown();
     }
-
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeepCopyTest.class);
 

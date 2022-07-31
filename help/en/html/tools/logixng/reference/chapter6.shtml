@@ -441,13 +441,13 @@
 
       <h5 id="script">Script</h5>
 
-      <p>A script expression calls a Jython script. The Jython context contains a
+      <p>A script expression calls a Jython or ECMAScript script. The script context contains a
       <strong>result</strong> boolean object. When the script is done, it does a
       <code>result.setValue(x)</code> where x is, or evaluates to, True or False.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter6/script_expression.png"><img src=
-        "images/chapter6/script_expression.png" alt="Chapter 6 script expression"></a>
+        <a href="images/chapter6/digital_expression_script.png">
+        <img src="images/chapter6/digital_expression_script.png" alt="Chapter 6 digital expression script"></a>
       </div>
 
       <p>The Register listener and Unregister listener options are used if the script is to run
@@ -455,6 +455,10 @@
       cause the script to be run every fast minute.</p>
 
       <code>memories.getMemory('IMCURRENTTIME').addPropertyChangeListener('value', self)</code>
+
+      <p>Select the type of script. The supported script types are <strong>Jython Files</strong>
+      and <strong>ECMAScript Files</strong>.</p>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Sensor</h5>
@@ -644,8 +648,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/digital_expression_other.png"><img src=
-        "images/chapter6/digital_expression_other.png" alt="Chapter 6 expression other list" width=
-        "232" height="134"></a>
+        "images/chapter6/digital_expression_other.png" alt="Chapter 6 expression other list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -667,6 +670,28 @@
 
       <p>Call a module and and return its true/false response. See <a href=
       "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="connectname">Connection name<span class="since">since 5.1.3</span></h5>
+
+      <p>The <strong>Connection name</strong> expression returns <strong>true</strong> if the
+      selected manufacturer and connection type match a connection in <strong>Preferences &rArr;
+      Connections</strong>.</p>
+
+      <p>This can be used to determine whether JMRI is using a real layout connection or a simulated
+      connection.  For example, a startup LogixNG can set an internal sensor that indicates the
+      simulation state.  Other LogixNG defintions can then check the state to determine what actions
+      are appropriate.  A good example is whether the <a href="chapter5.shtml#simfeedback">Simulate
+      turnout feedback</a> action should be used.</p>
+
+      <p>The connection name is selected by choosing the manufacturer and then a connection name
+      from the connection list.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/connection_expression.png"><img src=
+        "images/chapter6/connection_expression.png" alt="Chapter 6 connection expression"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

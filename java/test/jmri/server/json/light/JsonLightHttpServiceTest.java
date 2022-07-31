@@ -39,7 +39,7 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
             // allow setting of "illegal" states for testing
             @Override
             public void setState(int newState) {
-                if (newState == Light.ON && newState == Light.OFF) {
+                if (newState == Light.ON || newState == Light.OFF) {
                     // if ON or OFF allow full transition to occur
                     super.setState(newState);
                 } else {

@@ -1,5 +1,7 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -15,8 +17,9 @@ import org.python.modules.math;
  *
  * @author George Warner Copyright (C) 2017
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "CNT_ROUGH_CONSTANT_VALUE",
-        justification = "Many co-incidental usages of value near to PI constant")
+@SuppressFBWarnings( value = {"CNT_ROUGH_CONSTANT_VALUE", "FL_FLOATS_AS_LOOP_COUNTERS"},
+    justification = "Many co-incidental usages of value near to PI constant."
+                  + "Loop Increments do not need to be exact")
 public class MathUtilTest {
 
     static final double tolerance = 0.000001;

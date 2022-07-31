@@ -85,7 +85,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
                 }
             }
             // and force completion of the printing
-            writer.close();
+//            writer.close(); not needed when using try / catch
         } catch (HardcopyWriter.PrintCanceledException we) {
             log.debug("Print cancelled");
         } catch (IOException we) {

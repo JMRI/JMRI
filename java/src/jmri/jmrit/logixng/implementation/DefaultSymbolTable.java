@@ -115,7 +115,7 @@ public class DefaultSymbolTable implements SymbolTable {
             if (globalVariable != null) {
                 globalVariable.setValue(value);
             } else {
-                throw new IllegalArgumentException("The symbol "+name+" does not exist in the symbol table");
+                throw new IllegalArgumentException(Bundle.getMessage("ExceptionSymbolNotInSymbolTable", name));
             }
         }
     }

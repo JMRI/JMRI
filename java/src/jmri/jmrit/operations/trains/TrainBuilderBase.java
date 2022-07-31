@@ -22,7 +22,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -358,11 +357,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected void showAndInitializeTrainRoute() throws BuildFailedException {
         int requestedCarMoves = 0; // how many cars were asked to be moved
         // TODO: DAB control minimal build by each train
-        if (_train.getTrainDepartsRouteLocation().getMaxCarMoves() > _departLocation.getNumberRS() &&
-                Control.fullTrainOnly) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorCars"), new Object[] {
-                    Integer.toString(_departLocation.getNumberRS()), _train.getTrainDepartsName(), _train.getName() }));
-        }
+
         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildTrainRoute"),
                 new Object[] { _train.getName(), _train.getRoute().getName() }));
 
@@ -386,13 +381,13 @@ public class TrainBuilderBase extends TrainCommon {
             } else if (_train.isLocationSkipped(rl.getId())) {
                 addLine(_buildReport, THREE,
                         MessageFormat.format(Bundle.getMessage("buildLocSkippedMaxTrain"),
-                                new Object[] { rl.getId(), rl.getName(), _train.getName(), rl.getMaxTrainLength(),
+                                new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), _train.getName(), rl.getMaxTrainLength(),
                                         Setup.getLengthUnit().toLowerCase() }));
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
             } else if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
                 addLine(_buildReport, THREE,
                         MessageFormat.format(Bundle.getMessage("buildLocNoDropsOrPickups"), new Object[] { rl.getId(),
-                                rl.getName(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
+                                rl.getName(), rl.getTrainDirectionString(), rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
             } else {
                 // we're going to use this location, so initialize the route location
@@ -402,35 +397,35 @@ public class TrainBuilderBase extends TrainCommon {
                 if (location.isStaging() && rl.isPickUpAllowed() && rl == _train.getTrainDepartsRouteLocation()) {
                     addLine(_buildReport, THREE,
                             MessageFormat.format(Bundle.getMessage("buildStagingDeparts"),
-                                    new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves(),
+                                    new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
                                             rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
                 } else if (location.isStaging() &&
                         rl.isDropAllowed() &&
                         rl == _train.getTrainTerminatesRouteLocation()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTerminates"),
-                            new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves() }));
+                            new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves() }));
                 } else if (rl == _train.getTrainTerminatesRouteLocation() &&
                         rl.isDropAllowed() &&
                         rl.isPickUpAllowed()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocTerminatesMoves"),
-                            new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves() }));
+                            new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves() }));
                 } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
                     addLine(_buildReport, THREE,
                             MessageFormat.format(Bundle.getMessage("buildLocRequestMoves"),
-                                    new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves(),
+                                    new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
                                             rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
                 } else if (!rl.isDropAllowed()) {
                     addLine(_buildReport, THREE,
                             MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
-                                    new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves(),
+                                    new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
                                             rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
                 } else if (rl == _train.getTrainTerminatesRouteLocation()) {
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocTerminates"),
-                            new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves() }));
+                            new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves() }));
                 } else {
                     addLine(_buildReport, THREE,
                             MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
-                                    new Object[] { rl.getId(), rl.getName(), rl.getMaxCarMoves(),
+                                    new Object[] { rl.getId(), rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
                                             rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase() }));
                 }
             }
@@ -1068,7 +1063,7 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildExcludeCarTypeAtLoc"),
                                 new Object[] { car.toString(), car.getTypeName(),
-                                        (car.getLocationName() + ", " + car.getTrackName()) }));
+                                        car.getLocationName(), car.getTrackName() }));
                 // code check, should never be staging
                 if (car.getTrack() == _departStageTrack) {
                     throw new BuildFailedException("ERROR: Attempt to removed car with FRED or Caboose from staging"); // NOI18N
@@ -1100,11 +1095,7 @@ public class TrainBuilderBase extends TrainCommon {
         // get list of cars for this route
         _carList = carManager.getAvailableTrainList(_train);
         // TODO: DAB this needs to be controlled by each train
-        if (_train.getNumberCarsRequested() > _carList.size() && Control.fullTrainOnly) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNumReq"),
-                    new Object[] { Integer.toString(_train.getNumberCarsRequested()), _train.getName(),
-                            Integer.toString(_carList.size()) }));
-        }
+
         addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCars"));
         boolean showCar = true;
@@ -1206,7 +1197,7 @@ public class TrainBuilderBase extends TrainCommon {
                         car.getLastRouteId().equals(_train.getRoute().getId())) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildExcludeCarDropByTrain"),
-                                    new Object[] { car.toString(), _train.getRoute().getName(), car.getLocationName(),
+                                    new Object[] { car.toString(), car.getTypeName(), _train.getRoute().getName(), car.getLocationName(),
                                             car.getTrackName() }));
                     _carList.remove(car);
                     i--;
@@ -1222,7 +1213,7 @@ public class TrainBuilderBase extends TrainCommon {
                     } else {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("buildExcludeCarByTrain"),
-                                        new Object[] { car.toString(), car.getTrack().getTrackTypeName(),
+                                        new Object[] { car.toString(), car.getTypeName(), car.getTrack().getTrackTypeName(),
                                                 car.getLocationName(), car.getTrackName() }));
                         _carList.remove(car);
                         i--;
@@ -1235,7 +1226,7 @@ public class TrainBuilderBase extends TrainCommon {
                     } else {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("buildExcludeCarByRoute"),
-                                        new Object[] { car.toString(), car.getTrack().getTrackTypeName(),
+                                        new Object[] { car.toString(), car.getTypeName(), car.getTrack().getTrackTypeName(),
                                                 car.getLocationName(), car.getTrackName() }));
                         _carList.remove(car);
                         i--;
@@ -1387,7 +1378,7 @@ public class TrainBuilderBase extends TrainCommon {
                     }
                 } else {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarAtLoc"),
-                            new Object[] { car.toString(), (car.getLocationName() + ", " + car.getTrackName()) }));
+                            new Object[] { car.toString(), car.getTypeName(), car.getLocationName(), car.getTrackName() }));
                     _carList.remove(car);
                     i--;
                 }

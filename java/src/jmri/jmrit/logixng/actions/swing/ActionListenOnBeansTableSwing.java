@@ -26,6 +26,9 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
     private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
     private JCheckBox _listenOnAllPropertiesCheckBox;
+    private JTextField _localVariableNamedBean;
+    private JTextField _localVariableEvent;
+    private JTextField _localVariableNewValue;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -80,6 +83,7 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         for (NamedBeanType item : NamedBeanType.values()) {
             _namedBeanTypeComboBox.addItem(item);
         }
+        JComboBoxUtil.setupComboBoxMaxRows(_namedBeanTypeComboBox);
         namedBeanTypePanel.add(_namedBeanTypeComboBox);
         panel.add(namedBeanTypePanel);
 
@@ -89,6 +93,24 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         listenOnAllPropertiesPanel.add(_listenOnAllPropertiesCheckBox);
         panel.add(listenOnAllPropertiesPanel);
 
+        JPanel localVariableNamedBeanPanel = new JPanel();
+        localVariableNamedBeanPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNamedBean")));
+        _localVariableNamedBean = new JTextField(20);
+        localVariableNamedBeanPanel.add(_localVariableNamedBean);
+        panel.add(localVariableNamedBeanPanel);
+
+        JPanel localVariableNamedEventPanel = new JPanel();
+        localVariableNamedEventPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableEvent")));
+        _localVariableEvent = new JTextField(20);
+        localVariableNamedEventPanel.add(_localVariableEvent);
+        panel.add(localVariableNamedEventPanel);
+
+        JPanel localVariableNewValuePanel = new JPanel();
+        localVariableNewValuePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNewValue")));
+        _localVariableNewValue = new JTextField(20);
+        localVariableNewValuePanel.add(_localVariableNewValue);
+        panel.add(localVariableNewValuePanel);
+
         if (action != null) {
             if (action.getSelectNamedBean().getNamedBean() != null) {
                 _tableBeanPanel.setDefaultNamedBean(action.getSelectNamedBean().getNamedBean().getBean());
@@ -97,6 +119,10 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
             _includeCellsWithoutHeaderCheckBox.setSelected(action.getIncludeCellsWithoutHeader());
             _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
             _listenOnAllPropertiesCheckBox.setSelected(action.getListenOnAllProperties());
+
+            _localVariableNamedBean.setText(action.getLocalVariableNamedBean());
+            _localVariableEvent.setText(action.getLocalVariableEvent());
+            _localVariableNewValue.setText(action.getLocalVariableNewValue());
         }
     }
 
@@ -173,6 +199,10 @@ public class ActionListenOnBeansTableSwing extends AbstractDigitalActionSwing {
         }
         action.setIncludeCellsWithoutHeader(_includeCellsWithoutHeaderCheckBox.isSelected());
         action.setListenOnAllProperties(_listenOnAllPropertiesCheckBox.isSelected());
+
+        action.setLocalVariableNamedBean(_localVariableNamedBean.getText());
+        action.setLocalVariableEvent(_localVariableEvent.getText());
+        action.setLocalVariableNewValue(_localVariableNewValue.getText());
     }
 
     /** {@inheritDoc} */

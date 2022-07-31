@@ -251,6 +251,10 @@ public class WarrantTableAction extends AbstractAction {
 
         InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
     }
+    
+    protected WarrantFrame getOpenFrame() {
+        return _openFrame;
+    }
 
     /* ****************** Error checking ************************/
     public boolean errorCheck() {

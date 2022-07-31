@@ -119,8 +119,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SF_SWITCH_FALLTHROUGH",
+        justification = "cases statements are organized to flow")
+    @SuppressWarnings("fallthrough")
     public static void resetUnexpectedMessageFlags(Level severity) {
-        // cases statements are organized to flow
         switch (severity.toInt()) {
             case Level.INFO_INT:
                 unexpectedInfoSeen = false;

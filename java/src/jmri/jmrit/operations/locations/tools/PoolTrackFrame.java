@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -226,14 +227,20 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 addItem(poolStatus, length, 3, i + 1);
             }
             // Summary
+            int totalLine = tracks.size() + 1;
             JLabel total = new JLabel(Bundle.getMessage("Totals"));
-            addItem(poolStatus, total, 0, tracks.size() + 1);
+            addItem(poolStatus, total, 0, totalLine);
+            if (totalMinLength > totalLength) {
+                JLabel error = new JLabel(Bundle.getMessage("ErrorMinLen"));
+                error.setForeground(Color.RED);
+                addItem(poolStatus, error, 1, totalLine);
+            }
             JLabel totalMin = new JLabel();
             totalMin.setText(Integer.toString(totalMinLength));
-            addItem(poolStatus, totalMin, 2, tracks.size() + 1);
+            addItem(poolStatus, totalMin, 2, totalLine);
             JLabel totalLen = new JLabel();
             totalLen.setText(Integer.toString(totalLength));
-            addItem(poolStatus, totalLen, 3, tracks.size() + 1);
+            addItem(poolStatus, totalLen, 3, totalLine);
         }
         poolStatus.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("PoolTracks"),
                 new Object[]{poolName})));

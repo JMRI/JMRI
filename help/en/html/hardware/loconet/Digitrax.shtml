@@ -945,12 +945,6 @@
             </li>
 
             <li>
-              <a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure
-              LocoIO</a> (No longer supported, preferred method is via <a href=
-              "../../apps/DecoderPro/index.shtml">DecoderPro3</a>)
-            </li>
-
-            <li>
               <a href="CommandStationConfig.shtml">Roster-based Command Station Configuration</a>
               (recommended), or the <a href=
               "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configure
@@ -966,6 +960,11 @@
               <a href=
               "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure
               Duplex Group</a>. (Note that this tool can have an effect on LNWI devices.)
+            </li>
+
+            <li>
+              <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Configure
+                LNCV Modules</a>
             </li>
 
             <li>

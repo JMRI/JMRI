@@ -86,6 +86,7 @@ public class ExpressionNodeIdentifierTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

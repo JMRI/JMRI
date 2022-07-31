@@ -503,6 +503,14 @@ public class TimeTableXml {
             }
             return fileLocation;
         }
+
+        /**
+         * Reset the static file location.
+         * Only required for unit testing purposes.
+         */
+        public static void resetFileLocation() {
+            fileLocation = null;
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableXml.class);

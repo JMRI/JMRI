@@ -24,7 +24,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Test
     public void testCtor() {
-        new SerialTurnout("5", "to5", memo);
+        Assert.assertNotNull(new SerialTurnout("5", "to5", memo));
     }
     
     @Override
@@ -45,10 +45,14 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         Assert.assertNotNull("turnout exists", t);
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         if (tcis != null) tcis.terminateThreads();
         tcis = null;
+        if ( memo != null ) {
+            memo.dispose();
+        }
         memo = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
@@ -77,19 +81,19 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     @Test
     public void testSystemSpecificComparisonOfStandardNames() {
-        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
+        NamedBeanComparator<Turnout> comparator = new NamedBeanComparator<>();
         
         Turnout t1 = new SerialTurnout("CT1", "to1", memo);
         Turnout t2 = new SerialTurnout("CT2", "to2", memo);
         Turnout t10 = new SerialTurnout("CT10", "to10", memo);
 
-        Assert.assertEquals("T1 == T1", 0, t.compare(t1, t1));
+        Assert.assertEquals("T1 == T1", 0, comparator.compare(t1, t1));
 
-        Assert.assertEquals("T1 < T2", -1, t.compare(t1, t2));
-        Assert.assertEquals("T2 > T1", +1, t.compare(t2, t1));
+        Assert.assertEquals("T1 < T2", -1, comparator.compare(t1, t2));
+        Assert.assertEquals("T2 > T1", +1, comparator.compare(t2, t1));
 
-        Assert.assertEquals("T10 > T2", +1, t.compare(t10, t2));
-        Assert.assertEquals("T2 < T10", -1, t.compare(t2, t10));    
+        Assert.assertEquals("T10 > T2", +1, comparator.compare(t10, t2));
+        Assert.assertEquals("T2 < T10", -1, comparator.compare(t2, t10));    
     }
 
     @Test

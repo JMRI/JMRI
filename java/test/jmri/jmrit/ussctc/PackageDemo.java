@@ -35,10 +35,19 @@ public class PackageDemo {
 
         // turn signals on for display
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
-        shm.getSignalHead("2R Upper").setAppearance(SignalHead.RED);
-        shm.getSignalHead("2R Lower").setAppearance(SignalHead.RED);
-        shm.getSignalHead("2L Main").setAppearance(SignalHead.RED);
-        shm.getSignalHead("2L Siding").setAppearance(SignalHead.RED);
+        SignalHead rupper = shm.getSignalHead("2R Upper");
+        SignalHead rlower = shm.getSignalHead("2R Lower");
+        SignalHead lmain = shm.getSignalHead("2L Main");
+        SignalHead lsiding = shm.getSignalHead("2L Siding");
+
+        if ( rupper!=null && rlower!=null && lmain !=null && lsiding !=null ) {
+            rupper.setAppearance(SignalHead.RED);
+            rlower.setAppearance(SignalHead.RED);
+            lmain.setAppearance(SignalHead.RED);
+            lsiding.setAppearance(SignalHead.RED);
+        } else {
+            log.error("Could not find all Signal Heads");
+        }
 
         // create and wire USS CTC objects
         Bell bell = new PhysicalBell("CTC Bell");

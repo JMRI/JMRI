@@ -1063,7 +1063,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 if (next == null) {
                     for (int i = 0; i < currPathCnt; i++) {
                         if (isSet[i] && isActive[i]) {
-                            if (next != null && ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
+                            if (next != null && next.getBlock() != null && next.getBlock().getValue() != null &&
+                                    ! next.getBlock().getValue().equals(pList[i].getBlock().getValue())) {
                                 allNeighborsAgree = false;
                             }
                             count++;

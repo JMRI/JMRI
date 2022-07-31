@@ -198,20 +198,22 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                             printEngine(fileOut, engine, "PL", Bundle.getMessage("csvPickUpLoco"));
                         }
                     }
-
-                    // get a list of cars and determine if this location is serviced
-                    // block pick up cars
+                    // now block out train
+                    // caboose or FRED is placed at end of the train
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
                     for (RouteLocation rld : train.getTrainBlockingOrder()) {
                         for (Car car : carList) {
-                            if (car.getRouteLocation() == rl &&
-                                    car.getTrack() != null &&
-                                    car.getRouteDestination() == rld) {
+                            if (isNextCar(car, rl, rld)) {
                                 pickupCars++;
                                 int count = 0;
                                 if (car.isUtility()) {
                                     count = countPickupUtilityCars(carList, car, !IS_MANIFEST);
                                     if (count == 0) {
-                                        continue; // already done this set of utility cars
+                                        continue; // already done this set of
+                                        // utility cars
                                     }
                                 }
                                 printCar(fileOut, car, "PC", Bundle.getMessage("csvPickUpCar"), count);
