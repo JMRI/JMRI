@@ -41,27 +41,11 @@ public class CompDecVariableValue extends DecVariableValue {
     @Override
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
-            return extractVal(Cv, maskString);
+            return extractVal(Cv, maskString, _offset, _factor);
         } else {
             log.error("Can't handle Radix mask");
             return -1;
         }
-    }
-
-    /**
-     * Fetch the relevant digits from a value, using a String bit mask like XXXVVVXX.
-     * On decimal 12345678 this will return 456.
-     *
-     * @param Cv the value to process
-     * @param maskString the textual (XXXVVVXX style) mask
-     * @return extracted int (part) for the variable
-     */
-    protected int extractVal(int Cv, String maskString) {
-        // unpack String mask
-        int decLength = maskDigits(maskString);
-        int decOffset = offsetVal(maskString);
-        int part = (int) ((Cv % Math.pow(10, decOffset + decLength)) / Math.pow(10, decOffset));
-        return (part * _factor) + _offset;
     }
 
     /**
@@ -77,7 +61,7 @@ public class CompDecVariableValue extends DecVariableValue {
     protected int setValueInCV(int oldCv, int newVal, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
             if (newVal <= maxVal) {
-                return insertVal(oldCv, newVal, maskString);
+                return insertVal(oldCv, newVal, maskString, _offset, _factor);
             } else {
                 log.error("Value {} for {} out of range", newVal, cvName());
                 return -1;
@@ -87,45 +71,6 @@ public class CompDecVariableValue extends DecVariableValue {
             log.error("Can't handle Radix mask on CompDecVariableValue");
             return -1;
         }
-    }
-
-    /**
-     * Insert the relevant digits from a value into the Cv, using a String bit mask like XXXVVVXX.
-     * On decimal 12311178 inserting 456 with mask XXXVVVXX will return 12345678.
-     *
-     * @param oldCv to current Cv value
-     * @param newVal the value to insert into the Cv
-     * @param maskString the textual (XXXVVVXX style) mask
-     * @return newVal with value inserted
-     */
-    protected int insertVal(int oldCv, int newVal, String maskString) {
-        // unpack String mask
-        int decLength = maskDigits(maskString);
-        int decOffset = offsetVal(maskString);
-        double keepLeftDiv = (oldCv / Math.pow(10, decOffset + decLength));
-        int keepLeft = (int) (keepLeftDiv * Math.pow(10, decOffset + decLength));
-        int keepRight = (int) (oldCv % Math.pow(10, decOffset));
-        // handle offset and factor
-        int transfer = (newVal - _offset) / _factor;
-        // shift left
-        int insert = (int) (transfer * Math.pow(10, decOffset));
-        return keepLeft + insert + keepRight;
-    }
-
-    /**
-     * Get the number of digits (tens) of the VVV part of the decimal mask
-     * @param maskString The (XXXVVVXX style ; NOT small int) mask for this variable in character form
-     * @return number of decimal places used in VVV part of mask
-     */
-    protected int maskDigits(String maskString) {
-        int length = 0;
-        if (maskString.contains("V")) {
-            length = maskString.lastIndexOf("V") - maskString.indexOf("V") + 1;
-            //log.debug("MaskDigits = {}", length);
-        } else {
-            log.error("Variable={};cvName={};cvMask={} is an invalid bitmask", label(), getCvName(), maskString);
-        }
-        return length;
     }
 
     @Override
