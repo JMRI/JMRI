@@ -1,12 +1,11 @@
 package apps.gui3.tabbedpreferences;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -14,10 +13,15 @@ import org.junit.Assume;
 public class EditConnectionPreferencesDialogTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EditConnectionPreferencesDialog d = new EditConnectionPreferencesDialog();
-        Assert.assertNotNull("exists",d);
+
+        Thread t = JemmyUtil.createModalDialogOperatorThread("Preferences", "Quit");
+        ThreadingUtil.runOnGUI(() -> {
+            Assertions.assertFalse(EditConnectionPreferencesDialog.showDialog());
+        });
+        JUnitUtil.waitFor(() -> { return !t.isAlive(); }," dialog thread did not close");
+
     }
 
     @BeforeEach
