@@ -41,7 +41,13 @@ public class CompDecVariableValue extends DecVariableValue {
     @Override
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
-            return extractVal(Cv, maskString, _offset, _factor);
+            int val = extractVal(Cv, maskString, _offset, _factor);
+            if (val > maxVal || val < _minVal) {
+                log.error("New value {} for {} is out of bounds", val, label());
+                return _minVal;
+            } else {
+                return val;
+            }
         } else {
             log.error("Can't handle Radix mask");
             return -1;
@@ -60,11 +66,12 @@ public class CompDecVariableValue extends DecVariableValue {
     @Override
     protected int setValueInCV(int oldCv, int newVal, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
-            if (newVal <= maxVal) {
+            if (newVal <= maxVal && newVal >= _minVal) { // bounds apply to entry/value
                 return insertVal(oldCv, newVal, maskString, _offset, _factor);
             } else {
                 log.error("Value {} for {} out of range", newVal, cvName());
-                return -1;
+                // author should check offset and factor against min and max
+                return oldCv;
             }
         } else {
             // see VariableValue#setValueInCV()

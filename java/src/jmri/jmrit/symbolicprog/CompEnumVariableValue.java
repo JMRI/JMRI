@@ -41,7 +41,13 @@ public class CompEnumVariableValue extends EnumVariableValue {
     @Override
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
-            return extractVal(Cv, maskString, _offset, _factor);
+            int val = extractVal(Cv, maskString, _offset, _factor);
+            if (val > maxVal || val < _minVal) {
+                log.error("New value {} for {} is out of bounds", val, label());
+                return _minVal;
+            } else {
+                return val;
+            }
         } else {
             log.error("Can't handle Radix mask");
             return -1;
@@ -60,13 +66,14 @@ public class CompEnumVariableValue extends EnumVariableValue {
     @Override
     protected int setValueInCV(int oldCv, int newVal, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
-            log.debug("setValueInCV to {}. maxVal ={}", newVal, maxVal);
-            // super sends (maxVal - 1) but this is the index. Combo protects bounds
+            log.debug("setValueInCV to {}. maxVal ={}", newVal, maxVal); // bounds apply to entry/value
+            // super sends (maxVal - 1) but this is the index. Combo protects bounds if
+            // author checks offset and factor against min and max
             return insertVal(oldCv, newVal, maskString, _offset, _factor);
         } else {
             // see VariableValue#setValueInCV()
             log.error("Can't handle Radix mask on CompEnumVariableValue");
-            return -1;
+            return oldCv;
         }
     }
 

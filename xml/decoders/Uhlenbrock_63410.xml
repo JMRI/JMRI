@@ -80,7 +80,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.1" item="ProgramAssist" mask="XXXXXXXV" default="0">
-              <compEnumVal>
+              <compEnumVal offset="0" factor="1">
                 <enumChoice choice="1" value="0">
                   <choice>Choose and write...</choice>
                   <choice xml:lang="nl">Kies optie en schrijf...</choice>
@@ -117,7 +117,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.1" item="Start Address" mask="XXXVVVVX" default="1">
-              <compDecVal min="1" max="2048" offset="0" factor="1"/>
+              <compDecVal min="0" max="2048" offset="0" factor="1"/>
               <label xml:lang="de"> Anfangsadresse:</label>
               <label xml:lang="nl"> Beginadres:</label>
               <label> Start Address:</label>
@@ -454,7 +454,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
 
             <!-- CV 21-40: Settings outputs 1-20 On -->
 
-            <variable CV="6341.21" mask="XXXXXXXV" item="Output 1 On Type" default="199">
+            <variable CV="6341.21" mask="XXXXXXXV" item="Output 1 On Type" default="1">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchCommandChoice.xml"/>
               <label xml:lang="de">Bericht Ein: </label>
               <label xml:lang="nl">Instructie Aan: </label>
