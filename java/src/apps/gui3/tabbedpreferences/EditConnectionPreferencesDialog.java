@@ -54,7 +54,7 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
         add(editConnectionPreferences);
 //        addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener(this);
+        addWindowListener(EditConnectionPreferencesDialog.this);
     }
 
     public void gotoPreferenceItem(String item, String sub) {
