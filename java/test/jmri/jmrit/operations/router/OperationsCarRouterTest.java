@@ -2815,7 +2815,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
         Track actonSpur2 = acton.getTrackByName("Acton Spur 2", null);
         Track actonYard = acton.getTrackByName("Acton Yard 1", null);
-        Track actonInterchange = acton.getTrackByName("Acton Interchange 1", null);
+//        Track actonInterchange = acton.getTrackByName("Acton Interchange 1", null);
 
         Location boston = lmanager.getLocationByName("Boston");
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
@@ -3000,11 +3000,9 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
         actonToBostonTrain.build();
         // confirm that car destinations
-        // note that the Router has two interchange tracks to choose from boston and
-        // acton, so results could change based on usage above
         Assert.assertEquals("car's destination track", bostonSpur2, c3.getDestinationTrack());
         Assert.assertEquals("car's destination track", bostonInterchange1, c4.getDestinationTrack());
-        Assert.assertEquals("car's destination track", actonInterchange, c5.getDestinationTrack());
+        Assert.assertEquals("car's destination track", bostonInterchange1, c5.getDestinationTrack());
         Assert.assertEquals("car's destination track", bostonInterchange1, c6.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
