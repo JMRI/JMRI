@@ -17,8 +17,10 @@
 <!-- Decoder definition based on NMJ B7 board, a special packaged version of the Shine Plus Max Digi             -->
 <!-- Decoder manual used: http://www.train-o-matic.com/downloads/manuals/tOm_Shine_Plus_Maxi_Digi_en_v_0.0.9.pdf -->
 <!-- Version 2 - Added the NMJ B3 and B7 boards that are made by tOm                                             -->
+<!-- Version 3 - Added productID and software version                                                            -->
 
   <version author="lbijlsma@pobox.com" version="2" lastUpdated="20160507"/>
+  <version author="lbijlsma@pobox.com" version="3" lastUpdated="20220730"/>
   <decoder>
     <family name="Shine Plus" mfg="Tehnologistic (train-O-matic)">
       <model model="Shine Plus Midi Digi" lowVersionID="0" highVersionID="255" numOuts="12" numFns="15">
@@ -236,6 +238,12 @@
       <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
+      </variable>
+
+<!-- CV26 - tOm sub version -->
+      <variable CV="26" readOnly="yes" item="Decoder Subversion">
+        <decVal/>
+        <label>Decoder Subversion</label>
       </variable>
 
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
@@ -1996,6 +2004,14 @@
         <label>Out 16 Effect</label>
       </variable>
 
+<!-- CV508,509,510 ProductID -->
+      <variable item="Product Number" CV="508,509,510" readOnly="yes">
+        <splitVal highCV="508"/>
+      </variable>
+
+
+
+
     </variables>
 
     <resets>
@@ -2124,6 +2140,23 @@
       <display item="Programming Key CV15" />
       <separator/>
       <display item="Error CV" />
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text>Decoder firmware</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Decoder Version" label="Version" />
+        <display item="Decoder Subversion" label="" />
+      </row>
+      <display item="Product Number"/>
+
     </column>
   </pane>
 
