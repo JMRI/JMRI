@@ -321,7 +321,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Added support for Lokommander II decoders. Including automatic identification of the right decoder type based on productID.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
