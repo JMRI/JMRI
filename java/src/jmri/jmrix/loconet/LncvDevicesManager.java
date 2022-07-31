@@ -76,16 +76,27 @@ public class LncvDevicesManager extends PropertyChangeSupport
         jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
     }
 
+    /**
+     * Extract module information from LNCV READREPLY/READREPLY2 message,
+     * if not already in the lncvDevices list, try to find a matching decoder definition (by article number)
+     * and add it. Skip if already in the list.
+     *
+     * @param m The received LocoNet message. Note that this same object may
+     *            be presented to multiple users. It should not be modified
+     *            here.
+     */
     public void message(LocoNetMessage m) {
         if (LncvMessageContents.isSupportedLncvMessage(m)) {
-            if (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) {
+            if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||
+                    //Updated 2022 to also accept undocumented Digikeijs DR5088 reply format LNCV_READ_REPLY2
+                    (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY2)) {
                 // it's an LNCV ReadReply message, decode contents:
                 LncvMessageContents contents = new LncvMessageContents(m);
                 int art = contents.getLncvArticleNum();
                 int addr = -1;
                 int cv = contents.getCvNum();
                 int val = contents.getCvValue();
-                log.debug("LNCV read reply: art:{}, address:{} cv:{} val:{}", art, addr, cv, val);
+                log.debug("LncvDevicesManager got read reply: art:{}, address:{} cv:{} val:{}", art, addr, cv, val);
                 if (cv == 0) { // trust last used address
                     addr = val; // if cvNum = 0, this is the LNCV module address
                     log.debug("LNCV read reply: device address {} of LNCV returns {}", addr, val);
@@ -126,7 +137,11 @@ public class LncvDevicesManager extends PropertyChangeSupport
                 } else {
                     log.debug("LNCV device check skipped as value not CV0/module address");
                 }
+            } else {
+                log.debug("LNCV message not a READ REPLY [{}]", m);
             }
+        } else {
+            log.debug("LNCV message not recognized");
         }
     }
 

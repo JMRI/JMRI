@@ -615,6 +615,8 @@ public class AutoActiveTrain implements ThrottleListener {
     protected void allocateAFresh() {
         //Reset initialized flag
         _initialized = false;
+        // set direction
+        setForward(!getRunInReverse());
     }
 
     private void addAllocatedSection(AllocatedSection as) {

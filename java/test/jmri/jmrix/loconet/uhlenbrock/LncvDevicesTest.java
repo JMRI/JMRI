@@ -2,8 +2,8 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class LncvDevicesTest {
     @Test
     public void testCTor() {
         LncvDevices ld = new LncvDevices();
-        Assert.assertNotNull("LncvDeviceManager exists", ld);
+        Assertions.assertNotNull(ld, "LncvDeviceManager exists");
     }
 
     @Test

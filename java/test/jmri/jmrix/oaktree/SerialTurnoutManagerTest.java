@@ -3,10 +3,7 @@ package jmri.jmrix.oaktree;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SerialTurnoutManager class
@@ -26,14 +23,14 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void testCtor() {
         // create and register the manager object
         SerialTurnoutManager atm = new SerialTurnoutManager(memo);
-        Assert.assertNotNull("Oak Tree Turnout Manager creation", atm);
+        Assertions.assertNotNull( atm, "Oak Tree Turnout Manager creation" );
     }
 
     @Test
     public void testConstructor() {
         // create and register the manager object
         SerialTurnoutManager atm = new SerialTurnoutManager(new OakTreeSystemConnectionMemo());
-        Assert.assertNotNull("Oak Tree Turnout Manager creation with memo", atm);
+        Assertions.assertNotNull(atm, "Oak Tree Turnout Manager creation with memo" );
     }
 
     @Test
@@ -41,19 +38,12 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("OT21", "my name");
 
-        log.debug("received turnout value {}", o);
-        Assert.assertTrue(null != (SerialTurnout) o);
+        Assertions.assertNotNull( o );
+        Assertions.assertTrue(o instanceof SerialTurnout );
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("OT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("OT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assertions.assertNotNull( l.getBySystemName("OT21"));
+        Assertions.assertNotNull( l.getByUserName("my name"));
     }
 
     @BeforeEach
@@ -78,6 +68,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

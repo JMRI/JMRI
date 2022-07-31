@@ -65,13 +65,12 @@ public class StoreAndCompare extends AbstractAction {
         JFileChooser chooser = LoadStoreBaseAction.getUserFileChooser();
         File file1 = chooser.getSelectedFile();
         if (file1 == null) {
-            // No file loaded, check for only time beans.
-            // If true, no check needed so return false, else return true.
-            return !haveOnlyTimeBeans();    // Invert the meaning of the haveOnlyTimeBeans return
+            // No file loaded, check for possible additions.
+            return noFileChecks();
         }
 
         // Get file 2 :: This is the default tmp directory with a random xml file name.
-        var tempDir = System.getProperty("java.io.tmpdir");
+        var tempDir = System.getProperty("java.io.tmpdir") + File.separator;
         var fileName = UUID.randomUUID().toString();
         File file2 = new File(tempDir + fileName + ".xml");
 
@@ -95,43 +94,62 @@ public class StoreAndCompare extends AbstractAction {
         return result;
     }
 
+    /**
+     * When a file has not been loaded, there might be items that should be stored.  This check
+     * is not exhaustive.
+     * <p>
+     * If ISCLOCKRUNNING is the only sensor, that is not considered a change.  This also applies
+     * to the IMCURRENTTIME and IMRATEFACTOR memories.
+     * @return true if notification should occur.
+     */
     @SuppressFBWarnings(value = {"RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"},
             justification =
                     "spotbugs did not like the protection provided by the result boolean, but the second test was declared redundant")
-    private static boolean haveOnlyTimeBeans() {
-        var result = true;
+    private static boolean noFileChecks() {
+        var result = false;
 
+        var tMgr = InstanceManager.getDefault(TurnoutManager.class);
         var sMgr = InstanceManager.getDefault(SensorManager.class);
         var mMgr = InstanceManager.getDefault(MemoryManager.class);
 
-        if (sMgr == null || mMgr == null) result = false;
+        // Get the system prefix for internal beans using the memory manager to avoid the default prefix.
+        var systemPrefix = "I";
+        if (mMgr != null) {
+            systemPrefix = mMgr.getSystemPrefix();
+        }
 
-        if (result && sMgr != null) {
-            if (sMgr.getNamedBeanSet().size() != 1) {
-                result = false;
-            } else {
-                if (sMgr.getBySystemName("ISCLOCKRUNNING") == null) {
-                    result = false;
+        if (tMgr == null || sMgr == null || mMgr == null) result = true;
+
+        if (!result && tMgr != null && tMgr.getNamedBeanSet().size() > 0) result = true;
+
+        if (!result && sMgr != null) {
+            var sensorSize = sMgr.getNamedBeanSet().size();
+            if (sensorSize > 1) {
+                result = true;
+            } else if (sensorSize == 1) {
+                if (sMgr.getBySystemName(systemPrefix + "SCLOCKRUNNING") == null) {
+                    result = true;  // One sensor but it is not ISCLOCKRUNNING
                 }
             }
         }
 
-        if (result && mMgr != null) {
-            if (mMgr.getNamedBeanSet().size() != 2) {
-                result = false;
-            } else {
-                if (mMgr.getBySystemName("IMCURRENTTIME") == null) {
-                    result = false;
+        if (!result && mMgr != null) {
+            var memSize = mMgr.getNamedBeanSet().size();
+            if (memSize > 2) {
+                result = true;
+            } else if (memSize != 0) {
+                if (mMgr.getBySystemName(systemPrefix + "MCURRENTTIME") == null) {
+                    result = true;  // Two memories but one is not IMCURRENTTIME
                 }
-                if (mMgr.getBySystemName("IMRATEFACTOR") == null) {
-                    result = false;
+                if (mMgr.getBySystemName(systemPrefix + "MRATEFACTOR") == null) {
+                    result = true;  // Two memories but one is not IMRATEFACTOR
                 }
             }
         }
 
-        if (result) {
+        if (!result) {
             if (InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getList().size() > 0) {
-                result = false;
+                result = true;  // One or more panels have been added.
             }
         }
 

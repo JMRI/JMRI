@@ -17,17 +17,17 @@ import org.junit.Assert;
 public class SectionTest {
 
    @Test
-   public void SysNameConstructorTest(){
+   public void testSectionSysNameConstructorTest(){
       Assert.assertNotNull("Constructor", new DefaultSection("TS1"));
    }
 
    @Test
-   public void TwoNameStringConstructorTest(){
+   public void testSectionTwoNameStringConstructorTest(){
       Assert.assertNotNull("Constructor", new DefaultSection("TS1", "user name"));
    }
 
    @Test
-   public void warnOnBlockAdd() {
+   public void testWarnOnBlockAdd() {
     Section  s = new DefaultSection("TS1");
     Assert.assertEquals(0, s.getBlockList().size());
     s.addBlock(new Block("IB1", "user"));
@@ -35,7 +35,7 @@ public class SectionTest {
    }
 
    @Test
-   public void warnOnBlockAddWithNoUserName() {
+   public void testWarnOnBlockAddWithNoUserName() {
     Section  s = new DefaultSection("TS1");
     Assert.assertEquals(0, s.getBlockList().size());
     s.addBlock(new Block("IB1"));

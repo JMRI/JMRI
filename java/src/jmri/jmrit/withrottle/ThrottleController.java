@@ -586,7 +586,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this, true);
         } else {
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(new DccLocoAddress(number, isLong), this, true);
-            
+
         }
     }
 
@@ -630,7 +630,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     /**
-     * Get the string representation of this Roster ID. Returns empty string 
+     * Get the string representation of this Roster ID. Returns empty string
      * if no address in use.
      * since 4.15.4
      *
@@ -664,7 +664,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
             //  F2 is momentary for horn, unless prefs are set to follow roster entry
             if ((isMomF2) && (receivedFunction==2)) {
-                functionThrottle.setF2(false);
+                functionThrottle.setFunction(2, false);
                 return;
             }
 

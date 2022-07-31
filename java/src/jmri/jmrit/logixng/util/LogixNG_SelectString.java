@@ -260,7 +260,8 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     public void registerListeners() {
         if (!_listenersAreRegistered
                 && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)) {
+                && (_memoryHandle != null)
+                && _listenToMemory) {
             _memoryHandle.getBean().addPropertyChangeListener("value", _listener);
             _listenersAreRegistered = true;
         }
@@ -272,7 +273,8 @@ public class LogixNG_SelectString implements VetoableChangeListener {
     public void unregisterListeners() {
         if (_listenersAreRegistered
                 && (_addressing == NamedBeanAddressing.Memory)
-                && (_memoryHandle != null)) {
+                && (_memoryHandle != null)
+                && _listenToMemory) {
             _memoryHandle.getBean().removePropertyChangeListener("value", _listener);
             _listenersAreRegistered = false;
         }

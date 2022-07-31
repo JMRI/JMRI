@@ -19,14 +19,15 @@ public class CvValueTest {
 
     @Test
     public void testStart() {
-        new CvValue("12", p);
+        CvValue t = new CvValue("12", p);
+        Assertions.assertNotNull(t);
     }
 
     // can we create one and manipulate info?
     @Test
     public void testCvValCreate() {
         CvValue cv = new CvValue("19", p);
-        Assert.assertTrue(cv.number() == "19");
+        Assert.assertEquals("19", cv.number());
         cv.setValue(23);
         Assert.assertTrue(cv.getValue() == 23);
     }

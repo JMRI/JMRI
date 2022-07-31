@@ -49,8 +49,15 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
                     = new ArrayList<>(listenOnBeans.getReferences());
 
             namedBeanReference.sort((o1, o2) -> {
+                if (o1.getType() == null) return o2.getType() == null ? 0 : -1;
+                if (o2.getType() == null) return 1;
+
                 int result = o1.getType().toString().compareTo(o2.getType().toString());
-                if (result == 0) result = o1.getName().compareTo(o2.getName());
+                if (result == 0) {
+                    if (o1.getName() == null) return o2.getName() == null ? 0 : -1;
+                    if (o2.getName() == null) return 1;
+                    result = o1.getName().compareTo(o2.getName());
+                }
                 return result;
             });
             _listenOnBeansTableModel = new ListenOnBeansTableModel(namedBeanReference);
@@ -63,7 +70,8 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
                 new ListenOnBeansTableModel.CellRenderer());
         _listenOnBeansTable.setDefaultEditor(NamedBeanType.class,
                 new ListenOnBeansTableModel.NamedBeanTypeCellEditor());
-        _listenOnBeansTable.setDefaultEditor(String.class,
+        _listenOnBeansTable.setDefaultEditor(
+                ActionListenOnBeans.NamedBeanReference.class,
                 _listenOnBeansTableModel.getNamedBeanCellEditor());
         _listenOnBeansTableModel.setColumnsForComboBoxes(_listenOnBeansTable);
         _listenOnBeansTable.setDefaultRenderer(JButton.class, new ButtonRenderer());

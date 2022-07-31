@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.99.8plus+jake+20220527T1808Z+Rc92cf60506 on Fri May 27 14:09:34 EDT 2022-->
-  <decoderIndex version="17">
+  <!--Written by JMRI version 5.1.1plus+jake+20220710T1206Z+Rfcd65e975b on Sun Jul 10 08:07:26 EDT 2022-->
+  <decoderIndex version="21">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -16890,6 +16890,11 @@
       </family>
       <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_pulsed_smoke.xml">
         <model model="Pulsed Smoke Unit" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1600 mA" numOuts="0" numFns="18" formFactor="G" connector="other" />
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_pulsed_smoke_8415001.xml">
+        <model model="Pulsed Smoker for round boilers" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1000 mA" numOuts="0" numFns="3" formFactor="G" connector="other" productID="8415001">
+          <size length="54.0" width="426" height="30" units="mm" />
+        </model>
       </family>
       <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="5" highVersionID="255" file="Mistral_GOLD_V6.xml">
         <model model="GOLD V6" />

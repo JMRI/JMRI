@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.tools;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.lang.reflect.Field;
 
@@ -26,7 +25,7 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
     Timebase fastClock;
     ConditionalVariable cv;
 
-    private enum ClockEnum {
+    protected enum ClockEnum {
         Clock__start10_20__end_13_10(10,20,13,10),
         Clock__start18_15__end_12_25(18,15,12,25);
 
@@ -40,7 +39,7 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
     }
 
     @Override
-    public Enum[] getEnums() {
+    protected Enum<ClockEnum>[] getEnums() {
         return ClockEnum.values();
     }
 
@@ -56,7 +55,7 @@ public class ImportExpressionClockTest extends ImportExpressionComplexTestBase {
 
     @Override
     @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
-    public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
+    public void setNamedBeanState(Enum<?> e, Setup setup) throws JmriException {
 
         ClockEnum ce = ClockEnum.valueOf(e.name());
 

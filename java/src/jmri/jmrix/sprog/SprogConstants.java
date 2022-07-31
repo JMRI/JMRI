@@ -87,6 +87,9 @@ public final class SprogConstants {
     /* Maimum number of slots */
     public final static int SLOTS_LIMIT = 64;
     
+    /* Number of function buttons on a throttle */
+    public static int MAX_FUNCTIONS = 32; 
+    
     /* various bit masks */
     public final static int F8 = 0x100; /* Function 8 bit */
 

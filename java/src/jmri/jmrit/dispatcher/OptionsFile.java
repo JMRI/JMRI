@@ -59,6 +59,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     /**
      * Read Dispatcher Options from a file in the user's preferences directory.
      * If the file containing Dispatcher Options does not exist, this routine returns quietly.
+     * <p>The lename attribute is deprecated at 5.1.3. The current value will be retained.
+     *
      * @param f   The dispatcher instance.
      * @throws org.jdom2.JDOMException  if dispatcher parameter logically incorrect
      * @throws java.io.IOException    if dispatcher parameter not found
@@ -78,7 +80,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                     if (options.getAttribute("lename") != null) {
                         // there is a layout editor name selected
                         String leName = options.getAttribute("lename").getValue();
+
                         // get list of Layout Editor panels
+                        // Note: While editor is deprecated, retain the value for backward compatibility.
                         Set<LayoutEditor> layoutEditorList = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
                         if (layoutEditorList.isEmpty()) {
                             log.warn("Dispatcher options specify a Layout Editor panel that is not present.");
@@ -221,8 +225,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                     if (options.getAttribute("stoppingspeedname") != null) {
                         dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
                     }
-                    
-                    log.debug("  Options: {}, Detection={}, AutoAllocate={}, AutoTurnouts={}, SetSSLDirectionSensors={}", 
+
+                    log.debug("  Options: {}, Detection={}, AutoAllocate={}, AutoTurnouts={}, SetSSLDirectionSensors={}",
                             (dispatcher.getSignalTypeString()),
                             (dispatcher.getAutoAllocate()?"yes":"no"),
                             (dispatcher.getAutoTurnouts()?"yes":"no"),
@@ -236,6 +240,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
 
     /**
      * Write out Dispatcher options to a file in the user's preferences directory.
+     * <p>The lename attribute is deprecated at 5.1.3.  The current value will be retained.
      * @param f Dispatcher instance.
      * @throws java.io.IOException Thrown if dispatcher option file not found
      */

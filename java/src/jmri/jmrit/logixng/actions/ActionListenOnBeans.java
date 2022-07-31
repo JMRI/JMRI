@@ -264,6 +264,19 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
+    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
+        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
+        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
+            if (namedBeanReference._handle != null) {
+                if (bean.equals(namedBeanReference._handle.getBean())) {
+                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
+                }
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void disposeMe() {
     }
 
@@ -276,7 +289,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         private boolean _listenOnAllProperties = false;
 
         public NamedBeanReference(NamedBeanReference ref) {
-            this(ref._name, ref._type, ref._listenOnAllProperties);
+            this(ref._handle, ref._type, ref._listenOnAllProperties);
         }
 
         public NamedBeanReference(String name, NamedBeanType type, boolean all) {
@@ -284,10 +297,19 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _type = type;
             _listenOnAllProperties = all;
 
-            NamedBean bean = _type.getManager().getNamedBean(name);
-            if (bean != null) {
-                _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
+            if (_type != null) {
+                NamedBean bean = _type.getManager().getNamedBean(name);
+                if (bean != null) {
+                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
+                }
             }
+        }
+
+        public NamedBeanReference(NamedBeanHandle<? extends NamedBean> handle, NamedBeanType type, boolean all) {
+            _name = handle != null ? handle.getName() : null;
+            _type = type;
+            _listenOnAllProperties = all;
+            _handle = handle;
         }
 
         public String getName() {
@@ -297,6 +319,27 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         public void setName(String name) {
             _name = name;
             updateHandle();
+        }
+
+        public void setName(NamedBean bean) {
+            if (bean != null) {
+                _handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(bean.getDisplayName(), bean);
+                _name = _handle.getName();
+            } else {
+                _name = null;
+                _handle = null;
+            }
+        }
+
+        public void setName(NamedBeanHandle<? extends NamedBean> handle) {
+            if (handle != null) {
+                _handle = handle;
+                _name = _handle.getName();
+            } else {
+                _name = null;
+                _handle = null;
+            }
         }
 
         public NamedBeanType getType() {
@@ -309,7 +352,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 type = NamedBeanType.Turnout;
             }
             _type = type;
-            updateHandle();
+            _handle = null;
         }
 
         public NamedBeanHandle<? extends NamedBean> getHandle() {
@@ -317,7 +360,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         }
 
         private void updateHandle() {
-            if (!_name.isEmpty()) {
+            if (_type != null && _name != null && !_name.isEmpty()) {
                 NamedBean bean = _type.getManager().getNamedBean(_name);
                 if (bean != null) {
                     _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
@@ -337,18 +380,12 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         public void setListenOnAllProperties(boolean listenOnAllProperties) {
             _listenOnAllProperties = listenOnAllProperties;
         }
-    }
 
-    /** {@inheritDoc} */
-    @Override
-    public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
-        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (bean.equals(namedBeanReference._handle.getBean())) {
-                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-                }
-            }
+        // This method is used by ListenOnBeansTableModel
+        @Override
+        public String toString() {
+            if (_handle != null) return _handle.getName();
+            else return "";
         }
     }
 

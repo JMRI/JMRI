@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 public class SprogTrafficControllerTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
        SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
        SprogTrafficController tc = new SprogTrafficController(m);
        Assert.assertNotNull(tc);

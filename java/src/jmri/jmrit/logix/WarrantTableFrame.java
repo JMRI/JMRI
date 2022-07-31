@@ -51,15 +51,15 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouseListener {
 
-    static final String ramp = Bundle.getMessage("Halt");
-    static final String halt = Bundle.getMessage("Stop");
-    static final String stop = Bundle.getMessage("EStop");
+    static final String ramp = Bundle.getMessage("SmoothHalt");
+    static final String stop = Bundle.getMessage("Stop");
+    static final String estop = Bundle.getMessage("EStop");
     static final String resume = Bundle.getMessage("Resume");
     static final String speedup = Bundle.getMessage("SpeedUp");
     static final String abort = Bundle.getMessage("Abort");
     static final String retryfwd = Bundle.getMessage("MoveToNext");
     static final String retrybkwd = Bundle.getMessage("MoveToPrevious");    // removed from drop down
-    static final String[] controls = {" ", ramp, resume, halt, speedup, retryfwd, stop, abort,
+    static final String[] controls = {" ", ramp, resume, stop, speedup, retryfwd, estop, abort,
                             (LoggerFactory.getLogger(WarrantTableFrame.class).isDebugEnabled()?"Debug":"")};
 
     public static int _maxHistorySize = 40;
@@ -411,6 +411,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
         }
     }
 
+    long lastClicktime; // keep double clicks from showing dialogs
     /**
      * Return error message if warrant cannot be run.
      *
@@ -419,7 +420,28 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
      * @return null if warrant is started
      */
     public String runTrain(Warrant w, int mode) {
-        String msg = _model.checkAddressInUse(w);
+        long time = System.currentTimeMillis();
+        if (time - lastClicktime < 1000) {
+            return null;
+        }
+        lastClicktime = time;
+
+        String msg = null;
+        WarrantFrame frame = WarrantTableAction.getDefault().getOpenFrame();
+        if (frame != null) {
+            Warrant warrant = frame.getWarrant();
+            if (warrant != null) {
+                if (w.equals(warrant) && frame.isRunning()) {
+                    msg = Bundle.getMessage("CannotRun", w.getDisplayName(),
+                            Bundle.getMessage("TrainRunning", warrant.getTrainName()));
+                }
+            }
+        }
+
+        if (msg == null) {
+            msg = _model.checkAddressInUse(w);
+        }
+
         if (msg == null) {
             msg = w.checkforTrackers();
         }

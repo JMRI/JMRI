@@ -1,10 +1,7 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.locobufferusb.Bundle;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,45 +15,45 @@ class LncvDeviceTest {
     @Test
     public void testCTor() {
         LncvDevice ld1 = new LncvDevice(5000, 1, 0, 1, "Test", "R_Test", 1);
-        Assert.assertNotNull("LncvDeviceManager exists", ld1);
+        assertNotNull(ld1, "LncvDeviceManager exists");
     }
 
     @Test
     void testGetProductID() {
-        Assert.assertEquals("get productID", 1111, lncvd.getProductID());
+        assertEquals(1111, lncvd.getProductID(), "get productID");
     }
 
     @Test
     void testGetDestAddr() {
-        Assert.assertEquals("get module address", 8, lncvd.getDestAddr());
+        assertEquals(8, lncvd.getDestAddr(), "get module address");
     }
 
     @Test
     void testSetDestAddr() {
         lncvd.setDestAddr(14);
-        Assert.assertEquals("set module address", 14, lncvd.getDestAddr());
+        assertEquals(14, lncvd.getDestAddr(), "set module address");
     }
 
     @Test
     void testGetCvNum() {
-        Assert.assertEquals("get last cv num", 4, lncvd.getCvNum());
+        assertEquals(4, lncvd.getCvNum(), "get last cv num");
     }
 
     @Test
     void testSetCvNum() {
         lncvd.setCvNum(68);
-        Assert.assertEquals("set last cv num", 68, lncvd.getCvNum());
+        assertEquals(68, lncvd.getCvNum(), "set last cv num");
     }
 
     @Test
     void testGetCvValue() {
-        Assert.assertEquals("get cv value read", 16, lncvd.getCvValue());
+        assertEquals(16, lncvd.getCvValue(), "get cv value read");
     }
 
     @Test
     void testSetCvValue() {
         lncvd.setCvValue(33);
-        Assert.assertEquals("get module address", 33, lncvd.getCvValue());
+        assertEquals(33, lncvd.getCvValue(), "get module address");
     }
 
     @BeforeEach

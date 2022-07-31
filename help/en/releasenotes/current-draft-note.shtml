@@ -21,7 +21,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
+                <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -106,7 +107,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Fixed a problem adding sensors with names like NS50:1
+                </li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -114,7 +116,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+        <h4>OpenLCB / LCC</h4>
             <ul>
                 <li></li>
             </ul>
@@ -136,7 +138,9 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
+                <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
+                <li>Added F29+ support to SPROG Command Station mode.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -166,7 +170,8 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li></li>
+          <li>An include file enum-WeekdaysSun.xml that can be used to create a drop down of Weekdays was added to
+            xml/decoders/parts/</li>
         </ul>
 
         <h4>Arnold</h4>
@@ -196,7 +201,10 @@
 
         <h4>Digikeijs (Digirails)</h4>
             <ul>
-                <li></li>
+                <li>New decoder definition for DR5088RC with LNCV programming capabilities.<br>
+                  Thanks to Dennis Cherry for testing on actual hardware.<br>
+                Awaiting response from Digikeijs to complete the settings stored in LNCV4.</li>
+              <li>The Stationary family of decoders was renamed to Feedback (Inputs).</li>
             </ul>
 
         <h4>Digitrax</h4>
@@ -229,7 +237,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
+        <h4>LDH</h4>
             <ul>
                 <li></li>
             </ul>
@@ -238,11 +246,6 @@
             <ul>
                 <li></li>
             </ul>
-
-        <h4>Massoth</h4>
-             <ul>
-                <li>New decoder definition for "Pulsed Smoker for round boilers" (product nr 8415001</li>
-             </ul>
 
         <h4>MD Electronics</h4>
              <ul>
@@ -331,7 +334,12 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added a decoder definition to configure the 63810 Mobile Station Adapter.<br>
+                Use the LNCV tool to program.</li>
+                <li>Added decoder definitions for Occupancy Feedback modules #63320/40 (2-rail) and #63330/50
+                (3-rail).<br>
+                Use the LNCV Tool for programming.</li>
+                <li>Added a decoder definition to configure the 63450 LocoNet Display module, also with LNCV</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -362,7 +370,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>To simplify writing a decoder definition, variable declarations for decimal and hex values without a
+              "mask"with max &gt; 255  now will get an appropriately sized mask assigned so that they store any
+              valid entry.<br>
+              Variables with a max &lt;= 255 or with an explicit mask are not affected.
+            </li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -374,8 +386,11 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Separated reverse at end delays from reset delays</li>
-             <li>Allow a next traininfo to be run at successful termination using the same loco info</li>
+             <li>Support transits and sections that use multiple panels connected by edge
+             connectors.</li>
+             <li>The "Use connectivity from Layout Editor panels" option in Dispatcher Options
+             no longer uses a specified panel.  All Layout Editor panels are used for layout
+             connectivity.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -410,7 +425,24 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action <i>Simulate turnout feedback</i> has been added.
+          It's useful to simulate feedback based turnout actions when a
+          simulator connection is used, for example the <i>LocoNet simulator</i>.</li>
+          <li>The expression <i>Connection name</i> has been added.
+          It's useful together with <i>Simulate turnout feedback</i> so
+          that simulation only happens for simulated connections.</li>
+          <li>The action <i>For each</i> has been added. It's useful when
+          you want to loop thru all items in a list, for example all the
+          sensors in the sensor manager.</li>
+          <li>The formula function <i>new</i> has been added. It allows
+          you to create a new instance of a class.</li>
+          <li>Several formula constants have been added. See the modules
+          <i>Java</i> and <i>Layout</i>. Examples are constants like
+          <i>sensors</i> and <i>turnouts</i> that gives you direct access
+          to the managers. And <i>InstanceManager</i> that gives you direct
+          access to the instance manager. The constants <i>null</i> and
+          <i>None</i> has the null value in Java, the None value in Jython.</li>
+          <li>The action <i>Listen On Beans - Table</i> is improved.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -450,8 +482,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>A <strong>Shutdown</strong> preference has been created to support the
-            StoreAndCompare process that detects changes to PanelPro tables and panels.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -475,7 +506,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed a spurious error message when creating some internal items.</li>
+            <li></li>
         </ul>
 
     <h3>Scripting</h3>
@@ -587,7 +618,15 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Minor changes to resolve Spotbug OS_OPEN_STREAM_EXCEPTION_PATH </li>
-            <li>Minor changes to resolve Spotbug ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD </li>
+            <li><i>jmri.jmrix.SystemConnectionMemoManager</i> has new utility methods to find a connection by its connection name.<br>
+            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("L2", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("LocoNet", LocoNetSystemConnectionMemo.class);</code><br>
+            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("M", MqttSystemConnectionMemo.class);</code>
+            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("MQTT", MqttSystemConnectionMemo.class);</code>
+            </li>
+            <li>The PlantUML library has been updated to the current version.  This is used for
+                developer documentation.
+            </li>
+            <li></li>
         </ul>
 

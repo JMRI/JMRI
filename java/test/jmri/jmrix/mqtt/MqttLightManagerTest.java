@@ -15,7 +15,7 @@ import org.junit.jupiter.api.*;
 public class MqttLightManagerTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         MqttSystemConnectionMemo memo = new MqttSystemConnectionMemo();
         Assert.assertNotNull("constructor", new MqttLightManager(memo));
     }
@@ -23,7 +23,7 @@ public class MqttLightManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @AfterEach

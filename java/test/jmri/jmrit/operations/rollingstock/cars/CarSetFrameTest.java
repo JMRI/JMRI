@@ -2,6 +2,16 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.MessageFormat;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -12,14 +22,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import org.netbeans.jemmy.operators.*;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Tests for the Operations CarSetFrame class
@@ -147,7 +149,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         jfo.getQueueTool().waitEmpty();
 
         JUnitUtil.waitFor(() -> {return !t1.isAlive();});
-
+        JemmyUtil.waitFor(f); // wait for frame to become active
         jfo.requestClose();
         jfo.waitClosed();
 
@@ -208,6 +210,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         JUnitUtil.waitFor(() -> {return !t3.isAlive();});
 
         jfo.getQueueTool().waitEmpty();
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
 
@@ -262,7 +265,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         jfo.getQueueTool().waitEmpty();
-        
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
@@ -317,7 +320,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         jfo.getQueueTool().waitEmpty();
-        
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
@@ -370,7 +373,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         jfo.getQueueTool().waitEmpty();
-
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
 
@@ -424,7 +427,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         jfo.getQueueTool().waitEmpty();
-        
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
         
@@ -479,7 +482,7 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         jfo.getQueueTool().waitEmpty();
-
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertNull("car has destination removed", c3.getDestination());
         Assert.assertNull("car has destination track removed", c3.getDestinationTrack());
 
@@ -536,10 +539,10 @@ public class CarSetFrameTest extends OperationsTestCase {
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});
         jfo.getQueueTool().waitEmpty();
-        
+        JemmyUtil.waitFor(f); // wait for frame to become active
         Assert.assertEquals("car has still has destination", westford, c3.getDestination());
         Assert.assertNull("Car's route location is removed", c3.getRouteLocation());
-        
+        JemmyUtil.waitFor(f); // wait for frame to become active
         jfo.requestClose();
         jfo.waitClosed();
         JUnitOperationsUtil.checkOperationsShutDownTask();
