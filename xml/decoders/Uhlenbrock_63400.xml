@@ -76,12 +76,12 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Kies instelling voor alle uitgangen (vanaf startadres):</tooltip>
             </variable>
 
-            <variable CV="6340.1" mask="VVVVVVVVVVVV" item="Start Address" default="1">
-              <decVal min="1" max="2028"/>
+            <variable CV="6340.1" item="Start Address" mask="XXXVVVVX" default="1">
+              <compDecVal min="1" max="2048" offset="0" factor="1"/>
               <label xml:lang="de">Anfangsadresse:</label>
               <label xml:lang="nl">Beginadres:</label>
               <label>Start Address:</label>
-              <tooltip>Start Address for Module Setting (1-2028)</tooltip>
+              <tooltip>Start Address for Module Setting (1-2048)</tooltip>
             </variable>
 
             <variable CV="6340.2" item="Blink Rate 1.1" default="10" >

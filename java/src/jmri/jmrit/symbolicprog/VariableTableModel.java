@@ -276,7 +276,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             mask = e.getAttribute("mask").getValue();
         } else {
             mask = "VVVVVVVV"; // default mask is 8 bits
-            // for DecVariableValue replaced by larger mask if maxVal>256 in #processDecVal()
+            // for some VariableValue types this is replaced in #processDecVal() by larger mask if maxVal>256
         }
 
         boolean readOnly = e.getAttribute("readOnly") != null && e.getAttribute("readOnly").getValue().equals("yes");
@@ -322,7 +322,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             v = processDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ((child = e.getChild("compDecVal")) != null) {
-            v = processCalculatedDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
+            v = processCompDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ((child = e.getChild("hexVal")) != null) {
             v = processHexVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
@@ -514,7 +514,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v;
     }
 
-    protected VariableValue processCalculatedDecVal(Element child, String name, String comment,
+    protected VariableValue processCompDecVal(Element child, String name, String comment,
         boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV,
         String mask, String item) throws NumberFormatException {
         VariableValue v;

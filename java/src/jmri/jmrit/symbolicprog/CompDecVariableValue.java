@@ -30,7 +30,7 @@ public class CompDecVariableValue extends DecVariableValue {
     int _offset;
 
     /**
-     * Get the current value (part) from the CV, using the mask _on digits_ as needed.
+     * Get the current value (part) from the CV, using the mask _on decimal digits_ as needed.
      *
      * @param Cv         the CV of interest
      * @param maskString the (XXXVVVXX style) mask for extracting the Variable
@@ -60,12 +60,12 @@ public class CompDecVariableValue extends DecVariableValue {
         // unpack String mask
         int decLength = maskDigits(maskString);
         int decOffset = offsetVal(maskString);
-        double part = (Cv % Math.pow(10, decOffset + decLength + 1)) / Math.pow(10, decOffset);
-        return (int) (part * _factor) + _offset;
+        int part = (int) ((Cv % Math.pow(10, decOffset + decLength)) / Math.pow(10, decOffset));
+        return (part * _factor) + _offset;
     }
 
     /**
-     * Set a value into a CV, using the mask as needed.
+     * Set a value into a CV, using the mask _on decimal digits_ as needed.
      *
      * @param oldCv      Value of the CV before this update is applied
      * @param newVal     Value for this variable (e.g. not the CV value)
@@ -102,14 +102,14 @@ public class CompDecVariableValue extends DecVariableValue {
         // unpack String mask
         int decLength = maskDigits(maskString);
         int decOffset = offsetVal(maskString);
-        double keepLeft = (oldCv / Math.pow(10, decOffset + decLength)) * Math.pow(10, decOffset + decLength);
-        double keepRight = oldCv % Math.pow(10, decOffset);
+        double keepLeftDiv = (oldCv / Math.pow(10, decOffset + decLength));
+        int keepLeft = (int) (keepLeftDiv * Math.pow(10, decOffset + decLength));
+        int keepRight = (int) (oldCv % Math.pow(10, decOffset));
         // handle offset and factor
         int transfer = (newVal - _offset) / _factor;
         // shift left
-        double insert = transfer * Math.pow(10, decOffset);
-        double retVal = keepLeft + insert + keepRight;
-        return (int) retVal;
+        int insert = (int) (transfer * Math.pow(10, decOffset));
+        return keepLeft + insert + keepRight;
     }
 
     /**
@@ -121,6 +121,7 @@ public class CompDecVariableValue extends DecVariableValue {
         int length = 0;
         if (maskString.contains("V")) {
             length = maskString.lastIndexOf("V") - maskString.indexOf("V") + 1;
+            //log.debug("MaskDigits = {}", length);
         } else {
             log.error("Variable={};cvName={};cvMask={} is an invalid bitmask", label(), getCvName(), maskString);
         }
