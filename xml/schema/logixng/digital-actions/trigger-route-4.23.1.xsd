@@ -59,6 +59,7 @@
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
                     <xs:enumeration value="TriggerRoute"/>
+                    <xs:enumeration value="TriggerReverseRoute"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

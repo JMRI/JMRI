@@ -4,16 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action triggers a route.
@@ -71,16 +66,21 @@ public class TriggerRoute extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
         Route route = _selectNamedBean.evaluateNamedBean(getConditionalNG());
-
         if (route == null) return;
 
         Operation oper = _selectEnum.evaluateEnum(getConditionalNG());
+        if (oper == null) return;
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
-            if (oper == Operation.TriggerRoute) {
-                route.setRoute();
-            } else {
-                throw new IllegalArgumentException("invalid oper: " + oper.name());
+            switch (oper) {
+                case TriggerRoute:
+                    route.setRoute();
+                    break;
+                case TriggerReverseRoute:
+                    route.setReverseRoute();
+                    break;
+                default:
+                    throw new IllegalArgumentException("invalid oper: " + oper.name());
             }
         });
     }
@@ -135,7 +135,8 @@ public class TriggerRoute extends AbstractDigitalAction
 
 
     public enum Operation {
-        TriggerRoute(Bundle.getMessage("TriggerRoute_TriggerRoute"));
+        TriggerRoute(Bundle.getMessage("TriggerRoute_TriggerRoute")),
+        TriggerReverseRoute(Bundle.getMessage("TriggerRoute_TriggerReverseRoute"));
 
         private final String _text;
 

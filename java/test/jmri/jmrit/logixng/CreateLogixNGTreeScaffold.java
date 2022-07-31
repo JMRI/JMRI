@@ -2727,6 +2727,12 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(triggerRoute);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        triggerRoute = new TriggerRoute(digitalActionManager.getAutoSystemName(), null);
+        triggerRoute.setComment("A comment");
+        triggerRoute.getSelectEnum().setEnum(TriggerRoute.Operation.TriggerReverseRoute);
+        maleSocket = digitalActionManager.registerAction(triggerRoute);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);

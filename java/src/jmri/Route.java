@@ -383,6 +383,15 @@ public interface Route extends NamedBean {
     public void setRoute();
 
     /**
+     * Set the reverse Route.
+     * <p>
+     * Sets all Route Turnouts to the reverse directed state in the Route definition.
+     */
+    public default void setReverseRoute() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    /**
      * Activate the Route.
      * <p>
      * This starts route processing by connecting to inputs, etc. A Route must
