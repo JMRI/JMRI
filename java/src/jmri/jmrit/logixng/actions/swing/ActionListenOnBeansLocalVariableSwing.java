@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -34,48 +36,73 @@ public class ActionListenOnBeansLocalVariableSwing extends AbstractDigitalAction
 
         ActionListenOnBeansLocalVariable action = (ActionListenOnBeansLocalVariable)object;
 
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        JPanel namedBeanTypePanel = new JPanel();
-        namedBeanTypePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansLocalVariableSwing_NamedBeanType")));
+        JLabel namedBeanTypeLabel = new JLabel(Bundle.getMessage("ActionListenOnBeansLocalVariableSwing_NamedBeanType"));
         _namedBeanTypeComboBox = new JComboBox<>();
         for (NamedBeanType item : NamedBeanType.values()) {
             _namedBeanTypeComboBox.addItem(item);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_namedBeanTypeComboBox);
-        namedBeanTypePanel.add(_namedBeanTypeComboBox);
-        panel.add(namedBeanTypePanel);
 
-        JPanel listenOnAllPropertiesPanel = new JPanel();
-        listenOnAllPropertiesPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansLocalVariableSwing_ListenOnAllPropertiesCheckBox")));
+        JLabel listenOnAllPropertiesLabel = new JLabel(Bundle.getMessage("ActionListenOnBeansLocalVariableSwing_ListenOnAllPropertiesCheckBox"));
         _listenOnAllPropertiesCheckBox = new JCheckBox();
-        listenOnAllPropertiesPanel.add(_listenOnAllPropertiesCheckBox);
-        panel.add(listenOnAllPropertiesPanel);
 
-        JPanel localVariableBeanToListenOnPanel = new JPanel();
-        localVariableBeanToListenOnPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansLocalVariableSwing_LocalVariableBeanToListenOn")));
+        JLabel localVariableBeanToListenOnLabel = new JLabel(Bundle.getMessage("ActionListenOnBeansLocalVariableSwing_LocalVariableBeanToListenOn"));
         _localVariableBeanToListenOn = new JTextField(20);
-        localVariableBeanToListenOnPanel.add(_localVariableBeanToListenOn);
-        panel.add(localVariableBeanToListenOnPanel);
 
-        JPanel localVariableNamedBeanPanel = new JPanel();
-        localVariableNamedBeanPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNamedBean")));
+        JLabel localVariableNamedBeanLabel = new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNamedBean"));
         _localVariableNamedBean = new JTextField(20);
-        localVariableNamedBeanPanel.add(_localVariableNamedBean);
-        panel.add(localVariableNamedBeanPanel);
 
-        JPanel localVariableNamedEventPanel = new JPanel();
-        localVariableNamedEventPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableEvent")));
+        JLabel localVariableEventLabel = new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableEvent"));
         _localVariableEvent = new JTextField(20);
-        localVariableNamedEventPanel.add(_localVariableEvent);
-        panel.add(localVariableNamedEventPanel);
 
-        JPanel localVariableNewValuePanel = new JPanel();
-        localVariableNewValuePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNewValue")));
+        JLabel localVariableNewValueLabel = new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNewValue"));
         _localVariableNewValue = new JTextField(20);
-        localVariableNewValuePanel.add(_localVariableNewValue);
-        panel.add(localVariableNewValuePanel);
+
+        panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 1;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
+        panel.add(namedBeanTypeLabel, constraint);
+        namedBeanTypeLabel.setLabelFor(_namedBeanTypeComboBox);
+        constraint.gridy = 1;
+        panel.add(listenOnAllPropertiesLabel, constraint);
+        listenOnAllPropertiesLabel.setLabelFor(_listenOnAllPropertiesCheckBox);
+        constraint.gridy = 2;
+        panel.add(localVariableBeanToListenOnLabel, constraint);
+        localVariableBeanToListenOnLabel.setLabelFor(_localVariableBeanToListenOn);
+        constraint.gridy = 3;
+        panel.add(localVariableNamedBeanLabel, constraint);
+        localVariableNamedBeanLabel.setLabelFor(_localVariableNamedBean);
+        constraint.gridy = 4;
+        panel.add(localVariableEventLabel, constraint);
+        localVariableEventLabel.setLabelFor(_localVariableEvent);
+        constraint.gridy = 5;
+        panel.add(localVariableNewValueLabel, constraint);
+        localVariableNewValueLabel.setLabelFor(_localVariableNewValue);
+
+        // Add some space
+        constraint.gridx = 1;
+        constraint.gridy = 0;
+        panel.add(new JLabel(" "), constraint);
+
+        constraint.gridx = 2;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.WEST;
+        panel.add(_namedBeanTypeComboBox, constraint);
+        constraint.gridy = 1;
+        panel.add(_listenOnAllPropertiesCheckBox, constraint);
+        constraint.gridy = 2;
+        panel.add(_localVariableBeanToListenOn, constraint);
+        constraint.gridy = 3;
+        panel.add(_localVariableNamedBean, constraint);
+        constraint.gridy = 4;
+        panel.add(_localVariableEvent, constraint);
+        constraint.gridy = 5;
+        panel.add(_localVariableNewValue, constraint);
 
         if (action != null) {
             _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
