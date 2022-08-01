@@ -339,6 +339,7 @@
                 <li>Added decoder definitions for Occupancy Feedback modules #63320/40 (2-rail) and #63330/50
                 (3-rail).<br>
                 Use the LNCV Tool for programming.</li>
+                <li>Added Funk-Master LN+DCC 66410 definition. Renamed  model 66400 FunkMaster to Funk-Master LN.</li>
                 <li>Added a decoder definition to configure the 63450 LocoNet Display module, also with LNCV</li>
             </ul>
 

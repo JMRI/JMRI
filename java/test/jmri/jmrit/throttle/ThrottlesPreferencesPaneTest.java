@@ -1,7 +1,13 @@
 package jmri.jmrit.throttle;
 
-import org.junit.Assert;
+import javax.swing.JFrame;
+
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of ThrottlesPreferencesPane
@@ -11,20 +17,31 @@ import org.junit.jupiter.api.*;
 public class ThrottlesPreferencesPaneTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
         ThrottlesPreferencesPane panel = new ThrottlesPreferencesPane();
-        Assert.assertNotNull("exists", panel);
+        Assertions.assertNotNull(panel, "exists");
+        JFrame f = new JFrame(panel.getPreferencesItemText());
+        f.add(panel);
+        f.pack();
+        ThreadingUtil.runOnGUI(() -> {
+            f.setVisible(true);
+        });
+        JFrameOperator jfo = new JFrameOperator(panel.getPreferencesItemText());
+        jfo.requestClose();
+        jfo.waitClosed();
+
     }
 
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
     }
 
     @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
     }
 }
