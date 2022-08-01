@@ -168,10 +168,12 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
             }
 
             if (namedBean != null) {
-                _namedBeansEntries.put(namedBean, _namedBeanType.getPropertyName());
-                addPropertyListener(namedBean, _namedBeanType.getPropertyName());
+                if (!_namedBeansEntries.containsKey(namedBean)) {
+                    _namedBeansEntries.put(namedBean, _namedBeanType.getPropertyName());
+                    addPropertyListener(namedBean, _namedBeanType.getPropertyName());
+                }
             } else {
-                log.warn("The named bean \"{}\" cannot be found in the manager for {}", namedBean, _namedBeanType.toString());
+                log.warn("The named bean \"{}\" cannot be found in the manager for {}", value, _namedBeanType.toString());
             }
         }
     }
