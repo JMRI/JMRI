@@ -444,6 +444,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      */
     private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString()}));
             return setCarDestinationTwoTrains(car, Track.STAGING);
