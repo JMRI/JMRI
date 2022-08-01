@@ -13,26 +13,14 @@
   <revhistory>
     <revision>
         <revnumber>1</revnumber>
-        <date>2010-01-01</date>
+        <date>2022-08-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
-    <revision>
-        <revnumber>1.1</revnumber>
-        <date>2011-06-24</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Added mapping information</revremark>
-     </revision>
-     <revision>
-        <revnumber>2.0</revnumber>
-        <date>2015-04-26</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Fixing general items after I got a 1949 rule book</revremark>
-     </revision>
   </revhistory>
 
   <aspecttable>NW-1949</aspecttable>
-  <name>Double position light high absolute signal</name>
+  <name>Double position light high permissive signal</name>
   <reference>As described in the Norfolk and Western Railway Company March 1949, Rules and Regulations for the Government of the Operating Department: Diagrams of Signal Aspects </reference>
   <description>Appearances for a two high position light signal</description>
   
@@ -43,7 +31,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 101</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high-pbs/rule-281.gif</imagelink>
     </appearance>
     
     <appearance>
@@ -51,7 +39,7 @@
       <show>yellow</show>
       <show>green</show>
       <reference>Page 102</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high-pbs/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -59,15 +47,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 103</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-282A.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Medium Clear</aspectname>
-      <show>red</show>
-      <show>green</show>
-      <reference>Page 104</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-283.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high-pbs/rule-282A.gif</imagelink>
     </appearance>
 
 	<appearance>
@@ -75,7 +55,7 @@
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 105</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high-pbs/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -83,32 +63,24 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Page 107</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high-pbs/rule-290.gif</imagelink>
     </appearance>
     
     <appearance>
-      <aspectname>Medium Approach</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
-      <show>yellow</show>
+      <show>dark</show>
       <reference>Page 55</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-286.gif</imagelink>
-    </appearance>
-    
-    <appearance>
-      <aspectname>Stop and Stay</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <reference>Page 55</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1949/PL-2-high-pbs/rule-291.gif</imagelink>
     </appearance>
   </appearances>
 
   <specificappearances>
     <danger>
-      <aspect>Stop and Stay</aspect>
+      <aspect>Stop and Proceed</aspect>
     </danger>
     <held>
-      <aspect>Stop and Stay</aspect>
+      <aspect>Stop and Proceed</aspect>
     </held>
   </specificappearances>
 
@@ -116,7 +88,6 @@
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -128,7 +99,6 @@
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -139,25 +109,21 @@
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
     </aspectMapping>
-
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
-      <ourAspect>Approach Restricting</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Stay</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
