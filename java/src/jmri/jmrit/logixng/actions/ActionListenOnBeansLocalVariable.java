@@ -68,7 +68,9 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
      * @param namedBeanType the type of the named beans
      */
     public void setNamedBeanType(@Nonnull NamedBeanType namedBeanType) {
-        if (namedBeanType == null) throw new RuntimeException("Daniel");
+        if (namedBeanType == null) {
+            throw new IllegalArgumentException("namedBeanType must not be null");
+        }
         _namedBeanType = namedBeanType;
     }
 
