@@ -556,6 +556,13 @@
                 <li></li>
             </ul>
 
+   <h3>Speedometer</h3>
+        <a id="Speedometer" name="Speedometer"></a>
+        <ul>
+            <li>Expanded user documentation</li>
+        </ul>
+
+
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
