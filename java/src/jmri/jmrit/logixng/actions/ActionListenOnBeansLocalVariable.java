@@ -23,7 +23,7 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
     private String _localVariableNamedBean;
     private String _localVariableEvent;
     private String _localVariableNewValue;
-    private final List<Map.Entry<NamedBean, String>> _namedBeansEntries = new ArrayList<>();
+    private final Map<NamedBean, String> _namedBeansEntries = new HashMap<>();
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
     private String _executeSocketSystemName;
     private final FemaleDigitalActionSocket _executeSocket;
@@ -51,11 +51,6 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
         copy.setLocalVariableNamedBean(_localVariableNamedBean);
         copy.setLocalVariableEvent(_localVariableEvent);
         copy.setLocalVariableNewValue(_localVariableNewValue);
-
-        for (var entry : _namedBeansEntries) {
-            copy._namedBeansEntries.add(
-                    new HashMap.SimpleEntry<>(entry.getKey(), entry.getValue()));
-        }
 
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
@@ -173,11 +168,8 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
             }
 
             if (namedBean != null) {
-                Map.Entry<NamedBean, String> namedBeanEntry =
-                        new HashMap.SimpleEntry<>(namedBean, _namedBeanType.getPropertyName());
-
-                _namedBeansEntries.add(namedBeanEntry);
-                addPropertyListener(namedBeanEntry);
+                _namedBeansEntries.put(namedBean, _namedBeanType.getPropertyName());
+                addPropertyListener(namedBean, _namedBeanType.getPropertyName());
             } else {
                 log.warn("The named bean \"{}\" cannot be found in the manager for {}", namedBean, _namedBeanType.toString());
             }
@@ -264,12 +256,12 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
         }
     }
 
-    private void addPropertyListener(Map.Entry<NamedBean, String> namedBeanEntry) {
+    private void addPropertyListener(NamedBean namedBean, String property) {
         if (!_listenOnAllProperties
-                && (namedBeanEntry.getValue() != null)) {
-            namedBeanEntry.getKey().addPropertyChangeListener(namedBeanEntry.getValue(), this);
+                && (property != null)) {
+            namedBean.addPropertyChangeListener(property, this);
         } else {
-            namedBeanEntry.getKey().addPropertyChangeListener(this);
+            namedBean.addPropertyChangeListener(this);
         }
     }
 
@@ -278,8 +270,8 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         if (_listenersAreRegistered) return;
 
-        for (Map.Entry<NamedBean, String> namedBeanEntry : _namedBeansEntries) {
-            addPropertyListener(namedBeanEntry);
+        for (Map.Entry<NamedBean, String> namedBeanEntry : _namedBeansEntries.entrySet()) {
+            addPropertyListener(namedBeanEntry.getKey(), namedBeanEntry.getValue());
         }
         _listenersAreRegistered = true;
     }
@@ -289,7 +281,7 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (!_listenersAreRegistered) return;
 
-        for (Map.Entry<NamedBean, String> namedBeanEntry : _namedBeansEntries) {
+        for (Map.Entry<NamedBean, String> namedBeanEntry : _namedBeansEntries.entrySet()) {
             if (!_listenOnAllProperties
                     && (namedBeanEntry.getValue() != null)) {
                 namedBeanEntry.getKey().removePropertyChangeListener(namedBeanEntry.getValue(), this);
@@ -323,16 +315,6 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-/*
-        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
-        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (bean.equals(namedBeanReference._handle.getBean())) {
-                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-                }
-            }
-        }
-*/
     }
 
 
