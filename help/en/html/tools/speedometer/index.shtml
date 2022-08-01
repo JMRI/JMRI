@@ -121,10 +121,22 @@
       
       <h2 id="single">Using a single block occupancy sensor</h2>
 
-      <p>You can also set up the Speedometer to measure speed across a single block. In this case, the same 
-      block occupancy sensor name should be entered for both the first sensor and the second sensor. The first sensor 
-      should be set to <strong>"entry"</strong> and the second sensor should be set to <strong>"exit"</strong>.  
-      <strong>"Distance 1"</strong> should be set to the length of the block.</p>
+      <p>You can also set up the Speedometer to measure speed across a single block or around a loop using only a single
+      block occupancy sensor.  In both cases, the same block occupancy sensor name should be entered for both the first 
+      sensor and the second sensor.</p> 
+      
+      <ul>
+      <li><em>Measuring across a single block: </em> The first sensor should be set to <strong>"entry"</strong> and the 
+      second sensor should be set to <strong>"exit"</strong>. <strong>"Distance 1"</strong> should be set to the length
+      of the block plus the length of the train.  The Speedometer is measuring time from when the train first occupies
+      the block until it completely exits it.  Note that if your sensor has different delays for going active and inactive,
+      this approach may give incorrect results.</li>
+      <li><em>Measuring around a loop with part of it being a monitored block: </em> Both sensors are set to 
+      <strong>"entry"</strong> as the Speedometer is measuring from entry to entry on that single block sensor, 
+      start of lap to end of lap. Think of the start of the block as a start/finish line. By using "entry" for both start
+      and end, you don't have to worry about whether the block detector has equal on and off delays. <strong>"Distance 1"
+      </strong> should be set to the full length of the loop.  </li>
+      </ul>
 
 
       <!-- ************************* ****************************** **************************** ************* -->
