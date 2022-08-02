@@ -695,27 +695,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Get the number of digits (tens) of the VVV part of the decimal mask
-     * @param maskString The (XXXVVVXX style ; NOT small int) mask for this variable in character form
-     * @return number of decimal places used in VVV part of mask
-     */
-    protected int maskDigits(String maskString) {
-        int length = 0;
-        if (maskString.contains("V")) {
-            length = maskString.lastIndexOf("V") - maskString.indexOf("V") + 1;
-        } else {
-            log.error("Variable={};cvName={};cvMask={} is an invalid bitmask", label(), getCvName(), maskString);
-        }
-        return length;
-    }
-
-    /**
      * Extract the current value from the CV, using the mask as needed.
      *
      * @param Cv         the full CV value of interest.
      * @param maskString the (XXXVVVXX style or small int) mask for extracting the Variable
      *                   value from this CV
-     * @param maxVal     the maximum possible value for this Variable position in the CV, i.e. 9 in a single digit
+     * @param maxVal     the maximum possible value for this Variable position in the CV.
+     *                   Note it's 10 (0-9) in a single digit using a radix mask.
      * @return the current value of the Variable. Optional factor and offset not yet applied.
      */
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
@@ -751,53 +737,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             log.trace("Set sees oldCv {} radix {}, lowPart {}, newVal {}, highPart {}, does {}", oldCv, radix, lowPart, newVal, highPart, retval);
             return retval;
         }
-    }
-
-    /**
-     * Insert the relevant digits from a value into the Cv, using a String bit mask like XXXVVVXX.
-     * On decimal 12311178 inserting 456 with mask XXXVVVXX will return 12345678.
-     *
-     * @param oldCv to current Cv value
-     * @param newVal the value to insert into the Cv
-     * @param maskString the textual (XXXVVVXX style) mask
-     * @return newVal with value inserted
-     */
-    protected int insertVal(int oldCv, int newVal, String maskString, int offset, int factor) {
-        // analyse String mask
-        int decLength = maskDigits(maskString);
-        int decOffset = offsetVal(maskString);
-        int highPartBase = (int) (oldCv / Math.pow(10, decOffset + decLength));
-        int highPart = (int) (highPartBase * Math.pow(10, decOffset + decLength));
-
-        int lowPart = (int) (oldCv % Math.pow(10, decOffset));
-        // handle offset and factor
-        int transfer;
-        if (factor != 0) {
-             transfer = (newVal - offset) / factor;
-        } else {
-            log.error("Variable param 'factor' = 0. Decoder definition needs correction");
-            transfer = (newVal - offset);
-        }
-        // shift left
-        int insert = (int) (transfer * Math.pow(10, decOffset));
-        log.warn("l+ins+r={}+{}+{}", highPart, insert, lowPart);
-        return highPart + insert + lowPart;
-    }
-
-    /**
-     * Fetch the relevant digits from a value, using a String bit mask like XXXVVVXX.
-     * On decimal 12345678 this will return 456.
-     *
-     * @param Cv the value to process
-     * @param maskString the textual (XXXVVVXX style) mask
-     * @return extracted int (part) for the variable
-     */
-    protected int extractVal(int Cv, String maskString, int offset, int factor) {
-        // unpack String mask
-        int decLength = maskDigits(maskString);
-        int decOffset = offsetVal(maskString);
-        int part = (int) ((Cv % Math.pow(10, decOffset + decLength)) / Math.pow(10, decOffset));
-        return (part * factor) + offset;
     }
 
     /**
