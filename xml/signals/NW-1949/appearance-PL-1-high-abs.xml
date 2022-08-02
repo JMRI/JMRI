@@ -6,10 +6,17 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
   
+  
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
     <author>
         <personname><firstname>David</firstname><surname>Baker</surname></personname>
     </author>    
-    
+  </authorgroup>
+  
   <revhistory>
     <revision>
         <revnumber>1</revnumber>
