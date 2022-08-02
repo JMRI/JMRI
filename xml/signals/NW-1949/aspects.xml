@@ -7,20 +7,26 @@
 >
   <name>NW-1949</name>
   <date>1949</date>
-  
+
   <reference>Norfolk and Western Railway Company March 1949: Rules and Regulations of the Government of the Operating Department</reference>
 
-  <author>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
         <personname><firstname>David</firstname><surname>Baker</surname></personname>
-    </author>    
-    
-  <revhistory>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
         <date>2010-01-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2011-06-24</date>
@@ -116,7 +122,7 @@
       <speed2>Stop</speed2>
       <route>Either</route>
     </aspect>
-    
+
     <aspect>
       <name>Stop and Flag</name>
       <rule>Rule 291A</rule>
@@ -145,6 +151,6 @@
     <appearancefile href="appearance-PL-2-high.xml"/>
     <appearancefile href="appearance-PL-1-low.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+
