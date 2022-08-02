@@ -29,16 +29,16 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     }
 
     // GUI member declarations
-    JLabel onOffStatus = new JLabel(Bundle.getMessage("LabelUnknown"));
+    protected JLabel onOffStatus = new JLabel(Bundle.getMessage("LabelUnknown"));
     JButton onButton = new JButton(Bundle.getMessage("ButtonOn"));
     JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
     JButton idleButton = new JButton(Bundle.getMessage("ButtonIdle"));
 
-    NamedIcon onIcon = new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;
-    NamedIcon offIcon = new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png") ;
-    NamedIcon unknownIcon = new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png") ;
+    protected NamedIcon onIcon = new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;
+    protected NamedIcon offIcon = new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png") ;
+    protected NamedIcon unknownIcon = new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png") ;
 
-    jmri.swing.PowerManagerMenu selectMenu;
+    protected jmri.swing.PowerManagerMenu selectMenu;
 
     /**
      * Add Connection menu to choose which to turn on/off.
@@ -51,7 +51,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         return list;
     }
 
-    PowerManager listening = null;
+    protected PowerManager listening = null;
 
     /**
      * Constructor for PowerPane.
@@ -95,13 +95,17 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         setStatus();
     }
 
+    protected int getPower() {
+        return listening.getPower();
+    }
+    
     /**
      * Display status changes from PowerManager in PowerPane.
      */
-    void setStatus() {
+    protected void setStatus() {
         // Check to see if the Power Manager has a current status
         if (mgrOK()) {
-            switch (listening.getPower()) {
+            switch (getPower()) {
                 case PowerManager.ON:
                     onOffStatus.setText(Bundle.getMessage("StatusOn"));
                     onOffStatus.setIcon(onIcon);
@@ -142,7 +146,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
      * Check for presence of PowerManager.
      * @return True if one is available, false if not
      */
-    private boolean mgrOK() {
+    protected boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
             log.debug("Manager = {}", listening);
@@ -158,12 +162,20 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     }
 
     /**
+     * Helper function that may be overridden for other power interfaces
+     * @param mode the power mode to set
+     */
+    protected void setPower(int mode) throws JmriException {
+        selectMenu.getManager().setPower(mode);
+    }
+    
+/**
      * Respond to Power On button pressed.
      */
     public void onButtonPushed() {
         if (mgrOK()) {
             try {
-                selectMenu.getManager().setPower(PowerManager.ON);
+                setPower(PowerManager.ON);
             } catch (JmriException e) {
                 log.error("Exception trying to turn power on", e);
             }
@@ -176,7 +188,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     public void offButtonPushed() {
         if (mgrOK()) {
             try {
-                selectMenu.getManager().setPower(PowerManager.OFF);
+                setPower(PowerManager.OFF);
             } catch (JmriException e) {
                 log.error("Exception trying to turn power off", e);
             }
@@ -192,7 +204,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                 return;
             }
             try {
-                selectMenu.getManager().setPower(PowerManager.IDLE);
+                setPower(PowerManager.IDLE);
             } catch (JmriException e) {
                 log.error("Exception trying to set power to idle", e);
             }
@@ -202,7 +214,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         log.debug("PropertyChange received ");
-        switch (listening.getPower()) {
+        switch (getPower()) {
             case PowerManager.ON:
                 onOffStatus.setText(Bundle.getMessage("StatusOn"));
                 onOffStatus.setIcon(onIcon);

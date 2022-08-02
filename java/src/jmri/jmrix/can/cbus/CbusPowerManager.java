@@ -123,14 +123,14 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
      * Listen for changes to prog track power.
      * 
      * Main track is monitored in super class
-     * @param e 
+     * @param e property change event
      */
     public void propertyChange(PropertyChangeEvent e) {
         if (isProgTrackPowerSupported()) {
             if (PROGPOWER.equals(e.getPropertyName())) {
-                int newProgPowerState = getPower();
-                if (newProgPowerState != power) {
-                    power = newProgPowerState;
+                int newProgPowerState = getProgTrackPower();
+                if (newProgPowerState != progPower) {
+                    progPower = newProgPowerState;
                 }
             }
         }

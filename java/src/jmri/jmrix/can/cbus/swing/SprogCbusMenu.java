@@ -45,6 +45,10 @@ public class SprogCbusMenu extends JMenu {
                 // Hardware supports programming mode switching
                 add(new jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusModeSwitcherAction(Bundle.getMessage("MenuItemSPROGModeSwitcher"), memo));
             }
+            if (!memo.isProgTrackPowerIndependent()) {
+                // Hardware may support separate programming track power control (depends on other operating states)
+                add(new jmri.jmrix.can.cbus.swing.power.CbusProgPowerAction(Bundle.getMessage("MenuItemProgTrackPower"), memo));
+            }
         }
         // Added tools that can normally only be found in PanelPro tools menu so that they are available from DP3
         add(new javax.swing.JSeparator());
