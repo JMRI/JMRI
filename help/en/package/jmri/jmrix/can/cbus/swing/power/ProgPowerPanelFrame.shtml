@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Power Control</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Power Control</h1>
+
+      <p>The On/Off buttons on this pane turn the power On/Off on the programming track.</p>
+
+      <p><img src="images/PowerControlWithIdleButton.png" alt=
+      "Power control panel showing Idle pushbutton">
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

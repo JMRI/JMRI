@@ -19,6 +19,16 @@ public class CbusProgPowerPane extends PowerPane {
     }
     
     @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.can.cbus.swing.power.ProgPowerPanelFrame";
+    }
+
+    @Override
+    public String getTitle() {
+        return Bundle.getMessage("MenuItemProgTrackPower");
+    }
+
+    @Override
     protected int getPower() {
         return listening.getProgTrackPower();
     }
