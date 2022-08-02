@@ -163,7 +163,9 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     /**
      * Helper function that may be overridden for other power interfaces
+     * 
      * @param mode the power mode to set
+     * @throws JmriException if mode cannot be set
      */
     protected void setPower(int mode) throws JmriException {
         selectMenu.getManager().setPower(mode);
