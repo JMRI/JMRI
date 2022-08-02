@@ -806,6 +806,30 @@ public class CreateLogixNGTreeScaffold {
         }
 
 
+        ActionListenOnBeansLocalVariable actionListenOnBeansLocalVariable = new ActionListenOnBeansLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansLocalVariable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansLocalVariable = new ActionListenOnBeansLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansLocalVariable.setComment("A comment");
+        actionListenOnBeansLocalVariable.setNamedBeanType(NamedBeanType.Turnout);
+        actionListenOnBeansLocalVariable.setListenOnAllProperties(true);
+        actionListenOnBeansLocalVariable.setLocalVariableBeanToListenOn("beanToListenOn");
+        actionListenOnBeansLocalVariable.setLocalVariableNamedBean("bean");
+        actionListenOnBeansLocalVariable.setLocalVariableEvent("event");
+        actionListenOnBeansLocalVariable.setLocalVariableNewValue("value");
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        DigitalMany manyTemp_ActionListenOnBeansLocalVariable =
+                new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        manyTemp_ActionListenOnBeansLocalVariable.setComment("Action socket 1");
+        maleSocket = digitalActionManager.registerAction(manyTemp_ActionListenOnBeansLocalVariable);
+        maleSocket.setEnabled(false);
+        actionListenOnBeansLocalVariable.getChild(0).connect(maleSocket);
+
+
         ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         maleSocket.setEnabled(false);

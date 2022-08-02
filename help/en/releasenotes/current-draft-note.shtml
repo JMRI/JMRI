@@ -451,6 +451,9 @@
           access to the instance manager. The constants <i>null</i> and
           <i>None</i> has the null value in Java, the None value in Jython.</li>
           <li>The action <i>Listen On Beans - Table</i> is improved.</li>
+          <li>The action <i>Listen On Beans - Local variable</i> has been
+          added. It can be used together with the <i>For each</i> action
+          to listen to all beans of a manager.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
