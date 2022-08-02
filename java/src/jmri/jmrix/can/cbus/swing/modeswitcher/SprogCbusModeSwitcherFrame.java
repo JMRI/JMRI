@@ -17,7 +17,6 @@ import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.jmrix.can.cbus.*;
-import jmri.jmrix.can.cbus.swing.modeswitcher.Bundle;
 import jmri.util.JmriJFrame;
 
 import org.slf4j.Logger;
