@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2022 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock publishes the Article number for each (new) device.
+The Uhlenbrock LocoNet IR Empfanger 63830 has an Article number 6383, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220728"/>
+    <!-- version 1 - new decoder definition using programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+
+    <decoder>
+        <family name="Adapter" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="LocoNet IR Receiver 63830" productID="6383" formFactor="Stationary" comment="IR Receiver for IRIS Remote and Piko Digi-Fern">
+              <versionCV />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6383.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Module address">
+              <decVal min="1" max="65534"/>
+              <label xml:lang="it">Indirizzo Modulo: </label>
+              <label xml:lang="fr">Adresse Module: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Module-adres: </label>
+              <label>Module: </label>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
+            </variable>
+
+            <variable CV="6383.1" item="Decoder Version" readOnly="yes">
+              <decVal/>
+              <label>Firmware Version: </label>
+              <label xml:lang="it">Versione: </label>
+              <label xml:lang="fr">Version: </label>
+              <label xml:lang="de">Version: </label>
+              <label xml:lang="nl">Firmware-versie: </label>
+            </variable>
+
+            <variable CV="6383.3" item="Route Command" default="3">
+              <enumVal>
+                <enumChoice choice="1" value="0">
+                  <choice>Numeric: Sensor | Presets: Sensor</choice>
+                  <choice xml:lang="de">Ziffereingabe: Melder | Presets: Melder)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Melder | Presets: Melder)</choice>
+                </enumChoice>
+                <enumChoice choice="2" value="1">
+                  <choice>Numeric: Turnout | Presets: Sensor</choice>
+                  <choice xml:lang="de">Ziffereingabe: Weiche | Presets: Melder)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Wissel | Presets: Melder)</choice>
+                </enumChoice>
+                <enumChoice choice="3" value="2">
+                  <choice>Numeric: Sensor | Presets: Turnout</choice>
+                  <choice xml:lang="de">Ziffereingabe: Melder | Presets: Weiche)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Melder | Presets: Wissel)</choice>
+                </enumChoice>
+                <enumChoice choice="4" value="3">
+                  <choice>Numeric: Turnout | Presets: Turnout</choice>
+                  <choice xml:lang="de">Ziffereingabe: Weiche | Presets: Weiche)</choice>
+                  <choice xml:lang="nl">Nummerinvoer: Wissel | Presets: Wissel)</choice>
+                </enumChoice>
+              </enumVal>
+              <label>To Trigger Route: </label>
+              <label xml:lang="de">Fahrstraßenaufruf: </label>
+              <label xml:lang="nl">Rijpaden oproep: </label>
+              <tooltip>What triggers CS Routes (numeric address entry, top)  |  IRIS presets (Red/Green buttons, bottom)</tooltip>
+              <tooltip xml:lang="de">Welche Art von Berichte löst eine Fahrstraße aus: Definiert in IB/JMRI (Ziffern, oben)  |  IRIS Presets (rot/grün unten)</tooltip>
+              <tooltip xml:lang="nl">Rijpad stellen met welk type bericht? Adres opgeslagen in IB/JMRI (cijferadres, boven)  |  De IRIS Presets (rood/groen, onder)</tooltip>
+            </variable>
+
+            <variable CV="6383.4" item="Startup Wait" default="20">
+              <decVal min="0" max="255"/>
+              <label>Startup Wait: </label>
+              <label xml:lang="de">Startup-Zeit: </label>
+              <label xml:lang="nl">Opstartpauze: </label>
+              <tooltip>Waiting period in 0.5 sec steps. The standard value is equivalent to approx. 10 seconds</tooltip>
+              <tooltip xml:lang="de">Startphase Wartezeit in 0,5 Sek Schritten. Werkseinstellung ~ 10 S.</tooltip>
+              <tooltip xml:lang="nl">Wachttijd inschakelen in stappen van 0,5 s. Standaard ingesteld op ca. 10 s.</tooltip>
+            </variable>
+
+            <variable CV="6383.5" item="Channel A Last Loco Address" default="1">
+              <decVal min="1" max="9999"/>
+              <label>Last Loco:</label>
+              <label xml:lang="de">Letzte Lok:</label>
+              <label xml:lang="nl">Laatste Lok:</label>
+              <tooltip>Memory for last commanded Loco Address on Channel A</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Lokadresse auf Kanal A</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Lok op kanaal A</tooltip>
+            </variable>
+            <variable CV="6383.6" item="Channel B Last Loco Address" default="2">
+              <decVal min="1" max="9999"/>
+              <tooltip>Memory for last commanded Loco Address on Channel B</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Lokadresse auf Kanal B</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Lok op kanaal B</tooltip>
+            </variable>
+            <variable CV="6383.7" item="Channel C Last Loco Address" default="3">
+              <decVal min="1" max="9999"/>
+              <tooltip>Memory for last commanded Loco Address on Channel C</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Lokadresse auf Kanal C</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Lok op kanaal C</tooltip>
+            </variable>
+            <variable CV="6383.8" item="Channel D Last Loco Address" default="4">
+              <decVal min="1" max="9999"/>
+              <tooltip>Memory for last commanded Loco Address on Channel D</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Lokadresse auf Kanal D</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Lok op kanaal D</tooltip>
+            </variable>
+
+            <variable CV="6383.9" item="Channel A Last Turnout Address" default="10">
+              <decVal min="1" max="2000"/>
+              <label>Last Turnout:</label>
+              <label xml:lang="de">Letzte Weiche:</label>
+              <label xml:lang="nl">Laatste Wissel:</label>
+              <tooltip>Memory for last commanded Turnout Address on Channel A</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Weiche auf Kanal A</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Wissel op kanaal A</tooltip>
+            </variable>
+            <variable CV="6383.10" item="Channel B Last Turnout Address" default="20">
+              <decVal min="1" max="2000"/>
+              <tooltip>Memory for last commanded Turnout Address on Channel B</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Weiche auf Kanal B</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Wissel op kanaal B</tooltip>
+            </variable>
+            <variable CV="6383.11" item="Channel C Last Turnout Address" default="30">
+              <decVal min="1" max="2000"/>
+              <tooltip>Memory for last commanded Turnout Address on Channel C</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Weiche auf Kanal C</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Wissel op kanaal C</tooltip>
+            </variable>
+            <variable CV="6383.12" item="Channel D Last Turnout Address" default="40">
+              <decVal min="1" max="2000"/>
+              <tooltip>Memory for last commanded Turnout Address on Channel D</tooltip>
+              <tooltip xml:lang="de">Speicher für die zuletzt gesteuerten Weiche auf Kanal D</tooltip>
+              <tooltip xml:lang="nl">Geheugen voor laatste bestuurde Wissel op kanaal D</tooltip>
+            </variable>
+
+            <!-- Speed step presets -->
+            <variable CV="6383.13" item="Key 0 Speed Step" default="0">
+              <decVal min="0" max="127"/>
+              <label>Key 0 Speed Step:</label>
+              <label xml:lang="de">Taste 0 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 0 Snelheidsstap:</label>
+              <tooltip>Step 0  = Stop with deceleration</tooltip>
+            </variable>
+            <variable CV="6383.14" item="Key 1 Speed Step" default="2">
+              <decVal min="0" max="127"/>
+              <label>Key 1 Speed Step:</label>
+              <label xml:lang="de">Taste 1 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 1 Snelheidsstap:</label>
+              <tooltip>Step 1  = Emergency STOP without deceleration</tooltip>
+            </variable>
+            <variable CV="6383.15" item="Key 2 Speed Step" default="17">
+              <decVal min="0" max="127"/>
+              <label>Key 2 Speed Step:</label>
+              <label xml:lang="de">Taste 2 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 2 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.16" item="Key 3 Speed Step" default="32">
+              <decVal min="0" max="127"/>
+              <label>Key 3 Speed Step:</label>
+              <label xml:lang="de">Taste 3 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 3 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.17" item="Key 4 Speed Step" default="47">
+              <decVal min="0" max="127"/>
+              <label>Key 4 Speed Step:</label>
+              <label xml:lang="de">Taste 4 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 4 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.18" item="Key 5 Speed Step" default="62">
+              <decVal min="0" max="127"/>
+              <label>Key 5 Speed Step:</label>
+              <label xml:lang="de">Taste 5 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 5 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.19" item="Key 6 Speed Step" default="77">
+              <decVal min="0" max="127"/>
+              <label>Key 6 Speed Step:</label>
+              <label xml:lang="de">Taste 6 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 6 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.20" item="Key 7 Speed Step" default="92">
+              <decVal min="0" max="127"/>
+              <label>Key 7 Speed Step:</label>
+              <label xml:lang="de">Taste 7 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 7 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.21" item="Key 8 Speed Step" default="107">
+              <decVal min="0" max="127"/>
+              <label>Key 8 Speed Step:</label>
+              <label xml:lang="de">Taste 8 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 8 Snelheidsstap:</label>
+            </variable>
+            <variable CV="6383.22" item="Key 9 Speed Step" default="127">
+              <decVal min="0" max="127"/>
+              <label>Key 9 Speed Step:</label>
+              <label xml:lang="de">Taste 9 Geschw. Stufe:</label>
+              <label xml:lang="nl">Knop 9 Snelheidsstap:</label>
+            </variable>
+
+          <!-- Channel A Turnout Presets -->
+          <variable CV="6383.23" item="Channel A Turnout 1 Address" default="1">
+            <decVal min="1" max="2000"/>
+            <label>Turnout 1 Address:</label>
+            <label xml:lang="de">Weiche 1:</label>
+            <label xml:lang="nl">Wissel 1:</label>
+            <tooltip>Preset Turnout 1 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 1 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 1 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.24" item="Channel A Turnout 2 Address" default="2">
+            <decVal min="1" max="2000"/>
+            <label>Turnout 2 Address:</label>
+            <label xml:lang="de">Weiche 2:</label>
+            <label xml:lang="nl">Wissel 2:</label>
+            <tooltip>Preset Turnout 2 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 2 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 2 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.25" item="Channel A Turnout 3 Address" default="3">
+            <decVal min="1" max="2000"/>
+            <label>Turnout 3 Address:</label>
+            <label xml:lang="de">Weiche 3:</label>
+            <label xml:lang="nl">Wissel 3:</label>
+            <tooltip>Preset Turnout 3 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 3 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 3 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.26" item="Channel A Turnout 4 Address" default="4">
+            <decVal min="1" max="2000"/>
+            <label>Turnout 4 Address:</label>
+            <label xml:lang="de">Weiche 1:</label>
+            <label xml:lang="nl">Wissel 4:</label>
+            <tooltip>Preset Turnout 4 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 4 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 4 op kanaal A</tooltip>
+          </variable>
+
+          <!-- no labels on B-C fields, presented in matrix -->
+          <!-- Channel B Turnout Presets -->
+          <variable CV="6383.27" item="Channel B Turnout 1 Address" default="11">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 1 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 1 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 1 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.28" item="Channel B Turnout 2 Address" default="12">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 2 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 2 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 2 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.29" item="Channel B Turnout 3 Address" default="13">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 3 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 3 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 3 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.30" item="Channel B Turnout 4 Address" default="14">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 4 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 4 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 4 op kanaal B</tooltip>
+          </variable>
+
+          <!-- Channel C Turnout Presets -->
+          <variable CV="6383.31" item="Channel C Turnout 1 Address" default="21">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 1 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 1 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 1 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.32" item="Channel C Turnout 2 Address" default="22">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 2 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 2 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 2 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.33" item="Channel C Turnout 3 Address" default="23">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 3 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 3 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 3 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.34" item="Channel C Turnout 4 Address" default="24">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 4 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 4 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 4 op kanaal C</tooltip>
+          </variable>
+
+          <!-- Channel D Turnout Presets -->
+          <variable CV="6383.35" item="Channel D Turnout 1 Address" default="31">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 1 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 1 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 1 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.36" item="Channel D Turnout 2 Address" default="32">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 2 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 2 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 2 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.37" item="Channel D Turnout 3 Address" default="33">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 3 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 3 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 3 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.38" item="Channel D Turnout 4 Address" default="34">
+            <decVal min="1" max="2000"/>
+            <tooltip>Preset Turnout 4 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Weichenadresse 4 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Instelling Wissel 4 op kanaal D</tooltip>
+          </variable>
+
+          <!-- Channel A-D Route Presets -->
+          <!-- Channel A Routes CVs -->
+          <variable CV="6383.39" item="Channel A Route 1 Address" default="1">
+            <decVal min="1" max="4096"/>
+            <label>Route 1 Address:</label>
+            <label xml:lang="de">Straße 1:</label>
+            <label xml:lang="nl">Straat 1:</label>
+            <tooltip>Preset Route 1 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 1 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 1 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.40" item="Channel A Route 2 Address" default="2">
+            <decVal min="1" max="4096"/>
+            <label>Route 2 Address:</label>
+            <label xml:lang="de">Straße 2:</label>
+            <label xml:lang="nl">Straat 2:</label>
+            <tooltip>Preset Route 2 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 2 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 2 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.41" item="Channel A Route 3 Address" default="3">
+            <decVal min="1" max="4096"/>
+            <label>Route 3 Address:</label>
+            <label xml:lang="de">Straße 3:</label>
+            <label xml:lang="nl">Straat 3:</label>
+            <tooltip>Preset Route 3 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 3 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 3 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.42" item="Channel A Route 4 Address" default="4">
+            <decVal min="1" max="4096"/>
+            <label>Route 4 Address:</label>
+            <label xml:lang="de">Straße 4:</label>
+            <label xml:lang="nl">Straat 4:</label>
+            <tooltip>Preset Route 4 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 4 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 4 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.43" item="Channel A Route 5 Address" default="5">
+            <decVal min="1" max="4096"/>
+            <label>Route 5 Address:</label>
+            <label xml:lang="de">Straße 5:</label>
+            <label xml:lang="nl">Straat 5:</label>
+            <tooltip>Preset Route 5 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 5 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 5 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.44" item="Channel A Route 6 Address" default="6">
+            <decVal min="1" max="4096"/>
+            <label>Route 6 Address:</label>
+            <label xml:lang="de">Straße 6:</label>
+            <label xml:lang="nl">Straat 6:</label>
+            <tooltip>Preset Route 6 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 6 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 6 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.45" item="Channel A Route 7 Address" default="7">
+            <decVal min="1" max="4096"/>
+            <label>Route 7 Address:</label>
+            <label xml:lang="de">Straße 7:</label>
+            <label xml:lang="nl">Straat 7:</label>
+            <tooltip>Preset Route 7 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 7 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 7 op kanaal A</tooltip>
+          </variable>
+          <variable CV="6383.46" item="Channel A Route 8 Address" default="8">
+            <decVal min="1" max="4096"/>
+            <label>Route 8 Address:</label>
+            <label xml:lang="de">Straße 8:</label>
+            <label xml:lang="nl">Straat 8:</label>
+            <tooltip>Preset Route 8 Address on Channel A</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 8 für Kanal A</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 8 op kanaal A</tooltip>
+          </variable>
+
+          <!-- no labels on B-C fields, presented in matrix -->
+          <!-- Channel B Routes CVs -->
+          <variable CV="6383.47" item="Channel B Route 1 Address" default="11">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 1 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 1 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 1 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.48" item="Channel B Route 2 Address" default="12">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 2 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 2 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 2 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.49" item="Channel B Route 3 Address" default="13">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 3 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 3 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 3 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.50" item="Channel B Route 4 Address" default="14">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 4 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 4 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 4 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.51" item="Channel B Route 5 Address" default="15">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 5 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 5 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 5 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.52" item="Channel B Route 6 Address" default="16">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 6 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 6 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 6 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.53" item="Channel B Route 7 Address" default="17">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 7 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 7 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 7 op kanaal B</tooltip>
+          </variable>
+          <variable CV="6383.54" item="Channel B Route 8 Address" default="18">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 8 Address on Channel B</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 8 für Kanal B</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 8 op kanaal B</tooltip>
+          </variable>
+
+          <!-- Channel C Routes CVs -->
+          <variable CV="6383.55" item="Channel C Route 1 Address" default="21">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 1 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 1 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 1 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.56" item="Channel C Route 2 Address" default="22">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 2 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 2 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 2 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.57" item="Channel C Route 3 Address" default="23">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 3 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 3 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 3 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.58" item="Channel C Route 4 Address" default="24">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 4 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 4 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 4 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.59" item="Channel C Route 5 Address" default="25">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 5 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 5 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 5 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.60" item="Channel C Route 6 Address" default="26">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 6 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 6 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 6 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.61" item="Channel C Route 7 Address" default="27">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 7 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 7 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 7 op kanaal C</tooltip>
+          </variable>
+          <variable CV="6383.62" item="Channel C Route 8 Address" default="28">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 8 Address on Channel C</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 8 für Kanal C</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 8 op kanaal C</tooltip>
+          </variable>
+
+          <!-- Channel D Routes CVs -->
+          <variable CV="6383.63" item="Channel D Route 1 Address" default="31">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 1 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 1 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 1 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.64" item="Channel D Route 2 Address" default="32">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 2 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 2 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 2 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.65" item="Channel D Route 3 Address" default="33">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 3 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 3 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 3 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.66" item="Channel D Route 4 Address" default="34">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 4 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 4 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 4 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.67" item="Channel D Route 5 Address" default="35">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 5 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 5 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 5 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.68" item="Channel D Route 6 Address" default="36">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 6 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 6 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 6 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.69" item="Channel D Route 7 Address" default="37">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 7 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 7 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 7 op kanaal D</tooltip>
+          </variable>
+          <variable CV="6383.70" item="Channel D Route 8 Address" default="38">
+            <decVal min="1" max="4096"/>
+            <tooltip>Preset Route 8 Address on Channel D</tooltip>
+            <tooltip xml:lang="de">Voreingestellte Adresse Weichenstraße 8 für Kanal D</tooltip>
+            <tooltip xml:lang="nl">Ingesteld Adres Wisselstraat 8 op kanaal D</tooltip>
+          </variable>
+
+        </variables>
+    </decoder>
+
+    <pane>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <row>
+            <column>
+              <label>
+                <text>Before writing, open a Programming</text>
+                <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              </label>
+              <label>
+                <text>session using the LocoNet LNCV Tool.</text>
+                <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              </label>
+              <label>
+                <text>Article Number: 6383</text>
+                <text xml:lang="nl">Artikel Nummer: 6383</text>
+                <text xml:lang="de">Artikelnummer: 6383</text>
+              </label>
+
+              <label>
+                <text> </text>
+              </label>
+
+              <display item="Startup Wait"/>
+              <display item="Route Command"/>
+
+              <label>
+                <text> </text>
+              </label>
+              <label>
+                <text>Speed Steps</text>
+              </label>
+              <row>
+                <display item="Key 0 Speed Step" format="hslider"/>
+                <display item="Key 0 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 1 Speed Step" format="hslider"/>
+                <display item="Key 1 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 2 Speed Step" format="hslider"/>
+                <display item="Key 2 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 3 Speed Step" format="hslider"/>
+                <display item="Key 3 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 4 Speed Step" format="hslider"/>
+                <display item="Key 4 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 5 Speed Step" format="hslider"/>
+                <display item="Key 5 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 6 Speed Step" format="hslider"/>
+                <display item="Key 6 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 7 Speed Step" format="hslider"/>
+                <display item="Key 7 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 8 Speed Step" format="hslider"/>
+                <display item="Key 8 Speed Step" label=""/>
+              </row>
+              <row>
+                <display item="Key 9 Speed Step" format="hslider"/>
+                <display item="Key 9 Speed Step" label=""/>
+              </row>
+
+            </column>
+
+            <column>
+                <label>
+                  <text>                               Channel A</text>
+                  <text xml:lang="de">                         Kanal A</text>
+                  <text xml:lang="nl">                         Kanaal A</text>
+                </label>
+                <display item="Channel A Last Loco Address"/>
+                <display item="Channel A Last Turnout Address"/>
+                <label>
+                  <text>  </text>
+                </label>
+                  <display item="Channel A Turnout 1 Address"/>
+                  <display item="Channel A Turnout 2 Address"/>
+                  <display item="Channel A Turnout 3 Address"/>
+                  <display item="Channel A Turnout 4 Address"/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel A Route 1 Address"/>
+                <display item="Channel A Route 2 Address"/>
+                <display item="Channel A Route 3 Address"/>
+                <display item="Channel A Route 4 Address"/>
+                <display item="Channel A Route 5 Address"/>
+                <display item="Channel A Route 6 Address"/>
+                <display item="Channel A Route 7 Address"/>
+                <display item="Channel A Route 8 Address"/>
+            </column>
+
+            <column>
+                <label>
+                  <text> Channel B</text>
+                  <text xml:lang="de">   Kanal B</text>
+                  <text xml:lang="nl">   Kanaal B</text>
+                </label>
+                <display item="Channel B Last Loco Address" label=""/>
+                <display item="Channel B Last Turnout Address" label=""/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel B Turnout 1 Address" label=""/>
+                <display item="Channel B Turnout 2 Address" label=""/>
+                <display item="Channel B Turnout 3 Address" label=""/>
+                <display item="Channel B Turnout 4 Address" label=""/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel B Route 1 Address" label=""/>
+                <display item="Channel B Route 2 Address" label=""/>
+                <display item="Channel B Route 3 Address" label=""/>
+                <display item="Channel B Route 4 Address" label=""/>
+                <display item="Channel B Route 5 Address" label=""/>
+                <display item="Channel B Route 6 Address" label=""/>
+                <display item="Channel B Route 7 Address" label=""/>
+                <display item="Channel B Route 8 Address" label=""/>
+            </column>
+
+            <column>
+                <label>
+                  <text> Channel C</text>
+                  <text xml:lang="de">   Kanal C</text>
+                  <text xml:lang="nl">   Kanaal C</text>
+                </label>
+                <display item="Channel C Last Loco Address" label=""/>
+                <display item="Channel C Last Turnout Address" label=""/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel C Turnout 1 Address" label=""/>
+                <display item="Channel C Turnout 2 Address" label=""/>
+                <display item="Channel C Turnout 3 Address" label=""/>
+                <display item="Channel C Turnout 4 Address" label=""/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel C Route 1 Address" label=""/>
+                <display item="Channel C Route 2 Address" label=""/>
+                <display item="Channel C Route 3 Address" label=""/>
+                <display item="Channel C Route 4 Address" label=""/>
+                <display item="Channel C Route 5 Address" label=""/>
+                <display item="Channel C Route 6 Address" label=""/>
+                <display item="Channel C Route 7 Address" label=""/>
+                <display item="Channel C Route 8 Address" label=""/>
+            </column>
+
+            <column>
+                <label>
+                  <text> Channel D</text>
+                  <text xml:lang="de">   Kanal D</text>
+                  <text xml:lang="nl">   Kanaal D</text>
+                </label>
+                <display item="Channel D Last Loco Address" label=""/>
+                <display item="Channel D Last Turnout Address" label=""/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel D Turnout 1 Address" label=""/>
+                <display item="Channel D Turnout 2 Address" label=""/>
+                <display item="Channel D Turnout 3 Address" label=""/>
+                <display item="Channel D Turnout 4 Address" label=""/>
+                <label>
+                  <text>  </text>
+                </label>
+                <display item="Channel D Route 1 Address" label=""/>
+                <display item="Channel D Route 2 Address" label=""/>
+                <display item="Channel D Route 3 Address" label=""/>
+                <display item="Channel D Route 4 Address" label=""/>
+                <display item="Channel D Route 5 Address" label=""/>
+                <display item="Channel D Route 6 Address" label=""/>
+                <display item="Channel D Route 7 Address" label=""/>
+                <display item="Channel D Route 8 Address" label=""/>
+            </column>
+
+          <column>
+
+            </column>
+
+        </row>
+    </pane>
+
+</decoder-config>

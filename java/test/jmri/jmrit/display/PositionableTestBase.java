@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.event.WindowListener;
-import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -11,7 +10,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Base class for tests for Positionable objects.
@@ -65,9 +64,9 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetPositionable() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt Positionable", p.isPositionable());
+        Assert.assertTrue("Default Positionable", p.isPositionable());
         p.setPositionable(false);
         Assert.assertFalse("Positionable after set false", p.isPositionable());
         p.setPositionable(true);
@@ -75,9 +74,9 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetEditable() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt Editable", p.isEditable());
+        Assert.assertTrue("Default Editable", p.isEditable());
         p.setEditable(false);
         Assert.assertFalse("Editable after set false", p.isEditable());
         p.setEditable(true);
@@ -85,9 +84,9 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetShowToolTip() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt ShowToolTip", p.showToolTip());
+        Assert.assertTrue("Default ShowToolTip", p.showToolTip());
         p.setShowToolTip(false);
         Assert.assertFalse("showToolTip after set false", p.showToolTip());
         p.setShowToolTip(true);
@@ -95,16 +94,16 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetToolTip() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("default tool tip", p.getToolTip());
         p.setToolTip(new ToolTip("hello",0,0,null));
         Assert.assertNotNull("tool tip after set", p.getToolTip());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetViewCoordinates() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Default View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(false);
         Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
@@ -113,9 +112,9 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetControlling() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt ShowToolTip", p.isControlling());
+        Assert.assertTrue("Default ShowToolTip", p.isControlling());
         p.setControlling(false);
         Assert.assertFalse("Controlling after set false", p.isControlling());
         p.setControlling(true);
@@ -123,9 +122,9 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetHidden() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Defalt Hidden", p.isHidden());
+        Assert.assertFalse("Default Hidden", p.isHidden());
         p.setHidden(true);
         Assert.assertTrue("Hidden after set true", p.isHidden());
         p.setHidden(false);
@@ -133,15 +132,15 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetDisplayLevel(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         p.setDisplayLevel(2);
         Assert.assertEquals("Display Level",2,p.getDisplayLevel());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetEditor(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor es = new EditorScaffold();
         p.setEditor(es);
         Assert.assertEquals("Editor",es,p.getEditor());
@@ -149,8 +148,8 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testClone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         p.deepClone();
 
         // this next line is consistently failing (on all object types).
@@ -161,59 +160,59 @@ abstract public class PositionableTestBase {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testMaxWidth() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Max Width",0<=p.maxWidth());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testMaxHeight() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Max Height",0<=p.maxHeight());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetScale(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals("Default Scale",1.0D,p.getScale(),0.0);
         p.setScale(5.0D);
         Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetAndSetRotationDegrees(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         p.rotate(50);
         Assert.assertEquals("Degrees",50,p.getDegrees());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetTextComponent(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("text component",p.getTextComponent());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testStoreItem(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Store Item",p.storeItem());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testDoViemMenu(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Do Viem Menu",p.doViemMenu());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testGetNameString(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("Name String",p.getNameString());
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testShow() throws Positionable.DuplicateIdException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JFrame jf = new jmri.util.JmriJFrame("Positionable Target Panel");
         JPanel panel = new JPanel();
@@ -224,7 +223,7 @@ abstract public class PositionableTestBase {
         editor.putItem(p);
         p.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
 
-        Assert.assertEquals("Display Level ", p.getDisplayLevel(), jmri.jmrit.display.Editor.LABELS);
+        Assertions.assertEquals(jmri.jmrit.display.Editor.LABELS, p.getDisplayLevel(), "Display Level ");
 
         editor.setLocation(150, 150);
 

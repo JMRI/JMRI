@@ -473,6 +473,9 @@ public class LocoNetMessageTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "BIT_AND",
+        justification = "Would be good to simplify the Bitwise masks, though "
+        + "tests pass with current logic.")
     public void testsetElement() {
 
         LocoNetMessage m = new LocoNetMessage(20);
