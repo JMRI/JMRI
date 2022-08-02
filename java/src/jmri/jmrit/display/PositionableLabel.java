@@ -868,9 +868,11 @@ public class PositionableLabel extends JLabel implements Positionable {
                 } else if (_text) {     // update text only icon image
                     _namedIcon = makeTextIcon(_unRotatedText);
                 }
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
-                setOpaque(false);   // rotations cannot be opaque
+                if (_namedIcon != null) {
+                    _namedIcon.rotate(deg, this);
+                    super.setIcon(_namedIcon);
+                    setOpaque(false);   // rotations cannot be opaque
+                }
             }
         } else {  // first time text or icon is rotated from horizontal
             if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
@@ -887,8 +889,10 @@ public class PositionableLabel extends JLabel implements Positionable {
             if (_popupUtil != null) {
                 _popupUtil.setBorder(false);
             }
-            _namedIcon.rotate(deg, this);
-            super.setIcon(_namedIcon);
+            if (_namedIcon != null) { // it is possible that the icon did not get created yet.
+                _namedIcon.rotate(deg, this);
+                super.setIcon(_namedIcon);
+            }
         }
         updateSize();
         repaint();
@@ -1104,7 +1108,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public void setText(String text) {
         _unRotatedText = text;
         _text = (text != null && text.length() > 0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
-        if (/*_rotateText &&*/!isIcon() && _namedIcon != null) {
+        if (/*_rotateText &&*/!isIcon() && (_namedIcon != null || _degrees != 0)) {
             log.debug("setText calls rotate({})", _degrees);
             rotate(_degrees);  //this will change text label as a icon with a new _namedIcon.
         } else {
