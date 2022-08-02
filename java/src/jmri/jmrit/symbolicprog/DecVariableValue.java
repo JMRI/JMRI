@@ -19,18 +19,26 @@ import org.slf4j.LoggerFactory;
 /**
  * Decimal representation of a value.
  *
- * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001, 2022
  */
 public class DecVariableValue extends VariableValue
         implements ActionListener, FocusListener {
 
-    public DecVariableValue(String name, String comment, String cvName,
-            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-            String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String stdname) {
+    public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
+                            boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
+                            HashMap<String, CvValue> v, JLabel status, String stdname) {
+        this(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal,
+                v, status, stdname, 0, 1);
+    }
+
+    public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
+                            boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String stdname, int offset, int factor) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
+        _factor = factor;
+        _offset = offset;
         _value = new JTextField("0", fieldLength());
         _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
@@ -52,6 +60,8 @@ public class DecVariableValue extends VariableValue
 
     int _maxVal;
     int _minVal;
+    int _factor;
+    int _offset;
 
     int fieldLength() {
         if (_maxVal <= 255) {
@@ -132,7 +142,14 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal);
+        int transfer;
+        if (_factor != 0) {
+            transfer = (newVal - _offset) / _factor;
+        } else {
+            log.error("Variable param 'factor' = 0; Decoder definition needs correction");
+            transfer = (newVal - _offset);
+        }
+        int newCv = setValueInCV(oldCv, transfer, getMask(), _maxVal);
         if (oldCv != newCv) {
             cv.setValue(newCv);
         }
@@ -394,7 +411,8 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            int transfer = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            int newVal = (transfer * _factor) + _offset;
             setValue(newVal);  // check for duplicate done inside setValue
         }
     }

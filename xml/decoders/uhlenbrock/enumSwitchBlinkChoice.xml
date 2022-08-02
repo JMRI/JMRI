@@ -15,7 +15,7 @@
 <!-- version 2 - include file for Uhlenbrock Switch decoder 63410           -->
 <!-- Requires JMRI 5.1.3 for variable type CompEnumChoice w/ mask on digits -->
 <!-- 																		                                    -->
-<compEnumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<enumVal max="10" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <enumChoice choice="1" value="0">
     <choice>Permanent/Timed</choice>
     <choice xml:lang="nl">Permanent/Puls</choice>
@@ -36,4 +36,4 @@
     <choice xml:lang="nl">Knipper 1+2</choice>
     <choice xml:lang="de">Blinkend 1+2</choice>
   </enumChoice>
-</compEnumVal>
+</enumVal>

@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *   multiple bit masks, separated by spaces.
  *   <li>A small decimal value, i.e. "9"
  *   <br>
- *   In this case, the mask forms the multiplier (N) which combines with the
+ *   In this case, aka Radix mask, it forms the multiplier (N) which combines with the
  *   maximum value (maxVal, defined in a subclass) to break the CV into three
  *   parts:
  *   <ul>
@@ -710,13 +710,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Get the current value from the CV, using the mask as needed.
+     * Extract the current value from the CV, using the mask as needed.
      *
-     * @param Cv         the CV of interest
+     * @param Cv         the full CV value of interest.
      * @param maskString the (XXXVVVXX style or small int) mask for extracting the Variable
      *                   value from this CV
-     * @param maxVal     the maximum possible value for this Variable
-     * @return the current value of the Variable
+     * @param maxVal     the maximum possible value for this Variable position in the CV, i.e. 9 in a single digit
+     * @return the current value of the Variable. Optional factor and offset not yet applied.
      */
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
@@ -729,13 +729,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Set a value into a CV, using the mask as needed.
+     * Insert a value into a CV, using the mask as needed.
      *
      * @param oldCv      Value of the CV before this update is applied
-     * @param newVal     Value for this variable (e.g. not the CV value)
+     * @param newVal     Value for this variable (e.g. not the CV value). Optional factor and offset already applied.
      * @param maskString The (XXXVVVXX style or small int) mask for this variable in character form
      * @param maxVal     the maximum possible value for this Variable
-     * @return int new value for the CV
+     * @return int new value for the full CV
      */
     protected int setValueInCV(int oldCv, int newVal, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
@@ -766,14 +766,22 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         // analyse String mask
         int decLength = maskDigits(maskString);
         int decOffset = offsetVal(maskString);
-        int keepLeftBase = (int) (oldCv / Math.pow(10, decOffset + decLength));
-        int keepLeft = (int) (keepLeftBase * Math.pow(10, decOffset + decLength));
-        int keepRight = (int) (oldCv % Math.pow(10, decOffset));
+        int highPartBase = (int) (oldCv / Math.pow(10, decOffset + decLength));
+        int highPart = (int) (highPartBase * Math.pow(10, decOffset + decLength));
+
+        int lowPart = (int) (oldCv % Math.pow(10, decOffset));
         // handle offset and factor
-        int transfer = (newVal - offset) / factor;
+        int transfer;
+        if (factor != 0) {
+             transfer = (newVal - offset) / factor;
+        } else {
+            log.error("Variable param 'factor' = 0. Decoder definition needs correction");
+            transfer = (newVal - offset);
+        }
         // shift left
         int insert = (int) (transfer * Math.pow(10, decOffset));
-        return keepLeft + insert + keepRight;
+        log.warn("l+ins+r={}+{}+{}", highPart, insert, lowPart);
+        return highPart + insert + lowPart;
     }
 
     /**

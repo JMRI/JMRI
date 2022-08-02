@@ -42,9 +42,12 @@ public class CompDecVariableValue extends DecVariableValue {
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
             int val = extractVal(Cv, maskString, _offset, _factor);
-            if (val > maxVal || val < _minVal) {
+            if (val < _minVal) {
                 log.error("New value {} for {} is out of bounds", val, label());
                 return _minVal;
+            } else if (val > _maxVal) {
+                log.error("New value {} for {} is out of bounds", val, label());
+                return _maxVal;
             } else {
                 return val;
             }

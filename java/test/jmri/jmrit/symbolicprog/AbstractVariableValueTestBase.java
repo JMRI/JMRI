@@ -209,7 +209,8 @@ public abstract class AbstractVariableValueTestBase {
         CvValue cv = new CvValue("81", p);
         v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
+        VariableValue variable = makeVar("label", "comment", "", false, false,
+                false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
 
         variable.readAll();

@@ -15,7 +15,7 @@
 <!-- version 2 - include file for Uhlenbrock Switch decoder 63410           -->
 <!-- Requires JMRI 5.1.3 for variable type CompEnumChoice w/ mask on digits -->
 <!-- 																		                                    -->
-<compEnumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<enumVal max="10" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <enumChoice choice="1" value="0">
     <choice>Normal Outputs</choice>
     <choice xml:lang="nl">Normale uitgangen</choice>
@@ -48,4 +48,4 @@
     <choice>Warning signal, Märklin style</choice>
     <choice xml:lang="nl">Voorsein, Märklin stijl</choice>
   </enumChoice>
-</compEnumVal>
+</enumVal>

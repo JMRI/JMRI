@@ -14,8 +14,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
@@ -27,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Extends VariableValue to represent an enumerated variable.
  * @see VariableValue
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014, 2022
  */
 public class EnumVariableValue extends VariableValue implements ActionListener {
 
@@ -36,7 +34,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
-        _maxVal = maxVal;
+        _maxVal = maxVal; // count of possibles in the masked part, i.e. radix mask. Can be higher that the enums count
         _minVal = minVal;
 
         treeNodes.addLast(new DefaultMutableTreeNode("")); // root
@@ -380,22 +378,19 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
                 dTree.setExpandsSelectedPaths(true);
                 dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
                 // arrange for only leaf nodes can be selected
-                dTree.addTreeSelectionListener(new TreeSelectionListener() {
-                    @Override
-                    public void valueChanged(TreeSelectionEvent e) {
-                        TreePath[] paths = e.getPaths();
-                        for (TreePath path : paths) {
-                            DefaultMutableTreeNode o = (DefaultMutableTreeNode) path.getLastPathComponent();
-                            if (o.getChildCount() > 0) {
-                                ((JTree) e.getSource()).removeSelectionPath(path);
-                            }
+                dTree.addTreeSelectionListener(e -> {
+                    TreePath[] paths = e.getPaths();
+                    for (TreePath path : paths) {
+                        DefaultMutableTreeNode o = (DefaultMutableTreeNode) path.getLastPathComponent();
+                        if (o.getChildCount() > 0) {
+                            ((JTree) e.getSource()).removeSelectionPath(path);
                         }
-                        // now record selection
-                        if (paths.length >= 1) {
-                            if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
-                                // update value of Variable
-                                setValue(_valueArray[((TreeLeafNode) paths[0].getLastPathComponent()).index]);
-                            }
+                    }
+                    // now record selection
+                    if (paths.length >= 1) {
+                        if (paths[0].getLastPathComponent() instanceof TreeLeafNode) {
+                            // update value of Variable
+                            setValue(_valueArray[((TreeLeafNode) paths[0].getLastPathComponent()).index]);
                         }
                     }
                 });
@@ -545,14 +540,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         VarComboBox(ComboBoxModel<String> m, EnumVariableValue var) {
             super(m);
             _var = var;
-            _l = new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("VarComboBox saw property change: {}", e);
-                    }
-                    originalPropertyChanged(e);
+            _l = e -> {
+                if (log.isDebugEnabled()) {
+                    log.debug("VarComboBox saw property change: {}", e);
                 }
+                originalPropertyChanged(e);
             };
             // get the original color right
             setBackground(_var._value.getBackground());
@@ -600,14 +592,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         if (_value != null) {
             _value.removeActionListener(this);
         }
-        for (int i = 0; i < comboCBs.size(); i++) {
-            comboCBs.get(i).dispose();
+        for (ComboCheckBox comboCB : comboCBs) {
+            comboCB.dispose();
         }
-        for (int i = 0; i < comboVars.size(); i++) {
-            comboVars.get(i).dispose();
+        for (VarComboBox comboVar : comboVars) {
+            comboVar.dispose();
         }
-        for (int i = 0; i < comboRBs.size(); i++) {
-            comboRBs.get(i).dispose();
+        for (ComboRadioButtons comboRB : comboRBs) {
+            comboRB.dispose();
         }
     }
 
