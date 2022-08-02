@@ -3780,7 +3780,7 @@ public class LocoNetMessageInterpret {
          * LISSY is an automatic train detection system made by Uhlenbrock.
          * All documentation appears to be in German.
          */
-        log.debug("Message from LISSY: " + Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
+        log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
         switch (l.getElement(1)) {           
             case 0x08: // Format LISSY message              
                 int unit = (l.getElement(4) & 0x7F);
