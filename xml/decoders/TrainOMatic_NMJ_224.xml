@@ -17,8 +17,10 @@
 <!-- Decoder definition based on NMJ Skd 224 board, a special decoder built by Train-O-Matic                     -->
 <!-- Decoder manual used: SKD224_replacement board with integrated dcc decoder assembly guide v 0.1.6.pdf        -->
 <!-- Version 2 - Incorporated the other decoders from the same family after info from tOm                        -->
+<!-- Version 3 - Based on information from tOm, correct version information and added productID                  -->
 
   <version author="lbijlsma@pobox.com" version="2" lastUpdated="20160403"/>
+  <version author="lbijlsma@pobox.com" version="3" lastUpdated="20220730"/>
   <decoder>
     <family name="Lokommander" mfg="Tehnologistic (train-O-matic)">
       <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
@@ -840,6 +842,11 @@
         <comment>CV138= 0 means no Brake Delay. To increase breaking distance above the value configured in CV138, increase in small amounts the value of CV65, which will delay the start of the braking, resulting in a longer braking path. Brake Delay = CV138 Value * 8ms (ms) Extra Distance = MaxSpeed * BrakeDelay Ex: 200ms(delay)=8(ms)*25(CV value)</comment>
       </variable>
 
+<!-- CV508,509,510 ProductID -->
+      <variable item="Product Number" CV="508,509,510" readOnly="yes">
+        <splitVal highCV="508"/>
+      </variable>
+
     </variables>
 
     <resets>
@@ -1123,6 +1130,7 @@
         <display item="Decoder Version" label="Version" />
         <display item="Decoder Subversion" label="" />
       </row>
+      <display item="Product Number"/>
 
     </column>
   </pane>

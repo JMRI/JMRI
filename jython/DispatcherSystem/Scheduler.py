@@ -310,9 +310,11 @@ class RunRoute(MoveTrain):
 
         self.run_route()
         self.mycount += 1
-        if self.mycount < self.no_repetitions:
+        if int(self.mycount) <= int(self.no_repetitions):
+            if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
             return True
         else:
+            if self.logLevel > 0: print "returning true", "mycount", self.mycount, "reps" , self.no_repetitions
             return False
 
     def run_route(self):
@@ -356,10 +358,10 @@ class RunRoute(MoveTrain):
                 if train_to_move != None:
                     if self.logLevel > 0: print "************************************moving train******************",train_to_move
                     self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    print "finished move between stations station_from = ", station_from, " station_to = ", station_to
+                    if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
                     end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy+
                     msg = "finished move between stations station_from = " + station_from + "state of block" + str(end_block.getState())
-                    print "state of block" , end_block.getState()
+                    if self.logLevel > 0: print "state of block" , end_block.getState()
                     title = "Information after moving"
                     opt1 = "OK"
 
@@ -381,9 +383,8 @@ class RunRoute(MoveTrain):
                         if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
                         train_to_move = start_block.getValue()
 
-
                     self.move_between_stations(station_from, station_to, train_to_move, self.graph)
-                    print "finished move between stations station_from = ", station_from, " station_to = ", station_to
+                    if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
                     end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy
                     end_block.setValue(train_to_move)
 

@@ -628,6 +628,20 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
+     * Create a "VVV" style mask matching the size of max value in bits.
+     * @param maxVal the maximum value to be stored in the cv as decimal
+     * @return a string of V's
+     */
+    protected static String getMaxMask(int maxVal) {
+        int length = Integer.toBinaryString(maxVal).length();
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < length) {
+            sb.append('V');
+        }
+        return sb.toString();
+    }
+
+    /**
      * Convert a String bit mask like XXXVVVXX to an int like 0b00011100.
      *
      * @param maskString the textual (XXXVVVXX style) mask
@@ -684,7 +698,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Get the current value from the CV, using the mask as needed.
      *
      * @param Cv         the CV of interest
-     * @param maskString the (XXXVVVXX style) mask for extracting the Variable
+     * @param maskString the (XXXVVVXX style or small int) mask for extracting the Variable
      *                   value from this CV
      * @param maxVal     the maximum possible value for this Variable
      * @return the current value of the Variable
@@ -704,7 +718,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *
      * @param oldCv      Value of the CV before this update is applied
      * @param newVal     Value for this variable (e.g. not the CV value)
-     * @param maskString The bit mask for this variable in character form
+     * @param maskString The (XXXVVVXX style or small int) mask for this variable in character form
      * @param maxVal     the maximum possible value for this Variable
      * @return int new value for the CV
      */

@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.ActionSignalMast.OperationType;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
@@ -23,6 +24,7 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
+ * @author Pete Cressman Copyright (C) 2022
  */
 public class ActionWarrant extends AbstractDigitalAction
         implements PropertyChangeListener {
@@ -34,13 +36,17 @@ public class ActionWarrant extends AbstractDigitalAction
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
             new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.AllocateWarrantRoute, this);
 
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
     private String _dataLocalVariable = "";
     private String _dataFormula = "";
     private ExpressionNode _dataExpressionNode;
 
-    private String _trainIdName = "";
+    private String _trainData = "";
     private ControlAutoTrain _controlAutoTrain = ControlAutoTrain.Halt;
 
     public ActionWarrant(String sys, String user)
@@ -57,6 +63,7 @@ public class ActionWarrant extends AbstractDigitalAction
         ActionWarrant copy = new ActionWarrant(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         _selectEnum.copy(copy._selectEnum);
 
         copy.setDataAddressing(_dataAddressing);
@@ -64,7 +71,7 @@ public class ActionWarrant extends AbstractDigitalAction
         copy.setDataLocalVariable(_dataLocalVariable);
         copy.setDataFormula(_dataFormula);
 
-        copy.setTrainIdName(_trainIdName);
+        copy.setTrainData(_trainData);
         copy.setControlAutoTrain(_controlAutoTrain);
 
         return manager.registerAction(copy);
@@ -72,6 +79,10 @@ public class ActionWarrant extends AbstractDigitalAction
 
     public LogixNG_SelectNamedBean<Warrant> getSelectNamedBean() {
         return _selectNamedBean;
+    }
+
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
 
     public LogixNG_SelectEnum<DirectOperation> getSelectEnum() {
@@ -126,13 +137,12 @@ public class ActionWarrant extends AbstractDigitalAction
         }
     }
 
-
-    public void setTrainIdName(@Nonnull String trainIdName) {
-        _trainIdName = trainIdName;
+    public void setTrainData(@Nonnull String trainData) {
+        _trainData = trainData;
     }
 
-    public String getTrainIdName() {
-        return _trainIdName;
+    public String getTrainData() {
+        return _trainData;
     }
 
     public void setControlAutoTrain(ControlAutoTrain controlAutoTrain) {
@@ -157,7 +167,7 @@ public class ActionWarrant extends AbstractDigitalAction
                 switch(theOper) {
                     case SetTrainId:
                     case SetTrainName:
-                        return _trainIdName;
+                        return _trainData;
                     case ControlAutoTrain:
                         return _controlAutoTrain.name();
                     default:
@@ -195,10 +205,16 @@ public class ActionWarrant extends AbstractDigitalAction
             return;
         }
 
-        DirectOperation oper = _selectEnum.evaluateEnum(getConditionalNG());
-
         // Variables used in lambda must be effectively final
-        DirectOperation theOper = oper;
+        DirectOperation theOper = _selectEnum.evaluateEnum(getConditionalNG());
+
+        if (!theOper.equals(DirectOperation.GetTrainLocation)) {
+            if (warrant.getRunMode() == Warrant.MODE_RUN && !theOper.equals(DirectOperation.ControlAutoTrain)) {
+                throw new JmriException("Cannot \"" + theOper.toString() + "\" when warrant is running - " + warrant.getDisplayName());  // NOI18N
+//                log.info("Cannot \"{}\" when warrant is running - {}", theOper.toString(), warrant.getDisplayName());
+//                return;
+            }
+        }
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             String msg;
@@ -206,10 +222,7 @@ public class ActionWarrant extends AbstractDigitalAction
 
             switch (theOper) {
                 case AllocateWarrantRoute:
-                    msg = warrant.allocateRoute(false, null);
-                    if (msg != null) {
-                        log.warn("Warrant {} - {}", warrant.getDisplayName(), msg);  // NOI18N
-                    }
+                    warrant.allocateRoute(false, null);
                     break;
 
                 case DeallocateWarrant:
@@ -270,18 +283,31 @@ public class ActionWarrant extends AbstractDigitalAction
                             throw new IllegalArgumentException("invalid train control action: " + _controlAutoTrain);
                     }
                     if (!warrant.controlRunTrain(controlAction)) {
-                        log.warn("Train {} not running  - {}", warrant.getSpeedUtil().getRosterId(), warrant.getDisplayName());  // NOI18N
+                        log.info("Warrant {} {}({}) failed. - {}", warrant.getDisplayName(),
+                                theOper.toString(), _controlAutoTrain.toString(), warrant.getMessage());
+                        throw new JmriException("Warrant " + warrant.getDisplayName() + " "
+                              + theOper.toString() +"(" + _controlAutoTrain.toString() + ") failed. "
+                              + warrant.getMessage());
                     }
                     break;
+
                 case SetTrainId:
-                    if (warrant.getRunMode() == Warrant.MODE_NONE) {
-                        if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
-                            throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
-                        }
+                    if(!warrant.getSpeedUtil().setAddress(getNewData(theOper))) {
+                        throw new JmriException("invalid train ID in action - " + warrant.getDisplayName());  // NOI18N
                     }
                     break;
+
                 case SetTrainName:
                     warrant.setTrainName(getNewData(theOper));
+                    break;
+
+                case GetTrainLocation:
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (memory != null) {
+                        memory.setValue(warrant.getCurrentBlockName());
+                    } else {
+                        throw new JmriException("Memory for GetTrainLocation is null for warrant - " + warrant.getDisplayName());  // NOI18N
+                    }
                     break;
 
                 default:
@@ -309,16 +335,19 @@ public class ActionWarrant extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
         String state = _selectEnum.getDescription(locale);
+        String getLocationMemory = _selectMemoryNamedBean.getDescription(locale);
 
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
             if (_selectEnum.getEnum() != null) {
                 switch (_selectEnum.getEnum()) {
                     case SetTrainId:
-                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainIdName);
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Id", namedBean, _trainData);
                     case SetTrainName:
-                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainIdName);
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Train_Name", namedBean, _trainData);
                     case ControlAutoTrain:
                         return getLongDataDescription(locale, "ActionWarrant_Long_Control", namedBean, _controlAutoTrain.name());
+                    case GetTrainLocation:
+                        return getLongDataDescription(locale, "ActionWarrant_Long_Location", namedBean, getLocationMemory);
                     default:
                         // Fall thru and handle it in the end of the method
                 }
@@ -354,6 +383,7 @@ public class ActionWarrant extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
         _selectEnum.registerListeners();
+        _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -361,6 +391,7 @@ public class ActionWarrant extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
         _selectEnum.unregisterListeners();
+        _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -377,7 +408,8 @@ public class ActionWarrant extends AbstractDigitalAction
         ManuallyRunTrain(Bundle.getMessage("ActionWarrant_ManuallyRunTrain")),
         ControlAutoTrain(Bundle.getMessage("ActionWarrant_ControlAutoTrain")),
         SetTrainId(Bundle.getMessage("ActionWarrant_SetTrainId")),
-        SetTrainName(Bundle.getMessage("ActionWarrant_SetTrainName"));
+        SetTrainName(Bundle.getMessage("ActionWarrant_SetTrainName")),
+        GetTrainLocation(Bundle.getMessage("ActionWarrant_GetTrainLocation"));
 
         private final String _text;
 
@@ -418,6 +450,7 @@ public class ActionWarrant extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     /** {@inheritDoc} */

@@ -14,12 +14,12 @@ import org.junit.jupiter.api.*;
 public class RocoZ21CommandStationTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
       Assert.assertNotNull("RocoZ21CommandStation constructor",new RocoZ21CommandStation());
    }
 
    @Test
-   public void SerialNumber(){
+   public void testSerialNumber(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertEquals("initial serial number",0,rcs.getSerialNumber());
       rcs.setSerialNumber(3456);
@@ -27,7 +27,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void SoftwareVersion(){
+   public void testSoftwareVersion(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertEquals("initial software version",0,rcs.getSoftwareVersion(),0.0);
       rcs.setSoftwareVersion(3456);
@@ -35,7 +35,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void HardwareVersion(){
+   public void testHardwareVersion(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertEquals("initial hardware version",0,rcs.getHardwareVersion());
       rcs.setHardwareVersion(3456);
@@ -43,7 +43,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void BroadcastFlags(){
+   public void testBroadcastFlags(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertEquals("initial Broadcast Flags",0,rcs.getZ21BroadcastFlags());
       rcs.setZ21BroadcastFlags(3456);
@@ -51,7 +51,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void XPressNetFlag(){
+   public void testXPressNetFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial XpressNet Flag",rcs.getXPressNetMessagesFlag());
       rcs.setXPressNetMessagesFlag(true);
@@ -61,7 +61,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void RMBusFlag(){
+   public void testRMBusFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial RMBus Flag",rcs.getRMBusMessagesFlag());
       rcs.setRMBusMessagesFlag(true);
@@ -71,7 +71,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void RailComFlag(){
+   public void testRailComFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial RailCom Flag",rcs.getRailComMessagesFlag());
       rcs.setRailComMessagesFlag(true);
@@ -81,7 +81,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void SystemStatusFlag(){
+   public void testSystemStatusFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial System Status Flag",rcs.getSystemStatusMessagesFlag());
       rcs.setSystemStatusMessagesFlag(true);
@@ -91,7 +91,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void XPressNetLocoMotiveFlag(){
+   public void testXPressNetLocoMotiveFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial XpressNet Locomotive Flag",rcs.getXPressNetLocomotiveMessagesFlag());
       rcs.setXPressNetLocomotiveMessagesFlag(true);
@@ -101,7 +101,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void LocoNetFlag(){
+   public void testLocoNetFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial LocoNet Flag",rcs.getLocoNetMessagesFlag());
       rcs.setLocoNetMessagesFlag(true);
@@ -111,7 +111,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void LocoNetLocoMotiveFlag(){
+   public void testLocoNetLocoMotiveFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial LocoNet Locomotive Flag",rcs.getLocoNetLocomotiveMessagesFlag());
       rcs.setLocoNetLocomotiveMessagesFlag(true);
@@ -121,7 +121,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void LocoNetTurnoutFlag(){
+   public void testLocoNetTurnoutFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial LocoNet Turnout Flag",rcs.getLocoNetTurnoutMessagesFlag());
       rcs.setLocoNetTurnoutMessagesFlag(true);
@@ -131,7 +131,7 @@ public class RocoZ21CommandStationTest {
    }
 
    @Test
-   public void LocoNetOccupancyFlag(){
+   public void testLocoNetOccupancyFlag(){
       RocoZ21CommandStation rcs = new RocoZ21CommandStation();
       Assert.assertFalse("initial LocoNet Occupancy Flag",rcs.getLocoNetOccupancyMessagesFlag());
       rcs.setLocoNetOccupancyMessagesFlag(true);

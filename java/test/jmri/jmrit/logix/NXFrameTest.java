@@ -6,13 +6,12 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.ThreadingUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -74,7 +73,7 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
@@ -144,7 +143,7 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
@@ -204,12 +203,12 @@ public class NXFrameTest {
 
         assertThat(warrant).withFailMessage("warrant").isNotNull();
         assertThat(warrant.getBlockOrders()).withFailMessage("warrant.getBlockOrders(").isNotNull();
-        warrant.getBlockOrders();
         assertThat(warrant.getBlockOrders().size()).withFailMessage("Num Blocks in Route").isEqualTo(7);
         assertThat(warrant.getThrottleCommands().size()>5).withFailMessage("Num Comands").isTrue();
 
+        Assertions.assertNotNull(block);
         String name = block.getDisplayName();
-        jmri.util.JUnitUtil.waitFor(()->{
+        JUnitUtil.waitFor(()->{
             return warrant.getRunningMessage().equals(Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), name));},
             "Waiting message");
         Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
@@ -227,11 +226,16 @@ public class NXFrameTest {
             return Bundle.getMessage("RampHalt", warrant.getTrainName(), testblock.getDisplayName()).equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
         });
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitAppender.assertWarnMessageStartsWith("block: OB1 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB5 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
+
+        JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return m.endsWith("Cmd #8.");
         }, "Train starts to move at 8th command");
@@ -242,7 +246,7 @@ public class NXFrameTest {
         // runtimes() in next line runs the train, then checks location
         assertThat(runtimes(route, _OBlockMgr).getDisplayName()).withFailMessage("Train in last block").isEqualTo(block.getSensor().getDisplayName());
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.ABORT);
         });
 
@@ -261,7 +265,7 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
@@ -280,11 +284,18 @@ public class NXFrameTest {
         assertThat(warrant).withFailMessage("warrant").isNotNull();
 
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             if (m == null) return false;
             return m.endsWith("Cmd #3.");
         }, "Train is moving at 3rd command");
+
+        JUnitAppender.assertWarnMessageStartsWith("block: OB4 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB5 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: East Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: West Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB1 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
 
        // OBlock sensor names
         String[] route = {"OB3", "OB4", "OB5", "OB10", "OB0", "OB1", "OB2", "OB3"};
@@ -307,7 +318,7 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
@@ -326,12 +337,16 @@ public class NXFrameTest {
         assertThat(warrant).withFailMessage("warrant").isNotNull();
 
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        
+        JUnitAppender.assertWarnMessageStartsWith("block: OB6 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 2540.0,");
+        JUnitAppender.assertWarnMessageStartsWith("block: OB7 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
 
         SpeedUtil sp = warrant.getSpeedUtil();
         sp.setRampThrottleIncrement(0.15f);
         sp.setRampTimeIncrement(100);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             if (m == null) return false;
             return m.endsWith("Cmd #8.");
@@ -345,14 +360,14 @@ public class NXFrameTest {
 
         warrant.controlRunTrain(Warrant.HALT); // user interrupts script
         JUnitUtil.waitFor(100);     // waitEmpty(10) causes a lot of failures on Travis GUI
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.equals(Bundle.getMessage("RampHalt", warrant.getTrainName(), block3.getDisplayName())));
         }, "Train Halted");
 
         warrant.controlRunTrain(Warrant.RESUME);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             if (m == null) return false;
             return m.startsWith("At speed Normal") ||

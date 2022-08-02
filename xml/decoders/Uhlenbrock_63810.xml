@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2021 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock publishes the Article number for each (new) device.
+The Uhlenbrock Daisy II has an Article number 6381, which was registered with Uhlenbrock.
+Older LNCV devices may not have their own address, or even no article. They can be programmed using
+Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
+programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220722"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+
+    <decoder>
+        <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter">
+            <model model="mobile station Adapter 63810" productID="6381" formFactor="Stationary" comment="to connect a Märklin mobile station to LocoNet">
+              <versionCV />
+              <size length="50" width="50" height="25" units="mm" />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6381.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Module address">
+              <decVal min="1" max="65534"/>
+              <label xml:lang="it">Indirizzo Modulo: </label>
+              <label xml:lang="fr">Adresse Module: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Module-adres: </label>
+              <label>Module: </label>
+              <tooltip>Enter as decimal value (1-65534)</tooltip>
+            </variable>
+
+            <!-- Loco-Ln address pairs 1-80 -->
+            <variable CV="6381.1" mask="VVVVVVVVVVVVVV" item="Loco 1 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 1:</label>
+              <label xml:lang="de">Lok 1:</label>
+              <label xml:lang="nl">Lok 1:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.2" mask="VVVVVVVVVVVVVV" item="Loco 2 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 2:</label>
+              <label xml:lang="de">Lok 2:</label>
+              <label xml:lang="nl">Lok 2:</label>
+            </variable>
+            <variable CV="6381.3" mask="VVVVVVVVVVVVVV" item="Loco 3 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 3:</label>
+              <label xml:lang="de">Lok 3:</label>
+              <label xml:lang="nl">Lok 3:</label>
+            </variable>
+            <variable CV="6381.4" mask="VVVVVVVVVVVVVV" item="Loco 4 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 4:</label>
+              <label xml:lang="de">Lok 4:</label>
+              <label xml:lang="nl">Lok 4:</label>
+            </variable>
+            <variable CV="6381.5" mask="VVVVVVVVVVVVVV" item="Loco 5 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 5:</label>
+              <label xml:lang="de">Lok 5:</label>
+              <label xml:lang="nl">Lok 5:</label>
+            </variable>
+            <variable CV="6381.6" mask="VVVVVVVVVVVVVV" item="Loco 6 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 6:</label>
+              <label xml:lang="de">Lok 6:</label>
+              <label xml:lang="nl">Lok 6:</label>
+            </variable>
+            <variable CV="6381.7" mask="VVVVVVVVVVVVVV" item="Loco 7 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 7:</label>
+              <label xml:lang="de">Lok 7:</label>
+              <label xml:lang="nl">Lok 7:</label>
+            </variable>
+            <variable CV="6381.8" mask="VVVVVVVVVVVVVV" item="Loco 8 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 8:</label>
+              <label xml:lang="de">Lok 8:</label>
+              <label xml:lang="nl">Lok 8:</label>
+            </variable>
+            <variable CV="6381.9" mask="VVVVVVVVVVVVVV" item="Loco 9 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 9:</label>
+              <label xml:lang="de">Lok 9:</label>
+              <label xml:lang="nl">Lok 9:</label>
+            </variable>
+            <variable CV="6381.10" mask="VVVVVVVVVVVVVV" item="Loco 10 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 10:</label>
+              <label xml:lang="de">Lok 10:</label>
+              <label xml:lang="nl">Lok 10:</label>
+            </variable>
+
+            <variable CV="6381.11" mask="VVVVVVVVVVVVVV" item="Loco 11 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 11:</label>
+              <label xml:lang="de">Lok 11:</label>
+              <label xml:lang="nl">Lok 11:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.12" mask="VVVVVVVVVVVVVV" item="Loco 12 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 12:</label>
+              <label xml:lang="de">Lok 12:</label>
+              <label xml:lang="nl">Lok 12:</label>
+            </variable>
+            <variable CV="6381.13" mask="VVVVVVVVVVVVVV" item="Loco 13 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 13:</label>
+              <label xml:lang="de">Lok 13:</label>
+              <label xml:lang="nl">Lok 13:</label>
+            </variable>
+            <variable CV="6381.14" mask="VVVVVVVVVVVVVV" item="Loco 14 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 14:</label>
+              <label xml:lang="de">Lok 14:</label>
+              <label xml:lang="nl">Lok 14:</label>
+            </variable>
+            <variable CV="6381.15" mask="VVVVVVVVVVVVVV" item="Loco 15 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 15:</label>
+              <label xml:lang="de">Lok 15:</label>
+              <label xml:lang="nl">Lok 15:</label>
+            </variable>
+            <variable CV="6381.16" mask="VVVVVVVVVVVVVV" item="Loco 16 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 16:</label>
+              <label xml:lang="de">Lok 16:</label>
+              <label xml:lang="nl">Lok 16:</label>
+            </variable>
+            <variable CV="6381.17" mask="VVVVVVVVVVVVVV" item="Loco 17 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 17:</label>
+              <label xml:lang="de">Lok 17:</label>
+              <label xml:lang="nl">Lok 17:</label>
+            </variable>
+            <variable CV="6381.18" mask="VVVVVVVVVVVVVV" item="Loco 18 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 18:</label>
+              <label xml:lang="de">Lok 18:</label>
+              <label xml:lang="nl">Lok 18:</label>
+            </variable>
+            <variable CV="6381.19" mask="VVVVVVVVVVVVVV" item="Loco 19 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 19:</label>
+              <label xml:lang="de">Lok 19:</label>
+              <label xml:lang="nl">Lok 19:</label>
+            </variable>
+            <variable CV="6381.20" mask="VVVVVVVVVVVVVV" item="Loco 20 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 20:</label>
+              <label xml:lang="de">Lok 20:</label>
+              <label xml:lang="nl">Lok 20:</label>
+            </variable>
+
+            <variable CV="6381.21" mask="VVVVVVVVVVVVVV" item="Loco 21 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 21:</label>
+              <label xml:lang="de">Lok 21:</label>
+              <label xml:lang="nl">Lok 21:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.22" mask="VVVVVVVVVVVVVV" item="Loco 22 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 22:</label>
+              <label xml:lang="de">Lok 22:</label>
+              <label xml:lang="nl">Lok 22:</label>
+            </variable>
+            <variable CV="6381.23" mask="VVVVVVVVVVVVVV" item="Loco 23 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 23:</label>
+              <label xml:lang="de">Lok 23:</label>
+              <label xml:lang="nl">Lok 23:</label>
+            </variable>
+            <variable CV="6381.24" mask="VVVVVVVVVVVVVV" item="Loco 24 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 24:</label>
+              <label xml:lang="de">Lok 24:</label>
+              <label xml:lang="nl">Lok 24:</label>
+            </variable>
+            <variable CV="6381.25" mask="VVVVVVVVVVVVVV" item="Loco 25 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 25:</label>
+              <label xml:lang="de">Lok 25:</label>
+              <label xml:lang="nl">Lok 25:</label>
+            </variable>
+            <variable CV="6381.26" mask="VVVVVVVVVVVVVV" item="Loco 26 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 26:</label>
+              <label xml:lang="de">Lok 26:</label>
+              <label xml:lang="nl">Lok 26:</label>
+            </variable>
+            <variable CV="6381.72" mask="VVVVVVVVVVVVVV" item="Loco 27 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 27:</label>
+              <label xml:lang="de">Lok 27:</label>
+              <label xml:lang="nl">Lok 27:</label>
+            </variable>
+            <variable CV="6381.28" mask="VVVVVVVVVVVVVV" item="Loco 28 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 28:</label>
+              <label xml:lang="de">Lok 28:</label>
+              <label xml:lang="nl">Lok 28:</label>
+            </variable>
+            <variable CV="6381.29" mask="VVVVVVVVVVVVVV" item="Loco 29 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 29:</label>
+              <label xml:lang="de">Lok 29:</label>
+              <label xml:lang="nl">Lok 29:</label>
+            </variable>
+            <variable CV="6381.30" mask="VVVVVVVVVVVVVV" item="Loco 30 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 30:</label>
+              <label xml:lang="de">Lok 30:</label>
+              <label xml:lang="nl">Lok 30:</label>
+            </variable>
+
+            <variable CV="6381.31" mask="VVVVVVVVVVVVVV" item="Loco 31 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 31:</label>
+              <label xml:lang="de">Lok 31:</label>
+              <label xml:lang="nl">Lok 31:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.32" mask="VVVVVVVVVVVVVV" item="Loco 32 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 32:</label>
+              <label xml:lang="de">Lok 32:</label>
+              <label xml:lang="nl">Lok 32:</label>
+            </variable>
+            <variable CV="6381.33" mask="VVVVVVVVVVVVVV" item="Loco 33 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 33:</label>
+              <label xml:lang="de">Lok 33:</label>
+              <label xml:lang="nl">Lok 33:</label>
+            </variable>
+            <variable CV="6381.34" mask="VVVVVVVVVVVVVV" item="Loco 34 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 34:</label>
+              <label xml:lang="de">Lok 34:</label>
+              <label xml:lang="nl">Lok 34:</label>
+            </variable>
+            <variable CV="6381.35" mask="VVVVVVVVVVVVVV" item="Loco 35 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 35:</label>
+              <label xml:lang="de">Lok 35:</label>
+              <label xml:lang="nl">Lok 35:</label>
+            </variable>
+            <variable CV="6381.36" mask="VVVVVVVVVVVVVV" item="Loco 36 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 36:</label>
+              <label xml:lang="de">Lok 36:</label>
+              <label xml:lang="nl">Lok 36:</label>
+            </variable>
+            <variable CV="6381.37" mask="VVVVVVVVVVVVVV" item="Loco 37 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 37:</label>
+              <label xml:lang="de">Lok 37:</label>
+              <label xml:lang="nl">Lok 37:</label>
+            </variable>
+            <variable CV="6381.38" mask="VVVVVVVVVVVVVV" item="Loco 38 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 38:</label>
+              <label xml:lang="de">Lok 38:</label>
+              <label xml:lang="nl">Lok 38:</label>
+            </variable>
+            <variable CV="6381.39" mask="VVVVVVVVVVVVVV" item="Loco 39 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 39:</label>
+              <label xml:lang="de">Lok 39:</label>
+              <label xml:lang="nl">Lok 39:</label>
+            </variable>
+            <variable CV="6381.40" mask="VVVVVVVVVVVVVV" item="Loco 40 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 40:</label>
+              <label xml:lang="de">Lok 40:</label>
+              <label xml:lang="nl">Lok 40:</label>
+            </variable>
+
+            <variable CV="6381.41" mask="VVVVVVVVVVVVVV" item="Loco 41 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 41:</label>
+              <label xml:lang="de">Lok 41:</label>
+              <label xml:lang="nl">Lok 41:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.42" mask="VVVVVVVVVVVVVV" item="Loco 42 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 42:</label>
+              <label xml:lang="de">Lok 42:</label>
+              <label xml:lang="nl">Lok 42:</label>
+            </variable>
+            <variable CV="6381.43" mask="VVVVVVVVVVVVVV" item="Loco 43 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 43:</label>
+              <label xml:lang="de">Lok 43:</label>
+              <label xml:lang="nl">Lok 43:</label>
+            </variable>
+            <variable CV="6381.44" mask="VVVVVVVVVVVVVV" item="Loco 44 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 44:</label>
+              <label xml:lang="de">Lok 44:</label>
+              <label xml:lang="nl">Lok 44:</label>
+            </variable>
+            <variable CV="6381.45" mask="VVVVVVVVVVVVVV" item="Loco 45 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 45:</label>
+              <label xml:lang="de">Lok 45:</label>
+              <label xml:lang="nl">Lok 45:</label>
+            </variable>
+            <variable CV="6381.46" mask="VVVVVVVVVVVVVV" item="Loco 46 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 46:</label>
+              <label xml:lang="de">Lok 46:</label>
+              <label xml:lang="nl">Lok 46:</label>
+            </variable>
+            <variable CV="6381.47" mask="VVVVVVVVVVVVVV" item="Loco 47 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 47:</label>
+              <label xml:lang="de">Lok 47:</label>
+              <label xml:lang="nl">Lok 47:</label>
+            </variable>
+            <variable CV="6381.48" mask="VVVVVVVVVVVVVV" item="Loco 48 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 48:</label>
+              <label xml:lang="de">Lok 48:</label>
+              <label xml:lang="nl">Lok 48:</label>
+            </variable>
+            <variable CV="6381.49" mask="VVVVVVVVVVVVVV" item="Loco 49 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 49:</label>
+              <label xml:lang="de">Lok 49:</label>
+              <label xml:lang="nl">Lok 49:</label>
+            </variable>
+            <variable CV="6381.50" mask="VVVVVVVVVVVVVV" item="Loco 50 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 50:</label>
+              <label xml:lang="de">Lok 50:</label>
+              <label xml:lang="nl">Lok 50:</label>
+            </variable>
+
+            <variable CV="6381.51" mask="VVVVVVVVVVVVVV" item="Loco 51 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 51:</label>
+              <label xml:lang="de">Lok 51:</label>
+              <label xml:lang="nl">Lok 51:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.52" mask="VVVVVVVVVVVVVV" item="Loco 52 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 52:</label>
+              <label xml:lang="de">Lok 52:</label>
+              <label xml:lang="nl">Lok 52:</label>
+            </variable>
+            <variable CV="6381.53" mask="VVVVVVVVVVVVVV" item="Loco 53 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 53:</label>
+              <label xml:lang="de">Lok 53:</label>
+              <label xml:lang="nl">Lok 53:</label>
+            </variable>
+            <variable CV="6381.54" mask="VVVVVVVVVVVVVV" item="Loco 54 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 54:</label>
+              <label xml:lang="de">Lok 54:</label>
+              <label xml:lang="nl">Lok 54:</label>
+            </variable>
+            <variable CV="6381.55" mask="VVVVVVVVVVVVVV" item="Loco 55 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 55:</label>
+              <label xml:lang="de">Lok 55:</label>
+              <label xml:lang="nl">Lok 55:</label>
+            </variable>
+            <variable CV="6381.56" mask="VVVVVVVVVVVVVV" item="Loco 56 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 56:</label>
+              <label xml:lang="de">Lok 56:</label>
+              <label xml:lang="nl">Lok 56:</label>
+            </variable>
+            <variable CV="6381.57" mask="VVVVVVVVVVVVVV" item="Loco 57 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 57:</label>
+              <label xml:lang="de">Lok 57:</label>
+              <label xml:lang="nl">Lok 57:</label>
+            </variable>
+            <variable CV="6381.58" mask="VVVVVVVVVVVVVV" item="Loco 58 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 58:</label>
+              <label xml:lang="de">Lok 58:</label>
+              <label xml:lang="nl">Lok 58:</label>
+            </variable>
+            <variable CV="6381.59" mask="VVVVVVVVVVVVVV" item="Loco 59 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 59:</label>
+              <label xml:lang="de">Lok 59:</label>
+              <label xml:lang="nl">Lok 59:</label>
+            </variable>
+            <variable CV="6381.60" mask="VVVVVVVVVVVVVV" item="Loco 60 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 60:</label>
+              <label xml:lang="de">Lok 60:</label>
+              <label xml:lang="nl">Lok 60:</label>
+            </variable>
+
+            <variable CV="6381.61" mask="VVVVVVVVVVVVVV" item="Loco 61 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 61:</label>
+              <label xml:lang="de">Lok 61:</label>
+              <label xml:lang="nl">Lok 61:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.62" mask="VVVVVVVVVVVVVV" item="Loco 62 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 62:</label>
+              <label xml:lang="de">Lok 62:</label>
+              <label xml:lang="nl">Lok 62:</label>
+            </variable>
+            <variable CV="6381.63" mask="VVVVVVVVVVVVVV" item="Loco 63 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 63:</label>
+              <label xml:lang="de">Lok 63:</label>
+              <label xml:lang="nl">Lok 63:</label>
+            </variable>
+            <variable CV="6381.64" mask="VVVVVVVVVVVVVV" item="Loco 64 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 64:</label>
+              <label xml:lang="de">Lok 64:</label>
+              <label xml:lang="nl">Lok 64:</label>
+            </variable>
+            <variable CV="6381.65" mask="VVVVVVVVVVVVVV" item="Loco 65 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 65:</label>
+              <label xml:lang="de">Lok 65:</label>
+              <label xml:lang="nl">Lok 65:</label>
+            </variable>
+            <variable CV="6381.66" mask="VVVVVVVVVVVVVV" item="Loco 66 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 66:</label>
+              <label xml:lang="de">Lok 66:</label>
+              <label xml:lang="nl">Lok 66:</label>
+            </variable>
+            <variable CV="6381.67" mask="VVVVVVVVVVVVVV" item="Loco 67 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 67:</label>
+              <label xml:lang="de">Lok 67:</label>
+              <label xml:lang="nl">Lok 67:</label>
+            </variable>
+            <variable CV="6381.68" mask="VVVVVVVVVVVVVV" item="Loco 68 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 68:</label>
+              <label xml:lang="de">Lok 68:</label>
+              <label xml:lang="nl">Lok 68:</label>
+            </variable>
+            <variable CV="6381.69" mask="VVVVVVVVVVVVVV" item="Loco 69 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 9:</label>
+              <label xml:lang="de">Lok 9:</label>
+              <label xml:lang="nl">Lok 9:</label>
+            </variable>
+            <variable CV="6381.70" mask="VVVVVVVVVVVVVV" item="Loco 70 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 70:</label>
+              <label xml:lang="de">Lok 70:</label>
+              <label xml:lang="nl">Lok 70:</label>
+            </variable>
+
+            <variable CV="6381.71" mask="VVVVVVVVVVVVVV" item="Loco 71 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 71:</label>
+              <label xml:lang="de">Lok 71:</label>
+              <label xml:lang="nl">Lok 71:</label>
+              <tooltip>Set to 0 to use this address for normal Loco addressing</tooltip>
+              <tooltip xml:lang="de">Auf 0 setzen für normales Lokbetrieb</tooltip>
+              <tooltip xml:lang="nl">Op 0 zal de adapter dit adres negeren op LocoNet</tooltip>
+            </variable>
+            <variable CV="6381.72" mask="VVVVVVVVVVVVVV" item="Loco 72 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 72:</label>
+              <label xml:lang="de">Lok 72:</label>
+              <label xml:lang="nl">Lok 72:</label>
+            </variable>
+            <variable CV="6381.73" mask="VVVVVVVVVVVVVV" item="Loco 73 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 73:</label>
+              <label xml:lang="de">Lok 73:</label>
+              <label xml:lang="nl">Lok 73:</label>
+            </variable>
+            <variable CV="6381.74" mask="VVVVVVVVVVVVVV" item="Loco 74 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 74:</label>
+              <label xml:lang="de">Lok 74:</label>
+              <label xml:lang="nl">Lok 74:</label>
+            </variable>
+            <variable CV="6381.75" mask="VVVVVVVVVVVVVV" item="Loco 75 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 75:</label>
+              <label xml:lang="de">Lok 75:</label>
+              <label xml:lang="nl">Lok 75:</label>
+            </variable>
+            <variable CV="6381.76" mask="VVVVVVVVVVVVVV" item="Loco 76 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 76:</label>
+              <label xml:lang="de">Lok 76:</label>
+              <label xml:lang="nl">Lok 76:</label>
+            </variable>
+            <variable CV="6381.77" mask="VVVVVVVVVVVVVV" item="Loco 77 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 77:</label>
+              <label xml:lang="de">Lok 77:</label>
+              <label xml:lang="nl">Lok 77:</label>
+            </variable>
+            <variable CV="6381.78" mask="VVVVVVVVVVVVVV" item="Loco 78 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 78:</label>
+              <label xml:lang="de">Lok 78:</label>
+              <label xml:lang="nl">Lok 78:</label>
+            </variable>
+            <variable CV="6381.79" mask="VVVVVVVVVVVVVV" item="Loco 79 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 79:</label>
+              <label xml:lang="de">Lok 79:</label>
+              <label xml:lang="nl">Lok 79:</label>
+            </variable>
+            <variable CV="6381.80" mask="VVVVVVVVVVVVVV" item="Loco 80 Address" default="0">
+              <decVal min="0" max="2000"/>
+              <label>Loco 80:</label>
+              <label xml:lang="de">Lok 80:</label>
+              <label xml:lang="nl">Lok 80:</label>
+            </variable>
+
+            <variable CV="6381.81" item="Startup Wait" default="100">
+              <decVal min="0" max="255"/>
+              <label>Startup wait: </label>
+              <label xml:lang="de">Start Wartezeit: </label>
+              <label xml:lang="nl">Opstartpauze: </label>
+              <tooltip>Waiting period in 50 msec steps. The standard value is equivalent to approx. 5 seconds</tooltip>
+              <tooltip xml:lang="de">Startphase Wartezeit in 50 mSek Schritten. Werkseinstellung ~ 5 S.</tooltip>
+              <tooltip xml:lang="nl">Wachttijd inschakelen in stappen van 50 ms. Standaard ingesteld op ca. 5 s.</tooltip>
+            </variable>
+
+            <variable CV="6381.82" mask="XXXXXXXV" item="Clear Addresses" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label>Clear All Addresses:</label>
+              <label xml:lang="de">Adressen Löschen:</label>
+              <label xml:lang="nl">Alle adressen wissen:</label>
+              <tooltip>Check this box and write to decoder to reset all entries 1-80 to normal Loco operation</tooltip>
+            </variable>
+
+        </variables>
+    </decoder>
+
+    <pane>
+        <name>LNCV Configuration</name>
+        <name xml:lang="de">LNCV Konfiguration</name>
+        <name xml:lang="nl">LNCV instellingen</name>
+        <row>
+            <column>
+              <label>
+                <text>Before writing, open a Programming</text>
+                <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+                <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              </label>
+              <label>
+                <text>session using the LocoNet LNCV Tool.</text>
+                <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+                <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              </label>
+
+              <label>
+                <text> </text>
+              </label>
+
+              <display item="Startup Wait"/>
+
+              <label>
+                <text> </text>
+              </label>
+
+              <display item="Clear Addresses" format="checkbox"/>
+            </column>
+
+          <column>
+              <label>
+                <text>Märklin Loco &gt; LocoNet Turnout Address Matches (0 = inactive)</text>
+              </label>
+              <row>
+                <column>
+                  <display item="Loco 1 Address"/>
+                  <display item="Loco 2 Address"/>
+                  <display item="Loco 3 Address"/>
+                  <display item="Loco 4 Address"/>
+                  <display item="Loco 5 Address"/>
+                  <display item="Loco 6 Address"/>
+                  <display item="Loco 7 Address"/>
+                  <display item="Loco 8 Address"/>
+                  <display item="Loco 9 Address"/>
+                  <display item="Loco 10 Address"/>
+                  <display item="Loco 11 Address"/>
+                  <display item="Loco 12 Address"/>
+                  <display item="Loco 13 Address"/>
+                  <display item="Loco 14 Address"/>
+                  <display item="Loco 15 Address"/>
+                  <display item="Loco 16 Address"/>
+                  <display item="Loco 17 Address"/>
+                  <display item="Loco 18 Address"/>
+                  <display item="Loco 19 Address"/>
+                  <display item="Loco 20 Address"/>
+                </column>
+
+                <column>
+                  <display item="Loco 21 Address"/>
+                  <display item="Loco 22 Address"/>
+                  <display item="Loco 23 Address"/>
+                  <display item="Loco 24 Address"/>
+                  <display item="Loco 25 Address"/>
+                  <display item="Loco 26 Address"/>
+                  <display item="Loco 27 Address"/>
+                  <display item="Loco 28 Address"/>
+                  <display item="Loco 29 Address"/>
+                  <display item="Loco 30 Address"/>
+                  <display item="Loco 31 Address"/>
+                  <display item="Loco 32 Address"/>
+                  <display item="Loco 33 Address"/>
+                  <display item="Loco 34 Address"/>
+                  <display item="Loco 35 Address"/>
+                  <display item="Loco 36 Address"/>
+                  <display item="Loco 37 Address"/>
+                  <display item="Loco 38 Address"/>
+                  <display item="Loco 39 Address"/>
+                  <display item="Loco 40 Address"/>
+                </column>
+
+                <column>
+                  <display item="Loco 41 Address"/>
+                  <display item="Loco 42 Address"/>
+                  <display item="Loco 43 Address"/>
+                  <display item="Loco 44 Address"/>
+                  <display item="Loco 45 Address"/>
+                  <display item="Loco 46 Address"/>
+                  <display item="Loco 47 Address"/>
+                  <display item="Loco 48 Address"/>
+                  <display item="Loco 49 Address"/>
+                  <display item="Loco 50 Address"/>
+                  <display item="Loco 51 Address"/>
+                  <display item="Loco 52 Address"/>
+                  <display item="Loco 53 Address"/>
+                  <display item="Loco 54 Address"/>
+                  <display item="Loco 55 Address"/>
+                  <display item="Loco 56 Address"/>
+                  <display item="Loco 57 Address"/>
+                  <display item="Loco 58 Address"/>
+                  <display item="Loco 59 Address"/>
+                  <display item="Loco 60 Address"/>
+                </column>
+
+                <column>
+                  <display item="Loco 61 Address"/>
+                  <display item="Loco 62 Address"/>
+                  <display item="Loco 63 Address"/>
+                  <display item="Loco 64 Address"/>
+                  <display item="Loco 65 Address"/>
+                  <display item="Loco 66 Address"/>
+                  <display item="Loco 67 Address"/>
+                  <display item="Loco 68 Address"/>
+                  <display item="Loco 69 Address"/>
+                  <display item="Loco 70 Address"/>
+                  <display item="Loco 71 Address"/>
+                  <display item="Loco 72 Address"/>
+                  <display item="Loco 73 Address"/>
+                  <display item="Loco 74 Address"/>
+                  <display item="Loco 75 Address"/>
+                  <display item="Loco 76 Address"/>
+                  <display item="Loco 77 Address"/>
+                  <display item="Loco 78 Address"/>
+                  <display item="Loco 79 Address"/>
+                  <display item="Loco 80 Address"/>
+                </column>
+
+              </row>
+            </column>
+
+        </row>
+    </pane>
+
+</decoder-config>

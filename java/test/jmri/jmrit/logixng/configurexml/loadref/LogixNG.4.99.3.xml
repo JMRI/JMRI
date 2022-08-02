@@ -13057,6 +13057,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13125,6 +13128,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13193,6 +13199,9 @@
       <rowOrColumnName>Signal before</rowOrColumnName>
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13261,6 +13270,9 @@
       <rowOrColumnName>2</rowOrColumnName>
       <tableRowOrColumn>Column</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13329,6 +13341,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -13397,6 +13412,9 @@
       <rowOrColumnName />
       <tableRowOrColumn>Row</tableRowOrColumn>
       <namedBeanType>Light</namedBeanType>
+      <localVariableNamedBean />
+      <localVariableEvent />
+      <localVariableNewValue />
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -14927,6 +14945,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -15000,6 +15022,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -15073,6 +15099,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>Deallocate</enum>
@@ -15148,6 +15178,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetValue</enum>
@@ -15223,6 +15257,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>ClearError</enum>
@@ -15298,6 +15336,10 @@
         <name>OB99</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>LocalVariable</addressing>
         <enum>Deallocate</enum>
@@ -15374,6 +15416,10 @@
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Formula</addressing>
         <enum>Deallocate</enum>
@@ -15450,6 +15496,10 @@
         <listenToMemory>no</listenToMemory>
         <formula>"IT"+index</formula>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Reference</addressing>
         <enum>Deallocate</enum>
@@ -15526,6 +15576,10 @@
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetOutOfService</enum>
@@ -18730,6 +18784,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -18804,6 +18862,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -18878,6 +18940,10 @@
         <addressing>Direct</addressing>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -18954,6 +19020,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>SetTrainName</enum>
@@ -19030,6 +19100,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>ControlAutoTrain</enum>
@@ -19106,6 +19180,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -19182,6 +19260,10 @@
         <name>Test Warrant</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>LocalVariable</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -19259,6 +19341,10 @@
         <listenToMemory>no</listenToMemory>
         <localVariable>index</localVariable>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Formula</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -19336,6 +19422,10 @@
         <listenToMemory>no</listenToMemory>
         <formula>"IT"+index</formula>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Reference</addressing>
         <enum>AllocateWarrantRoute</enum>
@@ -19413,6 +19503,10 @@
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
       </namedBean>
+      <memoryNamedBean>
+        <addressing>Direct</addressing>
+        <listenToMemory>no</listenToMemory>
+      </memoryNamedBean>
       <operation>
         <addressing>Direct</addressing>
         <enum>DeallocateWarrant</enum>

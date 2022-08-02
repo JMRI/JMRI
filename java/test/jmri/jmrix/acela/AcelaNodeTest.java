@@ -1,9 +1,9 @@
 package jmri.jmrix.acela;
 
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Sensor;
-import jmri.Turnout;
+// import jmri.InstanceManager;
+// import jmri.Light;
+// import jmri.Sensor;
+// import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
 
@@ -160,9 +160,9 @@ public class AcelaNodeTest {
 
     AcelaNode a0, a1, a2, a3;
 
-    Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
-    Light l1, l2, l3;
+    // Turnout t1, t2, t3;
+    // Sensor s1, s2, s3, s4, s5;
+    // Light l1, l2, l3;
 
     @BeforeEach
     public void setUp() {
@@ -194,15 +194,15 @@ public class AcelaNodeTest {
         a3 = new AcelaNode(3, AcelaNode.SY, tcis);
         a3.initNode();
 
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT99", "99");
-        s1 = InstanceManager.sensorManagerInstance().newSensor("IS98", "98");
+        // t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT99", "99");
+        // s1 = InstanceManager.sensorManagerInstance().newSensor("IS98", "98");
 
     }
 
     @AfterEach
     public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
         JUnitUtil.tearDown();
     }
 

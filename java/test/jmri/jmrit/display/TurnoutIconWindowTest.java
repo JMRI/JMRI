@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -9,7 +7,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -18,19 +16,18 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class TurnoutIconWindowTest {
 
     @Test
     public void testPanelEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         jmri.jmrit.display.panelEditor.PanelEditor panel
                 = new jmri.jmrit.display.panelEditor.PanelEditor("TurnoutIconWindowTest.testPanelEditor");
 
-        panel.getTargetPanel();
-
         TurnoutIcon icon = new TurnoutIcon(panel);
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        icon.setTurnout(new NamedBeanHandle<Turnout>("IT1", sn));
+        icon.setTurnout(new NamedBeanHandle<>("IT1", sn));
 
         icon.setDisplayLevel(Editor.TURNOUTS);
 
@@ -83,11 +80,9 @@ public class TurnoutIconWindowTest {
 
     @Test
     public void testLayoutEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         jmri.jmrit.display.layoutEditor.LayoutEditor panel
                 = new jmri.jmrit.display.layoutEditor.LayoutEditor("TurnoutIconWindowTest.testLayoutEditor");
-
-        panel.getTargetPanel();
 
         TurnoutIcon icon = new TurnoutIcon(panel);
         icon.setDisplayLevel(Editor.TURNOUTS);
@@ -141,7 +136,7 @@ public class TurnoutIconWindowTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -149,7 +144,7 @@ public class TurnoutIconWindowTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

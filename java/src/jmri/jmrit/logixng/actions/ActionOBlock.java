@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
@@ -33,6 +34,10 @@ public class ActionOBlock extends AbstractDigitalAction
     private final LogixNG_SelectEnum<DirectOperation> _selectEnum =
             new LogixNG_SelectEnum<>(this, DirectOperation.values(), DirectOperation.Deallocate, this);
 
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+
     private NamedBeanAddressing _dataAddressing = NamedBeanAddressing.Direct;
     private String _dataReference = "";
     private String _dataLocalVariable = "";
@@ -55,6 +60,7 @@ public class ActionOBlock extends AbstractDigitalAction
         ActionOBlock copy = new ActionOBlock(sysName, userName);
         copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         _selectEnum.copy(copy._selectEnum);
 
         copy.setDataAddressing(_dataAddressing);
@@ -68,6 +74,10 @@ public class ActionOBlock extends AbstractDigitalAction
 
     public LogixNG_SelectNamedBean<OBlock> getSelectNamedBean() {
         return _selectNamedBean;
+    }
+
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
 
     public LogixNG_SelectEnum<DirectOperation> getSelectEnum() {
@@ -198,6 +208,32 @@ public class ActionOBlock extends AbstractDigitalAction
                 case ClearOutOfService:
                     oblock.setOutOfService(false);
                     break;
+                case GetBlockWarrant:
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (memory != null) {
+                        Warrant w = oblock.getWarrant();
+                        if (w != null) {
+                            memory.setValue(w.getDisplayName());
+                        } else {
+                            memory.setValue("unallocated");
+                        }
+                    } else {
+                        throw new JmriException("Memory for GetBlockWarrant is null for oblock - " + oblock.getDisplayName());  // NOI18N
+                    }
+                    break;
+                case GetBlockValue:
+                    memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (memory != null) {
+                        Object obj = oblock.getValue();
+                        if (obj instanceof String) {
+                            memory.setValue(obj);
+                        } else {
+                            memory.setValue("");
+                        }
+             } else {
+                        throw new JmriException("Memory for GetBlockValue is null for oblock - " + oblock.getDisplayName());  // NOI18N
+                    }
+                    break;
                 default:
                     throw new IllegalArgumentException("invalid oper state: " + theOper.name());
             }
@@ -223,26 +259,39 @@ public class ActionOBlock extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String namedBean = _selectNamedBean.getDescription(locale);
         String state = _selectEnum.getDescription(locale);
+        String getLocationMemory = _selectMemoryNamedBean.getDescription(locale);
 
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
-            if (_selectEnum.getEnum() == DirectOperation.SetValue) {
-                String bundleKey = "ActionOBlock_Long_Value";
-                switch (_dataAddressing) {
-                    case Direct:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, _oblockValue);
-                    case Reference:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
-                    case LocalVariable:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
-                    case Formula:
-                        return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
+            if (_selectEnum.getEnum() != null) {
+                switch (_selectEnum.getEnum()) {
+                    case SetValue:
+                        return getLongDataDescription(locale, "ActionOBlock_Long_Value", namedBean, _oblockValue);
+                    case GetBlockWarrant:
+                        return getLongDataDescription(locale, "ActionOBlock_Long_GetWarrant", namedBean, getLocationMemory);
+                    case GetBlockValue:
+                        return getLongDataDescription(locale, "ActionOBlock_Long_GetTrain", namedBean, getLocationMemory);
                     default:
-                        throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+                        // Fall thru and handle it in the end of the method
                 }
             }
         }
 
         return Bundle.getMessage(locale, "ActionOBlock_Long", namedBean, state);
+    }
+
+    private String getLongDataDescription(Locale locale, String bundleKey, String namedBean, String value) {
+        switch (_dataAddressing) {
+            case Direct:
+                return Bundle.getMessage(locale, bundleKey, namedBean, value);
+            case Reference:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByReference", _dataReference));
+            case LocalVariable:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByLocalVariable", _dataLocalVariable));
+            case Formula:
+                return Bundle.getMessage(locale, bundleKey, namedBean, Bundle.getMessage("AddressByFormula", _dataFormula));
+            default:
+                throw new IllegalArgumentException("invalid _dataAddressing state: " + _dataAddressing.name());
+        }
     }
 
     /** {@inheritDoc} */
@@ -256,6 +305,7 @@ public class ActionOBlock extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         _selectNamedBean.registerListeners();
         _selectEnum.registerListeners();
+        _selectMemoryNamedBean.addPropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -263,6 +313,7 @@ public class ActionOBlock extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         _selectNamedBean.unregisterListeners();
         _selectEnum.unregisterListeners();
+        _selectMemoryNamedBean.removePropertyChangeListener("value", this);
     }
 
     /** {@inheritDoc} */
@@ -276,7 +327,9 @@ public class ActionOBlock extends AbstractDigitalAction
         SetError(Bundle.getMessage("ActionOBlock_SetError")),
         ClearError(Bundle.getMessage("ActionOBlock_ClearError")),
         SetOutOfService(Bundle.getMessage("ActionOBlock_SetOutOfService")),
-        ClearOutOfService(Bundle.getMessage("ActionOBlock_ClearOutOfService"));
+        ClearOutOfService(Bundle.getMessage("ActionOBlock_ClearOutOfService")),
+        GetBlockWarrant(Bundle.getMessage("ActionOBlock_GetBlockWarrant")),
+        GetBlockValue(Bundle.getMessage("ActionOBlock_GetValue"));
 
         private final String _text;
 

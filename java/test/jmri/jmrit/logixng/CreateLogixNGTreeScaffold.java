@@ -806,6 +806,30 @@ public class CreateLogixNGTreeScaffold {
         }
 
 
+        ActionListenOnBeansLocalVariable actionListenOnBeansLocalVariable = new ActionListenOnBeansLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansLocalVariable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionListenOnBeansLocalVariable = new ActionListenOnBeansLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeansLocalVariable.setComment("A comment");
+        actionListenOnBeansLocalVariable.setNamedBeanType(NamedBeanType.Turnout);
+        actionListenOnBeansLocalVariable.setListenOnAllProperties(true);
+        actionListenOnBeansLocalVariable.setLocalVariableBeanToListenOn("beanToListenOn");
+        actionListenOnBeansLocalVariable.setLocalVariableNamedBean("bean");
+        actionListenOnBeansLocalVariable.setLocalVariableEvent("event");
+        actionListenOnBeansLocalVariable.setLocalVariableNewValue("value");
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeansLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        DigitalMany manyTemp_ActionListenOnBeansLocalVariable =
+                new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        manyTemp_ActionListenOnBeansLocalVariable.setComment("Action socket 1");
+        maleSocket = digitalActionManager.registerAction(manyTemp_ActionListenOnBeansLocalVariable);
+        maleSocket.setEnabled(false);
+        actionListenOnBeansLocalVariable.getChild(0).connect(maleSocket);
+
+
         ActionListenOnBeansTable actionListenOnBeansTable = new ActionListenOnBeansTable(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         maleSocket.setEnabled(false);
@@ -824,6 +848,9 @@ public class CreateLogixNGTreeScaffold {
         actionListenOnBeansTable.setTableRowOrColumn(TableRowOrColumn.Row);
         actionListenOnBeansTable.setIncludeCellsWithoutHeader(false);
         actionListenOnBeansTable.setListenOnAllProperties(false);
+        actionListenOnBeansTable.setLocalVariableNamedBean("variableNamedBean");
+        actionListenOnBeansTable.setLocalVariableEvent("variableEvent");
+        actionListenOnBeansTable.setLocalVariableNewValue("variableNewValue");
         maleSocket = digitalActionManager.registerAction(actionListenOnBeansTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -1870,7 +1897,7 @@ public class CreateLogixNGTreeScaffold {
         actionWarrant.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetTrainName);
 
         actionWarrant.setDataAddressing(NamedBeanAddressing.Direct);
-        actionWarrant.setTrainIdName("ABC");
+        actionWarrant.setTrainData("ABC");
 
         maleSocket = digitalActionManager.registerAction(actionWarrant);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
@@ -2257,6 +2284,52 @@ public class CreateLogixNGTreeScaffold {
         actionFor.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(actionFor);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ForEach actionForEach =
+                new ForEach(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+        actionForEach.setComment("A comment");
+        actionForEach.setUseCommonSource(false);
+        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Variable);
+        actionForEach.setFormula("turnouts");
+        actionForEach.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+        actionForEach.setComment("A comment");
+        actionForEach.setUseCommonSource(false);
+        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Memory);
+        actionForEach.setFormula("turnouts");
+        actionForEach.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+        actionForEach.setComment("A comment");
+        actionForEach.setUseCommonSource(false);
+        actionForEach.setCommonManager(ForEach.CommonManager.Turnouts);
+        actionForEach.setUserSpecifiedSource(ForEach.UserSpecifiedSource.Formula);
+        actionForEach.setFormula("turnouts");
+        actionForEach.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEach);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        for (ForEach.CommonManager manager : ForEach.CommonManager.values()) {
+            actionForEach = new ForEach(digitalActionManager.getAutoSystemName(), null);
+            actionForEach.setComment("A comment");
+            actionForEach.setUseCommonSource(true);
+            actionForEach.setCommonManager(manager);
+            maleSocket = digitalActionManager.registerAction(actionForEach);
+            actionManySocket.getChild(indexAction++).connect(maleSocket);
+        }
 
 
         IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);

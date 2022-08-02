@@ -937,6 +937,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return true;
     }
+    
+    public boolean isTurn() {
+        return !isLocalSwitcher() &&
+                TrainCommon.splitString(getTrainDepartsName())
+                        .equals(TrainCommon.splitString(getTrainTerminatesName()));
+    }
 
     /**
      * Used to determine if train is carrying only passenger cars.
@@ -1722,6 +1728,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                         new Object[] { getName(), car.toString(), car.getLocationName(),
                                                 car.getTrackName(), car.getDestinationName(),
                                                 car.getDestinationTrackName() }));
+                    continue;
+                }
+                // don't allow local move when car is in staging
+                if (!isTurn() && car.getTrack().isStaging() &&
+                        rldest.getLocation() == car.getLocation()) {
+                    log.debug(
+                            "Car ({}) at ({}, {}) not allowed to perform local move in staging ({})",
+                            car.toString(), car.getLocationName(), car.getTrackName(), rldest.getName());
                     continue;
                 }
                 // allow car to return to staging?
