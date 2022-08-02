@@ -379,8 +379,18 @@ public final class CbusConstants {
      * or boosters. They are addressed to a consumer by using the consumer's
      * node number, rather than the producer NN. ON or OFF is determined by the
      * event type, ACON or ACOF
+     * 
+     * The track number is added to these base values with 0 and 1 being reserved
+     * for main and prog tracks.
      */
     public static final int CS_DEF_EV_POWER_REQ = 1000;
     public static final int CS_DEF_EV_POWER_ACK = 2000;
+    public static final int CS_DEF_EV_POWER_END = 3000;
+    
+    public static final int MAIN_TRACK = 0;
+    public static final int PROG_TRACK = 1;
+    
+    public static final int DEFAULT_CS_NN = 65534;
+    public static final int CAB_NN = 65535;
 }
 

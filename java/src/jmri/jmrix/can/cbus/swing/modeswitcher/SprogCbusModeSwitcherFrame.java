@@ -16,6 +16,8 @@ import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
+import jmri.jmrix.can.cbus.*;
+import jmri.jmrix.can.cbus.swing.modeswitcher.Bundle;
 import jmri.util.JmriJFrame;
 
 import org.slf4j.Logger;
@@ -71,7 +73,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
             panel.add(label, BorderLayout.NORTH);
             return false;
         } else {
-            csNode = 65534;
+            csNode = CbusConstants.DEFAULT_CS_NN;
             CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
             if (cs != null) {
                 CbusNode csnode = cs.getCsByNum(0);
@@ -79,7 +81,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
                     csNode = csnode.getNodeNumber();
                 }
             } else {
-                log.info("Unable to fetch Master Command Station from Node Manager");
+                log.info("Unable to fetch Master Command Station from Node Manager, defaulting to NN {}", CbusConstants.DEFAULT_CS_NN);
             }
             send = new CbusSend(_memo);
             

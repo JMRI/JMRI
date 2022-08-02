@@ -132,7 +132,7 @@ public class CbusPredefinedMeters implements CanListener, Disposable {
          */
         @Override
         public void enable() {
-            _nodeToListen = 65534;
+            _nodeToListen = CbusConstants.DEFAULT_CS_NN;
             _eventToListenCurrent = 1; // hard coded at present
             _eventToListenVoltage = 2; // hard coded at present
             _eventToListenCurrentExtra = 3; // hard coded at present
@@ -143,7 +143,7 @@ public class CbusPredefinedMeters implements CanListener, Disposable {
                     _nodeToListen = csnode.getNodeNumber();
                 }
             } else {
-                log.info("Unable to fetch Master Command Station from Node Manager");
+                log.info("Unable to fetch Master Command Station from Node Manager, defaulting to NN {}", CbusConstants.DEFAULT_CS_NN);
             }
             tc.addCanListener(CbusPredefinedMeters.this);
             log.info("Enabled meter Long Ex2Data {} {} {}", 

@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
+
 import jmri.Disposable;
 import jmri.JmriException;
 import jmri.jmrix.can.CanListener;
@@ -7,7 +9,12 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.managers.AbstractPowerManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PowerManager implementation for controlling CBUS layout power.
@@ -64,18 +71,40 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         return memo.isProgTrackPowerIndependent();
     }
  
+    /**
+     * Get the current Command Station Node Number
+     * 
+     * Only looks for CS 0
+     * @return the NN or default if no CS known
+     */
+    private int getCsNn() {
+        int _csNN = CbusConstants.DEFAULT_CS_NN;
+        CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+        if (cs != null) {
+            CbusNode csnode = cs.getCsByNum(0);
+            if (csnode!=null) {
+                _csNN = csnode.getNodeNumber();
+            }
+        } else {
+            log.info("Unable to fetch Master Command Station from Node Manager, using default NN {}", CbusConstants.DEFAULT_CS_NN);
+        }
+        return _csNN;
+    }
+    
     @Override
     public void setProgTrackPower(int v) throws JmriException {
         if (isProgTrackPowerSupported()) {
             int old = progPower;
             progPower = UNKNOWN; // while waiting for reply
             checkTC();
+            int csNN = getCsNn();
+
             if (v == ON) {
                 // send "Enable prog track"
-                tc.sendCanMessage(CbusMessage.getRequestTrackOnEvent(tc.getCanid(), 65534, 1), this);
+                tc.sendCanMessage(CbusMessage.getRequestTrackOnEvent(tc.getCanid(), csNN, CbusConstants.PROG_TRACK), this);
             } else if (v == OFF) {
                 // send "Kill prog track"
-                tc.sendCanMessage(CbusMessage.getRequestTrackOffEvent(tc.getCanid(), 65534, 1), this);
+                tc.sendCanMessage(CbusMessage.getRequestTrackOffEvent(tc.getCanid(), csNN, CbusConstants.PROG_TRACK), this);
             }
             fireProgPowerPropertyChange(old, progPower);
         }
@@ -84,10 +113,26 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
     @Override
     public int getProgTrackPower() {
         if (isProgTrackPowerSupported()) {
-            return PROG_OFF;
-            
+            return progPower;
         } else {
             return UNKNOWN;
+        }
+    }
+
+    /**
+     * Listen for changes to prog track power.
+     * 
+     * Main track is monitored in super class
+     * @param e 
+     */
+    public void propertyChange(PropertyChangeEvent e) {
+        if (isProgTrackPowerSupported()) {
+            if (PROGPOWER.equals(e.getPropertyName())) {
+                int newProgPowerState = getPower();
+                if (newProgPowerState != power) {
+                    power = newProgPowerState;
+                }
+            }
         }
     }
 
@@ -101,6 +146,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
     protected final void fireProgPowerPropertyChange(int old, int current) {
         firePropertyChange(PROGPOWER, old, current);
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -122,21 +168,32 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         if (m.extendedOrRtr()) {
             return;
         }
-        int old = power;
-        if (CbusMessage.isTrackOff(m)) {
-            power = OFF;
-        } else if (CbusMessage.isTrackOn(m)) {
-            power = ON;
-        } else if (CbusMessage.isArst(m)) {
-            // Some CBUS command stations (e.g. CANCMD) will turn on the track
-            // power at start up, before sending ARST (System reset). Others,
-            // e.g., SPROG CBUS hardware can selectively turn on the track power
-            // so we selectively check for ARST here, based on connection settings.
-            if (memo.powerOnArst()) {
-                power = ON;
+        int csNN = getCsNn();
+        if (CbusMessage.isTrackOffEvent(m, csNN) || CbusMessage.isTrackOnEvent(m, csNN)) {
+            int old = progPower;
+            if (CbusMessage.isTrackOffEvent(m, csNN)) {
+                progPower = OFF;
+            } else {
+                progPower = OFF;
             }
+            fireProgPowerPropertyChange(old, progPower);
+        } else {
+            int old = power;
+            if (CbusMessage.isTrackOff(m)) {
+                power = OFF;
+            } else if (CbusMessage.isTrackOn(m)) {
+                power = ON;
+            } else if (CbusMessage.isArst(m)) {
+                // Some CBUS command stations (e.g. CANCMD) will turn on the track
+                // power at start up, before sending ARST (System reset). Others,
+                // e.g., SPROG CBUS hardware can selectively turn on the track power
+                // so we selectively check for ARST here, based on connection settings.
+                if (memo.powerOnArst()) {
+                    power = ON;
+                }
+            }
+            firePowerPropertyChange(old, power);
         }
-        firePowerPropertyChange(old, power);
     }
 
     /**
@@ -147,4 +204,5 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         // do nothing
     }
 
+    private final static Logger log = LoggerFactory.getLogger(CbusPowerManager.class);
 }

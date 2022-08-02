@@ -495,36 +495,72 @@ public class CbusMessage {
     }
 
     /**
-     * Checks if a CBUS event in a CanMessage is confirmation of Track Power On
+     * Checks if a CBUS event in a CanReply is confirmation of Track Power On
+     * for a given track
      *
-     * @param  m Can Frame Message
+     * @param  r Can Frame Reply
      * @param consumer NN of the expected producer of the event
      * @param track output index
      * @return True if outgoing track power on request
      */
-    public static boolean isTrackOnEvent(CanMessage m, int consumer, int track) {
-        return ((m.getOpCode() == CbusConstants.CBUS_ACON)
-                && (m.getElement(1) == ((consumer / 256) & 0xFF))
-                && (m.getElement(2) == (consumer & 0xFF))
-                && (m.getElement(3) == (((CbusConstants.CS_DEF_EV_POWER_ACK + track) / 256) & 0xFF))
-                && (m.getElement(4) == ((CbusConstants.CS_DEF_EV_POWER_ACK + track) & 0xFF))
+    public static boolean isTrackOnEvent(CanReply r, int consumer, int track) {
+        int ev = r.getElement(3) * 256 + r.getElement(4);
+        return ((r.getOpCode() == CbusConstants.CBUS_ACON)
+                && (r.getElement(1) == ((consumer / 256) & 0xFF))
+                && (r.getElement(2) == (consumer & 0xFF))
+                && (ev == CbusConstants.CS_DEF_EV_POWER_ACK + track)
                 );
     }
 
     /**
-     * Checks if a CBUS event in a CanMessage is confirmation of Track Power Off
+     * Checks if a CBUS event in a CanReply is confirmation of Track Power On
      *
-     * @param  m Can Frame Message
+     * @param  r Can Frame Reply
+     * @param consumer NN of the expected producer of the event
+     * @return True if outgoing track power on request
+     */
+    public static boolean isTrackOnEvent(CanReply r, int consumer) {
+        int ev = r.getElement(3) * 256 + r.getElement(4);
+        return ((r.getOpCode() == CbusConstants.CBUS_ACON)
+                && (r.getElement(1) == ((consumer / 256) & 0xFF))
+                && (r.getElement(2) == (consumer & 0xFF))
+                && (ev >= CbusConstants.CS_DEF_EV_POWER_ACK)
+                && (ev < CbusConstants.CS_DEF_EV_POWER_END)
+                );
+    }
+
+    /**
+     * Checks if a CBUS event in a CanReply is confirmation of Track Power Off
+     * for a given track
+     *
+     * @param  r Can Frame Reply
      * @param consumer NN of the expected producer of the event
      * @param track output index
      * @return boolean
      */
-    public static boolean isTrackOffEvent(CanMessage m, int consumer, int track) {
-        return ((m.getOpCode() == CbusConstants.CBUS_ACOF)
-                && (m.getElement(1) == ((consumer / 256) & 0xFF))
-                && (m.getElement(2) == (consumer & 0xFF))
-                && (m.getElement(3) == (((CbusConstants.CS_DEF_EV_POWER_ACK + track) / 256) & 0xFF))
-                && (m.getElement(4) == ((CbusConstants.CS_DEF_EV_POWER_ACK + track) & 0xFF))
+    public static boolean isTrackOffEvent(CanReply r, int consumer, int track) {
+        int ev = r.getElement(3) * 256 + r.getElement(4);
+        return ((r.getOpCode() == CbusConstants.CBUS_ACOF)
+                && (r.getElement(1) == ((consumer / 256) & 0xFF))
+                && (r.getElement(2) == (consumer & 0xFF))
+                && (ev == CbusConstants.CS_DEF_EV_POWER_ACK + track)
+                );
+    }
+
+    /**
+     * Checks if a CBUS event in a CanReply is confirmation of Track Power Off
+     *
+     * @param  r Can Frame Message
+     * @param consumer NN of the expected producer of the event
+     * @return boolean
+     */
+    public static boolean isTrackOffEvent(CanReply r, int consumer) {
+        int ev = r.getElement(3) * 256 + r.getElement(4);
+        return ((r.getOpCode() == CbusConstants.CBUS_ACOF)
+                && (r.getElement(1) == ((consumer / 256) & 0xFF))
+                && (r.getElement(2) == (consumer & 0xFF))
+                && (ev >= CbusConstants.CS_DEF_EV_POWER_ACK)
+                && (ev < CbusConstants.CS_DEF_EV_POWER_END)
                 );
     }
 
