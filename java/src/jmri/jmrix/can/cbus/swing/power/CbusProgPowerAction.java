@@ -13,15 +13,12 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CbusProgPowerAction extends AbstractAction {
     
-    private CanSystemConnectionMemo _memo = null;
-
     public CbusProgPowerAction(CanSystemConnectionMemo memo) {
         this(Bundle.getMessage("MenuItemProgTrackPower"), memo);
     }
 
     public CbusProgPowerAction(String s, CanSystemConnectionMemo memo) {
         super(s);
-        _memo = memo;
     }
 
     @Override
