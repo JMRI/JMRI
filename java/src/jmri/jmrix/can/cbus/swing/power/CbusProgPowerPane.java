@@ -42,5 +42,5 @@ public class CbusProgPowerPane extends PowerPane {
         selectMenu.getManager().setProgTrackPower(mode);
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusProgPowerPane.class);
+//    private final static Logger log = LoggerFactory.getLogger(CbusProgPowerPane.class);
 }
