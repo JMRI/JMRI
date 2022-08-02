@@ -57,6 +57,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().setProgModeSwitch(_progMode);
         this.getSystemConnectionMemo().setSupportsCVHints(true);
         this.getSystemConnectionMemo().setPowerOnArst(false);
+        this.getSystemConnectionMemo().setProgTrackPowerIndependent(true);
 
         // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));

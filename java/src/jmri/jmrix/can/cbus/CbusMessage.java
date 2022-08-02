@@ -307,8 +307,11 @@ public class CbusMessage {
         return m.getOpCode() == CbusConstants.CBUS_ARST;
     }
 
+    // CBUS Programmer Commands
+    
     /**
-     * CBUS programmer commands
+     * Get a CanMessage to read a CV
+     * 
      * @param cv CV to read
      * @param mode Programming Mode
      * @param header CAN ID
@@ -334,7 +337,7 @@ public class CbusMessage {
     }
 
     /**
-     * CBUS programmer commands
+     * Get a CanMessage to read a CV with hint
      *
      * CBUS VCVS works like a QCVS read but the programmer will first check if
      * the CV contents are equal to the startVal. This can speed up CV reads by
@@ -367,7 +370,8 @@ public class CbusMessage {
     }
 
     /**
-     * Get a CanMessage to write a CV.
+     * Get a CanMessage to write a CV
+     * 
      * @param cv Which CV, 0-65534
      * @param val New CV value, 0-255
      * @param mode Programming Mode
@@ -394,8 +398,11 @@ public class CbusMessage {
         return m;
     }
 
+    // CBUS Ops mode programmer commands
+    
     /**
-     * CBUS Ops mode programmer commands
+     * Get a message to write a CV
+     * 
      * @param mAddress Loco Address, non-DCC format
      * @param mLongAddr If Loco Address is a long address
      * @param header CAN ID
@@ -420,6 +427,8 @@ public class CbusMessage {
         return m;
     }
 
+    // CBUS Power Control
+    
     /**
      * Get a CanMessage to send track power on
      *
@@ -444,6 +453,79 @@ public class CbusMessage {
         m.setElement(0, CbusConstants.CBUS_RTOF);
         setPri(m, 0xb);
         return m;
+    }
+
+
+    /**
+     * Get a CBUS event in a CanMessage to send track power on
+     *
+     * @param header for connection CAN ID
+     * @param consumer NN of the consumer of the event
+     * @param track output index
+     * @return the CanMessage to send to request track power on
+     */
+    static public CanMessage getRequestTrackOnEvent(int header, int consumer, int track) {
+        CanMessage m = new CanMessage(5, header);
+        m.setElement(0, CbusConstants.CBUS_ACON);
+        m.setElement(1, (consumer / 256) & 0xFF);
+        m.setElement(2, consumer & 0xFF);
+        m.setElement(3, ((CbusConstants.CS_DEF_EV_POWER_REQ + track) / 256) & 0xFF) ;
+        m.setElement(4, ((CbusConstants.CS_DEF_EV_POWER_REQ + track) & 0xFF));
+        setPri(m, 0xb);
+        return m;
+    }
+
+    /**
+     * Get a CBUS event in a CanMessage to send track power off
+     *
+     * @param header for connection CAN ID
+     * @param consumer NN of the consumer of the event
+     * @param track output index
+     * @return the CanMessage to send to request track power off
+     */
+    static public CanMessage getRequestTrackOffEvent(int header, int consumer, int track) {
+        CanMessage m = new CanMessage(5, header);
+        m.setElement(0, CbusConstants.CBUS_ACOF);
+        m.setElement(1, (consumer / 256) & 0xFF);
+        m.setElement(2, consumer & 0xFF);
+        m.setElement(3, ((CbusConstants.CS_DEF_EV_POWER_REQ + track) / 256) & 0xFF) ;
+        m.setElement(4, ((CbusConstants.CS_DEF_EV_POWER_REQ + track) & 0xFF));
+        setPri(m, 0xb);
+        return m;
+    }
+
+    /**
+     * Checks if a CBUS event in a CanMessage is confirmation of Track Power On
+     *
+     * @param  m Can Frame Message
+     * @param consumer NN of the expected producer of the event
+     * @param track output index
+     * @return True if outgoing track power on request
+     */
+    public static boolean isTrackOnEvent(CanMessage m, int consumer, int track) {
+        return ((m.getOpCode() == CbusConstants.CBUS_ACON)
+                && (m.getElement(1) == ((consumer / 256) & 0xFF))
+                && (m.getElement(2) == (consumer & 0xFF))
+                && (m.getElement(3) == (((CbusConstants.CS_DEF_EV_POWER_ACK + track) / 256) & 0xFF))
+                && (m.getElement(4) == ((CbusConstants.CS_DEF_EV_POWER_ACK + track) & 0xFF))
+                );
+    }
+
+    /**
+     * Checks if a CBUS event in a CanMessage is confirmation of Track Power Off
+     *
+     * @param  m Can Frame Message
+     * @param consumer NN of the expected producer of the event
+     * @param track output index
+     * @return boolean
+     */
+    public static boolean isTrackOffEvent(CanMessage m, int consumer, int track) {
+        return ((m.getOpCode() == CbusConstants.CBUS_ACOF)
+                && (m.getElement(1) == ((consumer / 256) & 0xFF))
+                && (m.getElement(2) == (consumer & 0xFF))
+                && (m.getElement(3) == (((CbusConstants.CS_DEF_EV_POWER_ACK + track) / 256) & 0xFF))
+                && (m.getElement(4) == ((CbusConstants.CS_DEF_EV_POWER_ACK + track) & 0xFF))
+                );
     }
 
 

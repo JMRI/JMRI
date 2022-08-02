@@ -371,4 +371,16 @@ public final class CbusConstants {
      * Number of slots supported by the command station
      */
     public static final int CBUS_MAX_SLOTS = 32;
+    
+    /**
+     * Power Control events
+     * 
+     * These are fixed or default events for power control in command stations
+     * or boosters. They are addressed to a consumer by using the consumer's
+     * node number, rather than the producer NN. ON or OFF is determined by the
+     * event type, ACON or ACOF
+     */
+    public static final int CS_DEF_EV_POWER_REQ = 1000;
+    public static final int CS_DEF_EV_POWER_ACK = 2000;
 }
+

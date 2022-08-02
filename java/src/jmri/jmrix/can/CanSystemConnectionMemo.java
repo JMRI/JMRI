@@ -66,6 +66,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected boolean _supportsCVHints = false; // Support for CV read hint values
     private boolean _multipleThrottles = true;  // Support for multiple throttles 
     private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
+    private boolean _progTrackPwr = false;      // Can programming track have independent power
     
     jmri.jmrix.swing.ComponentFactory cf = null;
 
@@ -259,6 +260,22 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     
     public void setPowerOnArst(boolean b) {
         _powerOnArst = b;
+    }
+    
+    /**
+     * Get the behaviour of the programming track power control
+     * 
+     * Programming track mau have independent power control, but may also be
+     * dependent on other configuration or operating modes.
+     * 
+     * @return true if programming track power can be independent
+     */
+    public boolean isProgTrackPowerIndependent() {
+        return _progTrackPwr;
+    }
+    
+    public void setProgTrackPowerIndependent(boolean b) {
+        _progTrackPwr = b;
     }
     
     /**

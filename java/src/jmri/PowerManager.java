@@ -42,20 +42,43 @@ public interface PowerManager extends PropertyChangeProvider {
     static final int ON = 0x02;
     static final int OFF = 0x04;
     static final int IDLE = 0x08; // not supported by some connection types
-
+    static final int PROG_ON = 0x10;
+    static final int PROG_OFF = 0x20;
+    
     /**
      * {@link java.beans.PropertyChangeEvent}s are fired with this property name.
      * <p>
      * {@value #POWER}
      */
     static final String POWER = "power"; // as recommended in JavaBeans Spec // NOI18N
+    static final String PROGPOWER = "progpower"; // as recommended in JavaBeans Spec // NOI18N
 
     public void setPower(int v) throws JmriException;
 
     @CheckReturnValue
     public int getPower();
 
-    // to free resources when no longer used
+    /**
+     * Can programming track power be controlled by this interface?
+     * Only some connections supports it.
+     * 
+     * Control may also depend on other system operating modes or state.
+     * 
+     * @return true if track power can be controlled, false otherwise
+     */
+    public default boolean isProgTrackPowerSupported() {
+        return false;
+    }
+ 
+    public default void setProgTrackPower(int v) throws JmriException {
+        throw new JmriException("setProgTrackPower must be overridden");
+    }
+ 
+    public default int getProgTrackPower() {
+        return PROG_OFF;
+    }
+ 
+     // to free resources when no longer used
     public void dispose() throws JmriException;
 
     public default boolean implementsIdle() {

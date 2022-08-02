@@ -18,6 +18,8 @@ import jmri.managers.AbstractPowerManager;
 public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener, Disposable {
 
     private TrafficController tc;
+    
+    protected int progPower;
 
     public CbusPowerManager(CanSystemConnectionMemo memo) {
         super(memo);
@@ -57,6 +59,48 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
         }
     }
 
+    @Override
+    public boolean isProgTrackPowerSupported() {
+        return memo.isProgTrackPowerIndependent();
+    }
+ 
+    @Override
+    public void setProgTrackPower(int v) throws JmriException {
+        if (isProgTrackPowerSupported()) {
+            int old = progPower;
+            progPower = UNKNOWN; // while waiting for reply
+            checkTC();
+            if (v == ON) {
+                // send "Enable prog track"
+                tc.sendCanMessage(CbusMessage.getRequestTrackOnEvent(tc.getCanid(), 65534, 1), this);
+            } else if (v == OFF) {
+                // send "Kill prog track"
+                tc.sendCanMessage(CbusMessage.getRequestTrackOffEvent(tc.getCanid(), 65534, 1), this);
+            }
+            fireProgPowerPropertyChange(old, progPower);
+        }
+    }
+ 
+    @Override
+    public int getProgTrackPower() {
+        if (isProgTrackPowerSupported()) {
+            return PROG_OFF;
+            
+        } else {
+            return UNKNOWN;
+        }
+    }
+
+    /**
+     * Fires a {@link java.beans.PropertyChangeEvent} for the programming track
+     * power state using property name "progpower".
+     *
+     * @param old the old power state
+     * @param current the new power state
+     */
+    protected final void fireProgPowerPropertyChange(int old, int current) {
+        firePropertyChange(PROGPOWER, old, current);
+    }
     /**
      * {@inheritDoc}
      */
