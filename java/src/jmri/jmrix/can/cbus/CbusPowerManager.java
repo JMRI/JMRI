@@ -174,7 +174,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
             if (CbusMessage.isTrackOffEvent(m, csNN)) {
                 progPower = OFF;
             } else {
-                progPower = OFF;
+                progPower = ON;
             }
             fireProgPowerPropertyChange(old, progPower);
         } else {
