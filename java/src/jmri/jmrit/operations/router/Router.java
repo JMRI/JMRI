@@ -709,7 +709,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         // add staging if requested
         if (useStaging) {
-            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
+            List<Track> allStaging = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
+            tracks.clear();
+            for (Track staging : allStaging) {
+                if (staging.isModifyLoadsEnabled()) {
+                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterStagingExcluded"),
+                            new Object[]{staging.getLocation().getName(), staging.getName()}));
+                } else {
+                    tracks.add(staging);
+                }
+            }
             loadTracks(car, testCar, tracks);
         }
 

@@ -1672,14 +1672,11 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         // check the number of in bound cars to this track
         if (!track.isSpaceAvailable(car)) {
-            // Now determine if we should move the car or just leave it where it
-            // is
+            // Now determine if we should move the car or just leave it
             if (track.isHoldCarsWithCustomLoadsEnabled()) {
                 // determine if this car can be routed to the spur
-                String id = track.getScheduleItemId();
-                car.setFinalDestination(track.getLocation());
-                car.setFinalDestinationTrack(track);
-                if (router.setDestination(car, _train, _buildReport)) {
+                String id = track.getScheduleItemId(); // save the tracks schedule item id
+                if (router.isCarRouteable(car, _train, track, _buildReport)) {
                     // hold car if able to route to track
                     _routeToTrackFound = true;
                 } else {
@@ -1687,9 +1684,6 @@ public class TrainBuilder extends TrainBuilderBase {
                             new Object[]{car.toString(), car.getFinalDestinationName(),
                                     car.getFinalDestinationTrackName()}));
                 }
-                car.setDestination(null, null);
-                car.setFinalDestination(null);
-                car.setFinalDestinationTrack(null);
                 track.setScheduleItemId(id); // restore id
             }
             if (car.getTrack().isStaging()) {

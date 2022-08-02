@@ -1,12 +1,13 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import javax.swing.UIManager;
+
 import jmri.util.JUnitUtil;
 import jmri.util.SystemType;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -23,8 +24,9 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     protected T e = null;
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
     public void checkFileMenuExists() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
@@ -33,16 +35,18 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
 
     @Test
     @Disabled("The test sometimes has trouble finding the file menu")
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
     public void checkFileDeleteMenuItem() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         jfo.deleteViaFileMenuWithConfirmations();
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
     public void checkWindowMenuExists() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuWindow"));
@@ -51,8 +55,9 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
     public void checkHelpMenuExists() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuHelp"));
@@ -67,14 +72,15 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
     @Disabled("This test seems to be reliable on Linux, but fails on Windows (appveyor)")
     public void testSetSize() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         java.awt.Dimension d0 = e.getSize();
         e.setSize(100, 100);
         JUnitUtil.waitFor(() -> {
             return d0 != e.getSize();
-        });
+        },"dimension still equals initial editor size");
         java.awt.Dimension d = e.getSize();
         // the java.awt.Dimension stores the values as floating point
         // numbers, but setSize expects integer parameters.
@@ -83,8 +89,9 @@ abstract public class AbstractEditorTestBase<T extends Editor> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
     public void testChangeView() throws Positionable.DuplicateIdException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // create a new Positionable Label on the existing editor (e);
         PositionableLabel to = new PositionableLabel("one", e);
         to.setBounds(80, 80, 40, 40);
