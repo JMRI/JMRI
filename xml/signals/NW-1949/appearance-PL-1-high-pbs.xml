@@ -6,17 +6,23 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
-  <author>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
         <personname><firstname>David</firstname><surname>Baker</surname></personname>
-    </author>    
-    
-  <revhistory>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
         <date>2010-01-01</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
     <revision>
         <revnumber>1.1</revnumber>
         <date>2011-06-24</date>
@@ -35,7 +41,7 @@
   <name>Single position light high permissive signal</name>
   <reference>As described in the Norfolk and Western Railway Company March 1949, Rules and Regulations for the Government of the Operating Department: Diagrams of Signal Aspects </reference>
   <description>Appearances for single position light signal head **WITHOUT** marker light.</description>
-  
+
   <appearances>
 
     <appearance>
@@ -114,4 +120,4 @@
 
   </aspectMappings>
 
-</appearancetable>  
+</appearancetable>
