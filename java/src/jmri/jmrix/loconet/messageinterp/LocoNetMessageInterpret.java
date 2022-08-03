@@ -4836,23 +4836,14 @@ public class LocoNetMessageInterpret {
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 hwType = "DCS210";
                 break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
-                hwType = "DCS210+";
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                hwType = "DCS52";
                 break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
                 hwType = "BXP88";
                 break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
                 hwType = "BXPA1";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_UR93:
-                hwType = "UR93";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                hwType = "DB210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
-                hwType = "PR4";
                 break;
             default:
                 hwType = "Unknown";
@@ -4890,23 +4881,11 @@ public class LocoNetMessageInterpret {
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 hwType = "DCS210";
                 break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
-                hwType = "DCS210+";
-                break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
                 hwType = "BXP88";
                 break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
                 hwType = "BXPA1";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_UR93:
-                hwType = "UR93";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                hwType = "DB210";
-                break;
-            case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
-                hwType = "PR4";
                 break;
             default:
                 hwType = "Unknown";
