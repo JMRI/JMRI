@@ -75,7 +75,8 @@ public interface PowerManager extends PropertyChangeProvider {
      * programming track power control is possible.
      * 
      * @param v the power state
-     * @throws JmriException if not supported or not overridden
+     * @throws JmriException if not overridden when supported by the connection
+     * @throws UnsupportedOperationException if not supported
      */
     public default void setProgTrackPower(int v) throws JmriException {
         if (!isProgTrackPowerSupported()) {
@@ -92,7 +93,8 @@ public interface PowerManager extends PropertyChangeProvider {
      * programming track power control is possible.
      * 
      * @return the power state
-     * @throws JmriException if not supported or not overridden
+     * @throws JmriException if not overridden when supported by the connection
+     * @throws UnsupportedOperationException if not supported
      */
     public default int getProgTrackPower() throws JmriException{
         if (!isProgTrackPowerSupported()) {
