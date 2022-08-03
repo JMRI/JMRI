@@ -215,7 +215,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Add support for DCS240+</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -330,7 +330,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Added support for Lokommander II decoders. Including automatic identification of the right decoder type based on productID.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -451,6 +451,9 @@
           access to the instance manager. The constants <i>null</i> and
           <i>None</i> has the null value in Java, the None value in Jython.</li>
           <li>The action <i>Listen On Beans - Table</i> is improved.</li>
+          <li>The action <i>Listen On Beans - Local variable</i> has been
+          added. It can be used together with the <i>For each</i> action
+          to listen to all beans of a manager.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -562,6 +565,13 @@
             <ul>
                 <li></li>
             </ul>
+
+   <h3>Speedometer</h3>
+        <a id="Speedometer" name="Speedometer"></a>
+        <ul>
+            <li>Expanded user documentation</li>
+        </ul>
+
 
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
