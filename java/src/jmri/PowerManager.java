@@ -42,8 +42,6 @@ public interface PowerManager extends PropertyChangeProvider {
     static final int ON = 0x02;
     static final int OFF = 0x04;
     static final int IDLE = 0x08; // not supported by some connection types
-    static final int PROG_ON = 0x10;
-    static final int PROG_OFF = 0x20;
     
     /**
      * {@link java.beans.PropertyChangeEvent}s are fired with this property name.

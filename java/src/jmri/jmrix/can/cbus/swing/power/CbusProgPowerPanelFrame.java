@@ -13,7 +13,7 @@ public class CbusProgPowerPanelFrame extends JmriJFrame {
     CbusProgPowerPane pane = new CbusProgPowerPane();
 
     public CbusProgPowerPanelFrame() {
-        super(Bundle.getMessage("TitlePowerPanel"));
+        super(Bundle.getMessage("MenuItemProgTrackPower"));
         // general GUI config
 
         // install items in GUI

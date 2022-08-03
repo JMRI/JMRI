@@ -1,31 +1,36 @@
 package jmri.jmrix.can.cbus.swing.power;
 
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-
-import jmri.jmrix.can.CanSystemConnectionMemo;
-
 /**
  * Create a CBUS Programming Track Power Control Pane.
  *
  * @author Andrew Crosland Copyright (C) 2022
  */
-public class CbusProgPowerAction extends AbstractAction {
+public class CbusProgPowerAction extends jmri.util.swing.JmriNamedPaneAction {
     
-    public CbusProgPowerAction(CanSystemConnectionMemo memo) {
-        this(Bundle.getMessage("MenuItemProgTrackPower"), memo);
+    public CbusProgPowerAction(String s, jmri.util.swing.WindowInterface wi) {
+        super(s, wi, "jmri.jmrix.can.cbus.swing.power.CbusProgPowerPane");
+        checkManager();
     }
 
-    public CbusProgPowerAction(String s, CanSystemConnectionMemo memo) {
-        super(s);
+    public CbusProgPowerAction(String s, javax.swing.Icon i, jmri.util.swing.WindowInterface wi) {
+        super(s, i, wi, "jmri.jmrix.can.cbus.swing.power.CbusProgPowerPane");
+        checkManager();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        CbusProgPowerPanelFrame f = new CbusProgPowerPanelFrame();
-        
-        f.initComponents();
-        f.setVisible(true);
+    public CbusProgPowerAction(String s) {
+        super(s, "jmri.jmrix.can.cbus.swing.power.CbusProgPowerPane");
+        checkManager();
     }
+
+    public CbusProgPowerAction() {
+        this(Bundle.getMessage("TitlePowerPanel"));
+    }
+
+    protected void checkManager() {
+        // disable ourself if there is no power Manager
+        if (jmri.InstanceManager.getNullableDefault(jmri.PowerManager.class) == null) {
+            setEnabled(false);
+        }
+    }
+
 }

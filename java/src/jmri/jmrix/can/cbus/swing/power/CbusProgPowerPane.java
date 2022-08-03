@@ -1,5 +1,10 @@
 package jmri.jmrix.can.cbus.swing.power;
 
+import java.util.List;
+
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.powerpanel.PowerPane;
@@ -14,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusProgPowerPane extends PowerPane {
     
-    CbusProgPowerPane() {
+    public CbusProgPowerPane() {
         super();
     }
     
@@ -28,6 +33,10 @@ public class CbusProgPowerPane extends PowerPane {
         return Bundle.getMessage("MenuItemProgTrackPower");
     }
 
+    protected JLabel getPowerLabel() {
+        return new JLabel(Bundle.getMessage("LabelProgTrackPower"));
+    }
+    
     @Override
     protected int getPower() {
         try {

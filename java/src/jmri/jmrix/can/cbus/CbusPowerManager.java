@@ -26,7 +26,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
 
     private TrafficController tc;
     
-    protected int progPower;
+    protected int progPower = UNKNOWN;
 
     public CbusPowerManager(CanSystemConnectionMemo memo) {
         super(memo);

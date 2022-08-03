@@ -60,6 +60,10 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         init();
     }
 
+    protected JLabel getPowerLabel() {
+        return new JLabel(Bundle.getMessage("LabelLayoutPower"));
+    }
+    
     private void init() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
             @Override
@@ -85,7 +89,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         setLayout(new jmri.util.javaworld.GridLayout2(3, 2, 6, 0)); // r, c, hgap , vgap
 
         // install items in GUI
-        add(new JLabel(Bundle.getMessage("LabelLayoutPower")));
+        add(getPowerLabel());
         add(onButton);
         add(onOffStatus); // on row 2
         add(offButton);
@@ -130,7 +134,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                 default:
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                     onOffStatus.setIcon(unknownIcon);
-                    log.error("Unexpected state value: {}", selectMenu.getManager().getPower());
+                    log.error("Unexpected state value: {}", getPower());
                     break;
             }
         }

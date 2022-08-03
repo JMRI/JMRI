@@ -11,9 +11,9 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>Power Control</h1>
+      <h1>Programming Track Power Control</h1>
 
-      <p>The On/Off buttons on this pane turn the power On/Off on the programming track.</p>
+      <p>The On/Off buttons on this pane turn the power On/Off on the programming track, if supported by the hardware and the current operating mode.</p>
 
       <p><img src="images/PowerControlWithIdleButton.png" alt=
       "Power control panel showing Idle pushbutton">
