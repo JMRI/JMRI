@@ -73,6 +73,24 @@ public enum LnCommandStationType {
                     new SlotMapEntry(376,384,SlotType.SYSTEM),
                     new SlotMapEntry(385,432,SlotType.LOCO))
             ),
+    COMMAND_STATION_DCS240PLUS("DCS240+ (Advanced Command Station)",  // NOI18N
+            ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            "LnThrottleManager", "SlotManager",  // NOI18N
+            IdleSupport.SUPPORTS_OPC_IDLE,
+            MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+            LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
+            CommandStationFracType.CLOCK15BIT,
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.LOCO),
+                    new SlotMapEntry(121,128,SlotType.SYSTEM),
+                    new SlotMapEntry(129,247,SlotType.LOCO),
+                    new SlotMapEntry(248,256,SlotType.SYSTEM),
+                    new SlotMapEntry(257,375,SlotType.LOCO),
+                    new SlotMapEntry(376,384,SlotType.SYSTEM),
+                    new SlotMapEntry(385,432,SlotType.LOCO))
+            ),
+
     COMMAND_STATION_DCS210PLUS("DCS210+ (Advanced Command Station)",  // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
@@ -320,6 +338,19 @@ public enum LnCommandStationType {
                     new SlotMapEntry(128,432,SlotType.UNKNOWN))
             ),
     COMMAND_STATION_USB_DCS240_ALONE("DCS240 USB interface as standalone programmer", // NOI18N
+            ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
+            ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
+            "LnThrottleManager", "SlotManager",  // NOI18N
+            IdleSupport.NO_OPC_IDLE_SUPPORT,
+            MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
+            LocoResetSupport.NO_LOCO_RESET_SUPPORT,
+            CommandStationFracType.CLOCK15BIT,
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
+                    new SlotMapEntry(1,120,SlotType.UNKNOWN),
+                    new SlotMapEntry(121,127,SlotType.SYSTEM),
+                    new SlotMapEntry(128,432,SlotType.UNKNOWN))
+            ),
+    COMMAND_STATION_USB_DCS240PLUS_ALONE("DCS240+ USB interface as standalone programmer", // NOI18N
             ReadsFromServiceModeTrack.CAN_READ_ON_SVC_TRACK,
             ProgDepowersTrack.TRACK_UNCHANGED_BY_PROGRAMMING,
             "LnThrottleManager", "SlotManager",  // NOI18N
