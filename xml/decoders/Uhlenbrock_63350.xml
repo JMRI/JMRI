@@ -8,15 +8,14 @@
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
 Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
-The Feedback Module 63350 has an Article number 6335, which was registered with Uhlenbrock.
-Older LNCV devices may not have their own address, or even no article. They can be programmed using
-Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
-programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+The Feedback Module #63350 has an Article number 6335, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20220722"/>
+    <version author="Egbert Broerse" version="1.1" lastUpdated="20220803"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
     <!-- compare to 63340. Because of the way LNCV includes the art.nr. in the CV they could not be combined in one file -->
+    <!-- version 1.1 - autohide address fields 2-7 and delays depending on indiv checkbox states -->
 
     <decoder>
         <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary">
@@ -361,31 +360,60 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 
         <column>
           <!-- per output setting -->
-            <separator/>
-            <row>
+          <separator/>
+          <row>
             <label>
               <text>&lt;html&gt;&lt;strong&gt;Input 1 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 1 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 1 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 1 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-              <display item="Feedback 1 Address"/>
-              <display item="Occupied Delay Track 1"/>
-              <display item="Free Delay Track 1"/>
-            </row>
+            <display item="Feedback 1 Address"/>
+            <display item="Occupied Delay Track 1"/>
+            <display item="Free Delay Track 1"/>
+          </row>
 
-            <separator/>
-            <row>
+          <separator/>
+          <row>
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Input 2 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 2 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 2 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 2 &lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <group><!--hide/see Track 2 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 2 Address"/></row>
+            </group>
+            <group><!--hide/see Track 2 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
               <label>
-                <text>&lt;html&gt;&lt;strong&gt;Input 2 &lt;/strong&gt;&lt;/html&gt;</text>
-                <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 2 &lt;/strong&gt;&lt;/html&gt;</text>
-                <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 2 &lt;/strong&gt;&lt;/html&gt;</text>
-                <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 2 &lt;/strong&gt;&lt;/html&gt;</text>
+                <text>(Input 1 Address + 1)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 1)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 1)</text>
+                <text xml:lang="nl">(adres 1 + 1)</text>
               </label>
-              <display item="Feedback 2 Address"/>
-              <display item="Occupied Delay Track 2"/>
-              <display item="Free Delay Track 2"/>
-            </row>
+            </group>
+            <group><!--hide/see Track 2 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 2"/>
+                <display item="Free Delay Track 2"/>
+              </row>
+            </group>
+          </row>
 
           <separator/>
           <row>
@@ -395,9 +423,38 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 3 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 3 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 3 Address"/>
-            <display item="Occupied Delay Track 3"/>
-            <display item="Free Delay Track 3"/>
+            <group><!--hide/see Track 3 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 3 Address"/></row>
+            </group>
+            <group><!--hide/see Track 3 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 2)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 2)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 2)</text>
+                <text xml:lang="nl">(adres 1 + 2)</text>
+              </label>
+            </group>
+            <group><!--hide/see Track 8 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 3"/>
+                <display item="Free Delay Track 3"/>
+              </row>
+            </group>
           </row>
 
           <separator/>
@@ -408,9 +465,38 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 4 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 4 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 4 Address"/>
-            <display item="Occupied Delay Track 4"/>
-            <display item="Free Delay Track 4"/>
+            <group><!--hide/see Track 4 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 4 Address"/></row>
+            </group>
+            <group><!--hide/see Track 4 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 3)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 3)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 3)</text>
+                <text xml:lang="nl">(adres 1 + 3)</text>
+              </label>
+            </group>
+            <group><!--hide/see Track 8 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 4"/>
+                <display item="Free Delay Track 4"/>
+              </row>
+            </group>
           </row>
 
           <separator/>
@@ -421,9 +507,38 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 5 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 5 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 5 Address"/>
-            <display item="Occupied Delay Track 5"/>
-            <display item="Free Delay Track 5"/>
+            <group><!--hide/see Track 5 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 5 Address"/></row>
+            </group>
+            <group><!--hide/see Track 5 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 4)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 4)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 4)</text>
+                <text xml:lang="nl">(adres 1 + 4)</text>
+              </label>
+            </group>
+            <group><!--hide/see Track 5 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 5"/>
+                <display item="Free Delay Track 5"/>
+              </row>
+            </group>
           </row>
 
           <separator/>
@@ -434,9 +549,38 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 6 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 6 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 6 Address"/>
-            <display item="Occupied Delay Track 6"/>
-            <display item="Free Delay Track 6"/>
+            <group><!--hide/see Track 6 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 6 Address"/></row>
+            </group>
+            <group><!--hide/see Track 6 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 5)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 5)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 5)</text>
+                <text xml:lang="nl">(adres 1 + 5)</text>
+              </label>
+            </group>
+            <group><!--hide/see Track 6 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 6"/>
+                <display item="Free Delay Track 6"/>
+              </row>
+            </group>
           </row>
 
           <separator/>
@@ -447,9 +591,38 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 7 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 7 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 7 Address"/>
-            <display item="Occupied Delay Track 7"/>
-            <display item="Free Delay Track 7"/>
+            <group><!--hide/see Track 7 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 7 Address"/></row>
+            </group>
+            <group><!--hide/see Track 7 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 6)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 6)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 6)</text>
+                <text xml:lang="nl">(adres 1 + 6)</text>
+              </label>
+            </group>
+            <group><!--hide/see Track 7 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 7"/>
+                <display item="Free Delay Track 7"/>
+              </row>
+            </group>
           </row>
 
           <separator/>
@@ -460,9 +633,38 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 8 &lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 8 &lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 8 Address"/>
-            <display item="Occupied Delay Track 8"/>
-            <display item="Free Delay Track 8"/>
+            <group><!--hide/see Track 8 Address box-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row><display item="Feedback 8 Address"/></row>
+            </group>
+            <group><!--hide/see Track 8 autonumber label-->
+              <qualifier>
+                <variableref>Configuration 1</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <label>
+                <text>(Input 1 Address + 7)</text>
+                <text xml:lang="de">(Adresse Gleis 1 + 7)</text>
+                <text xml:lang="fr">(Addresse Voie 1 + 7)</text>
+                <text xml:lang="nl">(adres 1 + 7)</text>
+              </label>
+            </group>
+            <group><!--hide/see Track 8 Delay box-->
+              <qualifier>
+                <variableref>Configuration 2</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+              </qualifier>
+              <row>
+                <display item="Occupied Delay Track 8"/>
+                <display item="Free Delay Track 8"/>
+              </row>
+            </group>
           </row>
 
         </column>
