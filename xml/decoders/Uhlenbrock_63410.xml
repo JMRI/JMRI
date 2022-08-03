@@ -12,9 +12,9 @@ The Uhlenbrock 63410 has an Article number 6341, which was registered with Uhlen
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="2" lastUpdated="20220802"/>
+    <version author="Egbert Broerse" version="2" lastUpdated="20220803"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
-    <!-- version 2 - corrected mask using radix mask, fix max on LNCV1. Requires JMRI 5.1.3 -->
+    <!-- version 2 - corrected mask using radix mask, fix max on LNCV1. Requires JMRI 5.1.3 and schema decoder-4-15-2.xsd -->
 
     <decoder>
         <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary">
@@ -55,7 +55,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Turn on automatically following a short circuit in 3 ms steps. The standard value is equivalent to approx. 3/4 of a second (750 ms)</tooltip>
               <tooltip xml:lang="de">Automatisches Einschalten nach einem Kurzschluss im drei Ms Takt. Der Standardwert entspricht ca. einer 3/4 Sekunde (750 ms)</tooltip>
               <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 3 ms. La valeur standard équivaut à env. 3⁄4 de seconde (750 ms)</tooltip>
-              <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (Het instellen gebeurt in drie milliseconde stappen.)</tooltip>
+              <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 3/4 seconde (750 ms). (instellen in stappen van 3 milliseconde)</tooltip>
             </variable>
             <variable CV="6341.18" item="Short Threshold" readOnly="yes" default="25">
               <decVal/>
@@ -63,10 +63,10 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label xml:lang="fr">Retard de réaction court-circuit: </label>
               <label xml:lang="nl">Kortsluitmelding vertr.: </label>
               <label>Short Detect Delay: </label>
-              <tooltip>Short detection delay in 0.6 sec steps</tooltip>
-              <tooltip xml:lang="de">Einschaltreaktionszeit im 0,6 s Takt</tooltip>
+              <tooltip>Short detection delay in 0.6 sec steps. Manual advises not to change.</tooltip>
+              <tooltip xml:lang="de">Einschaltreaktionszeit im 0,6 s Takt. Handbuch warnt vor Änderung.</tooltip>
               <tooltip xml:lang="fr">Le temps de réaction en étapes de 0,6 s.</tooltip>
-              <tooltip xml:lang="nl">Inschakelvertraging (stappen van 0,6 s)</tooltip>
+              <tooltip xml:lang="nl">Inschakelvertraging (stappen van 0,6 s). Advies om niet te wijzigen</tooltip>
             </variable>
             <variable CV="6341.19" item="Delay" default="1">
               <decVal min="1" max="255"/>
