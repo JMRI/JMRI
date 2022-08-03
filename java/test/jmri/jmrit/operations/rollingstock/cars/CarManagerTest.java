@@ -1263,12 +1263,12 @@ public class CarManagerTest extends OperationsTestCase {
         c5.setLoadName("Bags");
         c6.setLoadName("Nails");
 
-        c1.setOwner("LAST");
-        c2.setOwner("FOOL");
-        c3.setOwner("AAA");
-        c4.setOwner("DAD");
-        c5.setOwner("DAB");
-        c6.setOwner("BOB");
+        c1.setOwnerName("LAST");
+        c2.setOwnerName("FOOL");
+        c3.setOwnerName("AAA");
+        c4.setOwnerName("DAD");
+        c5.setOwnerName("DAB");
+        c6.setOwnerName("BOB");
 
         // make a couple of cabooses
         c4.setCaboose(true);

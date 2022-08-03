@@ -49,39 +49,39 @@ public class TrainRoadOptionsFrameTest extends OperationsTestCase {
         Assert.assertTrue("Save button enabled", f.saveTrainButton.isEnabled());
 
         // only accept "AA" road
-        JemmyUtil.enterClickAndLeave(f.roadNameInclude);
-        JemmyUtil.enterClickAndLeave(f.addRoadButton);
+        JemmyUtil.enterClickAndLeave(f.carRoadNameInclude);
+        JemmyUtil.enterClickAndLeave(f.addCarRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertTrue("Train accepts AA road", train.isRoadNameAccepted("AA"));
-        Assert.assertFalse("Train does not accepts SP road", train.isRoadNameAccepted("SP"));
+        Assert.assertTrue("Train accepts AA road", train.isCarRoadNameAccepted("AA"));
+        Assert.assertFalse("Train does not accepts SP road", train.isCarRoadNameAccepted("SP"));
 
         // delete "AA" road
-        f.comboBoxRoads.setSelectedItem("AA");
-        JemmyUtil.enterClickAndLeave(f.deleteRoadButton);
+        f.comboBoxCarRoads.setSelectedItem("AA");
+        JemmyUtil.enterClickAndLeave(f.deleteCarRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertFalse("Train does not accepts AA road", train.isRoadNameAccepted("AA"));
+        Assert.assertFalse("Train does not accepts AA road", train.isCarRoadNameAccepted("AA"));
         
         // each add road name bumps the road name displayed order AA, ACL, ADCX
-        JemmyUtil.enterClickAndLeave(f.addRoadButton);
+        JemmyUtil.enterClickAndLeave(f.addCarRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertTrue("Train accepts ACL road", train.isRoadNameAccepted("ACL"));
+        Assert.assertTrue("Train accepts ACL road", train.isCarRoadNameAccepted("ACL"));
 
         // delete all
-        JemmyUtil.enterClickAndLeave(f.deleteAllRoadsButton);
+        JemmyUtil.enterClickAndLeave(f.deleteCarAllRoadsButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertFalse("Train does not accepts ACL road", train.isRoadNameAccepted("ACL"));
+        Assert.assertFalse("Train does not accepts ACL road", train.isCarRoadNameAccepted("ACL"));
 
         // accept all roads
-        JemmyUtil.enterClickAndLeave(f.roadNameAll);
+        JemmyUtil.enterClickAndLeave(f.carRoadNameAll);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertTrue("Train accepts AA road", train.isRoadNameAccepted("AA"));
+        Assert.assertTrue("Train accepts AA road", train.isCarRoadNameAccepted("AA"));
 
         // exclude "AA" road
-        JemmyUtil.enterClickAndLeave(f.roadNameExclude);
-        JemmyUtil.enterClickAndLeave(f.addRoadButton);
+        JemmyUtil.enterClickAndLeave(f.carRoadNameExclude);
+        JemmyUtil.enterClickAndLeave(f.addCarRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertFalse("Train does not accepts ACCX road", train.isRoadNameAccepted("ADCX"));
-        Assert.assertTrue("Train does acceptsroad", train.isRoadNameAccepted("SP"));
+        Assert.assertFalse("Train does not accepts ACCX road", train.isCarRoadNameAccepted("ADCX"));
+        Assert.assertTrue("Train does acceptsroad", train.isCarRoadNameAccepted("SP"));
 
         JUnitUtil.dispose(f);
     }
@@ -101,7 +101,7 @@ public class TrainRoadOptionsFrameTest extends OperationsTestCase {
         CarRoads cr = InstanceManager.getDefault(CarRoads.class);
         cr.addName("AAA");
         
-        Assert.assertEquals("Confirm new load added", "AAA", f.comboBoxRoads.getItemAt(1));
+        Assert.assertEquals("Confirm new load added", "AAA", f.comboBoxCarRoads.getItemAt(1));
         
         JUnitUtil.dispose(f);
     }

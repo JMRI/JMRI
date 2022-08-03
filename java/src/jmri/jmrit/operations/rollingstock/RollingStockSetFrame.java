@@ -338,7 +338,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's road
-                if (!train.isRoadNameAccepted(rs.getRoadName())) {
+                if (!train.isCarRoadNameAccepted(rs.getRoadName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -358,9 +358,9 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's owner
-                if (!train.isOwnerNameAccepted(rs.getOwner())) {
+                if (!train.isOwnerNameAccepted(rs.getOwnerName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
-                            "rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}), getRb()
+                            "rsTrainNotServOwner"), new Object[]{rs.getOwnerName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
                             JOptionPane.ERROR_MESSAGE);
                     // prevent rs from being picked up and delivered

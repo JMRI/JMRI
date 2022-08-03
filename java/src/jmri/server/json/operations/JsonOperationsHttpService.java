@@ -616,7 +616,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
         rs.setColor(data.path(COLOR).asText(rs.getColor()));
         rs.setComment(data.path(COMMENT).asText(rs.getComment()));
-        rs.setOwner(data.path(OWNER).asText(rs.getOwner()));
+        rs.setOwnerName(data.path(OWNER).asText(rs.getOwnerName()));
         rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));
         if (data.path(WEIGHT).isValueNode()) {
             rs.setWeight(Double.toString(data.path(WEIGHT).asDouble()));

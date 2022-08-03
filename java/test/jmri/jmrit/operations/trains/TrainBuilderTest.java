@@ -3024,14 +3024,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("Train 1 should build", train1.isBuilt());
 
         // exclude road name CP for train 2
-        train2.setRoadOption(Train.EXCLUDE_ROADS);
-        train2.addRoadName("CP");
-        Assert.assertEquals("Number of road names for train", 1, train2.getRoadNames().length);
+        train2.setCarRoadOption(Train.EXCLUDE_ROADS);
+        train2.addCarRoadName("CP");
+        Assert.assertEquals("Number of road names for train", 1, train2.getCarRoadNames().length);
 
         train2.reset();
         Assert.assertFalse(new TrainBuilder().build(train2));
         Assert.assertFalse("Train 2 After Build but exclude road CP", train2.isBuilt());
-        train2.setRoadOption(Train.ALL_ROADS);
+        train2.setCarRoadOption(Train.ALL_ROADS);
 
         train2.reset();
         Assert.assertTrue(new TrainBuilder().build(train2));
@@ -3095,15 +3095,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(l1, l1s2));
 
         // Try again, but exclude road name CP
-        train1.setRoadOption(Train.EXCLUDE_ROADS);
-        train1.addRoadName("CP");
-        Assert.assertEquals("Number of road names for train", 1, train1.getRoadNames().length);
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
+        train1.addCarRoadName("CP");
+        Assert.assertEquals("Number of road names for train", 1, train1.getCarRoadNames().length);
 
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertFalse("Train 1 After Build with engines but exclude road CP", train1.isBuilt());
 
-        train1.setRoadOption(Train.ALL_ROADS);
+        train1.setCarRoadOption(Train.ALL_ROADS);
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 allow all roads", train1.isBuilt());
 
@@ -3248,7 +3248,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         RouteLocation rl2 = route1.getLocationById("1r2");
         RouteLocation rl3 = route1.getLocationById("1r3");
 
-        train2.setRoadOption(Train.ALL_ROADS);
+        train2.setCarRoadOption(Train.ALL_ROADS);
 
         // Try building without engines on staging tracks but require them
         train1.setEngineRoad("PC");
@@ -5202,9 +5202,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse(new TrainBuilder().build(train2));
         Assert.assertFalse("Train 2 will NOT build road restriction", train2.isBuilt());
 
-        train2.setRoadOption(Train.INCLUDE_ROADS);
-        train2.addRoadName("CP");
-        Assert.assertEquals("Number of road names for train", 1, train2.getRoadNames().length);
+        train2.setCarRoadOption(Train.INCLUDE_ROADS);
+        train2.addCarRoadName("CP");
+        Assert.assertEquals("Number of road names for train", 1, train2.getCarRoadNames().length);
 
         train2.reset();
         Assert.assertFalse(new TrainBuilder().build(train2));
@@ -5217,9 +5217,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(new TrainBuilder().build(train2));
         Assert.assertTrue("Train 2 will build road restriction CP removed", train2.isBuilt());
 
-        train2.setRoadOption(Train.EXCLUDE_ROADS);
-        train2.deleteRoadName("CP");
-        Assert.assertEquals("Number of road names for train", 0, train2.getRoadNames().length);
+        train2.setCarRoadOption(Train.EXCLUDE_ROADS);
+        train2.deleteCarRoadName("CP");
+        Assert.assertEquals("Number of road names for train", 0, train2.getCarRoadNames().length);
 
         train2.reset();
         Assert.assertFalse(new TrainBuilder().build(train2));
@@ -9011,18 +9011,18 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc1trk1.setRoadOption(Track.INCLUDE_ROADS);
         loc1trk1.addRoadName("CP");
         loc1trk1.addRoadName("PC");
-        train1.setRoadOption(Train.INCLUDE_ROADS);
-        train1.addRoadName("CP");
-        train1.addRoadName("PC");
+        train1.setCarRoadOption(Train.INCLUDE_ROADS);
+        train1.addCarRoadName("CP");
+        train1.addCarRoadName("PC");
         train1.setCabooseRoad("CP");
         train1.setEngineRoad("CP");
 
         Assert.assertTrue("track loc1trk1 should accept road CP", loc1trk1.isRoadNameAccepted("CP"));
         Assert.assertTrue("track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("PC"));
         Assert.assertFalse("track loc1trk1 should Not accept road PC", loc1trk1.isRoadNameAccepted("UP"));
-        Assert.assertTrue("Train 1 should accept road CP", train1.isRoadNameAccepted("CP"));
-        Assert.assertTrue("Train 1 should accept road PC", train1.isRoadNameAccepted("PC"));
-        Assert.assertFalse("Train 1 should Not accept road UP", train1.isRoadNameAccepted("UP"));
+        Assert.assertTrue("Train 1 should accept road CP", train1.isCarRoadNameAccepted("CP"));
+        Assert.assertTrue("Train 1 should accept road PC", train1.isCarRoadNameAccepted("PC"));
+        Assert.assertFalse("Train 1 should Not accept road UP", train1.isCarRoadNameAccepted("UP"));
         Assert.assertEquals("Caboose road", "CP", train1.getCabooseRoad());
         Assert.assertEquals("Engine road", "CP", train1.getEngineRoad());
 
@@ -9031,9 +9031,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertFalse("after replace track loc1trk1 should Not accept road CP", loc1trk1.isRoadNameAccepted("CP"));
         Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("PC"));
         Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("UP"));
-        Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.isRoadNameAccepted("CP"));
-        Assert.assertTrue("after replace Train 1 should accept road PC", train1.isRoadNameAccepted("PC"));
-        Assert.assertTrue("after replace Train 1 should accept road UP", train1.isRoadNameAccepted("UP"));
+        Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.isCarRoadNameAccepted("CP"));
+        Assert.assertTrue("after replace Train 1 should accept road PC", train1.isCarRoadNameAccepted("PC"));
+        Assert.assertTrue("after replace Train 1 should accept road UP", train1.isCarRoadNameAccepted("UP"));
         Assert.assertEquals("Caboose road", "UP", train1.getCabooseRoad());
         Assert.assertEquals("Engine road", "UP", train1.getEngineRoad());
 
@@ -9645,13 +9645,16 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.setNumberEngines("2"); // lead engine road name "NH"
 
         // now exclude road NH, engine road is NH and should be rejected
-        train1.addRoadName("NH");
-        train1.setRoadOption(Train.EXCLUDE_ROADS);
+        train1.addLocoRoadName("NH");
+        train1.setLocoRoadOption(Train.EXCLUDE_ROADS);
         train1.reset();
         Assert.assertFalse("Build 4", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 7a", false, train1.isBuilt());
 
         // now override by setting a road for the engine
+        train1.setLocoRoadOption(Train.INCLUDE_ROADS);
+        train1.addCarRoadName("NH");
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
         train1.setEngineRoad("NH");
         train1.reset();
         Assert.assertTrue("Build 4a", new TrainBuilder().build(train1));
@@ -9675,7 +9678,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e2 destination 1", "Boston Engine Yard", e2.getDestinationTrackName());
 
         // now only include NH
-        train1.setRoadOption(Train.INCLUDE_ROADS);
+        train1.setCarRoadOption(Train.INCLUDE_ROADS);
         train1.reset();
         Assert.assertTrue("Build 5", new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 9", true, train1.isBuilt());
@@ -10509,15 +10512,15 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.reset();
         // now only include NH
-        train1.setRoadOption(Train.INCLUDE_ROADS);
-        train1.addRoadName("NH");
+        train1.setCarRoadOption(Train.INCLUDE_ROADS);
+        train1.addCarRoadName("NH");
 
         Assert.assertFalse(new TrainBuilder().build(train1));
         // train only accepted engine and cars with NH road therefore build should fail
         Assert.assertEquals("Train 1 After Build from staging", false, train1.isBuilt());
 
         // try again but now accept all roads
-        train1.setRoadOption(Train.ALL_ROADS);
+        train1.setCarRoadOption(Train.ALL_ROADS);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 10", true, train1.isBuilt());
@@ -10540,7 +10543,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e2 destination 10", "Boston Engine Yard", e2.getDestinationTrackName());
 
         // exclude road NH
-        train1.setRoadOption(Train.EXCLUDE_ROADS);
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         // should fail since there are NH roads in staging
@@ -10548,7 +10551,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // reduce Boston moves to 6, to force non caboose and FRED cars to Acton
         rl3.setMaxCarMoves(6);
-        train1.setRoadOption(Train.ALL_ROADS);
+        train1.setCarRoadOption(Train.ALL_ROADS);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 12", true, train1.isBuilt());
@@ -10767,13 +10770,13 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
-        e1.setOwner("AT");
+        e1.setOwnerName("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
         Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
-        e2.setOwner("AT");
+        e2.setOwnerName("AT");
         e2.setBuilt("1957");
         e2.setConsist(con1);
         e2.setMoves(5);
@@ -10781,20 +10784,20 @@ public class TrainBuilderTest extends OperationsTestCase {
         // one engine
         Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
-        e3.setOwner("DAB");
+        e3.setOwnerName("DAB");
         e3.setBuilt("1957");
 
         Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
 
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
-        e4.setOwner("DAB");
+        e4.setOwnerName("DAB");
         e4.setBuilt("1944");
         e4.setConsist(con2);
         e4.setMoves(20);
         Engine e5 = emanager.newRS("SP", "20");
         e5.setModel("GP40");
-        e5.setOwner("DAB");
+        e5.setOwnerName("DAB");
         e5.setBuilt("1944");
         e5.setConsist(con2);
         e5.setMoves(20);
@@ -10804,19 +10807,19 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
-        e6.setOwner("DAB");
+        e6.setOwnerName("DAB");
         e6.setBuilt("1944");
         e6.setConsist(con3);
         e6.setMoves(2);
         Engine e7 = emanager.newRS("SP", "200");
         e7.setModel("GP40");
-        e7.setOwner("DAB");
+        e7.setOwnerName("DAB");
         e7.setBuilt("1944");
         e7.setConsist(con3);
         e7.setMoves(2);
         Engine e8 = emanager.newRS("SP", "300");
         e8.setModel("GP40");
-        e8.setOwner("DAB");
+        e8.setOwnerName("DAB");
         e8.setBuilt("1944");
         e8.setConsist(con3);
         e8.setMoves(2);
@@ -10826,7 +10829,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
-        c1.setOwner("AT");
+        c1.setOwnerName("AT");
         c1.setBuilt("1943");
         c1.setCaboose(true);
 
@@ -10834,7 +10837,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setTypeName(Bundle.getMessage("Caboose"));
         c2.setLength("30");
         c2.setMoves(5);
-        c2.setOwner("DAB");
+        c2.setOwnerName("DAB");
         c2.setBuilt("1957");
         c2.setCaboose(true);
 
@@ -10842,7 +10845,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setTypeName(Bundle.getMessage("Caboose"));
         c3.setLength("33");
         c3.setMoves(0);
-        c3.setOwner("DAB");
+        c3.setOwnerName("DAB");
         c3.setBuilt("1944");
         c3.setCaboose(true);
 
@@ -10850,7 +10853,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
-        c4.setOwner("DAB");
+        c4.setOwnerName("DAB");
         c4.setBuilt("1958");
         c4.setFred(true);
 
@@ -10858,7 +10861,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
-        c5.setOwner("DAB");
+        c5.setOwnerName("DAB");
         c5.setBuilt("1958");
         c5.setFred(true);
 
@@ -10866,7 +10869,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
-        c6.setOwner("DAB");
+        c6.setOwnerName("DAB");
         c6.setBuilt("1958");
         c6.setFred(true);
 
@@ -10874,35 +10877,35 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
-        c7.setOwner("DAB");
+        c7.setOwnerName("DAB");
         c7.setBuilt("1958");
 
         Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
-        c8.setOwner("DAB");
+        c8.setOwnerName("DAB");
         c8.setBuilt("1958");
 
         Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
-        c9.setOwner("DAB");
+        c9.setOwnerName("DAB");
         c9.setBuilt("1944");
 
         Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
-        c10.setOwner("DAB");
+        c10.setOwnerName("DAB");
         c10.setBuilt("1958");
 
         Car c11 = cmanager.newRS("SP", "11");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
-        c11.setOwner("DAB");
+        c11.setOwnerName("DAB");
         c11.setBuilt("1958");
 
         // Create 5 locations
@@ -12674,14 +12677,14 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
-        e1.setOwner("AT");
+        e1.setOwnerName("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
 
         Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
-        e2.setOwner("AT");
+        e2.setOwnerName("AT");
         e2.setBuilt("1957");
         e2.setConsist(con1);
         e2.setMoves(5);
@@ -12747,8 +12750,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // exclude the engine road names, should be ignored
         String[] roads = { "SP", "UP" };
-        train1.setRoadNames(roads);
-        train1.setRoadOption(Train.EXCLUDE_ROADS);
+        train1.setCarRoadNames(roads);
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
 
         // depart with 2 engines
         train1.setBuildConsistEnabled(true);
@@ -13287,8 +13290,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.setEngineRoad(Train.NONE);
         // exclude road "SP" from this train
-        train1.addRoadName("SP");
-        train1.setRoadOption(Train.EXCLUDE_ROADS);
+        train1.addCarRoadName("SP");
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -13300,7 +13303,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
         Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
 
-        train1.setRoadOption(Train.ALL_ROADS);
+        train1.setCarRoadOption(Train.ALL_ROADS);
         // restrict engine selection to model "GP30-200"
         train1.setEngineModel("GP30-200");
 
@@ -14116,13 +14119,13 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Engine e1 = emanager.newRS("UP", "1");
         e1.setModel("GP30");
-        e1.setOwner("AT");
+        e1.setOwnerName("AT");
         e1.setBuilt("1957");
         e1.setConsist(con1);
         e1.setMoves(5);
         Engine e2 = emanager.newRS("SP", "2");
         e2.setModel("GP30");
-        e2.setOwner("AT");
+        e2.setOwnerName("AT");
         e2.setBuilt("1957");
         e2.setConsist(con1);
         e2.setMoves(5);
@@ -14130,20 +14133,20 @@ public class TrainBuilderTest extends OperationsTestCase {
         // one engine
         Engine e3 = emanager.newRS("SP", "3");
         e3.setModel("GP40");
-        e3.setOwner("DAB");
+        e3.setOwnerName("DAB");
         e3.setBuilt("1957");
 
         Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
 
         Engine e4 = emanager.newRS("UP", "10");
         e4.setModel("GP40");
-        e4.setOwner("DAB");
+        e4.setOwnerName("DAB");
         e4.setBuilt("1944");
         e4.setConsist(con2);
         e4.setMoves(20);
         Engine e5 = emanager.newRS("SP", "20");
         e5.setModel("GP40");
-        e5.setOwner("DAB");
+        e5.setOwnerName("DAB");
         e5.setBuilt("1944");
         e5.setConsist(con2);
         e5.setMoves(20);
@@ -14153,19 +14156,19 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Engine e6 = emanager.newRS("UP", "100");
         e6.setModel("GP40");
-        e6.setOwner("DAB");
+        e6.setOwnerName("DAB");
         e6.setBuilt("1944");
         e6.setConsist(con3);
         e6.setMoves(2);
         Engine e7 = emanager.newRS("SP", "200");
         e7.setModel("GP40");
-        e7.setOwner("DAB");
+        e7.setOwnerName("DAB");
         e7.setBuilt("1944");
         e7.setConsist(con3);
         e7.setMoves(2);
         Engine e8 = emanager.newRS("SP", "300");
         e8.setModel("GP40");
-        e8.setOwner("DAB");
+        e8.setOwnerName("DAB");
         e8.setBuilt("1944");
         e8.setConsist(con3);
         e8.setMoves(2);
@@ -14175,7 +14178,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setTypeName(Bundle.getMessage("Caboose"));
         c1.setLength("32");
         c1.setMoves(10);
-        c1.setOwner("AT");
+        c1.setOwnerName("AT");
         c1.setBuilt("1943");
         c1.setCaboose(true);
 
@@ -14183,70 +14186,70 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setTypeName(carTypes[1]);
         c2.setLength("30");
         c2.setMoves(5);
-        c2.setOwner("DAB");
+        c2.setOwnerName("DAB");
         c2.setBuilt("1957");
 
         Car c3 = cmanager.newRS("UP", "33");
         c3.setTypeName(carTypes[1]);
         c3.setLength("33");
         c3.setMoves(0);
-        c3.setOwner("DAB");
+        c3.setOwnerName("DAB");
         c3.setBuilt("1944");
 
         Car c4 = cmanager.newRS("UP", "43");
         c4.setTypeName(carTypes[1]);
         c4.setLength("40");
         c4.setMoves(16);
-        c4.setOwner("DAB");
+        c4.setOwnerName("DAB");
         c4.setBuilt("1958");
 
         Car c5 = cmanager.newRS("SP", "53");
         c5.setTypeName(carTypes[1]);
         c5.setLength("40");
         c5.setMoves(8);
-        c5.setOwner("DAB");
+        c5.setOwnerName("DAB");
         c5.setBuilt("1958");
 
         Car c6 = cmanager.newRS("NH", "63");
         c6.setTypeName(carTypes[1]);
         c6.setLength("40");
         c6.setMoves(2);
-        c6.setOwner("DAB");
+        c6.setOwnerName("DAB");
         c6.setBuilt("1958");
 
         Car c7 = cmanager.newRS("UP", "73");
         c7.setTypeName(carTypes[5]);
         c7.setLength("40");
         c7.setMoves(5);
-        c7.setOwner("DAB");
+        c7.setOwnerName("DAB");
         c7.setBuilt("1958");
 
         Car c8 = cmanager.newRS("SP", "83");
         c8.setTypeName(carTypes[1]);
         c8.setLength("40");
         c8.setMoves(4);
-        c8.setOwner("DAB");
+        c8.setOwnerName("DAB");
         c8.setBuilt("1958");
 
         Car c9 = cmanager.newRS("NH", "93");
         c9.setTypeName(carTypes[1]);
         c9.setLength("40");
         c9.setMoves(3);
-        c9.setOwner("DAB");
+        c9.setOwnerName("DAB");
         c9.setBuilt("1944");
 
         Car c10 = cmanager.newRS("NH", "103");
         c10.setTypeName(carTypes[1]);
         c10.setLength("40");
         c10.setMoves(10);
-        c10.setOwner("DAB");
+        c10.setOwnerName("DAB");
         c10.setBuilt("1958");
 
         Car c11 = cmanager.newRS("SP", "113");
         c11.setTypeName(carTypes[1]);
         c11.setLength("40");
         c11.setMoves(3);
-        c11.setOwner("DAB");
+        c11.setOwnerName("DAB");
         c11.setBuilt("1958");
 
         // Create 5 locations

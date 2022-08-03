@@ -57,7 +57,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
-        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getRoadOption());
+        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
         // test departure time fields
@@ -223,7 +223,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
-        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getRoadOption());
+        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
         JUnitUtil.dispose(trainEditFrame);
