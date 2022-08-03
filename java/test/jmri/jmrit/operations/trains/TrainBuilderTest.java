@@ -9012,7 +9012,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         loc1trk1.addRoadName("CP");
         loc1trk1.addRoadName("PC");
         train1.setCarRoadOption(Train.INCLUDE_ROADS);
+        train1.setLocoRoadOption(Train.INCLUDE_ROADS);
         train1.addCarRoadName("CP");
+        train1.addLocoRoadName("CP");
         train1.addCarRoadName("PC");
         train1.setCabooseRoad("CP");
         train1.setEngineRoad("CP");
@@ -9021,6 +9023,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("PC"));
         Assert.assertFalse("track loc1trk1 should Not accept road PC", loc1trk1.isRoadNameAccepted("UP"));
         Assert.assertTrue("Train 1 should accept road CP", train1.isCarRoadNameAccepted("CP"));
+        Assert.assertTrue("Train 1 should accept road CP", train1.isLocoRoadNameAccepted("CP"));
         Assert.assertTrue("Train 1 should accept road PC", train1.isCarRoadNameAccepted("PC"));
         Assert.assertFalse("Train 1 should Not accept road UP", train1.isCarRoadNameAccepted("UP"));
         Assert.assertEquals("Caboose road", "CP", train1.getCabooseRoad());
@@ -9032,8 +9035,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("PC"));
         Assert.assertTrue("after replace track loc1trk1 should accept road PC", loc1trk1.isRoadNameAccepted("UP"));
         Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.isCarRoadNameAccepted("CP"));
+        Assert.assertFalse("after replace Train 1 should Not accept road CP", train1.isLocoRoadNameAccepted("CP"));
         Assert.assertTrue("after replace Train 1 should accept road PC", train1.isCarRoadNameAccepted("PC"));
         Assert.assertTrue("after replace Train 1 should accept road UP", train1.isCarRoadNameAccepted("UP"));
+        Assert.assertTrue("after replace Train 1 should accept road UP", train1.isLocoRoadNameAccepted("UP"));
         Assert.assertEquals("Caboose road", "UP", train1.getCabooseRoad());
         Assert.assertEquals("Engine road", "UP", train1.getEngineRoad());
 
