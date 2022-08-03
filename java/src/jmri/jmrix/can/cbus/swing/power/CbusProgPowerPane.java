@@ -33,6 +33,7 @@ public class CbusProgPowerPane extends PowerPane {
         return Bundle.getMessage("MenuItemProgTrackPower");
     }
 
+    @Override
     protected JLabel getPowerLabel() {
         return new JLabel(Bundle.getMessage("LabelProgTrackPower"));
     }
