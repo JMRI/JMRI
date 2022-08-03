@@ -8,16 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayDeque;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.text.Document;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
@@ -511,7 +507,7 @@ public class SplitEnumVariableValue extends VariableValue
         if (_value != null && !oldContents.equals(_value.getSelectedItem())) {
             long newFieldVal = 0;
             try {
-                newFieldVal = Long.parseLong((String)_value.getSelectedItem());
+                newFieldVal = Long.parseLong((String) Objects.requireNonNull(_value.getSelectedItem()));
             } catch (NumberFormatException e) {
                 //_value.setText(oldContents);
             }

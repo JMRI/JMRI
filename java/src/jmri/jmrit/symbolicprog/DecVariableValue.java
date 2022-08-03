@@ -37,8 +37,8 @@ public class DecVariableValue extends VariableValue
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
-        _factor = factor;
         _offset = offset;
+        _factor = factor;
         _value = new JTextField("0", fieldLength());
         _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
@@ -60,8 +60,8 @@ public class DecVariableValue extends VariableValue
 
     int _maxVal;
     int _minVal;
-    int _factor;
     int _offset;
+    int _factor;
 
     int fieldLength() {
         if (_maxVal <= 255) {
@@ -135,23 +135,23 @@ public class DecVariableValue extends VariableValue
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvNum());
         // compute new cv value by combining old and request
-        int oldCv = cv.getValue();
+        int oldCvVal = cv.getValue();
         int newVal;
         try {
             newVal = textToValue(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int transfer;
+        int transfer = Math.max(newVal - _offset, 0); // prevent negative values, especially in tests outside UI
         if (_factor != 0) {
-            transfer = (newVal - _offset) / _factor;
+            transfer = transfer / _factor;
         } else {
-            log.error("Variable param 'factor' = 0; Decoder definition needs correction");
-            transfer = (newVal - _offset);
+            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
         }
-        int newCv = setValueInCV(oldCv, transfer, getMask(), _maxVal);
-        if (oldCv != newCv) {
-            cv.setValue(newCv);
+        int newCvVal = setValueInCV(oldCvVal, transfer, getMask(), _maxVal);
+        log.warn("newVal={} transfer={} newCvVal ={}", newVal, transfer, newCvVal);
+        if (oldCvVal != newCvVal) {
+            cv.setValue(newCvVal);
         }
     }
 
@@ -263,13 +263,13 @@ public class DecVariableValue extends VariableValue
             }
             b.setSize(b.getWidth(), 28);
             Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-            labelTable.put(Integer.valueOf(0), new JLabel("0%"));
+            labelTable.put(0, new JLabel("0%"));
             if (_maxVal == 63) {   // this if for the QSI mute level, not very universal, needs work
-                labelTable.put(Integer.valueOf(_maxVal / 2), new JLabel("25%"));
-                labelTable.put(Integer.valueOf(_maxVal), new JLabel("50%"));
+                labelTable.put(_maxVal / 2, new JLabel("25%"));
+                labelTable.put(_maxVal, new JLabel("50%"));
             } else {
-                labelTable.put(Integer.valueOf(_maxVal / 2), new JLabel("50%"));
-                labelTable.put(Integer.valueOf(_maxVal), new JLabel("100%"));
+                labelTable.put(_maxVal / 2, new JLabel("50%"));
+                labelTable.put(_maxVal, new JLabel("100%"));
             }
             b.setLabelTable(labelTable);
             b.setPaintTicks(true);
@@ -294,7 +294,7 @@ public class DecVariableValue extends VariableValue
     ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
 
     /**
-     * Set a new value, including notification as needed.
+     * Set a new value in the variable (text box), including notification as needed.
      * <p>
      * This does the conversion from string to int, so it's the place where
      * formatting needs to be applied.
@@ -309,7 +309,7 @@ public class DecVariableValue extends VariableValue
         }
         if (value < _minVal) value = _minVal;
         if (value > _maxVal) value = _maxVal;
-        log.debug("setValue with new value {} old value {}", value, oldVal);
+        log.warn("setValue with new value {} old value {}", value, oldVal);
         if (oldVal != value) {
             _value.setText(valueToText(value));
             updatedTextField();
