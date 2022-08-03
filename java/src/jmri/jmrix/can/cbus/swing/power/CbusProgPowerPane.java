@@ -30,7 +30,12 @@ public class CbusProgPowerPane extends PowerPane {
 
     @Override
     protected int getPower() {
-        return listening.getProgTrackPower();
+        try {
+            return listening.getProgTrackPower();
+        } catch (JmriException e) {
+            log.error("Exception trying to get power state", e);
+            return PowerManager.UNKNOWN;
+        }
     }
     
     /**
@@ -42,5 +47,5 @@ public class CbusProgPowerPane extends PowerPane {
         selectMenu.getManager().setProgTrackPower(mode);
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(CbusProgPowerPane.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusProgPowerPane.class);
 }

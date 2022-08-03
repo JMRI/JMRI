@@ -95,6 +95,11 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         setStatus();
     }
 
+    /**
+     * Helper function that may be overridden for other power interfaces
+     * 
+     * @return the power mode
+     */
     protected int getPower() {
         return listening.getPower();
     }

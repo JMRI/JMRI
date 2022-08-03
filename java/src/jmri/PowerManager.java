@@ -70,12 +70,38 @@ public interface PowerManager extends PropertyChangeProvider {
         return false;
     }
  
+    /**
+     * Set the programming track power state
+     * 
+     * This method must be overridden with system specific behaviour if independent 
+     * programming track power control is possible.
+     * 
+     * @param v the power state
+     * @throws JmriException if not supported or not overridden
+     */
     public default void setProgTrackPower(int v) throws JmriException {
-        throw new JmriException("setProgTrackPower must be overridden");
+        if (!isProgTrackPowerSupported()) {
+            throw new UnsupportedOperationException("setProgTrackPower is not supported by this connection or system");
+        } else {
+            throw new JmriException("setProgTrackPower must be overridden");
+        }
     }
  
-    public default int getProgTrackPower() {
-        return PROG_OFF;
+    /**
+     * Get the programming track power state
+     * 
+     * This method must be overridden with system specific behaviour if independent 
+     * programming track power control is possible.
+     * 
+     * @return the power state
+     * @throws JmriException if not supported or not overridden
+     */
+    public default int getProgTrackPower() throws JmriException{
+        if (!isProgTrackPowerSupported()) {
+            throw new UnsupportedOperationException("setProgTrackPower is not supported by this connection or system");
+        } else {
+            throw new JmriException("getProgTrackPower must be overridden");
+        }
     }
  
      // to free resources when no longer used
