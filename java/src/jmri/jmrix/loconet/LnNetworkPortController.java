@@ -41,7 +41,9 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_1,
         LnCommandStationType.COMMAND_STATION_IBX_TYPE_2,
         LnCommandStationType.COMMAND_STATION_LBPS,
-        LnCommandStationType.COMMAND_STATION_MM};
+        LnCommandStationType.COMMAND_STATION_MM,
+        LnCommandStationType.COMMAND_STATION_DCS210PLUS,
+        LnCommandStationType.COMMAND_STATION_DCS240PLUS};
 
     protected String[] commandStationNames;
 

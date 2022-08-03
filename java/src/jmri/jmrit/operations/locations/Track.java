@@ -2397,6 +2397,15 @@ public class Track extends PropertyChangeSupport {
     public boolean isAddCustomLoadsAnyStagingTrackEnabled() {
         return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
     }
+    
+    public boolean isModifyLoadsEnabled() {
+        return isLoadEmptyEnabled() ||
+                isLoadSwapEnabled() ||
+                isRemoveCustomLoadsEnabled() ||
+                isAddCustomLoadsAnySpurEnabled() ||
+                isAddCustomLoadsAnyStagingTrackEnabled() ||
+                isAddCustomLoadsEnabled();
+    }
 
     public void setBlockCarsEnabled(boolean enable) {
         if (enable) {

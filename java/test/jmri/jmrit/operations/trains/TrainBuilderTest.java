@@ -5853,7 +5853,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 529, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 531, in.lines().count());
         in.close();
 
         // TODO search and confirm limit message in build report
@@ -5892,7 +5892,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 263, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 265, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -15007,11 +15007,12 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // confirm that car destination is correct
         Assert.assertEquals("car destination is eastend", eastendSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("car destination is midTown", midtownSpur2, c2.getDestinationTrack());
 
         // confirm track move counts are correct
         Assert.assertEquals("Westend spur 1", 0, westendSpur1.getMoves());
         Assert.assertEquals("Midtown spur 1", 22, midtownSpur1.getMoves());
-        Assert.assertEquals("Midtown spur 2", 45, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown spur 2", 46, midtownSpur2.getMoves());
         Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
         Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
 

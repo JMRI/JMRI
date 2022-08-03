@@ -155,7 +155,10 @@ public class TrainPrintUtilities {
                         c = Setup.getLocalColor();
                     } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
                         c = TrainCommon.getTextColor(line);
-                        if (!line.endsWith(TrainCommon.TEXT_COLOR_END)) {
+                        if (line.contains(TrainCommon.TEXT_COLOR_END)) {
+                            printingColor = false;
+                        } else {
+                            // printing multiple lines in color
                             printingColor = true;
                         }
                         // could be a color change when using two column format

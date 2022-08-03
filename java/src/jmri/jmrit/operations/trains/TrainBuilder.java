@@ -1285,6 +1285,10 @@ public class TrainBuilder extends TrainBuilderBase {
                     car.getLoadName(), car.getDestinationName(), car.getFinalDestinationName());
             return false;
         }
+        // check to see if car type has custom loads
+        if (carLoads.getNames(car.getTypeName()).size() == 2) {
+            return false;
+        }
         List<Track> tracks = locationManager.getTracks(Track.STAGING);
         // log.debug("Found {} staging tracks for load generation", tracks.size());
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTryStagingToStaging"),
@@ -1668,19 +1672,20 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         // check the number of in bound cars to this track
         if (!track.isSpaceAvailable(car)) {
-            // Now determine if we should move the car or just leave it where it is
-            String id = track.getScheduleItemId(); // save the tracks schedule item id
-            // determine if this car can be routed to the spur
-            car.setFinalDestination(track.getLocation());
-            car.setFinalDestinationTrack(track);
-            // hold car if able to route to track
-            if (router.setDestination(car, _train, _buildReport) && track.isHoldCarsWithCustomLoadsEnabled()) {
-                _routeToTrackFound = true; // if we don't find another spur, don't move car
+            // Now determine if we should move the car or just leave it
+            if (track.isHoldCarsWithCustomLoadsEnabled()) {
+                // determine if this car can be routed to the spur
+                String id = track.getScheduleItemId(); // save the tracks schedule item id
+                if (router.isCarRouteable(car, _train, track, _buildReport)) {
+                    // hold car if able to route to track
+                    _routeToTrackFound = true;
+                } else {
+                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildRouteNotFound"),
+                            new Object[]{car.toString(), car.getFinalDestinationName(),
+                                    car.getFinalDestinationTrackName()}));
+                }
+                track.setScheduleItemId(id); // restore id
             }
-            car.setDestination(null, null);
-            car.setFinalDestination(null);
-            car.setFinalDestinationTrack(null);
-            track.setScheduleItemId(id); // restore id
             if (car.getTrack().isStaging()) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
