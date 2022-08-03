@@ -79,7 +79,7 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);  // never transponding!
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);  // never transponding!
             this.getSystemConnectionMemo().configureManagersPR2();
 
             // start operation
@@ -107,7 +107,7 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
+                    mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);
 
             this.getSystemConnectionMemo().configureManagersMS100();
 

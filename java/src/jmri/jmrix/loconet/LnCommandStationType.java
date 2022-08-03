@@ -79,7 +79,7 @@ public enum LnCommandStationType {
             "LnThrottleManager", "SlotManager",  // NOI18N
             IdleSupport.SUPPORTS_OPC_IDLE,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
-            LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION),
+            LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
             CommandStationFracType.CLOCK15BIT,
             Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),
                     new SlotMapEntry(1,120,SlotType.LOCO),
