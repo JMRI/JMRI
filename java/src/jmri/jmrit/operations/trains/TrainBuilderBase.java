@@ -320,10 +320,6 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTrainServices() {
         // show road names that this train will service
-        if (!_train.getCarRoadOption().equals(Train.ALL_ROADS)) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRoads"), new Object[] {
-                    _train.getName(), _train.getCarRoadOption(), formatStringToCommaSeparated(_train.getCarRoadNames()) }));
-        }
         if (!_train.getLocoRoadOption().equals(Train.ALL_ROADS)) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainLocoRoads"), new Object[] {
                     _train.getName(), _train.getLocoRoadOption(), formatStringToCommaSeparated(_train.getLocoRoadNames()) }));
@@ -630,6 +626,15 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         return false;
+    }
+    
+    protected void showTrainCarRoads() {
+        if (!_train.getCarRoadOption().equals(Train.ALL_ROADS)) {
+            addLine(_buildReport, FIVE, BLANK_LINE);
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRoads"), new Object[]{
+                    _train.getName(), _train.getCarRoadOption(),
+                    formatStringToCommaSeparated(_train.getCarRoadNames())}));
+        }
     }
 
     protected void showTrainCarTypes() {
