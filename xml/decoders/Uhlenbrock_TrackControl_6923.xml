@@ -8,16 +8,16 @@
 3. CV number
 For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
 Uhlenbrock publishes the Article number for each (new) device.
-The Uhlenbrock Track-Control Signal Indicator has Article number 6923, which was registered with Uhlenbrock.
-Older LNCV devices may not have their own address, or even no article. They can be programmed using
-Broadcast mode, but you have to be sure only one such device is powered, as they all would respond to
-programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+The Uhlenbrock Track-Control Signal Indicator #69230 has Article number 6923, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20210205"/>
+    <version author="Egbert Broerse" version="2.0" lastUpdated="20220803"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
   <!-- all Track-Control items, and all LNCV definitions, require their own files as the article number is part of the CV name -->
-  <!-- compare to the similar 6922 Turnout Control. -->    <decoder>
+  <!-- compare to the similar 6922 Turnout Control. -->
+  <!-- version 2 - fixed CV39, added Route 1 configuration, requires JMRI 5.1.3 -->
+  <decoder>
         <family name="Track-Control" mfg="Uhlenbrock Elektronik" type="stationary">
             <model model="Signal Module" productID="6923" formFactor="Stationary" comment="Control Panel Signal Indicator">
               <versionCV />
@@ -243,7 +243,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Drukknop verstuurt adres (1-2048)</tooltip>
             </variable>
             <variable CV="6923.39" item="Group Button Color" mask="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit1.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
               <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
               <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
               <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
@@ -270,7 +270,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Drukknop wacht op adres (1-1997)</tooltip>
             </variable>
             <variable CV="6923.41" item="Route 1 Assign Type" mask="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit1.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGDigit0.xml"/>
               <tooltip>xxxx0 for Red, xxxx1 for Green</tooltip>
               <tooltip xml:lang="de">xxxx0 für Rot, xxxx1 für Grün</tooltip>
               <tooltip xml:lang="nl">0 voor Rood, xxxx1 voor Groen</tooltip>
@@ -285,7 +285,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Als starttoets is gedrukt stuur Ln bericht (wisselstraat toewijzen)</tooltip>
             </variable>
             <variable CV="6923.42" item="Route 1 Assigned Type" mask="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGUnOccDigit1.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGUnOccDigit0.xml"/>
               <tooltip>type of message to send</tooltip>
               <tooltip xml:lang="de">Art des Berichts</tooltip>
               <tooltip xml:lang="nl">Soort LocoNet bericht</tooltip>
@@ -300,7 +300,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Terugmelding (straat 1 vrijgeven)</tooltip>
             </variable>
             <variable CV="6923.43" item="Route 1 Release Type" mask="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-UnOccDigit1.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-UnOccDigit0.xml"/>
               <tooltip>type of message to send</tooltip>
               <tooltip xml:lang="de">Art des Berichts</tooltip>
               <tooltip xml:lang="nl">Soort LocoNet bericht</tooltip>
@@ -315,7 +315,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Na vrijgave straat 1 LN bericht sturen</tooltip>
             </variable>
             <variable CV="6923.44" item="Route 1 Released Type" mask="1">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGUnOccDigit1.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-RGUnOccDigit0.xml"/>
               <tooltip>type of message to send</tooltip>
               <tooltip xml:lang="de">Art des Berichts</tooltip>
               <tooltip xml:lang="nl">Soort LocoNet bericht</tooltip>
