@@ -23,7 +23,7 @@ public class CbusProgPowerAction extends jmri.util.swing.JmriNamedPaneAction {
     }
 
     public CbusProgPowerAction() {
-        this(Bundle.getMessage("TitlePowerPanel"));
+        this(Bundle.getMessage("LabelProgTrackPower"));
     }
 
     protected void checkManager() {

@@ -271,6 +271,68 @@ public class CbusMessageTest {
     }
 
     @Test
+    public void testisTrackOnEventReply() {
+        CanReply r = new CanReply(0x12);
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_ACON);
+        r.setElement(1, 65534/256);
+        r.setElement(2, 65534 & 0xFF);
+        r.setElement(3, CbusConstants.CS_DEF_EV_POWER_ACK/256);
+        r.setElement(4, CbusConstants.CS_DEF_EV_POWER_ACK & 0xFF);
+        Assert.assertEquals("isRequestTrackOnEvent Reply", CbusMessage.isTrackOnEvent(r, 65534, 0),true);
+        r = new CanReply(0x12);
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_ACON);
+        r.setElement(1, 65534/256);
+        r.setElement(2, 65534 & 0xFF);
+        r.setElement(3, CbusConstants.CS_DEF_EV_POWER_ACK/256);
+        r.setElement(4, CbusConstants.CS_DEF_EV_POWER_ACK & 0xFF);
+        Assert.assertEquals("isRequestTrackOnEvent default track Reply", CbusMessage.isTrackOnEvent(r, 65534),true);
+    }
+
+    @Test
+    public void testisTrackOffEventReply() {
+        CanReply r = new CanReply(0x12);
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_ACOF);
+        r.setElement(1, 1234/256);
+        r.setElement(2, 1234 & 0xFF);
+        r.setElement(3, (CbusConstants.CS_DEF_EV_POWER_ACK + 3)/256);
+        r.setElement(4, (CbusConstants.CS_DEF_EV_POWER_ACK + 3) & 0xFF);
+        Assert.assertEquals("isRequestTrackOffEvent Reply", CbusMessage.isTrackOffEvent(r, 1234, 3),true);
+        r = new CanReply(0x12);
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_ACOF);
+        r.setElement(1, 5678/256);
+        r.setElement(2, 5678 & 0xFF);
+        r.setElement(3, (CbusConstants.CS_DEF_EV_POWER_ACK)/256);
+        r.setElement(4, (CbusConstants.CS_DEF_EV_POWER_ACK) & 0xFF);
+        Assert.assertEquals("isRequestTrackOffEvent default track Reply", CbusMessage.isTrackOffEvent(r, 5678),true);
+    }
+
+    @Test
+    public void testgetRequestTrackOnEventMessage() {
+        CanMessage m = CbusMessage.getRequestTrackOnEvent(0x12, 65534, 0);
+        Assert.assertTrue("getRequestTrackOnEvent OPC", m.getElement(0) == CbusConstants.CBUS_ACON);
+        Assert.assertTrue("getRequestTrackOnEvent NN Hi byte", m.getElement(1) == (65534/256));
+        Assert.assertTrue("getRequestTrackOnEvent NN Lo byte", m.getElement(2) == (65534 & 0xFF));
+        Assert.assertTrue("getRequestTrackOnEvent track", m.getElement(3) == (((CbusConstants.CS_DEF_EV_POWER_REQ)/256) & 0xFF));
+        Assert.assertTrue("getRequestTrackOnEvent track", m.getElement(4) == ((CbusConstants.CS_DEF_EV_POWER_REQ) & 0xFF));
+        Assert.assertTrue("getRequestTrackOn Length", m.getNumDataElements() == 5);
+    }
+    
+    @Test
+    public void testgetRequestTrackOffEventMessage() {
+        CanMessage m = CbusMessage.getRequestTrackOffEvent(0x12, 27, 2);
+        Assert.assertTrue("getRequestTrackOnEvent OPC", m.getElement(0) == CbusConstants.CBUS_ACOF);
+        Assert.assertTrue("getRequestTrackOnEvent NN Hi byte", m.getElement(1) == (27/256));
+        Assert.assertTrue("getRequestTrackOnEvent NN Lo byte", m.getElement(2) == (27 & 0xFF));
+        Assert.assertTrue("getRequestTrackOnEvent track", m.getElement(3) == (((CbusConstants.CS_DEF_EV_POWER_REQ + 2)/256) & 0xFF));
+        Assert.assertTrue("getRequestTrackOnEvent track", m.getElement(4) == ((CbusConstants.CS_DEF_EV_POWER_REQ + 2) & 0xFF));
+        Assert.assertTrue("getRequestTrackOn Length", m.getNumDataElements() == 5);
+    }
+    
+    @Test
     public void testgetDataLength() {
         CanReply r = new CanReply(0x12);
         CanMessage m = new CanMessage(0x12);
