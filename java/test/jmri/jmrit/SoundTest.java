@@ -1,12 +1,14 @@
 package jmri.jmrit;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,13 +22,13 @@ public class SoundTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
     }
     
@@ -34,8 +36,8 @@ public class SoundTest {
      * Test of play method, of class Sound.
      */
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testPlay() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -50,8 +52,8 @@ public class SoundTest {
      * Test of loop method, of class Sound.
      */
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testLoopInt() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -66,8 +68,8 @@ public class SoundTest {
      * Test of stop method, of class Sound.
      */
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testStop() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         try {
             AudioSystem.getClip();
         } catch (IllegalArgumentException | LineUnavailableException ex) {
@@ -75,17 +77,7 @@ public class SoundTest {
         }
         Sound instance = new Sound("program:resources/sounds/RlyClick.wav");
         instance.loop();
-        Runnable waiter = new Runnable() {
-            @Override
-            public synchronized void run() {
-                try {
-                    this.wait(500);
-                } catch (InterruptedException ex) {
-                    log.error("Waiter interrupted.");
-                }
-            }
-        };
-        waiter.run();
+        JUnitUtil.waitFor(500);
         instance.stop();
         log.info("Repeated relay clicks played.");
     }
