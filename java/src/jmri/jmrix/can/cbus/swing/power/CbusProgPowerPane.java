@@ -1,9 +1,7 @@
 package jmri.jmrix.can.cbus.swing.power;
 
-import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 
 import jmri.JmriException;
 import jmri.PowerManager;

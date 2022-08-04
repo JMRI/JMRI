@@ -1,5 +1,9 @@
 package jmri.jmrix.can.cbus.swing.power;
 
+import jmri.InstanceManager;
+import jmri.PowerManager;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusPowerManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -17,7 +21,9 @@ public class CbusProgPowerPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.initDebugPowerManager();
+//        JUnitUtil.initDebugPowerManager();
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        InstanceManager.setDefault(PowerManager.class, new CbusPowerManager(memo));
         panel = new CbusProgPowerPane();
         helpTarget="package.jmri.jmrix.can.cbus.swing.power.ProgPowerPanelFrame";
         title=jmri.jmrix.can.cbus.swing.power.Bundle.getMessage("MenuItemProgTrackPower");
