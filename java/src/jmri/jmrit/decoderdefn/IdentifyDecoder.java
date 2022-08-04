@@ -36,6 +36,8 @@ import org.slf4j.LoggerFactory;
  * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
  * Republic</li>
  * <li>Doehler &amp; Haass: (mfgID == 97) CV261 is ID from 2020 firmwares</li>
+ * <li>Train-O-Matic: (mfgID == 78, modelID == 3 or 5) CV508 lowest byte, 
+ * CV509 low byte and CV510 high byte</li>
  * </ul>
  * <dl>
  * <dt>Optional CVs:</dt>
@@ -143,6 +145,10 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             setOptionalCv(true);
             readCV("261");
             return false;
+        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+            statusUpdate("Read productID #1 CV 510");
+            readCV("510");
+            return false;
         }
         return true;
     }
@@ -205,6 +211,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             }
             productID = value;
             return true;
+        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+            productIDhigh = value;
+            statusUpdate("Read productID #2 CV 509");
+            readCV("509");
+            return false;
         }
         log.error("unexpected step 4 reached with value: {}", value);
         return true;
@@ -242,6 +253,11 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder extended Version ID Low Byte");
             readCV("111");
             return false;
+        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+            productIDlow = value;
+            statusUpdate("Read productID #3 CV 508");
+            readCV("508");
+            return false;
         }
         log.error("unexpected step 5 reached with value: {}", value);
         return true;
@@ -269,6 +285,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder extended Version ID High Byte");
             readCV("110");
             return false;
+        } else if (mfgID == 78 && (modelID == 3 || modelID == 5)) {  // Train-O-Matic Lokommander II
+            productID = value + (productIDlow * 256) + (productIDhigh * 256 * 256);
+            return true;
         }
         log.error("unexpected step 6 reached with value: {}", value);
         return true;

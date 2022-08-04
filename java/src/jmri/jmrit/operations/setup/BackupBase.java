@@ -91,6 +91,7 @@ public abstract class BackupBase {
      *
      * @param setName The name of the new backup set
      * @throws java.io.IOException Due to trouble writing files
+     * @throws IllegalArgumentException  if string null or empty
      */
     public void backupFilesToSetName(String setName) throws IOException, IllegalArgumentException {
         validateNotNullOrEmpty(setName);

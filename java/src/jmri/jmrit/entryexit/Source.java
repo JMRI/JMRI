@@ -63,7 +63,7 @@ public class Source implements PropertyChangeListener {
     /**
      * Property change support for table in AddEntryExitPairPanel.
      * Catch when paths go active.
-     * @since 4.17.4 
+     * @since 4.17.4
      */
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -75,7 +75,7 @@ public class Source implements PropertyChangeListener {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(listener);
     }
-    
+
     /**
      * Remove property change listener.
      * @since 4.17.4
@@ -84,7 +84,7 @@ public class Source implements PropertyChangeListener {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(listener);
     }
-    
+
     /**
      * @since 4.17.4
      */
@@ -92,7 +92,7 @@ public class Source implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         pcs.firePropertyChange("active", evt.getOldValue(), evt.getNewValue());
     }
-    
+
 
     void cancelClearInterlockFromSource(int cancelClear) {
         for (DestinationPoints dp : pointToDest.values()) {
@@ -255,7 +255,9 @@ public class Source implements PropertyChangeListener {
         }
         if (type == EntryExitPairs.FULLINTERLOCK) {
             if (sourceSignal instanceof SignalMast) {
-                ((SignalMast) sourceSignal).setHeld(true);
+                if (!manager.isAbsSignalMode()) {
+                    ((SignalMast) sourceSignal).setHeld(true);
+                }
             }
         }
     }

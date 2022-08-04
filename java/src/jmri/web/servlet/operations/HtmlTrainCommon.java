@@ -279,7 +279,7 @@ public class HtmlTrainCommon extends TrainCommon {
                     .escapeHtml4(splitString(rs.getDestinationName())), StringEscapeUtils.escapeHtml4(splitString(rs
                     .getDestinationTrackName())));
         } else if (attribute.equals(Setup.OWNER)) {
-            return StringEscapeUtils.escapeHtml4(rs.getOwner());
+            return StringEscapeUtils.escapeHtml4(rs.getOwnerName());
         } else if (attribute.equals(Setup.COMMENT)) {
             return StringEscapeUtils.escapeHtml4(rs.getComment());
         } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER)
