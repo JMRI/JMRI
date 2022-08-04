@@ -416,7 +416,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
                 Bundle.getMessage("ProgOnMode"),
-                Bundle.getMessage("ProgArMode")
+                Bundle.getMessage("ProgArMode"),
+                Bundle.getMessage("ProgOnlyMode")
             };
             
             c.weightx = 1;

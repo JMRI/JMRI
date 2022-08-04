@@ -78,7 +78,7 @@ public interface PowerManager extends PropertyChangeProvider {
      * @throws JmriException if not overridden when supported by the connection
      * @throws UnsupportedOperationException if not supported
      */
-    public default void setProgTrackPower(int v) throws JmriException {
+    public default void setProgTrackPower(int v) throws JmriException, UnsupportedOperationException {
         if (!isProgTrackPowerSupported()) {
             throw new UnsupportedOperationException("setProgTrackPower is not supported by this connection or system");
         } else {
@@ -96,7 +96,7 @@ public interface PowerManager extends PropertyChangeProvider {
      * @throws JmriException if not overridden when supported by the connection
      * @throws UnsupportedOperationException if not supported
      */
-    public default int getProgTrackPower() throws JmriException{
+    public default int getProgTrackPower() throws JmriException, UnsupportedOperationException {
         if (!isProgTrackPowerSupported()) {
             throw new UnsupportedOperationException("setProgTrackPower is not supported by this connection or system");
         } else {
