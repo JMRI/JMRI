@@ -12,9 +12,9 @@ The Uhlenbrock 63410 has an Article number 6341, which was registered with Uhlen
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="2" lastUpdated="20220803"/>
+    <version author="Egbert Broerse" version="2" lastUpdated="20220804"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
-    <!-- version 2 - corrected mask using radix mask, fix max on LNCV1. Requires JMRI 5.1.3 and schema decoder-4-15-2.xsd -->
+    <!-- version 2 - corrected mask using radix mask on LNCV1 etc. Requires JMRI 5.1.3 and schema decoder-4-15-2.xsd -->
 
     <decoder>
         <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary">
@@ -117,14 +117,14 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
 
             <variable CV="6341.1" item="Start Address" mask="10" default="1">
-              <decVal min="0" max="9999" factor="1" offset="0"/>
+              <decVal min="0" max="10000"/>
               <label xml:lang="de"> Anfangsadresse:</label>
               <label xml:lang="nl"> Beginadres:</label>
               <label> Start Address:</label>
               <tooltip>Start Address for Module Setting (1-2048)</tooltip>
             </variable>
 
-            <variable CV="6341.1" item="Assist">
+            <variable CV="6341.1" item="Assist" readOnly="yes" >
               <!-- debug field-->
               <decVal min="1" max="20489"/>
               <label xml:lang="de"> macht:</label>
@@ -343,14 +343,14 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <!--5 = Main signal with 3 states. Märklin style-->
             <!--6 = Main signal with 4 states. Märklin style-->
             <!--7 = Warning signal. Märklin style-->
-            <variable CV="6341.11" mask="1" item="Signal Group 1 Type" default="0">
+            <variable CV="6341.11" item="Signal Group 1 Type" mask="1" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 1 Modell: </label>
               <label xml:lang="nl">Seingroep 1 Type: </label>
               <label>Signal Group 1 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.11" mask="10" item="Signal Group 1 Address" default="0">
+            <variable CV="6341.11" item="Signal Group 1 Address" mask="10" default="0">
               <decVal min="0" max="9999"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
@@ -358,29 +358,29 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.11" item="Signal Group 1" default="0">
+            <variable CV="6341.11" item="Signal Group 1" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
               <label xml:lang="de"> macht:</label>
               <label xml:lang="nl"> maakt:</label>
               <label> makes:</label>
             </variable>
           
-            <variable CV="6341.12" mask="1" item="Signal Group 2 Type" default="0">
+            <variable CV="6341.12" item="Signal Group 2 Type" mask="1" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSwitchSignalChoice.xml"/>
               <label xml:lang="de">Signalgruppe 1 Modell: </label>
               <label xml:lang="nl">Seingroep 1 Type: </label>
               <label>Signal Group 2 Type: </label>
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
-            <variable CV="6341.12" mask="10" item="Signal Group 2 Address" default="0">
-              <decVal min="0" max="9999"/>
+            <variable CV="6341.12" item="Signal Group 2 Address" mask="10" default="0">
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.12" item="Signal Group 2" default="0">
+            <variable CV="6341.12" item="Signal Group 2" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
               <label xml:lang="de"> macht:</label>
               <label xml:lang="nl"> maakt:</label>
@@ -395,14 +395,14 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
             <variable CV="6341.13" mask="10" item="Signal Group 3 Address" default="0">
-              <decVal min="0" max="9999"/>
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.13" item="Signal Group 3" default="0">
+            <variable CV="6341.13" item="Signal Group 3" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
               <label xml:lang="de"> macht:</label>
               <label xml:lang="nl"> maakt:</label>
@@ -417,14 +417,14 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
             <variable CV="6341.14" mask="10" item="Signal Group 4 Address" default="0">
-              <decVal min="0" max="9999"/>
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.14" item="Signal Group 4" default="0">
+            <variable CV="6341.14" item="Signal Group 4" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
               <label xml:lang="de"> macht:</label>
               <label xml:lang="nl"> maakt:</label>
@@ -439,14 +439,14 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Type of signal head connected to this group of outputs</tooltip>
             </variable>
             <variable CV="6341.15" mask="10" item="Signal Group 5 Address" default="0">
-              <decVal min="0" max="9999"/>
+              <decVal min="0" max="10000"/>
               <label xml:lang="de">Signaladresse:</label>
               <label xml:lang="nl">Seinadres:</label>
               <label>Address:</label>
               <tooltip>Address of searchlight signal (1-2048)</tooltip>
             </variable>
             <!-- test -->
-            <variable CV="6341.15" item="Signal Group 5" default="0">
+            <variable CV="6341.15" item="Signal Group 5" readOnly="yes" default="0">
               <decVal min="0" max="20487"/>
               <label xml:lang="de"> macht:</label>
               <label xml:lang="nl"> maakt:</label>
@@ -483,7 +483,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 2 On</tooltip>
           </variable>
           <variable CV="6341.22" mask="10" item="Output 2 On Address" default="200">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -503,7 +503,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 3 On</tooltip>
           </variable>
           <variable CV="6341.23" mask="10" item="Output 3 On Address" default="201">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -523,7 +523,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 4 On</tooltip>
           </variable>
           <variable CV="6341.24" mask="10" item="Output 4 On Address" default="202">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -543,7 +543,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 5 On</tooltip>
           </variable>
           <variable CV="6341.25" mask="10" item="Output 5 On Address" default="203">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -563,7 +563,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 6 On</tooltip>
           </variable>
           <variable CV="6341.26" mask="10" item="Output 6 On Address" default="204">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -583,7 +583,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 7 On</tooltip>
           </variable>
           <variable CV="6341.27" mask="10" item="Output 7 On Address" default="205">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -603,7 +603,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 8 On</tooltip>
           </variable>
           <variable CV="6341.28" mask="10" item="Output 8 On Address" default="206">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -623,7 +623,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 9 On</tooltip>
           </variable>
           <variable CV="6341.29" mask="10" item="Output 9 On Address" default="207">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -643,7 +643,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 10 On</tooltip>
           </variable>
           <variable CV="6341.30" mask="10" item="Output 10 On Address" default="208">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -663,7 +663,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 11 On</tooltip>
           </variable>
           <variable CV="6341.31" mask="10" item="Output 11 On Address" default="209">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -683,7 +683,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 12 On</tooltip>
           </variable>
           <variable CV="6341.32" mask="10" item="Output 12 On Address" default="210">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -703,7 +703,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 13 On</tooltip>
           </variable>
           <variable CV="6341.33" mask="10" item="Output 13 On Address" default="211">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -723,7 +723,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 14 On</tooltip>
           </variable>
           <variable CV="6341.34" mask="10" item="Output 14 On Address" default="212">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -743,7 +743,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 15 On</tooltip>
           </variable>
           <variable CV="6341.35" mask="10" item="Output 15 On Address" default="213">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -763,7 +763,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 16 On</tooltip>
           </variable>
           <variable CV="6341.36" mask="10" item="Output 16 On Address" default="214">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -783,7 +783,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 17 On</tooltip>
           </variable>
           <variable CV="6341.37" mask="10" item="Output 17 On Address" default="215">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -803,7 +803,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 18 On</tooltip>
           </variable>
           <variable CV="6341.38" mask="10" item="Output 18 On Address" default="216">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -823,7 +823,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 19 On</tooltip>
           </variable>
           <variable CV="6341.39" mask="10" item="Output 19 On Address" default="217">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -843,7 +843,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <tooltip>Command to turn output 20 On</tooltip>
           </variable>
           <variable CV="6341.40" mask="10" item="Output 20 On Address" default="218">
-            <decVal min="1" max="9999"/>
+            <decVal min="1" max="10000"/>
             <label xml:lang="de">Adresse Ein:</label>
             <label xml:lang="nl">Adres Aan:</label>
             <label>On Address:</label>
@@ -865,7 +865,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 1 Off</tooltip>
             </variable>
             <variable CV="6341.41" mask="10" item="Output 1 Off Address" default="199">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -880,7 +880,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 2 Off</tooltip>
             </variable>
             <variable CV="6341.42" mask="10" item="Output 2 Off Address" default="200">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -895,7 +895,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 3 Off</tooltip>
             </variable>
             <variable CV="6341.43" mask="10" item="Output 3 Off Address" default="201">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -910,7 +910,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 4 Off</tooltip>
             </variable>
             <variable CV="6341.44" mask="10" item="Output 4 Off Address" default="202">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -925,7 +925,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 5 Off</tooltip>
             </variable>
             <variable CV="6341.45" mask="10" item="Output 5 Off Address" default="203">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -940,7 +940,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 6 Off</tooltip>
             </variable>
             <variable CV="6341.46" mask="10" item="Output 6 Off Address" default="204">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -955,7 +955,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 7 Off</tooltip>
             </variable>
             <variable CV="6341.47" mask="10" item="Output 7 Off Address" default="205">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -970,7 +970,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 8 Off</tooltip>
             </variable>
             <variable CV="6341.48" mask="10" item="Output 8 Off Address" default="206">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -985,7 +985,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 9 Off</tooltip>
             </variable>
             <variable CV="6341.49" mask="10" item="Output 9 Off Address" default="207">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1000,7 +1000,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn Output 10 Off</tooltip>
             </variable>
             <variable CV="6341.50" mask="10" item="Output 10 Off Address" default="208">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1015,7 +1015,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 11 Off</tooltip>
             </variable>
             <variable CV="6341.51" mask="10" item="Output 11 Off Address" default="209">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1030,7 +1030,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 12 Off</tooltip>
             </variable>
             <variable CV="6341.52" mask="10" item="Output 12 Off Address" default="210">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1045,7 +1045,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 13 Off</tooltip>
             </variable>
             <variable CV="6341.53" mask="10" item="Output 13 Off Address" default="211">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1060,7 +1060,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 14 Off</tooltip>
             </variable>
             <variable CV="6341.54" mask="10" item="Output 14 Off Address" default="212">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1075,7 +1075,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 15 Off</tooltip>
             </variable>
             <variable CV="6341.55" mask="10" item="Output 15 Off Address" default="213">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1090,7 +1090,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 16 Off</tooltip>
             </variable>
             <variable CV="6341.56" mask="10" item="Output 16 Off Address" default="214">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1105,7 +1105,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 17 Off</tooltip>
             </variable>
             <variable CV="6341.57" mask="10" item="Output 17 Off Address" default="215">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1120,7 +1120,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 18 Off</tooltip>
             </variable>
             <variable CV="6341.58" mask="10" item="Output 18 Off Address" default="216">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1135,7 +1135,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 19 Off</tooltip>
             </variable>
             <variable CV="6341.59" mask="10" item="Output 19 Off Address" default="217">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1150,7 +1150,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Command to turn output 20 Off</tooltip>
             </variable>
             <variable CV="6341.60" mask="10" item="Output 20 Off Address" default="218">
-              <decVal min="1" max="9999"/>
+              <decVal min="1" max="10000"/>
               <label xml:lang="de">Adresse Aus:</label>
               <label xml:lang="nl">Adres Uit:</label>
               <label>Off Address:</label>
@@ -1167,7 +1167,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 1</tooltip>
             </variable>
             <variable CV="6341.61" mask="10" item="Output 1 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1182,7 +1182,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 2</tooltip>
             </variable>
             <variable CV="6341.62" mask="10" item="Output 2 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1197,7 +1197,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 3</tooltip>
             </variable>
             <variable CV="6341.63" mask="10" item="Output 3 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1212,7 +1212,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 4</tooltip>
             </variable>
             <variable CV="6341.64" mask="10" item="Output 4 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1227,7 +1227,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 5</tooltip>
             </variable>
             <variable CV="6341.65" mask="10" item="Output 5 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1242,7 +1242,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 6</tooltip>
             </variable>
             <variable CV="6341.66" mask="10" item="Output 6 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1257,7 +1257,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 7</tooltip>
             </variable>
             <variable CV="6341.67" mask="10" item="Output 7 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1272,7 +1272,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 8</tooltip>
             </variable>
             <variable CV="6341.68" mask="10" item="Output 8 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1287,7 +1287,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 9</tooltip>
             </variable>
             <variable CV="6341.69" mask="10" item="Output 9 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1302,7 +1302,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 10</tooltip>
             </variable>
             <variable CV="6341.70" mask="10" item="Output 10 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1317,7 +1317,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 11</tooltip>
             </variable>
             <variable CV="6341.71" mask="10" item="Output 11 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1332,7 +1332,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 12</tooltip>
             </variable>
             <variable CV="6341.72" mask="10" item="Output 12 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1347,7 +1347,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 13</tooltip>
             </variable>
             <variable CV="6341.73" mask="10" item="Output 13 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1362,7 +1362,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 14</tooltip>
             </variable>
             <variable CV="6341.74" mask="10" item="Output 14 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1377,7 +1377,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 15</tooltip>
             </variable>
             <variable CV="6341.75" mask="10" item="Output 15 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1392,7 +1392,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 16</tooltip>
             </variable>
             <variable CV="6341.76" mask="10" item="Output 16 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1407,7 +1407,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 17</tooltip>
             </variable>
             <variable CV="6341.77" mask="10" item="Output 17 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1422,7 +1422,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 18</tooltip>
             </variable>
             <variable CV="6341.78" mask="10" item="Output 18 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1437,7 +1437,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 19</tooltip>
             </variable>
             <variable CV="6341.79" mask="10" item="Output 19 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -1452,7 +1452,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Switching mode of output 20</tooltip>
             </variable>
             <variable CV="6341.80" mask="10" item="Output 20 Switch Time" default="0">
-              <decVal max="999"/>
+              <decVal max="1000"/>
               <label xml:lang="de">Impulslänge:</label>
               <label xml:lang="nl">Pulslengte:</label>
               <label>Duration:</label>
@@ -2158,8 +2158,10 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
                   <!--end of output blocks-->
 
                 <separator/>
-                <display item="Damped 1"/>
-                <display item="Damped 2"/>
+                <row>
+                  <display item="Damped 1"/>
+                  <display item="Damped 2"/>
+                </row>
               </column>
           </row>
       </pane>
