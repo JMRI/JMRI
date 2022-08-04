@@ -12,9 +12,8 @@ The Uhlenbrock Switch Control #63400 has an Article number 6340, which was regis
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="2.0" lastUpdated="20220804"/>
-    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
-    <!-- version 2 - fixed masks for LNCV 1 and 11-up, requires decoder.4.15.2.xsd -->
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220804"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 and decoder.4.15.2.xsd -->
 
     <decoder>
         <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary">
@@ -779,6 +778,8 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> Address:</label>
               <tooltip>Lamp 9 Off Address (1-2048)</tooltip>
             </variable>
+
+            <!--          TODO add Start Key-Finish Key functions - LNCV 100 bis 199 -->
 
            </variables>
       </decoder>
