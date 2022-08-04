@@ -104,7 +104,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         rs1.setWeight("TESTWEIGHT");
         rs1.setWeightTons("TESTWEIGHTTONS");
         rs1.setBuilt("TESTBUILT");
-        rs1.setOwner("TESTOWNER");
+        rs1.setOwnerName("TESTOWNER");
         rs1.setComment("TESTCOMMENT");
         // make sure the ID tags exist before we
         // try to add it to a car.
@@ -123,7 +123,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car WeightTons", "TESTWEIGHTTONS", rs1.getWeightTons());
 
         Assert.assertEquals("Car Built", "TESTBUILT", rs1.getBuilt());
-        Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwner());
+        Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwnerName());
         Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
         Assert.assertEquals("Car Rfid", "IDTESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());

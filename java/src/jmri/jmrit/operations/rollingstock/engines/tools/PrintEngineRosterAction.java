@@ -126,7 +126,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 
                 // show one of 7 options, built is default
                 if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_OWNER) {
-                    owner = padAttribute(engine.getOwner(), ownerMaxLen);
+                    owner = padAttribute(engine.getOwnerName(), ownerMaxLen);
                 } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_MOVES) {
                     moves = padAttribute(Integer.toString(engine.getMoves()), 5);
                 } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_DCC_ADDRESS) {

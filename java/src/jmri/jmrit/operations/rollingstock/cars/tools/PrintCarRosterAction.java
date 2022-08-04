@@ -169,7 +169,7 @@ public class PrintCarRosterAction extends AbstractAction {
                     kernel = padAttribute(car.getKernelName().trim(), Control.max_len_string_attibute);
                 }
                 if (printCarOwner.isSelected()) {
-                    owner = padAttribute(car.getOwner().trim(),
+                    owner = padAttribute(car.getOwnerName().trim(),
                             InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
                 }
                 if (printCarBuilt.isSelected()) {
