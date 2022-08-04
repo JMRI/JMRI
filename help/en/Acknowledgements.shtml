@@ -549,6 +549,9 @@
 
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
+        <li>Arco Klippstein, <!-- arthkl -->
+        who updated the Lissy support.</li>
+
         <li>Michael Kneebone, who gave permission to allow us to use his SliderSnap class that
         corrects the behavior of JSliders, making them snap whilst sliding rather than
         afterwards.</li>
