@@ -313,8 +313,8 @@ public class CarSetFrameTest extends OperationsTestCase {
         jfo.getQueueTool().waitEmpty();
 
         // Exclude car's road name from train
-        train1.setRoadOption(Train.EXCLUDE_ROADS);
-        train1.addRoadName(c3.getRoadName());
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
+        train1.addCarRoadName(c3.getRoadName());
 
         Thread t2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
@@ -422,7 +422,7 @@ public class CarSetFrameTest extends OperationsTestCase {
 
         // Exclude car's owner name from train
         train1.setOwnerOption(Train.EXCLUDE_OWNERS);
-        train1.addOwnerName(c3.getOwner());
+        train1.addOwnerName(c3.getOwnerName());
         Thread t2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("rsNotMove"), Bundle.getMessage("ButtonOK"));
         new JButtonOperator(jfo, Bundle.getMessage("ButtonSave") ).doClick();
         JUnitUtil.waitFor(() -> {return !t2.isAlive();});

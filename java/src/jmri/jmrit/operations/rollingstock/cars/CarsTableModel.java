@@ -660,7 +660,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case BUILT_COLUMN:
                 return car.getBuilt();
             case OWNER_COLUMN:
-                return car.getOwner();
+                return car.getOwnerName();
             case VALUE_COLUMN:
                 return car.getValue();
             case RFID_COLUMN:
