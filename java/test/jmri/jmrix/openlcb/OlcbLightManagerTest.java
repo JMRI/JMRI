@@ -120,7 +120,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @Override
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
         String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
