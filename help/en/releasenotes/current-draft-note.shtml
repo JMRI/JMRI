@@ -238,9 +238,13 @@
                 <li></li>
             </ul>
 
-        <h4>Lenz</h4>
+        <h4>Lissy</h4>
             <ul>
-                <li></li>
+                <li>Updated the Lissy Reporter support, including
+                improved display of the messages. Note that this
+                has changed the format of the reports, so users
+                who have written scripts to use this might need to
+                check and update them.</li>
             </ul>
 
         <h4>MD Electronics</h4>
