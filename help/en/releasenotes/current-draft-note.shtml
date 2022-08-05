@@ -340,6 +340,11 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
+                <li>Updated the Lissy Reporter support, including
+                improved display of the messages. Note that this
+                has changed the format of the reports, so users
+                who have written scripts to use this might need to
+                check and update them.</li>
                 <li>Added a decoder definition to configure the 63810 Mobile Station Adapter.<br>
                 Use the LNCV tool to program.</li>
                 <li>Added decoder definitions for Occupancy Feedback modules #63320/40 (2-rail) and #63330/50
