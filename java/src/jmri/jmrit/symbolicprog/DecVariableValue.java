@@ -132,7 +132,7 @@ public class DecVariableValue extends VariableValue
             newVal = 0;
         }
         int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
-        log.warn("newVal={} newCvVal ={}", newVal, newCvVal);
+        log.debug("newVal={} newCvVal ={}", newVal, newCvVal);
         if (oldCvVal != newCvVal) {
             cv.setValue(newCvVal);
         }

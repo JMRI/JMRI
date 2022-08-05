@@ -664,7 +664,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Is this a bit mask (such as XVVVXXXX form) vice radix mask (small
+     * Is this a bit mask (such as XVVVXXXX form) vs. radix mask (small
      * integer)?
      *
      * @param mask the bit mask to check
