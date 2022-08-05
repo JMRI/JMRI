@@ -3872,8 +3872,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 After 1st Build type Diesel not serviced", false, train1.isBuilt());
         train1.addTypeName(engineTypes[2]);
         train1.reset();
-        new TrainBuilder().build(train1);
-//        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After 2nd Build type Diesel serviced", true, train1.isBuilt());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -4261,7 +4260,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         l1s1.setTrainDirections(Location.SOUTH);
         l1s2.setTrainDirections(Location.SOUTH);
         train1.reset();
-//        new TrainBuilder().build(train1);
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertTrue("Train 1 After 2nd Build staging set to South", train1.isBuilt());
 
