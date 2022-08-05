@@ -188,7 +188,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Start Address (output 1; 1-2048). Outputs 2-5: +1</tooltip>
             </variable>
 
-          §<!-- CV 10-19: Settings outputs 1-10 On -->
+            <!-- CV 10-19: Settings outputs 1-10 On -->
 
             <!-- Events for CV 10-19 as per docs: see include uhlenbrock/enumEventChoice.xml-->
             <!-- E = 0 Lamp output is switched on when the solenoid is switched to “red” status.-->

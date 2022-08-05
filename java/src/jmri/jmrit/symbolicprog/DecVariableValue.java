@@ -26,19 +26,10 @@ public class DecVariableValue extends VariableValue
 
     public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
                             boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
-                            HashMap<String, CvValue> v, JLabel status, String stdname) {
-        this(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal,
-                v, status, stdname, 0, 1);
-    }
-
-    public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
-                            boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String stdname, int offset, int factor) {
+            HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
-        _offset = offset;
-        _factor = factor;
         _value = new JTextField("0", fieldLength());
         _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
@@ -60,8 +51,6 @@ public class DecVariableValue extends VariableValue
 
     int _maxVal;
     int _minVal;
-    int _offset;
-    int _factor;
 
     int fieldLength() {
         if (_maxVal <= 255) {
@@ -142,14 +131,8 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int transfer = Math.max(newVal - _offset, 0); // prevent negative values, especially in tests outside UI
-        if (_factor != 0) {
-            transfer = transfer / _factor;
-        } else {
-            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
-        }
-        int newCvVal = setValueInCV(oldCvVal, transfer, getMask(), _maxVal);
-        log.warn("newVal={} transfer={} newCvVal ={}", newVal, transfer, newCvVal);
+        int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
+        log.warn("newVal={} newCvVal ={}", newVal, newCvVal);
         if (oldCvVal != newCvVal) {
             cv.setValue(newCvVal);
         }
@@ -262,7 +245,7 @@ public class DecVariableValue extends VariableValue
                 b.setSnapToTicks(true);   // like it should, we fake it here
             }
             b.setSize(b.getWidth(), 28);
-            Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
             labelTable.put(0, new JLabel("0%"));
             if (_maxVal == 63) {   // this if for the QSI mute level, not very universal, needs work
                 labelTable.put(_maxVal / 2, new JLabel("25%"));
@@ -291,7 +274,7 @@ public class DecVariableValue extends VariableValue
         }
     }
 
-    ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
+    ArrayList<DecVarSlider> sliders = new ArrayList<>();
 
     /**
      * Set a new value in the variable (text box), including notification as needed.
@@ -309,7 +292,7 @@ public class DecVariableValue extends VariableValue
         }
         if (value < _minVal) value = _minVal;
         if (value > _maxVal) value = _maxVal;
-        log.warn("setValue with new value {} old value {}", value, oldVal);
+        log.debug("setValue with new value {} old value {}", value, oldVal);
         if (oldVal != value) {
             _value.setText(valueToText(value));
             updatedTextField();
@@ -394,7 +377,7 @@ public class DecVariableValue extends VariableValue
             log.debug("Property changed: {}", e.getPropertyName());
         }
         if (e.getPropertyName().equals("Busy")) {
-            if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+            if (e.getNewValue().equals(Boolean.FALSE)) {
                 setToRead(false);
                 setToWrite(false);  // some programming operation just finished
                 setBusy(false);
@@ -411,14 +394,13 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int transfer = getValueInCV(cv.getValue(), getMask(), _maxVal);
-            int newVal = (transfer * _factor) + _offset;
+            int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
             setValue(newVal);  // check for duplicate done inside setValue
         }
     }
 
     // stored value, read-only Value
-    JTextField _value = null;
+    JTextField _value;
 
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable

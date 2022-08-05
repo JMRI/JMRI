@@ -387,13 +387,8 @@
               valid entry.<br>
               Variables with a max &lt;= 255 or with an explicit mask are not affected.
             </li>
-            <li>Values of type DecVar can now be presented using an offset and factor to reflect their application. For
-              example if address 1 had to be entered as 0 (and 2 as 1) an offset of +1 would fix this for the user.
-              Likewise, a factor of 50 would present a setting "in steps of 50 milliseconds" in ms units while saving
-              it in the CV just like it used to.<br>
-              Requires schema decoder-4-15-2.xsd. When a min or max is applied, the author should update that for the
-              numbers as entered. Entries smaller than the offset are replaced by 0.
-            </li>
+            <li>In decoder definitions, enumVal variables can now use a so-called "radix" mask to map values on specific
+            digits in the CV value. Requires decoder-4-15-2.xsd schema in the xml declaration.</li>
         </ul>
 
     <h3>CTC Tool</h3>

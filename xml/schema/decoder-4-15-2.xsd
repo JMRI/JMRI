@@ -752,8 +752,6 @@
                   <xs:complexType>
                     <xs:attribute name="min" type="xs:int" default="0"/>
                     <xs:attribute name="max" type="xs:int" default="255"/>
-                    <xs:attribute name="factor" type="xs:int" default="1"/>
-                    <xs:attribute name="offset" type="xs:int" default="0"/>
                     <xs:attribute name="comment" type="xs:string"/>
                   </xs:complexType>
                 </xs:element>
@@ -908,19 +906,6 @@
                   <xs:annotation><xs:documentation>
                     A fixed set of choices is defined, made up of references to others
                   </xs:documentation></xs:annotation>
-                </xs:element>
-                <xs:element name="compDecVal">
-                  <xs:annotation><xs:documentation>
-                    Decimal value stored in one CV using a mask on the digits
-                  </xs:documentation></xs:annotation>
-                  <xs:complexType>
-                    <xs:attribute name="min" type="xs:int" default="0"/>
-                    <xs:attribute name="max" type="xs:int" default="255"/>
-                    <xs:attribute name="default" type="xs:int"/>
-                    <xs:attribute name="comment" type="xs:string"/>
-                    <xs:attribute name="factor" type="xs:int" default="1"/>
-                    <xs:attribute name="offset" type="xs:int" default="0"/>
-                  </xs:complexType>
                 </xs:element>
                 <xs:element ref="xi:include" minOccurs="0" maxOccurs="1" />
               </xs:choice>
@@ -1108,8 +1093,6 @@
     <xs:attribute name="min" type="xs:int" default="0"/>
     <xs:attribute name="max" type="xs:int" default="255"/>
     <xs:attribute name="default" type="xs:int"/>
-    <xs:attribute name="factor" type="xs:int" default="1"/>
-    <xs:attribute name="offset" type="xs:int" default="0"/>
     <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
   </xs:complexType>
 
