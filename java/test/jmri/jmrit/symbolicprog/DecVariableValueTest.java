@@ -20,14 +20,14 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
     private DecVariableValue makeVarDec(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String item, int offset, int factor) {
+            HashMap<String, CvValue> v, JLabel status, String item) {
         ProgDebugger pp = new ProgDebugger();
 
         CvValue cvNext = new CvValue(cvNum, pp);
         cvNext.setValue(0);
         v.put(cvName, cvNext);
         return new DecVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, item, offset, factor);
+                cvNum, mask, minVal, maxVal, v, status, item);
     }
 
     // abstract members invoked by tests in parent AbstractVariableValueTestBase class
@@ -37,7 +37,7 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
         return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, item, 0, 1);
+                cvNum, mask, minVal, maxVal, v, status, item);
     }
 
     @Override
@@ -148,14 +148,12 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         String mask = "VVVVVVVV";
         int minVal = 3;
         int maxVal = 31;
-        int offset = 0;
-        int factor = 1;
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
         DecVariableValue var = makeVarDec(name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, stdname, offset, factor);
+                cvNum, mask, minVal, maxVal, v, status, stdname);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
@@ -229,14 +227,12 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         String mask = "XXXVVVVV";
         int minVal = 4;
         int maxVal = 28;
-        int offset = 0;
-        int factor = 1;
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
         DecVariableValue var = makeVarDec(name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
-                cvNum, mask, minVal, maxVal, v, status, stdname, offset, factor);
+                cvNum, mask, minVal, maxVal, v, status, stdname);
         Assertions.assertNotNull(var, "makeVar returned null");
 
         ActionEvent actionEvent = new ActionEvent(var.getCommonRep(), ActionEvent.ACTION_PERFORMED, name);
