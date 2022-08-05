@@ -1588,6 +1588,9 @@ public class LocoNetMessageInterpretTest {
                 case 0x1C:
                     s = "Digitrax DCS240 host";
                     break;
+                case 0x1D:
+                    s = "Digitrax DCS240plus host";
+                    break;
                 case 0x23:
                     s = "Digitrax PR3 host";
                     break;

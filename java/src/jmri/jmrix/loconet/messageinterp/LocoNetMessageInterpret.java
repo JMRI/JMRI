@@ -4558,6 +4558,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210PLUS");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240PLUS");
             case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR3");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
@@ -4870,6 +4872,15 @@ public class LocoNetMessageInterpret {
         int hwSerial;
         String hwType;
         switch (l.getElement(14)) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
+                hwType = "DB210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
+                hwType = "DCS240+";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
+                hwType = "DCS210+";
+                break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 hwType = "DCS240";
                 break;
@@ -4956,9 +4967,9 @@ public class LocoNetMessageInterpret {
         double msgInUse;
         double msgIdle;
         double msgFree;
-        msgInUse = (l.getElement(4) + ( l.getElement(5) * 128)) ;
-        msgIdle = (l.getElement(6) + ( l.getElement(7) * 128)) ;
-        msgFree = (l.getElement(8) + ( l.getElement(9) * 128)) ;
+        msgInUse = (l.getElement(4) + ( (l.getElement(5) & 0x03) * 128)) ;
+        msgIdle = (l.getElement(6) + ( (l.getElement(7) & 0x03) * 128)) ;
+        msgFree = (l.getElement(8) + ( (l.getElement(9) & 0x03) * 128)) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_SLOTS",
                 msgInUse,
                 msgIdle,

@@ -1563,7 +1563,7 @@ public class TrainCommon {
                                                 3);
             } else if (attribute.equals(Setup.OWNER)) {
                 return SPACE +
-                        padAndTruncateIfNeeded(rs.getOwner(),
+                        padAndTruncateIfNeeded(rs.getOwnerName(),
                                 InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
             } else if (attribute.equals(Setup.COMMENT)) {
                 return SPACE + rs.getComment();

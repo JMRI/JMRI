@@ -98,6 +98,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     public final static int FULLINTERLOCK = 0x02;
 
     boolean allocateToDispatcher = false;
+    boolean absSignalMode = false;
 
     public final static int PROMPTUSER = 0x00;
     public final static int AUTOCLEAR = 0x01;
@@ -143,6 +144,14 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     public boolean getDispatcherIntegration() {
         return allocateToDispatcher;
+    }
+
+    public void setAbsSignalMode(boolean absMode) {
+        absSignalMode = absMode;
+    }
+
+    public boolean isAbsSignalMode() {
+        return absSignalMode;
     }
 
     /**

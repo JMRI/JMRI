@@ -458,7 +458,9 @@
 
                   <li>
                     <p>Click on Specify Git Repository, and enter the URL for your own repository,
-                    e.g. <strong>https://github.com/&lt;yourname&gt;/JMRI.git</strong></p>
+                    e.g.<br>
+                    <span class="wide" style="font-family: monospace;">https://github.com/&lt;yourname&gt;/JMRI.git</span>
+                    </p>
                   </li>
 
                   <li>
@@ -549,10 +551,10 @@
                   </li>
 
                   <li>
-                    <a href="images/netbeans-resolve-project-problems.png"><span class=
+                    <p><a href="images/netbeans-resolve-project-problems.png"><span class=
                     "image related right"><img src="images/netbeans-resolve-project-problems.png"
-                    alt="Resolve Project Problems dialog"></span></a>Click
-                    <strong class="button">Resolve...</strong>
+                    alt="Resolve Project Problems dialog"></span></a></p>
+                    Click <strong class="button">Resolve...</strong>
                   </li>
 
                   <li>

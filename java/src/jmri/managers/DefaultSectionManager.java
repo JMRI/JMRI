@@ -24,6 +24,7 @@ import jmri.SignalHeadManager;
 
 import jmri.implementation.DefaultSection;
 
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -168,14 +169,9 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     /**
      * Validate all Sections.
      *
-     * @param frame   ignored
-     * @param lePanel the panel containing sections to validate
-     * @return number or validation errors; -2 is returned if there are no
-     *         sections
+     * @return number or validation errors; -2 is returned if there are no sections
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification = "passing section validation text")
-    public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
+    public int validateAllSections() {
         Set<Section> set = getNamedBeanSet();
         int numSections = 0;
         int numErrors = 0;
@@ -183,9 +179,9 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
             return -2;
         }
         for (Section section : set) {
-            String s = section.validate(lePanel);
+            String s = section.validate();
             if (!s.isEmpty()) {
-                log.error(s);
+                log.error("Validate result for section {}: {}", section.getDisplayName(), s);
                 numErrors++;
             }
             numSections++;
@@ -197,14 +193,9 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     /**
      * Check direction sensors in SSL for signals.
      *
-     * @param lePanel the panel containing direction sensors
-     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
-     *         if there are no sections
+     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
-    public int setupDirectionSensors(LayoutEditor lePanel) {
-        if (lePanel == null) {
-            return -1;
-        }
+    public int setupDirectionSensors() {
         Set<Section> set = getNamedBeanSet();
         int numSections = 0;
         int numErrors = 0;
@@ -212,7 +203,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
             return -2;
         }
         for (Section section : set) {
-            int errors = section.placeDirectionSensors(lePanel);
+            int errors = section.placeDirectionSensors();
             numErrors = numErrors + errors;
             numSections++;
         }
@@ -223,15 +214,9 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     /**
      * Remove direction sensors from SSL for all signals.
      *
-     * @param lePanel the panel containing direction sensors
-     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
-     *         if there are no sections
+     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2 if there are no sections
      */
-    public int removeDirectionSensorsFromSSL(LayoutEditor lePanel) {
-        if (lePanel == null) {
-            return -1;
-        }
-        jmri.jmrit.display.layoutEditor.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
+    public int removeDirectionSensorsFromSSL() {
         Set<Section> set = getNamedBeanSet();
         if (set.size() <= 0) {
             return -2;
@@ -248,10 +233,16 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
                 sensorList.add(name);
             }
         }
-        SignalHeadManager shManager = InstanceManager.getDefault(SignalHeadManager.class);
-        for (SignalHead sh : shManager.getNamedBeanSet()) {
-            if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList, sh)) {
-                numErrors++;
+
+        var editorManager = InstanceManager.getDefault(EditorManager.class);
+        var shManager = InstanceManager.getDefault(SignalHeadManager.class);
+
+        for (var panel : editorManager.getAll(LayoutEditor.class)) {
+            var cUtil = panel.getConnectivityUtil();
+            for (SignalHead sh : shManager.getNamedBeanSet()) {
+                if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList, sh)) {
+                    numErrors++;
+                }
             }
         }
         return numErrors;

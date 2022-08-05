@@ -49,7 +49,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         m.setElement(4, 0x00);
         m.setElement(5, 0xE0);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
 
         // this should put the throttle into idle state,
@@ -190,7 +190,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0x05);
 
-        n = tc.outbound.size();
+        // n = tc.outbound.size();
         t.message(m);
         // which sets the status back state back to idle..
     }

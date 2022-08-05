@@ -444,6 +444,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      */
     private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{car.toString()}));
             return setCarDestinationTwoTrains(car, Track.STAGING);
@@ -708,7 +709,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         // add staging if requested
         if (useStaging) {
-            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
+            List<Track> allStaging = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
+            tracks.clear();
+            for (Track staging : allStaging) {
+                if (staging.isModifyLoadsEnabled()) {
+                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterStagingExcluded"),
+                            new Object[]{staging.getLocation().getName(), staging.getName()}));
+                } else {
+                    tracks.add(staging);
+                }
+            }
             loadTracks(car, testCar, tracks);
         }
 

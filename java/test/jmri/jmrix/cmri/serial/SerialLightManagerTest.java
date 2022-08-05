@@ -27,7 +27,7 @@ public class SerialLightManagerTest {
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
-        new SerialNode(0, SerialNode.SMINI,tcis);
+        Assertions.assertNotNull(new SerialNode(0, SerialNode.SMINI,tcis));
     }
 
     @AfterEach
