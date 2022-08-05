@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jmri.InstanceManager;
@@ -22,10 +23,10 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     @Test
     public void testGetListOfNames() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
-        java.util.List<String> l = d.getListOfNames();
-        Assert.assertTrue(l.contains("basic"));
-        Assert.assertTrue(l.contains("AAR-1946"));
-        Assert.assertTrue(l.contains("SPTCO-1960"));
+        List<String> list = d.getListOfNames();
+        Assert.assertTrue(list.contains("basic"));
+        Assert.assertTrue(list.contains("AAR-1946"));
+        Assert.assertTrue(list.contains("SPTCO-1960"));
     }
 
     @Test
@@ -35,8 +36,8 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
 
             // check that mock (test directory) system is present
             DefaultSignalSystemManager d = new DefaultSignalSystemManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-            java.util.List<String> l = d.getListOfNames();
-            Assert.assertTrue(l.contains(SignalSystemTestUtil.getMockSystemName()));
+            List<String> list = d.getListOfNames();
+            Assert.assertTrue(list.contains(SignalSystemTestUtil.getMockSystemName()));
 
         } finally {
             SignalSystemTestUtil.deleteMockSystem();
@@ -70,11 +71,11 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     @Test
     public void testUniqueNames() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
-        java.util.List<String> l = d.getListOfNames();
-        for (int i = 0; i < l.size(); i++) {
-            for (int j = 0; j < l.size(); j++) {
-                if ((i != j) && (l.get(i).equals(l.get(j)))) {
-                    Assert.fail("Found " + l.get(i) + " at " + i + " and " + j);
+        List<String> list = d.getListOfNames();
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size(); j++) {
+                if ((i != j) && (list.get(i).equals(list.get(j)))) {
+                    Assert.fail("Found " + list.get(i) + " at " + i + " and " + j);
                 }
             }
         }
@@ -83,11 +84,13 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     @Test
     public void testUniqueSystemNames() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
-        java.util.List<String> l = d.getListOfNames();
-        for (int i = 0; i < l.size(); i++) {
-            jmri.SignalSystem si = d.getSystem(l.get(i));
-            for (int j = 0; j < l.size(); j++) {
-                jmri.SignalSystem sj = d.getSystem(l.get(j));
+        List<String> list = d.getListOfNames();
+        for (int i = 0; i < list.size(); i++) {
+            SignalSystem si = d.getSystem(list.get(i));
+            Assertions.assertNotNull(si);
+            for (int j = 0; j < list.size(); j++) {
+                SignalSystem sj = d.getSystem(list.get(j));
+                Assertions.assertNotNull(sj);
                 if ((i != j) && (si.getSystemName().equals(sj.getSystemName()))) {
                     Assert.fail("Found system name " + si.getSystemName() + " at " + i + " and " + j);
                 }
@@ -98,12 +101,15 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     @Test
     public void testUniqueUserNames() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
-        java.util.List<String> l = d.getListOfNames();
-        for (int i = 0; i < l.size(); i++) {
-            jmri.SignalSystem si = d.getSystem(l.get(i));
-            for (int j = 0; j < l.size(); j++) {
-                jmri.SignalSystem sj = d.getSystem(l.get(j));
-                if ((i != j) && (si.getUserName().equals(sj.getUserName()))) {
+        List<String> list = d.getListOfNames();
+        for (int i = 0; i < list.size(); i++) {
+            SignalSystem si = d.getSystem(list.get(i));
+            Assertions.assertNotNull(si);
+            for (int j = 0; j < list.size(); j++) {
+                SignalSystem sj = d.getSystem(list.get(j));
+                Assertions.assertNotNull(sj);
+                String siUserName = si.getUserName();
+                if ((i != j) && (siUserName != null) && (siUserName.equals(sj.getUserName()))) {
                     Assert.fail("Found user name " + si.getUserName() + " at " + i + " and " + j);
                 }
             }
