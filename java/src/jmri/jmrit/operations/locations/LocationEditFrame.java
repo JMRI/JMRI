@@ -833,6 +833,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (lctf != null) {
             lctf.dispose();
         }
+        if (yef != null) {
+            yef.dispose();
+        }
+        if (sef != null) {
+            sef.dispose();
+        }
+        if (ief != null) {
+            ief.dispose();
+        }
+        if (stef != null) {
+            stef.dispose();
+        }
         super.dispose();
     }
 
