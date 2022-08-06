@@ -1,5 +1,7 @@
 package jmri.jmris.simpleserver;
 
+import java.io.*;
+
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,40 +35,42 @@ public class SimpleServerTest {
     // test sending a message.
     public void testSendMessage() {
         StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
+        try (
+            DataOutputStream output = new DataOutputStream(
+                new OutputStream() {
                     @Override
                     public void write(int b) {
                         sb.append((char)b);
                     }
                 });
-        String code = "LIGHT IL1 OFF\n\r";
-        java.io.InputStream input = new java.io.ByteArrayInputStream(code.getBytes());
-        Thread t = new Thread(() -> { 
-            try{
-               ss.handleClient(new java.io.DataInputStream(input),output); }
-            catch(java.io.IOException ioe){
-               // exception expected at end of input.
-            }
+        ) {
+            String code = "LIGHT IL1 OFF\n\r";
+            InputStream input = new ByteArrayInputStream(code.getBytes());
+            Thread t = new Thread(() -> { 
+                try {
+                    ss.handleClient(new DataInputStream(input),output);
+                } catch( IOException ioe) {
+                    // exception expected at end of input.
+                }
             });
-        t.setName("simpleserver client test thread");
-        t.start();
-        try {
-           t.join();
-        } catch (InterruptedException ie) {
-           // we just want to continue, so do nothing.
+            t.setName("simpleserver client test thread LIGHT IL1 OFF");
+            t.start();
+            JUnitUtil.waitFor(()->{ return t.getState() == Thread.State.TERMINATED; }, "simpleserver client test thread not terminated");
+
+        } catch ( IOException ex){ // catching the try #close
+            // we just want to continue, so do nothing.
         }
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDebugPowerManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
         ss = new SimpleServer();
         jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }

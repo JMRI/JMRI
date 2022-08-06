@@ -216,6 +216,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             return Bundle.getMessage("NoLoco");
         }
         for (Warrant w :_warList) {
+            if (w.equals(warrant)) {
+                continue;
+            }
             if (w._runMode != Warrant.MODE_NONE) {
                 if (address.equals(w.getSpeedUtil().getDccAddress())) {
                     return Bundle.getMessage("AddressInUse", address, w.getDisplayName(), w.getTrainName());
@@ -367,8 +370,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     public Object getValueAt(int row, int col) {
         Warrant w = getWarrantAt(row);
         // some error checking
-        if (w == null) {
-            log.warn("getValueAt row= {}, Warrant is null!", row);
+        if (w == null) { // if NXWarrant is aborted while save/edit frame is open, closing frame causes update
+//            log.warn("getValueAt row= {}, Warrant is null!", row);
             return "";
         }
         JRadioButton allocButton = new JRadioButton();
@@ -491,7 +494,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             }
             break;
         case AUTO_RUN_COLUMN:
-            msg = frameRunTrain(w, Warrant.MODE_RUN);
+            msg = frameRunTrain(w, Warrant.MODE_RUN); 
             this.fireTableRowsUpdated(row, row);
             break;
         case MANUAL_RUN_COLUMN:
@@ -511,27 +514,27 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
             } else if (value!=null) {
                 String setting = (String) value;
                 if (mode == Warrant.MODE_RUN || mode == Warrant.MODE_MANUAL) {
-                    int s = 0;
-                    if (setting.equals(WarrantTableFrame.halt)) {
-                        s = Warrant.HALT;
+                    int s = -1;
+                    if (setting.equals(WarrantTableFrame.stop)) {
+                        s = Warrant.STOP;
                     } else if (setting.equals(WarrantTableFrame.ramp)) {
-                        s = Warrant.RAMP_HALT;
+                        s = Warrant.HALT;
                     } else if (setting.equals(WarrantTableFrame.resume)) {
                         s = Warrant.RESUME;
                     } else if (setting.equals(WarrantTableFrame.speedup)) {
                         s = Warrant.SPEED_UP;
                     } else if (setting.equals(WarrantTableFrame.retryfwd)) {
                         s = Warrant.RETRY_FWD;
-                    } else if (setting.equals(WarrantTableFrame.retrybkwd)) {
-                        s = Warrant.RETRY_BKWD;
-                    } else if (setting.equals(WarrantTableFrame.stop)) {
+                    } else if (setting.equals(WarrantTableFrame.estop)) {
                         s = Warrant.ESTOP;
                     } else if (setting.equals(WarrantTableFrame.abort)) {
                         s = Warrant.ABORT;
                     } else if (setting.isEmpty()) {
                         s = Warrant.DEBUG;
+                    } else if (setting.equals(WarrantTableFrame.retrybkwd)) {
+                        s = Warrant.RETRY_BKWD;
                     }
-                    if (s > 0) {
+                    if (s >= 0) {
                         w.controlRunTrain(s);
                     }
                 }
@@ -626,13 +629,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void fireCellUpdate(int row, int col) {
-        if (row < getRowCount()) {
-            ThreadingUtil.runOnGUIEventually(()-> {
-                if (row < getRowCount()) {  // when Aborted, row may be gone by now
-                    fireTableCellUpdated(row, col);
-                }
-            });
-        }
+        ThreadingUtil.runOnGUIEventually(()-> {
+            if (row < _warList.size()) {  // when Aborted, row may be gone by now
+                fireTableCellUpdated(row, col);
+            }
+        });
     }
 
     private void fireTableUpdate() {
@@ -642,12 +643,16 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     private void fireTableRowDeleted(Warrant w, int row, boolean all) {
         ThreadingUtil.runOnGUIEventually(()-> {
             removeWarrant(w, all);  // true any warrant, false NX only  
-            fireTableRowsDeleted(row, row);
+            if (row < _warList.size()) {
+                fireTableRowsDeleted(row, row);
+            }
         });
     }
 
     private void fireTableRowUpdated(Warrant w, int row) {
-        ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
+        if (row < _warList.size()) {
+            ThreadingUtil.runOnGUIEventually(()-> fireTableRowsUpdated(row, row));
+        }
     }
 
     private String _lastProperty;

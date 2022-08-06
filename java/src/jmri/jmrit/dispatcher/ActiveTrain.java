@@ -766,8 +766,9 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     private void refreshPanel() {
-        if (InstanceManager.getDefault(DispatcherFrame.class).getLayoutEditor() != null) {
-            InstanceManager.getDefault(DispatcherFrame.class).getLayoutEditor().redrawPanel();
+        var editorManager = InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class);
+        for (var panel : editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor.class)) {
+            panel.redrawPanel();
         }
     }
 

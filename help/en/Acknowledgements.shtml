@@ -27,10 +27,10 @@
       page</a>.</p>
 
       <p><a href="#A">A</a>|<a href="#B">B</a>|<a href="#C">C</a>|<a href="#D">D</a>|<a href=
-      "#E">E</a>|<a href="#F">F</a>|<a href="#G">G</a>|<a href="#H">H</a>|<a href=
+      "#E">E</a>|<a href="#F">F</a>|<a href="#G">G</a>|<wbr><a href="#H">H</a>|<a href=
       "#I">I</a>|<a href="#J">J</a>|<a href="#K">K</a>|<a href="#L">L</a>|<a href=
-      "#M">M</a>|<a href="#N">N</a>|<a href="#O">O</a>|<a href="#P">P</a>|<a href=
-      "#Q">Q</a>|<a href="#R">R</a>|<a href="#S">S</a>|<a href="#T">T</a>|<a href=
+      "#M">M</a>|<a href="#N">N</a>|<wbr><a href="#O">O</a>|<a href="#P">P</a>|<a href=
+      "#Q">Q</a>|<a href="#R">R</a>|<a href="#S">S</a>|<a href="#T">T</a>|<wbr><a href=
       "#U">U</a>|<a href="#V">V</a>|<a href="#W">W</a>|<a href="#X">X</a>|<a href=
       "#Y">Y</a>|<a href="#Z">Z</a></p>
 
@@ -56,7 +56,7 @@
         <li>Ian Anderson, who set up the <a href="https://editthis.info/wiki/Main_Page">
         documentation Wiki</a>, which lets a lot of people easily contribute to building better
         documentation.</li>
-<!-- https://editthis.info/wiki/Main_Page -->
+
         <li>Chris Atkins helped improve the <a href=
         "https://jmri.org/help/en/html/tools/scripting/Python.shtml#newJython">instructions for using
         a separate jython install</a>
@@ -497,12 +497,10 @@
         <li>Hornby Hobbys, who provided a full set of TTS manuals plus information regarding
         various CVs.</li>
 
-        <li>Al Huberty, who organized our first users meeting at the NMRA Toronto convention</li>
-
-        <a id="I"></a> <a id="J"></a>
+        <li>Al Huberty, who organized our first users meeting at the NMRA Toronto convention<a id="I"></a></li>
 
         <li>AJ Ireland of Digitrax, who loaned equipment, answered questions and made valuable
-        suggestions</li>
+        suggestions<a id="J"></a></li>
 
         <li>John Jabour, who created the excellent LocoBuffer and thereby made reliable LocoNet
         communications routine</li>
@@ -549,6 +547,9 @@
 
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
+        <li>Arco Klippstein, <!-- arthkl -->
+        who updated the Lissy support.</li>
+
         <li>Michael Kneebone, who gave permission to allow us to use his SliderSnap class that
         corrects the behavior of JSliders, making them snap whilst sliding rather than
         afterwards.</li>
@@ -580,7 +581,7 @@
 
         <li>Tighe Kuykendall improved documentation.</li>
 
-        <li>Bjorn Kvisli, who provided Doehler & Haass decoder definitions. <a id="L"></a>
+        <li>Bjorn Kvisli, who provided Doehler &amp; Haass decoder definitions. <a id="L"></a>
         </li>
 
         <li>John Lang, who provided several signal definitions</li>

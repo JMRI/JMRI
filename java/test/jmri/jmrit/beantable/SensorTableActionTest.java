@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
-import java.awt.GraphicsEnvironment;
 
 import javax.annotation.Nonnull;
 import javax.swing.JFrame;
@@ -16,8 +15,9 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.Logger;
@@ -62,8 +62,8 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
      * @since 4.7.4
      */
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddAndInvoke() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         a.actionPerformed(null); // show table
         // create 2 sensors and see if they exist
@@ -113,9 +113,9 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
 
     @Test
     @Override
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+        Assert.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -123,16 +123,17 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
+        JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
     }
 
     @Test
     @Override
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        Assert.assertTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -168,13 +169,13 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAddFailureCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        InstanceManager.setDefault(SensorManager.class, new CreateNewSensorAlwaysException());
+        InstanceManager.setDefault(SensorManager.class, new AlwaysExceptionCreateNewSensor());
 
         a = new SensorTableAction();
-        Assume.assumeTrue(a.includeAddButton());
+        Assert.assertTrue(a.includeAddButton());
 
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
@@ -198,9 +199,9 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         JUnitUtil.dispose(f);
     }
 
-    private class CreateNewSensorAlwaysException extends InternalSensorManager {
+    private static class AlwaysExceptionCreateNewSensor extends InternalSensorManager {
 
-        public CreateNewSensorAlwaysException() {
+        AlwaysExceptionCreateNewSensor() {
             super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 

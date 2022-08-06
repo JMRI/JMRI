@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -119,6 +118,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         map.put(Category.COMMON, classes);
 
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.expressions.ConnectionName.class);
         classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.expressions.False.class);
         classes.add(jmri.jmrit.logixng.expressions.Hold.class);

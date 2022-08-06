@@ -120,6 +120,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.actions.ExecuteDelayed.class);
         classes.add(jmri.jmrit.logixng.actions.For.class);
+        classes.add(jmri.jmrit.logixng.actions.ForEach.class);
         classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalMany.class);
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
@@ -132,6 +133,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansTable.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
@@ -140,6 +142,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.Timeout.class);
         classes.add(jmri.jmrit.logixng.actions.ShowDialog.class);
         classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
+        classes.add(jmri.jmrit.logixng.actions.SimulateTurnoutFeedback.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
         map.put(Category.OTHER, classes);
 

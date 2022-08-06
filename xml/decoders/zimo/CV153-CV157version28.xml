@@ -3,6 +3,7 @@
 <!-- version 1, Mark Waters - for Unified Software -->
 <!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
 <!-- version 1.2, Ronald Kuhn - add german translation  -->
+<!-- version 1.3, Nigel Cliffe, extended function options in CV155 and 156 to F28 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable CV="153" item="Packet Time-out Value" default="0">
     <decVal min="0" max="255"/>
@@ -172,6 +173,33 @@
       <enumChoice choice="F19">
         <choice>F19</choice>
       </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
     </enumVal>
     <label>Half Speed Key Extension</label>
     <label xml:lang="it">Estensione tasto funzione Mezza velocità</label>
@@ -242,6 +270,33 @@
       </enumChoice>
       <enumChoice choice="F19">
         <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
       </enumChoice>
     </enumVal>
     <label>Shunt Function Key Extension</label>

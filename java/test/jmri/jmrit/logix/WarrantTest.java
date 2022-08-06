@@ -12,6 +12,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -192,38 +193,44 @@ public class WarrantTest {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - " + msg, msg);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             String m = warrant.getRunningMessage();
             return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+//        JUnitUtil.waitFor(100); // What should we specifically waitFor?
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sWest.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        JUnitUtil.waitFor(100); // What should we specifically waitFor?
+        try {
+            sWest.setState(Sensor.ACTIVE);
+        } catch ( JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
 
-        jmri.util.ThreadingUtil.runOnLayout(() -> {
-            try {
-                sSouth.setState(Sensor.ACTIVE);
-            } catch (jmri.JmriException e) {
-                Assert.fail("Unexpected Exception: " + e);
-            }
-        });
-        JUnitUtil.waitFor(100);
+        JUnitUtil.waitFor(() -> {
+            return bWest.isOccupied() == true;
+
+        }, "South not occupied");
+
+        try {
+            sSouth.setState(Sensor.ACTIVE);
+        } catch ( JmriException e) {
+            Assert.fail("Unexpected Exception: " + e);
+        }
+
+        JUnitUtil.waitFor(() -> {
+            return bSouth.isOccupied() == true;
+
+        }, "South not occupied");
 
         // wait for done
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return warrant.getRunningMessage().equals("Idle");
+        JUnitUtil.waitFor(() -> {
+            return warrant.getRunningMessage().equals(Bundle.getMessage("Idle"));
         }, "warrant not done");
+
+        JUnitAppender.assertWarnMessageStartingWith("block: West Path distance or SpeedProfile unreliable! pathDist= 200.0,");
 
     }
 
-    static class WarrantListener implements PropertyChangeListener {
+    protected static class WarrantListener implements PropertyChangeListener {
 
         Warrant warrant;
 
@@ -243,9 +250,9 @@ public class WarrantTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initRosterConfigManager();
 

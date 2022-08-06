@@ -66,7 +66,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton addButton = new JButton(Bundle.getMessage("AddTrain"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
@@ -133,7 +133,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         cp1.add(action);
 
         // tool tips, see setPrintButtonText() for more tool tips
-        addButton.setToolTipText(Bundle.getMessage("AddTrain"));
+        addButton.setToolTipText(Bundle.getMessage("AddTrainTip"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
         switchListsButton.setToolTipText(Bundle.getMessage("PreviewPrintSwitchListsTip"));
 

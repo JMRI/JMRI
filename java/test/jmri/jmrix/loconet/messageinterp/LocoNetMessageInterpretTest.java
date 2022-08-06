@@ -881,11 +881,11 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testLissy() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
-        Assert.assertEquals("Lissy message test 1", "Lissy 1 IR Report: Loco 8501 moving south\n",
+        Assert.assertEquals("Lissy message test 1", "Lissy 1 IR Report: Loco 8501 (category 1) moving south\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x40, 0x01, 0x42, 0x35, 0x25});
-        Assert.assertEquals("Lissy message test 2", "Lissy 1 IR Report: Loco 8501 moving north\n",
+        Assert.assertEquals("Lissy message test 2", "Lissy 1 IR Report: Loco 8501 (category 1) moving north\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x09, 0x00, 0x69, 0x00, 0x01, 0x18, 0x00, 0x62});
@@ -923,11 +923,23 @@ public class LocoNetMessageInterpretTest {
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x60, 0x02, 0x42, 0x35, 0x05});
-        Assert.assertEquals("Lissy message test 10", "Lissy 2 Wheel Report: 8501 wheels moving south\n",
+        Assert.assertEquals("Lissy message test 10", "Lissy 2 IR Report: Loco 8501 (category 2) moving south\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x40, 0x14, 0x42, 0x35, 0x25});
-        Assert.assertEquals("Lissy message test 11", "Lissy 20 Wheel Report: 8501 wheels moving north\n",
+        Assert.assertEquals("Lissy message test 11", "Lissy 20 IR Report: Loco 8501 (category 2) moving north\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x23, 0x7E, 0x00, 0x25, 0x6B});
+        Assert.assertEquals("Lissy message test 12", "Lissy 126 IR Report: Speed 37\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x24, 0x04, 0x00, 0x03, 0x31});
+        Assert.assertEquals("Lissy message test 13", "Lissy 4 IR Report: Block occupied\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x23, 0x7A, 0x00, 0x02, 0x49});
+        Assert.assertEquals("Lissy message test 14", "Lissy 122 IR Report: Block free\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
@@ -935,10 +947,10 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testOpcAnalogIO() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x01, 0x03, 0x32, 0x11, 0x35});
-        Assert.assertEquals("OpcAnalogIO message test 1", "Lissy 3 Wheel Report: 6417 wheels moving north\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        Assert.assertEquals("OpcAnalogIO message test 1", "Lissy 3 IR Report: Block occupied\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x21, 0x55, 0x01, 0x00, 0x35});
-        Assert.assertEquals("OpcAnalogIO message test ", "Lissy 85 Wheel Report: 128 wheels moving south\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        Assert.assertEquals("OpcAnalogIO message test ", "Lissy 85 IR Report: Block free\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x02, 0x21, 0x55, 0x01, 0x00, 0x35});
         Assert.assertEquals("Unable to parse LocoNet message.\ncontents: E4 08 02 21 55 01 00 35\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
@@ -1575,6 +1587,9 @@ public class LocoNetMessageInterpretTest {
                     break;
                 case 0x1C:
                     s = "Digitrax DCS240 host";
+                    break;
+                case 0x1D:
+                    s = "Digitrax DCS240plus host";
                     break;
                 case 0x23:
                     s = "Digitrax PR3 host";

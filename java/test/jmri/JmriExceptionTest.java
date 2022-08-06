@@ -17,17 +17,17 @@ import org.junit.Assert;
 public class JmriExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testConstructor(){
       Assert.assertNotNull("JmriException constructor",new JmriException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("JmriException string constructor",new JmriException("test exception"));
    }
 
     @Test
-    public void ArrayConstructorTest() {
+    public void testArrayConstructor() {
         List<String> list = new ArrayList<>();
         list.add("First row");
         list.add("Second row");

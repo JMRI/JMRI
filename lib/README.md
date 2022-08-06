@@ -321,10 +321,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 4.12
 - from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
 
-##### hamcrest-core-1.3.jar
-- version 1.3
-- Used for testing only, not at runtime
-- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
@@ -342,7 +338,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### PlantUML
 - plantuml.jar
     was from plantuml.org, now from https://github.com/plantuml/plantuml.git
-    pulled June 1, 2021 and modified with PR#1028 https://github.com/plantuml/plantuml/pull/1028
+    pulled July 14, 2022 post PR-1057
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases
@@ -428,3 +424,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
 - libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
 - No longer used as of JMRI 4.9.1
+
+##### hamcrest-core-1.3.jar
+- version 1.3
+- Used for testing only, not at runtime
+- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
+- No longer used as of JMRI 5.1.3

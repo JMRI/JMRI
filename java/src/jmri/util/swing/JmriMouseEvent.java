@@ -6,8 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
-import javax.swing.SwingUtilities;
-
 import jmri.util.SystemType;
 
 /**
@@ -299,8 +297,18 @@ public class JmriMouseEvent {
      */
     public boolean isPopupTrigger() {
         if (SystemType.isWindows()) {
-            // event.isPopupTrigger() returns false on mousePressed() on Windows
-            return SwingUtilities.isRightMouseButton(event);
+            switch (event.getID()) {
+                case MouseEvent.MOUSE_PRESSED:
+                case MouseEvent.MOUSE_RELEASED:
+                case MouseEvent.MOUSE_CLICKED:
+                    // event.isPopupTrigger() returns false on mousePressed() on Windows.
+                    // The bad news is that SwingUtilities.isRightMouseButton(event) doesn't work either.
+                    return (event.getModifiersEx() & InputEvent.META_DOWN_MASK) != 0
+                            || (event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
+
+                default:
+                    return event.isPopupTrigger();
+            }
         } else {
             return event.isPopupTrigger();
         }
@@ -374,7 +382,7 @@ public class JmriMouseEvent {
      */
     public boolean isMetaDown() {
         if (SystemType.isWindows() || SystemType.isLinux()) {
-            return SwingUtilities.isRightMouseButton(event);
+            return (event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
         } else {
             return event.isMetaDown();
         }

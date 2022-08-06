@@ -481,7 +481,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Engine type", "Diesel", e6.getTypeName());
         Assert.assertEquals("Engine length", "44", e6.getLength()); //default for SW8 is 44
         Assert.assertEquals("Engine built", "1999", e6.getBuilt());
-        Assert.assertEquals("Engine owner", "AT", e6.getOwner());
+        Assert.assertEquals("Engine owner", "AT", e6.getOwnerName());
         Assert.assertEquals("Engine comment", "test Engine comment field", e6.getComment());
         Assert.assertFalse(e6.isBunit());
         Assert.assertEquals("Blocking order", Engine.DEFAULT_BLOCKING_ORDER, e6.getBlocking());
@@ -820,7 +820,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
         Engine e1 = engineManager.getByRoadAndNumber("PC", "5524");
-        e1.setOwner("TEST_OWNER");
+        e1.setOwnerName("TEST_OWNER");
 
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();

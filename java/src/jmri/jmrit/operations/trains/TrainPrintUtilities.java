@@ -63,10 +63,10 @@ public class TrainPrintUtilities {
             pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
-        try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
+        try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
                 margin, .5, .5, isPreview, printerName, isLandScape, printHeader, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(file), StandardCharsets.UTF_8)); ){
+                        new FileInputStream(file), StandardCharsets.UTF_8));) {
 
             // set font
             if (!fontName.isEmpty()) {
@@ -74,7 +74,7 @@ public class TrainPrintUtilities {
             }
 
             // now get the build file to print
-            
+
             String line;
 
             if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
@@ -97,8 +97,10 @@ public class TrainPrintUtilities {
                 if (line == null) {
                     if (isPreview) {
                         try {
-                            writer.write(" "); // need to do this in case the input
-                                               // file was empty to create preview
+                            writer.write(" "); // need to do this in case the
+                                               // input
+                                               // file was empty to create
+                                               // preview
                         } catch (IOException e) {
                             log.debug("Print write failed for null line");
                         }
@@ -153,7 +155,10 @@ public class TrainPrintUtilities {
                         c = Setup.getLocalColor();
                     } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
                         c = TrainCommon.getTextColor(line);
-                        if (!line.endsWith(TrainCommon.TEXT_COLOR_END)) {
+                        if (line.contains(TrainCommon.TEXT_COLOR_END)) {
+                            printingColor = false;
+                        } else {
+                            // printing multiple lines in color
                             printingColor = true;
                         }
                         // could be a color change when using two column format
@@ -194,7 +199,8 @@ public class TrainPrintUtilities {
                                 writer.write(writer.getCurrentLineNumber(), line.length() + 1,
                                         writer.getCurrentLineNumber() + 1, line.length() + 1);
                             }
-                            writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1, i + 1);
+                            writer.write(writer.getCurrentLineNumber(), i + 1, writer.getCurrentLineNumber() + 1,
+                                    i + 1);
                         }
                     }
                     line = line.replace(VERTICAL_LINE_SEPARATOR, SPACE);
@@ -223,7 +229,8 @@ public class TrainPrintUtilities {
             }
 
             // and force completion of the printing
-            writer.close();
+            // close is no longer needed when using the try / catch declaration
+            // writer.close();
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
         } catch (HardcopyWriter.PrintCanceledException ex) {
@@ -243,12 +250,12 @@ public class TrainPrintUtilities {
     public static void editReport(File file, String name) {
         // make a new file with the build report levels removed
         File buildReport = InstanceManager.getDefault(TrainManagerXml.class)
-                    .createTrainBuildReportFile(Bundle.getMessage("Report") + " " + name);
+                .createTrainBuildReportFile(Bundle.getMessage("Report") + " " + name);
 
-        try ( BufferedReader in = new BufferedReader(new InputStreamReader(
-            new FileInputStream(file), StandardCharsets.UTF_8));            
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true); ) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(file), StandardCharsets.UTF_8));
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream(buildReport), StandardCharsets.UTF_8)), true);) {
 
             String line;
             while (true) {

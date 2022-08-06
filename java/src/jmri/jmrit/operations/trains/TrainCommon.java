@@ -1389,9 +1389,13 @@ public class TrainCommon {
             return (car.isHazardous() ? SPACE + Setup.getHazardousMsg()
                     : padAndTruncateIfNeeded("", Setup.getHazardousMsg().length() + 1));
         } else if (attribute.equals(Setup.DROP_COMMENT)) {
-            return SPACE + car.getDropComment();
+            return SPACE +
+                    padAndTruncateIfNeeded(car.getDropComment(),
+                            InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength());
         } else if (attribute.equals(Setup.PICKUP_COMMENT)) {
-            return SPACE + car.getPickupComment();
+            return SPACE +
+                    padAndTruncateIfNeeded(car.getPickupComment(),
+                            InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength());
         } else if (attribute.equals(Setup.KERNEL)) {
             return SPACE +
                     padAndTruncateIfNeeded(car.getKernelName(),
@@ -1559,7 +1563,7 @@ public class TrainCommon {
                                                 3);
             } else if (attribute.equals(Setup.OWNER)) {
                 return SPACE +
-                        padAndTruncateIfNeeded(rs.getOwner(),
+                        padAndTruncateIfNeeded(rs.getOwnerName(),
                                 InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
             } else if (attribute.equals(Setup.COMMENT)) {
                 return SPACE + rs.getComment();
@@ -1847,9 +1851,11 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.COMMENT)) {
                 buf.append(TrainManifestHeaderText.getStringHeader_Comment() + SPACE);
             } else if (attribute.equals(Setup.DROP_COMMENT)) {
-                buf.append(TrainManifestHeaderText.getStringHeader_Drop_Comment() + SPACE);
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Drop_Comment(),
+                        InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength()) + SPACE);
             } else if (attribute.equals(Setup.PICKUP_COMMENT)) {
-                buf.append(TrainManifestHeaderText.getStringHeader_Pickup_Comment() + SPACE);
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Pickup_Comment(),
+                        InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength()) + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {

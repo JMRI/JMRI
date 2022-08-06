@@ -62,6 +62,7 @@ public class EngineRosterMenu extends JMenu {
         add(exportAction);
         add(deleteAction);
         add(resetMovesAction);
+        addSeparator();
         add(printAction);
         add(previewAction);
 

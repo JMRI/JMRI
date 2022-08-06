@@ -15,47 +15,47 @@ public class VetoedBellTest {
 
     @Test
     public void testConstruction() {
-        new VetoedBell("veto Sensor", new PhysicalBell("Bell output"));
+        Assert.assertNotNull( new VetoedBell("veto Sensor", new PhysicalBell("Bell output")));
     }
  
-    @Test 
+    @Test
     public void testBellStrokeAllowed() throws JmriException {
-        rung = false;
-        Bell bell = new Bell(){
-            @Override
-            public void ring() {
-                rung = true;
-            }
-        };
+        Assert.assertNotNull(veto);
         veto.setState(Sensor.INACTIVE);
         
-        Bell vbell = new VetoedBell("veto Sensor", bell);
+        Bell vbell = new VetoedBell("veto Sensor", new BellScaffold());
         vbell.ring();
         
         Assert.assertTrue(rung);
     }
     
-    @Test 
+    @Test
     public void testBellStrokeNotAllowed() throws JmriException  {
-        rung = false;
-        Bell bell = new Bell(){
-            @Override
-            public void ring() {
-                rung = true;
-            }
-        };
+        Assert.assertNotNull(veto);
         veto.setState(Sensor.ACTIVE);
         
-        Bell vbell = new VetoedBell("veto Sensor", bell);
+        Bell vbell = new VetoedBell("veto Sensor", new BellScaffold());
         vbell.ring();
         
-        Assert.assertTrue(!rung);
+        Assert.assertFalse(rung);
     }
     
     boolean rung;
-    Sensor veto;
-    Turnout bellTurnout;
-    
+    private Sensor veto = null;
+    private Turnout bellTurnout = null;
+
+    private class BellScaffold implements Bell {
+
+        BellScaffold(){
+            rung = false;
+        }
+
+        @Override
+        public void ring() {
+            rung = true;
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

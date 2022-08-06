@@ -56,6 +56,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
         LnCommandStationType.COMMAND_STATION_DCS240,
+        LnCommandStationType.COMMAND_STATION_DCS240PLUS,
         LnCommandStationType.COMMAND_STATION_DCS210,
         LnCommandStationType.COMMAND_STATION_DCS210PLUS,
         LnCommandStationType.COMMAND_STATION_DCS200,

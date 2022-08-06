@@ -1029,63 +1029,67 @@ this name.
       <ul>
         <li>JComboBox format:<br>
         <a href="images/ComboBox.png"><img src="images/ComboBox.png" alt="combobox"></a>
+        <span class="wide">
+          <!-- pre allowed inside span because class "wide" contains {display: block} -->
+<pre style="font-family: monospace;">
+import jmri.swing.NamedBeanComboBox;
 
-          <pre style="font-family: monospace;">
-        import jmri.swing.NamedBeanComboBox;
-
-        // the first argument is the manager, the 2nd is a bean to select or null
-        // the third determines how the beans are displayed
-        selectComboBox = new <a href=
+// the first argument is the manager
+// the 2nd is a bean to select or null
+// the third determines how the beans are displayed
+selectComboBox = new <a href=
 "https://jmri.org/JavaDoc/doc/jmri/swing/NamedBeanComboBox.html">NamedBeanComboBox</a>(InstanceManager.getDefault(SensorManager.class),
-                                                    currentSensor,
-                                                    <a href=
-"https://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
+  currentSensor, <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.DisplayOptions.html">NamedBean.DisplayOptions</a>.DISPLAYNAME)
 
-        // to get the selected item:
-        selectComboBox.getSelectedItem()
+// to get the selected item:
+selectComboBox.getSelectedItem()
 </pre>
+        </span>
         </li>
 
         <li>Table format:<br>
         <a href="images/TableSelector.png"><img src="images/TableSelector.png" alt="table selector"></a>
-
+  <span class="wide">
           <pre style="font-family: monospace;">
-
-        import jmri.jmrit.picker.*;
-        <a href=
+import jmri.jmrit.picker.*;
+<a href=
 "https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a> tableModel = <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickListModel.html">PickListModel</a>.sensorPickModelInstance(); // or another type
         <a href=
 "https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a> panel = new <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/picker/PickSinglePane.html">PickSinglePane</a>(tableModel);
 
-        // to get the selected item as a NamedBeanHandle&lt;T&gt;
-        panel.getSelectedBeanHandle();
+// to get the selected item as a NamedBeanHandle&lt;T&gt;
+panel.getSelectedBeanHandle();
 
-        // you can listen for a selected value by inheriting from ListSelectionListener
-        // and registering with panel.getTable().getSelectionModel().addListSelectionListener(this)
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            System.out.println("  Selected: "+panel.getSelectedBeanHandle());
-        }
-</pre>This allows the user to select either the system name or (non-blank) user name in a row,
-which then becomes the preferred name for the resulting <a href=
-"https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>. For more information
-on <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>, including
-how to get them from the <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">
+// you can listen for a selected value by
+// inheriting from ListSelectionListener
+// and registering with
+// panel.getTable().getSelectionModel().addListSelectionListener(this)
+@Override
+public void valueChanged(ListSelectionEvent e) {
+    System.out.println("  Selected: "+panel.getSelectedBeanHandle());
+}
+</pre>
+  </span>
+          This allows the user to select either the system name or (non-blank) user name in a row,
+          which then becomes the preferred name for the resulting <a href=
+          "https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>. For more information
+          on <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>, including
+          how to get them from the <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandleManager.html">
           NamedBeanHandleManager</a> see the page on <a href="Patterns.shtml">code patterns
           page</a>.
         </li>
       </ul>
 
       <h3>System Name Comparisons</h3>
-      System names are compared and sorted in multiple places: as labels for table rows, in
+      <p>System names are compared and sorted in multiple places: as labels for table rows, in
       selection boxes and lists, etc. We have two <code>java.util.Comparator&lt;&gt;</code>
-      implementations to handle this:
+      implementations to handle this:</p>
       <ul>
         <li><code>NamedBeanComparator</code> - a comparison on the NamedBeans themselves</li>
 
         <li><code>SystemNameComparator</code> - a comparison on Strings (deprecated)</li>
       </ul>
-      Please use one of these whenever you need to compare or sort by system names to keep the
+      <p>Please use one of these whenever you need to compare or sort by system names to keep the
       complexity in one place.
       <p>Both of them sort first by system connection prefix, to group all the objects from one
       system together. If there are objects of multiple types, the type letter is put in
@@ -1108,7 +1112,7 @@ how to get them from the <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHan
       bottom of jmri.jmrix.cmri.serial.SerialTurnout and
       jmri.jmrix.cmri.serial.SerialTurnoutTest.</p>
 
-      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

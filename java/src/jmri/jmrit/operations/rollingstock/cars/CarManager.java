@@ -248,9 +248,9 @@ public class CarManager extends RollingStockManager<Car>
      * have blocking numbers which places them relative to each other.
      * <li>Car's destination (alphabetical by location and track name or by
      * track blocking order)
+     * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * <li>Car's current location (alphabetical by location and track name)
      * <li>Car's final destination (alphabetical by location and track name)
-     * <li>Car is hazardous (hazardous placed after a non-hazardous car)
      * </ol>
      * <p>
      * Cars in a kernel are placed together by their kernel blocking numbers.
@@ -263,10 +263,10 @@ public class CarManager extends RollingStockManager<Car>
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<Car> byHazard = getByList(getList(train), BY_HAZARD);
-        List<Car> byFinal = getByList(byHazard, BY_FINAL_DEST);
+        List<Car> byFinal = getByList(getList(train), BY_FINAL_DEST);
         List<Car> byLocation = getByList(byFinal, BY_LOCATION);
-        List<Car> byDestination = getByList(byLocation, BY_DESTINATION);
+        List<Car> byHazard = getByList(byLocation, BY_HAZARD);
+        List<Car> byDestination = getByList(byHazard, BY_DESTINATION);
         // now place cabooses, cars with FRED, and passenger cars at the rear of the
         // train
         List<Car> out = new ArrayList<>();

@@ -12,14 +12,14 @@ import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns configuration objects for a SPROG DCC SPROG 3 Plus
+ * Returns configuration objects for a SPROG DCC [Pi-]SPROG 3 [v2|Plus]
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
 @ServiceProvider(service = CbusConfigPaneProvider.class)
 public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     
-    String type = "Pi-SPROG 3";
+    String type = "CANSPROG3P";
     
     public static final int CMD_STATION_NUMBER = 1;
     public static final int USER_FLAGS = 2;

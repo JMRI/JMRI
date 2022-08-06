@@ -666,8 +666,8 @@ public class DefaultConditional extends AbstractNamedBean
                     case SET_ROUTE_TURNOUTS:
                         conditionalExecute.setRouteTurnouts(action, (Warrant) nb, actionCount, errorList);
                         break;
-                    case THROTTLE_FACTOR:
-                        log.info("Set warrant Throttle Factor deprecated - Use Warrrant Preferences");  // NOI18N
+                    case GET_TRAIN_LOCATION:
+                        conditionalExecute.getTrainLocation(action, (Warrant) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
                         break;
                     case SET_TRAIN_ID:
                         conditionalExecute.setTrainId(action, (Warrant) nb, getActionString(action), actionCount, errorList);
@@ -716,6 +716,12 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case SET_BLOCK_IN_SERVICE:
                         conditionalExecute.setBlockInService(action, (OBlock) nb, actionCount, errorList);
+                        break;
+                    case GET_BLOCK_TRAIN_NAME:
+                        conditionalExecute.getBlockTrainName(action, (OBlock) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
+                        break;
+                    case GET_BLOCK_WARRANT:
+                        conditionalExecute.getBlockWarrant(action, (OBlock) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
                         break;
                     case SET_NXPAIR_ENABLED:
                         conditionalExecute.setNXPairEnabled(action, actionCount, errorList, devName);
