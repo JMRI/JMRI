@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 public class PiSprog3SerialDriverAdapterTest {
 
     @Test
-    public void ConstructorTest(){
+    public void testCtor(){
         PiSprog3SerialDriverAdapter a = new PiSprog3SerialDriverAdapter();
         Assert.assertNotNull("SerialDriverAdapter constructor", a);
     }

@@ -85,8 +85,10 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
 
         Exception ex = Assert.assertThrows(JmriException.class, () ->
             mgr.provideRepeater(m2, m1));
+        String message = ex.getMessage();
+        Assertions.assertNotNull(message);
         Assert.assertTrue("wrong way repeater not in exception text",
-            ex.getMessage().contains("repeater already exists the wrong way"));
+            message.contains("repeater already exists the wrong way"));
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
     

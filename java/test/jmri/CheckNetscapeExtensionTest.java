@@ -37,8 +37,9 @@ public class CheckNetscapeExtensionTest {
         Node applicationExtensions = null;
         NodeList nodeList = tree.getChildNodes();
         for (int child=0; child < nodeList.getLength(); child++) {
-            if (nodeList.item(child).getNodeName().equals("ApplicationExtensions")) {
-                applicationExtensions = nodeList.item(child);
+            var tstNode = nodeList.item(child);
+            if ( tstNode !=null && tstNode.getNodeName().equals("ApplicationExtensions")) {
+                applicationExtensions = tstNode;
             }
         }
         if (applicationExtensions == null) return false;
@@ -46,12 +47,16 @@ public class CheckNetscapeExtensionTest {
         // Loop thru the extensions to try to find the "NETSCAPE" extension
         nodeList = applicationExtensions.getChildNodes();
         for (int child=0; child < nodeList.getLength(); child++) {
-            if (nodeList.item(child).getNodeName().equals("ApplicationExtension")) {
-                org.w3c.dom.NamedNodeMap map = nodeList.item(child).getAttributes();
-                for (int i=0; i < map.getLength(); i++) {
-                    if (map.item(i).getNodeName().equals("applicationID")
-                            && map.item(i).getNodeValue().equals("NETSCAPE")) {
-                        return true;
+            var tstNode = nodeList.item(child);
+            if ( tstNode != null && tstNode.getNodeName().equals("ApplicationExtension")) {
+                org.w3c.dom.NamedNodeMap map = tstNode.getAttributes();
+                if ( map != null ) {
+                    for (int i=0; i < map.getLength(); i++) {
+                        var mapItem = map.item(i);
+                        if ( mapItem != null && mapItem.getNodeName().equals("applicationID")
+                                && "NETSCAPE".equals(mapItem.getNodeValue())) {
+                            return true;
+                        }
                     }
                 }
             }
