@@ -293,6 +293,91 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         Assertions.assertEquals(Integer.toString(minVal), ((JTextField) var.getCommonRep()).getText(), "set var text value");
     }
 
+    // test handling of factor and ratio effect
+    @Test
+    public void testFactorRatio1() {
+        int offset1 = 0;
+        int factor1 = 1;
+        int offset2 = 0;
+        int factor2 = 1;
+        log.trace("testFactorRatioDecimalValues");
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(0);
+        v.put("81", cv);
+        VariableValue variable1 = makeVarDec("lower", "comment", "", false,
+                false, false, false, "81", "XXXXVVVV", 0, 255,
+                v, null, null, offset1, factor1);
+        VariableValue variable2 = makeVarDec("higher", "comment", "", false,
+                false, false, false, "81", "VVVVXXXX", 0, 255,
+                v, null, null, offset2, factor2);
+        checkValue(variable1, "var1 initially contains ", "0");
+        checkValue(variable2, "var2 initially contains ", "0");
+        Assertions.assertEquals(0, cv.getValue(), "cv value");
+
+        // pretend you've edited the upper value & manually notify
+        setValue(variable1, "5");
+        // see if the CV was updated
+        Assertions.assertEquals(5, cv.getValue(), "cv value");
+        // check variable values
+        checkValue(variable1, "value1 object contains ", "5");
+        checkValue(variable2, "value2 object contains ", "0");
+
+        // set CV value
+        cv.setValue(226);
+        checkValue(variable1, "value1 object contains ", "2");
+        checkValue(variable2, "value2 object contains ", "14");
+
+        setValue(variable2, "14");
+        // check variable values
+        checkValue(variable1, "value1 object contains ", "2");
+        checkValue(variable2, "value2 object contains ", "14");
+        // see if the CV was updated
+        Assertions.assertEquals(226, cv.getValue(), "cv value");
+    }
+
+    @Test
+    public void testFactorRatio2() {
+        int offset1 = 1;
+        int factor1 = 1;
+        int offset2 = 1;
+        int factor2 = 2;
+        log.trace("testFactorRatioDecimalValues");
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(0);
+        v.put("81", cv);
+        VariableValue variable1 = makeVarDec("lower", "comment", "", false,
+                false, false, false, "81", "XXXXVVVV", 0, 255,
+                v, null, null, offset1, factor1);
+        VariableValue variable2 = makeVarDec("higher", "comment", "", false,
+                false, false, false, "81", "VVVVXXXX", 0, 255,
+                v, null, null, offset2, factor2);
+        checkValue(variable1, "var1 initially contains ", "0");
+        checkValue(variable2, "var2 initially contains ", "0");
+        Assertions.assertEquals(0, cv.getValue(), "cv value");
+
+        // pretend you've edited the upper value & manually notify
+        setValue(variable1, "6");
+        // see if the CV was updated
+        Assertions.assertEquals(5, cv.getValue(), "cv value");
+        // check variable values
+        checkValue(variable1, "value1 object contains ", "6");
+        checkValue(variable2, "value2 object contains ", "1");
+
+        // set CV value
+        cv.setValue(226);
+        checkValue(variable1, "value1 object contains ", "3");
+        checkValue(variable2, "value2 object contains ", "29");
+
+        setValue(variable2, "17");
+        // check variable values
+        checkValue(variable1, "value1 object contains ", "3");
+        checkValue(variable2, "value2 object contains ", "17");
+        // see if the CV was updated
+        Assertions.assertEquals(130, cv.getValue(), "cv value");
+    }
+
     @BeforeEach
     @Override
     public void setUp() {

@@ -26,10 +26,19 @@ public class DecVariableValue extends VariableValue
 
     public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
                             boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String stdname) {
+                            HashMap<String, CvValue> v, JLabel status, String stdname) {
+        this(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal,
+                v, status, stdname, 0, 1);
+    }
+
+    public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
+                            boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String stdname, int offset, int factor) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
+        _offset = offset;
+        _factor = factor;
         _value = new JTextField("0", fieldLength());
         _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
@@ -51,6 +60,8 @@ public class DecVariableValue extends VariableValue
 
     int _maxVal;
     int _minVal;
+    int _offset;
+    int _factor;
 
     int fieldLength() {
         if (_maxVal <= 255) {
@@ -131,8 +142,14 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
-        log.debug("newVal={} newCvVal ={}", newVal, newCvVal);
+        int transfer = Math.max(newVal - _offset, 0); // prevent negative values, especially in tests outside UI
+        if (_factor != 0) {
+            transfer = transfer / _factor;
+        } else {
+            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
+        }
+        int newCvVal = setValueInCV(oldCvVal, transfer, getMask(), _maxVal);
+        log.debug("newVal={} transfer={} newCvVal ={}", newVal, transfer, newCvVal);
         if (oldCvVal != newCvVal) {
             cv.setValue(newCvVal);
         }
@@ -274,7 +291,7 @@ public class DecVariableValue extends VariableValue
         }
     }
 
-    ArrayList<DecVarSlider> sliders = new ArrayList<>();
+    ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
 
     /**
      * Set a new value in the variable (text box), including notification as needed.
@@ -394,7 +411,8 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            int transfer = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            int newVal = (transfer * _factor) + _offset;
             setValue(newVal);  // check for duplicate done inside setValue
         }
     }
