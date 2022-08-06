@@ -81,6 +81,7 @@ public class TrainBuilder extends TrainBuilderBase {
         showTrainRequirements(); // show how many engines, caboose, car with FRED and changes in the route
         showTrainServices(); // show which engine roads, owners, built dates, and engine types
         getAndRemoveEnginesFromList(); // get a list of available engines
+        listEnginesByLocation(); // list available engines by location
         determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train
         determineIfTrainDepartsStagingAndAddEngines(); // assign engines to train if departing staging
         addEngines(); // 1st, 2nd and 3rd engine swaps in a train's route

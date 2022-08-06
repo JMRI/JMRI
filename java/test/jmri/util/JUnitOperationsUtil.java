@@ -2,7 +2,6 @@ package jmri.util;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.ResourceBundle; // for access operations keys directly.
 
 import org.junit.Assert;

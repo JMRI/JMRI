@@ -607,6 +607,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (numEnginesBox.getSelectedItem().equals("0") || road.equals(NONE) || !model.equals(NONE)) {
             return true;
         }
+        if (!road.equals(NONE) && !_train.isLocoRoadNameAccepted(road)) {
+            JOptionPane.showMessageDialog(this,
+                    MessageFormat.format(Bundle.getMessage("TrainNotThisRoad"), new Object[] { _train.getName(), road }),
+                    MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"), new Object[] { _train.getName() }),
+                    JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
         for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
             if (!_train.isTypeNameAccepted(rs.getTypeName())) {
                 continue;
