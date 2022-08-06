@@ -327,7 +327,13 @@ public class SplitVariableValue extends VariableValue
         }
 
         // calculate resulting number
-        long newVal = (newEntry - mOffset) / mFactor;
+        long newVal = newEntry - mOffset;
+        // long newVal = Math.max(newEntry - mOffset, 0); // prevent negative values, especially in tests outside UI
+        if (mFactor != 0) {
+            newVal = newVal / mFactor;
+        } else {
+            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
+        }
         log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
 
         int[] retVals = new int[cvCount];

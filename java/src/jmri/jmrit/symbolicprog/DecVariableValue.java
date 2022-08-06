@@ -13,11 +13,23 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
+
+import jmri.util.CvUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Decimal representation of a value.
+ * <br>
+ * The {@code mask} attribute represents the part of the value that's present in
+ * the CV.
+ * <br>
+ * Optional attributes {@code factor} and {@code offset} are applied when going
+ * <i>from</i> the variable value <i>to</i> the CV values, or vice-versa:
+ * <pre>
+ * Value to put in CVs = ((value in text field) -{@code offset})/{@code factor}
+ * Value to put in text field = ((value in CVs) *{@code factor}) +{@code offset}
+ * </pre> *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2022
  */
