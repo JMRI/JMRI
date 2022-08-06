@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.1.1plus+jake+20220710T1206Z+Rfcd65e975b on Sun Jul 10 08:07:26 EDT 2022-->
-  <decoderIndex version="21">
+  <!--Written by JMRI version 5.1.2plus+jake+20220804T1050Z+R9257e996fd on Thu Aug 04 06:50:51 EDT 2022-->
+  <decoderIndex version="23">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1546,6 +1546,12 @@
           <size length="102" width="86" height="20" units="mm" />
         </model>
       </family>
+      <family name="Feedback (Inputs)" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5088.xml">
+        <model model="DR5088RC" productID="5088" formFactor="Stationary" comment="16 port LocoNet Feedback module with RailCom">
+          <versionCV />
+          <size length="102" width="86" height="20" units="mm" />
+        </model>
+      </family>
       <family name="Locomotive lighting" mfg="Digikeijs" file="Digikeijs_DR80010-15.xml">
         <model model="DR80010" productID="80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
           <versionCV lowVersionID="10" highVersionID="10" />
@@ -1589,7 +1595,7 @@
           <size length="10" width="6" height="3" units="mm" />
         </model>
       </family>
-      <family name="Stationary" mfg="Digikeijs" comment="also sold under the Digirails label" file="Digikeijs_Stationary.xml">
+      <family name="Switch (Outputs)" mfg="Digikeijs" comment="also sold under the Digirails label" file="Digikeijs_Stationary.xml">
         <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
           <versionCV lowVersionID="134" highVersionID="255" />
           <output name="1" label="Out1" connection="other" maxcurrent="500 mA" />
@@ -33998,6 +34004,82 @@
         <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6" />
         <model model="Quad-LN_S_v3" comment="4, 8, 12 or 16 Servo Driver with Signaling and Detection options" lowVersionID="7" />
       </family>
+      <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2.xml">
+        <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
+          <output name="1" label="FL" />
+          <output name="2" label="RL" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <size length="12.9" width="9.2" height="3.3" units="mm" />
+        </model>
+        <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="3" highVersionID="3" connector="Next18" productID="2010216">
+          <output name="1" label="FL" />
+          <output name="2" label="RL" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <size length="14.2" width="9.2" height="3.3" units="mm" />
+        </model>
+        <model model="Lokommander 2 Mini" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM651/NEM652" productID="2010210,2010211,2010207,2010212">
+          <output name="1" label="FL" />
+          <output name="2" label="RL" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <size length="19.5" width="11" height="3.3" units="mm" />
+        </model>
+        <model model="Lokommander 2 Mini M21" numOuts="8" numFns="15" lowVersionID="3" highVersionID="3" connector="21MTC" productID="2010208,2010209,2010228">
+          <output name="1" label="FL" />
+          <output name="2" label="RL" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <size length="19.5" width="11" height="3.3" units="mm" />
+        </model>
+      </family>
+      <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2_p22.xml">
+        <model model="Lokommander 2 Mini P22" numOuts="12" numFns="15" lowVersionID="3" highVersionID="3" connector="PluX22" productID="2010217">
+          <output name="1" label="FL" />
+          <output name="2" label="RL" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <output name="9" label="Aux7" />
+          <output name="10" label="Aux8" />
+          <output name="11" label="Aux9" />
+          <output name="12" label="Aux10" />
+          <size length="20.5" width="15" height="3.2" units="mm" />
+        </model>
+        <model model="Lokommander 2 Mini W22" numOuts="12" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM652" productID="2010218,2010229">
+          <output name="1" label="FL" />
+          <output name="2" label="RL" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <output name="9" label="Aux7" />
+          <output name="10" label="Aux8" />
+          <output name="11" label="Aux9" />
+          <output name="12" label="Aux10" />
+          <size length="20.5" width="15" height="3.2" units="mm" />
+        </model>
+      </family>
       <family name="Lokommander" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
         <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
           <output name="1" label="Out1" />
@@ -38557,8 +38639,49 @@
           <size length="30" width="16" height="4.6" units="mm" />
         </model>
       </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63320.xml">
+        <model model="Feedback Module 2-rail 63320" productID="6332" formFactor="Stationary" comment="LocoNet 8 block feedback module 2-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63330.xml">
+        <model model="Feedback Module 3-rail 63330" productID="6333" formFactor="Stationary" comment="LocoNet 8 block feedback module 3-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63340.xml">
+        <model model="Feedback Module 2-rail 63340" productID="6334" formFactor="Stationary" comment="LocoNet 8 block feedback module 2-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63350.xml">
+        <model model="Feedback Module 3-rail 63350" productID="6335" formFactor="Stationary" comment="LocoNet 8 block feedback module 3-rail">
+          <versionCV />
+        </model>
+      </family>
       <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63410.xml">
         <model model="63410" productID="6341" formFactor="Stationary" comment="LocoNet General Purpose 20 Outputs Switch">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Display Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63450.xml">
+        <model model="63450" productID="6345" formFactor="Stationary" comment="LocoNet Display">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter" file="Uhlenbrock_63810.xml">
+        <model model="mobile station Adapter 63810" productID="6381" formFactor="Stationary" comment="to connect a Märklin mobile station to LocoNet">
+          <versionCV />
+          <size length="50" width="50" height="25" units="mm" />
+        </model>
+      </family>
+      <family name="Adapter" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63830.xml">
+        <model model="LocoNet IR Receiver 63830" productID="6383" formFactor="Stationary" comment="IR Receiver for IRIS Remote and Piko Digi-Fern">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter" file="Uhlenbrock_63880.xml">
+        <model model="s88-Ln Interface 63880" productID="6388" formFactor="Stationary" comment="to connect s88 feedback bus to LocoNet">
           <versionCV />
         </model>
       </family>
@@ -38907,8 +39030,15 @@
           <size length="200" width="60" height="40" units="mm" />
         </model>
       </family>
-      <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster.xml">
-        <model model="FunkMaster" productID="6640" maxTotalCurrent="250mA" formFactor="Stationary" comment="Wireless Daisy Hub">
+      <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66400.xml">
+        <model model="Funk-Master LN 66400" productID="6640" maxTotalCurrent="250mA" formFactor="Stationary" comment="Funk-Master LN Wireless Daisy Hub">
+          <versionCV />
+          <size length="95" width="98" height="32" units="mm" />
+        </model>
+        <model model="FunkMaster" show="no" replacementModel="Funk-Master LN 66400" replacementFamily="Wireless" productID="6640" comment="file and model renamed without changes" />
+      </family>
+      <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66410.xml">
+        <model model="Funk-Master LN+DCC 66410" productID="6641" maxTotalCurrent="250mA" formFactor="Stationary" comment="Funk-Master LN+DCC Wireless Hub">
           <versionCV />
           <size length="95" width="98" height="32" units="mm" />
         </model>
@@ -38925,8 +39055,32 @@
           <size length="105" width="58" height="35" units="mm" />
         </model>
       </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power22.xml">
+        <model model="Power22" productID="6321" maxTotalCurrent="2.2A" formFactor="Stationary" comment="Intelligenter 2.2A Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power4.xml">
         <model model="Power4" productID="6324" maxTotalCurrent="3.5A" formFactor="Stationary" comment="3.5A Multiprotocol Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power40.xml">
+        <model model="Power40" productID="6322" maxTotalCurrent="3.5A" formFactor="Stationary" comment="Intelligenter 3.5A Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power7.xml">
+        <model model="Power7" productID="6327" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power70.xml">
+        <model model="Power70" productID="6323" maxTotalCurrent="6.8A" formFactor="Stationary" comment="Intelligenter 6.8A Booster">
           <versionCV />
           <size length="104" width="58" height="33" units="mm" />
         </model>
@@ -39517,6 +39671,213 @@
           <output name="2" label="Yellow" />
           <output name="1" label="Green" />
           <output name="2" label="Violet" />
+        </model>
+      </family>
+      <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_small_v4.xml">
+        <model model="MS440 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">Funkční výstup 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">Funkční výstup 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">Funkční výstup 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">Funkční výstup 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">Funkční výstup 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">Funkční výstup 6</label>
+          </output>
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MS450 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="6">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
+          </output>
+          <output name="11" label="FO 9 (+5V)">
+            <label xml:lang="de">FA9 (+5V)</label>
+            <label xml:lang="cs">FV 9 (+5V)</label>
+          </output>
+          <output name="12" label="FO 10 (+5V)">
+            <label xml:lang="de">FA10 (+5V)</label>
+            <label xml:lang="cs">FV 10 (+5V)</label>
+          </output>
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MS480 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="19" width="11" height="3.1" units="mm" />
+        </model>
+        <model model="MS490 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="3">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <size length="19" width="8.6" height="2.9" units="mm" />
+        </model>
+        <model model="MS500 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="1">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="14" width="10" height="2.6" units="mm" />
+        </model>
+        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="8">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="25" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="8">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="15" width="9.5" height="3.3" units="mm" />
         </model>
       </family>
       <family name="Zimo Early model (1996-97)" mfg="Zimo" file="Zimo_MX40.xml">

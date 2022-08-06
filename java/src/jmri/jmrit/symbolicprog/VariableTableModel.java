@@ -276,7 +276,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             mask = e.getAttribute("mask").getValue();
         } else {
             mask = "VVVVVVVV"; // default mask is 8 bits
-            // for DecVariableValue replaced by larger mask if maxVal>256 in #processDecVal()
+            // for some VariableValue types this is replaced in #processDecVal() by larger mask if maxVal>256
         }
 
         boolean readOnly = e.getAttribute("readOnly") != null && e.getAttribute("readOnly").getValue().equals("yes");
@@ -320,9 +320,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         VariableValue v;
         if ((child = e.getChild("decVal")) != null) {
             v = processDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
-
-        } else if ((child = e.getChild("compDecVal")) != null) {
-            v = processCalculatedDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ((child = e.getChild("hexVal")) != null) {
             v = processHexVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
@@ -495,7 +492,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
-    protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
+    protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly,
+                                          boolean writeOnly, boolean opsOnly, String CV, String mask, String item)
+            throws NumberFormatException {
         VariableValue v;
         Attribute a;
         int minVal = 0;
@@ -508,43 +507,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         if (maxVal > 255 && Objects.equals(mask, "VVVVVVVV")) {
             mask = VariableValue.getMaxMask(maxVal); // replaces the default 8 bit mask when no mask is provided in xml
-            log.debug("Created mask {} for Dec CV {}", mask, name);
+            log.debug("Created mask {} for DecVar CV {}", mask, name);
         }
-        v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item);
+        v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item);
         return v;
     }
 
-    protected VariableValue processCalculatedDecVal(Element child, String name, String comment,
-        boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV,
-        String mask, String item) throws NumberFormatException {
+    protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly,
+                                           boolean writeOnly, boolean opsOnly, String CV, String mask, String item)
+            throws NumberFormatException {
         VariableValue v;
-        Attribute a;
-        int minVal = 0;
-        int maxVal = 255;
-        if ((a = child.getAttribute("min")) != null) {
-            minVal = Integer.parseInt(a.getValue());
-        }
-        if ((a = child.getAttribute("max")) != null) {
-            maxVal = Integer.parseInt(a.getValue());
-        }
-        int factor = 1;
-        if ((a = child.getAttribute("factor")) != null) {
-            factor = Integer.parseInt(a.getValue());
-        }
-        int offset = 0;
-        if ((a = child.getAttribute("offset")) != null) {
-            offset = Integer.parseInt(a.getValue());
-        }
-        int max = (maxVal * factor) + offset;
-        if (max > 255 && Objects.equals(mask, "VVVVVVVV")) {
-            mask = VariableValue.getMaxMask(max); // replace the default 8 bit mask when no mask is provided in xml
-            log.debug("Created mask {} for CompDec CV {}", mask, name);
-        }
-        v = new CompDecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, offset, factor);
-        return v;
-    }
-
-    protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) throws NumberFormatException {
         int count = 0;
         IteratorIterable<Content> iterator = child.getDescendants();
         while (iterator.hasNext()) {
@@ -555,9 +528,16 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
                 }
             }
         }
-
-        VariableValue v;
-        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, count, _cvModel.allCvMap(), _status, item);
+        Attribute a;
+        int maxVal = 255;
+        if ((a = child.getAttribute("max")) != null) {
+            // requires explicit max attribute for Radix mask if not all options are filled by enum
+            maxVal = Integer.parseInt(a.getValue());
+        } else {
+            maxVal = count;
+        }
+        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                CV, mask, 0, maxVal, _cvModel.allCvMap(), _status, item);
         v = v1; // v1 is of EnumVariableValue type, so doesn't need casts
 
         v1.nItems(count);
@@ -565,7 +545,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v1.lastItem();
         return v;
     }
-    
+
     protected VariableValue processSplitEnumVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
         VariableValue v;
         Attribute a;

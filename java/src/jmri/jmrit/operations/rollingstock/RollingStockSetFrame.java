@@ -17,6 +17,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarsSetFrame;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -338,7 +339,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's road
-                if (!train.isRoadNameAccepted(rs.getRoadName())) {
+                if (rs.getClass() == Car.class && !train.isCarRoadNameAccepted(rs.getRoadName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
@@ -358,9 +359,9 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's owner
-                if (!train.isOwnerNameAccepted(rs.getOwner())) {
+                if (!train.isOwnerNameAccepted(rs.getOwnerName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
-                            "rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}), getRb()
+                            "rsTrainNotServOwner"), new Object[]{rs.getOwnerName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),
                             JOptionPane.ERROR_MESSAGE);
                     // prevent rs from being picked up and delivered

@@ -3780,31 +3780,37 @@ public class LocoNetMessageInterpret {
          * LISSY is an automatic train detection system made by Uhlenbrock.
          * All documentation appears to be in German.
          */
-        switch (l.getElement(1)) {
-            case 0x08: // Format LISSY message
+        log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
+        switch (l.getElement(1)) {           
+            case 0x08: // Format LISSY message              
                 int unit = (l.getElement(4) & 0x7F);
-                int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                switch (l.getElement(2)) {
-                    case 0x00:
-                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                        // OPC_LISSY_REP
-                        return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
+                if ((l.getElement(3) & 0x40) != 0) { // Loco movement
+                    int category = l.getElement(2) + 1;
+                    int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                    return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
+                          unit,
+                          Integer.toString(address),
+                          Integer.toString(category),
+                          ((l.getElement(3) & 0x20) == 0
+                          ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
+                          : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));  
+                } else { // other messages
+                    switch (l.getElement(2)) {
+                      case 0x00: // Loco speed
+                          int speed = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                          return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_SPEED",
+                                  unit,
+                                  Integer.toString(speed));
+
+                      case 0x01: // Block status
+                        return Bundle.getMessage("LN_MSG_LISSY_BLOCK_REPORT",
                                 unit,
-                                Integer.toString(address),
-                                ((l.getElement(3) & 0x20) == 0
-                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                    case 0x01:
-                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                        // OPC_WHEELCNT_REP
-                        int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                        return Bundle.getMessage("LN_MSG_LISSY_WHEEL_REPORT_LOCO_MOVEMENT",
-                                unit, Integer.toString(wheelCount),
-                                ((l.getElement(3) & 0x20) == 0
-                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                    default:
-                        break;
+                                ((l.getElement(6) & 0x01) == 0
+                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_FREE")
+                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_OCCUPIED")));   
+                      default:
+                          break;
+                    }   
                 }
                 break;
 
@@ -4552,6 +4558,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210PLUS");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240PLUS");
             case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR3");
             case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
@@ -4864,6 +4872,15 @@ public class LocoNetMessageInterpret {
         int hwSerial;
         String hwType;
         switch (l.getElement(14)) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
+                hwType = "DB210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240PLUS:
+                hwType = "DCS240+";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210PLUS:
+                hwType = "DCS210+";
+                break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 hwType = "DCS240";
                 break;
@@ -4950,9 +4967,9 @@ public class LocoNetMessageInterpret {
         double msgInUse;
         double msgIdle;
         double msgFree;
-        msgInUse = (l.getElement(4) + ( l.getElement(5) * 128)) ;
-        msgIdle = (l.getElement(6) + ( l.getElement(7) * 128)) ;
-        msgFree = (l.getElement(8) + ( l.getElement(9) * 128)) ;
+        msgInUse = (l.getElement(4) + ( (l.getElement(5) & 0x03) * 128)) ;
+        msgIdle = (l.getElement(6) + ( (l.getElement(7) & 0x03) * 128)) ;
+        msgFree = (l.getElement(8) + ( (l.getElement(9) & 0x03) * 128)) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_SLOTS",
                 msgInUse,
                 msgIdle,

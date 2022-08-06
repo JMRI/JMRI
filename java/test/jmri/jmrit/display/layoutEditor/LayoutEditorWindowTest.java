@@ -1,13 +1,11 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Swing tests for the LayoutEditor.
@@ -16,14 +14,15 @@ import org.junit.jupiter.api.*;
  */
 public class LayoutEditorWindowTest {
 
-    ConfigXmlManager cm;
+    private ConfigXmlManager cm = null;
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // load and display sample file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/valid/SimpleLayoutEditorTest.xml");
+        Assertions.assertNotNull(cm);
         cm.load(f);
 
         // Find new window by name (should be more distinctive, comes from sample file)
@@ -39,7 +38,7 @@ public class LayoutEditorWindowTest {
 
     // Setup for log4J
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -49,7 +48,7 @@ public class LayoutEditorWindowTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         cm = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();

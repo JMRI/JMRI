@@ -169,7 +169,7 @@
 
 <!-- Each variable element defines one item that the user will want to configure -->
 <!ELEMENT variable  (enumVal | decVal | hexVal | speedTableVal |
-                     longAddressVal | shortAddressVal | splitVal | compositeVal | compDecVal) >
+                     longAddressVal | shortAddressVal | splitVal | compositeVal) >
 <!ATTLIST variable label CDATA #REQUIRED>  <!-- name manufacturer used to identify this feature -->
 <!ATTLIST variable CV    CDATA #IMPLIED>   <!-- CV number containing value, if single CV -->
 <!ATTLIST variable mask  CDATA "VVVVVVVV"> <!-- mask of bits within CV -->
@@ -196,7 +196,6 @@
 <!-- variables come in a number of forms: -->
 <!--    decVal:          a decimal value is used, subject to mask and limit requirements -->
 <!--    hexVal:          a hexadecimal value is used, subject to mask and limit requirements -->
-<!--    compDecVal:      a decimal value is used, subject to mask on the digits (not bits), optional offset and factor -->
 <!--    enumVal:         a fixed set of choices is defined, each corresponding to a specific value -->
 <!--    splitVal:        a decimal value, but stored across two CVs using some simple calculations -->
 <!--    shortAddressVal: NMRA short address, including its unique behaviors -->
@@ -312,12 +311,6 @@
 <!ATTLIST splitVal offset  CDATA "0">
 <!ATTLIST splitVal comment CDATA #IMPLIED>
 <!ATTLIST splitVal upperMask CDATA "VVVVVVVV"> <!-- mask of bits within upper CV -->
-
-<!ELEMENT compDecVal EMPTY>
-<!ATTLIST compDecVal min CDATA "0" >           <!-- smallest acceptable value -->
-<!ATTLIST compDecVal factor  CDATA "1">        <!-- cv*factor+offset is variable value -->
-<!ATTLIST compDecVal offset  CDATA "0">
-<!ATTLIST compDecVal comment CDATA #IMPLIED>
 
 <!ELEMENT indexedVal EMPTY >
 <!ATTLIST indexedVal min CDATA "0" >          <!-- smallest acceptable value  -->

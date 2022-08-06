@@ -203,7 +203,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         e1.setModel("RS1");
         e1.setBuilt("2009");
         e1.setMoves(55);
-        e1.setOwner("Owner2");
+        e1.setOwnerName("Owner2");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         e1.setRfid("RFID 3");
         e1.setWeightTons("Tons of Weight");
@@ -215,7 +215,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         e2.setModel("FT");
         e2.setBuilt("2004");
         e2.setMoves(50);
-        e2.setOwner("AT");
+        e2.setOwnerName("AT");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         e2.setRfid("RFID 2");
 
@@ -223,7 +223,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         e3.setModel("SW8");
         e3.setBuilt("2006");
         e3.setMoves(40);
-        e3.setOwner("AB");
+        e3.setOwnerName("AB");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
         e3.setRfid("RFID 5");
         Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
@@ -233,7 +233,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         e4.setModel("GP35");
         e4.setBuilt("1990");
         e4.setMoves(30);
-        e4.setOwner("AAA");
+        e4.setOwnerName("AAA");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
         e4.setRfid("RFID 4");
         Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSpur));
@@ -243,7 +243,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         e5.setModel("SW1200");
         e5.setBuilt("1956");
         e5.setMoves(25);
-        e5.setOwner("DAB");
+        e5.setOwnerName("DAB");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
         e5.setRfid("RFID 1");
         Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));

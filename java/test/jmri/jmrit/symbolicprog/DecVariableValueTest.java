@@ -36,7 +36,8 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
-        return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item);
+        return new DecVariableValue(label, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal, v, status, item);
     }
 
     @Override
@@ -71,7 +72,9 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
         v.put("81", cv);
         // create a variable pointed at CV 81
         //      Mask = 9, minVal = 0, maxVal = 2
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "9", 0, 2, v, null, null);
+        VariableValue variable = makeVar("label", "comment", "", false,
+                false, false, false, "81", "9", 0, 2,
+                v, null, null);
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify

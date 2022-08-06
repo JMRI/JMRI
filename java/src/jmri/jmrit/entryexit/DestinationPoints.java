@@ -77,7 +77,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             return;
         }
         if (enabled) {
-            sourceMast.setHeld(true);
+            if (!manager.isAbsSignalMode()) {
+                sourceMast.setHeld(true);
+            }
         } else {
             // All destinations for the source must be disabled before the mast hold can be released
             for (PointDetails pd : src.getDestinationPoints()) {
@@ -239,7 +241,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 setRouteFrom(false);
                 src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                 if (sml != null && getEntryExitType() == EntryExitPairs.FULLINTERLOCK) {
-                    sml.getSourceMast().setHeld(true);
+                    if (!manager.isAbsSignalMode()) {
+                        sml.getSourceMast().setHeld(true);
+                    }
                     SignalMast mast = (SignalMast) getSignal();
                     if (sml.getStoreState(mast) == SignalMastLogic.STORENONE) {
                         sml.removeDestination(mast);
@@ -808,10 +812,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         if (src.sourceSignal instanceof SignalMast) {
             SignalMast mast = (SignalMast) src.sourceSignal;
             mast.setAspect(mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER));
-            mast.setHeld(true);
+            if (!manager.isAbsSignalMode()) {
+                mast.setHeld(true);
+            }
         } else if (src.sourceSignal instanceof SignalHead) {
             SignalHead head = (SignalHead) src.sourceSignal;
-            head.setHeld(true);
+            if (!manager.isAbsSignalMode()) {
+                head.setHeld(true);
+            }
         } else {
             log.debug("No signal found");  // NOI18N
         }
