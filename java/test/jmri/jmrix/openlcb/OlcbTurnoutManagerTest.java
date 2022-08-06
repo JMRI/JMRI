@@ -66,7 +66,7 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Test
     public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
-            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+            IllegalArgumentException, IllegalAccessException {
         String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
         String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
         testRegisterDuplicateSystemName(l, s1, s2);
