@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 public class AnymaDMX_TrafficControllerTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testConstructor() {
         AnymaDMX_TrafficController atc = new AnymaDMX_TrafficController();
         Assert.assertNotNull("ConnectionConfig constructor", atc);
         atc.dispose();

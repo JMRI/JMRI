@@ -289,9 +289,18 @@ public class TrainManager extends PropertyChangeSupport
         return false;
     }
 
-    public boolean isRoadRestricted() {
+    public boolean isCarRoadRestricted() {
         for (Train train : getList()) {
-            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+            if (!train.getCarRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isLocoRoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getLocoRoadOption().equals(Train.ALL_ROADS)) {
                 return true;
             }
         }
@@ -770,8 +779,10 @@ public class TrainManager extends PropertyChangeSupport
         newTrain._typeList.clear(); // remove all types loaded by create
         newTrain.setTypeNames(train.getTypeNames());
         // set road, load, and owner options
-        newTrain.setRoadOption(train.getRoadOption());
-        newTrain.setRoadNames(train.getRoadNames());
+        newTrain.setCarRoadOption(train.getCarRoadOption());
+        newTrain.setCarRoadNames(train.getCarRoadNames());
+        newTrain.setLocoRoadOption(train.getLocoRoadOption());
+        newTrain.setLocoRoadNames(train.getLocoRoadNames());
         newTrain.setLoadOption(train.getLoadOption());
         newTrain.setLoadNames(train.getLoadNames());
         newTrain.setOwnerOption(train.getOwnerOption());

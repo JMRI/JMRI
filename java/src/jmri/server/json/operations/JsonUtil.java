@@ -314,7 +314,7 @@ public class JsonUtil {
             node.put(JsonOperations.WEIGHT_TONS, 0.0);
         }
         node.put(JSON.COLOR, rs.getColor());
-        node.put(JSON.OWNER, rs.getOwner());
+        node.put(JSON.OWNER, rs.getOwnerName());
         node.put(JsonOperations.BUILT, rs.getBuilt());
         node.put(JSON.COMMENT, rs.getComment());
         node.put(JsonOperations.OUT_OF_SERVICE, rs.isOutOfService());

@@ -3,6 +3,8 @@ package jmri.managers;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.lang.reflect.Field;
@@ -50,7 +52,12 @@ public class DefaultShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
         Assert.assertEquals(1, dsdm.getCallables().size());
-        assertThatCode(() -> dsdm.register((ShutDownTask) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> registerNullShutDownTask(dsdm)).isInstanceOf(NullPointerException.class);
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    private void registerNullShutDownTask(DefaultShutDownManager d) {
+        d.register((ShutDownTask) null);
     }
 
     @Test
@@ -83,7 +90,12 @@ public class DefaultShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getCallables().size());
         Assert.assertEquals(0, dsdm.getRunnables().size());
-        assertThatCode(() -> dsdm.register((Callable<Boolean>) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> registerNullCallable(dsdm) ).isInstanceOf(NullPointerException.class);
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    private void registerNullCallable(DefaultShutDownManager d) {
+        d.register((Callable<Boolean>) null);
     }
 
     @Test
@@ -102,6 +114,7 @@ public class DefaultShutDownManagerTest {
     }
 
     @Test
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
     public void testRegister_Runnable() {
         Assert.assertEquals(0, dsdm.getRunnables().size());
         Assert.assertEquals(0, dsdm.getCallables().size());
@@ -112,7 +125,12 @@ public class DefaultShutDownManagerTest {
         dsdm.register(task);
         Assert.assertEquals(1, dsdm.getRunnables().size());
         Assert.assertEquals(0, dsdm.getCallables().size());
-        assertThatCode(() -> dsdm.register((Runnable) null)).isInstanceOf(NullPointerException.class);
+        assertThatCode(() -> registerNullRunnable(dsdm) ).isInstanceOf(NullPointerException.class);
+    }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    private void registerNullRunnable(DefaultShutDownManager d) {
+        d.register((Runnable) null);
     }
 
     @Test

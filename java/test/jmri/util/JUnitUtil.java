@@ -95,7 +95,7 @@ public class JUnitUtil {
     /**
      * Default standard time step (in mSec) when looping in a waitFor operation.
      */
-    static final private int DEFAULT_WAITFOR_DELAY_STEP = 5;
+    static final protected int DEFAULT_WAITFOR_DELAY_STEP = 5;
 
     /**
      * Standard time step (in mSec) when looping in a waitFor operation.
@@ -116,7 +116,7 @@ public class JUnitUtil {
      * are slow. But too long will cause CI jobs to time out before this logs
      * the error....
      */
-    static final private int DEFAULT_WAITFOR_MAX_DELAY = 10000;
+    static final protected int DEFAULT_WAITFOR_MAX_DELAY = 10000;
 
     /**
      * Maximum time to wait before failing a waitFor operation.
@@ -328,7 +328,8 @@ public class JUnitUtil {
     }
 
     /**
-     * Utility to remove any threads with a matchiing name
+     * Utility to remove any threads with a matching name
+     * @param nameContains The thread name to search
      */
     public static void removeMatchingThreads(String nameContains) {
         ThreadGroup main = Thread.currentThread().getThreadGroup();

@@ -2,7 +2,6 @@ package jmri.util;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.ResourceBundle; // for access operations keys directly.
 
 import org.junit.Assert;
@@ -119,7 +118,7 @@ public class JUnitOperationsUtil {
         e1.setModel("GP40");
         e1.setConsist(con1);
         e1.setMoves(123);
-        e1.setOwner("AT");
+        e1.setOwnerName("AT");
         e1.setBuilt("1990");
         emanager.register(e1);
 
@@ -127,21 +126,21 @@ public class JUnitOperationsUtil {
         e2.setModel("GP40");
         e2.setConsist(con1);
         e2.setMoves(321);
-        e2.setOwner("AT");
+        e2.setOwnerName("AT");
         e2.setBuilt("1990");
         emanager.register(e2);
 
         Engine e3 = new Engine("PC", "5524");
         e3.setModel("SD45");
         e3.setConsist(con2);
-        e3.setOwner("DAB");
+        e3.setOwnerName("DAB");
         e3.setBuilt("1980");
         emanager.register(e3);
 
         Engine e4 = new Engine("PC", "5559");
         e4.setModel("SD45");
         e4.setConsist(con2);
-        e4.setOwner("DAB");
+        e4.setOwnerName("DAB");
         e4.setBuilt("1980");
         emanager.register(e4);
 
@@ -484,7 +483,7 @@ public class JUnitOperationsUtil {
         Car car = cmanager.newRS(road, number);
         car.setTypeName(type);
         car.setLength(length);
-        car.setOwner(owner);
+        car.setOwnerName(owner);
         car.setBuilt(built);
         car.setMoves(moves);
         car.setColor("Black");
