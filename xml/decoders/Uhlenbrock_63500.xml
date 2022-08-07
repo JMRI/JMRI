@@ -11,13 +11,13 @@ Uhlenbrock publishes the Article number for each (new) device.
 The Ln Servo Module #63500 has an Article number 6350, which was registered with Uhlenbrock.
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
     <version author="Egbert Broerse" version="1.0" lastUpdated="20220808"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
     <!-- compare names etc. to non-Ln servo decoder Uhlenbrock_67800.xml -->
 
     <decoder>
-        <family name="Servo Module" mfg="Uhlenbrock Elektronik" type="stationary">
+        <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="stationary">
             <model model="Ln Servo Module 63500" productID="6350" formFactor="Stationary" comment="LocoNet 4 servo Decoder">
               <versionCV />
             </model>
@@ -44,7 +44,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label xml:lang="de">Servo 1 Adresse 1:</label>
               <label xml:lang="nl">Servo 1 adres 1:</label>
               <label>Servo 1 Address 1:</label>
-              <tooltip>Address of Servo 1 (1-2048)</tooltip>
+              <tooltip>Address 1 of Servo 1 (1-2048)</tooltip>
             </variable>
             <variable CV="6350.2" mask="VVVVVVVVV" item="Servo 1 Position 1" default="120">
               <decVal min="100" max="355"/>
@@ -62,308 +62,608 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
             <variable CV="6350.13" mask="VVVVVVVVVVVV" item="Servo 1 Address 2" default="0">
               <decVal min="0" max="2000"/>
-              <label xml:lang="de">Servo 1 Adresse 1:</label>
-              <label xml:lang="nl">Servo 1 adres 1:</label>
-              <label>Servo 1 Address 1:</label>
-              <tooltip>Address of Servo 1 (1-2048)</tooltip>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 1 (1-2048)</tooltip>
             </variable>
             <variable CV="6350.14" mask="VVVVVVVVV" item="Servo 1 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.15" mask="VVVVVVVVV" item="Servo 1 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.25" mask="VVVVVVVVV" item="Servo 1 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+
+            <!-- Servo 2 config-->
+            <variable CV="6350.4" mask="VVVVVVVVVVVV" item="Servo 2 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 2 Adresse 1:</label>
+              <label xml:lang="nl">Servo 2 adres 1:</label>
+              <label>Servo 2 Address 1:</label>
+              <tooltip>Address 1 of Servo 2 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.5" mask="VVVVVVVVV" item="Servo 2 Position 1" default="120">
               <decVal min="100" max="355"/>
               <label xml:lang="de">Halteposition 1:</label>
               <label xml:lang="nl">Stoppositie 1:</label>
               <label>Stop position 1:</label>
               <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
             </variable>
-            <variable CV="6350.15" mask="VVVVVVVVV" item="Servo 1 Position 4" default="250">
+            <variable CV="6350.6" mask="VVVVVVVVV" item="Servo 2 Position 2" default="300">
               <decVal min="100" max="355"/>
               <label xml:lang="de">Halteposition 2:</label>
               <label xml:lang="nl">Stoppositie 2:</label>
               <label>Stop position 2:</label>
               <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
             </variable>
-            <variable CV="6350.25" mask="VVVVVVVVV" item="Servo 1 Turn Time" default="30">
+            <variable CV="6350.16" mask="VVVVVVVVVVVV" item="Servo 2 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 2 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.17" mask="VVVVVVVVV" item="Servo 2 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.18" mask="VVVVVVVVV" item="Servo 2 Position 4" default="250">
               <decVal min="100" max="355"/>
               <label xml:lang="de">Halteposition 2:</label>
               <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.26" mask="VVVVVVVVV" item="Servo 2 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
               <label>Movement Speed:</label>
               <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
             </variable>
 
-          <!--Power-->
-          <variable CV="6350.46" item="Power Servo_1 on" mask="XXXXXXXV" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-            <label>Power Servo 1 on</label>
-          </variable>
-          <variable CV="6350.46" item="Power Servo_2 on" mask="XXXXXXVX" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-            <label>Power Servo 2 on</label>
-          </variable>
-          <variable CV="6350.46" item="Power Servo_3 on" mask="XXXXXVXX" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-            <label>Power Servo 3 on</label>
-          </variable>
-          <variable CV="6350.46" item="Power Servo_4 on" mask="XXXXVXXX" default="1">
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-            <label>Power Servo 4 on</label>
-          </variable>
-
-
-
-          <variable CV="6350.4" mask="VVVVVVVVVVVV" item="Feedback 4 Address" default="4">
-              <decVal min="0" max="2048"/>
-              <label xml:lang="de">Rückmeldeadresse:</label>
-              <label xml:lang="nl">Terugmeldadres:</label>
-              <label>Feedback Address:</label>
-              <tooltip>Address of occupancy block 4 (1-2048)</tooltip>
+            <!-- Servo 3 config-->
+            <variable CV="6350.7" mask="VVVVVVVVVVVV" item="Servo 3 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 3 Adresse 1:</label>
+              <label xml:lang="nl">Servo 3 adres 1:</label>
+              <label>Servo 3 Address 1:</label>
+              <tooltip>Address 1 of Servo 3 (1-2048)</tooltip>
             </variable>
-            <variable CV="6350.5" mask="VVVVVVVVVVVV" item="Feedback 5 Address" default="5">
-              <decVal min="0" max="2048"/>
-              <label xml:lang="de">Rückmeldeadresse:</label>
-              <label xml:lang="nl">Terugmeldadres:</label>
-              <label>Feedback Address:</label>
-              <tooltip>Address of occupancy block 5 (1-2048)</tooltip>
+            <variable CV="6350.8" mask="VVVVVVVVV" item="Servo 3 Position 1" default="120">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 1:</label>
+              <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
             </variable>
-            <variable CV="6350.6" mask="VVVVVVVVVVVV" item="Feedback 6 Address" default="6">
-              <decVal min="0" max="2048"/>
-              <label xml:lang="de">Rückmeldeadresse:</label>
-              <label xml:lang="nl">Terugmeldadres:</label>
-              <label>Feedback Address:</label>
-              <tooltip>Address of occupancy block 6 (1-2048)</tooltip>
+            <variable CV="6350.9" mask="VVVVVVVVV" item="Servo 3 Position 2" default="300">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 2:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
             </variable>
-            <variable CV="6350.7" mask="VVVVVVVVVVVV" item="Feedback 7 Address" default="7">
-              <decVal min="0" max="2048"/>
-              <label xml:lang="de">Rückmeldeadresse:</label>
-              <label xml:lang="nl">Terugmeldadres:</label>
-              <label>Feedback Address:</label>
-              <tooltip>Address of occupancy block 7 (1-2048)</tooltip>
+            <variable CV="6350.19" mask="VVVVVVVVVVVV" item="Servo 3 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 3 (1-2048)</tooltip>
             </variable>
-            <variable CV="6350.8" mask="VVVVVVVVVVVV" item="Feedback 8 Address" default="8">
-              <decVal min="0" max="2048"/>
-              <label xml:lang="de">Rückmeldeadresse:</label>
-              <label xml:lang="nl">Terugmeldadres:</label>
-              <label>Feedback Address:</label>
-              <tooltip>Address of occupancy block 8 (1-2048)</tooltip>
+            <variable CV="6350.20" mask="VVVVVVVVV" item="Servo 3 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.21" mask="VVVVVVVVV" item="Servo 3 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.27" mask="VVVVVVVVV" item="Servo 3 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
             </variable>
 
-            <variable CV="6350.17" mask="VVVVVVVVVVVV" item="Reporting Address" default="1017">
-              <decVal min="0" max="2048"/>
-              <label xml:lang="de">Adresse für Rapportage:</label>
-              <label xml:lang="fr">Adresse pour Rapportage:</label>
-              <label xml:lang="nl">Adres voor Statusrapport:</label>
-              <label>Status Reporting Address:</label>
-              <tooltip>Turnout Address that will send a full occupancy status report (1-2048)</tooltip>
+            <!-- Servo 4 config-->
+            <variable CV="6350.10" mask="VVVVVVVVVVVV" item="Servo 4 Address 1" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Servo 4 Adresse 1:</label>
+              <label xml:lang="nl">Servo 4 adres 1:</label>
+              <label>Servo 4 Address 1:</label>
+              <tooltip>Address 1 of Servo 4 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.11" mask="VVVVVVVVV" item="Servo 4 Position 1" default="120">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 1:</label>
+              <tooltip>For Address 1 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.12" mask="VVVVVVVVV" item="Servo 4 Position 2" default="300">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 2:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.22" mask="VVVVVVVVVVVV" item="Servo 4 Address 2" default="0">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Optional Address 2 of Servo 4 (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.23" mask="VVVVVVVVV" item="Servo 4 Position 3" default="200">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 1:</label>
+              <label xml:lang="nl">Stoppositie 1:</label>
+              <label>Stop position 3:</label>
+              <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.24" mask="VVVVVVVVV" item="Servo 4 Position 4" default="250">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Halteposition 2:</label>
+              <label xml:lang="nl">Stoppositie 2:</label>
+              <label>Stop position 4:</label>
+              <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.28" mask="VVVVVVVVV" item="Servo 4 Turn Time" default="30">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Geschwindigkeit:</label>
+              <label xml:lang="nl">Snelheid:</label>
+              <label>Movement Speed:</label>
+              <tooltip>For Address 1 + Green (enter a value from 100-355)</tooltip>
             </variable>
 
-            <!-- Module Configuration (3 bits) -->
-            <variable CV="6350.20" mask="XXXXXXXV" item="Configuration 1" default="0">
+            <!-- CV29 Polarisation etc -->
+            <variable CV="6350.29" item="Output Servo 1" mask="XXXXXXXV" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label>Individual Addressing</label>
-              <label xml:lang="de">Adresse individuell eingeben</label>
-              <label xml:lang="nl">Adressen individueel toewijzen</label>
-              <tooltip>Off = Autonumber 8 feedback addresses starting from Section 1 entry</tooltip>
-              <tooltip xml:lang="de">Aus = 8 Adressen automatisch zuweisen ab Eingabe für Gleis 1</tooltip>
-              <tooltip xml:lang="nl">Uit = Wijs de 8 adressen oplopend toe vanaf ingevulde waarde voor sectie 1</tooltip>
+              <label xml:lang="de">Output 1 schaltet Herzstück für Servo 1</label>
+              <label xml:lang="nl">Uitgang 1 schakelt puntstuk bij servo 1</label>
+              <label>Output 1 polarised Frog for Servo 1</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
             </variable>
-          <variable CV="6350.20" mask="XXXXXXVX" item="Configuration 2" default="0">
-            <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-            <label>Set Delay per Section</label>
-            <label xml:lang="de">Verzögerung pro Gleis eingeben</label>
-            <label xml:lang="nl">Vertraging per sectie toewijzen</label>
-            <tooltip>Off = Use Section 1 delay entries</tooltip>
-            <tooltip xml:lang="de">Aus = Nutze Eingabe für Gleis 1 für alle Gleise</tooltip>
-            <tooltip xml:lang="nl">Uit = Pas voor alle secties de ingevulde waarde voor sectie 1 toe</tooltip>
-          </variable>
-            <variable CV="6350.20" mask="XXXXXVXX" item="Configuration 3" default="0">
+            <variable CV="6350.29" item="Output Servo 2" mask="XXXXXXVX" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label>Send report at Startup</label>
-              <label xml:lang="de">Belegtmeldung berichten</label>
-              <label xml:lang="nl">Rapporteer bezetstatus</label>
-              <tooltip>Send occupancy report in LocoNet on Power ON?</tooltip>
-              <tooltip xml:lang="de">Belegtzustand auf LocoNet berichten beim Einschalten?</tooltip>
-              <tooltip xml:lang="nl">Bezetstatus op LocoNet melden na inschakelen?</tooltip>
+              <label xml:lang="de">Output 2 schaltet Herzstück für Servo 2</label>
+              <label xml:lang="nl">Uitgang 2 schakelt puntstuk bij servo 2</label>
+              <label>Output 2 polarised Frog for Servo 2</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 3" mask="XXXXXVXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Output 3 schaltet Herzstück für Servo 3</label>
+              <label xml:lang="nl">Uitgang 3 schakelt puntstuk bij servo 3</label>
+              <label>Output 3 polarised Frog for Servo 3</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 4" mask="XXXXVXXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Output 4 schaltet Herzstück für Servo 4</label>
+              <label xml:lang="nl">Uitgang 4 schakelt puntstuk bij servo 4</label>
+              <label>Output 4 polarised Frog for Servo 4</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 5" mask="XXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">A1/A2 blinken wenn Servo 1 in Pos. 1</label>
+              <label xml:lang="nl">Uitgangen 1+2 knipperen als Servo 1 in pos. 1</label>
+              <label>Outputs 1+2 altern. flash when Servo 1 in Pos. 1</label>
+              <tooltip>Select either this option or or Output 1/2 polarization, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 6" mask="XXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">A3/A4 blinken wenn Servo 3 in Pos. 1</label>
+              <label xml:lang="nl">Uitgangen 3+4 knipperen als Servo 3 in pos. 1</label>
+              <label>Outputs 3+4 altern. flash when Servo 3 in Pos. 1</label>
+              <tooltip>Select either this option or Output 3/4 polarization, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 7" mask="XVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Moderner Bahnüberg. m/Ampel A1/A2 + Servo 1</label>
+              <label xml:lang="nl">AHOB met W/R licht op uitg. 1+2 bij Servo 1</label>
+              <label>Modern Xing with R/Y lights outputs 1+2 + Servo 3</label>
+              <tooltip>Select either this option or Output 1/2 Polarization, not both!</tooltip>
+            </variable>
+            <variable CV="6350.29" item="Output Servo 8" mask="VXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Moderner Bahnüberg. m/Ampel A3/A4 + Servo 1</label>
+              <label xml:lang="nl">AHOB met W/R licht op uitg. 3+4 bij Servo 1</label>
+              <label>Modern Xing with R/Y lights outputs 3+4 + Servo 1</label>
+              <tooltip>Select either this option or Output 3/4 Polarization, not both!</tooltip>
             </variable>
 
-            <!-- Occupied Reporting Delay for sections 1-8-->
-            <variable CV="6350.21" item="Occupied Delay Track 1" default="3">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+            <!--LNCV 30 Inputs 1-4 config-->
+            <variable CV="6350.30" item="Input 1 Action 1" mask="XXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 1</label>
+              <label xml:lang="nl">Bedient Servo 1</label>
+              <label>Operates Servo 1</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.22" item="Occupied Delay Track 2">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.30" item="Input 1 Action 2" mask="XXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.23" item="Occupied Delay Track 3">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+<!--            <variable CV="6350.30" item="Input 1 Action" mask="XXXVXXXV" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 1</choice>-->
+<!--                  <choice xml:lang="de">Servo 1 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 1</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 1 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.30" item="Input 2 Action 1" mask="XXXXXXVX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 2</label>
+              <label xml:lang="nl">Bedient Servo 2</label>
+              <label>Operates Servo 2</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.24" item="Occupied Delay Track 4">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.30" item="Input 2 Action 2" mask="XXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.25" item="Occupied Delay Track 5">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+<!--            <variable CV="6350.30" item="Input 2 Action" mask="XXVXXXVX" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 2</choice>-->
+<!--                  <choice xml:lang="de">Servo 2 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 2</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 2 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.30" item="Input 3 Action 1" mask="XXXXXVXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 3</label>
+              <label xml:lang="nl">Bedient Servo 3</label>
+              <label>Operates Servo 3</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.26" item="Occupied Delay Track 6">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.30" item="Input 3 Action 2" mask="XVXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.27" item="Occupied Delay Track 7">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+<!--            <variable CV="6350.30" item="Input 3 Action" mask="XVXXXVXX" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 3</choice>-->
+<!--                  <choice xml:lang="de">Servo 3 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 3</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 3 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.30" item="Input 4 Action 1" mask="XXXXVXXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Schaltet Servo 4</label>
+              <label xml:lang="nl">Bedient Servo 4</label>
+              <label>Operates Servo 4</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
             </variable>
-            <variable CV="6350.28" item="Occupied Delay Track 8">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Occupied Delay: </label>
-              <tooltip>Occupied detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Belegtmeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Occupé en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.30" item="Input 4 Action 2" mask="VXXXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">Sendet Rückmeldung</label>
+              <label xml:lang="nl">Verstuurt bezetmelding</label>
+              <label>Sends Occupancy</label>
+              <tooltip>Select either Servo or Occupancy, not both!</tooltip>
+            </variable>
+<!--            <variable CV="6350.30" item="Input 4 Action" mask="VXXXVXXX" default="1">-->
+<!--              <enumVal>-->
+<!--                <enumChoice value="1">-->
+<!--                  <choice>Operate Servo 4</choice>-->
+<!--                  <choice xml:lang="de">Servo 4 schalten</choice>-->
+<!--                  <choice xml:lang="nl">Bedien Servo 4</choice>-->
+<!--                </enumChoice>-->
+<!--                <enumChoice value="2">-->
+<!--                  <choice>Send Occupancy</choice>-->
+<!--                  <choice xml:lang="de">Sende Rückmeldung</choice>-->
+<!--                  <choice xml:lang="nl">Verstuur bezetmelding</choice>-->
+<!--                </enumChoice>-->
+<!--              </enumVal>-->
+<!--              <label>Input 4 Action:</label>-->
+<!--            </variable>-->
+
+            <variable CV="6350.31" mask="VVVVVVVVVVVV" item="Input 1 Feedback Address" default="5">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 1:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 1:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 1 Feedback Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.32" mask="VVVVVVVVVVVV" item="Input 2 Feedback Address" default="6">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 2:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 2:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 2 Feedback Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.33" mask="VVVVVVVVVVVV" item="Input 3 Feedback Address" default="7">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 3:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 3:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 3 Feedback Address (1-2048)</tooltip>
+            </variable>
+            <variable CV="6350.34" mask="VVVVVVVVVVVV" item="Input 4 Feedback Address" default="8">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Rückmeldeadresse Eingang 4:</label>
+              <label xml:lang="nl">Terugmeldadres ingang 4:</label>
+              <label>Feedback Address:</label>
+              <tooltip>Input 4 Feedback Address (1-2048)</tooltip>
             </variable>
 
-            <!-- Unoccupied Reporting Delay for sections 1-8-->
-            <variable CV="6350.41" item="Free Delay Track 1" default="30">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Bezetvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.35" mask="VVVVVVVVVVVV" item="Output 1 Address" default="1">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 1:</label>
+              <label xml:lang="nl">Adres 1:</label>
+              <label>Address 1:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
             </variable>
-            <variable CV="6350.42" item="Free Delay Track 2">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.36" mask="VVVVVVVVVVVV" item="Output 2 Address" default="2">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 2:</label>
+              <label xml:lang="nl">Adres 2:</label>
+              <label>Address 2:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
             </variable>
-            <variable CV="6350.43" item="Free Delay Track 3">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.37" mask="VVVVVVVVVVVV" item="Output 3 Address" default="3">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 3:</label>
+              <label xml:lang="nl">Adres 3:</label>
+              <label>Address 3:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
             </variable>
-            <variable CV="6350.44" item="Free Delay Track 4">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
-            </variable>
-            <variable CV="6350.45" item="Free Delay Track 5">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
-            </variable>
-            <variable CV="6350.46" item="Free Delay Track 6">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
-            </variable>
-            <variable CV="6350.47" item="Free Delay Track 7">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
-            </variable>
-            <variable CV="6350.48" item="Free Delay Track 8">
-              <decVal/>
-              <label xml:lang="de">Belegtverzögerung: </label>
-              <label xml:lang="fr">Réaction Occupé: </label>
-              <label xml:lang="nl">Bezetvertraging: </label>
-              <label>Free Delay: </label>
-              <tooltip>Free detection delay in 10 millisec steps</tooltip>
-              <tooltip xml:lang="de">Freimeldungsverzögerung im 10 mS Takt</tooltip>
-              <tooltip xml:lang="fr">Le temps de réaction Libre en étapes de 10 ms.</tooltip>
-              <tooltip xml:lang="nl">Vrijvertraging (stappen van 10 ms)</tooltip>
+            <variable CV="6350.38" mask="VVVVVVVVVVVV" item="Output 4 Address" default="4">
+              <decVal min="0" max="2048"/>
+              <label xml:lang="de">Adresse 4:</label>
+              <label xml:lang="nl">Adres 4:</label>
+              <label>Address 4:</label>
+              <tooltip>Turnout Address (1-2048)</tooltip>
             </variable>
 
-          </variables>
+            <!--LNCV 39 Outputs 1-4 config-->
+            <variable CV="6350.39" item="Output Function 1" mask="XXXXXXXV" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A1</label>
+              <label xml:lang="nl">schakelt uitgang 1</label>
+              <label>controls Output 1</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 2" mask="XXXXXXVX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A2</label>
+              <label xml:lang="nl">schakelt uitgang 2</label>
+              <label>controls Output 2</label>
+              <tooltip>Select either this option or Alternating 1+2, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 3" mask="XXXXXVXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A3</label>
+              <label xml:lang="nl">schakelt uitgang 3</label>
+              <label>controls Output 3</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 4" mask="XXXXVXXX" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">schaltet A1</label>
+              <label xml:lang="nl">schakelt uitgang 1</label>
+              <label>controls Output 4</label>
+              <tooltip>Select either this option or Alternating 3+4, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 5" mask="XXXVXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">oder schaltet A1/A2 wechselseitig</label>
+              <label xml:lang="nl">of wisselt uitgangen 1+2</label>
+              <label>or alternates outputs 1+2</label>
+              <tooltip>Select either this option or by Output 1/2 Address, not both!</tooltip>
+            </variable>
+            <variable CV="6350.39" item="Output Function 6" mask="XXVXXXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+              <label xml:lang="de">oder schaltet A3/A4 wechselseitig</label>
+              <label xml:lang="nl">of wisselt uitgangen 3+4</label>
+              <label>or alternates outputs 3+4</label>
+              <tooltip>Select either this option or by Output 3/4 Address, not both!</tooltip>
+            </variable>
+
+            <variable CV="6350.40" item="Output 1-2 Duration" default="0">
+              <decVal min="0" max="255"/>
+              <label xml:lang="de">Ausgänge 1&amp;2 Dauer:</label>
+              <label xml:lang="nl">Uitgangen 1&amp;2 Schakelduur:</label>
+              <label>Outputs 1&amp;2 Pulse Duration:</label>
+              <tooltip>In 10 milliseconds steps (1-255), 0=Constant On</tooltip>
+              <tooltip xml:lang="de">In 10 ms Schritten (1-255), 0=Dauerausgang</tooltip>
+              <tooltip xml:lang="de">In stappen van 10 ms (1-255), 0=Continu</tooltip>
+            </variable>
+            <variable CV="6350.41" item="Output 3-4 Duration" default="0">
+              <decVal min="0" max="255"/>
+              <label xml:lang="de">Ausgänge 3&amp;4 Dauer:</label>
+              <label xml:lang="nl">Uitgangen 3&amp;4 Schakelduur:</label>
+              <label>Outputs 3&amp;4 Pulse Duration:</label>
+              <tooltip>In 10 milliseconds steps (1-255), 0=Constant On</tooltip>
+              <tooltip xml:lang="de">In 10 ms Schritten (1-255), 0=Dauerausgang</tooltip>
+              <tooltip xml:lang="de">In stappen van 10 ms (1-255), 0=Continu</tooltip>
+            </variable>
+
+            <!-- Occupied Reporting Delay for inputs 1-4 -->
+            <variable CV="6350.42" item="Input 1 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 1 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 1 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 1 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+            <variable CV="6350.43" item="Input 2 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 2 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 2 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 2 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+            <variable CV="6350.44" item="Input 3 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 3 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 3 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 3 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+            <variable CV="6350.45" item="Input 4 Occupied Delay" default="20">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung:</label>
+              <label xml:lang="fr"> Réaction:</label>
+              <label xml:lang="nl"> Meldvertraging:</label>
+              <label> Feedback Delay:</label>
+              <tooltip>Input 4 detection delay in 10 millisec steps</tooltip>
+              <tooltip xml:lang="de">Eingang 4 Meldungsverzögerung im 10 mS Takt</tooltip>
+              <tooltip xml:lang="fr">Le temps de réaction en étapes de 10 ms.</tooltip>
+              <tooltip xml:lang="nl">Ingang 4 meldvertraging (in stappen van 10 ms)</tooltip>
+            </variable>
+
+            <!--Power-->
+            <variable CV="6350.46" item="Servo 1 Power" mask="XXXXXXXV" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo 1 on:</label>
+            </variable>
+            <variable CV="6350.46" item="Servo 2 Power" mask="XXXXXXVX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo 2 on:</label>
+            </variable>
+            <variable CV="6350.46" item="Servo 3 Power" mask="XXXXXVXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo 3 on:</label>
+            </variable>
+            <variable CV="6350.46" item="Servo 4 Power" mask="XXXXVXXX" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
+              <label>Power Servo 4 on:</label>
+            </variable>
+
+            <!-- TODO add CVs 47-64-->
+
+            <!--Operate servo 1-4 -->
+            <variable CV="6350.101" mask="VVVVVVVVVVVV" item="Move Servo 1" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 1 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 1 naar positie:</label>
+              <label>Move Servo 1 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+            <variable CV="6350.102" mask="VVVVVVVVVVVV" item="Move Servo 2" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 2 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 2 naar positie:</label>
+              <label>Move Servo 2 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+            <variable CV="6350.103" mask="VVVVVVVVVVVV" item="Move Servo 3" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 3 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 3 naar positie:</label>
+              <label>Move Servo 3 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+            <variable CV="6350.104" mask="VVVVVVVVVVVV" item="Move Servo 4" default="0">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
+              <label xml:lang="de">Fahre Servo 4 in Position:</label>
+              <label xml:lang="nl">Beweeg Servo 4 naar positie:</label>
+              <label>Move Servo 4 to position:</label>
+              <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
+            </variable>
+
+            <variable CV="6350.105" item="Factory Reset" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Select and write...</choice>
+                </enumChoice>
+                <enumChoice value="17">
+                  <choice>Reset</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Zurückstellen nach Werkseinstellungen</label>
+              <label xml:lang="nl">Zet alles terug naar standaard</label>
+              <label>Reset module to defaults</label>
+            </variable>
+
+        </variables>
+
+        <resets>
+          <factReset label="HARD RESET Reset all CVs to default values" CV="6350.105" default="17">
+            <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+            <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+            <label xml:lang="de">Alle CVs zurückstellen auf Werkseinstellungen</label>
+            <label xml:lang="nl">Reset alle CV's naar de standaard fabrieksinstellingen</label>
+            <label xml:lang="cs">Reset všech CV na výchozí hodnoty</label>
+          </factReset>
+        </resets>
+
       </decoder>
 
       <!-- Programming tabbed panes layout -->
@@ -393,328 +693,307 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           <label>
             <text> </text>
           </label>
-
-          <separator/>
-
-          <display item="Configuration 1" format="checkbox"/>
-          <display item="Configuration 2" format="checkbox"/>
+          <display item="Factory Reset"/>
           <label>
             <text> </text>
           </label>
-          <display item="Configuration 3" format="checkbox"/>
-          <display item="Reporting Address"/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Outputs&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Ausgänge&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Uitgangen&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <row>
+            <display item="Output 1 Address"/>
+            <display item="Output Function 1" format="checkbox"/>
+            <display item="Output Function 5" format="checkbox"/>
+          </row>
+          <row>
+            <display item="Output 2 Address"/>
+            <display item="Output Function 2" format="checkbox"/>
+          </row>
+          <display item="Output 1-2 Duration"/>
+          <label>
+            <text> </text>
+          </label>
+          <row>
+            <display item="Output 3 Address"/>
+            <display item="Output Function 3" format="checkbox"/>
+            <display item="Output Function 6" format="checkbox"/>
+          </row>
+          <row>
+            <display item="Output 4 Address"/>
+            <display item="Output Function 4" format="checkbox"/>
+          </row>
+          <display item="Output 3-4 Duration"/>
+
+          <label>
+            <text> </text>
+          </label>
+
+          <display item="Output Servo 1" format="checkbox"/>
+          <display item="Output Servo 2" format="checkbox"/>
+          <display item="Output Servo 3" format="checkbox"/>
+          <display item="Output Servo 4" format="checkbox"/>
+          <display item="Output Servo 5" format="checkbox"/>
+          <display item="Output Servo 6" format="checkbox"/>
+          <display item="Output Servo 7" format="checkbox"/>
+          <display item="Output Servo 8" format="checkbox"/>
 
         </column>
 
         <column>
-          <!-- per output setting -->
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 1&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang1 &lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 1&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 1&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 1 Action 1" format="checkbox"/>
+          <display item="Input 1 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 1 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 1 Feedback Address"/>
+              <display item="Input 1 Occupied Delay"/>
+            </row>
+          </group>
           <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 2&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 2&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 2&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 2&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 2 Action 1" format="checkbox"/>
+          <display item="Input 2 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 2 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 2 Feedback Address"/>
+              <display item="Input 2 Occupied Delay"/>
+            </row>
+          </group>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 3&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 3&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 3&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 3&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 3 Action 1" format="checkbox"/>
+          <display item="Input 3 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 3 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 3 Feedback Address"/>
+              <display item="Input 3 Occupied Delay"/>
+            </row>
+          </group>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Input 4&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 4&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Entrée 4&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 4&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Input 4 Action 1" format="checkbox"/>
+          <display item="Input 4 Action 2" format="checkbox"/>
+          <group>
+            <qualifier>
+              <variableref>Input 4 Action 2</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+            <row>
+              <display item="Input 4 Feedback Address"/>
+              <display item="Input 4 Occupied Delay"/>
+            </row>
+          </group>
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servos</name>
+        <name xml:lang="de">Servos</name>
+        <name xml:lang="nl">Servo's</name>
+
+        <column>
+
           <row>
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 1 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 1 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 1 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 1 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;h1&gt;Servo Settings&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo-instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration des Servos&lt;/h1&gt;&lt;/html&gt;</text>
             </label>
-            <display item="Feedback 1 Address"/>
-            <display item="Occupied Delay Track 1"/>
-            <display item="Free Delay Track 1"/>
+          </row>
+          <row>
+            <label>
+              <text>Before writing, open a Programming session using the LocoNet LNCV Tool.</text>
+              <text xml:lang="nl">Voordat je waarden schrijft eerst een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            </label>
           </row>
 
           <separator/>
           <row>
+
+            <!-- per servo setting -->
+          <column>
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 2 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 2 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 2 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 2 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <group><!--hide/see Track 2 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 2 Address"/></row>
-            </group>
-            <group><!--hide/see Track 2 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 1)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 1)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 1)</text>
-                <text xml:lang="nl">(adres 1 + 1)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 2 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 2"/>
-                <display item="Free Delay Track 2"/>
-              </row>
-            </group>
-          </row>
+            <row>
+              <display item="Servo 1 Address 1"/>
+              <display item="Servo 1 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 1 Position 1" format="hslider"/>
+              <display item="Servo 1 Position 1" label=""/>
+            </row>
+            <row>
+            <display item="Servo 1 Position 2" format="hslider"/>
+              <display item="Servo 1 Position 2" label=""/>
+            </row>
+            <row>
+            <display item="Servo 1 Position 3" format="hslider"/>
+              <display item="Servo 1 Position 3" label=""/>
+            </row>
+            <row>
+            <display item="Servo 1 Position 4" format="hslider"/>
+              <display item="Servo 1 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 1 Turn Time"/>
+            <display item="Servo 1 Power"/>
+            <display item="Move Servo 1"/>
 
           <separator/>
-          <row>
+
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 3 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 3 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 3 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 3 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <group><!--hide/see Track 3 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 3 Address"/></row>
-            </group>
-            <group><!--hide/see Track 3 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 2)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 2)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 2)</text>
-                <text xml:lang="nl">(adres 1 + 2)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 8 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 3"/>
-                <display item="Free Delay Track 3"/>
-              </row>
-            </group>
-          </row>
+            <row>
+              <display item="Servo 2 Address 1"/>
+              <display item="Servo 2 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 1" format="hslider"/>
+              <display item="Servo 2 Position 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 2" format="hslider"/>
+              <display item="Servo 2 Position 2" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 3" format="hslider"/>
+              <display item="Servo 2 Position 3" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Position 4" format="hslider"/>
+              <display item="Servo 2 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 2 Turn Time"/>
+            <display item="Servo 2 Power"/>
+            <display item="Move Servo 2"/>
+
+          </column>
+            <separator/>
+          <column>
+
+            <label>
+              <text>&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <row>
+              <display item="Servo 3 Address 1"/>
+              <display item="Servo 3 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 1" format="hslider"/>
+              <display item="Servo 3 Position 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 2" format="hslider"/>
+              <display item="Servo 3 Position 2" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 3" format="hslider"/>
+              <display item="Servo 3 Position 3" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Position 4" format="hslider"/>
+              <display item="Servo 3 Position 4" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <display item="Servo 3 Turn Time"/>
+            <display item="Servo 3 Power"/>
+            <display item="Move Servo 3"/>
 
           <separator/>
-          <row>
-            <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 4 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 4 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 4 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 4 &lt;/strong&gt;&lt;/html&gt;</text>
-            </label>
-            <group><!--hide/see Track 4 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 4 Address"/></row>
-            </group>
-            <group><!--hide/see Track 4 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 3)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 3)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 3)</text>
-                <text xml:lang="nl">(adres 1 + 3)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 8 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 4"/>
-                <display item="Free Delay Track 4"/>
-              </row>
-            </group>
-          </row>
 
-          <separator/>
-          <row>
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 5 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 5 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 5 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 5 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
-            <group><!--hide/see Track 5 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 5 Address"/></row>
-            </group>
-            <group><!--hide/see Track 5 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 4)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 4)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 4)</text>
-                <text xml:lang="nl">(adres 1 + 4)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 5 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 5"/>
-                <display item="Free Delay Track 5"/>
-              </row>
-            </group>
-          </row>
-
-          <separator/>
-          <row>
+            <row>
+              <display item="Servo 4 Address 1"/>
+              <display item="Servo 4 Address 2"/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 1" format="hslider"/>
+              <display item="Servo 4 Position 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 2" format="hslider"/>
+              <display item="Servo 4 Position 2" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 3" format="hslider"/>
+              <display item="Servo 4 Position 3" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Position 4" format="hslider"/>
+              <display item="Servo 4 Position 4" label=""/>
+            </row>
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 6 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 6 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 6 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 6 &lt;/strong&gt;&lt;/html&gt;</text>
+              <text> </text>
             </label>
-            <group><!--hide/see Track 6 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 6 Address"/></row>
-            </group>
-            <group><!--hide/see Track 6 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 5)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 5)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 5)</text>
-                <text xml:lang="nl">(adres 1 + 5)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 6 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 6"/>
-                <display item="Free Delay Track 6"/>
-              </row>
-            </group>
-          </row>
+            <display item="Servo 4 Turn Time"/>
+            <display item="Servo 4 Power"/>
+            <display item="Move Servo 4"/>
 
-          <separator/>
-          <row>
-            <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 7 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 7 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 7 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 7 &lt;/strong&gt;&lt;/html&gt;</text>
-            </label>
-            <group><!--hide/see Track 7 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 7 Address"/></row>
-            </group>
-            <group><!--hide/see Track 7 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 6)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 6)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 6)</text>
-                <text xml:lang="nl">(adres 1 + 6)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 7 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 7"/>
-                <display item="Free Delay Track 7"/>
-              </row>
-            </group>
+            </column>
           </row>
-
-          <separator/>
-          <row>
-            <label>
-              <text>&lt;html&gt;&lt;strong&gt;Input 8 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Eingang 8 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Voie 8 &lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Ingang 8 &lt;/strong&gt;&lt;/html&gt;</text>
-            </label>
-            <group><!--hide/see Track 8 Address box-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row><display item="Feedback 8 Address"/></row>
-            </group>
-            <group><!--hide/see Track 8 autonumber label-->
-              <qualifier>
-                <variableref>Configuration 1</variableref>
-                <relation>eq</relation>
-                <value>0</value>
-              </qualifier>
-              <label>
-                <text>(Input 1 Address + 7)</text>
-                <text xml:lang="de">(Adresse Gleis 1 + 7)</text>
-                <text xml:lang="fr">(Addresse Voie 1 + 7)</text>
-                <text xml:lang="nl">(adres 1 + 7)</text>
-              </label>
-            </group>
-            <group><!--hide/see Track 8 Delay box-->
-              <qualifier>
-                <variableref>Configuration 2</variableref>
-                <relation>eq</relation>
-                <value>1</value>
-              </qualifier>
-              <row>
-                <display item="Occupied Delay Track 8"/>
-                <display item="Free Delay Track 8"/>
-              </row>
-            </group>
-          </row>
-
         </column>
 
       </pane>
