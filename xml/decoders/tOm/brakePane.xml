@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II v5           -->
+
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Brake</name>
+    <column>
+      <separator/>
+      <label>
+        <text>Brake functions</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+        <griditem>
+          <display item="Brake1 Function" label="Brake 1" />
+          <display item="Brake1 Rate" label="Rate" />
+          <display item="Brake1 Rate" label="" format="hslider" />
+          <display item="Brake1 Speed" label="Max speed" />
+          <display item="Brake1 Speed" label="" format="hslider" />
+        </griditem>
+        <griditem>
+          <display item="Brake2 Function" label="Brake 2" />
+          <display item="Brake2 Rate" label="Rate" />
+          <display item="Brake2 Rate" label="" format="hslider" />
+          <display item="Brake2 Speed" label="Max speed" />
+          <display item="Brake2 Speed" label="" format="hslider" />
+        </griditem>
+        <griditem>
+          <display item="Brake3 Function" label="Brake 3" />
+          <display item="Brake3 Rate" label="Rate" />
+          <display item="Brake3 Rate" label="" format="hslider" />
+          <display item="Brake3 Speed" label="Max speed" />
+          <display item="Brake3 Speed" label="" format="hslider" />
+        </griditem>
+      </grid>
+    </column>
+  </pane>

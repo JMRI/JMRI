@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II v5           -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+
+<!-- Brake functions, see section 12.4 in 0.5.04 decoder manual             -->
+
+<!-- CV197,198,199 set brake functions -->
+  <variable item="Brake1 Function" CV="197" default="255">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <label>Brake 1 function</label>
+  </variable>
+
+  <variable item="Brake2 Function" CV="198" default="255">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <label>Brake 2 function</label>
+  </variable>
+
+  <variable item="Brake3 Function" CV="199" default="255">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <label>Brake 3 function</label>
+  </variable>
+
+<!-- CV200,201,202 set brake rate -->
+  <variable item="Brake1 Rate" CV="200" default="0">
+    <decVal min="0" max="255" />
+    <label>Brake 1 deceleration rate</label>
+    <tooltip>Brake 1 deceleration rate reduction percentage. 255 corresponds to 100%</tooltip>
+  </variable>
+
+  <variable item="Brake2 Rate" CV="201" default="0">
+    <decVal min="0" max="255" />
+    <label>Brake 2 deceleration rate</label>
+    <tooltip>Brake 2 deceleration rate reduction percentage. 255 corresponds to 100%</tooltip>
+  </variable>
+
+  <variable item="Brake3 Rate" CV="202" default="0">
+    <decVal min="0" max="255" />
+    <label>Brake 2 deceleration rate</label>
+    <tooltip>Brake 2 deceleration rate reduction percentage. 255 corresponds to 100%</tooltip>
+  </variable>
+
+<!-- CV203,204,205 set max speed brake reduction -->
+  <variable item="Brake1 Speed" CV="203" default="0">
+    <decVal min="0" max="255" />
+    <label>Brake 1 max speed</label>
+    <tooltip>Maximum speed with brake function 1 activated</tooltip>
+  </variable>
+
+  <variable item="Brake2 Speed" CV="204" default="0">
+    <decVal min="0" max="255" />
+    <label>Brake 2 max speed</label>
+    <tooltip>Maximum speed with brake function 2 activated</tooltip>
+  </variable>
+
+  <variable item="Brake3 Speed" CV="205" default="0">
+    <decVal min="0" max="255" />
+    <label>Brake 3 max speed</label>
+    <tooltip>Maximum speed with brake function 3 activated</tooltip>
+  </variable>
+
+</variables>
