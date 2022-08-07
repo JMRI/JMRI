@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import jmri.Block;
@@ -12,7 +11,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Swing tests for the LayoutEditor
@@ -21,11 +20,11 @@ import org.junit.Assume;
  */
 public class LayoutEditorConnectivityTest {
 
-    ConfigXmlManager cm;
+    ConfigXmlManager cm = null;
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testShowAndClose() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // load and display test panel file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/valid/LEConnectTest.xml");
