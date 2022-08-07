@@ -17,6 +17,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarsSetFrame;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -338,7 +339,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's road
-                if (!train.isCarRoadNameAccepted(rs.getRoadName())) {
+                if (rs.getClass() == Car.class && !train.isCarRoadNameAccepted(rs.getRoadName())) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                             "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
                                     .getString("rsNotMove"),

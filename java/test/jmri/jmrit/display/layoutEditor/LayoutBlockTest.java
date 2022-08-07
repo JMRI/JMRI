@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
-import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrix.internal.InternalSensorManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -74,6 +73,7 @@ public class LayoutBlockTest {
 
         // Get the referenced block
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
+        Assertions.assertNotNull(block);
 
         // change the value of the block.
         block.setValue("hello world");
@@ -98,6 +98,7 @@ public class LayoutBlockTest {
 
         // Get the referenced block
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
+        Assertions.assertNotNull(block);
 
         // add a roster entry as the block value
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
@@ -124,6 +125,7 @@ public class LayoutBlockTest {
 
         // Get the referenced block
         Block block = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName("Test Block");
+        Assertions.assertNotNull(block);
 
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
