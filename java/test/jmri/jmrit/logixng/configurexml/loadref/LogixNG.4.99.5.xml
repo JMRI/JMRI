@@ -2,9 +2,9 @@
 <?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
-    <major>4</major>
-    <minor>99</minor>
-    <test>8</test>
+    <major>5</major>
+    <minor>1</minor>
+    <test>2</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -22476,15 +22476,19 @@
     </For>
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
       <systemName>IQDA:AUTO:0163</systemName>
-      <IfSocket>
-        <socketName>f2cwy2z413</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>vbo38qftkw</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>k1eib6f91c</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>f2cwy2z413</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>vbo38qftkw</socketName>
+        </Socket>
+        <Socket>
+          <socketName>k1eib6f91c</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22545,15 +22549,19 @@
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
       <systemName>IQDA:AUTO:0164</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>yc6e2habox</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>u5ryhxupqt</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>vjp4tew4db</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>yc6e2habox</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>u5ryhxupqt</socketName>
+        </Socket>
+        <Socket>
+          <socketName>vjp4tew4db</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -22614,15 +22622,19 @@
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="AlwaysExecute">
       <systemName>IQDA:AUTO:0165</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>gm282fpv6v</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>tmdblw9wdh</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>vzermykkwe</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>gm282fpv6v</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>tmdblw9wdh</socketName>
+        </Socket>
+        <Socket>
+          <socketName>vzermykkwe</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -25482,16 +25494,20 @@
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
       <systemName>IQDA:AUTO:0205</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>yeczby1jpx</socketName>
-        <systemName>IQDE:AUTO:0011</systemName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>vsq9dbhlzq</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>nzbr18h1c8</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>yeczby1jpx</socketName>
+          <systemName>IQDE:AUTO:0011</systemName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>vsq9dbhlzq</socketName>
+        </Socket>
+        <Socket>
+          <socketName>nzbr18h1c8</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -28345,14 +28361,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat May 14 15:55:16 CEST 2022</date>
+      <date>Sun Aug 07 01:54:00 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.4.99.5.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat May 14 15:55:16 CEST 2022</date>
+      <date>Sun Aug 07 01:54:00 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.99.8plus+daniel+2022-05-14T13:54:26Z+Rf741a24 on Sat May 14 15:55:16 CEST 2022-->
+  <!--Written by JMRI version 5.1.2plus+daniel+2022-08-06T23:53:23Z+R7533a8a on Sun Aug 07 01:54:00 CEST 2022-->
 </layout-config>
