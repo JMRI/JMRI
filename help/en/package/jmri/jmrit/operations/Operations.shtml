@@ -1475,19 +1475,22 @@
    find a route using a maximum of seven trains to complete the car move. Note that the program
    never gives up trying to route a car. If a car has been assigned a
    <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the program
-   will try and route the car during every train build that has access to the car.
+      will try and route the car during every train build that has access to the car.
 
-   <h4 id="EnableRoutingYards">Enable Car Routing via Yards</h4>
+      <h4 id="EnableRoutingYards">Enable Car Routing via Yards</h4>
       The program when routing a car will first try to find classification/interchange tracks to
       move the car to its final destination. If you want the program to also consider using yard
       tracks when routing, select this option.
-      
+
       <h4 id="EnableRoutingStaging">Enable Car Routing through Staging</h4>
       Routing through staging is disabled by default. This is considered to be an advanced feature
       and shouldn't be used until you've become very familiar with the program. When enabled the
       program will try to route cars through staging if it couldn't find a route using C/I and yard
-      tracks. Enabling this feature can increase train build times.
-      
+      tracks. Enabling this feature can significantly increase train build times. The router will
+      only use staging tracks that don't modify a car's load. See
+      <a href="#StagingAndCarLoads">Staging and Car loads</a>. You must deselect all six car load
+      controls for staging.
+
       <h4>Use all Trains when Routing</h4>
 
       <p>The option "Use all Trains when Routing" when selected instructs the program to use all of
