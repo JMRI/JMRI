@@ -214,8 +214,8 @@ public class IfThenElse extends AbstractDigitalAction
                 // Possible, except for the first two sockets and the last two sockets
                 return (index >= 2) && (index < numChilds-2);
             case MoveDown:
-                // Possible if not the last three sockets
-                return (index >= 0) && (index < numChilds-3);
+                // Possible if not the last four sockets
+                return (index >= 0) && (index < numChilds-4);
             default:
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
