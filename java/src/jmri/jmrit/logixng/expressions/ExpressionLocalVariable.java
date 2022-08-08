@@ -398,10 +398,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             return _extraValue;
         }
 
-        public CompareOperation getOper() {
-            return _oper;
-        }
-
     }
 
 

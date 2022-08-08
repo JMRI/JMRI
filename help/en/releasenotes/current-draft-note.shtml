@@ -465,11 +465,11 @@
           <li>The action <i>Listen On Beans - Local variable</i> has been
           added. It can be used together with the <i>For each</i> action
           to listen to all beans of a manager.</li>
-          <li>The expression <i>Local Variable</i> now have the choice
-          "Type" which allows you to select whenether the data should be
-          treated as a number or a string. If "Number" is choosen, it's
-          required that both operands are numbers. Otherwise an exception
-          will occur.</li>
+          <li>The expressions <i>Local Variable</i> and <i>Memory</i> now
+          have the choice "Type" which allows you to select whenether the
+          data should be treated as a number or a string. If "Number" is
+          choosen, it's required that both operands are numbers. Otherwise
+          an exception will occur.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
