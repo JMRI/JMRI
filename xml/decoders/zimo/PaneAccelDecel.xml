@@ -48,15 +48,19 @@
             <label> <text>        </text> </label>
             <label>
               <text>Change momentum when driving solo / light engine</text>
+              <text xml:lang="cs">Změna hybnosti při strojové jízdě / odlehčený motor</text>
             </label>
             <display item="Fn key driving solo">   <!-- CV347 -->
                 <label>Key for solo / light engine</label>
+                <label xml:lang="cs">Klávesa pro strojovou jízdu / odlehčený motor</label>
             </display>
             <display item="Solo change momentum" >   <!-- CV348 bit1 -->
                 <label>Change Momentum</label>
+                <label xml:lang="cs">Změna hybnosti</label>
             </display>
             <display item="Momentum reduction when driving solo">   <!-- CV390 -->
                 <label>Momentum Reduction</label>
+                <label xml:lang="cs">Snížení hybnosti</label>
             </display>
             <label> <text>        </text> </label>
             

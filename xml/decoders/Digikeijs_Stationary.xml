@@ -97,7 +97,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoderversion: </label>
                 <label xml:lang="nl">Versie van de decoder: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
             </variable>
             <variable CV="8" readOnly="yes" item="Manufacturer" default="42">
                 <decVal/>
@@ -106,7 +106,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
                 <tooltip>Read-Only, 42 = Digikeijs/Digirails</tooltip>
                 <tooltip xml:lang="cs">Pouze pro čtení, 42 = Digikeijs/Digirails</tooltip>
             </variable>

@@ -51,7 +51,7 @@
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
             </variable>
             <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO40501"><!-- Piko -->
                 <decVal/>
@@ -60,7 +60,7 @@
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
             </variable>
             <variable item="DC Operation" CV="12" default="1" mask="XXXXXXXV">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1095,7 +1095,7 @@
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
-                <label xml:lang="cs">ID výrobce: </label>
+                <label xml:lang="cs">ID výrobce </label>
             </variable>
             <variable item="Bank A Software version" CV="901.1021=0" readOnly="yes">
                 <decVal/>
@@ -1104,7 +1104,7 @@
                 <label xml:lang="fr">Version décodeur: </label>
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
-                <label xml:lang="cs">Verze dekodéru: </label>
+                <label xml:lang="cs">Verze dekodéru </label>
             </variable>
             <variable item="Bank A Reset" CV="905.1021=0" readOnly="no">
                 <decVal/>

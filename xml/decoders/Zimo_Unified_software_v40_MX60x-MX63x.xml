@@ -2140,61 +2140,61 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="130" readOnly="yes" include="130">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="133" readOnly="yes" include="133">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="134" readOnly="yes" include="134">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="135" readOnly="yes" include="135">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="137" readOnly="yes" include="137">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="166" readOnly="yes" include="166">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="177" readOnly="yes" include="177">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="181" readOnly="yes" include="181">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="186" readOnly="yes" include="186">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1 Text" CV="250" default="186" readOnly="yes" include="186">
         <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
@@ -2203,127 +2203,127 @@
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="193" readOnly="yes" include="193">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="194" readOnly="yes" include="194">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="195" readOnly="yes" include="195">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="197" readOnly="yes" include="197">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="199" readOnly="yes" include="199">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="201" readOnly="yes" include="201">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="206" readOnly="yes" include="206">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="212" readOnly="yes" include="212">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="213" readOnly="yes" include="213">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="219" readOnly="yes" include="219">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="220" readOnly="yes" include="220">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes" include="222">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="233" readOnly="yes" include="233">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="234" readOnly="yes" include="234">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="237" readOnly="yes" include="237">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="240" readOnly="yes" include="240">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="243" readOnly="yes" include="243">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 1:</label>
+        <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 2:</label>
+        <label xml:lang="cs">Dekodér ID 2</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 3:</label>
+        <label xml:lang="cs">Dekodér ID 3</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
-        <label xml:lang="cs">Dekodér ID 4:</label>
+        <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV399.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v40.xml"/>
