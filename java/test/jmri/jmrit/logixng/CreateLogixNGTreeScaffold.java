@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.script.ScriptEngineSelector;
+import jmri.util.CompareUtil;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -3175,6 +3176,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable.setConstantValue("10");
         expressionLocalVariable.setCaseInsensitive(true);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
+        expressionLocalVariable.setCompareType(CompareUtil.CompareType.NumberOrString);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GreaterThan);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         and.getChild(indexExpr++).connect(maleSocket);
@@ -3185,6 +3187,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory2);
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Memory);
+        expressionLocalVariable.setCompareType(CompareUtil.CompareType.String);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
         set_LogixNG_SelectTable_Data(csvTable, expressionLocalVariable.getSelectTable(), NamedBeanAddressing.LocalVariable);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
@@ -3197,6 +3200,7 @@ public class CreateLogixNGTreeScaffold {
         expressionLocalVariable.setOtherLocalVariable("MyOtherVar");
         expressionLocalVariable.setCaseInsensitive(false);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.LocalVariable);
+        expressionLocalVariable.setCompareType(CompareUtil.CompareType.Number);
         expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
         set_LogixNG_SelectTable_Data(csvTable, expressionLocalVariable.getSelectTable(), NamedBeanAddressing.Reference);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
