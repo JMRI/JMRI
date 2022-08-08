@@ -23,13 +23,13 @@ public class IfThenElse extends AbstractDigitalAction
         super(sys, user);
         _expressionEntries
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, "If")));
+                        .createFemaleSocket(this, this, Bundle.getMessage("IfThenElse_Socket_If"))));
         _actionEntries
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
-                        .createFemaleSocket(this, this, "Then")));
+                        .createFemaleSocket(this, this, Bundle.getMessage("IfThenElse_Socket_Then"))));
         _actionEntries
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
-                        .createFemaleSocket(this, this, "Else")));
+                        .createFemaleSocket(this, this, Bundle.getMessage("IfThenElse_Socket_Else"))));
     }
 
     public IfThenElse(String sys, String user,
@@ -41,19 +41,19 @@ public class IfThenElse extends AbstractDigitalAction
         setActionSystemNames(actionSystemNames);
     }
 
-    public static String getNewSocketName(String start, String[] names) {
+    public static String getNewSocketName(String propertyName, String[] names) {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
             boolean validName = true;
+            String name = Bundle.getMessage(propertyName, x);
             for (int i=0; i < names.length; i++) {
-                String name = start + Integer.toString(x);
                 if (name.equals(names[i])) {
                     validName = false;
                     break;
                 }
             }
             if (validName) {
-                return "E" + Integer.toString(x);
+                return name;
             }
             x++;
         }
@@ -65,7 +65,7 @@ public class IfThenElse extends AbstractDigitalAction
         for (int i=0; i < getChildCount(); i++) {
             names[i] = getChild(i).getName();
         }
-        return getNewSocketName("ElseIf", names);
+        return getNewSocketName("IfThenElse_Socket_ElseIf", names);
     }
 
     public String getNewActionSocketName() {
@@ -73,7 +73,7 @@ public class IfThenElse extends AbstractDigitalAction
         for (int i=0; i < getChildCount(); i++) {
             names[i] = getChild(i).getName();
         }
-        return getNewSocketName("Then", names);
+        return getNewSocketName("IfThenElse_Socket_Then2", names);
     }
 
     @Override
@@ -188,6 +188,135 @@ public class IfThenElse extends AbstractDigitalAction
     @Override
     public int getChildCount() {
         return _expressionEntries.size() + _actionEntries.size();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
+        int numChilds = getChildCount();
+
+        switch (oper) {
+            case Remove:
+                // Possible if not the last socket,
+                // if there is more than four sockets,
+                // the socket is not connected and the next socket is not connected
+                return (index >= 0)
+                        && (index+2 < numChilds)
+                        && (numChilds > 4)
+                        && !getChild(index).isConnected()
+                        && !getChild(index+1).isConnected();
+            case InsertBefore:
+                return index >= 0;
+            case InsertAfter:
+                // Possible if not the last socket
+                return index < numChilds-1;
+            case MoveUp:
+                // Possible, except for the first two sockets and the last two sockets
+                return (index >= 2) && (index < numChilds-2);
+            case MoveDown:
+                // Possible if not the last three sockets
+                return (index >= 0) && (index < numChilds-3);
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+
+    private void insertNewSocket(int index) {
+        int expressionIndex = index >> 1;
+        int actionIndex = index >> 1;
+
+        // Does index points to an action socket instead of an expression socket?
+        if ((index % 2) != 0) {
+            actionIndex = index >> 1;
+            expressionIndex = (index >> 1) + 1;
+        }
+
+        FemaleDigitalExpressionSocket exprSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .createFemaleSocket(this, this, getNewExpressionSocketName());
+
+        FemaleDigitalActionSocket actionSocket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .createFemaleSocket(this, this, getNewActionSocketName());
+
+        _expressionEntries.add(expressionIndex, new ExpressionEntry(exprSocket));
+        _actionEntries.add(actionIndex, new ActionEntry(actionSocket));
+
+        List<FemaleSocket> addList = new ArrayList<>();
+        addList.add(actionSocket);
+        addList.add(exprSocket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+
+    private void removeSocket(int index) {
+        int actionIndex = index >> 1;
+        int expressionIndex = index >> 1;
+
+        // Does index points to an action socket instead of an expression socket?
+        if ((index % 2) != 0) {
+            expressionIndex = (index >> 1) + 1;
+        }
+
+        List<FemaleSocket> removeList = new ArrayList<>();
+        removeList.add(_actionEntries.remove(actionIndex)._socket);
+        removeList.add(_expressionEntries.remove(expressionIndex)._socket);
+
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
+    }
+
+    private void moveSocketDown(int index) {
+        int actionIndex = index >> 1;
+        int expressionIndex = index >> 1;
+
+        // Does index points to an action socket instead of an expression socket?
+        if ((index % 2) != 0) {
+            expressionIndex = (index >> 1) + 1;
+        }
+
+        ActionEntry actionTemp = _actionEntries.get(actionIndex);
+        _actionEntries.set(actionIndex, _actionEntries.get(actionIndex+1));
+        _actionEntries.set(actionIndex+1, actionTemp);
+
+        ExpressionEntry exprTemp = _expressionEntries.get(expressionIndex);
+        _expressionEntries.set(expressionIndex, _expressionEntries.get(expressionIndex+1));
+        _expressionEntries.set(expressionIndex+1, exprTemp);
+
+        List<FemaleSocket> list = new ArrayList<>();
+        list.add(_actionEntries.get(actionIndex)._socket);
+        list.add(_actionEntries.get(actionIndex+1)._socket);
+        list.add(_expressionEntries.get(expressionIndex)._socket);
+        list.add(_expressionEntries.get(expressionIndex+1)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void doSocketOperation(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                if (index+1 >= getChildCount()) throw new UnsupportedOperationException("Cannot remove only the last socket");
+                if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+                if (getChild(index+1).isConnected()) throw new UnsupportedOperationException("Socket below is connected");
+                removeSocket(index);
+                break;
+            case InsertBefore:
+                insertNewSocket(index);
+                break;
+            case InsertAfter:
+                insertNewSocket(index+1);
+                break;
+            case MoveUp:
+                if (index < 0) throw new UnsupportedOperationException("cannot move up static sockets");
+                if (index <= 1) throw new UnsupportedOperationException("cannot move up first two children");
+                moveSocketDown(index-2);
+                break;
+            case MoveDown:
+                if (index+2 >= getChildCount()) throw new UnsupportedOperationException("cannot move down last two children");
+                moveSocketDown(index);
+                break;
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
     }
 
     @Override
