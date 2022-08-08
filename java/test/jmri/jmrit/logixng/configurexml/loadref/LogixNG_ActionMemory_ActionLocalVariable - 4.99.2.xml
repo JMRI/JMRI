@@ -76,6 +76,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>C4</constant>
       <regEx />
@@ -111,6 +112,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>D1</constant>
       <regEx />
@@ -190,6 +192,7 @@
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant />
       <otherVariable />
+      <reference />
       <formula />
       <table>
         <tableName>

@@ -470,6 +470,8 @@
           data should be treated as a number or a string. If "Number" is
           choosen, it's required that both operands are numbers. Otherwise
           an exception will occur.</li>
+          <li>The action <i>Local Variable</i> can now copy the value of a
+          reference.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

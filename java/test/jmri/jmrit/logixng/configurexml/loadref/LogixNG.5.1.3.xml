@@ -973,6 +973,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -1072,6 +1073,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4661,6 +4663,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4757,6 +4760,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>GreaterThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>yes</caseInsensitive>
       <constant>10</constant>
       <regEx />
@@ -4855,6 +4859,7 @@
       </memoryNamedBean>
       <compareTo>Memory</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4965,6 +4970,7 @@
       </memoryNamedBean>
       <compareTo>LocalVariable</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5075,6 +5081,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5185,6 +5192,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5295,6 +5303,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5405,6 +5414,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5515,6 +5525,7 @@
       </memoryNamedBean>
       <compareTo>RegEx</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx>/^Test$/</regEx>
@@ -5626,6 +5637,7 @@
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5727,6 +5739,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>LessThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>10</constant>
       <regEx />
@@ -5829,6 +5842,7 @@
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5943,6 +5957,7 @@
       <variable />
       <compareTo>Table</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -6057,6 +6072,7 @@
       <variable>MyVar</variable>
       <compareTo>LocalVariable</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -6171,6 +6187,7 @@
       <variable />
       <compareTo>RegEx</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx>/^Hello$/</regEx>
@@ -18642,6 +18659,7 @@
       <variableOperation>SetToString</variableOperation>
       <constant />
       <otherVariable />
+      <reference />
       <formula />
       <table>
         <tableName>
@@ -18749,6 +18767,7 @@
       <variableOperation>CalculateFormula</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -18858,6 +18877,7 @@
       <variableOperation>CopyMemoryToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -18967,6 +18987,7 @@
       <variableOperation>CopyBlockToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19076,6 +19097,7 @@
       <variableOperation>CopyReporterToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19183,6 +19205,7 @@
       <variableOperation>CopyVariableToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19304,6 +19327,7 @@
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19423,6 +19447,7 @@
       <variableOperation>SetToNull</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19542,6 +19567,7 @@
       <variableOperation>SetToString</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>

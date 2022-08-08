@@ -890,9 +890,22 @@ public class CreateLogixNGTreeScaffold {
         actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyReferenceToVariable);
+        actionLocalVariable.setConstantValue("1");
+        actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setReference("{{MyVarName}}");
+        actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
+        actionLocalVariable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setLocalVariable("result");
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         actionLocalVariable.setConstantValue("1");
         actionLocalVariable.setOtherLocalVariable("SomeVar");
+        actionLocalVariable.setReference("{{MyVarName}}");
         actionLocalVariable.getSelectMemoryNamedBean().setNamedBean(memory3);
         actionLocalVariable.setFormula("a+b");
         maleSocket = digitalActionManager.registerAction(actionLocalVariable);
