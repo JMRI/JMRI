@@ -48,15 +48,7 @@ public class CompareUtil {
 
 
     /**
-     * Compare two values using the comparator set using the comparison
-     * instructions in {@link #_variableOperation}.
-     *
-     * <strong>Note:</strong> {@link #_variableOperation} must be one of
-     * {@link #MemoryOperation.LESS_THAN},
-     * {@link #MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #MemoryOperation.EQUAL},
-     * {@link #MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #MemoryOperation.GREATER_THAN}.
+     * Compare two values.
      *
      * @param type            the type
      * @param oper            the operation
@@ -81,15 +73,7 @@ public class CompareUtil {
     }
 
     /**
-     * Compare two values using the comparator set using the comparison
-     * instructions in {@link #_variableOperation}.
-     *
-     * <strong>Note:</strong> {@link #_variableOperation} must be one of
-     * {@link #MemoryOperation.LESS_THAN},
-     * {@link #MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #MemoryOperation.EQUAL},
-     * {@link #MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #MemoryOperation.GREATER_THAN}.
+     * Compare two values.
      *
      * @param oper            the operation
      * @param value1          left side of the comparison
@@ -154,15 +138,7 @@ public class CompareUtil {
     }
 
     /**
-     * Compare two values using the comparator set using the comparison
-     * instructions in {@link #_variableOperation}.
-     *
-     * <strong>Note:</strong> {@link #_variableOperation} must be one of
-     * {@link #MemoryOperation.LESS_THAN},
-     * {@link #MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #MemoryOperation.EQUAL},
-     * {@link #MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #MemoryOperation.GREATER_THAN}.
+     * Compare two values.
      *
      * @param requireNumber   true if two numbers are required, false otherwise
      * @param oper            the operation
