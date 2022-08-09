@@ -12,7 +12,7 @@ The Ln Servo Module #63500 has an Article number 6350, which was registered with
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20220808"/>
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220809"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
     <!-- compare names etc. to non-Ln servo decoder Uhlenbrock_67800.xml -->
 
@@ -69,15 +69,15 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
             <variable CV="6350.14" mask="VVVVVVVVV" item="Servo 1 Position 3" default="200">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 1:</label>
-              <label xml:lang="nl">Stoppositie 1:</label>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
               <label>Stop position 3:</label>
               <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
             </variable>
             <variable CV="6350.15" mask="VVVVVVVVV" item="Servo 1 Position 4" default="250">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 2:</label>
-              <label xml:lang="nl">Stoppositie 2:</label>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
               <label>Stop position 4:</label>
               <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
             </variable>
@@ -120,15 +120,15 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
             <variable CV="6350.17" mask="VVVVVVVVV" item="Servo 2 Position 3" default="200">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 1:</label>
-              <label xml:lang="nl">Stoppositie 1:</label>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
               <label>Stop position 3:</label>
               <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
             </variable>
             <variable CV="6350.18" mask="VVVVVVVVV" item="Servo 2 Position 4" default="250">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 2:</label>
-              <label xml:lang="nl">Stoppositie 2:</label>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
               <label>Stop position 4:</label>
               <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
             </variable>
@@ -171,15 +171,15 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
             <variable CV="6350.20" mask="VVVVVVVVV" item="Servo 3 Position 3" default="200">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 1:</label>
-              <label xml:lang="nl">Stoppositie 1:</label>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
               <label>Stop position 3:</label>
               <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
             </variable>
             <variable CV="6350.21" mask="VVVVVVVVV" item="Servo 3 Position 4" default="250">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 2:</label>
-              <label xml:lang="nl">Stoppositie 2:</label>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
               <label>Stop position 4:</label>
               <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
             </variable>
@@ -222,15 +222,15 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </variable>
             <variable CV="6350.23" mask="VVVVVVVVV" item="Servo 4 Position 3" default="200">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 1:</label>
-              <label xml:lang="nl">Stoppositie 1:</label>
+              <label xml:lang="de">Halteposition 3:</label>
+              <label xml:lang="nl">Stoppositie 3:</label>
               <label>Stop position 3:</label>
               <tooltip>For Address 2 + Red (enter a value from 100-355)</tooltip>
             </variable>
             <variable CV="6350.24" mask="VVVVVVVVV" item="Servo 4 Position 4" default="250">
               <decVal min="100" max="355"/>
-              <label xml:lang="de">Halteposition 2:</label>
-              <label xml:lang="nl">Stoppositie 2:</label>
+              <label xml:lang="de">Halteposition 4:</label>
+              <label xml:lang="nl">Stoppositie 4:</label>
               <label>Stop position 4:</label>
               <tooltip>For Address 2 + Green (enter a value from 100-355)</tooltip>
             </variable>
@@ -591,23 +591,199 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             <!--Power-->
             <variable CV="6350.46" item="Servo 1 Power" mask="XXXXXXXV" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-              <label>Power Servo 1 on:</label>
+              <label>Power Servo on:</label>
             </variable>
             <variable CV="6350.46" item="Servo 2 Power" mask="XXXXXXVX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-              <label>Power Servo 2 on:</label>
+              <label>Power Servo on:</label>
             </variable>
             <variable CV="6350.46" item="Servo 3 Power" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-              <label>Power Servo 3 on:</label>
+              <label>Power Servo on:</label>
             </variable>
             <variable CV="6350.46" item="Servo 4 Power" mask="XXXXVXXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPower.xml"/>
-              <label>Power Servo 4 on:</label>
+              <label>Power Servo on:</label>
             </variable>
 
-            <!-- TODO add CVs 47-58-->
+            <variable CV="6350.47" mask="VVVVVVVVVVVV" item="Servo 1 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1024-1151 Red and 1152-1279 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1024-1151 Rot und 1152-1279 Grün</tooltip>
+              <tooltip xml:lang="nl">Rood+Groen=gebruik LNCV 1024-1151 Rood en 1152-1279 Groen</tooltip>
+            </variable>
+            <variable CV="6350.48" mask="VVVVVVVVVVVV" item="Servo 2 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1280-1407 Red and 1408-1535 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1280-1407 Rot und 1408-1535 Grün</tooltip>
+              <tooltip xml:lang="nl">Rood+Groen=gebruik LNCV 1280-1407 Rood en 1408-1535 Groen</tooltip>
+            </variable>
+            <variable CV="6350.49" mask="VVVVVVVVVVVV" item="Servo 3 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1536-1663 Red and 1664-1791 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1536-1663 Rot und 1664-1791 Grün</tooltip>
+              <tooltip xml:lang="nl">Rood+Groen=gebruik LNCV 1536-1663 Rood en 1664-1791 Groen</tooltip>
+            </variable>
+            <variable CV="6350.50" mask="VVVVVVVVVVVV" item="Servo 4 Table Mode" default="0">
+              <enumVal>
+                <enumChoice value="0">
+                  <choice>Single Table</choice>
+                  <choice xml:lang="de">Eine Tabelle</choice>
+                  <choice xml:lang="nl">Enkele tabel</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>Repeat</choice>
+                  <choice xml:lang="de">Wiederholen</choice>
+                  <choice xml:lang="nl">Herhalen</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>Red+Green</choice>
+                  <choice xml:lang="de">Rot+Grün</choice>
+                  <choice xml:lang="nl">Rood+Groen</choice>
+                </enumChoice>
+              </enumVal>
+              <label xml:lang="de">Servo Tabellenmodus :</label>
+              <label xml:lang="nl">Servo Tabelmodus:</label>
+              <label>Servo Table Mode:</label>
+              <tooltip>Red+Green=use LNCV 1792-1919 Red and 1920-2047 Green</tooltip>
+              <tooltip xml:lang="de">Wiederholen=ständig wiederholen, Rot+Grün=nutze LNCV 1792-1919 Rot und 1920-2047 Grün</tooltip>
+              <tooltip xml:lang="nl">1=herhalen, 2=gebruik LNCV 1792-1919 Rood en 1920-2047 Groen</tooltip>
+            </variable>
 
+            <!--Servo 1-4 Tab Distance-->
+            <variable CV="6350.51" item="Servo 1 Tab Distance" default="0">
+              <decVal/>
+              <label xml:lang="de"> Tababstand:</label>
+              <label xml:lang="nl"> Afstand tussen stops:</label>
+              <label> Distance between stops:</label>
+              <tooltip>Servo 1: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+              <tooltip xml:lang="de">Servo 1: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+              <tooltip xml:lang="nl">Servo 1: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+              <variable CV="6350.52" item="Servo 2 Tab Distance" default="0">
+                <decVal/>
+                <label xml:lang="de"> Tababstand:</label>
+                <label xml:lang="nl"> Afstand tussen stops:</label>
+                <label> Distance between stops:</label>
+                <tooltip>Servo 2: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+                <tooltip xml:lang="de">Servo 2: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+                <tooltip xml:lang="nl">Servo 2: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+              <variable CV="6350.53" item="Servo 3 Tab Distance" default="0">
+                <decVal/>
+                <label xml:lang="de"> Tababstand:</label>
+                <label xml:lang="nl"> Afstand tussen stops:</label>
+                <label> Distance between stops:</label>
+                <tooltip>Servo 3: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+                <tooltip xml:lang="de">Servo 3: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+                <tooltip xml:lang="nl">Servo 3: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+              <variable CV="6350.54" item="Servo 4 Tab Distance" default="0">
+                <decVal/>
+                <label xml:lang="de"> Tababstand:</label>
+                <label xml:lang="nl"> Afstand tussen stops:</label>
+                <label> Distance between stops:</label>
+                <tooltip>Servo 4: Distance between 2 tab stops (value + 1 * 12 millisec)</tooltip>
+                <tooltip xml:lang="de">Servo 4: Abstand zwischen 2 Tabwerten (Wert + 1 * 12 mS)</tooltip>
+                <tooltip xml:lang="nl">Servo 4: Afstand tussen 2 tabstops (getal + 1 * 12 ms)</tooltip>
+              </variable>
+
+            <!-- CVs 55-58 Servo 1-4 Repeats -->
+            <variable CV="6350.55" item="Servo 1 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+            <variable CV="6350.56" item="Servo 2 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+            <variable CV="6350.57" item="Servo 3 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+            <variable CV="6350.58" item="Servo 4 Repeats" default="0">
+              <decVal/>
+              <label xml:lang="de"> Anzahl der Tabellendurchläufe:</label>
+              <label xml:lang="nl"> Aantal herhalingen:</label>
+              <label> Number of repeats:</label>
+              <tooltip>0 = always</tooltip>
+              <tooltip xml:lang="de">0 = immer</tooltip>
+              <tooltip xml:lang="nl">0 = non-stop</tooltip>
+            </variable>
+
+            <!-- Servo 1-4 Delays-->
             <variable CV="6350.59" item="Delay 1" default="5">
               <decVal/>
               <label xml:lang="de"> Verzögerung Andreaskr. 1/2:</label>
@@ -626,42 +802,41 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip xml:lang="de">Verzögerung von Eingang 3+4 an Servo 3 (in Sekunden)</tooltip>
               <tooltip xml:lang="nl">Vertraging Ingang 3+4 naar Servo 3 (in secondes)</tooltip>
             </variable>
-      <!--          TODO check this-->
-            <variable CV="6350.61" item="Delay 3" default="5">
+            <variable CV="6350.61" item="Delay 3" default="3">
               <decVal/>
-              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
-              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
-              <label> Xing Delay:</label>
-              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
-              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
-              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+              <label xml:lang="de"> Verzögerung Ampel Gelb:</label>
+              <label xml:lang="nl"> Vertraging Gele lamp:</label>
+              <label>Yellow Lamp Delay:</label>
+              <tooltip>Input 1 delay to Red Light (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1 nach Ampel Rot (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1 naar Rood Licht (in secondes)</tooltip>
             </variable>
-            <variable CV="6350.62" item="Delay 4" default="5">
+            <variable CV="6350.62" item="Delay 4" default="3">
               <decVal/>
-              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
-              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
-              <label> Xing Delay:</label>
-              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
-              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
-              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+              <label xml:lang="de"> Verzögerung Ampel Rot:</label>
+              <label xml:lang="nl"> Vertraging Rood Licht:</label>
+              <label> Red Lamp Delay:</label>
+              <tooltip>Input 2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 2 nach Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 2 naar Servo 1 (in secondes)</tooltip>
             </variable>
-            <variable CV="6350.63" item="Delay 5" default="5">
+            <variable CV="6350.63" item="Delay 5" default="3">
               <decVal/>
-              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
-              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
-              <label> Xing Delay:</label>
-              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
-              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
-              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+              <label xml:lang="de"> Verzögerung Ampel Gelb:</label>
+              <label xml:lang="nl"> Geel Licht:</label>
+              <label> Yellow Lamp Delay:</label>
+              <tooltip>Input 3 delay to Red Light (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 3 nach Ampel Rot (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 3 naar Rood Licht (in secondes)</tooltip>
             </variable>
-            <variable CV="6350.64" item="Delay 6" default="5">
+            <variable CV="6350.64" item="Delay 6" default="3">
               <decVal/>
-              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
-              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
-              <label> Xing Delay:</label>
-              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
-              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
-              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+              <label xml:lang="de"> Verzögerung Ampel Rot:</label>
+              <label xml:lang="nl"> Vertraging Rood Licht:</label>
+              <label> Red Lamp Delay:</label>
+              <tooltip>Input 4 delay to Servo 3 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 4 nach Servo 3 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 4 naar Servo 3 (in secondes)</tooltip>
             </variable>
 
             <!--Operate servo 1-4 -->
@@ -707,6 +882,138 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label xml:lang="nl">Zet alles terug naar standaard</label>
               <label>Reset module to defaults</label>
             </variable>
+
+            <!-- Servo 1 Curve-->
+            <variable CV="6350.1024" mask="VVVVVVVVV" item="Servo 1 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 1 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1025" mask="VVVVVVVVV" item="Servo 1 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 1 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1026-1151 -->
+
+            <variable CV="6350.1152" mask="VVVVVVVVV" item="Servo 1 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 1 Curve Point 1 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1153" mask="VVVVVVVVV" item="Servo 1 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 1 Curve Point 2 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1154-1279 -->
+
+            <!-- Servo 2 Curve-->
+            <variable CV="6350.1280" mask="VVVVVVVVV" item="Servo 2 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 2 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1281" mask="VVVVVVVVV" item="Servo 2 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 2 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1282-1407 -->
+
+            <variable CV="6350.1408" mask="VVVVVVVVV" item="Servo 2 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 2 Curve Point 127 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1409" mask="VVVVVVVVV" item="Servo 2 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 2 Curve Point 128 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1410-1535 -->
+
+            <!-- Servo 3 Curve-->
+            <variable CV="6350.1536" mask="VVVVVVVVV" item="Servo 3 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 3 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1537" mask="VVVVVVVVV" item="Servo 3 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 3 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1538-1663 -->
+
+            <variable CV="6350.1664" mask="VVVVVVVVV" item="Servo 3 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 3 Curve Point 127 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1665" mask="VVVVVVVVV" item="Servo 3 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 3 Curve Point 128 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1666-1791 -->
+
+            <!-- Servo 4 Curve-->
+            <variable CV="6350.1792" mask="VVVVVVVVV" item="Servo 4 Curve 1">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 1:</label>
+              <label xml:lang="nl">Punt 1:</label>
+              <label>Point 1:</label>
+              <tooltip>Servo 4 Curve Point 1 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1793" mask="VVVVVVVVV" item="Servo 4 Curve 2">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 2:</label>
+              <label xml:lang="nl">Punt 2:</label>
+              <label>Point 2:</label>
+              <tooltip>Servo 4 Curve Point 2 Red (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1794-1919 -->
+
+            <variable CV="6350.1920" mask="VVVVVVVVV" item="Servo 4 Curve 127">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 127:</label>
+              <label xml:lang="nl">Punt 127:</label>
+              <label>Point 127:</label>
+              <tooltip>Servo 4 Curve Point 127 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <variable CV="6350.1921" mask="VVVVVVVVV" item="Servo 4 Curve 128">
+              <decVal min="100" max="355"/>
+              <label xml:lang="de">Punkt 128:</label>
+              <label xml:lang="nl">Punt 128:</label>
+              <label>Point 128:</label>
+              <tooltip>Servo 4 Curve Point 128 Green (enter a value from 100-355)</tooltip>
+            </variable>
+            <!-- TODO add CV 1922-2047 -->
 
         </variables>
 
@@ -877,43 +1184,58 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Input 4 Occupied Delay"/>
             </row>
           </group>
+          <label>
+            <text> </text>
+          </label>
+          <separator/>
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Special delays&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Verzögerungen&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Speciale vertragingen&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <display item="Delay 1"/>
+          <display item="Delay 2"/>
+          <display item="Delay 3"/>
+          <display item="Delay 4"/>
+          <display item="Delay 5"/>
+          <display item="Delay 6"/>
+
+
         </column>
       </pane>
 
       <pane>
-        <name>Servos</name>
-        <name xml:lang="de">Servos</name>
-        <name xml:lang="nl">Servo's</name>
+        <name>Servo 1</name>
+        <name xml:lang="de">Servo 1</name>
+        <name xml:lang="nl">Servo 1</name>
 
         <column>
 
-          <row>
             <label>
-              <text>&lt;html&gt;&lt;h1&gt;Servo Settings&lt;/h1&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo-instellingen&lt;/h1&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration des Servos&lt;/h1&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;h1&gt;Servo 1 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 1 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 1 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servo 1&lt;/h1&gt;&lt;/html&gt;</text>
             </label>
-          </row>
-          <row>
             <label>
-              <text>Before writing, open a Programming session using the LocoNet LNCV Tool.</text>
-              <text xml:lang="nl">Voordat je waarden schrijft eerst een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
-              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              <text>Before writing, open a Programming</text>
+              <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+              <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
             </label>
-          </row>
+            <label>
+              <text>session using the LocoNet LNCV Tool.</text>
+              <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+              <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+              <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
 
-          <separator/>
-          <row>
-
-            <!-- per servo setting -->
-          <column>
-            <label>
-              <text>&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 1&lt;/strong&gt;&lt;/html&gt;</text>
-            </label>
+            <!-- servo 1 settings -->
             <row>
               <display item="Servo 1 Address 1"/>
               <display item="Servo 1 Address 2"/>
@@ -939,16 +1261,74 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </label>
             <display item="Servo 1 Turn Time"/>
             <display item="Servo 1 Power"/>
-            <display item="Move Servo 1"/>
-
-          <separator/>
-
+            <display item="Servo 1 Tab Distance"/>
+            <display item="Servo 1 Repeats"/>
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 2&lt;/strong&gt;&lt;/html&gt;</text>
+              <text> </text>
             </label>
+            <display item="Move Servo 1"/>
+        </column>
+
+        <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 1 Table Mode"/>
+            <row>
+              <display item="Servo 1 Curve 1" format="hslider"/>
+              <display item="Servo 1 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 1 Curve 2" format="hslider"/>
+              <display item="Servo 1 Curve 2" label=""/>
+            </row>
+          <label>
+            <text> </text>
+          </label>
+          <row>
+            <display item="Servo 1 Curve 127" format="hslider"/>
+            <display item="Servo 1 Curve 127" label=""/>
+          </row>
+          <row>
+            <display item="Servo 1 Curve 128" format="hslider"/>
+            <display item="Servo 1 Curve 128" label=""/>
+          </row>
+
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 2</name>
+        <name xml:lang="de">Servo 2</name>
+        <name xml:lang="nl">Servo 2</name>
+
+        <column>
+
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Servo 2 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 2 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 2 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servo 2&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+
+          <!-- servo 2 settings -->
             <row>
               <display item="Servo 2 Address 1"/>
               <display item="Servo 2 Address 2"/>
@@ -974,18 +1354,74 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </label>
             <display item="Servo 2 Turn Time"/>
             <display item="Servo 2 Power"/>
-            <display item="Move Servo 2"/>
-
-          </column>
-            <separator/>
-          <column>
-
+            <display item="Servo 2 Tab Distance"/>
+            <display item="Servo 2 Repeats"/>
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 3&lt;/strong&gt;&lt;/html&gt;</text>
+              <text> </text>
             </label>
+            <display item="Move Servo 2"/>
+          </column>
+
+          <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 2 Table Mode"/>
+            <row>
+              <display item="Servo 2 Curve 1" format="hslider"/>
+              <display item="Servo 2 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Curve 2" format="hslider"/>
+              <display item="Servo 2 Curve 2" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Servo 2 Curve 127" format="hslider"/>
+              <display item="Servo 2 Curve 127" label=""/>
+            </row>
+            <row>
+              <display item="Servo 2 Curve 128" format="hslider"/>
+              <display item="Servo 2 Curve 128" label=""/>
+            </row>
+
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 3</name>
+        <name xml:lang="de">Servo 3</name>
+        <name xml:lang="nl">Servo 3</name>
+
+        <column>
+
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Servo 3 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 3 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 3 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servos 3&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+
+          <!-- servo 3 settings -->
             <row>
               <display item="Servo 3 Address 1"/>
               <display item="Servo 3 Address 2"/>
@@ -1011,16 +1447,73 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </label>
             <display item="Servo 3 Turn Time"/>
             <display item="Servo 3 Power"/>
+            <display item="Servo 3 Tab Distance"/>
+            <display item="Servo 3 Repeats"/>
+            <label>
+              <text> </text>
+            </label>
             <display item="Move Servo 3"/>
+          </column>
 
-          <separator/>
+          <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 3 Table Mode"/>
+            <row>
+              <display item="Servo 3 Curve 1" format="hslider"/>
+              <display item="Servo 3 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Curve 2" format="hslider"/>
+              <display item="Servo 3 Curve 2" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Servo 3 Curve 127" format="hslider"/>
+              <display item="Servo 3 Curve 127" label=""/>
+            </row>
+            <row>
+              <display item="Servo 3 Curve 128" format="hslider"/>
+              <display item="Servo 3 Curve 128" label=""/>
+            </row>
+        </column>
+      </pane>
+
+      <pane>
+        <name>Servo 4</name>
+        <name xml:lang="de">Servo 4</name>
+        <name xml:lang="nl">Servo 4</name>
+
+        <column>
 
             <label>
-              <text>&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
-              <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Servo 4&lt;/strong&gt;&lt;/html&gt;</text>
+              <text>&lt;html&gt;&lt;h1&gt;Servo 4 Settings&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Servo 4 instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Servo 4 Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration du Servo 1&lt;/h1&gt;&lt;/html&gt;</text>
             </label>
+            <label>
+              <text>Before writing, open a Programming</text>
+              <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+              <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+              <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+            </label>
+            <label>
+              <text>session using the LocoNet LNCV Tool.</text>
+              <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+              <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+              <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+            </label>
+            <label>
+              <text> </text>
+            </label>
+
+            <!-- servo 4 settings -->
             <row>
               <display item="Servo 4 Address 1"/>
               <display item="Servo 4 Address 2"/>
@@ -1046,12 +1539,40 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </label>
             <display item="Servo 4 Turn Time"/>
             <display item="Servo 4 Power"/>
+            <display item="Servo 4 Tab Distance"/>
+            <display item="Servo 4 Repeats"/>
+            <label>
+              <text> </text>
+            </label>
             <display item="Move Servo 4"/>
+          </column>
 
-            </column>
-          </row>
+          <column>
+            <label>
+              <text>Movement Curve</text>
+            </label>
+            <display item="Servo 4 Table Mode"/>
+            <row>
+              <display item="Servo 4 Curve 1" format="hslider"/>
+              <display item="Servo 4 Curve 1" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Curve 2" format="hslider"/>
+              <display item="Servo 4 Curve 2" label=""/>
+            </row>
+            <label>
+              <text> </text>
+            </label>
+            <row>
+              <display item="Servo 4 Curve 127" format="hslider"/>
+              <display item="Servo 4 Curve 127" label=""/>
+            </row>
+            <row>
+              <display item="Servo 4 Curve 128" format="hslider"/>
+              <display item="Servo 4 Curve 128" label=""/>
+            </row>
+
         </column>
-
       </pane>
 
   </decoder-config>
