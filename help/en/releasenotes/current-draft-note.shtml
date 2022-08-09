@@ -23,6 +23,7 @@
             <ul>
                 <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
                 <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
+                <li>Added programming track power control for [Pi-]SPROG 3 Plus</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -147,6 +148,8 @@
                 <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
                 <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
                 <li>Added F29+ support to SPROG Command Station mode.</li>
+                <li>Added "Programming track only" mode for Pi-SPROG 3 Plus</li>
+                <li>Added programming track power control for [Pi-]SPROG 3 Plus</li>
             </ul>
 
         <h4>TAMS</h4>

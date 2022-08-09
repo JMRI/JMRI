@@ -15,7 +15,7 @@
 
       <p>The On/Off buttons on this pane turn the power On/Off on the programming track, if supported by the hardware and the current operating mode.</p>
 
-      <p><img src="images/PowerControlWithIdleButton.png" alt=
+      <p><img src="images/ProgPowerControl.png" alt=
       "Power control panel showing Idle pushbutton">
       </p>
       <!--#include virtual="/Footer.shtml" -->
