@@ -79,11 +79,13 @@ public class TrainBuilder extends TrainBuilderBase {
         showAndInitializeTrainRoute(); // show the train's route and initialize it
         showIfLocalSwitcher(); // show if this train a switcher, a train that works only one location
         showTrainRequirements(); // show how many engines, caboose, car with FRED and changes in the route
-        showTrainServices(); // show which roads, owners, built dates, and engine types
+        showTrainServices(); // show which engine roads, owners, built dates, and engine types
         getAndRemoveEnginesFromList(); // get a list of available engines
+        listEnginesByLocation(); // list available engines by location
         determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train
         determineIfTrainDepartsStagingAndAddEngines(); // assign engines to train if departing staging
         addEngines(); // 1st, 2nd and 3rd engine swaps in a train's route
+        showTrainCarRoads(); // show car roads that this train will service
         showTrainCarTypes(); // show car types that this train will service
         showTrainLoadNames(); // show load names that this train will service
         loadCarList(); // remove unwanted cars
@@ -94,7 +96,9 @@ public class TrainBuilder extends TrainBuilderBase {
         addCabooseOrFredToTrain(); // do all caboose and FRED changes in the train's route
         removeCaboosesAndCarsWithFred(); // done assigning cabooses and cars with FRED, remove the rest
         blockCarsFromStaging(); // optionally block cars from staging by setting destinations
+        
         addCarsToTrain(); // finds and adds cars to the train, throws BuildFailedException
+        
         checkStuckCarsInStaging(); // determine if cars are stuck in staging, throws BuildFailedException
         showTrainBuildStatus(); // show how well the build went with regards to cars requested and actual
         checkEngineHP(); // check that engine assigned to the train has the appropriate HP

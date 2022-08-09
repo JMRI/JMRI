@@ -422,7 +422,7 @@ public class ImportEngines extends ImportRollingStock {
                 if (engine.getWeightTons().equals(Engine.NONE)) {
                     engine.setWeightTons(engineWeightTons);
                 }
-                engine.setOwner(engineOwner);
+                engine.setOwnerName(engineOwner);
                 engine.setBuilt(engineBuilt);
                 // consist?
                 if (!engineConsistName.isEmpty()) {

@@ -258,6 +258,8 @@ public class Track extends PropertyChangeSupport {
         newTrack.setLoadNames(getLoadNames());
         newTrack.setLoadOption(getLoadOption());
         newTrack.setLoadSwapEnabled(isLoadSwapEnabled());
+        
+        newTrack.setOnlyCarsWithFinalDestinationEnabled(isOnlyCarsWithFinalDestinationEnabled());
 
         newTrack.setPickupOption(getPickupOption()); // must set option before setting ids
         newTrack.setPickupIds(getPickupIds());
@@ -267,6 +269,10 @@ public class Track extends PropertyChangeSupport {
             newTrack.setPool(newLocation.addPool(getPool().getName()));
             newTrack.setMinimumLength(getMinimumLength());
         }
+        
+        newTrack.setPrintManifestCommentEnabled(isPrintManifestCommentEnabled());
+        newTrack.setPrintSwitchListCommentEnabled(isPrintSwitchListCommentEnabled());
+        
         newTrack.setRemoveCustomLoadsEnabled(isRemoveCustomLoadsEnabled());
         newTrack.setReservationFactor(getReservationFactor());
         newTrack.setRoadNames(getRoadNames());
@@ -300,7 +306,6 @@ public class Track extends PropertyChangeSupport {
         _name = name;
         if (!old.equals(name)) {
             InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length
-                                                                                  // for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
@@ -2139,10 +2144,6 @@ public class Track extends PropertyChangeSupport {
                     return OKAY;
                 }
                 log.debug("Schedule id ({}) not valid for track ({})", id, getName());
-                // user could have deleted the schedule item after build train, so not really an
-                // error
-                // return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() +
-                // ")"; // NOI18N
             }
         }
         if (getScheduleMode() == MATCH && !searchSchedule(car).equals(OKAY)) {
@@ -2166,12 +2167,6 @@ public class Track extends PropertyChangeSupport {
             // bump schedule
             bumpSchedule();
         } else if (currentSi != null) {
-            // log.debug("Car (" + toString() + ") type (" + getType() + ") road (" +
-            // getRoad() + ") load ("
-            // + getLoad() + ") arrived out of sequence, needed type (" +
-            // currentSi.getType() // NOI18N
-            // + ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")");
-            // // NOI18N
             // build return message
             String scheduleName = "";
             String currentTrainScheduleName = "";
@@ -2913,14 +2908,6 @@ public class Track extends PropertyChangeSupport {
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
         e.setAttribute(Xml.TRACK_TYPE, getTrackType());
-
-        // backwards compatibility since 4.21.1, remove after year 2021
-        String trackType = getTrackType();
-        if (getTrackType().equals(SPUR)) {
-            trackType = SIDING; // Pre 4.21.1 location type
-        }
-        e.setAttribute(Xml.LOC_TYPE, trackType); // backwards compatibility
-
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));

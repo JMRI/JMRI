@@ -19,14 +19,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Decimal representation of a value.
  *
- * @author Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001, 2022
  */
 public class DecVariableValue extends VariableValue
         implements ActionListener, FocusListener {
 
-    public DecVariableValue(String name, String comment, String cvName,
-            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-            String cvNum, String mask, int minVal, int maxVal,
+    public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
+                            boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
@@ -125,16 +124,17 @@ public class DecVariableValue extends VariableValue
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvNum());
         // compute new cv value by combining old and request
-        int oldCv = cv.getValue();
+        int oldCvVal = cv.getValue();
         int newVal;
         try {
             newVal = textToValue(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal);
-        if (oldCv != newCv) {
-            cv.setValue(newCv);
+        int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
+        log.debug("newVal={} newCvVal ={}", newVal, newCvVal);
+        if (oldCvVal != newCvVal) {
+            cv.setValue(newCvVal);
         }
     }
 
@@ -245,14 +245,14 @@ public class DecVariableValue extends VariableValue
                 b.setSnapToTicks(true);   // like it should, we fake it here
             }
             b.setSize(b.getWidth(), 28);
-            Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-            labelTable.put(Integer.valueOf(0), new JLabel("0%"));
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+            labelTable.put(0, new JLabel("0%"));
             if (_maxVal == 63) {   // this if for the QSI mute level, not very universal, needs work
-                labelTable.put(Integer.valueOf(_maxVal / 2), new JLabel("25%"));
-                labelTable.put(Integer.valueOf(_maxVal), new JLabel("50%"));
+                labelTable.put(_maxVal / 2, new JLabel("25%"));
+                labelTable.put(_maxVal, new JLabel("50%"));
             } else {
-                labelTable.put(Integer.valueOf(_maxVal / 2), new JLabel("50%"));
-                labelTable.put(Integer.valueOf(_maxVal), new JLabel("100%"));
+                labelTable.put(_maxVal / 2, new JLabel("50%"));
+                labelTable.put(_maxVal, new JLabel("100%"));
             }
             b.setLabelTable(labelTable);
             b.setPaintTicks(true);
@@ -274,10 +274,10 @@ public class DecVariableValue extends VariableValue
         }
     }
 
-    ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
+    ArrayList<DecVarSlider> sliders = new ArrayList<>();
 
     /**
-     * Set a new value, including notification as needed.
+     * Set a new value in the variable (text box), including notification as needed.
      * <p>
      * This does the conversion from string to int, so it's the place where
      * formatting needs to be applied.
@@ -377,7 +377,7 @@ public class DecVariableValue extends VariableValue
             log.debug("Property changed: {}", e.getPropertyName());
         }
         if (e.getPropertyName().equals("Busy")) {
-            if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+            if (e.getNewValue().equals(Boolean.FALSE)) {
                 setToRead(false);
                 setToWrite(false);  // some programming operation just finished
                 setBusy(false);
@@ -400,7 +400,7 @@ public class DecVariableValue extends VariableValue
     }
 
     // stored value, read-only Value
-    JTextField _value = null;
+    JTextField _value;
 
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable

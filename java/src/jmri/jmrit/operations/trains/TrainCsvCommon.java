@@ -94,7 +94,7 @@ public class TrainCsvCommon extends TrainCommon {
                 car.getTrackName(),
                 car.getDestinationName(),
                 car.getDestinationTrackName(),
-                car.getOwner(),
+                car.getOwnerName(),
                 car.getKernelName(),
                 car.getComment(),
                 car.getPickupComment(),
@@ -125,7 +125,7 @@ public class TrainCsvCommon extends TrainCommon {
                 engine.getTrackName(),
                 engine.getDestinationName(),
                 engine.getDestinationTrackName(),
-                engine.getOwner(),
+                engine.getOwnerName(),
                 engine.getConsistName(),
                 engine.isLead() ? "Lead loco" : "", // NOI18N
                 engine.getComment(),

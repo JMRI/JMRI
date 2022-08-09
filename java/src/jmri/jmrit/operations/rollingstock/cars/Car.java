@@ -95,7 +95,7 @@ public class Car extends RollingStock {
         car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
         car.setReturnWhenLoadedLoadName(getReturnWhenLoadedLoadName());
         car.setNumber(getNumber());
-        car.setOwner(getOwner());
+        car.setOwnerName(getOwnerName());
         car.setRoadName(getRoadName());
         car.setTypeName(getTypeName());
         car.setCaboose(isCaboose());

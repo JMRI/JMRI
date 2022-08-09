@@ -3780,31 +3780,37 @@ public class LocoNetMessageInterpret {
          * LISSY is an automatic train detection system made by Uhlenbrock.
          * All documentation appears to be in German.
          */
-        switch (l.getElement(1)) {
-            case 0x08: // Format LISSY message
+        log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
+        switch (l.getElement(1)) {           
+            case 0x08: // Format LISSY message              
                 int unit = (l.getElement(4) & 0x7F);
-                int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                switch (l.getElement(2)) {
-                    case 0x00:
-                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                        // OPC_LISSY_REP
-                        return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
+                if ((l.getElement(3) & 0x40) != 0) { // Loco movement
+                    int category = l.getElement(2) + 1;
+                    int address = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                    return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_MOVEMENT",
+                          unit,
+                          Integer.toString(address),
+                          Integer.toString(category),
+                          ((l.getElement(3) & 0x20) == 0
+                          ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
+                          : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));  
+                } else { // other messages
+                    switch (l.getElement(2)) {
+                      case 0x00: // Loco speed
+                          int speed = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
+                          return Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_LOCO_SPEED",
+                                  unit,
+                                  Integer.toString(speed));
+
+                      case 0x01: // Block status
+                        return Bundle.getMessage("LN_MSG_LISSY_BLOCK_REPORT",
                                 unit,
-                                Integer.toString(address),
-                                ((l.getElement(3) & 0x20) == 0
-                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                    case 0x01:
-                        // Reverse-engineering note: interpretation of element 2 per wiki.rocrail.net
-                        // OPC_WHEELCNT_REP
-                        int wheelCount = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
-                        return Bundle.getMessage("LN_MSG_LISSY_WHEEL_REPORT_LOCO_MOVEMENT",
-                                unit, Integer.toString(wheelCount),
-                                ((l.getElement(3) & 0x20) == 0
-                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_NORTH")
-                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_DIRECTION_SOUTH")));
-                    default:
-                        break;
+                                ((l.getElement(6) & 0x01) == 0
+                                ? Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_FREE")
+                                : Bundle.getMessage("LN_MSG_LISSY_IR_REPORT_HELPER_BLOCK_OCCUPIED")));   
+                      default:
+                          break;
+                    }   
                 }
                 break;
 

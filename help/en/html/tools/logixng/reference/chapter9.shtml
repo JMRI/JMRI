@@ -225,6 +225,12 @@
             width="435" height="116"></a>
           </div>
         </li>
+        <li>Java<span class="since">since 5.1.3</span>
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_java.png"><img src=
+            "images/chapter9/functions_java.png" alt="Chapter 9 java functions"></a>
+          </div>
+        </li>
         <li>Layout<span class="since">since 4.25.8</span>
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_layout.png"><img src=

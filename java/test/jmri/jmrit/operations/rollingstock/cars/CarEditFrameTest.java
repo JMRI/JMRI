@@ -371,7 +371,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("car color", "Black", c6.getColor());
         Assert.assertEquals("car load", "L", c6.getLoadName());
         Assert.assertEquals("car built", "1999", c6.getBuilt());
-        Assert.assertEquals("car owner", "DAB", c6.getOwner());
+        Assert.assertEquals("car owner", "DAB", c6.getOwnerName());
         Assert.assertEquals("car comment", "test car comment field", c6.getComment());
 
         // test type default check boxes
@@ -1089,7 +1089,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = cManager.getByRoadAndNumber("CP", "777");
-        c1.setOwner("TEST_OWNER");
+        c1.setOwnerName("TEST_OWNER");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
@@ -1119,7 +1119,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
         Car c1 = cManager.getByRoadAndNumber("CP", "777");
-        c1.setOwner("TEST_OWNER");
+        c1.setOwnerName("TEST_OWNER");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();

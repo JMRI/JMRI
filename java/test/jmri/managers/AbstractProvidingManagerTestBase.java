@@ -25,16 +25,17 @@ import org.junit.jupiter.api.*;
 public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManager<E>, E extends NamedBean> extends AbstractManagerTestBase<T, E> {
 
     @Test
-    public void testProvideEmpty() throws IllegalArgumentException {
+    public void testProvideEmpty() {
         ProvidingManager<E> m = l;
-        Assert.assertThrows(IllegalArgumentException.class, () ->  m.provide(""));
+        Exception ex = Assert.assertThrows(IllegalArgumentException.class, () ->  m.provide(""));
+        Assertions.assertNotNull(ex);
         JUnitAppender.suppressErrorMessageStartsWith("Invalid system name for");
     }
 
     @jmri.util.junit.annotations.ToDo("Managers which cannot provide SystemName 1 or 2 "
-        + "should override so provide try / catch in called method can be removed")
+        + "should override so provide try / catch on IllegalArgumentException in called method can be removed")
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         ProvidingManager<E> m = l;
         String s1 = l.makeSystemName("1");
@@ -44,7 +45,7 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
 
     public void testRegisterDuplicateSystemName(ProvidingManager<E> m, String s1, String s2)
             throws PropertyVetoException, NoSuchFieldException,
-            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+            IllegalArgumentException, IllegalAccessException {
         Assert.assertNotNull(s1);
         Assert.assertFalse(s1.isEmpty());
         Assert.assertNotNull(s2);
@@ -57,15 +58,8 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
             e1 = m.provide(s1);
             e2 = m.provide(s2);
         } catch (
-                IllegalArgumentException |
-                com.pi4j.io.gpio.exception.GpioPinExistsException |
-                NullPointerException |
-                ArrayIndexOutOfBoundsException ex) {
-            // jmri.jmrix.pi.RaspberryPiTurnout(Providing)ManagerTest gives a GpioPinExistsException here.
-            // jmri.jmrix.openlcb.OlcbLightProvidingManagerTest gives a NullPointerException here.
-            // jmri.jmrix.openlcb.OlcbSensorProvidingManagerTest gives a ArrayIndexOutOfBoundsException here.
+                IllegalArgumentException  ex) {
             // Some other tests give an IllegalArgumentException here.
-
             // If the test is unable to provide a named bean, abort this test.
             JUnitAppender.clearBacklog(Level.WARN);
             log.debug("Cannot provide a named bean", ex);
