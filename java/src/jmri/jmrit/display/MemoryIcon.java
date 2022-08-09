@@ -393,8 +393,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     // this needs to be before Reportable
                     _icon = false;
                     _text = true;
-                    setText(((jmri.IdTag)val).getDisplayName());
                     setIcon(null);
+                    setText(((jmri.IdTag)val).getDisplayName());
                 } else if (val instanceof Reportable) {
                     _icon = false;
                     _text = true;
