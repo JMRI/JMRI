@@ -606,31 +606,87 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>Power Servo 4 on:</label>
             </variable>
 
-            <!-- TODO add CVs 47-64-->
+            <!-- TODO add CVs 47-58-->
+
+            <variable CV="6350.59" item="Delay 1" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr. 1/2:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr.: 1/2</label>
+              <label> Xing 1/2 Delay:</label>
+              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 an Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1+2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.60" item="Delay 2" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr. 3/4:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr. 3/4:</label>
+              <label> Xing 3/4 Delay:</label>
+              <tooltip>Input 3+4 delay to Servo 3 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 3+4 an Servo 3 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 3+4 naar Servo 3 (in secondes)</tooltip>
+            </variable>
+      <!--          TODO check this-->
+            <variable CV="6350.61" item="Delay 3" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
+              <label> Xing Delay:</label>
+              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.62" item="Delay 4" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
+              <label> Xing Delay:</label>
+              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.63" item="Delay 5" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
+              <label> Xing Delay:</label>
+              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
+            <variable CV="6350.64" item="Delay 6" default="5">
+              <decVal/>
+              <label xml:lang="de"> Verzögerung Andreaskr.:</label>
+              <label xml:lang="nl"> Vertraging Andreaskr.:</label>
+              <label> Xing Delay:</label>
+              <tooltip>Input 1+2 delay to Servo 1 (in seconds)</tooltip>
+              <tooltip xml:lang="de">Verzögerung von Eingang 1+2 nach Servo 1 (in Sekunden)</tooltip>
+              <tooltip xml:lang="nl">Vertraging Ingang 1_2 naar Servo 1 (in secondes)</tooltip>
+            </variable>
 
             <!--Operate servo 1-4 -->
-            <variable CV="6350.101" mask="VVVVVVVVVVVV" item="Move Servo 1" default="0">
+            <variable CV="6350.101" item="Move Servo 1" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
               <label xml:lang="de">Fahre Servo 1 in Position:</label>
               <label xml:lang="nl">Beweeg Servo 1 naar positie:</label>
               <label>Move Servo 1 to position:</label>
               <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
             </variable>
-            <variable CV="6350.102" mask="VVVVVVVVVVVV" item="Move Servo 2" default="0">
+            <variable CV="6350.102" item="Move Servo 2" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
               <label xml:lang="de">Fahre Servo 2 in Position:</label>
               <label xml:lang="nl">Beweeg Servo 2 naar positie:</label>
               <label>Move Servo 2 to position:</label>
               <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
             </variable>
-            <variable CV="6350.103" mask="VVVVVVVVVVVV" item="Move Servo 3" default="0">
+            <variable CV="6350.103" item="Move Servo 3" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
               <label xml:lang="de">Fahre Servo 3 in Position:</label>
               <label xml:lang="nl">Beweeg Servo 3 naar positie:</label>
               <label>Move Servo 3 to position:</label>
               <tooltip>To operate/test servo now. Click [Write] to execute</tooltip>
             </variable>
-            <variable CV="6350.104" mask="VVVVVVVVVVVV" item="Move Servo 4" default="0">
+            <variable CV="6350.104" item="Move Servo 4" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumServoPosition.xml"/>
               <label xml:lang="de">Fahre Servo 4 in Position:</label>
               <label xml:lang="nl">Beweeg Servo 4 naar positie:</label>
