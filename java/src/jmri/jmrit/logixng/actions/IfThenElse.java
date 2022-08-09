@@ -131,6 +131,8 @@ public class IfThenElse extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        boolean changed = false;
+
         for (int i=0; i < _expressionEntries.size(); i++) {
             ExpressionEntry entry = _expressionEntries.get(i);
             boolean result = entry._socket.evaluate();
@@ -138,6 +140,8 @@ public class IfThenElse extends AbstractDigitalAction
 
             // _lastExpressionResult may be Unknown
             if ((_type == Type.AlwaysExecute) || (_expressionResult != entry._lastExpressionResult)) {
+                changed = true;
+
                 // Last expression result must be stored as a tri state value, since
                 // we must know if the old value is known or not.
                 entry._lastExpressionResult = _expressionResult;
@@ -150,8 +154,9 @@ public class IfThenElse extends AbstractDigitalAction
         }
 
         // If here, all expressions where false
-        _actionEntries.get(_actionEntries.size()-1)._socket.execute();
-
+        if (changed) {
+            _actionEntries.get(_actionEntries.size()-1)._socket.execute();
+        }
     }
 
     /**
