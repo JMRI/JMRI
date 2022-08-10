@@ -122,7 +122,7 @@
         <defaultItem default="27" include="27"/>
         <decVal/>
         <label>Manufacturer Version No: </label>
-        <label xml:lang="cs">Verze dekodéru: </label>
+        <label xml:lang="cs">Verze dekodéru </label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoderversion: </label>
@@ -131,7 +131,7 @@
       <variable CV="8" readOnly="yes" item="Manufacturer" default="99">
         <decVal/>
         <label>Manufacturer ID: </label>
-        <label xml:lang="cs">ID výrobce: </label>
+        <label xml:lang="cs">ID výrobce </label>
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
@@ -670,13 +670,13 @@
         <decVal min="0" max="255"/>
         <label>Motor timeout on loss of DCC</label>
         <label xml:lang="ca">Timeout del Motor per manca de DCC</label>
-        <label xml:lang="cs">Timeout motoru při ztrátě DCC</label>
+        <label xml:lang="cs">Časový limit motoru při ztrátě DCC</label>
         <label xml:lang="de">Motorabschaltung bei nicht vorhandenem DCC-Signal.</label>
         <label xml:lang="it">Timeout Motore per mancanza di DCC</label>
         <label xml:lang="nl">Motoruitschakeling bij niet aanwezige DCC signaal.</label>
         <tooltip>"Duration of motor timeout t = value * 16 ms"</tooltip>
         <tooltip xml:lang="ca">Timeout del motor t = Valor * 16 ms</tooltip>
-        <tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
+        <tooltip xml:lang="cs">Časový limit motoru t = hodnota * 16 ms</tooltip>
         <tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
         <tooltip xml:lang="nl">Motor Timeout t = Wert * 16 ms</tooltip>
         <comment>Range 0-255</comment>

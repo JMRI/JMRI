@@ -464,9 +464,11 @@
       <enumVal> <!-- copy in for special value-->
         <enumChoice choice="No">
           <choice>No</choice>
+          <choice xml:lang="cs">Ne</choice>
         </enumChoice>
         <enumChoice choice="Yes" value="255" >    <!--  -->
           <choice>Yes</choice>
+          <choice xml:lang="cs">Ano</choice>
         </enumChoice>
     </enumVal>
     <label>Hibeam</label>

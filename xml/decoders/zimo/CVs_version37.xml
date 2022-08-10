@@ -288,7 +288,7 @@
     <decVal max="4"/>
     <label>Switch-over parameters for driving solo</label>
     <label xml:lang="de">Verhaltensdefinition für Lokfahrt</label>
-    <label xml:lang="cs">Parametry přepínání pro jízdu sólo</label>
+    <label xml:lang="cs">Parametry přepínání pro strojovou jízdu</label>
       <tooltip> </tooltip>
       <tooltip xml:lang="de">Auswahl der Maßnahmen, die bei Umschaltung auf Alleinfahrt getroffen werden sollen</tooltip>
       <tooltip xml:lang="cs">Výběr nastavení pro přepnutí do jízda sólo.</tooltip>
