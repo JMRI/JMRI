@@ -12,9 +12,9 @@ import java.util.*;
  */
 public class GpioPinDigitalInputSimulator implements GpioPinDigitalInput {
 
-    private final Pin pin;
+//    private final Pin pin;
     private String name;
-    private final PinPullResistance ppr;
+//    private final PinPullResistance ppr;
     private PinState pinState = PinState.LOW;
     private PinMode pinMode = PinMode.DIGITAL_INPUT;
     private PinPullResistance pinPullResistance = PinPullResistance.OFF;
@@ -22,9 +22,9 @@ public class GpioPinDigitalInputSimulator implements GpioPinDigitalInput {
     private final List<GpioPinListener> listeners = new ArrayList<>();
 
     public GpioPinDigitalInputSimulator(Pin pin, String string, PinPullResistance ppr) {
-        this.pin = pin;
+//        this.pin = pin;
         this.name = string;
-        this.ppr = ppr;
+//        this.ppr = ppr;
     }
 
     @Override
