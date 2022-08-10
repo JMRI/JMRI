@@ -127,6 +127,14 @@
             connect the Piko Digi-fern Remote Control to LocoNet.</li>
         </ul>
 
+        <h4>Raspberry Pi</h4>
+            <ul>
+                <li>A simulator is now added that simulates a Raspberry Pi.
+                The simulator is very simple and is mostly intended to be
+                able to load panels for a Raspberry Pi on a non Pi computer
+                like Windows.</li>
+            </ul>
+
         <h4>RFID</h4>
             <ul>
                 <li></li>
