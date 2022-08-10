@@ -311,6 +311,17 @@
         </li>
       </ul>
 
+      <p>The <strong><em>Type</em></strong> indicates the how the comparison process works.</p>
+
+      <ul>
+        <li><strong>Number or string</strong> &mdash; The comparison is based on the characteristics
+        of the objects.</li>
+        <li><strong>String</strong> &mdash; The comparison is based on the string values of the
+        objects.</li>
+        <li><strong>Number</strong> &mdash; The comparison is based on the numeric values of the
+        objects.  This can result in an exception if both values are not numbers.</li>
+      </ul>
+
       <p>For information about regular expressions, see:
       https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html</p>
 
@@ -353,6 +364,17 @@
 
         <li><strong>does not match regular expresson</strong>
         </li>
+      </ul>
+
+      <p>The <strong><em>Type</em></strong> indicates the how the comparison process works.</p>
+
+      <ul>
+        <li><strong>Number or string</strong> &mdash; The comparison is based on the characteristics
+        of the objects.</li>
+        <li><strong>String</strong> &mdash; The comparison is based on the string values of the
+        objects.</li>
+        <li><strong>Number</strong> &mdash; The comparison is based on the numeric values of the
+        objects.  This can result in an exception if both values are not numbers.</li>
       </ul>
 
       <p>For information about regular expressions, see:
