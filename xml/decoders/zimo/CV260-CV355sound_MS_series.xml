@@ -1315,9 +1315,11 @@
       </enumChoice>
     </enumVal>
     <label>Function key to raise diesel sound step</label>
+    <label xml:lang="cs">Funkční klávesa pro zvýšení zvuku stupně motoru</label>
   </variable>  
   <variable item="Diesel sound step" CV="340" tooltip="">
     <decVal min="0" max="10"/>
+    <label xml:lang="cs">Zvuk stupně motoru</label>
   </variable>    
   <variable item="Switch input 1 playback time" CV="341" default="0" include="208,210,214,215,221,222,224,227,230">
     <decVal min="0" max="255"/>

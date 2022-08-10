@@ -603,8 +603,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private boolean checkEngineRoad() {
         String road = (String) roadEngineBox.getSelectedItem();
-        String model = (String) modelEngineBox.getSelectedItem();
-        if (numEnginesBox.getSelectedItem().equals("0") || road.equals(NONE) || !model.equals(NONE)) {
+        if (numEnginesBox.getSelectedItem().equals("0") || road.equals(NONE)) {
             return true;
         }
         if (!road.equals(NONE) && !_train.isLocoRoadNameAccepted(road)) {
@@ -1009,14 +1008,20 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     private void updateRoadAndLoadStatus() {
         if (_train != null) {
             // road options
-            if (_train.getCarRoadOption().equals(Train.ALL_ROADS)) {
-                roadOptionButton.setText(Bundle.getMessage("AcceptAll"));
-            } else if (_train.getCarRoadOption().equals(Train.INCLUDE_ROADS)) {
+            if (_train.getCarRoadOption().equals(Train.INCLUDE_ROADS)) {
                 roadOptionButton.setText(Bundle.getMessage(
                         "AcceptOnly") + " " + _train.getCarRoadNames().length + " " + Bundle.getMessage("Roads"));
-            } else {
+            } else if (_train.getCarRoadOption().equals(Train.EXCLUDE_ROADS)) {
                 roadOptionButton.setText(Bundle.getMessage(
                         "Exclude") + " " + _train.getCarRoadNames().length + " " + Bundle.getMessage("Roads"));
+            } else if (_train.getLocoRoadOption().equals(Train.INCLUDE_ROADS)) {
+                roadOptionButton.setText(Bundle.getMessage(
+                        "AcceptOnly") + " " + _train.getLocoRoadNames().length + " " + Bundle.getMessage("Roads"));
+            } else if (_train.getLocoRoadOption().equals(Train.EXCLUDE_ROADS)) {
+                roadOptionButton.setText(Bundle.getMessage(
+                        "Exclude") + " " + _train.getLocoRoadNames().length + " " + Bundle.getMessage("Roads"));
+            } else {
+                roadOptionButton.setText(Bundle.getMessage("AcceptAll"));
             }
             // load options
             if (_train.getLoadOption().equals(Train.ALL_LOADS)) {
@@ -1028,7 +1033,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                 loadOptionButton.setText(Bundle.getMessage(
                         "Exclude") + " " + _train.getLoadNames().length + " " + Bundle.getMessage("Loads"));
             }
-            if (!_train.getCarRoadOption().equals(Train.ALL_ROADS) || !_train.getLoadOption().equals(Train.ALL_LOADS)) {
+            if (!_train.getCarRoadOption().equals(Train.ALL_ROADS) ||
+                    !_train.getLocoRoadOption().equals(Train.ALL_ROADS) ||
+                    !_train.getLoadOption().equals(Train.ALL_LOADS)) {
                 roadAndLoadStatusPanel.setVisible(true);
             }
         }

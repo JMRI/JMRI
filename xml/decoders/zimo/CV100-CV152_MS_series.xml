@@ -1511,14 +1511,17 @@
   <variable CV="147" default="0" item="EMF Option 3">
     <decVal min="0" max="255"/>
     <label>Integral Value of PID regulation</label>
+    <label xml:lang="cs">Hodnota Integrační složky PID regulátoru</label>
   </variable>
   <variable CV="148" default="0" item="EMF Option 4">
     <decVal min="0" max="255"/>
     <label>Differential value of PID regulation</label>
+    <label xml:lang="cs">Hodnota Derivační složky PID regulátoru</label>
   </variable>
   <variable CV="149" default="0" item="EMF Option 5">
     <decVal min="0" max="255"/>
     <label>Proportional value of PID regulation</label>
+    <label xml:lang="cs">Hodnota Proporcionální složky PID regulátoru</label>
   </variable>
 
   
