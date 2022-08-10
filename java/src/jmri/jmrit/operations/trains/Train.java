@@ -3901,7 +3901,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 log.error("Status cars requested ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
         }
-        if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.STATUS_CODE) == null) {
+        if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
+            try {
+                _statusCode = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
+        } else if ((a = e.getAttribute(Xml.STATUS)) != null) {
+            // attempt to recover status code
             String status = a.getValue();
             if (status.startsWith(BUILD_FAILED)) {
                 _statusCode = CODE_BUILD_FAILED;
@@ -3921,13 +3928,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 _statusCode = CODE_TRAIN_RESET;
             } else {
                 _statusCode = CODE_UNKNOWN;
-            }
-        }
-        if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
-            try {
-                _statusCode = Integer.parseInt(a.getValue());
-            } catch (NumberFormatException ee) {
-                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
         }
         if ((a = e.getAttribute(Xml.OLD_STATUS_CODE)) != null) {
