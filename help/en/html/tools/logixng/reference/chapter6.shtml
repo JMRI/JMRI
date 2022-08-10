@@ -319,7 +319,7 @@
         <li><strong>String</strong> &mdash; The comparison is based on the string values of the
         objects.</li>
         <li><strong>Number</strong> &mdash; The comparison is based on the numeric values of the
-        objects.  This can result in an exception if both values are not numbers.</li>
+        objects.  This can result in an exception if any of the values is not a number.</li>
       </ul>
 
       <p>For information about regular expressions, see:
@@ -374,7 +374,7 @@
         <li><strong>String</strong> &mdash; The comparison is based on the string values of the
         objects.</li>
         <li><strong>Number</strong> &mdash; The comparison is based on the numeric values of the
-        objects.  This can result in an exception if both values are not numbers.</li>
+        objects.  This can result in an exception if any of the values is not a number.</li>
       </ul>
 
       <p>For information about regular expressions, see:
