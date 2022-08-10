@@ -276,12 +276,12 @@ public class SplitVariableValue extends VariableValue
     int mOffset;
     String _name;
     String _mask; // full string as provided, use _maskArray to access one of multiple masks
-    String[] _maskArray = new String[0];
+    String[] _maskArray;
     String _cvNum;
 
     List<CvItem> cvList;
 
-    int cvCount = 0;
+    int cvCount;
     int currentOffset = 0;
 
     @Override
@@ -327,7 +327,13 @@ public class SplitVariableValue extends VariableValue
         }
 
         // calculate resulting number
-        long newVal = (newEntry - mOffset) / mFactor;
+        long newVal = newEntry - mOffset;
+        // long newVal = Math.max(newEntry - mOffset, 0); // prevent negative values, especially in tests outside UI
+        if (mFactor != 0) {
+            newVal = newVal / mFactor;
+        } else {
+            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
+        }
         log.debug("Variable={};newEntry={};newVal={} with Offset={} + Factor={} applied", _name, newEntry, newVal, mOffset, mFactor);
 
         int[] retVals = new int[cvCount];
@@ -550,7 +556,7 @@ public class SplitVariableValue extends VariableValue
     void setColor(Color c) {
         if (c != null) {
             _textField.setBackground(c);
-            log.debug("Variable={}; Set Color to {}", _name, c.toString());
+            log.debug("Variable={}; Set Color to {}", _name, c);
         } else {
             log.debug("Variable={}; Set Color to defaultColor {}", _name, _defaultColor.toString());
             _textField.setBackground(_defaultColor);
@@ -682,7 +688,7 @@ public class SplitVariableValue extends VariableValue
         _progState = WRITING_FIRST;
         log.debug("Variable={}; Start CV write", _name);
         log.debug("Writing CV={}", cvList.get(0).cvName);
-        (cvList.get(0).thisCV).write(_status); // kick off the write sequence
+        (cvList.get(0).thisCV).write(_status); // kick off the write-sequence
     }
 
     /**
@@ -718,7 +724,7 @@ public class SplitVariableValue extends VariableValue
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("Variable={} source={}; property {} changed from {} to {}", _name, e.getSource().toString(), e.getPropertyName(), e.getOldValue(),e.getNewValue());
         // notification from CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
+        if (e.getPropertyName().equals("Busy") && e.getNewValue().equals(Boolean.FALSE)) {
             // busy transitions drive the state
             if (_progState != IDLE) {
                 log.debug("Variable={} source={}; getState() = {}", _name, e.getSource().toString(), (cvList.get(Math.abs(_progState) - 1).thisCV).getState());
@@ -781,7 +787,7 @@ public class SplitVariableValue extends VariableValue
                 if (i == 0) {
                     varState = state;
                 } else if (priorityValue(state) > priorityValue(varState)) {
-                    varState = AbstractValue.UNKNOWN; // or should it be = state ?
+                    //varState = AbstractValue.UNKNOWN; // or should it be = state ?
                     varState = state; // or should it be = state ?
                 }
             }
@@ -812,7 +818,7 @@ public class SplitVariableValue extends VariableValue
     }
 
     // stored reference to the JTextField
-    JTextField _textField = null;
+    JTextField _textField;
 
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
@@ -828,12 +834,7 @@ public class SplitVariableValue extends VariableValue
             // get the original color right
             setBackground(_var._textField.getBackground());
             // listen for changes to ourself
-            addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    thisActionPerformed(e);
-                }
-            });
+            addActionListener(this::thisActionPerformed);
             addFocusListener(new java.awt.event.FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -848,12 +849,7 @@ public class SplitVariableValue extends VariableValue
                 }
             });
             // listen for changes to original state
-            _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    originalPropertyChanged(e);
-                }
-            });
+            _var.addPropertyChangeListener(this::originalPropertyChanged);
         }
 
         SplitVariableValue _var;
