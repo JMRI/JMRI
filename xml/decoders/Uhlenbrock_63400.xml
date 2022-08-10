@@ -779,7 +779,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Lamp 9 Off Address (1-2048)</tooltip>
             </variable>
 
-            <!--          TODO add Start Key-Finish Key functions - LNCV 100 bis 199 -->
+            <!--          TODO add Start Key-Finish Key functions - LNCV 100 to 199 -->
 
            </variables>
       </decoder>
