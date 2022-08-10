@@ -1566,13 +1566,13 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
-                            new Object[] { car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
+                            new Object[] { car.toString(), car.getTrack().getTrackTypeName(), car.getTrackName(),
                                     car.getTrack().getServiceOrder(), car.getLastDate() }));
             Car bestCar = car;
             for (int i = _carIndex + 1; i < _carList.size(); i++) {
                 Car testCar = _carList.get(i);
                 if (testCar.getTrack() == car.getTrack()) {
-                    log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackType(), testCar.toString(),
+                    log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackTypeName(), testCar.toString(),
                             testCar.getLastDate()); // NOI18N
                     if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
                         if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate()) &&
@@ -1592,7 +1592,7 @@ public class TrainBuilderBase extends TrainCommon {
             if (car != bestCar) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildTrackModeCarPriority"),
-                                new Object[] { car.getTrack().getTrackType(), car.getTrackName(),
+                                new Object[] { car.getTrack().getTrackTypeName(), car.getTrackName(),
                                         car.getTrack().getServiceOrder(), bestCar.toString(), bestCar.getLastDate(),
                                         car.toString(), car.getLastDate() }));
                 _carList.remove(bestCar); // change sort
@@ -2651,7 +2651,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (!car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildTrackModePriority"),
-                            new Object[] { car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
+                            new Object[] { car.toString(), car.getTrack().getTrackTypeName(), car.getTrackName(),
                                     car.getTrack().getServiceOrder(), car.getLastDate() }));
         }
     }
