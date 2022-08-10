@@ -973,6 +973,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -1072,6 +1073,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>Equal</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4661,6 +4663,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>Equal</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4757,6 +4760,7 @@
       </memoryNamedBean>
       <compareTo>Value</compareTo>
       <variableOperation>GreaterThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>yes</caseInsensitive>
       <constant>10</constant>
       <regEx />
@@ -4855,6 +4859,7 @@
       </memoryNamedBean>
       <compareTo>Memory</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -4965,6 +4970,7 @@
       </memoryNamedBean>
       <compareTo>LocalVariable</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5075,6 +5081,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5185,6 +5192,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5295,6 +5303,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5405,6 +5414,7 @@
       </memoryNamedBean>
       <compareTo>Table</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5515,6 +5525,7 @@
       </memoryNamedBean>
       <compareTo>RegEx</compareTo>
       <variableOperation>LessThan</variableOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx>/^Test$/</regEx>
@@ -5626,6 +5637,7 @@
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5727,6 +5739,7 @@
       <variable />
       <compareTo>Value</compareTo>
       <memoryOperation>LessThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant>10</constant>
       <regEx />
@@ -5829,6 +5842,7 @@
       <variable />
       <compareTo>Memory</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -5943,6 +5957,7 @@
       <variable />
       <compareTo>Table</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -6057,6 +6072,7 @@
       <variable>MyVar</variable>
       <compareTo>LocalVariable</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx />
@@ -6171,6 +6187,7 @@
       <variable />
       <compareTo>RegEx</compareTo>
       <memoryOperation>GreaterThan</memoryOperation>
+      <compareType>NumberOrString</compareType>
       <caseInsensitive>no</caseInsensitive>
       <constant />
       <regEx>/^Hello$/</regEx>
@@ -18642,6 +18659,7 @@
       <variableOperation>SetToString</variableOperation>
       <constant />
       <otherVariable />
+      <reference />
       <formula />
       <table>
         <tableName>
@@ -18749,6 +18767,7 @@
       <variableOperation>CalculateFormula</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -18858,6 +18877,7 @@
       <variableOperation>CopyMemoryToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -18967,6 +18987,7 @@
       <variableOperation>CopyBlockToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19076,6 +19097,7 @@
       <variableOperation>CopyReporterToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19183,6 +19205,7 @@
       <variableOperation>CopyVariableToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19304,6 +19327,7 @@
       <variableOperation>CopyTableCellToVariable</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19423,6 +19447,7 @@
       <variableOperation>SetToNull</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -19542,6 +19567,7 @@
       <variableOperation>SetToString</variableOperation>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
+      <reference />
       <formula>a+b</formula>
       <table>
         <tableName>
@@ -29906,15 +29932,19 @@
     </For>
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
       <systemName>IQDA:AUTO:0196</systemName>
-      <IfSocket>
-        <socketName>gar6tbjl2s</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>w5u712cnzw</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>t3ga6iwyju</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>gar6tbjl2s</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>w5u712cnzw</socketName>
+        </Socket>
+        <Socket>
+          <socketName>t3ga6iwyju</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -29990,15 +30020,19 @@
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
       <systemName>IQDA:AUTO:0197</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>w166rlk52a</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>yw8m1pcmnn</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>ie3vivqew6</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>w166rlk52a</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>yw8m1pcmnn</socketName>
+        </Socket>
+        <Socket>
+          <socketName>ie3vivqew6</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -30074,15 +30108,19 @@
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="AlwaysExecute">
       <systemName>IQDA:AUTO:0198</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>mxgcnbjq5v</socketName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>h69jag1em1</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>ww2jevw81g</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>mxgcnbjq5v</socketName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>h69jag1em1</socketName>
+        </Socket>
+        <Socket>
+          <socketName>ww2jevw81g</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -33711,16 +33749,20 @@
     <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
       <systemName>IQDA:AUTO:0240</systemName>
       <comment>A comment</comment>
-      <IfSocket>
-        <socketName>btjn8h4ya6</socketName>
-        <systemName>IQDE:AUTO:0011</systemName>
-      </IfSocket>
-      <ThenSocket>
-        <socketName>xpsgb9y5g6</socketName>
-      </ThenSocket>
-      <ElseSocket>
-        <socketName>ja6wjipcjv</socketName>
-      </ElseSocket>
+      <Expressions>
+        <Socket>
+          <socketName>btjn8h4ya6</socketName>
+          <systemName>IQDE:AUTO:0011</systemName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>xpsgb9y5g6</socketName>
+        </Socket>
+        <Socket>
+          <socketName>ja6wjipcjv</socketName>
+        </Socket>
+      </Actions>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -37551,14 +37593,14 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Sat Jul 23 02:28:05 CEST 2022</date>
+      <date>Sun Aug 07 01:54:04 CEST 2022</date>
       <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.5.1.3.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Jul 23 02:28:05 CEST 2022</date>
+      <date>Sun Aug 07 01:54:04 CEST 2022</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.1.2plus+daniel+2022-07-23T00:27:15Z+Rc908e08 on Sat Jul 23 02:28:05 CEST 2022-->
+  <!--Written by JMRI version 5.1.2plus+daniel+2022-08-06T23:53:23Z+R7533a8a on Sun Aug 07 01:54:04 CEST 2022-->
 </layout-config>

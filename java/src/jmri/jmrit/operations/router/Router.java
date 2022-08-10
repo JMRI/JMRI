@@ -1167,7 +1167,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 continue; // track doesn't accept this car
             }
             if (debugFlag) {
-                log.debug("Found {} track ({}, {}) for car ({})", track.getTrackType(), track.getLocation().getName(),
+                log.debug("Found {} track ({}, {}) for car ({})", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), car);
             }
             // test to see if there's a train that can deliver the car to this
@@ -1197,7 +1197,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             if (train != null) {
                 if (debugFlag) {
                     log.debug("Train ({}) can service car ({}) from {} ({}, {}) to destination ({}, {})",
-                            train.getName(), car, track.getTrackType(), testCar.getLocationName(),
+                            train.getName(), car, track.getTrackTypeName(), testCar.getLocationName(),
                             testCar.getTrackName(), testCar.getDestinationName(), testCar.getDestinationTrackName());
                 }
                 _nextLocationTracks.add(track);

@@ -472,6 +472,15 @@
           <li>The action <i>Listen On Beans - Local variable</i> has been
           added. It can be used together with the <i>For each</i> action
           to listen to all beans of a manager.</li>
+          <li>The expressions <i>Local Variable</i> and <i>Memory</i> now
+          have the choice "Type" which allows you to select whenether the
+          data should be treated as a number or a string. If "Number" is
+          choosen, it's required that both operands are numbers. Otherwise
+          an exception will occur.</li>
+          <li>The action <i>Local Variable</i> can now copy the value of a
+          reference.</li>
+          <li>The action <i>If Then Else</i> now supports <i>Else_If</i>
+          statements.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
