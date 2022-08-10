@@ -1651,7 +1651,7 @@ public class TreeEditor extends TreeViewer {
                                         JOptionPane.ERROR_MESSAGE);
                             }
                             ThreadingUtil.runOnGUIEventually(() -> {
-                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                                maleSocket.forEntireTree((Base b) -> {
                                     b.removePropertyChangeListener(_treePane);
                                     if (_clipboardEditor != null) {
                                         b.addPropertyChangeListener(_clipboardEditor._treePane);
@@ -1679,10 +1679,14 @@ public class TreeEditor extends TreeViewer {
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             Map<String, String> systemNames = new HashMap<>();
                             Map<String, String> userNames = new HashMap<>();
+                            MaleSocket maleSocket = null;
                             try {
+                                maleSocket = (MaleSocket) _currentFemaleSocket
+                                        .getConnectedSocket()
+                                        .getDeepCopy(systemNames, userNames);
                                 List<String> errors = new ArrayList<>();
                                 if (!clipboard.add(
-                                        (MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames),
+                                        maleSocket,
                                         errors)) {
                                     JOptionPane.showMessageDialog(this,
                                             String.join("<br>", errors),
@@ -1698,14 +1702,16 @@ public class TreeEditor extends TreeViewer {
                                             JOptionPane.ERROR_MESSAGE);
                                 });
                             }
-                            ThreadingUtil.runOnGUIEventually(() -> {
-                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
-                                    b.removePropertyChangeListener(_treePane);
-                                    if (_clipboardEditor != null) {
-                                        b.addPropertyChangeListener(_clipboardEditor._treePane);
-                                    }
+                            if (maleSocket != null) {
+                                MaleSocket socket = maleSocket;
+                                ThreadingUtil.runOnGUIEventually(() -> {
+                                    socket.forEntireTree((Base b) -> {
+                                        if (_clipboardEditor != null) {
+                                            b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                        }
+                                    });
                                 });
-                            });
+                            }
                         });
 
                         _treePane._femaleRootSocket.registerListeners();

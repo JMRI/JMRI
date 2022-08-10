@@ -96,11 +96,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
-        expression.setIfExpressionSocketSystemName("IQDE52");
+        expression.setExpressionSocketSystemName(0, "IQDE52");
         expression.getChild(1).setName("ZH12");
-        expression.setThenActionSocketSystemName("IQDA554");
+        expression.setActionSocketSystemName(0, "IQDA554");
         expression.getChild(2).setName("Bj23");
-        expression.setElseActionSocketSystemName("IQDA594");
+        expression.setActionSocketSystemName(1, "IQDA594");
 
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
@@ -169,11 +169,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
-        expression.setIfExpressionSocketSystemName(null);
+        expression.setExpressionSocketSystemName(0, null);
         expression.getChild(1).setName("ZH12");
-        expression.setThenActionSocketSystemName(null);
+        expression.setActionSocketSystemName(0, null);
         expression.getChild(2).setName("Bj23");
-        expression.setElseActionSocketSystemName(null);
+        expression.setActionSocketSystemName(1, null);
 
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());
@@ -245,11 +245,11 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 3 female sockets", 3, expression.getChildCount());
         expression.getChild(0).setName("XYZ123");
-        expression.setIfExpressionSocketSystemName("IQDE52");
+        expression.setExpressionSocketSystemName(0, "IQDE52");
         expression.getChild(1).setName("ZH12");
-        expression.setThenActionSocketSystemName("IQDA554");
+        expression.setActionSocketSystemName(0, "IQDA554");
         expression.getChild(2).setName("Bj23");
-        expression.setElseActionSocketSystemName("IQDA594");
+        expression.setActionSocketSystemName(1, "IQDA594");
 
         Assert.assertEquals("expression female socket name is XYZ123",
                 "XYZ123", expression.getChild(0).getName());

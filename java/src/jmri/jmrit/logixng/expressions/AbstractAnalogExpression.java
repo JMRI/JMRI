@@ -22,7 +22,7 @@ public abstract class AbstractAnalogExpression extends AbstractBase
     public AbstractAnalogExpression(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        
+
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(AnalogExpressionManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
@@ -58,38 +58,38 @@ public abstract class AbstractAnalogExpression extends AbstractBase
         log.warn("Unexpected call to getState in AbstractAnalogExpression.");  // NOI18N
         return _state;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setTriggerOnChange(boolean triggerOnChange) {
         _triggerOnChange = triggerOnChange;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean getTriggerOnChange() {
         return _triggerOnChange;
     }
-    
+
     public String getNewSocketName() {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
+            String name = "E" + Integer.toString(x);
             boolean validName = true;
             for (int i=0; i < getChildCount(); i++) {
-                String name = "E" + Integer.toString(x);
                 if (name.equals(getChild(i).getName())) {
                     validName = false;
                     break;
                 }
             }
             if (validName) {
-                return "E" + Integer.toString(x);
+                return name;
             }
             x++;
         }
         throw new RuntimeException("Unable to find a new socket name");
     }
-    
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAnalogExpression.class);
 }
