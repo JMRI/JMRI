@@ -79,9 +79,10 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         // add forwarder for internal JMRI traffic
         hub.addForwarder(m -> {
             if (m.source == null) {
-                log.trace("not forwarding back to JMRI due to null source", m);
+                log.trace("not forwarding {} back to JMRI due to null source", m.line);
                 return;  // was from this
-            }                // process and forward m.line
+            }
+            // process and forward m.line
             GridConnectReply msg = new GridConnectReply();
             byte[] bytes;
             bytes = m.line.getBytes(StandardCharsets.US_ASCII);  // GC adapters use ASCII // NOI18N
