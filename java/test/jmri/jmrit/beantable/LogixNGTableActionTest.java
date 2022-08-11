@@ -149,7 +149,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JFrameOperator editConditionalNGFrameOperator = new JFrameOperator("Edit ConditionalNG " + logixNG.getConditionalNG(0));
         new JMenuBarOperator(editConditionalNGFrameOperator).pushMenu("File|Close Window", "|");
         editConditionalNGFrameOperator.waitClosed();
-        
+
         JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonDone"));
         jf.requestClose();
         jf.waitClosed();
@@ -580,7 +580,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         // First, we get a dialog that lets us select which action to add
         JDialogOperator addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
-        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.COMMON);
+        new JComboBoxOperator(addItemDialog, 0).setSelectedItem(Category.FLOW_CONTROL);
         new JComboBoxOperator(addItemDialog, 1).selectItem("If then else");
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
