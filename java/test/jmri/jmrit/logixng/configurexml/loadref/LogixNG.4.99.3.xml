@@ -296,7 +296,7 @@
     </CsvTable>
   </LogixNGTables>
   <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0001</systemName>
       <comment>Start expression</comment>
       <Expressions>
@@ -361,7 +361,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0002</systemName>
       <comment>Stop expression</comment>
       <Expressions>
@@ -426,7 +426,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0003</systemName>
       <comment>Start expression</comment>
       <Expressions>
@@ -491,7 +491,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0004</systemName>
       <comment>Stop expression</comment>
       <Expressions>
@@ -556,7 +556,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0005</systemName>
       <comment>Reset expression</comment>
       <Expressions>
@@ -621,7 +621,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0006</systemName>
       <comment>Expression socket 1</comment>
       <Expressions>
@@ -686,7 +686,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0007</systemName>
       <comment>Expression socket 2</comment>
       <Expressions>
@@ -751,7 +751,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0008</systemName>
       <Expressions>
         <Socket>
@@ -985,7 +985,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </ExpressionMemory>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0011</systemName>
       <Expressions>
         <Socket>
@@ -1053,7 +1053,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </And>
-    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+    <And class="jmri.jmrit.logixng.expressions.configurexml.AndXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0012</systemName>
       <comment>A comment</comment>
       <Expressions>
@@ -8692,7 +8692,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Not>
-    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0110</systemName>
       <Expressions>
         <Socket>
@@ -8756,7 +8756,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </Or>
-    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+    <Or class="jmri.jmrit.logixng.expressions.configurexml.OrXml" type="EvaluateAll">
       <systemName>IQDE:AUTO:0111</systemName>
       <comment>A comment</comment>
       <Expressions>
