@@ -481,6 +481,13 @@
           reference.</li>
           <li>The action <i>If Then Else</i> now supports <i>Else_If</i>
           statements.</li>
+          <li>The new category <i>Flow Control</i> is added. The actions
+          <i>Call Module</i>, <i>For</i>, <i>For Each</i>, <i>Table: For
+          Each</i> and <i>Sequence</i> are moved to this category, as well
+          as the expression <i>Call Module</i>.</li>
+          <li>The actions <i>Break</i>, <i>Continue</i>, <i>Error</i>,
+          <i>Exit</i> and <i>Return</i> have been added to the <i>Flow
+          Control</i> category.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

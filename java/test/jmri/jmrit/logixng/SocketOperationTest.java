@@ -131,12 +131,25 @@ public class SocketOperationTest {
         int count = 0;
         List<Class<? extends Base>> categoryList = null;
 
-        while (count++ < 50 && (categoryList == null || categoryList.isEmpty())) {
+        Set<Category> categorySet = new HashSet<>();
+        while (count++ < 200 && (categoryList == null || categoryList.isEmpty())) {
             Category category = Category.values().get(JUnitUtil.getRandom().nextInt(Category.values().size()));
             categoryList = connectableClasses.get(category);
+            categorySet.add(category);
         }
 
         Assert.assertNotNull(categoryList);
+
+        if (categoryList.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (Category c : categorySet) {
+                sb.append(c.name());
+                sb.append(", ");
+            }
+            log.error("Item: {}, child: {}, Category: {}", child.getParent().getLongDescription(), child.getName(), sb.toString());
+        }
+
+
         Assert.assertFalse(categoryList.isEmpty());
 
         Class<? extends Base> clazz = categoryList.get(JUnitUtil.getRandom().nextInt(categoryList.size()));
@@ -177,6 +190,6 @@ public class SocketOperationTest {
         CreateLogixNGTreeScaffold.tearDown();
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeepCopyTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DeepCopyTest.class);
 
 }
