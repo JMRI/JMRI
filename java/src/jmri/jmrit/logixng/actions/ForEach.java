@@ -199,7 +199,13 @@ public class ForEach extends AbstractDigitalAction
 
         for (Object o : collectionRef.get()) {
             symbolTable.setValue(_variableName, o);
-            _socket.execute();
+            try {
+                _socket.execute();
+            } catch (BreakException e) {
+                break;
+            } catch (ContinueException e) {
+                // Do nothing, just catch it.
+            }
         }
     }
 

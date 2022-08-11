@@ -122,7 +122,11 @@ public class DigitalCallModule extends AbstractDigitalAction
         newSymbolTable.createSymbols(module.getLocalVariables());
         conditionalNG.setSymbolTable(newSymbolTable);
 
-        ((FemaleDigitalActionSocket)femaleSocket).execute();
+        try {
+            ((FemaleDigitalActionSocket)femaleSocket).execute();
+        } catch (ReturnException e) {
+            // Do nothing
+        }
 
         returnSymbols(newSymbolTable, _parameterData);
 

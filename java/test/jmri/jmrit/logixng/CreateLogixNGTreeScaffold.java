@@ -2469,6 +2469,44 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        Break breakAction = new Break(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(breakAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        Continue continueAction = new Continue(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(continueAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrit.logixng.actions.Error errorAction =
+                new jmri.jmrit.logixng.actions.Error(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(errorAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        errorAction = new jmri.jmrit.logixng.actions.Error(digitalActionManager.getAutoSystemName(), null);
+        errorAction.setMessage("Some error has occurred");
+        maleSocket = digitalActionManager.registerAction(errorAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        Exit exitAction = new Exit(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(exitAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        Return returnAction = new Return(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(returnAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         Sequence sequence =
                 new Sequence(digitalActionManager.getAutoSystemName(), null);
         sequence.setRunContinuously(false);
