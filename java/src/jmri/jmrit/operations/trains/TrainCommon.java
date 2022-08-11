@@ -1421,7 +1421,6 @@ public class TrainCommon {
             }
             return "";
         } else if (attribute.equals(Setup.FINAL_DEST)) {
-            if (!car.getFinalDestinationName().equals(Car.NONE)) {
                 return Setup.isPrintHeadersEnabled()
                         ? SPACE +
                                 padAndTruncateIfNeeded(splitString(car.getFinalDestinationName()),
@@ -1434,8 +1433,6 @@ public class TrainCommon {
                                         locationManager.getMaxLocationNameLength() +
                                                 TrainManifestText.getStringFinalDestination().length() +
                                                 1);
-            }
-            return "";
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
             if (!car.getFinalDestinationName().equals(Car.NONE)) {
                 return Setup.isPrintHeadersEnabled()
@@ -1488,19 +1485,16 @@ public class TrainCommon {
                                 InstanceManager.getDefault(CarColors.class).getMaxNameLength());
             } else if (((attribute.equals(Setup.LOCATION)) && (isPickup || isLocal)) ||
                     (attribute.equals(Setup.TRACK) && isPickup)) {
-                if (rs.getTrack() != null) {
-                    return Setup.isPrintHeadersEnabled()
-                            ? SPACE +
-                                    padAndTruncateIfNeeded(splitString(rs.getTrackName()),
-                                            locationManager.getMaxTrackNameLength())
-                            : SPACE +
-                                    padAndTruncateIfNeeded(
-                                            TrainManifestText.getStringFrom() + SPACE + splitString(rs.getTrackName()),
-                                            TrainManifestText.getStringFrom().length() +
-                                                    locationManager.getMaxTrackNameLength() +
-                                                    1);
-                }
-                return "";
+                return Setup.isPrintHeadersEnabled()
+                        ? SPACE +
+                                padAndTruncateIfNeeded(splitString(rs.getTrackName()),
+                                        locationManager.getMaxTrackNameLength())
+                        : SPACE +
+                                padAndTruncateIfNeeded(
+                                        TrainManifestText.getStringFrom() + SPACE + splitString(rs.getTrackName()),
+                                        TrainManifestText.getStringFrom().length() +
+                                                locationManager.getMaxTrackNameLength() +
+                                                1);
             } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {
                 return Setup.isPrintHeadersEnabled()
                         ? SPACE +
@@ -1513,8 +1507,6 @@ public class TrainCommon {
                                                 TrainManifestText.getStringFrom().length() +
                                                 1);
             } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
-                if (rs.getDestination() == null)
-                    return "";
                 if (Setup.isPrintHeadersEnabled()) {
                     return SPACE +
                             padAndTruncateIfNeeded(splitString(rs.getDestinationName()),
