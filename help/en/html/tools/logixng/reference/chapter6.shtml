@@ -19,6 +19,10 @@
 
       <p>The expression descriptions are grouped by the socket type and category.</p>
 
+      <p class="noted"><span class="since">since 5.1.3</span>The <strong>Call Module</strong>
+      expression has been moved from the <strong><em>Other</em></strong> category to the <strong><em>
+      Flow Control</em></strong> category.</p>
+
       <ul>
         <li>Digital expression
           <ul>
@@ -28,6 +32,10 @@
 
             <li>
               <a href="#digital_expression_common">Common</a>
+            </li>
+
+            <li>
+              <a href="#digital_expression_flow_control">Flow Control <span class="since">since 5.1.3</span></a>
             </li>
 
             <li>
@@ -644,6 +652,24 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h3 id="digital_expression_flow_control">Digital expression :: Flow Control
+      <span class="since">since 5.1.3</span></h3>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/digital_expression_flow_control.png"><img src=
+        "images/chapter6/digital_expression_flow_control.png"
+        alt="Chapter 6 expression flow control list"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5>Call module</h5>
+
+      <p>Call a module and and return its true/false response. See <a href=
+      "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="digital_expression_loconet">Digital expression :: LocoNet</h3>
 
       <div style="margin-left: 2em;">
@@ -685,13 +711,6 @@
 
       <p>The True expression always answers <strong>true</strong>. This expression is commonly used
       as a child to the Trigger Once expression.</p>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <h5>Call module</h5>
-
-      <p>Call a module and and return its true/false response. See <a href=
-      "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
