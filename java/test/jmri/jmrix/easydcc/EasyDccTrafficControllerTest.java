@@ -34,6 +34,7 @@ public class EasyDccTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
 
         // object to receive reply
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
+        Assert.assertNull(l.rcvdMsg);
         c.addEasyDccListener(l);
 
         // send a message
