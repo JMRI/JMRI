@@ -64,7 +64,7 @@ public class TableForEach extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return Category.FLOW_CONTROL;
     }
 
     private String getNewRowOrColumnName() throws JmriException {

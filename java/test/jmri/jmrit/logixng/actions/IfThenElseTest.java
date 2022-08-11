@@ -343,7 +343,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        Assert.assertTrue("Category matches", Category.FLOW_CONTROL == _base.getCategory());
     }
 
     // The minimal setup for log4J

@@ -43,7 +43,7 @@ public class Error extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.FLOW_CONTROL;
     }
 
     /** {@inheritDoc} */
