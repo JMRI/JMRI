@@ -481,6 +481,9 @@
           reference.</li>
           <li>The action <i>If Then Else</i> now supports <i>Else_If</i>
           statements.</li>
+          <li>The actions <i>Break</i>, <i>Continue</i>, <i>Error</i>,
+          <i>Exit</i> and <i>Return</i> have been added to the Other
+          category.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
