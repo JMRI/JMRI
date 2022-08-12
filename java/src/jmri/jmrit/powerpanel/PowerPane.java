@@ -30,8 +30,8 @@ public class PowerPane extends jmri.util.swing.JmriPanel
 
     // GUI member declarations
     protected JLabel onOffStatus = new JLabel(Bundle.getMessage("LabelUnknown"));
-    JButton onButton = new JButton(Bundle.getMessage("ButtonOn"));
-    JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
+    protected JButton onButton = new JButton(Bundle.getMessage("ButtonOn"));
+    protected JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
     JButton idleButton = new JButton(Bundle.getMessage("ButtonIdle"));
 
     protected NamedIcon onIcon = new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;

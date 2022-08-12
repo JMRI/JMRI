@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+import static jmri.PowerManager.PROGPOWER;
 import jmri.jmrit.powerpanel.PowerPane;
 
 import org.slf4j.Logger;
@@ -53,6 +54,15 @@ public class CbusProgPowerPane extends PowerPane {
     @Override
     protected void setPower(int mode) throws JmriException {
         selectMenu.getManager().setProgTrackPower(mode);
+    }
+    
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent ev) {
+        log.debug("PropertyChange received ");
+        if (PowerManager.PROGPOWERENABLE.equals(ev.getPropertyName())) {
+            onButton.setEnabled((boolean)ev.getNewValue());
+            offButton.setEnabled((boolean)ev.getNewValue());
+        }
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusProgPowerPane.class);

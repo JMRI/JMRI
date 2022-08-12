@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import static jmri.PowerManager.*;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.swing.modules.sprogdcc.Sprog3PlusPaneProvider;
 
 import org.slf4j.Logger;
@@ -62,26 +62,31 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(true);
+                fireProgPowerPropertyChange(false);
             } else if (preferences.getProgTrackMode() == PROG_ON_MODE) {
                 progOnButton.setSelected(true);
                 mode = PROG_ON_MODE;
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(true);
+                fireProgPowerPropertyChange(false);
             } else if (preferences.getProgTrackMode() == PROG_AR_MODE) {
                 progArButton.setSelected(true);
                 mode = PROG_AR_MODE;
                 pm.setGlobalProgrammerAvailable(false);
                 pm.setAddressedModePossible(true);
+                fireProgPowerPropertyChange(false);
             } else if (preferences.getProgTrackMode() == PROG_ONLY_MODE) {
                 progOnlyButton.setSelected(true);
                 mode = PROG_ONLY_MODE;
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(false);
+                fireProgPowerPropertyChange(true);
             } else {
                 // Default if inconsistent preference
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(true);
+                fireProgPowerPropertyChange(false);
             }
             // Reset hardware mode and preferences in case there was any inconsistency
             setHardwareMode(mode);
@@ -95,24 +100,28 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
                     pm.setAddressedModePossible(true);
+                    fireProgPowerPropertyChange(false);
                 } else if (progArButton.isSelected()) {
                     log.info("Setting prog track to auto-reverse");
                     mode = PROG_AR_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(false);
                     pm.setAddressedModePossible(true);
+                    fireProgPowerPropertyChange(false);
                 } else if (progOnlyButton.isSelected()) {
                     log.info("Setting prog track only mode");
                     mode = PROG_ONLY_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
                     pm.setAddressedModePossible(false);
+                    fireProgPowerPropertyChange(true);
                 } else {
                     log.info("Setting prog track off when not programming");
                     mode = PROG_OFF_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
                     pm.setAddressedModePossible(true);
+                    fireProgPowerPropertyChange(false);
                 }
                 preferences.setProgTrackMode(mode);
             };
@@ -168,17 +177,12 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                     log.debug("Write to power mode NV");
                     mode = PROG_OFF_MODE;
                     switch(m.getElement(4)) {
-                        case PROG_OFF_MODE: 
-                            progOffButton.setSelected(true);
-                            pm.setGlobalProgrammerAvailable(true);
-                            pm.setAddressedModePossible(true);
-                            break;
-                        
                         case PROG_ON_MODE:
                             progOnButton.setSelected(true);
                             mode = PROG_ON_MODE;
                             pm.setGlobalProgrammerAvailable(true);
                             pm.setAddressedModePossible(true);
+                            fireProgPowerPropertyChange(false);
                             break;
                             
                         case PROG_AR_MODE:
@@ -186,6 +190,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                             mode = PROG_AR_MODE;
                             pm.setGlobalProgrammerAvailable(false);
                             pm.setAddressedModePossible(true);
+                            fireProgPowerPropertyChange(false);
                             break;
                             
                         case PROG_ONLY_MODE:
@@ -193,12 +198,14 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                             mode = PROG_ONLY_MODE;
                             pm.setGlobalProgrammerAvailable(true);
                             pm.setAddressedModePossible(false);
+                            fireProgPowerPropertyChange(true);
                             break;
                             
                         default:
                             progOffButton.setSelected(true);
                             pm.setGlobalProgrammerAvailable(true);
                             pm.setAddressedModePossible(true);
+                            fireProgPowerPropertyChange(false);
                             break;
                     }
                 }
@@ -206,6 +213,16 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
         }
     }
     
+    
+    /**
+     * Fires a {@link java.beans.PropertyChangeEvent} for the programming track
+     * power state using property name "progpowerenable".
+     *
+     * @param enable true if prog track power control is enabled
+     */
+    protected final void fireProgPowerPropertyChange(boolean enable) {
+        firePropertyChange(PROGPOWERENABLE, null, enable);
+    }
     
     /**
      * disconnect from the CBUS

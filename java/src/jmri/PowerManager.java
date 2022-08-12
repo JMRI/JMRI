@@ -50,6 +50,7 @@ public interface PowerManager extends PropertyChangeProvider {
      */
     static final String POWER = "power"; // as recommended in JavaBeans Spec // NOI18N
     static final String PROGPOWER = "progpower"; // as recommended in JavaBeans Spec // NOI18N
+    static final String PROGPOWERENABLE = "progpowerenable"; // as recommended in JavaBeans Spec // NOI18N
 
     public void setPower(int v) throws JmriException;
 
