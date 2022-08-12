@@ -6,7 +6,6 @@ import jmri.SpeedStepMode;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
 
 public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -134,20 +133,8 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeed_float() {
         // set speed step mode to 128.
         instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
-        Assert.assertEquals("Full Speed", 127, ((LocoNetThrottle)instance).intSpeed(1.0F));
-        float incre = 1.0f / 126.0f;
-        float speed = incre;
-        // Cannot get speeedStep 1. range is 2 to 127
-        int i = 2;
-        while (speed < 0.999f) {
-            int result = ((LocoNetThrottle)instance).intSpeed(speed);
-            Assert.assertEquals("speed step ", i++, result);
-            speed += incre;
-        }
+        super.testGetSpeed_float();
     }
-
-
-
 
     /**
      * Test of setF0 method, of class AbstractThrottle.

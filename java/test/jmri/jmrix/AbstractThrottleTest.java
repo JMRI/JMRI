@@ -1,7 +1,5 @@
 package jmri.jmrix;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -11,7 +9,6 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
-import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitAppender;
 
@@ -718,8 +715,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testAddPropertyChangeListener() {
-        PropertyChangeListener l = null;
-        instance.addPropertyChangeListener(l);
+        instance.addPropertyChangeListener(null);
     }
 
     /**
@@ -736,8 +732,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testDispose_ThrottleListener() {
-        ThrottleListener l = null;
-        instance.dispose(l);
+        instance.dispose(null);
     }
 
     /**
@@ -745,8 +740,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testDispatch_ThrottleListener() {
-        ThrottleListener l = null;
-        instance.dispatch(l);
+        instance.dispatch(null);
     }
 
     /**
@@ -754,8 +748,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testRelease_ThrottleListener() {
-        ThrottleListener l = null;
-        instance.release(l);
+        instance.release(null);
     }
 
     /**
@@ -1542,8 +1535,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testSetRosterEntry() {
-        BasicRosterEntry re = null;
-        instance.setRosterEntry(re);
+        instance.setRosterEntry(null);
+        Assertions.assertNull(instance.getRosterEntry());
     }
 
     /**
@@ -1551,9 +1544,8 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetRosterEntry() {
-        BasicRosterEntry expResult = null;
         BasicRosterEntry result = instance.getRosterEntry();
-        Assert.assertEquals(expResult, result);
+        Assert.assertNull( result);
     }
 
     /**
@@ -1565,11 +1557,11 @@ public class AbstractThrottleTest {
         float incre = 1.0f / 126.0f;
         float speed = incre;
         // Cannot get speeedStep 1. range is 2 to 127
-        int i = 2;
-        while (speed < 0.999f) {
+        for ( int i=2; i < 128; i++ ) {
             int result = instance.intSpeed(speed);
+            // System.out.println("speed="+speed+" step="+result+" i="+i);
             log.debug("speed= {} step= {}", speed, result);
-            Assert.assertEquals("speed step ", i++, result);
+            Assert.assertEquals("speed step ", i, result);
             speed += incre;
         }
     }
@@ -1579,7 +1571,7 @@ public class AbstractThrottleTest {
      */
     @Test
     public void testGetSpeed_float_int() {
-        float speed = 0.001F;
+
         int maxStepHi = 127;
         int maxStepLo = 28;
         Assert.assertEquals("Idle", 0, AbstractThrottle.intSpeed(0.0F, maxStepHi));
@@ -1590,8 +1582,11 @@ public class AbstractThrottleTest {
         Assert.assertEquals("Emergency", 1, AbstractThrottle.intSpeed(-0.001F, maxStepLo));
         Assert.assertEquals("Full Speed", maxStepHi, AbstractThrottle.intSpeed(1.0F, maxStepHi));
         Assert.assertEquals("Full Speed", maxStepLo, AbstractThrottle.intSpeed(1.0F, maxStepLo));
-        while (speed < 1.1F) { // loop ~ 1100 times
+
+        for ( int i = 1; i < 1100; i++) { // loop ~ 1100 times
+            float speed = i / 1000f;
             int result = AbstractThrottle.intSpeed(speed, maxStepHi);
+            // System.out.println("i"+i+" speed="+speed+" result="+result );
             Assert.assertNotSame(speed + "(" + maxStepHi + " steps) should not idle", 0, result);
             Assert.assertNotSame(speed + "(" + maxStepHi + " steps) should not eStop", 1, result);
             Assert.assertTrue(speed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= maxStepHi);
@@ -1599,7 +1594,6 @@ public class AbstractThrottleTest {
             Assert.assertNotSame(speed + "(" + maxStepLo + " steps) should not idle", 0, result);
             Assert.assertNotSame(speed + "(" + maxStepLo + " steps) should not eStop", 1, result);
             Assert.assertTrue(speed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= maxStepLo);
-            speed = speed + 0.001F;
         }
     }
 

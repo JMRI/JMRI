@@ -127,6 +127,14 @@
             connect the Piko Digi-fern Remote Control to LocoNet.</li>
         </ul>
 
+        <h4>Raspberry Pi</h4>
+            <ul>
+                <li>A simulator is now added that simulates a Raspberry Pi.
+                The simulator is very simple and is mostly intended to be
+                able to load panels for a Raspberry Pi on a non Pi computer
+                like Windows.</li>
+            </ul>
+
         <h4>RFID</h4>
             <ul>
                 <li></li>
@@ -392,8 +400,15 @@
               valid entry.<br>
               Variables with a max &lt;= 255 or with an explicit mask are not affected.
             </li>
-            <li>In decoder definitions, enumVal variables can now use a so-called "radix" mask to map values on specific
+          <li>In decoder definitions, enumVal variables can now use a so-called "radix" mask to map values on specific
             digits in the CV value. Requires decoder-4-15-2.xsd schema in the xml declaration.</li>
+            <li>Values of type DecVar can now be presented using an offset and factor to reflect their application. For
+              example if address 1 had to be entered as 0 (and 2 as 1) an offset of +1 would fix this for the user.
+              Likewise, a factor of 50 would present a setting "in steps of 50 milliseconds" in ms units while saving
+              it in the CV just like it used to.<br>
+              Requires schema decoder-4-15-2.xsd. When a min or max is applied, the author should update that for the
+              numbers as entered. Entries smaller than the offset are replaced by 0.
+            </li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -465,6 +480,22 @@
           <li>The action <i>Listen On Beans - Local variable</i> has been
           added. It can be used together with the <i>For each</i> action
           to listen to all beans of a manager.</li>
+          <li>The expressions <i>Local Variable</i> and <i>Memory</i> now
+          have the choice "Type" which allows you to select whenether the
+          data should be treated as a number or a string. If "Number" is
+          choosen, it's required that both operands are numbers. Otherwise
+          an exception will occur.</li>
+          <li>The action <i>Local Variable</i> can now copy the value of a
+          reference.</li>
+          <li>The action <i>If Then Else</i> now supports <i>Else_If</i>
+          statements.</li>
+          <li>The new category <i>Flow Control</i> is added. The actions
+          <i>Call Module</i>, <i>For</i>, <i>For Each</i>, <i>Table: For
+          Each</i> and <i>Sequence</i> are moved to this category, as well
+          as the expression <i>Call Module</i>.</li>
+          <li>The actions <i>Break</i>, <i>Continue</i>, <i>Error</i>,
+          <i>Exit</i> and <i>Return</i> have been added to the <i>Flow
+          Control</i> category.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
