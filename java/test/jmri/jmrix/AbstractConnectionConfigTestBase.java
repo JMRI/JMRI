@@ -37,6 +37,7 @@ abstract public class AbstractConnectionConfigTestBase {
     public void testGetInfo(){
         Assume.assumeNotNull("adapter set", cc.getAdapter());
         Assert.assertNotNull("has info", cc.getInfo());
+        jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
     }
 
     @Test
