@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.expressions.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -13,6 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionLocalVariable.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
+import jmri.util.CompareUtil.CompareType;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -26,6 +29,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
     private LogixNG_SelectTableSwing selectTableSwing;
     private JTextField _localVariableTextField;
     private JComboBox<VariableOperation> _variableOperationComboBox;
+    private JComboBox<CompareType> _variableCompareTypeComboBox;
     private JCheckBox _caseInsensitiveCheckBox;
 
     private JTabbedPane _tabbedPane;
@@ -66,22 +70,56 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
 
         panel = new JPanel();
 
-        _localVariableTextField = new JTextField(30);
+        _localVariableTextField = new JTextField(20);
 
         JPanel operationAndCasePanel = new JPanel();
-        operationAndCasePanel.setLayout(new BoxLayout(operationAndCasePanel, BoxLayout.Y_AXIS));
+        operationAndCasePanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 2;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
 
         _variableOperationComboBox = new JComboBox<>();
         for (VariableOperation e : VariableOperation.values()) {
             _variableOperationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableOperationComboBox);
-        operationAndCasePanel.add(_variableOperationComboBox);
+        operationAndCasePanel.add(_variableOperationComboBox, constraint);
 
         _variableOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
 
+        constraint.gridy = 1;
+        operationAndCasePanel.add(javax.swing.Box.createVerticalStrut(8), constraint);
+
+        constraint.gridwidth = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 2;
+        constraint.anchor = GridBagConstraints.EAST;
+        operationAndCasePanel.add(new JLabel(Bundle.getMessage("ExpressionLocalVariable_CompareType")+" "), constraint);
+
+        constraint.gridx = 1;
+        constraint.anchor = GridBagConstraints.WEST;
+        _variableCompareTypeComboBox = new JComboBox<>();
+        for (CompareType e : CompareType.values()) {
+            _variableCompareTypeComboBox.addItem(e);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableCompareTypeComboBox);
+        operationAndCasePanel.add(_variableCompareTypeComboBox, constraint);
+
+        _variableCompareTypeComboBox.addActionListener((e) -> {
+            CompareType type = _variableCompareTypeComboBox.getItemAt(
+                    _variableCompareTypeComboBox.getSelectedIndex());
+            _caseInsensitiveCheckBox.setEnabled(type != CompareType.Number);
+        });
+
+        constraint.gridwidth = 2;
+        constraint.gridx = 0;
+        constraint.gridy = 3;
+        constraint.anchor = GridBagConstraints.WEST;
         _caseInsensitiveCheckBox = new JCheckBox(Bundle.getMessage("ExpressionLocalVariable_CaseInsensitive"));
-        operationAndCasePanel.add(_caseInsensitiveCheckBox);
+        operationAndCasePanel.add(_caseInsensitiveCheckBox, constraint);
 
         _tabbedPane = new JTabbedPane();
 
@@ -134,6 +172,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());
             }
             _variableOperationComboBox.setSelectedItem(expression.getVariableOperation());
+            _variableCompareTypeComboBox.setSelectedItem(expression.getCompareType());
             _caseInsensitiveCheckBox.setSelected(expression.getCaseInsensitive());
             _compareToConstantTextField.setText(expression.getConstantValue());
             _compareToLocalVariableTextField.setText(expression.getOtherLocalVariable());
@@ -181,6 +220,7 @@ public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing
 
         expression.setLocalVariable(_localVariableTextField.getText());
         expression.setVariableOperation(_variableOperationComboBox.getItemAt(_variableOperationComboBox.getSelectedIndex()));
+        expression.setCompareType(_variableCompareTypeComboBox.getItemAt(_variableCompareTypeComboBox.getSelectedIndex()));
         expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
 
 

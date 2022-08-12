@@ -123,7 +123,7 @@
       <label xml:lang="it">Versione Decoder: </label>
       <label xml:lang="fr">Version décodeur: </label>
       <label xml:lang="de">Decoder Version: </label>
-      <label xml:lang="cs">Verze dekodéru: </label>
+      <label xml:lang="cs">Verze dekodéru </label>
       <comment>at least version 34</comment>
       <comment xml:lang="it">Almeno versione 34</comment>
       <comment xml:lang="de">mindestens Version 34</comment>
@@ -136,7 +136,7 @@
       <label xml:lang="it">ID Costruttore: </label>
       <label xml:lang="fr">ID constructeur: </label>
       <label xml:lang="de">Hersteller ID: </label>
-      <label xml:lang="cs">ID výrobce: </label>
+      <label xml:lang="cs">ID výrobce </label>
       <tooltip xml:lang="de">für Kühn Wert 157</tooltip>
     </variable>
     <variable CV="9" default="0" item="Motor PWM Frequency">

@@ -59,7 +59,7 @@ public class DigitalCallModule extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.FLOW_CONTROL;
     }
 
     /**

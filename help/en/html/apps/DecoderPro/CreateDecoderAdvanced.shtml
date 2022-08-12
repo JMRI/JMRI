@@ -894,9 +894,9 @@ delay is 500 milliseconds.
         significant bits of the accessory decoder's address in bits 0-3.</li>
       </ul>
 
-      <h4>splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
+      <h4>decVal/splitVal/splitHexVal - optional "factor" and "offset" attributes</h4>
 
-      <p>For special purposes, splitVal and splitHexVal have two optional parameters, a "factor"
+      <p>For special purposes, decVal, splitVal and splitHexVal have two optional parameters, a "factor"
       and an "offset":</p>
 
       <ul>

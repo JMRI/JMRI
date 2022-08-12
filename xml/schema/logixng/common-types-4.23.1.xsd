@@ -25,7 +25,18 @@
             "
         >
 
-    <xs:simpleType name="LogixNG_Is_IsNot_Type">
+	<!-- This type is defined in jmri.util.CompareUtil -->
+    <xs:simpleType name="LogixNG_CompareUtil_CompareType">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="NumberOrString"/>
+        <xs:enumeration value="String"/>
+        <xs:enumeration value="Number"/>
+      </xs:restriction>
+    </xs:simpleType>
+	<!-- This type is defined in jmri.util.CompareUtil -->
+
+
+	<xs:simpleType name="LogixNG_Is_IsNot_Type">
       <xs:restriction base="xs:token">
         <xs:enumeration value="Is"/>
         <xs:enumeration value="IsNot"/>

@@ -214,15 +214,13 @@
         <li>Clock
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_clock.png"><img src=
-            "images/chapter9/functions_clock.png" alt="Chapter 9 clock functions"
-            width="435" height="44"></a>
+            "images/chapter9/functions_clock.png" alt="Chapter 9 clock functions"></a>
           </div>
         </li>
         <li>Convert
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_convert.png"><img src=
-            "images/chapter9/functions_convert.png" alt="Chapter 9 convert functions"
-            width="435" height="116"></a>
+            "images/chapter9/functions_convert.png" alt="Chapter 9 convert functions"></a>
           </div>
         </li>
         <li>Java<span class="since">since 5.1.3</span>
@@ -234,29 +232,25 @@
         <li>Layout<span class="since">since 4.25.8</span>
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_layout.png"><img src=
-            "images/chapter9/functions_layout.png" alt="Chapter 9 layout functions"
-            width="435" height="296"></a>
+            "images/chapter9/functions_layout.png" alt="Chapter 9 layout functions"></a>
           </div>
         </li>
         <li>Math
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_math.png"><img src=
-            "images/chapter9/functions_math.png" alt="Chapter 9 math functions"
-            width="435" height="62"></a>
+            "images/chapter9/functions_math.png" alt="Chapter 9 math functions"></a>
           </div>
         </li>
         <li>NamedBean
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_named_bean.png"><img src=
-            "images/chapter9/functions_named_bean.png" alt="Chapter 9 named bean functions"
-            width="435" height="44"></a>
+            "images/chapter9/functions_named_bean.png" alt="Chapter 9 named bean functions"></a>
           </div>
         </li>
         <li>String
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_string.png"><img src=
-            "images/chapter9/functions_string.png" alt="Chapter 9 string functions"
-            width="435" height="26"></a>
+            "images/chapter9/functions_string.png" alt="Chapter 9 string functions"></a>
           </div>
         </li>
       </ul>
