@@ -496,6 +496,8 @@
           <li>The actions <i>Break</i>, <i>Continue</i>, <i>Error</i>,
           <i>Exit</i> and <i>Return</i> have been added to the <i>Flow
           Control</i> category.</li>
+          <li>The expressions <i>And</i> and <i>Or</i> now have the option
+          to only evaluate the sockets that are needed for the result.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

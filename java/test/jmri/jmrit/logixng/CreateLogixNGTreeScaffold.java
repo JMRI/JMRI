@@ -2813,12 +2813,14 @@ public class CreateLogixNGTreeScaffold {
 
 
         And and1 = new And(digitalExpressionManager.getAutoSystemName(), null);
+        and1.setType(And.Type.EvaluateAll);
         maleSocket = digitalExpressionManager.registerExpression(and1);
         maleSocket.setEnabled(false);
         ifThenElse.getChild(0).connect(maleSocket);
 
         And and = new And(digitalExpressionManager.getAutoSystemName(), null);
         and.setComment("A comment");
+        and.setType(And.Type.EvaluateNeeded);
         maleSocket = digitalExpressionManager.registerExpression(and);
         and1.getChild(0).connect(maleSocket);
 
@@ -4008,12 +4010,14 @@ public class CreateLogixNGTreeScaffold {
 
 
         Or or = new Or(digitalExpressionManager.getAutoSystemName(), null);
+        or.setType(Or.Type.EvaluateAll);
         maleSocket = digitalExpressionManager.registerExpression(or);
         maleSocket.setEnabled(false);
         and.getChild(indexExpr++).connect(maleSocket);
 
         or = new Or(digitalExpressionManager.getAutoSystemName(), null);
         or.setComment("A comment");
+        or.setType(Or.Type.EvaluateNeeded);
         maleSocket = digitalExpressionManager.registerExpression(or);
         and.getChild(indexExpr++).connect(maleSocket);
 

@@ -58,7 +58,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "And ::: Use default%n" +
+                "And. Evaluate All ::: Use default%n" +
                 "   ? E1%n" +
                 "      Socket not connected%n");
     }
@@ -71,7 +71,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
                 "      ! A%n" +
                 "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               And ::: Use default%n" +
+                "               And. Evaluate All ::: Use default%n" +
                 "                  ? E1%n" +
                 "                     Socket not connected%n" +
                 "            ! Then%n" +
@@ -103,12 +103,12 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         expression2 = new And("IQDE321", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "And", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "And. Evaluate All", expression2.getLongDescription());
 
         expression2 = new And("IQDE321", "My expression");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "And", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "And. Evaluate All", expression2.getLongDescription());
 
         boolean thrown = false;
         try {
@@ -345,7 +345,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     public void testDescription() {
         And e1 = new And("IQDE321", null);
         Assert.assertTrue("And".equals(e1.getShortDescription()));
-        Assert.assertTrue("And".equals(e1.getLongDescription()));
+        Assert.assertTrue("And. Evaluate All".equals(e1.getLongDescription()));
     }
 
     // The minimal setup for log4J
