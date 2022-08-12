@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.swing.modules.sprogdcc.Sprog3PlusPaneProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,22 +61,27 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
             if (preferences.getProgTrackMode() == PROG_OFF_MODE) {
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(true);
             } else if (preferences.getProgTrackMode() == PROG_ON_MODE) {
                 progOnButton.setSelected(true);
                 mode = PROG_ON_MODE;
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(true);
             } else if (preferences.getProgTrackMode() == PROG_AR_MODE) {
                 progArButton.setSelected(true);
                 mode = PROG_AR_MODE;
                 pm.setGlobalProgrammerAvailable(false);
+                pm.setAddressedModePossible(true);
             } else if (preferences.getProgTrackMode() == PROG_ONLY_MODE) {
                 progOnlyButton.setSelected(true);
                 mode = PROG_ONLY_MODE;
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(false);
             } else {
                 // Default if inconsistent preference
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(true);
             }
             // Reset hardware mode and preferences in case there was any inconsistency
             setHardwareMode(mode);
@@ -86,21 +94,25 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                     mode = PROG_ON_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
+                    pm.setAddressedModePossible(true);
                 } else if (progArButton.isSelected()) {
                     log.info("Setting prog track to auto-reverse");
                     mode = PROG_AR_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(false);
+                    pm.setAddressedModePossible(true);
                 } else if (progOnlyButton.isSelected()) {
                     log.info("Setting prog track only mode");
                     mode = PROG_ONLY_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
+                    pm.setAddressedModePossible(false);
                 } else {
                     log.info("Setting prog track off when not programming");
                     mode = PROG_OFF_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
+                    pm.setAddressedModePossible(true);
                 }
                 preferences.setProgTrackMode(mode);
             };
@@ -134,6 +146,66 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
         addHelpMenu("package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame", true); // NOI18N
     }
 
+    
+    /**
+     * Processes incoming CAN replies
+     * 
+     * Look for write acknowledge to power mode NV
+     *
+     * {@inheritDoc} 
+     */
+    @Override
+    public void message(CanMessage m) {
+        
+        if ( m.isRtr() ) {
+            return;
+        }
+        
+        if (!m.isExtended() ) {
+            log.debug("Standard Reply {}", m);
+            if (m.getOpCode() == CbusConstants.CBUS_NVSET) {
+                if (m.getElement(3) == Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE) {
+                    log.debug("Write to power mode NV");
+                    mode = PROG_OFF_MODE;
+                    switch(m.getElement(4)) {
+                        case PROG_OFF_MODE: 
+                            progOffButton.setSelected(true);
+                            pm.setGlobalProgrammerAvailable(true);
+                            pm.setAddressedModePossible(true);
+                            break;
+                        
+                        case PROG_ON_MODE:
+                            progOnButton.setSelected(true);
+                            mode = PROG_ON_MODE;
+                            pm.setGlobalProgrammerAvailable(true);
+                            pm.setAddressedModePossible(true);
+                            break;
+                            
+                        case PROG_AR_MODE:
+                            progArButton.setSelected(true);
+                            mode = PROG_AR_MODE;
+                            pm.setGlobalProgrammerAvailable(false);
+                            pm.setAddressedModePossible(true);
+                            break;
+                            
+                        case PROG_ONLY_MODE:
+                            progOnlyButton.setSelected(true);
+                            mode = PROG_ONLY_MODE;
+                            pm.setGlobalProgrammerAvailable(true);
+                            pm.setAddressedModePossible(false);
+                            break;
+                            
+                        default:
+                            progOffButton.setSelected(true);
+                            pm.setGlobalProgrammerAvailable(true);
+                            pm.setAddressedModePossible(true);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    
     
     /**
      * disconnect from the CBUS
