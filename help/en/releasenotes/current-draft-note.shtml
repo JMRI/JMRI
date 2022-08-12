@@ -118,7 +118,7 @@
 
         <h4>OpenLCB / LCC</h4>
             <ul>
-                <li></li>
+                <li>Several fixes to JMRI's OpenLCB hub to reduce chance of duplicated traffic.</li>
             </ul>
 
         <h4>Piko</h4>
