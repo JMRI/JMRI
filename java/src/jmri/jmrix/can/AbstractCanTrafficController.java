@@ -297,6 +297,7 @@ abstract public class AbstractCanTrafficController
     public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
         // forward the message to the registered recipients,
         // which includes the communications monitor
+        if (msg == null) log.error("found unexpected null message", new Exception("traceback"));
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         distributeReply(r);
     }

@@ -10,8 +10,11 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import jmri.jmrix.pi.simulator.GpioSimulator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,40 +30,24 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
     private PinPullResistance pull = PinPullResistance.PULL_DOWN;
 
     public RaspberryPiSensor(String systemName, String userName) {
-        this(systemName, userName, GpioFactory.getInstance(), PinPullResistance.PULL_DOWN);
+        super(systemName, userName);
+        // default pull is Pull Down
+        init(systemName, PinPullResistance.PULL_DOWN);
     }
 
     public RaspberryPiSensor(String systemName, String userName, PinPullResistance p) {
-        this(systemName, userName, GpioFactory.getInstance(), p);
+        super(systemName, userName);
+        init(systemName, p);
     }
 
     public RaspberryPiSensor(String systemName) {
-        this(systemName, GpioFactory.getInstance(), PinPullResistance.PULL_DOWN);
+        super(systemName);
+        init(systemName, PinPullResistance.PULL_DOWN);
     }
 
     public RaspberryPiSensor(String systemName, PinPullResistance p) {
-        this(systemName, GpioFactory.getInstance(), p);
-    }
-
-    public RaspberryPiSensor(String systemName, String userName, GpioController _gpio) {
-        super(systemName, userName);
-        // default pull is Pull Down
-        init(systemName, _gpio, PinPullResistance.PULL_DOWN);
-    }
-
-    public RaspberryPiSensor(String systemName, String userName, GpioController _gpio, PinPullResistance p) {
-        super(systemName, userName);
-        init(systemName, _gpio, p);
-    }
-
-    public RaspberryPiSensor(String systemName, GpioController _gpio) {
         super(systemName);
-        init(systemName, _gpio, PinPullResistance.PULL_DOWN);
-    }
-
-    public RaspberryPiSensor(String systemName, GpioController _gpio, PinPullResistance p) {
-        super(systemName);
-        init(systemName, _gpio, p);
+        init(systemName, p);
     }
 
     /**
@@ -68,10 +55,14 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      * <p>
      * Compare {@link RaspberryPiTurnout}
      */
-    private void init(String systemName, GpioController _gpio, PinPullResistance pRes){
+    private void init(String systemName, PinPullResistance pRes){
         log.debug("Provisioning sensor {}", systemName);
         if (gpio == null) {
-            gpio = _gpio;
+            if (!RaspberryPiAdapter.isSimulator()) {
+                gpio = GpioFactory.getInstance();
+            } else {
+                gpio = GpioSimulator.getInstance();
+            }
         }
         pull = pRes;
         int address = Integer.parseInt(systemName.substring(systemName.lastIndexOf("S") + 1));
