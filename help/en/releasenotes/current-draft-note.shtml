@@ -119,6 +119,7 @@
         <h4>OpenLCB / LCC</h4>
             <ul>
                 <li>Several fixes to JMRI's OpenLCB hub to reduce chance of duplicated traffic.</li>
+                <li>Added ConsumerID, ProducerID buttons to OpenLCB console</li>
             </ul>
 
         <h4>Piko</h4>
