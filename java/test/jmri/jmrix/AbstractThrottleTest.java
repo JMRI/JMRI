@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.util.JUnitUtil;
 
+import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -1638,6 +1639,23 @@ public class AbstractThrottleTest {
         Assert.assertEquals("No Duration in Roster Entry, throttle needs to call finishRecord()", "2", re.getAttribute("OperatingDuration"));
         Assert.assertNotNull("Last Operated Updated", re.getAttribute("LastOperated"));
 
+    }
+
+    @Test
+    public void testGetFunctionNoWarnings() {
+
+        Assertions.assertFalse(instance.getFunctionNoWarn(-1));
+        Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(-1));
+        Assertions.assertFalse(instance.getFunctionNoWarn(9999999));
+        Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(999999));
+        // Check final status of logging
+        JUnitAppender.end();
+        Level severity = Level.WARN; // level at or above which we'll complain
+        boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
+        String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
+        JUnitAppender.verifyNoBacklog();
+        JUnitAppender.resetUnexpectedMessageFlags(severity);
+        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
     }
 
     public static final class AbstractThrottleImpl extends AbstractThrottle {
