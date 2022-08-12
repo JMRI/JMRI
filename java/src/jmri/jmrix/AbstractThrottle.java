@@ -208,6 +208,19 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
+     * Get Function Number without warning if Throttle does not support.
+     * When sending a whole Function Group, a function number may not be present.
+     * @param fN Function Number
+     * @return Function value, or false if not present.
+     */
+    protected boolean getFunctionNoWarn(int fN) {
+        if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
+            return false;
+        }
+        return FUNCTION_BOOLEAN_ARRAY[fN];
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -218,6 +231,19 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
 
+    }
+
+    /**
+     * Get Momentary Function Number without warning if Throttle does not support.
+     * When sending a whole Function Group, a function number may not be present.
+     * @param fN Function Number
+     * @return Function value, or false if not present.
+     */
+    protected boolean getFunctionMomentaryNoWarn(int fN) {
+        if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
+            return false;
+        }
+        return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
     }
 
     /**
