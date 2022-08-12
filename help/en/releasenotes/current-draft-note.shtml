@@ -119,6 +119,7 @@
         <h4>OpenLCB / LCC</h4>
             <ul>
                 <li></li>
+                <li>Added ConsumerID, ProducerID buttons to OpenLCB console</li>
             </ul>
 
         <h4>Piko</h4>
