@@ -214,6 +214,8 @@ public class XmlTest extends OperationsTestCase {
         t1.setRequirements(Train.NO_CABOOSE_OR_FRED);
         t1.setCarRoadOption("t1 road option");
         t1.addCarRoadName("t1 road name 1");
+        t1.setLocoRoadOption("t1 loco road option");
+        t1.addLocoRoadName("t1 loco road name 1");
         t1.setRoute(C);
         t1.setTerminationTrack(trackWestford);
         t1.setSecondLegCabooseRoad("t1 second leg caboose road");
@@ -317,6 +319,8 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
         Assert.assertEquals("t1 road option", "t1 road option", t1.getCarRoadOption());
         Assert.assertEquals("t1 road name", "t1 road name 1", t1.getCarRoadNames()[0]);
+        Assert.assertEquals("t1 loco road option", "t1 loco road option", t1.getLocoRoadOption());
+        Assert.assertEquals("t1 loco road name", "t1 loco road name 1", t1.getLocoRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
         Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
@@ -487,6 +491,8 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
         Assert.assertEquals("t1 road option", "t1 road option", t1.getCarRoadOption());
         Assert.assertEquals("t1 road name", "t1 road name 1", t1.getCarRoadNames()[0]);
+        Assert.assertEquals("t1 loco road option", "t1 loco road option", t1.getLocoRoadOption());
+        Assert.assertEquals("t1 loco road name", "t1 loco road name 1", t1.getLocoRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
         Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1

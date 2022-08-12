@@ -131,7 +131,7 @@ public class Sequence extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return Category.FLOW_CONTROL;
     }
 
     /** {@inheritDoc} */

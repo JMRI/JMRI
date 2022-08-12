@@ -13,11 +13,22 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Decimal representation of a value.
+ * <br>
+ * The {@code mask} attribute represents the part of the value that's present in
+ * the CV.
+ * <br>
+ * Optional attributes {@code factor} and {@code offset} are applied when going
+ * <i>from</i> the variable value <i>to</i> the CV values, or vice-versa:
+ * <pre>
+ * Value to put in CVs = ((value in text field) -{@code offset})/{@code factor}
+ * Value to put in text field = ((value in CVs) *{@code factor}) +{@code offset}
+ * </pre> *
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2022
  */
@@ -26,10 +37,19 @@ public class DecVariableValue extends VariableValue
 
     public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
                             boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String stdname) {
+                            HashMap<String, CvValue> v, JLabel status, String stdname) {
+        this(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal,
+                v, status, stdname, 0, 1);
+    }
+
+    public DecVariableValue(String name, String comment, String cvName, boolean readOnly, boolean infoOnly,
+                            boolean writeOnly, boolean opsOnly, String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String stdname, int offset, int factor) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
+        _offset = offset;
+        _factor = factor;
         _value = new JTextField("0", fieldLength());
         _value.getAccessibleContext().setAccessibleName(label());
         _defaultColor = _value.getBackground();
@@ -51,6 +71,8 @@ public class DecVariableValue extends VariableValue
 
     int _maxVal;
     int _minVal;
+    int _offset;
+    int _factor;
 
     int fieldLength() {
         if (_maxVal <= 255) {
@@ -90,7 +112,7 @@ public class DecVariableValue extends VariableValue
         }
         // what to do for the case where _value != null?
         if (!_value.getText().equals("")) {
-            // there may be a lost focus event left in the queue when disposed so protect
+            // there may be a lost focus event left in the queue when disposed, so protect
             if (!oldContents.equals(_value.getText())) {
                 try {
                     int newVal = textToValue(_value.getText());
@@ -106,8 +128,8 @@ public class DecVariableValue extends VariableValue
                 }
             }
         } else {
-            // As the user has left the contents blank, we shall re-instate the old
-            // value as, when a write to decoder is performed, the cv remains the same value.
+            // As the user has left the contents blank, we shall re-instate the old value as,
+            // when a write operation to decoder is performed, the cv remains the same value.
             _value.setText(oldContents);
         }
     }
@@ -131,8 +153,15 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
-        log.debug("newVal={} newCvVal ={}", newVal, newCvVal);
+        int transfer = Math.max(newVal - _offset, 0); // prevent negative values, especially in tests outside UI
+        if (_factor != 0) {
+            transfer = transfer / _factor;
+        } else {
+            // ignore division
+            log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
+        }
+        int newCvVal = setValueInCV(oldCvVal, transfer, getMask(), _maxVal);
+        log.debug("newVal={} transfer={} newCvVal ={}", newVal, transfer, newCvVal);
         if (oldCvVal != newCvVal) {
             cv.setValue(newCvVal);
         }
@@ -215,62 +244,66 @@ public class DecVariableValue extends VariableValue
         super.setAvailable(a);
     }
 
-    java.util.List<Component> reps = new java.util.ArrayList<Component>();
+    java.util.List<Component> reps = new java.util.ArrayList<>();
 
     @Override
     public Component getNewRep(String format) {
-        if (format.equals("vslider")) {
-            DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
-            b.setOrientation(JSlider.VERTICAL);
-            sliders.add(b);
-            reps.add(b);
-            updateRepresentation(b);
-            return b;
-        } else if (format.equals("hslider")) {
-            DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
-            b.setOrientation(JSlider.HORIZONTAL);
-            sliders.add(b);
-            reps.add(b);
-            updateRepresentation(b);
-            return b;
-        } else if (format.equals("hslider-percent")) {
-            DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
-            b.setOrientation(JSlider.HORIZONTAL);
-            if (_maxVal > 20) {
-                b.setMajorTickSpacing(_maxVal / 2);
-                b.setMinorTickSpacing((_maxVal + 1) / 8);
-            } else {
-                b.setMajorTickSpacing(5);
-                b.setMinorTickSpacing(1); // because JSlider does not SnapToValue
-                b.setSnapToTicks(true);   // like it should, we fake it here
+        switch (format) {
+            case "vslider": {
+                DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
+                b.setOrientation(JSlider.VERTICAL);
+                sliders.add(b);
+                reps.add(b);
+                updateRepresentation(b);
+                return b;
             }
-            b.setSize(b.getWidth(), 28);
-            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-            labelTable.put(0, new JLabel("0%"));
-            if (_maxVal == 63) {   // this if for the QSI mute level, not very universal, needs work
-                labelTable.put(_maxVal / 2, new JLabel("25%"));
-                labelTable.put(_maxVal, new JLabel("50%"));
-            } else {
-                labelTable.put(_maxVal / 2, new JLabel("50%"));
-                labelTable.put(_maxVal, new JLabel("100%"));
+            case "hslider": {
+                DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
+                b.setOrientation(JSlider.HORIZONTAL);
+                sliders.add(b);
+                reps.add(b);
+                updateRepresentation(b);
+                return b;
             }
-            b.setLabelTable(labelTable);
-            b.setPaintTicks(true);
-            b.setPaintLabels(true);
-            sliders.add(b);
-            updateRepresentation(b);
-            if (!getAvailable()) {
-                b.setVisible(false);
+            case "hslider-percent": {
+                DecVarSlider b = new DecVarSlider(this, _minVal, _maxVal);
+                b.setOrientation(JSlider.HORIZONTAL);
+                if (_maxVal > 20) {
+                    b.setMajorTickSpacing(_maxVal / 2);
+                    b.setMinorTickSpacing((_maxVal + 1) / 8);
+                } else {
+                    b.setMajorTickSpacing(5);
+                    b.setMinorTickSpacing(1); // because JSlider does not SnapToValue
+                    b.setSnapToTicks(true);   // like it should, we fake it here
+                }
+                b.setSize(b.getWidth(), 28);
+                Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+                labelTable.put(0, new JLabel("0%"));
+                if (_maxVal == 63) {   // this if for the QSI mute level, not very universal, needs work
+                    labelTable.put(_maxVal / 2, new JLabel("25%"));
+                    labelTable.put(_maxVal, new JLabel("50%"));
+                } else {
+                    labelTable.put(_maxVal / 2, new JLabel("50%"));
+                    labelTable.put(_maxVal, new JLabel("100%"));
+                }
+                b.setLabelTable(labelTable);
+                b.setPaintTicks(true);
+                b.setPaintLabels(true);
+                sliders.add(b);
+                updateRepresentation(b);
+                if (!getAvailable()) {
+                    b.setVisible(false);
+                }
+                return b;
             }
-            return b;
-        } else {
-            JTextField value = new VarTextField(_value.getDocument(), _value.getText(), fieldLength(), this);
-            if (getReadOnly() || getInfoOnly()) {
-                value.setEditable(false);
-            }
-            reps.add(value);
-            updateRepresentation(value);
-            return value;
+            default:
+                JTextField value = new VarTextField(_value.getDocument(), _value.getText(), fieldLength(), this);
+                if (getReadOnly() || getInfoOnly()) {
+                    value.setEditable(false);
+                }
+                reps.add(value);
+                updateRepresentation(value);
+                return value;
         }
     }
 
@@ -394,7 +427,8 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            int transfer = getValueInCV(cv.getValue(), getMask(), _maxVal);
+            int newVal = (transfer * _factor) + _offset;
             setValue(newVal);  // check for duplicate done inside setValue
         }
     }
@@ -415,12 +449,7 @@ public class DecVariableValue extends VariableValue
             // get the original color right
             setBackground(_var._value.getBackground());
             // listen for changes to ourself
-            addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    thisActionPerformed(e);
-                }
-            });
+            addActionListener(this::thisActionPerformed);
             addFocusListener(new java.awt.event.FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -435,12 +464,7 @@ public class DecVariableValue extends VariableValue
                 }
             });
             // listen for changes to original state
-            _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    originalPropertyChanged(e);
-                }
-            });
+            _var.addPropertyChangeListener(this::originalPropertyChanged);
         }
 
         DecVariableValue _var;
