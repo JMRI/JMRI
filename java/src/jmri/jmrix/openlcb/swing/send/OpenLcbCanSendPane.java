@@ -21,19 +21,7 @@ import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
-import org.openlcb.Connection;
-import org.openlcb.DatagramAcknowledgedMessage;
-import org.openlcb.DatagramMessage;
-import org.openlcb.EventID;
-import org.openlcb.IdentifyConsumersMessage;
-import org.openlcb.IdentifyEventsAddressedMessage;
-import org.openlcb.IdentifyProducersMessage;
-import org.openlcb.Message;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.ProducerConsumerEventReportMessage;
-import org.openlcb.VerifyNodeIDNumberMessage;
+import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
@@ -184,8 +172,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send Request Consumers");
         b.addActionListener(this::sendReqConsumers);
         pane2.add(b);
+        b = new JButton("Send Consumer Identified");
+        b.addActionListener(this::sendConsumerID);
+        pane2.add(b);
         b = new JButton("Send Request Producers");
         b.addActionListener(this::sendReqProducers);
+        pane2.add(b);
+        b = new JButton("Send Producer Identified");
+        b.addActionListener(this::sendProducerID);
         pane2.add(b);
         b = new JButton("Send Event Produced");
         b.addActionListener(this::sendEventPerformed);
@@ -355,8 +349,18 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection.put(m, null);
     }
 
+    public void sendConsumerID(java.awt.event.ActionEvent e) {
+        Message m = new ConsumerIdentifiedMessage(srcNodeID, eventID(), EventState.Valid);
+        connection.put(m, null);
+    }
+
     public void sendReqProducers(java.awt.event.ActionEvent e) {
         Message m = new IdentifyProducersMessage(srcNodeID, eventID());
+        connection.put(m, null);
+    }
+
+    public void sendProducerID(java.awt.event.ActionEvent e) {
+        Message m = new ProducerIdentifiedMessage(srcNodeID, eventID(), EventState.Valid);
         connection.put(m, null);
     }
 

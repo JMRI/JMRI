@@ -643,7 +643,8 @@ public class TrainBuilder extends TrainBuilderBase {
             } // is there a specific road requirement for the car with FRED?
             else if (!road.equals(Train.NONE) && !road.equals(car.getRoadName())) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarWrongRoad"),
-                        new Object[] { car.toString(), car.getTypeName(), car.getRoadName() }));
+                        new Object[]{car.toString(), car.getLocationName(), car.getTrackName(), car.getTypeName(),
+                                car.getRoadName()}));
                 _carList.remove(car); // remove this car from the list
                 _carIndex--;
                 continue;
