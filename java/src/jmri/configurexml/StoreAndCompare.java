@@ -118,16 +118,24 @@ public class StoreAndCompare extends AbstractAction {
             systemPrefix = mMgr.getSystemPrefix();
         }
 
-        if (tMgr == null || sMgr == null || mMgr == null) result = true;
+        if (tMgr == null || sMgr == null || mMgr == null) {
+            log.debug("triple manager test sets true");
+            result = true;
+        }
 
-        if (!result && tMgr != null && tMgr.getNamedBeanSet().size() > 0) result = true;
+        if (!result && tMgr != null && tMgr.getNamedBeanSet().size() > 0) {
+            log.debug("turnout manager test sets true");
+            result = true;
+        }
 
         if (!result && sMgr != null) {
             var sensorSize = sMgr.getNamedBeanSet().size();
             if (sensorSize > 1) {
+                log.debug("sensor > 1 sets true");
                 result = true;
             } else if (sensorSize == 1) {
                 if (sMgr.getBySystemName(systemPrefix + "SCLOCKRUNNING") == null) {
+                    log.debug("sensor == 1 sets true");
                     result = true;  // One sensor but it is not ISCLOCKRUNNING
                 }
             }
@@ -136,12 +144,15 @@ public class StoreAndCompare extends AbstractAction {
         if (!result && mMgr != null) {
             var memSize = mMgr.getNamedBeanSet().size();
             if (memSize > 2) {
+                log.debug("memory > 2 sets true");
                 result = true;
             } else if (memSize != 0) {
                 if (mMgr.getBySystemName(systemPrefix + "MCURRENTTIME") == null) {
+                    log.debug("memory no MCURRENTTIME sets true");
                     result = true;  // Two memories but one is not IMCURRENTTIME
                 }
                 if (mMgr.getBySystemName(systemPrefix + "MRATEFACTOR") == null) {
+                    log.debug("memory no MRATEFACTOR sets true");
                     result = true;  // Two memories but one is not IMRATEFACTOR
                 }
             }
@@ -149,6 +160,7 @@ public class StoreAndCompare extends AbstractAction {
 
         if (!result) {
             if (InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getList().size() > 0) {
+                log.debug("panel check sets true");
                 result = true;  // One or more panels have been added.
             }
         }

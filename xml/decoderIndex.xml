@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.1.2plus+jake+20220804T1050Z+R9257e996fd on Thu Aug 04 06:50:51 EDT 2022-->
-  <decoderIndex version="23">
+  <!--Written by JMRI version 5.1.2plus+jake+20220812T1944Z+R269ca2172f on Fri Aug 12 15:45:03 EDT 2022-->
+  <decoderIndex version="25">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1532,6 +1532,82 @@
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
           <size length="15" width="7" height="2.7" units="mm" />
+        </model>
+      </family>
+      <family name="Imperium Decoders" mfg="Dapol Limited" comment="Dapol Imperium decoder range" lowVersionID="04" highVersionID="06" file="Dapol.xml">
+        <model model="860015" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO/N" connector="Next18" comment="HO/N-scale, with Next18 plug">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 17</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 12</label>
+          </output>
+          <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 4</label>
+          </output>
+          <output name="6" label="Brown|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 13</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
+          <size length="15" width="9.5" height="2.9" units="mm" />
+        </model>
+        <model model="860019" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 7</label>
+          </output>
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 15</label>
+          </output>
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 14</label>
+          </output>
+          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 13</label>
+          </output>
+          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 4</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
+          <size length="17" width="16" height="3.5" units="mm" />
         </model>
       </family>
       <family name="Booster" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5033.xml">
@@ -38659,6 +38735,11 @@
           <versionCV />
         </model>
       </family>
+      <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63400.xml">
+        <model model="Switch Control 63400" productID="6340" formFactor="Stationary" comment="LocoNet Switch Control">
+          <versionCV />
+        </model>
+      </family>
       <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63410.xml">
         <model model="63410" productID="6341" formFactor="Stationary" comment="LocoNet General Purpose 20 Outputs Switch">
           <versionCV />
@@ -38666,6 +38747,11 @@
       </family>
       <family name="Display Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63450.xml">
         <model model="63450" productID="6345" formFactor="Stationary" comment="LocoNet Display">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63500.xml">
+        <model model="Ln Servo Module 63500" productID="6350" formFactor="Stationary" comment="LocoNet 4 servo Decoder">
           <versionCV />
         </model>
       </family>
@@ -38686,7 +38772,7 @@
         </model>
       </family>
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_67800.xml">
-        <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable Servo Decoder" />
+        <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable 4 Servo Decoder" />
       </family>
       <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73100.xml">
         <model model="73100" numOuts="4" numFns="14" maxMotorCurrent="1.5A" formFactor="N" productID="73100" comment="N-Scale, wired">
@@ -39685,27 +39771,27 @@
           </output>
           <output name="3" label="FO 1">
             <label xml:lang="de">FA1</label>
-            <label xml:lang="cs">Funkční výstup 1</label>
+            <label xml:lang="cs">FV 1</label>
           </output>
           <output name="4" label="FO 2">
             <label xml:lang="de">FA2</label>
-            <label xml:lang="cs">Funkční výstup 2</label>
+            <label xml:lang="cs">FV 2</label>
           </output>
           <output name="5" label="FO 3">
             <label xml:lang="de">FA3</label>
-            <label xml:lang="cs">Funkční výstup 3</label>
+            <label xml:lang="cs">FV 3</label>
           </output>
           <output name="6" label="FO 4">
             <label xml:lang="de">FA4</label>
-            <label xml:lang="cs">Funkční výstup 4</label>
+            <label xml:lang="cs">FV 4</label>
           </output>
           <output name="7" label="FO 5">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">FV 5</label>
           </output>
           <output name="8" label="FO 6">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">FV 6</label>
           </output>
           <size length="30" width="15" height="4" units="mm" />
         </model>
@@ -39761,14 +39847,30 @@
           <size length="30" width="15" height="4" units="mm" />
         </model>
         <model model="MS480 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="cs">FV 5 (+5V)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="cs">FV 6 (+5V)</label>
+          </output>
           <size length="19" width="11" height="3.1" units="mm" />
         </model>
         <model model="MS490 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="3">
@@ -43552,11 +43654,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -43587,11 +43689,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -43626,7 +43728,7 @@
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45609,11 +45711,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45636,19 +45738,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45679,11 +45781,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45714,11 +45816,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45749,11 +45851,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -46122,19 +46224,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -46165,11 +46267,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47797,11 +47899,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47824,19 +47926,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47867,11 +47969,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47902,11 +48004,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47937,11 +48039,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -48314,19 +48416,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -48357,11 +48459,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
