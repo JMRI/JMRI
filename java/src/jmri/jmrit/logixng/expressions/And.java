@@ -11,14 +11,15 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Evaluates to True if all of the children expressions evaluate to true.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class And extends AbstractDigitalExpression implements FemaleSocketListener {
 
+    private Type _type = Type.EvaluateAll;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     private boolean disableCheckForUnconnectedSocket = false;
-    
+
     public And(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -26,13 +27,13 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .createFemaleSocket(this, this, getNewSocketName())));
     }
-    
+
     public And(String sys, String user, List<Map.Entry<String, String>> expressionSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -41,24 +42,41 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         if (sysName == null) sysName = manager.getAutoSystemName();
         And copy = new And(sysName, userName);
         copy.setComment(getComment());
+        copy.setType(_type);
         copy.setNumSockets(getChildCount());
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+
+    /**
+     * Get the type.
+     * @return the type
+     */
+    public Type getType() {
+        return _type;
+    }
+
+    /**
+     * Set the type.
+     * @param type the type
+     */
+    public void setType(Type type) {
+        _type = type;
     }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {
             throw new RuntimeException("expression system names cannot be set more than once");
         }
-        
+
         for (Map.Entry<String, String> entry : systemNames) {
             FemaleDigitalExpressionSocket socket =
                     InstanceManager.getDefault(DigitalExpressionManager.class)
                             .createFemaleSocket(this, this, entry.getKey());
-            
+
             _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
         }
     }
-    
+
     public String getExpressionSystemName(int index) {
         return _expressionEntries.get(index)._socketSystemName;
     }
@@ -68,43 +86,44 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     public Category getCategory() {
         return Category.COMMON;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
         boolean result = true;
         for (ExpressionEntry e : _expressionEntries) {
             if (e._socket.isConnected() && !e._socket.evaluate()) {
+                if (_type == Type.EvaluateNeeded) return false;
                 result = false;
             }
         }
         return result;
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _expressionEntries.get(index)._socket;
     }
-    
+
     @Override
     public int getChildCount() {
         return _expressionEntries.size();
     }
-    
+
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "And_Short");
     }
-    
+
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "And_Long");
+        return Bundle.getMessage(locale, "And_Long", _type.toString());
     }
-    
+
     // This method ensures that we have enough of children
     private void setNumSockets(int num) {
         List<FemaleSocket> addList = new ArrayList<>();
-        
+
         // Is there not enough children?
         while (_expressionEntries.size() < num) {
             FemaleDigitalExpressionSocket socket =
@@ -118,7 +137,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
 
     private void checkFreeSocket() {
         boolean hasFreeSocket = false;
-        
+
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
@@ -127,13 +146,13 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                     InstanceManager.getDefault(DigitalExpressionManager.class)
                             .createFemaleSocket(this, this, getNewSocketName());
             _expressionEntries.add(new ExpressionEntry(socket));
-            
+
             List<FemaleSocket> list = new ArrayList<>();
             list.add(socket);
             firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
@@ -152,35 +171,35 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
     }
-    
+
     private void insertNewSocket(int index) {
         FemaleDigitalExpressionSocket socket =
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .createFemaleSocket(this, this, getNewSocketName());
         _expressionEntries.add(index, new ExpressionEntry(socket));
-        
+
         List<FemaleSocket> addList = new ArrayList<>();
         addList.add(socket);
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
-    
+
     private void removeSocket(int index) {
         List<FemaleSocket> removeList = new ArrayList<>();
         removeList.add(_expressionEntries.remove(index)._socket);
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
     }
-    
+
     private void moveSocketDown(int index) {
         ExpressionEntry temp = _expressionEntries.get(index);
         _expressionEntries.set(index, _expressionEntries.get(index+1));
         _expressionEntries.set(index+1, temp);
-        
+
         List<FemaleSocket> list = new ArrayList<>();
         list.add(_expressionEntries.get(index)._socket);
         list.add(_expressionEntries.get(index)._socket);
         firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void doSocketOperation(int index, FemaleSocketOperation oper) {
@@ -207,18 +226,18 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
     }
-    
+
     @Override
     public void connected(FemaleSocket socket) {
         if (disableCheckForUnconnectedSocket) return;
-        
+
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
                 entry._socketSystemName =
                         socket.getConnectedSocket().getSystemName();
             }
         }
-        
+
         checkFreeSocket();
     }
 
@@ -237,7 +256,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     public void setup() {
         // We don't want to check for unconnected sockets while setup sockets
         disableCheckForUnconnectedSocket = true;
-        
+
         for (ExpressionEntry ee : _expressionEntries) {
             try {
                 if ( !ee._socket.isConnected()
@@ -265,23 +284,23 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                 throw new RuntimeException("socket is already connected");
             }
         }
-        
+
         checkFreeSocket();
-        
+
         disableCheckForUnconnectedSocket = false;
     }
-    
-    
+
+
     /* This class is public since ExpressionAndXml needs to access it. */
     private static class ExpressionEntry {
         private String _socketSystemName;
         private final FemaleDigitalExpressionSocket _socket;
-        
+
         private ExpressionEntry(FemaleDigitalExpressionSocket socket, String socketSystemName) {
             _socketSystemName = socketSystemName;
             _socket = socket;
         }
-        
+
         private ExpressionEntry(FemaleDigitalExpressionSocket socket) {
             this._socket = socket;
         }
@@ -298,12 +317,41 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     public void unregisterListenersForThisClass() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
+
+
+    public enum Type {
+        /**
+         * All the connected sockets are evaluated.
+         */
+        EvaluateAll(Bundle.getMessage("And_EvaluateAll")),
+
+        /**
+         * Evaluation starts with the first socket and continues until
+         * all sockets are evaluated or the result is known.
+         * For the And expression, it means that the evaluation stops
+         * as soon as a connected socket evaluates to false.
+         */
+        EvaluateNeeded(Bundle.getMessage("And_EvaluateNeeded"));
+
+        private final String _text;
+
+        private Type(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(And.class);
-    
+
 }
