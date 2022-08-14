@@ -38,7 +38,7 @@ public class DefaultMaleDigitalActionSocket
 
         ConditionalNG conditionalNG = getConditionalNG();
 
-        log.warn("");
+        log.warn("{}", "");
         log.warn("this: {}", this);
         log.warn("this.getConditionalNG(): {}", this.getConditionalNG());
         log.warn("conditionalNG: {}", conditionalNG);
