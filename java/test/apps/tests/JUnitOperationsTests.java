@@ -46,16 +46,19 @@ public class JUnitOperationsTests {
     }
 
     /**
-     * Run tests with a specified RunListener
+     * Run tests with a specified RunListener.
+     * Will shut down the VM on completion.
      *
      * @param listener the listener for the tests
      * @param testClass the class containing tests to run
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "DM_EXIT",
+        justification = "OK to exit VM")
     public static void run(RunListener listener, Class<?> testClass) {
         JUnitCore runner = new JUnitCore();
         runner.addListener(listener);
         Result result = runner.run(testClass);
         System.exit(result.wasSuccessful() ? 0 : 1);
     }
-}
 
+}

@@ -182,11 +182,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @Override
     protected void sendFunctionGroup1() {
         int new_dirf = ((getIsForward() ? 0 : LnConstants.DIRF_DIR)
-                | (getF0() ? LnConstants.DIRF_F0 : 0)
-                | (getF1() ? LnConstants.DIRF_F1 : 0)
-                | (getF2() ? LnConstants.DIRF_F2 : 0)
-                | (getF3() ? LnConstants.DIRF_F3 : 0)
-                | (getF4() ? LnConstants.DIRF_F4 : 0));
+                | (getFunction(0) ? LnConstants.DIRF_F0 : 0)
+                | (getFunction(1) ? LnConstants.DIRF_F1 : 0)
+                | (getFunction(2) ? LnConstants.DIRF_F2 : 0)
+                | (getFunction(3) ? LnConstants.DIRF_F3 : 0)
+                | (getFunction(4) ? LnConstants.DIRF_F4 : 0));
         log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
@@ -200,10 +200,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup2() {
-        int new_snd = ((getF8() ? LnConstants.SND_F8 : 0)
-                | (getF7() ? LnConstants.SND_F7 : 0)
-                | (getF6() ? LnConstants.SND_F6 : 0)
-                | (getF5() ? LnConstants.SND_F5 : 0));
+        int new_snd = ((getFunction(8) ? LnConstants.SND_F8 : 0)
+                | (getFunction(7) ? LnConstants.SND_F7 : 0)
+                | (getFunction(6) ? LnConstants.SND_F6 : 0)
+                | (getFunction(5) ? LnConstants.SND_F5 : 0));
         log.debug("sendFunctionGroup2 sending {} to LocoNet slot {}", new_snd, slot.getSlot());
         LocoNetMessage msg = new LocoNetMessage(4);
         msg.setOpCode(LnConstants.OPC_LOCO_SND);
@@ -220,7 +220,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void sendFunctionGroup3() {
         // LocoNet practice is to send F9-F12 as a DCC packet
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 128),
-                getF9(), getF10(), getF11(), getF12());
+                getFunction(9), getFunction(10), getFunction(11), getFunction(12));
 
         log.debug("sendFunctionGroup3 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
@@ -234,8 +234,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void sendFunctionGroup4() {
         // LocoNet practice is to send F13-F20 as a DCC packet
         byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address >= 128),
-                getF13(), getF14(), getF15(), getF16(),
-                getF17(), getF18(), getF19(), getF20());
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         log.debug("sendFunctionGroup4 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4
@@ -249,8 +249,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected void sendFunctionGroup5() {
         // LocoNet practice is to send F21-F28 as a DCC packet
         byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address >= 128),
-                getF21(), getF22(), getF23(), getF24(),
-                getF25(), getF26(), getF27(), getF28());
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
 
         log.debug("sendFunctionGroup5 sending {} to LocoNet slot {}", result, slot.getSlot());
         ((jmri.CommandStation) adapterMemo.get(jmri.CommandStation.class)).sendPacket(result, 4); // repeat = 4

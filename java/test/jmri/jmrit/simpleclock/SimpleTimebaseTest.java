@@ -21,13 +21,6 @@ public class SimpleTimebaseTest {
 
     InternalSystemConnectionMemo memo;
 
-    void wait(int msec) {
-        try {
-            super.wait(msec);
-        } catch (Exception e) {
-        }
-    }
-
     // test creation
     @Test
     public void testCreate() {
@@ -53,6 +46,8 @@ public class SimpleTimebaseTest {
     public void testGetBeanType() {
         SimpleTimebase p = new SimpleTimebase(memo);
         Assert.assertEquals("Time", p.getBeanType());
+
+        p.dispose();
     }
 
     @Test
@@ -121,6 +116,7 @@ public class SimpleTimebaseTest {
         Assert.assertEquals(2.0, p.getRate(), 0.01);
         Assert.assertFalse(p.getRun());  // still
 
+        p.dispose();
     }
 
     double seenNewMinutes;
@@ -147,6 +143,8 @@ public class SimpleTimebaseTest {
         if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
 
         Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
+
+        p.dispose();
     }
 
     @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
@@ -165,11 +163,13 @@ public class SimpleTimebaseTest {
         instance.setRun(true);
         JUnitUtil.waitFor(() -> {
             return instance.getTime().getMinutes() != start.getMinutes();
-        });
+        },"getMinutes increased");
         instance.setRun(false);
         Assert.assertNotNull(l1.getTime());
         Assert.assertNotNull(l2.getTime());
         Assert.assertEquals(l1.getTime(), l2.getTime());
+
+        instance.dispose();
     }
 
     @Test
@@ -179,11 +179,13 @@ public class SimpleTimebaseTest {
         Date now = new Date();
         p.setTime(now);
         p.setRate(100.);
-        wait(100);
+        JUnitUtil.waitFor(100);
         Date then = p.getTime();
         long delta = then.getTime() - now.getTime();
         Assert.assertTrue("delta ge 50 (nominal value)", delta >= 50);
         Assert.assertTrue("delta lt 150 (nominal value)", delta < 150);
+
+        p.dispose();
     }
 
     @BeforeEach
@@ -194,6 +196,7 @@ public class SimpleTimebaseTest {
 
     @AfterEach
     public void tearDown() {
+        memo.dispose();
         memo = null;
         jmri.util.JUnitUtil.tearDown();
     }

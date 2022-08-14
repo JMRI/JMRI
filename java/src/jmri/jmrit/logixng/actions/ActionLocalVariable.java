@@ -4,14 +4,15 @@ import java.beans.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
+import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -20,15 +21,26 @@ import jmri.util.ThreadingUtil;
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionLocalVariable extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
     private String _localVariable;
-    private NamedBeanHandle<Memory> _memoryHandle;
-    private NamedBeanHandle<Block> _blockHandle;
-    private NamedBeanHandle<Reporter> _reporterHandle;
+
+    private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+
+    private final LogixNG_SelectNamedBean<Block> _selectBlockNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Block.class, InstanceManager.getDefault(BlockManager.class), this);
+
+    private final LogixNG_SelectNamedBean<Reporter> _selectReporterNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+
     private VariableOperation _variableOperation = VariableOperation.SetToString;
     private String _constantValue = "";
     private String _otherLocalVariable = "";
+    private String _reference = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private boolean _listenToMemory = false;
@@ -42,6 +54,10 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public ActionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+
+        _selectMemoryNamedBean.setOnlyDirectAddressingAllowed();
+        _selectBlockNamedBean.setOnlyDirectAddressingAllowed();
+        _selectReporterNamedBean.setOnlyDirectAddressingAllowed();
     }
 
     @Override
@@ -55,8 +71,11 @@ public class ActionLocalVariable extends AbstractDigitalAction
         copy.setLocalVariable(_localVariable);
         copy.setVariableOperation(_variableOperation);
         copy.setConstantValue(_constantValue);
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
+        _selectBlockNamedBean.copy(copy._selectBlockNamedBean);
+        _selectReporterNamedBean.copy(copy._selectReporterNamedBean);
         copy.setOtherLocalVariable(_otherLocalVariable);
+        copy.setReference(_reference);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
         copy.setListenToMemory(_listenToMemory);
@@ -74,142 +93,16 @@ public class ActionLocalVariable extends AbstractDigitalAction
         return _localVariable;
     }
 
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");  // No I18N
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
-        } else {
-            removeMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
-        }
+    public LogixNG_SelectNamedBean<Memory> getSelectMemoryNamedBean() {
+        return _selectMemoryNamedBean;
     }
 
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");  // No I18N
-        _memoryHandle = handle;
-        if (_memoryHandle != null) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
+    public LogixNG_SelectNamedBean<Block> getSelectBlockNamedBean() {
+        return _selectBlockNamedBean;
     }
 
-    public void setMemory(@CheckForNull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");  // No I18N
-        if (memory != null) {
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            _memoryHandle = null;
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "removeMemory");   // No I18N
-        if (_memoryHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _memoryHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
-    }
-
-    public void setBlock(@Nonnull String blockName) {
-        assertListenersAreNotRegistered(log, "setBlock");  // No I18N
-        BlockManager blockManager = InstanceManager.getDefault(BlockManager.class);
-        Block block = blockManager.getBlock(blockName);
-        if (block != null) {
-            setBlock(block);
-        } else {
-            removeBlock();
-            log.warn("block \"{}\" is not found", blockName);
-        }
-    }
-
-    public void setBlock(@Nonnull NamedBeanHandle<Block> handle) {
-        assertListenersAreNotRegistered(log, "setBlock");  // No I18N
-        _blockHandle = handle;
-        if (_blockHandle != null) {
-            InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    public void setBlock(@CheckForNull Block block) {
-        assertListenersAreNotRegistered(log, "setBlock");  // No I18N
-        if (block != null) {
-            _blockHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(block.getDisplayName(), block);
-            InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
-        } else {
-            _blockHandle = null;
-            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    public void removeBlock() {
-        assertListenersAreNotRegistered(log, "removeBlock");   // No I18N
-        if (_blockHandle != null) {
-            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
-            _blockHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Block> getBlock() {
-        return _blockHandle;
-    }
-
-    public void setReporter(@Nonnull String reporterName) {
-        assertListenersAreNotRegistered(log, "setReporter");  // No I18N
-        ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
-        Reporter reporter = reporterManager.getReporter(reporterName);
-        if (reporter != null) {
-            setReporter(reporter);
-        } else {
-            removeReporter();
-            log.warn("reporter \"{}\" is not found", reporterName);
-        }
-    }
-
-    public void setReporter(@Nonnull NamedBeanHandle<Reporter> handle) {
-        assertListenersAreNotRegistered(log, "setReporter");  // No I18N
-        _reporterHandle = handle;
-        if (_reporterHandle != null) {
-            InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    public void setReporter(@CheckForNull Reporter reporter) {
-        assertListenersAreNotRegistered(log, "setReporter");  // No I18N
-        if (reporter != null) {
-            _reporterHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(reporter.getDisplayName(), reporter);
-            InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
-        } else {
-            _reporterHandle = null;
-            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    public void removeReporter() {
-        assertListenersAreNotRegistered(log, "removeReporter");   // No I18N
-        if (_reporterHandle != null) {
-            InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
-            _reporterHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Reporter> getReporter() {
-        return _reporterHandle;
+    public LogixNG_SelectNamedBean<Reporter> getSelectReporterNamedBean() {
+        return _selectReporterNamedBean;
     }
 
     public void setVariableOperation(VariableOperation variableOperation) throws ParserException {
@@ -232,6 +125,15 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     public String getOtherLocalVariable() {
         return _otherLocalVariable;
+    }
+
+    public void setReference(@Nonnull String reference) {
+        assertListenersAreNotRegistered(log, "setReference");
+        _reference = reference;
+    }
+
+    public String getReference() {
+        return _reference;
     }
 
     public void setConstantValue(String constantValue) {
@@ -286,30 +188,6 @@ public class ActionLocalVariable extends AbstractDigitalAction
         }
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);   // No I18N
-                    throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_MemoryInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-            if (evt.getOldValue() instanceof Block) {
-                if (evt.getOldValue().equals(_blockHandle.getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);   // No I18N
-                    throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_BlockInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_reporterHandle.getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);   // No I18N
-                    throw new PropertyVetoException(Bundle.getMessage("ActionLocalVariable_ReporterInUseLocalVariableActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -346,11 +224,17 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyMemoryToVariable:
-                    if (_memoryHandle != null) {
-                        symbolTable.setValue(_localVariable, _memoryHandle.getBean().getValue());
+                    Memory memory = _selectMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (memory != null) {
+                        symbolTable.setValue(_localVariable, memory.getValue());
                     } else {
                         log.warn("ActionLocalVariable should copy memory to variable but memory is null");
                     }
+                    break;
+
+                case CopyReferenceToVariable:
+                    symbolTable.setValue(_localVariable, ReferenceUtil.getReference(
+                            conditionalNG.getSymbolTable(), _reference));
                     break;
 
                 case CopyTableCellToVariable:
@@ -359,16 +243,18 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     break;
 
                 case CopyBlockToVariable:
-                    if (_blockHandle != null) {
-                        symbolTable.setValue(_localVariable, _blockHandle.getBean().getValue());
+                    Block block = _selectBlockNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (block != null) {
+                        symbolTable.setValue(_localVariable, block.getValue());
                     } else {
                         log.warn("ActionLocalVariable should copy block value to variable but block is null");
                     }
                     break;
 
                 case CopyReporterToVariable:
-                    if (_reporterHandle != null) {
-                        symbolTable.setValue(_localVariable, _reporterHandle.getBean().getCurrentReport());
+                    Reporter reporter = _selectReporterNamedBean.evaluateNamedBean(getConditionalNG());
+                    if (reporter != null) {
+                        symbolTable.setValue(_localVariable, reporter.getCurrentReport());
                     } else {
                         log.warn("ActionLocalVariable should copy current report to variable but reporter is null");
                     }
@@ -412,26 +298,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        String copyToMemoryName;
-        if (_memoryHandle != null) {
-            copyToMemoryName = _memoryHandle.getBean().getDisplayName();
-        } else {
-            copyToMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
-
-        String copyToBlockName;
-        if (_blockHandle != null) {
-            copyToBlockName = _blockHandle.getBean().getDisplayName();
-        } else {
-            copyToBlockName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
-
-        String copyToReporterName;
-        if (_reporterHandle != null) {
-            copyToReporterName = _reporterHandle.getBean().getDisplayName();
-        } else {
-            copyToReporterName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
+        String copyToMemoryName = _selectMemoryNamedBean.getDescription(locale);
+        String copyToBlockName = _selectBlockNamedBean.getDescription(locale);
+        String copyToReporterName = _selectReporterNamedBean.getDescription(locale);
 
         switch (_variableOperation) {
             case SetToNull:
@@ -447,6 +316,10 @@ public class ActionLocalVariable extends AbstractDigitalAction
             case CopyMemoryToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable",
                         _localVariable, copyToMemoryName);
+
+            case CopyReferenceToVariable:
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReferenceToVariable",
+                        _localVariable, _reference);
 
             case CopyBlockToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyBlockToVariable",
@@ -481,20 +354,20 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             if (_listenToMemory
-                    && (_variableOperation == VariableOperation.CopyMemoryToVariable)
-                    && (_memoryHandle != null)) {
-                _memoryHandle.getBean().addPropertyChangeListener("value", this);
+                    && (_variableOperation == VariableOperation.CopyMemoryToVariable)) {
+                _selectMemoryNamedBean.addPropertyChangeListener("value", this);
             }
             if (_listenToBlock
-                    && (_variableOperation == VariableOperation.CopyBlockToVariable)
-                    && (_blockHandle != null)) {
-                _blockHandle.getBean().addPropertyChangeListener("value", this);
+                    && (_variableOperation == VariableOperation.CopyBlockToVariable)) {
+                _selectBlockNamedBean.addPropertyChangeListener("value", this);
             }
             if (_listenToReporter
-                    && (_variableOperation == VariableOperation.CopyReporterToVariable)
-                    && (_reporterHandle != null)) {
-                _reporterHandle.getBean().addPropertyChangeListener("currentReport", this);
+                    && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
+                _selectReporterNamedBean.addPropertyChangeListener("currentReport", this);
             }
+            _selectMemoryNamedBean.registerListeners();
+            _selectBlockNamedBean.registerListeners();
+            _selectReporterNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -504,20 +377,20 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             if (_listenToMemory
-                    && (_variableOperation == VariableOperation.CopyMemoryToVariable)
-                    && (_memoryHandle != null)) {
-                _memoryHandle.getBean().removePropertyChangeListener("value", this);
+                    && (_variableOperation == VariableOperation.CopyMemoryToVariable)) {
+                _selectMemoryNamedBean.removePropertyChangeListener("value", this);
             }
             if (_listenToBlock
-                    && (_variableOperation == VariableOperation.CopyBlockToVariable)
-                    && (_blockHandle != null)) {
-                _blockHandle.getBean().removePropertyChangeListener("value", this);
+                    && (_variableOperation == VariableOperation.CopyBlockToVariable)) {
+                _selectBlockNamedBean.removePropertyChangeListener("value", this);
             }
             if (_listenToReporter
-                    && (_variableOperation == VariableOperation.CopyReporterToVariable)
-                    && (_reporterHandle != null)) {
-                _reporterHandle.getBean().removePropertyChangeListener("currentReport", this);
+                    && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
+                _selectReporterNamedBean.removePropertyChangeListener("currentReport", this);
             }
+            _selectMemoryNamedBean.unregisterListeners();
+            _selectBlockNamedBean.unregisterListeners();
+            _selectReporterNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -539,6 +412,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         SetToString(Bundle.getMessage("ActionLocalVariable_VariableOperation_SetToString")),
         CopyVariableToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyVariableToVariable")),
         CopyMemoryToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyMemoryToVariable")),
+        CopyReferenceToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyReferenceToVariable")),
         CopyTableCellToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyTableCellToVariable")),
         CopyBlockToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyBlockToVariable")),
         CopyReporterToVariable(Bundle.getMessage("ActionLocalVariable_VariableOperation_CopyReporterToVariable")),
@@ -561,9 +435,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionLocalVariable: bean = {}, report = {}", cdl, report);
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectBlockNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectReporterNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariable.class);

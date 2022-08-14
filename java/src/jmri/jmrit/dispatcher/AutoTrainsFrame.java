@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
@@ -18,6 +19,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
+
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.JToolBar;
@@ -256,42 +259,73 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
                 return; // ignore if not speed or direction
             }
-            updateThrottleDisplay();
+            updateThrottleDisplay(e);
         }
 
-        private void updateThrottleDisplay() {
-            StringBuilder sb = new StringBuilder();
+        private float lastReportedSpeed;   // for display purposes
+
+        /*
+         * Updates screen control throttle.
+         */
+        private void primeThrottleDisplay() {
             if (throttle != null) {
-                if (rosterEntry != null && rosterEntry.getSpeedProfile() != null) {
+                if (throttle.getIsForward()) {
+                    forwardButton.setSelected(true);
+                } else {
+                    reverseButton.setSelected(true);
+                }
+                lastReportedSpeed = throttle.getSpeedSetting();
+                if (speedSlider.isVisible()) {
+                    speedSlider.setValue(Math.round(lastReportedSpeed * 100.0f));
+                }
+            }
+            updateThrottleStatus();
+        }
+
+        /*
+         * Updates control from events
+         */
+        private void updateThrottleDisplay(java.beans.PropertyChangeEvent e) {
+            if (throttle != null) {
+                if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
+                    if ((boolean) e.getNewValue()) {
+                        forwardButton.setSelected(true);
+                    } else {
+                        reverseButton.setSelected(true);
+                    }
+                } else {
+                    lastReportedSpeed = (float) e.getNewValue();
+                    if (speedSlider.isValid()) {
+                        speedSlider.setValue(Math.round(lastReportedSpeed * 100.0f));
+                    }
+                }
+            }
+            updateThrottleStatus();
+        }
+
+        /*
+         * Updates the status words.
+         */
+        private void updateThrottleStatus() {
+            StringBuilder sb = new StringBuilder();
+            if (throttle != null && throttleStatus.isVisible()) {
+                if (rosterEntry != null && autoActiveTrain.useSpeedProfile   && rosterEntry.getSpeedProfile() != null) {
                     sb.append("" +
                             rosterEntry.getSpeedProfile().convertThrottleSettingToScaleSpeedWithUnits(
-                                    throttle.getSpeedSetting(),
-                                    throttle.getIsForward()));
+                                    lastReportedSpeed,
+                                    forwardButton.isSelected()));
                 } else {
                     sb.append("" + Math.round(throttle.getSpeedSetting() * 100));
                     sb.append("% ");
                 }
-                if (throttle.getIsForward()) {
+                if (forwardButton.isSelected()) {
                     sb.append("(fwd)");
                 } else {
                     sb.append("(rev)");
                 }
-                if (forwardButton.isVisible() && throttle.getIsForward()) {
-                    forwardButton.setSelected(throttle.getIsForward());
-                }
-                if (reverseButton.isVisible() && !throttle.getIsForward()) {
-                    reverseButton.setSelected(throttle.getIsForward());
-                }
-                if (speedSlider.isVisible()) {
-                    speedSlider.setValue((int)(throttle.getSpeedSetting() * 100.0f));
-                }
-                if (throttleStatus.isVisible()) {
-                    throttleStatus.setText(sb.toString());
-                }
-            } else {
-                if (throttleStatus.isVisible()) {
-                    throttleStatus.setText("No Throttle");
-                }
+                throttleStatus.setText(sb.toString());
+            } else if (throttleStatus.isVisible()) {
+                throttleStatus.setText("No Throttle");
             }
         }
 
@@ -324,7 +358,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                                 handleThrottleListen(e);
                             }
                         };
-                        throttle.addPropertyChangeListener(throttleListener);
+                        jmri.InstanceManager.throttleManagerInstance().attachListener(throttle.getLocoAddress(), throttleListener);
+                        rosterEntry = autoActiveTrain.getRosterEntry();
+                        setStatusLabelWidth();
                         stopButton.setText(Bundle.getMessage("StopButton"));
                         stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
                         stopButton.setVisible(true);
@@ -336,7 +372,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                         reverseButton.setVisible(false);
                         speedSlider.setVisible(false);
                         throttleStatus.setVisible(true);
-                        updateThrottleDisplay();
+                        primeThrottleDisplay();
                     }
                 } else if ((int) e.getNewValue() == ActiveTrain.TERMINATED) {
                     if (throttle != null && throttleListener != null) {
@@ -365,7 +401,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                                 handleThrottleListen(e);
                             }
                         };
-                        throttle.addPropertyChangeListener(throttleListener);
+                        jmri.InstanceManager.throttleManagerInstance().attachListener(throttle.getLocoAddress(), throttleListener);
+                        rosterEntry = autoActiveTrain.getRosterEntry();
+                        setStatusLabelWidth();
                     }
                     stopButton.setText(Bundle.getMessage("StopButton"));
                     stopButton.setToolTipText(Bundle.getMessage("StopButtonHint"));
@@ -378,7 +416,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     reverseButton.setVisible(false);
                     speedSlider.setVisible(false);
                     throttleStatus.setVisible(true);
-                    updateThrottleDisplay();
+                    primeThrottleDisplay();
                 } else if ((int) e.getNewValue() == ActiveTrain.DONE) {
                     stopButton.setText(Bundle.getMessage("RestartButton"));
                     stopButton.setToolTipText(Bundle.getMessage("RestartButtonHint"));
@@ -426,6 +464,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     autoActiveTrain.setSpeedBySignal();
                 }
             }
+            pack();
         }
 
         private JToolBar componentJPanel;
@@ -463,12 +502,15 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             speedSlider.setPreferredSize(new Dimension(100, 20));
             componentJPanel.add(speedSlider);
             speedSlider.addChangeListener(e -> {
-                int val = ((JSlider) (e.getSource())).getValue();
-                sliderChanged(val);
+                if (speedSlider.isVisible()) {
+                    int val = ((JSlider) (e.getSource())).getValue();
+                    float speedValue = val * 0.01f;
+                    autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
+                }
             });
 
             throttleStatus = new JLabel();
-            // prevent JFrame to resize on each % change
+            // prevent JFrame to resize on each % change - temporary size for initialization
             throttleStatus.setPreferredSize(new Dimension(100, 20));
             throttleStatus.setText("Speed Unknown");
             componentJPanel.add(throttleStatus);
@@ -477,6 +519,18 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             pack();
         }
 
+        /*
+         * Using dummy strings get max size of the statustext
+         */
+        private void setStatusLabelWidth() {
+            if (rosterEntry!=null && autoActiveTrain.getUseSpeedProfile()) {
+                throttleStatus.setPreferredSize(
+                        new JTextField(20).getPreferredSize());
+            } else {
+                throttleStatus.setPreferredSize(
+                        new JTextField(10).getPreferredSize());
+            }
+        }
         public void stopResume() {
             if (autoActiveTrain.getAutoEngineer() != null) {
                 ActiveTrain at = autoActiveTrain.getActiveTrain();
@@ -501,9 +555,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     autoActiveTrain.saveSpeedAndDirection();
                     autoActiveTrain.setSavedStatus(at.getStatus());
                     at.setStatus(ActiveTrain.STOPPED);
-                    if (at.getMode() == ActiveTrain.MANUAL) {
-                        speedSlider.setValue(0);
-                    }
+                    speedSlider.setValue(0);
                 }
             } else {
                 log.error("unexpected null autoEngineer");
@@ -520,23 +572,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.MANUAL) {
                 autoActiveTrain.setForward(forwardButton.isSelected());
             } else {
-                log.warn("unexpected direction button change on line {}", at.getTrainName());
-            }
-        }
-
-        public void sliderChanged(int value) {
-            ActiveTrain at = autoActiveTrain.getActiveTrain();
-            if (at.getMode() == ActiveTrain.MANUAL) {
-                float speedValue = value;
-                speedValue = speedValue * 0.01f;
-                autoActiveTrain.getAutoEngineer().setSpeedImmediate(speedValue);
-            } else {
-                log.warn("unexpected slider change on line {}", at.getTrainName());
+                log.debug(" {}:Ignored direction button change, not in manual mode", at.getTrainName());
             }
         }
     }
 
-        private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 

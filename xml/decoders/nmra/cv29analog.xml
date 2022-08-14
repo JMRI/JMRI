@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -72,6 +72,7 @@
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
         <choice xml:lang="cs">Pouze digitál NMRA</choice>
         <choice xml:lang="nl">Alleen digitaal vlg. NMRA</choice>
+        <choice xml:lang="es">NMRA digital solamente</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
@@ -81,6 +82,7 @@
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
         <choice xml:lang="cs">Povolena konverze DC</choice>
         <choice xml:lang="nl">Analogmodus ingeschakeld</choice>
+        <choice xml:lang="es">Alimentación análoga habilitada(DCC+Análogo)</choice>
       </enumChoice>
     </enumVal>
     <label>Power Source Conversion</label>
@@ -90,11 +92,13 @@
     <label xml:lang="de">Stromquelle Konversion</label>
     <label xml:lang="cs">Konverze napájení</label>
     <label xml:lang="nl">Stroombron-omschakeling</label>
+    <label xml:lang="es">Conversión de fuente de energía</label>
     <tooltip>&lt;html&gt;NMRA Digital only: Digital Operation Only.&lt;br&gt; DC conversion enabled: both Digital + Analog, default is both&lt;br&gt;</tooltip>
     <tooltip xml:lang="it">&lt;html&gt;'4' bit.&lt;br&gt; Permette alla loco di andare in DC, per default è On&lt;br&gt;</tooltip>
     <tooltip xml:lang="fr">&lt;html&gt;Digital NMRA seulement: fonctionne uniquement en Digital&lt;br&gt; Mode analogique activé: fonctionne à la fois en Digital et en analogique&lt;br&gt;Les deux par défaut.&lt;br&gt;</tooltip>
     <tooltip xml:lang="de">&lt;html&gt;Nur Digital nach NMRA: Die Lokomotive fährt nur digital.&lt;br&gt; Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.&lt;br&gt;</tooltip>
     <tooltip xml:lang="cs">&lt;html&gt;Pouze digitál NMRA: pouze digitální provoz. &lt;br&gt; Povolena konverze DC: obojí provoz digitální + analogový, výhozí hodnota je vypnuto.&lt;br&gt;</tooltip>
     <tooltip xml:lang="nl">&lt;html&gt;Alleen digitaal volgens NMRA: de locomotief rijdt alleen digitaal.&lt;br&gt; Analoge modus geactiveerd: de locomotief rijdt zowel digitaal als analoog.&lt;br&gt;</tooltip>
+    <tooltip xml:lang="es">&lt;html&gt;Solo digital NMRA: solo funcionamiento digital.&lt;br&gt; Conversión de CC habilitada: tanto digital como analógico, el valor predeterminado es ambos&lt;br&gt;</tooltip>
   </variable>
 </variables>

@@ -20,7 +20,7 @@
       <ul>
         <li>LocoNet</li>
 
-        <li>CBUS®</li>
+        <li>CBUS&reg;</li>
       </ul>
 
       <h2>Signal Data Table Columns</h2>
@@ -201,7 +201,7 @@
       <p>You can view this help page within JMRI by selecting Help &gt; Window Help in the top bar
       of the Cab Signal window.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

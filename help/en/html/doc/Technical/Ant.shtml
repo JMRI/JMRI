@@ -5,11 +5,6 @@
   <title>JMRI: Building with Command Line Tools</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code ant">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
@@ -107,8 +102,10 @@
         <dd><code>mvn antrun:run -Danttarget=panelpro</code>
         </dd>
       </dl>
-      The <code>scripts/mvn-test</code> includes all the options necessary to run the Travis CI
-      test Maven job from your local command line. <!--#include virtual="/Footer.shtml" -->
+
+      <p>The <code>scripts/mvn-test</code> includes all the options necessary to run the Travis CI
+      test Maven job from your local command line.</p>
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

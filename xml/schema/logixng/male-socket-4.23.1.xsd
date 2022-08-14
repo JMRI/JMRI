@@ -65,22 +65,7 @@
                   <xs:sequence>
                     <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
 
-                    <xs:element name="type" minOccurs="1" maxOccurs="1">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:token">
-                          <xs:enumeration value="None"/>
-                          <xs:enumeration value="Integer"/>
-                          <xs:enumeration value="FloatingNumber"/>
-                          <xs:enumeration value="String"/>
-                          <xs:enumeration value="Array"/>
-                          <xs:enumeration value="Map"/>
-                          <xs:enumeration value="LocalVariable"/>
-                          <xs:enumeration value="Memory"/>
-                          <xs:enumeration value="Reference"/>
-                          <xs:enumeration value="Formula"/>
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
+                    <xs:element name="type" type="LogixNG_LocalVariable_InitialValueType_Type" minOccurs="1" maxOccurs="1"/>
 
                     <xs:element name="data" type="xs:string" minOccurs="1" maxOccurs="1"/>
                   </xs:sequence>
@@ -96,7 +81,7 @@
 
               <!-- Sub classes to AbstractMaleSocket may add things here - Start -->
 
-			  <xs:attribute name="DefaultMaleDigitalExpressionSocketListen" type="yesNoType" />
+              <xs:attribute name="DefaultMaleDigitalExpressionSocketListen" type="yesNoType" />
 
               <!-- Sub classes to AbstractMaleSocket may add things here - End -->
 

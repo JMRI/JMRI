@@ -93,7 +93,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         
         // Check if system name is valid
         if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
-            log.warn("SystemName " + expression.getSystemName() + " is not in the correct format");
+            log.warn("SystemName {} is not in the correct format", expression.getSystemName());
             throw new IllegalArgumentException(String.format("System name is invalid: %s", expression.getSystemName()));
         }
         

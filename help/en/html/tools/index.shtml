@@ -252,6 +252,14 @@
           meets.</dd>
 
           <dd>
+            <h3><a href="vsd/index.shtml">Virtual Sound Decoder</a>
+            </h3>
+          </dd>
+
+          <dd>Provides throttle-controlled locomotive sound simulation without the need of an
+          on-board sound decoder.</dd>
+
+          <dd>
             <h3><a href="../../package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a>
             </h3>
           </dd>
@@ -282,7 +290,7 @@
             The Operations tool has evolved to an advanced OperationsPro application, allowing you
             to generate Trains and produce computer generated Manifests and Switch Lists for your
             railroad from a roster of rolling stock, schedules and destinations. This set of tools
-            has evolved into a full <a href="../apps/OperationsPro/index.shtml">OperationsPro™
+            has evolved into a full <a href="../apps/OperationsPro/index.shtml">OperationsPro&trade;
             application</a>.
           </dd>
         </dl>
@@ -497,7 +505,7 @@
           </li>
         </ul>
 
-        <h3><a href="../hardware/marklin/index.shtml#tools">Märklin Tools</a>
+        <h3><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin Tools</a>
         </h3>
 
         <ul>
@@ -691,7 +699,7 @@
         commonly used in web development. Although it will take a little time to get used to it, in
         the end it provides a lot of power to control your layout anyway you'd like.
         <p>Run your own scripts or scripts shared by other JMRI users from the
-        <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>⇒ Run
+        <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>&rArr; Run
         Script...</strong> menu.</p>
         <!--#include virtual="/Footer.shtml" -->
       </div>

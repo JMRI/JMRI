@@ -7,6 +7,8 @@ import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
+import jmri.util.swing.BeanSelectPanel;
+
 /**
  * Check the architecture of the JMRI library
  * <p>
@@ -46,11 +48,83 @@ public class ArchitectureTest {
      * No access to System.err and System.out except as specified
      */
     @ArchTest // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
+    public static final ArchRule checkMouseEvent = noClasses().that()
+                                // classes with permitted access (temporary violations go in archunit_ignore_patterns.txt)
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseEvent").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseListener").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener").and()
+
+                                .doNotHaveFullyQualifiedName("apps.SystemConsole$PopupListener").and()
+                                .doNotHaveFullyQualifiedName("apps.startup.StartupActionsPreferencesPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableDataModel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.ListedTableFrame$ActionJList").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.block.BlockTableDataModel$ImageIconRenderer$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.light.LightTableDataModel$ImageIconRenderer$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.oblock.TableFrames$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.oblock.TableFrames").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.sensor.SensorTableDataModel$ImageIconRenderer$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableDataModel$ImageIconRenderer$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableJTable").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor$2").and()
+                                .doNotHaveFullyQualifiedName("mri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch$3").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.entryexit.EntryExitPairs$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.jython.JynstrumentPopupMenu$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.logix.WarrantRoute$RouteLocation").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.ConditionalNGDebugger$PopupMenu$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$PopupMenu$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterGroupsPanel$MouseAdapter").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterTable$RosterCellEditor").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.symbolicprog.CombinedLocoSelTreePane$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.throttle.FunctionButton$PopupListener").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.can.cbus.swing.nodeconfig.CbusNodeNVEditTablePane$NvSpinnerEditor").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.symbolicprog.CombinedLocoSelTreePane$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsFrame$DataButtonMouseListener").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetMetricsFrame$ErrMetricButtonMouseListener").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$3").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$4").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$5").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$4").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$6").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.rps.trackingpanel.RpsTrackingPanel").and()
+                                .doNotHaveFullyQualifiedName("jmri.profile.ProfileManagerDialog").and()
+                                .doNotHaveFullyQualifiedName("jmri.profile.ProfileManagerDialog$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.profile.ProfilePreferencesPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.profile.ProfilePreferencesPanel$2").and()
+                                .doNotHaveFullyQualifiedName("jmri.swing.EditableList$MouseListener").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.BusyGlassPane$CBListener").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.JTreeWithPopup$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseListener$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.TriStateJCheckBox$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.table.JTableWithColumnToolTips$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.table.ToggleButtonEditor").and()
+                                .doNotHaveFullyQualifiedName("jmri.web.servlet.frameimage.JmriJFrameServlet")
+
+                            .should()
+                                .dependOnClassesThat().haveFullyQualifiedName("java.awt.event.MouseEvent");
+
+    /**
+     * No access to System.err and System.out except as specified
+     */
+    @ArchTest // Initially 50 flags in JMRI 4.17.4 - see archunit_ignore_patterns.txt
     public static final ArchRule checkStandardStreams = noClasses().that()
                                 // classes with permitted access (temporary violations go in archunit_ignore_patterns.txt)
                                 .doNotHaveFullyQualifiedName("apps.JavaVersionCheckWindow").and()
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
                                 .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.FileUtilSupport").and() // used in log4j init
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetJavaProperty").and()
@@ -242,4 +316,74 @@ public class ArchitectureTest {
             .that().haveSimpleNameEndingWith("Bundle")
             .should().beAssignableTo(jmri.Bundle.class);
 
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeans")                            // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeans$NamedBeanReference")         // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable")                       // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable$NamedBeanReference")    // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /**
+     * No classes in jmri.jmrit.logixng.actions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsXmlNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions.configurexml")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /**
+     * No classes in jmri.jmrit.logixng.expressions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /**
+     * No classes in jmri.jmrit.logixng.expressions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     */
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsXmlNotUsingNamedBeanHandle = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions.configurexml")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
+
+    /*.*
+     * No classes in jmri.jmrit.logixng.actions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     *./
+    @ArchTest
+    public static final ArchRule checkLogixNGActionsNotUsingBeanSelectPanel = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.actions..")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
+
+    /*.*
+     * No classes in jmri.jmrit.logixng.expressions should access jmri.NamedBeanHandle.
+     * They should use jmri.jmrit.logixng.util.LogixNG_SelectNamedBean instead.
+     *./
+    @ArchTest
+    public static final ArchRule checkLogixNGExpressionsNotUsingBeanSelectPanel = noClasses()
+            .that()
+            .resideInAPackage("jmri.jmrit.logixng.expressions..")
+            .should()
+            .dependOnClassesThat().haveFullyQualifiedName("jmri.util.swing.BeanSelectPanel");
+*/
 }

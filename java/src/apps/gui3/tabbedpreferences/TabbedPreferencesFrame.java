@@ -13,7 +13,7 @@ import jmri.util.JmriJFrame;
  *<p>
  * The {@link TabbedPreferences} object is requested from the InstanceManager, and
  * if need-be created and initialized in the process of doing that.
- * 
+ *
  * @author Kevin Dickerson Copyright 2010
  * @author Bob Jacobsen Copyright 2019
  */
@@ -62,10 +62,14 @@ public class TabbedPreferencesFrame extends JmriJFrame {
             }
         }
         if (getTabbedPreferences().isDirty()) {
+            var buttons = JOptionPane.YES_NO_CANCEL_OPTION;
+            if (sdm.isShuttingDown()) {
+                buttons = JOptionPane.YES_NO_OPTION;
+            }
             switch (JOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("UnsavedChangesMessage", getTabbedPreferences().getTitle()), // NOI18N
                     Bundle.getMessage("UnsavedChangesTitle"), // NOI18N
-                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    buttons,
                     JOptionPane.QUESTION_MESSAGE)) {
                 case JOptionPane.YES_OPTION:
                     // save preferences

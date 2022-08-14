@@ -26,7 +26,7 @@ import org.jdom2.Element;
 public class DefaultModuleManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
-    
+
     public DefaultModuleManagerXml() {
     }
 
@@ -93,26 +93,26 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
      * @param expressions Element containing the Logix elements to load.
      */
     public void loadTables(Element expressions) {
-        
+
         List<Element> expressionList = expressions.getChildren();  // NOI18N
-        log.debug("Found " + expressionList.size() + " tables");  // NOI18N
+        log.debug("Found {} tables", expressionList.size() );  // NOI18N
 
         for (int i = 0; i < expressionList.size(); i++) {
-            
+
             String className = expressionList.get(i).getAttribute("class").getValue();
 //            log.error("className: " + className);
-            
+
             Class<?> clazz = xmlClasses.get(className);
-            
+
             if (clazz == null) {
                 try {
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
-                    log.error("cannot load class " + className, ex);
+                    log.error("cannot load class {}", className, ex);
                 }
             }
-            
+
             if (clazz != null) {
                 Constructor<?> c = null;
                 try {
@@ -120,7 +120,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
                 } catch (NoSuchMethodException | SecurityException ex) {
                     log.error("cannot create constructor", ex);
                 }
-                
+
                 if (c != null) {
                     try {
                         AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
@@ -161,7 +161,7 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
             // register new one for configuration
             ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cmOD != null) {
-                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_TABLES);
+                cmOD.registerConfig(pManager, jmri.Manager.LOGIXNG_MODULES);
             }
         });
     }

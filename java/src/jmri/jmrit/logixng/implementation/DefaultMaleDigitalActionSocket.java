@@ -43,11 +43,15 @@ public class DefaultMaleDigitalActionSocket
         log.warn("this.getConditionalNG(): {}", this.getConditionalNG());
         log.warn("conditionalNG: {}", conditionalNG);
         log.warn("conditionalNG.getStack(): {}", conditionalNG.getStack());
+
         int currentStackPos = conditionalNG.getStack().getCount();
 
         try {
             conditionalNG.getSymbolTable().createSymbols(_localVariables);
             ((DigitalActionBean)getObject()).execute();
+        } catch (PassThruException e) {
+            // Pass thru this exception
+            throw e;
         } catch (JmriException e) {
             if (e.getErrors() != null) {
                 handleError(this, Bundle.getMessage("ExceptionExecuteMulti"), e.getErrors(), e, log);

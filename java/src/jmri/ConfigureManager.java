@@ -92,14 +92,6 @@ public interface ConfigureManager {
     public List<Object> getInstanceList(Class<?> c);
 
     /**
-     * Stores prefs, config, tools and user information.
-     *
-     * @param file Output file
-     * @return true if succeeded
-     */
-    public boolean storeAll(File file);
-
-    /**
      * Stores just preferences information.
      * <p>
      * Where that information is stored is implementation-specific.
@@ -129,7 +121,7 @@ public interface ConfigureManager {
     public boolean storeConfig(File file);
 
     /**
-     * Stores just user information.
+     * Stores user and config information.
      *
      * @param file Output file
      * @return true if succeeded

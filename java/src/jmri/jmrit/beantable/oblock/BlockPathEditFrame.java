@@ -52,6 +52,7 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     protected UserPreferencesManager pref;
     protected boolean isDirty = false;  // true to fire reminder to save work
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public BlockPathEditFrame(String title, @Nonnull OBlock block, @CheckForNull OPath path,
@@ -377,6 +378,7 @@ public class BlockPathEditFrame extends JmriJFrame {
     }
 
     protected void showReminderMessage() {
+        if (checkEnabled) return;
         InstanceManager.getDefault(UserPreferencesManager.class).
                 showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemOBlockTable")),  // NOI18N

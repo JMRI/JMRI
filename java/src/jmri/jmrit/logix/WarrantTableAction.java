@@ -4,6 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,9 @@ public class WarrantTableAction extends AbstractAction {
     private boolean _hasErrors = false;
     private JDialog _errorDialog;
     private WarrantFrame _openFrame;
+    private Point _warFrameLoc = new Point(20,20);
     private NXFrame _nxFrame;
+    private Point _nxFrameLoc = new Point(40,40);
     private boolean _logging = false;
     private Runnable _shutDownTask = null;
 
@@ -172,6 +175,7 @@ public class WarrantTableAction extends AbstractAction {
     protected void closeNXFrame() {
         if (_nxFrame != null) {
             _nxFrame.clearTempWarrant();
+            _nxFrameLoc = _nxFrame.getLocation();
             _nxFrame.dispose();
             _nxFrame = null;
         }
@@ -185,6 +189,7 @@ public class WarrantTableAction extends AbstractAction {
         }
         _nxFrame.setState(java.awt.Frame.NORMAL);
         _nxFrame.setVisible(true);
+        _nxFrameLoc.setLocation(_nxFrameLoc);
         _nxFrame.toFront();
     }
 
@@ -194,6 +199,7 @@ public class WarrantTableAction extends AbstractAction {
             if (!_openFrame.askClose()) {
                 return false;
             }
+            _warFrameLoc = _openFrame.getLocation();
             _openFrame.close();
             _openFrame = null;
         }
@@ -218,6 +224,7 @@ public class WarrantTableAction extends AbstractAction {
         _openFrame = new WarrantFrame(w);
         _openFrame.setState(java.awt.Frame.NORMAL);
         _openFrame.toFront();            
+        _openFrame.setLocation(_warFrameLoc);
     }
 
     private void openWarrantFrame(String key) {
@@ -243,6 +250,10 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
+    }
+    
+    protected WarrantFrame getOpenFrame() {
+        return _openFrame;
     }
 
     /* ****************** Error checking ************************/

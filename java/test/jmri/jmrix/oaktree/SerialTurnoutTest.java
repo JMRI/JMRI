@@ -45,6 +45,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         tcis = null;
         _memo.dispose();

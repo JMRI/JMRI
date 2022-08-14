@@ -154,6 +154,13 @@ public class DefaultConditionalNG extends AbstractBase
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
+            } catch (ReturnException | ExitException e) {
+                // A Return action in a ConditionalNG causes a ReturnException so this is okay.
+                // An Exit action in a ConditionalNG causes a ExitException so this is okay.
+            } catch (PassThruException e) {
+                // This happens due to a a Break action or a Continue action that isn't handled.
+                log.info("ConditionalNG {} was aborted during execute: {}",
+                        conditionalNG.getSystemName(), e.getCause(), e.getCause());
             } catch (AbortConditionalNGExecutionException e) {
 //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
 //                        conditionalNG.getSystemName(), e, e);
@@ -323,7 +330,7 @@ public class DefaultConditionalNG extends AbstractBase
                         _femaleSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("digital action is not found: " + _socketSystemName);
+                        log.error("digital action is not found: {}", _socketSystemName);
                     }
                 } catch (SocketAlreadyConnectedException ex) {
                     // This shouldn't happen and is a runtime error if it does.

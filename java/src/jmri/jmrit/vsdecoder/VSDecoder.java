@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.awt.geom.Point2D;
 import jmri.Audio;
 import jmri.LocoAddress;
 import jmri.Throttle;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.Route;
@@ -18,6 +20,9 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.vsdecoder.swing.VSDControl;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 import jmri.util.PhysicalLocation;
+
+import javax.annotation.*;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,13 +45,12 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2021
+ * @author Klaus Killinger Copyright (C) 2018-2022
  */
 public class VSDecoder implements PropertyChangeListener {
 
     boolean initialized = false; // This decoder has been initialized
     boolean enabled = false; // This decoder is enabled
-    private boolean is_default = false; // This decoder is the default for its file
     private boolean create_xy_series = false; // Create xy coordinates in console
 
     private VSDConfig config;
@@ -54,13 +58,30 @@ public class VSDecoder implements PropertyChangeListener {
     // For use in VSDecoderManager
     int dirfn = 1;
     float currentspeed = 0.0f; // result of speedCurve(T)
+    PhysicalLocation posToSet;
     PhysicalLocation lastPos;
     PhysicalLocation startPos;
     int topspeed;
     int topspeed_rev;
+    float lastspeed;
+    float avgspeed;
     int setup_index; // Can be set by a Route
     boolean is_muted;
     VSDSound savedSound;
+
+    double distanceOnTrack;
+    float distanceMeter;
+    double distance; // how far to travel this frame
+    private double returnDistance; // used by a direction change
+    private Point2D location;
+    private LayoutTrack lastTrack; // the layout track we were on previously
+    private LayoutTrack layoutTrack; // which layout track we're on
+    private LayoutTrack returnTrack;
+    private LayoutTrack returnLastTrack;
+    LayoutTrack nextLayoutTrack;
+    private double directionRAD; // directionRAD we're headed (in radians)
+    private LayoutEditor models;
+    private VSDNavigation navigation;
 
     HashMap<String, VSDSound> sound_list; // list of sounds
     HashMap<String, SoundEvent> event_list; // list of events
@@ -104,7 +125,12 @@ public class VSDecoder implements PropertyChangeListener {
 
         // Handle Advanced Location Following (if the parameter file is OK)
         if (VSDecoderManager.instance().geofile_ok) {
+            // ALF1 needs this
             this.setup_index = 0;
+            // create a navigator for this VSDecoder
+            if (VSDecoderManager.instance().alf_version == 2) {
+                navigation = new VSDNavigation(this);
+            }
         }
 
         if (log.isDebugEnabled()) {
@@ -229,7 +255,7 @@ public class VSDecoder implements PropertyChangeListener {
             return;
         }
 
-        log.debug("VSDecoderPane throttle property change: {}", eventName);
+        log.debug("VSDecoder throttle property change: {}", eventName);
 
         if (eventName.equals("throttleAssigned")) {
             Float s = (Float) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), Throttle.SPEEDSETTING);
@@ -392,7 +418,7 @@ public class VSDecoder implements PropertyChangeListener {
         if (create_xy_series) {
             log.info("setPosition {}: {}\t{}", this.getAddress(), (float) Math.round(p.x*10000)/10000, p.y);
         }
-        log.debug("( {} ). Set Position: {}", this.getAddress(), p);
+        log.debug("address {} set Position: {}", this.getAddress(), p);
 
         this.lastPos = p; // save this position
 
@@ -607,11 +633,6 @@ public class VSDecoder implements PropertyChangeListener {
 
         me.setAttribute("name", this.config.getProfileName());
 
-        // If this decoder is marked as default, add the default Element.
-        if (is_default) {
-            me.addContent(new Element("default"));
-        }
-
         for (SoundEvent se : event_list.values()) {
             le.add(se.getXml());
         }
@@ -669,15 +690,6 @@ public class VSDecoder implements PropertyChangeListener {
         // Set this decoder's name.
         this.setProfileName(e.getAttributeValue("name"));
         log.debug("Decoder Name: {}", e.getAttributeValue("name"));
-
-        // Read and create all of its components.
-        // Check for default element.
-        if (e.getChild("default") != null) {
-            log.debug("{} is default", getProfileName());
-            is_default = true;
-        } else {
-            is_default = false;
-        }
 
         // Check for a flag element to create xy-position-coordinates.
         n = e.getChildText("create-xy-series");
@@ -786,6 +798,108 @@ public class VSDecoder implements PropertyChangeListener {
             event_list.put(se.getName(), se);
         }
         // Handle other types of children similarly here.
+    }
+
+    // VSDNavigation accessors
+    //
+    // Code from George Warner's LENavigator
+    //
+    void setLocation(Point2D location) {
+        this.location = location;
+    }
+
+    Point2D getLocation() {
+        return location;
+    }
+
+    LayoutTrack getLastTrack() {
+        return lastTrack;
+    }
+
+    void setLastTrack(LayoutTrack lastTrack) {
+        this.lastTrack = lastTrack;
+    }
+
+    void setLayoutTrack(LayoutTrack layoutTrack) {
+        this.layoutTrack = layoutTrack;
+    }
+
+    LayoutTrack getLayoutTrack() {
+        return layoutTrack;
+    }
+
+    void setReturnTrack(LayoutTrack returnTrack) {
+        this.returnTrack = returnTrack;
+    }
+
+    LayoutTrack getReturnTrack() {
+        return returnTrack;
+    }
+
+    void setReturnLastTrack(LayoutTrack returnLastTrack) {
+        this.returnLastTrack = returnLastTrack;
+    }
+
+    LayoutTrack getReturnLastTrack() {
+        return returnLastTrack;
+    }
+
+    double getDistance() {
+        return distance;
+    }
+
+    void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    double getReturnDistance() {
+        return returnDistance;
+    }
+
+    void setReturnDistance(double returnDistance) {
+        this.returnDistance = returnDistance;
+    }
+
+    double getDirectionRAD() {
+        return directionRAD;
+    }
+
+    void setDirectionRAD(double directionRAD) {
+        this.directionRAD = directionRAD;
+    }
+
+    void setDirectionDEG(double directionDEG) {
+        this.directionRAD = Math.toRadians(directionDEG);
+    }
+
+    LayoutEditor getModels() {
+        return models;
+    }
+
+    void setModels(LayoutEditor models) {
+        this.models = models;
+    }
+
+    void navigate() {
+        boolean result = false;
+        do {
+            if (this.getLayoutTrack() instanceof TrackSegment) {
+                result = navigation.navigateTrackSegment();
+            } else if (this.getLayoutTrack() instanceof LayoutSlip) {
+                result = navigation.navigateLayoutSlip();
+            } else if (this.getLayoutTrack() instanceof LayoutTurnout) {
+                result = navigation.navigateLayoutTurnout();
+            } else if (this.getLayoutTrack() instanceof PositionablePoint) {
+                result = navigation.navigatePositionalPoint();
+            } else if (this.getLayoutTrack() instanceof LevelXing) {
+                result = navigation.navigateLevelXing();
+            } else {
+                log.warn("Track type not supported");
+                setReturnDistance(0);
+                setReturnTrack(getLastTrack());
+                result = false;
+            }
+        } while (result);
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDecoder.class);

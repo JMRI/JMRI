@@ -300,7 +300,7 @@ public class SprogIIUpdateFrame
             }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
             if (log.isDebugEnabled()) {
-                log.debug(msg.toString(true));
+                log.debug("msg: {}", msg.toString(true));
             }
         } else {
             // Do nothing

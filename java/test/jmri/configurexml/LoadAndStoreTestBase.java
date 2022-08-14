@@ -29,11 +29,11 @@ import org.junit.jupiter.params.provider.Arguments;
  * class is:
  <pre>
    public class LoadAndStoreTest extends LoadAndStoreTestBase {
- 
-     public static Stream&amp;Arguments&amp; data() { 
-       return getFiles(new File("java/test/jmri/configurexml"), false, true); 
+
+     public static Stream&amp;Arguments&amp; data() {
+       return getFiles(new File("java/test/jmri/configurexml"), false, true);
      }
-  
+
      @ParameterizedTest
      @MethodSource("data")
      public void loadAndStoreTest(File file, boolean pass) { super.validate(file, pass); }
@@ -110,147 +110,147 @@ public class LoadAndStoreTestBase {
     }
 
     public static void checkFile(File inFile1, File inFile2) throws Exception {
-        // compare files, except for certain special lines
-        BufferedReader fileStream1 = new BufferedReader(
-                new InputStreamReader(new FileInputStream(inFile1)));
-        BufferedReader fileStream2 = new BufferedReader(
-                new InputStreamReader(new FileInputStream(inFile2)));
 
-        String line1 = fileStream1.readLine();
-        String line2 = fileStream2.readLine();
-
-        int lineNumber1 = 0, lineNumber2 = 0;
-        String next1, next2;
-        while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
-            lineNumber1++;
-            lineNumber2++;
-
-            // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
-            // This only happens in the first file since store() will not store comments
-            if  (next1.startsWith("<!--")) {
-                while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
+        try ( // compare files, except for certain special lines
+            BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile1)));
+            BufferedReader fileStream2 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile2)));
+        ) {
+            
+            String line1 = fileStream1.readLine();
+            String line2 = fileStream2.readLine();
+            int lineNumber1 = 0, lineNumber2 = 0;
+            String next1, next2;
+            while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
+                lineNumber1++;
+                lineNumber2++;
+                
+                // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
+                // This only happens in the first file since store() will not store comments
+                if  (next1.startsWith("<!--")) {
+                    while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
+                        lineNumber1++;
+                    }
+                    
+                    // If here, we either have a line that ends with --> or we have reached end of file
+                    String nullCheck = fileStream1.readLine();
+                    if (nullCheck == null) {
+                        break;
+                    }
+                    
+                    // If here, we have a line that ends with --> or we have reached end of file
+                    continue;
+                }
+                
+                // where the (empty) entryexitpairs line ends up seems to be non-deterministic
+                // so if we see it in either file we just skip it
+                String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
+                if (line1.contains(entryexitpairs)) {
+                    line1 = next1;
+                    if ((next1 = fileStream1.readLine()) == null) {
+                        break;
+                    }
                     lineNumber1++;
                 }
-
-                // If here, we either have a line that ends with --> or we have reached endf of file
-                if (fileStream1.readLine() == null) break;
-
-                // If here, we have a line that ends with --> or we have reached end of file
-                continue;
-            }
-
-            // where the (empty) entryexitpairs line ends up seems to be non-deterministic
-            // so if we see it in either file we just skip it
-            String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
-            if (line1.contains(entryexitpairs)) {
-                line1 = next1;
-                if ((next1 = fileStream1.readLine()) == null) {
-                    break;
+                if (line2.contains(entryexitpairs)) {
+                    line2 = next2;
+                    if ((next2 = fileStream2.readLine()) == null) {
+                        break;
+                    }
+                    lineNumber2++;
                 }
-                lineNumber1++;
-            }
-            if (line2.contains(entryexitpairs)) {
-                line2 = next2;
-                if ((next2 = fileStream2.readLine()) == null) {
-                    break;
+                
+                // if we get to the file history...
+                String filehistory = "filehistory";
+                if (line1.contains(filehistory) && line2.contains(filehistory)) {
+                    break;  // we're done!
                 }
-                lineNumber2++;
-            }
-
-            // if we get to the file history...
-            String filehistory = "filehistory";
-            if (line1.contains(filehistory) && line2.contains(filehistory)) {
-                break;  // we're done!
-            }
-
-            boolean match = false;  // assume failure (pessimist!)
-
-            String[] startsWithStrings = {
-                "  <!--Written by JMRI version",
-                "  <timebase",      // time changes from timezone to timezone
-                "    <test>",       // version changes over time
-                "    <modifier",    // version changes over time
-                "    <major",       // version changes over time
-                "    <minor",       // version changes over time
-                "<layout-config",   // Linux seems to put attributes in different order
-                "<?xml-stylesheet", // Linux seems to put attributes in different order
-                "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
-                "    <modifier>This line ignored</modifier>"
-            };
-            for (String startsWithString : startsWithStrings) {
-                if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
-                    match = true;
-                    break;
-                }
-            }
-
-            // Screen size will vary when written out
-            if (!match) {
-                if (line1.contains("  <LayoutEditor")) {
-                    // if either line contains a windowheight attribute
-                    String windowheight_regexe = "( windowheight=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, windowheight_regexe);
-                    line2 = filterLineUsingRegEx(line2, windowheight_regexe);
-                    // if either line contains a windowheight attribute
-                    String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
-                    line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
-                }
-            }
-
-            // window positions will sometimes differ based on window decorations.
-            if (!match) {
-                if (line1.contains("  <LayoutEditor") ||
-                    line1.contains(" <switchboardeditor")) {
-                    // if either line contains a y position attribute
-                    String yposition_regexe = "( y=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, yposition_regexe);
-                    line2 = filterLineUsingRegEx(line2, yposition_regexe);
-                    // if either line contains an x position attribute
-                    String xposition_regexe = "( x=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, xposition_regexe);
-                    line2 = filterLineUsingRegEx(line2, xposition_regexe);
-                }
-            }
-
-            // Time will vary when written out
-            if (!match) {
-                String memory_value = "<memory value";
-                if (line1.contains(memory_value) && line2.contains(memory_value)) {
-                    String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
-                    if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
+                
+                boolean match = false;  // assume failure (pessimist!)
+                
+                String[] startsWithStrings = {
+                    "  <!--Written by JMRI version",
+                    "  <timebase",      // time changes from timezone to timezone
+                    "    <test>",       // version changes over time
+                    "    <modifier",    // version changes over time
+                    "    <major",       // version changes over time
+                    "    <minor",       // version changes over time
+                    "<layout-config",   // Linux seems to put attributes in different order
+                    "<?xml-stylesheet", // Linux seems to put attributes in different order
+                    "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
+                    "    <modifier>This line ignored</modifier>"
+                };
+                for (String startsWithString : startsWithStrings) {
+                    if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
                         match = true;
+                        break;
                     }
                 }
-            }
-
-            // Dates can vary when written out
-            String date_string = "<date>";
-            if (!match && line1.contains(date_string) && line2.contains(date_string)) {
-                match = true;
-            }
-
-            if (!match) {
-                // if either line contains a fontname attribute
-                String fontname_regexe = "( fontname=\"[^\"]*\")";
-                line1 = filterLineUsingRegEx(line1, fontname_regexe);
-                line2 = filterLineUsingRegEx(line2, fontname_regexe);
-            }
-
-            if (!match && !line1.equals(line2)) {
-                log.error("match failed in LoadAndStoreTest:");
-                log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
-                log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.error("  comparing file1:\"{}\"", inFile1.getPath());
-                log.error("         to file2:\"{}\"", inFile2.getPath());
-                Assert.assertEquals(line1, line2);
-            }
-            line1 = next1;
-            line2 = next2;
-        }   // while readLine() != null
-
-        fileStream1.close();
-        fileStream2.close();
+                
+                // Screen size will vary when written out
+                if (!match) {
+                    if (line1.contains("  <LayoutEditor")) {
+                        // if either line contains a windowheight attribute
+                        String windowheight_regexe = "( windowheight=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, windowheight_regexe);
+                        line2 = filterLineUsingRegEx(line2, windowheight_regexe);
+                        // if either line contains a windowheight attribute
+                        String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
+                        line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
+                    }
+                }
+                
+                // window positions will sometimes differ based on window decorations.
+                if (!match) {
+                    if (line1.contains("  <LayoutEditor") ||
+                            line1.contains(" <switchboardeditor")) {
+                        // if either line contains a y position attribute
+                        String yposition_regexe = "( y=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, yposition_regexe);
+                        line2 = filterLineUsingRegEx(line2, yposition_regexe);
+                        // if either line contains an x position attribute
+                        String xposition_regexe = "( x=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, xposition_regexe);
+                        line2 = filterLineUsingRegEx(line2, xposition_regexe);
+                    }
+                }
+                
+                // Time will vary when written out
+                if (!match) {
+                    String memory_value = "<memory value";
+                    if (line1.contains(memory_value) && line2.contains(memory_value)) {
+                        String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
+                        if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
+                            match = true;
+                        }
+                    }
+                }
+                
+                // Dates can vary when written out
+                String date_string = "<date>";
+                if (!match && line1.contains(date_string) && line2.contains(date_string)) {
+                    match = true;
+                }
+                
+                if (!match) {
+                    // if either line contains a fontname attribute
+                    String fontname_regexe = "( fontname=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, fontname_regexe);
+                    line2 = filterLineUsingRegEx(line2, fontname_regexe);
+                }
+                
+                if (!match && !line1.equals(line2)) {
+                    log.error("match failed in LoadAndStoreTest:");
+                    log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
+                    log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
+                    log.error("  comparing file1:\"{}\"", inFile1.getPath());
+                    log.error("         to file2:\"{}\"", inFile2.getPath());
+                    Assert.assertEquals(line1, line2);
+                }
+                line1 = next1;
+                line2 = next2;
+            }   // while readLine() != null
+        }
     }
 
     private static String filterLineUsingRegEx(String line, String regexe) {
@@ -280,10 +280,6 @@ public class LoadAndStoreTestBase {
 
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         switch (inSaveType) {
-            case All: {
-                cm.storeAll(outFile);
-                break;
-            }
             case Config: {
                 cm.storeConfig(outFile);
                 break;
@@ -301,7 +297,7 @@ public class LoadAndStoreTestBase {
                 break;
             }
             default: {
-                log.error("Unknown save type {}.", inSaveType);
+                Assert.fail("Unknown save type "+inSaveType);
                 break;
             }
         }
@@ -326,10 +322,14 @@ public class LoadAndStoreTestBase {
         // to ease comparison, dump the history information;
         // if you need to turn that off you can override
         dumpHistory();
-        
+
         // find comparison files
-        File compFile = new File(file.getCanonicalFile().getParentFile().
-                getParent() + "/loadref/" + file.getName());
+        File tmpFile = file.getCanonicalFile().getParentFile();
+        if ( tmpFile == null ) {
+            log.warn("null file to check {}", file);
+            return;
+        }
+        File compFile = new File( tmpFile.getParent() + "/loadref/" + file.getName() );
         if (!compFile.exists()) {
             compFile = file;
         }
@@ -342,20 +342,20 @@ public class LoadAndStoreTestBase {
 
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
-  
-    /** 
+
+    /**
      * By default, drop the history information
-     * to simplify diffing the files. 
-     * Override if that info is needed for a test.  
+     * to simplify diffing the files.
+     * Override if that info is needed for a test.
      */
     protected void dumpHistory(){
         jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).purge(0);
     }
-    
+
     /**
      * If anything, i.e. typically a delay,
-     * is needed after loading the file before storing or doing 
-     * any final tests, 
+     * is needed after loading the file before storing or doing
+     * any final tests,
      * it can be added by override here.
      */
     protected void postLoadProcessing() {
@@ -375,11 +375,19 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
-        
+
         // kill the fast clock and set to a consistent time
         jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);
-        clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+
+        try {
+            clock.setTime(
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse("2021-12-02 00:00:00.0")
+            );
+        } catch (Exception e) {
+            log.warn("Unexpected Exception in test setup", e);
+        }
+
     }
 
     @AfterEach

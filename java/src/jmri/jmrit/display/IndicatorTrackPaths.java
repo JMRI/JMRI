@@ -134,7 +134,7 @@ public class IndicatorTrackPaths {
             return;
         }
         String trainName = (String) block.getValue();
-        if (trainName == null) {
+        if (trainName == null || trainName.isEmpty()) {
             removeLocoIcon();
             return;
         }
@@ -147,7 +147,15 @@ public class IndicatorTrackPaths {
             return;
         }
         trainName = trainName.trim();
-        _loco = new LocoLabel(ed);
+        try {
+            _loco = new LocoLabel(ed);
+        } catch (Exception e) {
+            jmri.jmrit.logix.Warrant w = block.getWarrant();
+            log.error("Exception in setLocoIcon() in thread {} {} for block \"{}\", train \"{}\" \"{}\". state= {} at pt({}, {})",
+                    Thread.currentThread().getName(), Thread.currentThread().getId(), block.getDisplayName(), trainName,
+                    (w!=null? w.getDisplayName(): "no warrant"), block.getState(), pt.x, pt.y);
+            return;
+        }
         Font font = block.getMarkerFont();
         if (font == null) {
             font = ed.getFont();

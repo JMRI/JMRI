@@ -38,9 +38,11 @@ public class CtcRunWithSignalMastsTest {
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
         JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
 
-       // Load the CTC run time
+        // Load the CTC run time
         new CtcRunAction().actionPerformed(null);
         JUnitUtil.waitFor(1000);     // Wait for CTC run time to finish its setup
+        // Make sure the rum time is active
+        JUnitUtil.waitFor(()->{return sm.getSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal normal indicator not active");
 
         // ** Run time test scenarios **
 
@@ -112,7 +114,6 @@ public class CtcRunWithSignalMastsTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

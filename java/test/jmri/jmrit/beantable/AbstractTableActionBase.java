@@ -2,8 +2,6 @@ package jmri.jmrit.beantable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
@@ -11,9 +9,12 @@ import jmri.NamedBean;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.jupiter.api.*;
+
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
@@ -48,9 +49,9 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         Assert.assertNotNull("Table Data Model Exists", a.getTableDataModel());
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testExecute() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
         Assert.assertNotNull("failed to find frame", f);
@@ -97,9 +98,9 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         Assert.assertEquals("help target", helpTarget, a.helpTarget());
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
@@ -128,9 +129,9 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         return getAddFrameName();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
@@ -152,9 +153,9 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JUnitUtil.dispose(f);
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);

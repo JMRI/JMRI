@@ -22,6 +22,7 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Programmer;
 import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -47,12 +48,15 @@ import org.slf4j.LoggerFactory;
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
+    private final ThrottleManager throttleManager;
+
     private DccThrottle throttle;
     private DccThrottle consistThrottle;
 
     private final DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
     private DccLocoAddress currentAddress;
     private DccLocoAddress consistAddress;
+    private DccLocoAddress requestedAddress;
     private ArrayList<AddressListener> listeners;
 
     private JPanel mainPanel;
@@ -68,27 +72,31 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     /**
      * Constructor
+     * @param throttleManager the throttle manager
      */
-    public AddressPanel() {
+    public AddressPanel(ThrottleManager throttleManager) {
+        this.throttleManager = throttleManager;
         if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
             log.debug("Creating new ThrottlesPreference Instance");
             jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }  
+        }
         initGUI();
         applyPreferences();
     }
 
     public void destroy() { // Handle disposing of the throttle
+        if ( requestedAddress != null ) {
+            throttleManager.cancelThrottleRequest(requestedAddress, this);
+            requestedAddress = null;
+        }
         if (throttle != null) {
-            DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
             throttle.removePropertyChangeListener(this);
-            InstanceManager.throttleManagerInstance().cancelThrottleRequest(l, this);
-            InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
+            throttleManager.releaseThrottle(throttle, this);
             notifyListenersOfThrottleRelease();
             throttle = null;
         }
         if (consistThrottle != null) {
-            InstanceManager.throttleManagerInstance().releaseThrottle(consistThrottle, this);
+            throttleManager.releaseThrottle(consistThrottle, this);
             notifyListenersOfThrottleRelease();
             consistThrottle = null;
         }
@@ -186,13 +194,15 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         if (t.getLocoAddress().getNumber() != currentAddress.getNumber()) {
             log.warn("Not correct address, asked for {} got {}, requesting again...", currentAddress.getNumber(), t.getLocoAddress());
             boolean requestOK
-                    = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this, true);
+                    = throttleManager.requestThrottle(currentAddress, this, true);
             if (!requestOK) {
                 JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
+                requestedAddress = null;
             }
             return;
         }
 
+        requestedAddress = null;
         throttle = t;
         releaseButton.setEnabled(true);
         currentAddress = (DccLocoAddress) t.getLocoAddress();
@@ -205,7 +215,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 && (InstanceManager.getDefault(ThrottlesPreferences.class).isEnablingRosterSearch())
                 && addrSelector.getAddress() != null) {
             List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + addrSelector.getAddress().getNumber(), null, null, null, null);
-            if (l.size() > 0) {
+            if (!l.isEmpty()) {
                 rosterEntry = l.get(0);
             }
         }
@@ -215,7 +225,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         addrSelector.setEnabled(false);
         getRosterEntrySelector().setEnabled(false);
         conRosterBox.setEnabled(false);
-        if (InstanceManager.throttleManagerInstance().hasDispatchFunction()) {
+        if (throttleManager.hasDispatchFunction()) {
             dispatchButton.setEnabled(true);
         }
         // enable program button if programmer available
@@ -228,7 +238,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         // send notification of new address
         listeners.stream().filter((l) -> (currentAddress != null)).forEachOrdered((l) -> {
             l.notifyAddressThrottleFound(throttle);
-        }); 
+        });
     }
 
     @Override
@@ -247,63 +257,66 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             switch (question) {
                 case STEAL:
                     if (InstanceManager.getDefault(ThrottlesPreferences.class).isSilentSteal() ){
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+                        throttleManager.responseThrottleDecision(address, this, DecisionType.STEAL );
                         return;
-                    }   
+                    }
                     jmri.util.ThreadingUtil.runOnGUI(() -> {
                         if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
                                 this, Bundle.getMessage("StealQuestionText",address.toString()),
                                 Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
-                            InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+                            throttleManager.responseThrottleDecision(address, this, DecisionType.STEAL );
                         } else {
-                            InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                            throttleManager.cancelThrottleRequest(address, this);
+                            requestedAddress = null;
                         }
-                    }); 
+                    });
                     break;
                 case SHARE:
                     if (InstanceManager.getDefault(ThrottlesPreferences.class).isSilentShare() ){
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                        throttleManager.responseThrottleDecision(address, this, DecisionType.SHARE );
                         return;
-                    }   
+                    }
                     jmri.util.ThreadingUtil.runOnGUI(() -> {
                         if ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(
                                 this, Bundle.getMessage("ShareQuestionText",address.toString()),
                                 Bundle.getMessage("ShareRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)) {
-                            InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                            throttleManager.responseThrottleDecision(address, this, DecisionType.SHARE );
                         } else {
-                            InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                            throttleManager.cancelThrottleRequest(address, this);
+                            requestedAddress = null;
                         }
-                    }); 
+                    });
                     break;
                 case STEAL_OR_SHARE:
                     if ( InstanceManager.getDefault(ThrottlesPreferences.class).isSilentSteal() ){
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+                        throttleManager.responseThrottleDecision(address, this, DecisionType.STEAL );
                         return;
-                    }   
+                    }
                     if ( InstanceManager.getDefault(ThrottlesPreferences.class).isSilentShare() ){
-                        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                        throttleManager.responseThrottleDecision(address, this, DecisionType.SHARE );
                         return;
-                    }   
+                    }
                     String[] options = new String[] {Bundle.getMessage("StealButton"), Bundle.getMessage("ShareButton"), Bundle.getMessage("CancelButton")};
                     jmri.util.ThreadingUtil.runOnGUI(() -> {
-                        int response = javax.swing.JOptionPane.showOptionDialog(AddressPanel.this, 
-                                Bundle.getMessage("StealShareQuestionText",address.toString()), Bundle.getMessage("StealShareRequestTitle"), 
+                        int response = javax.swing.JOptionPane.showOptionDialog(AddressPanel.this,
+                                Bundle.getMessage("StealShareQuestionText",address.toString()), Bundle.getMessage("StealShareRequestTitle"),
                                 javax.swing.JOptionPane.DEFAULT_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
                         switch (response) {
                             case 0:
                                 log.debug("steal clicked");
-                                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, AddressPanel.this, DecisionType.STEAL);
+                                throttleManager.responseThrottleDecision(address, AddressPanel.this, DecisionType.STEAL);
                                 break;
                             case 1:
                                 log.debug("share clicked");
-                                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, AddressPanel.this, DecisionType.SHARE);
+                                throttleManager.responseThrottleDecision(address, AddressPanel.this, DecisionType.SHARE);
                                 break;
                             default:
                                 log.debug("cancel clicked");
-                                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, AddressPanel.this);
+                                throttleManager.cancelThrottleRequest(address, AddressPanel.this);
+                                requestedAddress = null;
                                 break;
                         }
-                    }); 
+                    });
                     break;
                 default:
                     break;
@@ -317,6 +330,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * @param t An instantiation of the DccThrottle with the address requested.
      */
     public void notifyConsistThrottleFound(DccThrottle t) {
+        requestedAddress = null;
         this.consistThrottle = t;
         listeners.forEach((l) -> {
             // log.debug("Notify address listener of address change {}", l.getClass());
@@ -380,11 +394,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             consistAddress = null;
             changeOfAddress();
         });
-        
+
         // top : roster and consists selectors
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
-        
+
         rosterBox = new RosterEntrySelectorPanel();
         getRosterEntrySelector().setNonSelectedItem(Bundle.getMessage("NoLocoSelected"));
         getRosterEntrySelector().setToolTipText(Bundle.getMessage("SelectLocoFromRosterTT"));
@@ -400,18 +414,18 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             conRosterBox.addActionListener(e -> consistRosterSelected());
             topPanel.add(conRosterBox);
         }
-        
+
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // bottom : buttons
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));        
+        buttonPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
 
         progButton = new JButton(Bundle.getMessage("ButtonProgram"));
         buttonPanel.add(progButton);
         progButton.setEnabled(false);
         progButton.addActionListener(e -> openProgrammer());
-        
+
         dispatchButton = new JButton(Bundle.getMessage("ButtonDispatch"));
         buttonPanel.add(dispatchButton);
         dispatchButton.setEnabled(false);
@@ -427,8 +441,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             consistAddress = null;
             changeOfAddress();
         });
-        buttonPanel.add(setButton);        
-        
+        buttonPanel.add(setButton);
+
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         pack();
@@ -484,7 +498,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         currentAddress = addrSelector.getAddress();
         if (currentAddress == null) {
             return; // no address
-        }  
+        }
         // send notification of new address
         listeners.forEach((l) -> {
             l.notifyAddressChosen(currentAddress);
@@ -492,12 +506,15 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         log.debug("Requesting new slot for address {} rosterEntry {}",currentAddress,rosterEntry);
         boolean requestOK;
         if (rosterEntry == null) {
-            requestOK = InstanceManager.throttleManagerInstance().requestThrottle(currentAddress, this, true);
+            requestOK = throttleManager.requestThrottle(currentAddress, this, true);
+            requestedAddress = currentAddress;
         }
         else {
-            requestOK = InstanceManager.throttleManagerInstance().requestThrottle(rosterEntry, this, true);
+            requestOK = throttleManager.requestThrottle(rosterEntry, this, true);
+            requestedAddress = rosterEntry.getDccLocoAddress();
         }
         if (!requestOK) {
+            requestedAddress = null;
             JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
         }
     }
@@ -512,9 +529,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
 
         boolean requestOK
-                = InstanceManager.throttleManagerInstance().requestThrottle(consistAddress, this, true);
+                = throttleManager.requestThrottle(consistAddress, this, true);
         if (!requestOK) {
             JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
+        } else {
+            requestedAddress = consistAddress;
         }
     }
 
@@ -548,15 +567,15 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     public void dispatchAddress() {
         if (throttle != null) {
-            int usageCount  = InstanceManager.throttleManagerInstance().getThrottleUsageCount(throttle.getLocoAddress()) - 1;
+            int usageCount  = throttleManager.getThrottleUsageCount(throttle.getLocoAddress()) - 1;
 
             if ( usageCount != 0 ) {
                 JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
                 return;
             }
-            InstanceManager.throttleManagerInstance().dispatchThrottle(throttle, this);
+            throttleManager.dispatchThrottle(throttle, this);
             if (consistThrottle != null) {
-                InstanceManager.throttleManagerInstance().dispatchThrottle(consistThrottle, this);
+                throttleManager.dispatchThrottle(consistThrottle, this);
                 consistThrottle = null;
             }
             notifyThrottleDisposed();
@@ -567,9 +586,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * Release the current address.
      */
     public void releaseAddress() {
-        InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
+        throttleManager.releaseThrottle(throttle, this);
         if (consistThrottle != null) {
-            InstanceManager.throttleManagerInstance().releaseThrottle(consistThrottle, this);
+            throttleManager.releaseThrottle(consistThrottle, this);
             consistThrottle = null;
         }
         notifyThrottleDisposed();
@@ -626,7 +645,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
 
         List<Element> elementList = e.getChildren("locoaddress");
-        if ((elementList.size() > 0) && (getThrottle() == null)) {
+        if ((!elementList.isEmpty()) && (getThrottle() == null)) {
             log.debug("found {} locoaddress(es)", elementList.size() );
             currentAddress = (DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
                     .getAddress(elementList.get(0));
@@ -637,7 +656,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             if (elementList.size() > 1) {
                 DccLocoAddress tmpAdd = ((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
                         .getAddress(elementList.get(1)));
-                if (tmpAdd !=null && ! currentAddress.equals(tmpAdd)) {                    
+                if (tmpAdd !=null && ! currentAddress.equals(tmpAdd)) {
                     log.debug("and consist with {}",tmpAdd);
                     consistAddress = tmpAdd;
                 }
@@ -697,22 +716,22 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 notifyThrottleDisposed();
             }
         }
-        
+
         if ("DispatchEnabled".compareTo(evt.getPropertyName()) == 0) {
             log.debug("propertyChange: Dispatch Button Enabled {}" , evt.getNewValue() );
             dispatchButton.setEnabled( (Boolean) evt.getNewValue() );
         }
-        
+
         if ("ReleaseEnabled".compareTo(evt.getPropertyName()) == 0) {
             log.debug("propertyChange: release Button Enabled {}" , evt.getNewValue() );
             releaseButton.setEnabled( (Boolean) evt.getNewValue() );
-        }        
+        }
     }
-    
+
     void applyPreferences() {
         // nothing to do, for now
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(AddressPanel.class);
 
 }

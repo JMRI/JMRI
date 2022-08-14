@@ -208,6 +208,7 @@ public class Track extends PropertyChangeSupport {
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
     public static final String TRACK_REPORTER_PROPERTY = "trackReporterChange"; // NOI18N
     public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
+    public static final String HOLD_CARS_CHANGED_PROPERTY ="trackHoldCarsWithCustomLoads"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -257,6 +258,8 @@ public class Track extends PropertyChangeSupport {
         newTrack.setLoadNames(getLoadNames());
         newTrack.setLoadOption(getLoadOption());
         newTrack.setLoadSwapEnabled(isLoadSwapEnabled());
+        
+        newTrack.setOnlyCarsWithFinalDestinationEnabled(isOnlyCarsWithFinalDestinationEnabled());
 
         newTrack.setPickupOption(getPickupOption()); // must set option before setting ids
         newTrack.setPickupIds(getPickupIds());
@@ -266,6 +269,10 @@ public class Track extends PropertyChangeSupport {
             newTrack.setPool(newLocation.addPool(getPool().getName()));
             newTrack.setMinimumLength(getMinimumLength());
         }
+        
+        newTrack.setPrintManifestCommentEnabled(isPrintManifestCommentEnabled());
+        newTrack.setPrintSwitchListCommentEnabled(isPrintSwitchListCommentEnabled());
+        
         newTrack.setRemoveCustomLoadsEnabled(isRemoveCustomLoadsEnabled());
         newTrack.setReservationFactor(getReservationFactor());
         newTrack.setRoadNames(getRoadNames());
@@ -299,7 +306,6 @@ public class Track extends PropertyChangeSupport {
         _name = name;
         if (!old.equals(name)) {
             InstanceManager.getDefault(LocationManager.class).resetNameLengths(); // recalculate max track name length
-                                                                                  // for manifests
             setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
         }
     }
@@ -518,7 +524,7 @@ public class Track extends PropertyChangeSupport {
     public void setHoldCarsWithCustomLoadsEnabled(boolean enable) {
         boolean old = _holdCustomLoads;
         _holdCustomLoads = enable;
-        setDirtyAndFirePropertyChange("trackHoldCarsWithCustomLoads", old, enable);
+        setDirtyAndFirePropertyChange(HOLD_CARS_CHANGED_PROPERTY, old, enable);
     }
 
     /**
@@ -1511,8 +1517,8 @@ public class Track extends PropertyChangeSupport {
                         ") " +
                         MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[] { getName() }); // no
             }
-            // does this track (interchange) accept cars without a final destination?
-            if (isInterchange() && isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
+            // does this track accept cars without a final destination?
+            if (isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
@@ -2138,10 +2144,6 @@ public class Track extends PropertyChangeSupport {
                     return OKAY;
                 }
                 log.debug("Schedule id ({}) not valid for track ({})", id, getName());
-                // user could have deleted the schedule item after build train, so not really an
-                // error
-                // return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() +
-                // ")"; // NOI18N
             }
         }
         if (getScheduleMode() == MATCH && !searchSchedule(car).equals(OKAY)) {
@@ -2165,12 +2167,6 @@ public class Track extends PropertyChangeSupport {
             // bump schedule
             bumpSchedule();
         } else if (currentSi != null) {
-            // log.debug("Car (" + toString() + ") type (" + getType() + ") road (" +
-            // getRoad() + ") load ("
-            // + getLoad() + ") arrived out of sequence, needed type (" +
-            // currentSi.getType() // NOI18N
-            // + ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")");
-            // // NOI18N
             // build return message
             String scheduleName = "";
             String currentTrainScheduleName = "";
@@ -2396,6 +2392,15 @@ public class Track extends PropertyChangeSupport {
     public boolean isAddCustomLoadsAnyStagingTrackEnabled() {
         return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
     }
+    
+    public boolean isModifyLoadsEnabled() {
+        return isLoadEmptyEnabled() ||
+                isLoadSwapEnabled() ||
+                isRemoveCustomLoadsEnabled() ||
+                isAddCustomLoadsAnySpurEnabled() ||
+                isAddCustomLoadsAnyStagingTrackEnabled() ||
+                isAddCustomLoadsEnabled();
+    }
 
     public void setBlockCarsEnabled(boolean enable) {
         if (enable) {
@@ -2534,13 +2539,16 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * When true the C/I track will only accept cars that have a final destination
+     * When true the track will only accept cars that have a final destination
      * that can be serviced by the track. See acceptsDestination(Location).
      * 
      * @return false if any car spotted, true if only cars with a FD.
      */
     public boolean isOnlyCarsWithFinalDestinationEnabled() {
-        return _onlyCarsWithFD;
+        if (isInterchange() || isStaging()) {
+            return _onlyCarsWithFD;
+        }
+        return false;
     }
 
     /**
@@ -2900,14 +2908,6 @@ public class Track extends PropertyChangeSupport {
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
         e.setAttribute(Xml.TRACK_TYPE, getTrackType());
-
-        // backwards compatibility since 4.21.1, remove after year 2021
-        String trackType = getTrackType();
-        if (getTrackType().equals(SPUR)) {
-            trackType = SIDING; // Pre 4.21.1 location type
-        }
-        e.setAttribute(Xml.LOC_TYPE, trackType); // backwards compatibility
-
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
@@ -3011,7 +3011,7 @@ public class Track extends PropertyChangeSupport {
             e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
             e.setAttribute(Xml.HOLD_CARS_CUSTOM, isHoldCarsWithCustomLoadsEnabled() ? Xml.TRUE : Xml.FALSE);
         }
-        if (getTrackType().equals(INTERCHANGE)) {
+        if (isInterchange() || isStaging()) {
             e.setAttribute(Xml.ONLY_CARS_WITH_FD, isOnlyCarsWithFinalDestinationEnabled() ? Xml.TRUE : Xml.FALSE);
         }
         if (getAlternateTrack() != null) {

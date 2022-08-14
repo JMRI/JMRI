@@ -539,11 +539,13 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = socket;
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }

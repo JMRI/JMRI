@@ -860,10 +860,6 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
                 log.trace("waitForPrefLoad received InterruptedException, honoring termination request");
                 wait = true;
                 return false;
-            } catch (Exception e) {
-                wait = true;
-                log.error(e.toString());
-                return false;
             }
             wait = p.getPreferencesLoaded() && rcm.isInitialized(ProfileManager.getDefault().getActiveProfile());
             if (count >= 1000) {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: CBUS® Console Tool</title>
+  <title>JMRI: CBUS&reg; Console Tool</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI CBUS help monitor console log logging event long short">
   <!--#include virtual="/Style.shtml" -->
@@ -424,7 +424,7 @@
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Help
       page</a>.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

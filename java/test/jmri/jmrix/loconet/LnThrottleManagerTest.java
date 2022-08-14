@@ -108,7 +108,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
     @Test
     public void testCreateLnThrottleRunAndDispatch() {
-        tm = memo.get(ThrottleManager.class);
+
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
             public void notifyThrottleFound(DccThrottle t) {
@@ -317,7 +317,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis.sendTestMessage(cmdStationReply);
         Assert.assertEquals("Got a steal request", 129, flagGotStealRequest);
         JUnitAppender.assertWarnMessage("slot 17 address 129 is already in-use.");
-        JUnitAppender.assertWarnMessage("failedThrottleRequest with zero-length listeners: 129(L)");
         JUnitAppender.assertErrorMessage("1: Got a steal request");
     }
 
@@ -360,7 +359,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis.sendTestMessage(cmdStationReply);
         Assert.assertEquals("Got a steal request", 5, flagGotStealRequest);
         JUnitAppender.assertWarnMessage("slot 12 address 5 is already in-use.");
-        JUnitAppender.assertWarnMessage("failedThrottleRequest with zero-length listeners: 5(S)");
         JUnitAppender.assertErrorMessage("2: Got a steal request");
     }
 
@@ -402,14 +400,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         lnis.sendTestMessage(cmdStationReply);
         Assertions.assertEquals(85, flagGotStealRequest, "Got a steal request");
         JUnitAppender.assertWarnMessage("slot 96 address 85 is already in-use.");
-        JUnitAppender.assertWarnMessage("failedThrottleRequest with zero-length listeners: 85(S)");
         JUnitAppender.assertErrorMessage("3: Got a steal request");
     }
 
     @Test
     public void testCreateLnThrottleStealScenario4() {
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -455,7 +451,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @Test
     public void testCreateLnThrottleStealScenario5() {
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -500,7 +495,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @Test
     public void testCreateLnThrottleStealScenario7() {
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -552,7 +546,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // . release "throttle"
 
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -672,7 +665,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // . release "throttle2"
 
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -815,7 +807,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // release "throttle3"
 
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -979,7 +970,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // . release "throttle"
 
         throttle = null;
-        tm = memo.get(ThrottleManager.class);
 
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
@@ -1084,7 +1074,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
     @Test
     public void testUseRosterEntry() {
-        tm = memo.get(ThrottleManager.class);
+
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "our id 1")
                 .setAttribute("fileName", "file here")
@@ -1182,9 +1172,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
-        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
-        memo.configureManagers();
-        tm = new LnThrottleManager(memo);
+        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
+        memo.configureManagers(); // lnThrottleManager created by memo + added to instancemanager here
+        tm = memo.get(ThrottleManager.class);
+        Assertions.assertTrue(tm == InstanceManager.getDefault(ThrottleManager.class),"tm is Instance tm");
+        Assertions.assertTrue(tm instanceof LnThrottleManager,"tm is ln tm and not null");
         log.debug("new throttle manager is {}", tm.toString());
         memo.getSensorManager().dispose(); // get rid of sensor manager to prevent it from sending interrogation messages
         memo.getPowerManager().dispose(); // get rid of power manager to prevent it from sending slot 0 read message

@@ -84,7 +84,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected Route _route = null;
     protected Track _departureTrack; // the departure track from staging
     protected Track _terminationTrack; // the termination track into staging
-    protected String _roadOption = ALL_ROADS;// train road name restrictions
+    protected String _carRoadOption = ALL_ROADS;// train car road name restrictions
+    protected String _locoRoadOption = ALL_ROADS;// train engine road name restrictions
     protected int _requires = NO_CABOOSE_OR_FRED; // train requirements, caboose, FRED
     protected String _numberEngines = "0"; // number of engines this train requires
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
@@ -937,6 +938,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return true;
     }
+    
+    public boolean isTurn() {
+        return !isLocalSwitcher() &&
+                TrainCommon.splitString(getTrainDepartsName())
+                        .equals(TrainCommon.splitString(getTrainTerminatesName()));
+    }
 
     /**
      * Used to determine if train is carrying only passenger cars.
@@ -944,7 +951,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if only passenger cars have been assigned to this train.
      */
     public boolean isOnlyPassengerCars() {
-        for (Car car : InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(this)) {
+        for (Car car : InstanceManager.getDefault(CarManager.class).getList(this)) {
             if (!car.isPassenger()) {
                 return false;
             }
@@ -1103,12 +1110,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     /**
-     * Get how this train deals with road names.
+     * Get how this train deals with car road names.
      *
      * @return ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
      */
-    public String getRoadOption() {
-        return _roadOption;
+    public String getCarRoadOption() {
+        return _carRoadOption;
     }
 
     /**
@@ -1116,94 +1123,192 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @param option ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
      */
-    public void setRoadOption(String option) {
-        String old = _roadOption;
-        _roadOption = option;
+    public void setCarRoadOption(String option) {
+        String old = _carRoadOption;
+        _carRoadOption = option;
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _roadList = new ArrayList<>();
+    List<String> _carRoadList = new ArrayList<>();
 
-    protected void setRoadNames(String[] roads) {
-        if (roads.length > 0) {
-            Arrays.sort(roads);
-            for (String road : roads) {
-                if (!road.isEmpty()) {
-                    _roadList.add(road);
-                }
-            }
-        }
+    protected void setCarRoadNames(String[] roads) {
+        setRoadNames(roads, _carRoadList);
     }
 
     /**
-     * Provides a list of road names that the train will either service or exclude.
-     * See setRoadOption
+     * Provides a list of car road names that the train will either service or exclude.
+     * See setCarRoadOption
      *
      * @return Array of sorted road names as Strings
      */
-    public String[] getRoadNames() {
-        String[] roads = _roadList.toArray(new String[0]);
-        if (_roadList.size() > 0) {
+    public String[] getCarRoadNames() {
+        String[] roads = _carRoadList.toArray(new String[0]);
+        if (_carRoadList.size() > 0) {
             Arrays.sort(roads);
         }
         return roads;
     }
 
     /**
-     * Add a road name that the train will either service or exclude. See
-     * setRoadOption
+     * Add a car road name that the train will either service or exclude. See
+     * setCarRoadOption
      *
      * @param road The string road name.
      * @return true if road name was added, false if road name wasn't in the list.
      */
-    public boolean addRoadName(String road) {
-        if (_roadList.contains(road)) {
+    public boolean addCarRoadName(String road) {
+        if (_carRoadList.contains(road)) {
             return false;
         }
-        _roadList.add(road);
+        _carRoadList.add(road);
         log.debug("train ({}) add car road {}", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() - 1, _roadList.size());
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _carRoadList.size() - 1, _carRoadList.size());
         return true;
     }
 
     /**
-     * Delete a road name that the train will either service or exclude. See
+     * Delete a car road name that the train will either service or exclude. See
      * setRoadOption
      *
      * @param road The string road name to delete.
      * @return true if road name was removed, false if road name wasn't in the list.
      */
-    public boolean deleteRoadName(String road) {
-        if (!_roadList.contains(road)) {
+    public boolean deleteCarRoadName(String road) {
+        if (!_carRoadList.contains(road)) {
             return false;
         }
-        _roadList.remove(road);
+        _carRoadList.remove(road);
         log.debug("train ({}) delete car road {}", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1, _roadList.size());
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _carRoadList.size() + 1, _carRoadList.size());
         return true;
     }
 
     /**
-     * Determine if train will service a specific road name.
+     * Determine if train will service a specific road name for a car.
      *
      * @param road the road name to check.
      * @return true if train will service this road name.
      */
-    public boolean isRoadNameAccepted(String road) {
-        if (_roadOption.equals(ALL_ROADS)) {
+    public boolean isCarRoadNameAccepted(String road) {
+        if (_carRoadOption.equals(ALL_ROADS)) {
             return true;
         }
-        if (_roadOption.equals(INCLUDE_ROADS)) {
-            return _roadList.contains(road);
+        if (_carRoadOption.equals(INCLUDE_ROADS)) {
+            return _carRoadList.contains(road);
         }
         // exclude!
-        return !_roadList.contains(road);
+        return !_carRoadList.contains(road);
+    }
+    
+    /**
+     * Get how this train deals with locomotive road names.
+     *
+     * @return ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
+     */
+    public String getLocoRoadOption() {
+        return _locoRoadOption;
+    }
+
+    /**
+     * Set how this train deals with locomotive road names.
+     *
+     * @param option ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
+     */
+    public void setLocoRoadOption(String option) {
+        String old = _locoRoadOption;
+        _locoRoadOption = option;
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
+    }
+
+    List<String> _locoRoadList = new ArrayList<>();
+
+    protected void setLocoRoadNames(String[] roads) {
+        setRoadNames(roads, _locoRoadList);
+    }
+    
+    private void setRoadNames(String[] roads, List<String> list) {
+        if (roads.length > 0) {
+            Arrays.sort(roads);
+            for (String road : roads) {
+                if (!road.isEmpty()) {
+                    list.add(road);
+                }
+            }
+        }
+    }
+
+    /**
+     * Provides a list of engine road names that the train will either service or exclude.
+     * See setLocoRoadOption
+     *
+     * @return Array of sorted road names as Strings
+     */
+    public String[] getLocoRoadNames() {
+        String[] roads = _locoRoadList.toArray(new String[0]);
+        if (_locoRoadList.size() > 0) {
+            Arrays.sort(roads);
+        }
+        return roads;
+    }
+
+    /**
+     * Add a engine road name that the train will either service or exclude. See
+     * setLocoRoadOption
+     *
+     * @param road The string road name.
+     * @return true if road name was added, false if road name wasn't in the list.
+     */
+    public boolean addLocoRoadName(String road) {
+        if (_locoRoadList.contains(road)) {
+            return false;
+        }
+        _locoRoadList.add(road);
+        log.debug("train ({}) add engine road {}", getName(), road);
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _locoRoadList.size() - 1, _locoRoadList.size());
+        return true;
+    }
+
+    /**
+     * Delete a engine road name that the train will either service or exclude. See
+     * setLocoRoadOption
+     *
+     * @param road The string road name to delete.
+     * @return true if road name was removed, false if road name wasn't in the list.
+     */
+    public boolean deleteLocoRoadName(String road) {
+        if (!_locoRoadList.contains(road)) {
+            return false;
+        }
+        _locoRoadList.remove(road);
+        log.debug("train ({}) delete engine road {}", getName(), road);
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _locoRoadList.size() + 1, _locoRoadList.size());
+        return true;
+    }
+
+    /**
+     * Determine if train will service a specific road name for an engine.
+     *
+     * @param road the road name to check.
+     * @return true if train will service this road name.
+     */
+    public boolean isLocoRoadNameAccepted(String road) {
+        if (_locoRoadOption.equals(ALL_ROADS)) {
+            return true;
+        }
+        if (_locoRoadOption.equals(INCLUDE_ROADS)) {
+            return _locoRoadList.contains(road);
+        }
+        // exclude!
+        return !_locoRoadList.contains(road);
     }
 
     protected void replaceRoad(String oldRoad, String newRoad) {
         if (newRoad != null) {
-            if (deleteRoadName(oldRoad)) {
-                addRoadName(newRoad);
+            if (deleteCarRoadName(oldRoad)) {
+                addCarRoadName(newRoad);
+            }
+            if (deleteLocoRoadName(oldRoad)) {
+                addLocoRoadName(newRoad);
             }
             if (getEngineRoad().equals(oldRoad)) {
                 setEngineRoad(newRoad);
@@ -1548,8 +1653,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return false;
         }
         if (!isBuiltDateAccepted(car.getBuilt()) ||
-                !isOwnerNameAccepted(car.getOwner()) ||
-                !isRoadNameAccepted(car.getRoadName())) {
+                !isOwnerNameAccepted(car.getOwnerName()) ||
+                !isCarRoadNameAccepted(car.getRoadName())) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("trainCanNotServiceCar"),
                     new Object[] { getName(), car.toString() }));
             return false;
@@ -1724,6 +1829,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                                 car.getDestinationTrackName() }));
                     continue;
                 }
+                // don't allow local move when car is in staging
+                if (!isTurn() && car.getTrack().isStaging() &&
+                        rldest.getLocation() == car.getLocation()) {
+                    log.debug(
+                            "Car ({}) at ({}, {}) not allowed to perform local move in staging ({})",
+                            car.toString(), car.getLocationName(), car.getTrackName(), rldest.getName());
+                    continue;
+                }
                 // allow car to return to staging?
                 if (isAllowReturnToStagingEnabled() &&
                         car.getTrack().isStaging() &&
@@ -1810,7 +1923,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         if (!track.isDropTrainAccepted(this)) {
             addLine(buildReport, MessageFormat.format(Bundle.getMessage("buildCanNotDropCarTrain"),
-                    new Object[] { car.toString(), getName(), track.getTrackTypeName(), track.getName() }));
+                    new Object[]{car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
+                            track.getName()}));
             return false;
         }
         return true;
@@ -2124,9 +2238,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return The train's description.
      */
     public String getDescription() {
-        String description = MessageFormat.format(_description, new Object[] { getLeadEngineNumber(),
-                getTrainDepartsDirection(), getLeadEngineRoadName(), getLeadEngineDccAddress() });
-        return description;
+        try {
+            String description = MessageFormat.format(getRawDescription(), new Object[]{getLeadEngineNumber(),
+                    getTrainDepartsDirection(), getLeadEngineRoadName(), getLeadEngineDccAddress()});
+            return description;
+        } catch (IllegalArgumentException e) {
+            return "ERROR IN FORMATTING: " + getRawDescription();
+        }
     }
 
     public void setNumberEngines(String number) {
@@ -2889,10 +3007,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
     }
 
-    public void printBuildReport() {
+    public boolean printBuildReport() {
         boolean isPreview = (InstanceManager.getDefault(TrainManager.class).isPrintPreviewEnabled() ||
                 Setup.isBuildReportAlwaysPreviewEnabled());
-        printBuildReport(isPreview);
+        return printBuildReport(isPreview);
     }
 
     public boolean printBuildReport(boolean isPreview) {
@@ -3579,10 +3697,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         // old misspelled format
         if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null) {
-            _roadOption = a.getValue();
+            _carRoadOption = a.getValue();
         }
         if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null) {
-            _roadOption = a.getValue();
+            _carRoadOption = a.getValue();
         }
         // new way of reading car roads using elements
         if (e.getChild(Xml.CAR_ROADS) != null) {
@@ -3594,13 +3712,29 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     roads[i] = a.getValue();
                 }
             }
-            setRoadNames(roads);
+            setCarRoadNames(roads);
         } // old way of reading car roads up to version 2.99.6
         else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
             String names = a.getValue();
             String[] roads = names.split("%%"); // NOI18N
-            log.debug("Train ({}) {} car roads: {}", getName(), getRoadOption(), names);
-            setRoadNames(roads);
+            log.debug("Train ({}) {} car roads: {}", getName(), getCarRoadOption(), names);
+            setCarRoadNames(roads);
+        }
+        
+        if ((a = e.getAttribute(Xml.LOCO_ROAD_OPTION)) != null) {
+            _locoRoadOption = a.getValue();
+        }
+        // new way of reading engine roads using elements
+        if (e.getChild(Xml.LOCO_ROADS) != null) {
+            List<Element> locoRoads = e.getChild(Xml.LOCO_ROADS).getChildren(Xml.LOCO_ROAD);
+            String[] roads = new String[locoRoads.size()];
+            for (int i = 0; i < locoRoads.size(); i++) {
+                Element road = locoRoads.get(i);
+                if ((a = road.getAttribute(Xml.NAME)) != null) {
+                    roads[i] = a.getValue();
+                }
+            }
+            setLocoRoadNames(roads);
         }
 
         if ((a = e.getAttribute(Xml.CAR_LOAD_OPTION)) != null) {
@@ -3767,7 +3901,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 log.error("Status cars requested ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
         }
-        if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.STATUS_CODE) == null) {
+        if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
+            try {
+                _statusCode = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
+        } else if ((a = e.getAttribute(Xml.STATUS)) != null) {
+            // attempt to recover status code
             String status = a.getValue();
             if (status.startsWith(BUILD_FAILED)) {
                 _statusCode = CODE_BUILD_FAILED;
@@ -3787,13 +3928,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 _statusCode = CODE_TRAIN_RESET;
             } else {
                 _statusCode = CODE_UNKNOWN;
-            }
-        }
-        if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
-            try {
-                _statusCode = Integer.parseInt(a.getValue());
-            } catch (NumberFormatException ee) {
-                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
         }
         if ((a = e.getAttribute(Xml.OLD_STATUS_CODE)) != null) {
@@ -3997,13 +4131,25 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         e.addContent(eTypes);
         // save list of car roads for this train
-        if (!getRoadOption().equals(ALL_ROADS)) {
-            e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
-            String[] roads = getRoadNames();
+        if (!getCarRoadOption().equals(ALL_ROADS)) {
+            e.setAttribute(Xml.CAR_ROAD_OPTION, getCarRoadOption());
+            String[] roads = getCarRoadNames();
             // new way of saving road names
             Element eRoads = new Element(Xml.CAR_ROADS);
             for (String road : roads) {
                 Element eRoad = new Element(Xml.CAR_ROAD);
+                eRoad.setAttribute(Xml.NAME, road);
+                eRoads.addContent(eRoad);
+            }
+            e.addContent(eRoads);
+        }
+        // save list of engine roads for this train
+        if (!getLocoRoadOption().equals(ALL_ROADS)) {
+            e.setAttribute(Xml.LOCO_ROAD_OPTION, getLocoRoadOption());
+            String[] roads = getLocoRoadNames();
+            Element eRoads = new Element(Xml.LOCO_ROADS);
+            for (String road : roads) {
+                Element eRoad = new Element(Xml.LOCO_ROAD);
                 eRoad.setAttribute(Xml.NAME, road);
                 eRoads.addContent(eRoad);
             }

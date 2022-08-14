@@ -727,11 +727,12 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
         stringMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         stringActionMemory = new StringActionMemory("IQSA1", null);
-        stringActionMemory.setMemory(stringMemory);
+        stringActionMemory.getSelectNamedBean().setNamedBean(stringMemory);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
         doStringAction.getChild(1).connect(socketAtomicBoolean);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

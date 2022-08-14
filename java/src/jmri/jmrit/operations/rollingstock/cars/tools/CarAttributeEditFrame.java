@@ -215,7 +215,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
                 }
             }
             if (_attribute.equals(OWNER)) {
-                if (car.getOwner().equals(item)) {
+                if (car.getOwnerName().equals(item)) {
                     number++;
                 }
             }
@@ -240,7 +240,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             // need to check if an engine is using the road name
             if (_attribute.equals(OWNER)) {
                 for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
-                    if (rs.getOwner().equals(item)) {
+                    if (rs.getOwnerName().equals(item)) {
                         log.info("Engine ({} {}) is assigned owner name ({})", rs.getRoadName(), rs.getNumber(), item); // NOI18N
                         return;
                     }
@@ -248,7 +248,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             }
             // confirm that attribute is to be deleted
             if (!cancel) {
-                int results = JOptionPane.showOptionDialog(null,
+                int results = JOptionPane.showOptionDialog(this,
                         MessageFormat
                                 .format(Bundle.getMessage("ConfirmDeleteAttribute"), new Object[] { _attribute, item }),
                         Bundle.getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,

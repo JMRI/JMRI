@@ -6,10 +6,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import jmri.jmrix.dcc4pc.Dcc4PcListener;
+
 import jmri.jmrix.dcc4pc.Dcc4PcMessage;
-import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
+import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson Copyright (C) 2015
  */
-public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
+public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcPanelInterface {
 
     // member declarations
     JLabel jLabel1 = new JLabel();
@@ -59,12 +59,7 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             add(childBoardBox);
             add(sendButton);
 
-            sendButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            sendButton.addActionListener(this::sendButtonActionPerformed);
         }
     }
 
@@ -91,9 +86,21 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             hexStringToByteArray(text);
             return;
         }
-        Dcc4PcMessage m = new Dcc4PcMessage(text);
+        setChildBoardAndSend(new Dcc4PcMessage(text));
+    }
+
+    private void setChildBoardAndSend(Dcc4PcMessage m){
         m.setForChildBoard(childBoardBox.isSelected());
-        memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
+        if ( memo == null ) {
+            log.error("no System Connection Memo Found when sending {}", m);
+            return;
+        }
+        Dcc4PcTrafficController tc = memo.getDcc4PcTrafficController();
+        if( tc != null){
+            tc.sendDcc4PcMessage(m, null);
+        } else {
+            log.error("no Traffic Controller for sys conn {} Found when sending {}", memo.getUserName(), m);
+        }
     }
 
     public void hexStringToByteArray(String s) {
@@ -108,35 +115,9 @@ public class PacketGenPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             m.setElement(i, val);
             loc = loc + 2;
         }
-        m.setForChildBoard(childBoardBox.isSelected());
-        if(memo.getDcc4PcTrafficController()!=null){
-            memo.getDcc4PcTrafficController().sendDcc4PcMessage(m, null);
-        } else {
-            log.error("no Traffic Controller Found");
-        }
+        setChildBoardAndSend(m);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleTimeout(Dcc4PcMessage m) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void message(Dcc4PcMessage m) {
-    }  // ignore replies
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void reply(Dcc4PcReply r) {
-    } // ignore replies
-    
     private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);
     /**
      * Nested class to create one of these using old-style defaults

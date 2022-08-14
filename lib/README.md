@@ -110,7 +110,7 @@ which checks the dates of the control files to make sure they've benen updated w
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.28 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.28/openlcb-0.7.28.jar or the maven central repository.
+- 0.7.30 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.30/openlcb-0.7.30.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -128,11 +128,10 @@ which checks the dates of the control files to make sure they've benen updated w
 - version 2.0.6
 - from <jdom.org>
 
-##### jackson-annotations-2.10.0.jar, jackson-core-2.10.0.jar, jackson-databind-2.10.0.jar
+##### jackson-annotations-2.12.6.jar, jackson-core-2.12.6.jar, jackson-databind-2.12.6.1.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.10.0
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.10.0
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1
 
 ##### json-schema-validator-1.0.28.jar
 - JSON Schema validation library
@@ -277,13 +276,17 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From http://patrick.lidstone.net/html/dev_tools.html
 - See license http://patrick.lidstone.net/html/xap.html
 
-##### xbee-java-library-1.2.1.jar
+##### xbee-java-library-1.3.1.jar
 - Official XBee support library from Digi
 - from https://github.com/digidotcom/XBeeJavaLibrary
 
-##### xercesImpl-2.12.0.jar
-- version Xerces-J 2.12.0
-- from Maven
+##### xercesImpl-2.12.2.jar
+- version Xerces-J 2.12.2
+- from Maven https://mvnrepository.com/artifact/xerces/xercesImpl/2.12.2
+
+##### xml-apis-1.4.01.jar
+#- For xercesImpl 2.12.2
+# but we use the one provided by the JRE - see pom.xml - so there's no file for this
 
 ##### xml-apis-ext-1.3.04.jar
 - from Maven
@@ -318,10 +321,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 4.12
 - from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
 
-##### hamcrest-core-1.3.jar
-- version 1.3
-- Used for testing only, not at runtime
-- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
@@ -339,6 +338,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### PlantUML
 - plantuml.jar
     was from plantuml.org, now from https://github.com/plantuml/plantuml.git
+    pulled July 14, 2022 post PR-1057
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases
@@ -354,11 +354,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 5.1.14
 - from https://search.maven.org/search?q=g:org.springframework%20v:5.1.14.RELEASE
 - Mocks Java Servlet requests and responses
-
-##### AppleJavaExtensions.jar
-- version 1.5
-- from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
-- Used for building only, not at runtime
 
 #### SpotBugs static analysis
 
@@ -429,3 +424,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
 - libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
 - No longer used as of JMRI 4.9.1
+
+##### hamcrest-core-1.3.jar
+- version 1.3
+- Used for testing only, not at runtime
+- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
+- No longer used as of JMRI 5.1.3

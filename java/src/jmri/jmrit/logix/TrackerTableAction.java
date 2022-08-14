@@ -6,8 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +45,8 @@ import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -502,7 +502,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
      *
      * @author Peter Cressman
      */
-    class TableFrame extends JmriJFrame implements MouseListener {
+    class TableFrame extends JmriJFrame implements JmriMouseListener {
 
         private final TrackerTableModel _model;
         private JmriJFrame _pickFrame;
@@ -546,7 +546,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             p.add(_status);
             _status.setEditable(false);
             _status.setBackground(Color.white);
-            _status.addMouseListener(this);
+            _status.addMouseListener(JmriMouseListener.adapt(this));
             panel.add(p);
 
             tablePanel.add(makeButtonPanel(), BorderLayout.CENTER);
@@ -741,7 +741,7 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         }
 
         @Override
-        public void mouseClicked(MouseEvent event) {
+        public void mouseClicked(JmriMouseEvent event) {
             javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
             for (int i = _statusHistory.size() - 1; i >= 0; i--) {
                 popup.add(_statusHistory.get(i));
@@ -750,22 +750,22 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
         }
 
         @Override
-        public void mousePressed(MouseEvent event) {
+        public void mousePressed(JmriMouseEvent event) {
            // only handling mouseClicked
         }
 
         @Override
-        public void mouseEntered(MouseEvent event) {
+        public void mouseEntered(JmriMouseEvent event) {
             // only handling mouseClicked
         }
 
         @Override
-        public void mouseExited(MouseEvent event) {
+        public void mouseExited(JmriMouseEvent event) {
             // only handling mouseClicked
         }
 
         @Override
-        public void mouseReleased(MouseEvent event) {
+        public void mouseReleased(JmriMouseEvent event) {
             // only handling mouseClicked
         }
 

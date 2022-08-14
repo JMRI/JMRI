@@ -39,10 +39,12 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     private JPanel _copyBlock;
     private JPanel _copyReporter;
     private JPanel _copyVariable;
+    private JPanel _copyReference;
     private JPanel _calculateFormula;
     private JPanel _copyTableCell;
     private JTextField _setToConstantTextField;
     private JTextField _copyLocalVariableTextField;
+    private JTextField _copyReferenceTextField;
     private JTextField _calculateFormulaTextField;
 
 
@@ -69,6 +71,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             _copyTableCell = selectTableSwing.createPanel(null);
         }
         _copyVariable = new JPanel();
+        _copyReference = new JPanel();
         _calculateFormula = new JPanel();
 
         _tabbedPaneVariableOperation.addTab(VariableOperation.SetToNull.toString(), _setToNull);
@@ -77,6 +80,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyBlockToVariable.toString(), _copyBlock);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyReporterToVariable.toString(), _copyReporter);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyVariableToVariable.toString(), _copyVariable);
+        _tabbedPaneVariableOperation.addTab(VariableOperation.CopyReferenceToVariable.toString(), _copyReference);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CopyTableCellToVariable.toString(), _copyTableCell);
         _tabbedPaneVariableOperation.addTab(VariableOperation.CalculateFormula.toString(), _calculateFormula);
 
@@ -103,6 +107,9 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _copyLocalVariableTextField = new JTextField(30);
         _copyVariable.add(_copyLocalVariableTextField);
 
+        _copyReferenceTextField = new JTextField(30);
+        _copyReference.add(_copyReferenceTextField);
+
         _calculateFormulaTextField = new JTextField(30);
         _calculateFormula.add(_calculateFormulaTextField);
 
@@ -111,14 +118,14 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             if (action.getLocalVariable() != null) {
                 _localVariableTextField.setText(action.getLocalVariable());
             }
-            if (action.getMemory() != null) {
-                _copyMemoryBeanPanel.setDefaultNamedBean(action.getMemory().getBean());
+            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _copyMemoryBeanPanel.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
             }
-            if (action.getBlock() != null) {
-                _copyBlockBeanPanel.setDefaultNamedBean(action.getBlock().getBean());
+            if (action.getSelectBlockNamedBean().getNamedBean() != null) {
+                _copyBlockBeanPanel.setDefaultNamedBean(action.getSelectBlockNamedBean().getNamedBean().getBean());
             }
-            if (action.getReporter() != null) {
-                _copyReporterBeanPanel.setDefaultNamedBean(action.getReporter().getBean());
+            if (action.getSelectReporterNamedBean().getNamedBean() != null) {
+                _copyReporterBeanPanel.setDefaultNamedBean(action.getSelectReporterNamedBean().getNamedBean().getBean());
             }
             switch (action.getVariableOperation()) {
                 case SetToNull: _tabbedPaneVariableOperation.setSelectedComponent(_setToNull); break;
@@ -128,11 +135,13 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 case CopyBlockToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyBlock); break;
                 case CopyReporterToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyReporter); break;
                 case CopyVariableToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyVariable); break;
+                case CopyReferenceToVariable: _tabbedPaneVariableOperation.setSelectedComponent(_copyReference); break;
                 case CalculateFormula: _tabbedPaneVariableOperation.setSelectedComponent(_calculateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getVariableOperation().name());
             }
             _setToConstantTextField.setText(action.getConstantValue());
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
+            _copyReferenceTextField.setText(action.getReference());
             _calculateFormulaTextField.setText(action.getFormula());
 
             _listenOnMemory.setSelected(action.getListenToMemory());
@@ -156,7 +165,14 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     public boolean validate(@Nonnull List<String> errorMessages) {
         ActionLocalVariable action = new ActionLocalVariable("IQDA1", null);
 
-         // If using the Memory tab, validate the memory variable selection.
+        try {
+            action.setVariableOperation(VariableOperation.CalculateFormula);
+            action.setFormula(_calculateFormulaTextField.getText());
+        } catch (ParserException e) {
+            errorMessages.add(e.getMessage());
+        }
+
+        // If using the Memory tab, validate the memory variable selection.
         if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory) {
             if (_copyMemoryBeanPanel.getNamedBean() == null) {
                 errorMessages.add(Bundle.getMessage("ActionLocalVariable_CopyErrorMemory"));
@@ -208,7 +224,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
+                action.getSelectMemoryNamedBean().setNamedBean(handle);
             }
         }
 
@@ -219,7 +235,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Block> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(block.getDisplayName(), block);
-                action.setBlock(handle);
+                action.getSelectBlockNamedBean().setNamedBean(handle);
             }
         }
 
@@ -230,7 +246,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 NamedBeanHandle<Reporter> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(reporter.getDisplayName(), reporter);
-                action.setReporter(handle);
+                action.getSelectReporterNamedBean().setNamedBean(handle);
             }
         }
 
@@ -251,6 +267,9 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyVariable) {
                 action.setVariableOperation(VariableOperation.CopyVariableToVariable);
                 action.setOtherLocalVariable(_copyLocalVariableTextField.getText());
+            } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyReference) {
+                action.setVariableOperation(VariableOperation.CopyReferenceToVariable);
+                action.setReference(_copyReferenceTextField.getText());
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _calculateFormula) {
                 action.setVariableOperation(VariableOperation.CalculateFormula);
                 action.setFormula(_calculateFormulaTextField.getText());

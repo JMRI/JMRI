@@ -72,7 +72,7 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
         }
         
         List<Element> children = elementMaleSocket.getChildren();
-        log.debug("Found " + children.size() + " male sockets");  // NOI18N
+        log.debug("Found {} male sockets", children.size() );  // NOI18N
         
         for (Element e : children) {
             
@@ -86,7 +86,7 @@ public abstract class AbstractManagerXml extends jmri.managers.configurexml.Abst
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
-                    log.error("cannot load class " + className, ex);
+                    log.error("cannot load class {}", className, ex);
                 }
             }
             

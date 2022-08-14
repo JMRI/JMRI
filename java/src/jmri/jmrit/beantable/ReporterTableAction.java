@@ -115,7 +115,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
-            
+
             if (hardwareAddressValidator==null){
                 hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, java.util.Objects.requireNonNull(prefixBox.getSelectedItem()), true);
             } else {
@@ -183,20 +183,14 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
         String uName = userNameTextField.getText();
-        for (int x = 0; x < numberOfReporters; x++) {
-            try {
-                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix, false);
-            } catch (jmri.JmriException ex) {
-                displayHwError(curAddress, ex);
-                // directly add to statusBarLabel (but never called?)
-                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
-                statusBarLabel.setForeground(Color.red);
-                return;
-            }
 
-            // Compose the proposed system name from parts:
-            rName = reporterPrefix + reporterManager.typeLetter() + curAddress;
-            // rName = prefix + InstanceManager.reportManagerInstance().typeLetter() + curAddress;
+
+        // Compose the proposed system name from parts:
+        rName = reporterPrefix + reporterManager.typeLetter() + curAddress;
+
+       for (int x = 0; x < numberOfReporters; x++) {
+
+            // create the next reporter
             Reporter r;
             try {
                 r = reporterManager.provideReporter(rName);
@@ -206,6 +200,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return; // without creating
             }
 
+            // handle setting user name
             if (!uName.isEmpty()) {
                 if ((reporterManager.getByUserName(uName) == null)) {
                     r.setUserName(uName);
@@ -224,16 +219,29 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
             }
 
-            // bump user name
-            if (!uName.isEmpty()) {
-                uName = nextName(uName);
-            }
+            // except on last pass
+            if (x < numberOfReporters-1) {
+                // bump system name
+                try {
+                    rName = InstanceManager.getDefault(ReporterManager.class).getNextValidSystemName(r);
+                } catch (jmri.JmriException ex) {
+                    displayHwError(r.getSystemName(), ex);
+                    // directly add to statusBarLabel (but never called?)
+                    statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", rName));
+                    statusBarLabel.setForeground(Color.red);
+                    return;
+                }
 
+                // bump user name
+                if (!uName.isEmpty()) {
+                    uName = nextName(uName);
+                }
+            }
             // end of for loop creating rangeCheckBox of Reporters
         }
         // provide success feedback to uName
         statusBarLabel.setText(statusMessage);
-        statusBarLabel.setForeground(Color.gray);        
+        statusBarLabel.setForeground(Color.gray);
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
         removePrefixBoxListener(prefixBox);

@@ -4,7 +4,6 @@ package jmri.jmrix.openlcb;
 import java.beans.PropertyVetoException;
 
 import jmri.Light;
-import jmri.ProvidingManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -121,12 +120,17 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @Override
     @Test
-    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException,
             NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
         String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
         testRegisterDuplicateSystemName(l, s1, s2);
     }
+
+    // Test requires further setup
+    @Override
+    @Test
+    public void testCreate() {}
 
     @Override
     @BeforeEach
@@ -166,7 +170,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             }
         });
 
-        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()-> (!messages.isEmpty()),"Initialization Complete message");
     }
 
     @AfterAll

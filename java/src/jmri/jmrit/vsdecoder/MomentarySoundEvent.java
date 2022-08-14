@@ -1,23 +1,28 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Momentary Sound Event.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
 import javax.swing.JButton;
 import javax.swing.JComponent;
+
+import jmri.util.swing.JmriMouseListener;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +52,9 @@ public class MomentarySoundEvent extends SoundEvent {
     @Override
     public boolean hasButton() {
         if ((buttontype == ButtonType.NONE) || (buttontype == ButtonType.ENGINE) || (button == null)) {
-            return (false);
+            return false;
         } else {
-            return (true);
+            return true;
         }
     }
 
@@ -59,7 +64,7 @@ public class MomentarySoundEvent extends SoundEvent {
 
     @Override
     public JComponent getButton() {
-        return (button);
+        return button;
     }
 
     @Override
@@ -69,16 +74,16 @@ public class MomentarySoundEvent extends SoundEvent {
 
     @Override
     public String getButtonLabel() {
-        return (button.getText());
+        return button.getText();
     }
 
     @Override
     protected ButtonTrigger setupButtonAction(Element te) {
         bt = new ButtonTrigger(te.getAttributeValue("name"));
         button_trigger_list.put(bt.getName(), bt);
-        log.debug("new ButtonTrigger {} type {}", bt.getName(), buttontype.toString());
-        button.addMouseListener(bt);
-        return (bt);  // cast OK since we just instantiated it up above.
+        log.debug("new ButtonTrigger: {}, type: {}", bt.getName(), buttontype.toString());
+        button.addMouseListener(JmriMouseListener.adapt(bt));
+        return bt;  // cast OK since we just instantiated it up above.
     }
 
     @Override
@@ -90,7 +95,7 @@ public class MomentarySoundEvent extends SoundEvent {
             me.addContent(t.getXml());
         }
 
-        return (me);
+        return me;
     }
 
     @Override
@@ -122,7 +127,7 @@ public class MomentarySoundEvent extends SoundEvent {
          else
          log.debug("  Target Action: null");
 
-         } 
+         }
          */
 
         /*

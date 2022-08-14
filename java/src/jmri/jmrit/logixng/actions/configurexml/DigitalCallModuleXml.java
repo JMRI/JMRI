@@ -3,11 +3,12 @@ package jmri.jmrit.logixng.actions.configurexml;
 import java.util.List;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -38,10 +39,8 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
 
         storeCommon(p, element);
 
-        NamedBeanHandle<Module> module = p.getModule();
-        if (module != null) {
-            element.addContent(new Element("module").addContent(module.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Module>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
 
         Element parameters = new Element("Parameters");
         for (ParameterData pd : p.getParameterData()) {
@@ -61,22 +60,19 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         DigitalCallModule h = new DigitalCallModule(sys, uname);
 
         loadCommon(h, shared);
 
-        Element moduleName = shared.getChild("module");
-        if (moduleName != null) {
-            Module t = InstanceManager.getDefault(ModuleManager.class).getModule(moduleName.getTextTrim());
-            if (t != null) h.setModule(t);
-            else h.removeModule();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Module>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "module", null, null, null, null);
 
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
-        log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
+        log.debug("Found {} parameters", parameterList.size() );  // NOI18N
 
         for (Element e : parameterList) {
             Element elementName = e.getChild("name");

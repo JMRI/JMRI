@@ -6,10 +6,10 @@ import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBean.DisplayOptions;
+import jmri.NamedBeanHandle;
 import jmri.swing.NamedBeanComboBox;
 
 /**
@@ -81,7 +81,21 @@ public class BeanSelectPanel<E extends NamedBean> extends JPanel {
     }
 
     /**
-     * Check that the user selected something in this BeanSelectCreatePanel.
+     * Set the default selected item in the combo box.
+     * @param nBeanHandle the bean that is selected by default
+     */
+    public void setDefaultNamedBean(NamedBeanHandle<E> nBeanHandle) {
+        if (nBeanHandle != null) {
+            _selection = nBeanHandle.getBean();
+            _beanComboBox.setSelectedItem(_selection);
+        } else {
+            _selection = null;
+            _beanComboBox.setSelectedItem(null);
+        }
+    }
+
+    /**
+     * Check that the user selected something in this BeanSelectPanel.
      * @return true if nothing selected
      */
     public boolean isEmpty() {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - Standalone LocoNet®</title>
+  <title>JMRI Hardware Support - Standalone LocoNet&reg;</title>
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax LocoNet BDL16 BDL162 BDL168 DS64 PR3 DCS100 DB150 JMRI LocoBuffer-USB LocoBuffer-II LocoBuffer FastClock">
@@ -21,7 +21,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: Standalone LocoNet®</h1>
+      <h1>Hardware Support: Standalone LocoNet&reg;</h1>
 
       <h2>Contents</h2>
 
@@ -115,7 +115,7 @@
         </li>
 
         <li>
-          <a href="#examples">Standalone LocoNet® Examples</a>
+          <a href="#examples">Standalone LocoNet&reg; Examples</a>
           <ul>
             <li>
               <a href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet Turnouts,
@@ -144,7 +144,7 @@
 
       <h2 id="generalideas">Introduction</h2>
 
-      <p>A "Standalone" LocoNet® is a LocoNet bus which does not have a LocoNet command station.
+      <p>A "Standalone" LocoNet&reg; is a LocoNet bus which does not have a LocoNet command station.
       Since it does not have a LocoNet command station, it cannot control locomotives, and cannot
       directly influence the DCC track signal created by a DCC command station.</p>
 
@@ -230,7 +230,7 @@
 
               <li>DCS240</li>
 
-              <li>DCS210</li>
+              <li>DCS210/DCS210+</li>
             </ul>
           </td>
           <td>Provides</td>
@@ -249,7 +249,7 @@
 
               <li>DCS240</li>
 
-              <li>DCS210</li>
+              <li>DCS210/DCS210+</li>
 
               <li>DCS50/DCS51/DCS52</li>
 
@@ -274,7 +274,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Uhlenbrock Daisy System (Daisy throttle plus Power2 booster)</td>
+          <td>Uhlenbrock Daisy System (Daisy<br>throttle plus Power2 booster)</td>
           <td>Provides</td>
           <td>Can provide a DCC signal *</td>
           <td>Provides</td>
@@ -323,7 +323,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits LocoBuffer-USB Rev N, LocoBuffer-USB Rev O</td>
+          <td>RR-CirKits LocoBuffer-USB Rev N,<BR>LocoBuffer-USB Rev O</td>
           <td>Optional</td>
           <td>Required for power **</td>
           <td>Required, <em>cannot provide</em></td>
@@ -363,7 +363,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax DT100x/DT200x/DT300x/DT400x/DT402x/DT500x throttle</td>
+          <td>Digitrax DT100x/DT200x/DT300x/<br>DT400x/DT402x/DT500x/DT602x/UTx throttle</td>
           <td>Required</td>
           <td>Optional, for power</td>
           <td>Required</td>
@@ -393,7 +393,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax DS54/DS64</td>
+          <td>Digitrax DS54/DS64/DS74/DS78V</td>
           <td>
           </td>
           <td>
@@ -519,7 +519,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits Motorman, MotorMan-II, SignalMan, TowerMan, Watchman</td>
+          <td>RR-CirKits Motorman, MotorMan-II,<br>SignalMan, TowerMan, Watchman</td>
           <td>
           </td>
           <td>
@@ -611,7 +611,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Möllehem Gårdsproduktion (MGP) LocoNet Termination card</td>
+          <td>M&ouml;llehem G&aring;rdsproduktion (MGP)<br>LocoNet Termination card</td>
           <td>
           </td>
           <td>Can provide DC power</td>
@@ -783,7 +783,7 @@
         </li>
 
         <li>
-          <strong>Möllehem Gårdsproduktion LocoNet Termination card</strong>
+          <strong>M&ouml;llehem G&aring;rdsproduktion LocoNet Termination card</strong>
           <p>This device may be configured to provide LocoNet Data Signal termination. It may also
           be configured to provide DC power on the RailSync wires.</p>
         </li>
@@ -804,7 +804,7 @@
       <p>The 15 mA current source block in the diagram above may be implemented in a wide variety
       of ways. As an example, Dick Bronson shows a circuit for a 15 mA current source that can be
       used to provide LocoNet Data Signal termination at his <a href=
-      "http://www.rr-cirkits.com">RR-CirKits web site</a> on the <a href=
+      "http://www.rr-cirkits.com">RR-CirKits website</a> on the <a href=
       "http://www.rr-cirkits.com/Notebook/Standalone-LocoNet.html">Notebook page for Standalone
       LocoNet</a>. Look for the section titled "Pull Up" which shows a circuit using two 2N2222 NPN
       transistors and two resistors. The circuit node shown as <strong>LN</strong> should be
@@ -863,7 +863,7 @@
         </li>
 
         <li>
-          <strong>Möllehem Gårdsproduktion LocoNet Termination card</strong>
+          <strong>M&ouml;llehem G&aring;rdsproduktion LocoNet Termination card</strong>
           <p>This device may be configured to provide DC power on the RailSync wires. It may also
           be configured to provide LocoNet Data Signal termination.</p>
         </li>
@@ -1099,7 +1099,7 @@
       connectivity", so devices which connect to LocoNet must be powered with care. A safe "general
       rule" is that a power supply should be connected to, at most, one type of board.</p>
 
-      <h2 id="examples">Standalone LocoNet® Examples</h2>
+      <h2 id="examples">Standalone LocoNet&reg; Examples</h2>
 
       <h3 id="isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet Turnouts, Detection &
       Signaling</h3>
@@ -1210,16 +1210,16 @@
       <p>Information and support for the Logic Rail Technologies LocoNet Fast Clock may be found at
       <a href="http://www.logicrailtech.com">the Logic Rail Technologies website</a>.</p>
 
-      <p>Information and support for products by CML Electronics is now provided by Sig-naTrak® by
-      GFB Designs at <a href="https://www.signatrak.co.uk/">the Sig-naTrak® web site</a>.</p>
+      <p>Information and support for products by CML Electronics is now provided by Sig-naTrak&reg; by
+      GFB Designs at <a href="https://www.signatrak.co.uk/">the Sig-naTrak&reg; website</a>.</p>
 
       <p>Information and support for products by Tam Valley Depot may be found at <a href=
       "http://www.tamvalleydepot.com/">the TAM Valley Depot website</a>.</p>
 
-      <p>Information and support for products by Möllehem Gårdsproduktion MGP) may be found at
-      <a href="http://www.mollehem.se/index.php/en/">The Möllehem Gårdsproduktion website</a>.</p>
+      <p>Information and support for products by M&ouml;llehem G&aring;rdsproduktion MGP) may be found at
+      <a href="http://www.mollehem.se/index.php/en/">The M&ouml;llehem G&aring;rdsproduktion website</a>.</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

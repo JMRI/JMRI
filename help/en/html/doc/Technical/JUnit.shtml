@@ -246,6 +246,11 @@ suite.<br>
         <dd>If true, checks for any threads that have not yet been terminated during the test
         tearDown processing. If found, the context is logged as a warning.</dd>
 
+        <dt>jmri.util.JUnitUtil.failRemnantThreads</dt>
+
+        <dd>If true, checks for any threads that have not yet been terminated during the test
+        tearDown processing. If found, the test is marked as failure.</dd>
+        
         <dt>jmri.util.JUnitUtil.checkTestDuration</dt>
 
         <dd>If true, issues a warning if a test takes too long. The default limit is 5000 msec, but
@@ -343,12 +348,12 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       If a test fails during the continuous integration execution of "alltest", an e-mail is sent
       to the jmri-build e-mail list as well as to the developers who have checked in code which was
       included in the build.
-      <p>You may visit the web site <a href=
+      <p>You may visit the website <a href=
       "https://lists.sourceforge.net/lists/listinfo/jmri-builds">to subscribe to the jmri-builds
       e-mail list</a> to get the bad news as quickly as possible, or monitor <a href=
       "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds">to view the archives of
       the e-mail list</a> and see past logs. Or you can monitor the "dashboard" at the <a href=
-      "ContinuousIntegration.shtml">continuous integration</a> web site.</p>
+      "ContinuousIntegration.shtml">continuous integration</a> website.</p>
 
       <p>(When the build succeeds, nothing is mailed, to cut down on traffic)</p>
 
@@ -391,7 +396,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       </ul>
 
       <p>You can navigate using the bar along the top of the page:<br>
-      <img src="images/JenkinsByPackage.png" width="513" height="340" alt=
+      <img src="images/JenkinsByPackage.png" alt=
       "The JaCoCo coverage report for JMRI in Jenkins"></p>
 
       <h2 id="write">Writing Tests</h2>
@@ -1109,7 +1114,7 @@ milliseconds can improve the reliability of tests. Also, setting
         </li>
       </ul>
 
-        <h3 id="access">Testing GUI Accessibility</a>
+        <h3 id="access">Testing GUI Accessibility</h3>
         You can enable some accessibility checks using environment variables. These
         control test routines that are included in regular test runs over your code.
         For an example, see
@@ -1122,7 +1127,7 @@ milliseconds can improve the reliability of tests. Also, setting
             <dd>These determine what happens when a non-accessible GUI
                 element is found, ranging from logging to failing the relevant test.
             <dt>jmri.util.AccessibilityChecks.includeLaf
-            <dd>By default, these tests turn off messages about Java Look&Feel classes, i.e. Spinners.
+            <dd>By default, these tests turn off messages about Java Look&amp;Feel classes, i.e. Spinners.
                 Setting this variable true will include those in the output.
         </dl>
 

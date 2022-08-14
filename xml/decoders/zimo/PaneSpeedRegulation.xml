@@ -123,7 +123,7 @@
         <label>
           <text> Miles or Kilometres per hour per (128) Speed Step</text>
           <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
-          <text xml:lang="cs">kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
+          <text xml:lang="cs"> kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
           <text xml:lang="de">  km/h</text>
         </label>
       </column>

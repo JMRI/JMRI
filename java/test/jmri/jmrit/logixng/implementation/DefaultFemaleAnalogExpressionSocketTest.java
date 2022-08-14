@@ -21,7 +21,7 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Test DefaultFemaleAnalogExpressionSocket
- * 
+ *
  * @author Daniel Bergqvist 2018
  */
 public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBase {
@@ -30,7 +30,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     private String _memorySystemName;
     private Memory _memory;
     private MyAnalogExpressionMemory _expression;
-    
+
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -38,18 +38,18 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(AnalogExpressionManager.class);
     }
-    
+
     @Test
     public void testGetName() {
         Assert.assertTrue("String matches", "E1".equals(_femaleSocket.getName()));
     }
-    
+
     @Test
     public void testGetDescription() {
         Assert.assertTrue("String matches", "?~".equals(_femaleSocket.getShortDescription()));
         Assert.assertTrue("String matches", "?~ E1".equals(_femaleSocket.getLongDescription()));
     }
-    
+
     @Override
     protected FemaleSocket getFemaleSocket(String name) {
         return new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
@@ -62,12 +62,12 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
             }
         }, name);
     }
-    
+
     @Override
     protected boolean hasSocketBeenSetup() {
         return _expression._hasBeenSetup;
     }
-    
+
     @Test
     public void testSetValue() throws Exception {
         // Every test method should have an assertion
@@ -82,29 +82,29 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         _memory.setValue(1.2);
         Assert.assertTrue("values are equals", 1.2 == ((DefaultFemaleAnalogExpressionSocket)_femaleSocket).evaluate());
     }
-    
+
     @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
-        
+
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionAnalogIO.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionMemory.class);
         classes.add(jmri.jmrit.logixng.expressions.TimeSinceMidnight.class);
         map.put(Category.ITEM, classes);
-        
+
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.AnalogFormula.class);
         map.put(Category.COMMON, classes);
-        
+
         classes = new ArrayList<>();
         map.put(Category.OTHER, classes);
-        
+
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
     }
-    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -115,14 +115,14 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
+
         _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _memorySystemName = "IM1";
         _memory = InstanceManager.getDefault(MemoryManager.class).provide(_memorySystemName);
         _expression = new MyAnalogExpressionMemory("IQAE321");
-        _expression.setMemory(_memory);
+        _expression.getSelectNamedBean().setNamedBean(_memory);
         AnalogExpressionBean otherExpression = new AnalogExpressionMemory("IQAE322", null);
         manager = InstanceManager.getDefault(AnalogExpressionManager.class);
         maleSocket = ((AnalogExpressionManager)manager).registerExpression(_expression);
@@ -146,22 +146,22 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
-    
+
+
+
     private class MyAnalogExpressionMemory extends AnalogExpressionMemory {
-        
+
         private boolean _hasBeenSetup = false;
-        
+
         public MyAnalogExpressionMemory(String systemName) {
             super(systemName, null);
         }
-        
+
         /** {@inheritDoc} */
         @Override
         public void setup() {
             _hasBeenSetup = true;
         }
     }
-    
+
 }

@@ -210,7 +210,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
             functionButtons[0].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
         } catch (Exception e) {
-            log.debug("Exception loading svg icon : " + e.getMessage());
+            log.debug("Exception loading svg icon : {}", e.getMessage());
         } finally {
             if ((functionButtons[0].getIcon() == null) || (functionButtons[0].getSelectedIcon() == null)) {
                 log.debug("Issue loading svg icon, reverting to png");

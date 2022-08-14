@@ -1,20 +1,22 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
+ * Integer trigger.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author   Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
@@ -42,7 +44,7 @@ class IntTrigger extends Trigger {
     }
 
     public int getMatchValue() {
-        return (notch);
+        return notch;
     }
 
     public void setCompareType(IntTrigger.CompareType ct) {
@@ -50,7 +52,7 @@ class IntTrigger extends Trigger {
     }
 
     public CompareType getCompareType() {
-        return (compare_type);
+        return compare_type;
     }
 
     @Override
@@ -67,7 +69,7 @@ class IntTrigger extends Trigger {
             return;
         }
         if (event.getPropertyName().equals(this.getEventName()) != true) {
-            log.debug("Quit. Event name mismatch event = {} this = {}", event.getPropertyName(), this.getEventName());
+            log.debug("Quit. Event name mismatch event: {}, this:= {}", event.getPropertyName(), this.getEventName());
             return;
         }
         if (this.getTriggerType() == TriggerType.NONE) {

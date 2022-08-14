@@ -57,6 +57,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private static final long keepAliveTimeoutValue = 30000; // Interval
     //keep track of recreation command, including state, for each turnout and output
     private LinkedHashMap<Integer,String> turnouts = new LinkedHashMap<Integer, String>();
+    //keep track of speed, direction and functions for each loco address
+    private LinkedHashMap<Integer,Integer> locoSpeedByte = new LinkedHashMap<Integer,Integer>();
+    private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer,Integer>();
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
@@ -252,7 +255,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
     private DCCppReply generateReply(DCCppMessage msg) {
-        String s, r;
+        String s, r = null;
         Pattern p;
         Matcher m;
         DCCppReply reply = null;
@@ -266,14 +269,22 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 s = msg.toString();
                 try {
                     p = Pattern.compile(DCCppConstants.THROTTLE_CMD_REGEX);
-                    m = p.matcher(s);
+                    m = p.matcher(s); //<t REG CAB SPEED DIR>
                     if (!m.matches()) {
-                        log.error("Malformed Throttle Command: {}", s);
-                        return (null);
+                        p = Pattern.compile(DCCppConstants.THROTTLE_V3_CMD_REGEX);
+                        m = p.matcher(s); //<t locoId speed dir>
+                        if (!m.matches()) {
+                            log.error("Malformed Throttle Command: {}", s);
+                            return (null);
+                        }                       
+                        int locoId = Integer.parseInt(m.group(1));
+                        int speed = Integer.parseInt(m.group(2));
+                        int dir = Integer.parseInt(m.group(3));
+                        storeLocoSpeedByte(locoId, speed, dir);
+                        r = getLocoStateString(locoId);
+                    } else {
+                        r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
                     }
-                    r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
-                    reply = DCCppReply.parseDCCppReply(r);
-                    log.debug("Reply generated = '{}'", reply);
                 } catch (PatternSyntaxException e) {
                     log.error("Malformed pattern syntax! ");
                     return (null);
@@ -284,6 +295,38 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                     log.error("Index out of bounds string= {}", s);
                     return (null);
                 }
+                reply = DCCppReply.parseDCCppReply(r);
+                log.debug("Reply generated = '{}'", reply);
+                break;
+
+            case DCCppConstants.FUNCTION_V4_CMD:
+                log.debug("FunctionV4Detected");
+                s = msg.toString();
+                r = "";
+                try {
+                    p = Pattern.compile(DCCppConstants.FUNCTION_V4_CMD_REGEX); 
+                    m = p.matcher(s); //<F locoId func 1|0>
+                    if (!m.matches()) {
+                        log.error("Malformed FunctionV4 Command: {}", s);
+                        return (null);
+                    }                       
+                    int locoId = Integer.parseInt(m.group(1));
+                    int fn = Integer.parseInt(m.group(2));
+                    int state = Integer.parseInt(m.group(3));
+                    storeLocoFunction(locoId, fn, state);
+                    r = getLocoStateString(locoId);
+                } catch (PatternSyntaxException e) {
+                    log.error("Malformed pattern syntax!");
+                    return (null);
+                } catch (IllegalStateException e) {
+                    log.error("Group called before match operation executed string= {}", s);
+                    return (null);
+                } catch (IndexOutOfBoundsException e) {
+                    log.error("Index out of bounds string= {}", s);
+                    return (null);
+                }
+                reply = DCCppReply.parseDCCppReply(r);
+                log.debug("Reply generated = '{}'", reply);
                 break;
 
             case DCCppConstants.TURNOUT_CMD:
@@ -380,18 +423,32 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.PROG_WRITE_CV_BYTE:
                 log.debug("PROG_WRITE_CV_BYTE detected");
                 s = msg.toString();
+                r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
-                    m = p.matcher(s);
-                    if (!m.matches()) {
-                        log.error("Malformed ProgWriteCVByte Command: {}", s);
-                        return (null);
-                    }
-                    // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
-                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-                    r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
-                            " " + m.group(2);
-                    CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    if (s.matches(DCCppConstants.PROG_WRITE_BYTE_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed ProgWriteCVByte Command: {}", s);
+                            return (null);
+                        }
+                        // CMD: <W CV Value CALLBACKNUM CALLBACKSUB>
+                        // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                        r = "r " + m.group(3) + "|" + m.group(4) + "|" + m.group(1) +
+                                " " + m.group(2);
+                        CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    } else if (s.matches(DCCppConstants.PROG_WRITE_BYTE_V4_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_V4_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed ProgWriteCVByte Command: {}", s);
+                            return (null);
+                        }
+                        // CMD: <W CV Value>
+                        // Response: <r CV Value>
+                        r = "r " + m.group(1) + " " + m.group(2);
+                        CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+                    }                    
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
                 } catch (PatternSyntaxException e) {
@@ -445,24 +502,44 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.PROG_READ_CV:
                 log.debug("PROG_READ_CV detected");
                 s = msg.toString();
+                r = "";
                 try {
-                    p = Pattern.compile(DCCppConstants.PROG_READ_REGEX);
-                    m = p.matcher(s);
-                    if (!m.matches()) {
+                    if (s.matches(DCCppConstants.PROG_READ_CV_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_CV_REGEX);
+                        m = p.matcher(s);
+                        int cv = Integer.parseInt(m.group(1));
+                        int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                        if (cv < CVs.length) {
+                            cvVal = CVs[Integer.parseInt(m.group(1))];
+                        }
+                        // CMD: <R CV CALLBACKNUM CALLBACKSUB>
+                        // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
+                        r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
+                                + cvVal;
+                    } else if (s.matches(DCCppConstants.PROG_READ_CV_V4_REGEX)) {
+                        p = Pattern.compile(DCCppConstants.PROG_READ_CV_V4_REGEX);
+                        m = p.matcher(s);
+                        if (!m.matches()) {
+                            log.error("Malformed PROG_READ_CV Command: {}", s);
+                            return (null);
+                        }
+                        int cv = Integer.parseInt(m.group(1));
+                        int cvVal = 0; // Default to 0 if they're reading out of bounds.
+                        if (cv < CVs.length) {
+                            cvVal = CVs[Integer.parseInt(m.group(1))];
+                        }
+                        // CMD: <R CV>
+                        // Response: <r CV Value>
+                        r = "r " + m.group(1) + " " + cvVal;
+                    } else if (s.matches(DCCppConstants.PROG_READ_LOCOID_REGEX)) {
+                        int locoId = ThreadLocalRandom.current().nextInt(9999)+1; //get a random locoId between 1 and 9999
+                        // CMD: <R>
+                        // Response: <r LocoId>
+                        r = "r " + locoId;
+                    } else {
                         log.error("Malformed PROG_READ_CV Command: {}", s);
                         return (null);
                     }
-                    // TODO: Work Magic Here to retrieve stored value.
-                    // Make sure that CV exists
-                    int cv = Integer.parseInt(m.group(1));
-                    int cvVal = 0; // Default to 0 if they're reading out of bounds.
-                    if (cv < CVs.length) {
-                        cvVal = CVs[Integer.parseInt(m.group(1))];
-                    }
-                    // CMD: <R CV CALLBACKNUM CALLBACKSUB>
-                    // Response: <r CALLBACKNUM|CALLBACKSUB|CV Value>
-                    r = "r " + m.group(2) + "|" + m.group(3) + "|" + m.group(1) + " "
-                            + cvVal;
 
                     reply = DCCppReply.parseDCCppReply(r);
                     log.debug("Reply generated = {}", reply.toString());
@@ -541,7 +618,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 break;
 
             case DCCppConstants.FUNCTION_CMD:
-            case DCCppConstants.FUNCTION_V2_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
             case DCCppConstants.OPS_WRITE_CV_BYTE:
@@ -559,11 +635,46 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         return (reply);
     }
 
+    //calc speedByte value matching DCC++EX, then store it, so it can be used in the locoState replies
+    private void storeLocoSpeedByte(int locoId, int speed, int dir) {
+        if (speed>0) speed++; //add 1 to speed if not zero or estop
+        if (speed<0) speed = 1; //eStop is actually 1
+        int dirBit = dir*128; //calc value for direction bit
+        int speedByte = dirBit + speed; //add dirBit to adjusted speed value
+        locoSpeedByte.put(locoId, speedByte); //store it
+        if (!locoFunctions.containsKey(locoId)) locoFunctions.put(locoId, 0); //init functions if not set
+    }
+
+    //stores the calculated value of the functionsByte as used by DCC++EX
+    private void storeLocoFunction(int locoId, int function, int state) {
+        int functions = 0; //init functions to all off if not stored
+        if (locoFunctions.containsKey(locoId)) 
+            functions = locoFunctions.get(locoId); //get stored value, if any
+        int mask = 1 << function;
+        if (state == 1) {
+            functions = functions | mask; //apply ON
+        } else {
+            functions = functions & ~mask; //apply OFF            
+        }
+        locoFunctions.put(locoId, functions); //store new value
+        if (!locoSpeedByte.containsKey(locoId)) 
+            locoSpeedByte.put(locoId, 0); //init speedByte if not set
+    }
+
+    //retrieve stored values and calculate and format the locostate message text
+    private String getLocoStateString(int locoId) {
+        String s;
+        int speedByte = locoSpeedByte.get(locoId);
+        int functions = locoFunctions.get(locoId);
+        s = "l " + locoId + " 0 " + speedByte + " " + functions;  //<l loco slot speedByte functions>
+        return s;
+    }
+
     /* 's'tatus message gets multiple reply messages */
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-3.1.7 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }

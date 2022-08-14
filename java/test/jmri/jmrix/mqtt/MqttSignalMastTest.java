@@ -13,11 +13,12 @@ public class MqttSignalMastTest {
 
     @Test
     public void testCTor() {
+        Assert.assertNotNull("instancemanager getdefault MqttSystemConnectionMemo exists",memo);
         MqttSignalMast t = new MqttSignalMast("IF$mqm:AAR-1946:PL-2-high($0001)");
         Assert.assertNotNull("exists",t);
     }
 
-    MqttSystemConnectionMemo memo;
+    private MqttSystemConnectionMemo memo;
 
     @BeforeEach
     public void setUp() {
@@ -27,7 +28,10 @@ public class MqttSignalMastTest {
 
     @AfterEach
     public void tearDown() {
-        memo = null;
+        if ( memo != null ) {
+            memo.dispose();
+            memo = null;
+        }
         JUnitUtil.tearDown();
     }
 

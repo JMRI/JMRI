@@ -68,7 +68,7 @@
         </li>
 
         <li>Click <strong>Actions</strong> and <strong>Start Web Server</strong> to ensure the web
-        server is running (<strong>Tools ⇒ Servers ⇒ Start JRMI Web Server</strong> in
+        server is running (<strong>Tools &rArr; Servers &rArr; Start JRMI Web Server</strong> in
         PanelPro).</li>
 
         <li>If you want the Web Server to run each time you start JMRI:
@@ -77,7 +77,7 @@
 
             <li>Select <strong>Start Up</strong> in the left column</li>
 
-            <li>Click <strong>Add ▾</strong></li>
+            <li>Click <strong>Add &#9662;</strong></li>
 
             <li>Select <strong>Perform action...</strong></li>
 

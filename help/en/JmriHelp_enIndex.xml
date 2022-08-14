@@ -808,7 +808,7 @@
 
  <indexitem text="Variable Intensity Lights " target="html.tools.Lights_variablelight"/>
 
- <indexitem text="Virtual Sound Decoder (VSD) " target="package.jmri.jmrit.vsdecoder.VSDecoderFrame"/>
+ <indexitem text="Virtual Sound Decoder " target="html.tools.vsd.index"/>
 
  <indexitem text="Wangrow - Hardware, Connection, Tools " target="html.hardware.nce.Wangrow"/>
 

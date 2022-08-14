@@ -5,9 +5,14 @@ import jmri.configurexml.*;
 import java.io.File;
 import java.util.stream.Stream;
 
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrix.loconet.*;
+import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,6 +46,26 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     public LoadAndStoreTest() {
         // LogixNG cannot be loaded twice
         super(SaveType.Config, true);
+    }
+
+    @Override
+    protected void postLoadProcessing() {
+        InstanceManager.getDefault(LogixNG_Manager.class).setupAllLogixNGs();
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        super.setUp();
+
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager sm = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo locoNetMemo = new LocoNetSystemConnectionMemo(lnis, sm);
+        sm.setSystemConnectionMemo(locoNetMemo);
+        InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, locoNetMemo);
+
+        MqttSystemConnectionMemo mqttMemo = new MqttSystemConnectionMemo();
+        InstanceManager.setDefault(MqttSystemConnectionMemo.class, mqttMemo);
     }
 
     @AfterEach

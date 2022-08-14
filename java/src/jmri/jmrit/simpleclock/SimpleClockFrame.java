@@ -35,6 +35,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     private boolean changed = false;
     protected boolean showTime = false;
     private final DecimalFormat threeDigits = new DecimalFormat("0.000"); // 3 digit precision for speedup factor
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     protected JComboBox<String> timeSourceBox = null;
     protected JComboBox<String> clockStartBox = null;
@@ -62,7 +63,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     protected JButton setTimeButton = new JButton(Bundle.getMessage("ButtonSet"));
     protected JButton startButton = new JButton(Bundle.getMessage("ButtonStart"));
     protected JButton stopButton = new JButton(Bundle.getMessage("ButtonStop"));
-    protected JButton applyCloseButton = new JButton(Bundle.getMessage("ButtonStoreClock"));
+    protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
 
     protected JLabel clockStatus = new JLabel();
     protected JLabel timeLabel = new JLabel();
@@ -115,11 +116,11 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         saveContainerPanel.add(getSourcePane());
         saveContainerPanel.add(getStartupOptionsPane());
 
-        // add save/close buttons
+        // add Done button
         JPanel panel4 = new JPanel();
         panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
-        panel4.add(applyCloseButton);
-        applyCloseButton.addActionListener(this::saveButtonActionPerformed);
+        panel4.add(doneButton);
+        doneButton.addActionListener(this::doneButtonActionPerformed);
         saveContainerPanel.add(panel4);
 
 
@@ -749,33 +750,28 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     }
 
     /**
-     * Handle Store button.
-     * @param e null if a save reminder, not null then from save button action.
+     * Handle Done button.
+     * @param e null if a save reminder, not null then from Done button action.
      */
-    public void saveButtonActionPerformed(ActionEvent e) {
-
-        String messageString = (e==null ? Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuClocks"))
-                : Bundle.getMessage("StoreClockString") );
-
-        // remind to save
-        Object[] options = {Bundle.getMessage("ButtonSaveConfig"), Bundle.getMessage("ButtonSaveUser"),
-                Bundle.getMessage("ButtonCancel")};
-        int retval = javax.swing.JOptionPane.showOptionDialog(this,
-                messageString,
-                Bundle.getMessage((e==null ? "ReminderTitle" : "MenuItemStore")),
-                0,
-                javax.swing.JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        switch (retval) {
-            case 0:
-                new jmri.configurexml.StoreXmlConfigAction().actionPerformed(null); // Config only
-                break;
-            case 1:
-                new jmri.configurexml.StoreXmlUserAction().actionPerformed(null); // Config + Panels
-                break;
-            default:
-                log.debug("cancel");
+    public void doneButtonActionPerformed(ActionEvent e) {
+        if (changed && !checkEnabled) {
+            if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
+                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
+                        Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SimpleClockWindowTitle")),  // NOI18N
+                        getClassName(),
+                        "remindSaveClock");  // NOI18N
+            }
         }
         changed = false;
+        setVisible(false);
+        super.windowClosing(null);
+    }
+
+    protected String getClassName() {
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return this.getClass().getName();
     }
 
     /**
@@ -784,11 +780,15 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      */
     @Override
     public void windowClosing(WindowEvent e) {
-        if (changed) { // remind to save
-            saveButtonActionPerformed(null);
+        doneButtonActionPerformed(null);
+    }
+
+    @Override
+    public void dispose() {
+        if ( clock != null ) {
+            clock.removePropertyChangeListener(this);
         }
-        setVisible(false);
-        super.windowClosing(e);
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SimpleClockFrame.class);

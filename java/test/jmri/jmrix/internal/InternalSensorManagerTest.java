@@ -5,16 +5,12 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Tests for the jmri.managers.InternalSensorManager class.
@@ -40,28 +36,32 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         // ask for a Sensor, and check type
         Sensor tl = l.newSensor("IS21", "my name");
 
-        log.debug("received sensor value {}", tl);
-
-        Assert.assertTrue(null != tl);
+        Assert.assertNotNull(tl);
 
         // make sure loaded into tables
-        Assert.assertTrue(null != l.getBySystemName("IS21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull( l.getBySystemName("IS21"));
+        Assert.assertNotNull( l.getByUserName("my name"));
 
     }
 
     public void testSensorNameCase() {
         Assert.assertEquals(0, l.getObjectCount());
         // create
-        Sensor t = l.provideSensor("IS:XYZ");
-        t = l.provideSensor("IS:xyz");  // upper canse and lower case are the same object
+        Sensor ta = l.provideSensor("IS:XYZ");
+        Sensor tb = l.provideSensor("IS:xyz");  // upper canse and lower case are the same object
         // check
-        Assert.assertTrue("real object returned ", t != null);
-        Assert.assertEquals("IS:XYZ", t.getSystemName());  // we force upper
-        Assert.assertTrue("system name correct ", t == l.getBySystemName("IS:XYZ"));
+        Assert.assertNotNull("real object returned ", ta );
+        Assert.assertEquals("IS:XYZ", ta.getSystemName());  // we force upper
+        Assert.assertTrue("system name correct ", ta == l.getBySystemName("IS:XYZ"));
+        
+        Assert.assertNotNull("real object returned ", tb );
+        Assert.assertEquals("IS:XYZ", tb.getSystemName());  // we force upper
+        Assert.assertTrue("system name correct ", tb == l.getBySystemName("IS:XYZ"));
+        
         Assert.assertEquals(1, l.getObjectCount());
 
-        t = l.provideSensor("IS:XYZ");
+        Sensor t = l.provideSensor("IS:XYZ");
+        Assert.assertNotNull(t);
         Assert.assertEquals(1, l.getObjectCount());
     }
 
@@ -185,15 +185,16 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         l.provideSensor("IS2");
 
         java.util.SortedSet<Sensor> set = l.getNamedBeanSet();
-        Assert.assertThrows(UnsupportedOperationException.class, () -> set.add(null));
+        assertThatThrownBy(() -> set.add(null))
+            .isInstanceOf(UnsupportedOperationException.class);
 
     }
 
     // from here down is testing infrastructure
 
     // Property listen & audit methods
-    static protected int propertyListenerCount = 0;
-    static protected String propertyListenerLast = null;
+    protected int propertyListenerCount = 0;
+    protected String propertyListenerLast = null;
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -272,53 +273,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    // No manager-specific system name validation at present
-    @Test
-    @Override
-    public void testIncorrectGetNextValidAddress() {}
-
-    @Test
-    public void testDeprecatedGetNextValidAddress() throws JmriException {
-
-        Assert.assertEquals("2", "My Sensor 2", l.getNextValidAddress("My Sensor 2", l.getSystemPrefix(), false));
-
-    }
-
-    @Test
-    public void testgetNextValidAddressMaxedOut() throws JmriException {
-
-        Assert.assertNotNull("Created S1", l.provide("My Sensor 1"));
-        Assert.assertEquals("2 false", "My Sensor 2", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
-        Assert.assertEquals("2 true", "My Sensor 2", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),true));
-
-
-        Assert.assertNotNull("Created S2", l.provide("My Sensor 2"));
-        Assert.assertNotNull("Created S3", l.provide("My Sensor 3"));
-        Assert.assertEquals("2", "My Sensor 4", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
-
-        Assert.assertNotNull("Created S4", l.provide("My Sensor 4"));
-        Assert.assertNotNull("Created S5", l.provide("My Sensor 5"));
-        Assert.assertNotNull("Created S6", l.provide("My Sensor 6"));
-        Assert.assertNotNull("Created S7", l.provide("My Sensor 7"));
-        Assert.assertNotNull("Created S8", l.provide("My Sensor 8"));
-        Assert.assertEquals("9", "My Sensor 9", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
-
-        Assert.assertNotNull("Created S9", l.provide("My Sensor 9"));
-        Assert.assertEquals("10", "My Sensor 10", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
-
-        Assert.assertNotNull("Created S10", l.provide("My Sensor 10"));
-        Assert.assertEquals("11", "My Sensor 11", l.getNextValidAddress("My Sensor 1", l.getSystemPrefix(),false));
-
-        Assert.assertNotNull("Created S11", l.provide("My Sensor 11"));
-
-        Assert.assertThrows(JmriException.class, () -> l.getNextValidAddress("My Sensor 1",l.getSystemPrefix(),false));
-
-        Assert.assertEquals("12", "My Sensor 12", l.getNextValidAddress("My Sensor 2", l.getSystemPrefix(),false));
-
-        Assert.assertEquals("99 true", "My Sensor 100", l.getNextValidAddress("My Sensor 99", l.getSystemPrefix(),true));
-
-    }
-
     private static class CountingPropertyChangeListener implements PropertyChangeListener {
 
         int count = 0;
@@ -354,6 +308,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSensorManagerTest.class);
 
 }

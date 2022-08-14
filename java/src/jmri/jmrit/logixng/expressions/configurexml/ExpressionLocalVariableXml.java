@@ -4,7 +4,9 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
+import jmri.util.CompareUtil;
 
 import org.jdom2.Element;
 
@@ -46,13 +48,12 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
             element.addContent(new Element("otherVariable").addContent(otherVariableName));
         }
 
-        NamedBeanHandle<Memory> memoryName = p.getMemory();
-        if (memoryName != null) {
-            element.addContent(new Element("memory").addContent(memoryName.getName()));
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectMemoryNamedBean(), "memoryNamedBean"));
 
         element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
         element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));
+        element.addContent(new Element("compareType").addContent(p.getCompareType().name()));
         element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
 
         element.addContent(new Element("constant").addContent(p.getConstantValue()));
@@ -83,12 +84,9 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
             h.setOtherLocalVariable(otherVariableName.getTextTrim());
         }
 
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory t = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (t != null) h.setMemory(t);
-            else h.removeMemory();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Memory>();
+        selectNamedBeanXml.load(shared.getChild("memoryNamedBean"), h.getSelectMemoryNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectMemoryNamedBean(), "memory", null, null, null, null);
 
         Element constant = shared.getChild("constant");
         if (constant != null) {
@@ -108,6 +106,11 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         Element variableOperation = shared.getChild("variableOperation");
         if (variableOperation != null) {
             h.setVariableOperation(ExpressionLocalVariable.VariableOperation.valueOf(variableOperation.getTextTrim()));
+        }
+
+        Element compareType = shared.getChild("compareType");
+        if (compareType != null) {
+            h.setCompareType(CompareUtil.CompareType.valueOf(compareType.getTextTrim()));
         }
 
         Element caseInsensitive = shared.getChild("caseInsensitive");

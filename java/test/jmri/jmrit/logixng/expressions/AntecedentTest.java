@@ -587,11 +587,11 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
 
         // Test illegal number
         testCalculate(Antecedent.FALSE, "R#", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R#, ex= java.lang.NumberFormatException");
+                "IXIC 1 parseCalculation error antecedent= R#, ex= java.lang.NumberFormatException: For input string: \"#\"");
         testCalculate(Antecedent.FALSE, "R-", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R-, ex= java.lang.NumberFormatException");
+                "IXIC 1 parseCalculation error antecedent= R-, ex= java.lang.NumberFormatException: For input string: \"-\"");
         testCalculate(Antecedent.FALSE, "Ra", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= Ra, ex= java.lang.NumberFormatException");
+                "IXIC 1 parseCalculation error antecedent= Ra, ex= java.lang.NumberFormatException: For input string: \"A\"");
 
         // Test single condition
         testCalculate(Antecedent.TRUE, "R1", conditionalVariablesList_True, "");
@@ -703,6 +703,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
 
         if (! logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        logixNG.activate();
         logixNG.setEnabled(true);
     }
 

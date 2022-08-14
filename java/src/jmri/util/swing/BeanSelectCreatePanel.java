@@ -66,6 +66,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
             newItem.setSelected(true);
         }
         existingCombo.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(existingCombo);
 
         JPanel radio = new JPanel();
         radio.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
@@ -238,7 +239,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
      */
     public void updateComment(@Nonnull E nBean, String content) {
         String comment = nBean.getComment();
-        log.debug((comment == null || comment.isEmpty()) ? "comment was empty" : "comment already filled");
+        log.debug("comment {}", (comment == null || comment.isEmpty()) ? "was empty" : "already filled");
         if((content != null && !content.isEmpty()) && (comment ==null || comment.isEmpty())) {
             log.debug("new comment added to bean {}", nBean.getDisplayName());
             nBean.setComment(content);

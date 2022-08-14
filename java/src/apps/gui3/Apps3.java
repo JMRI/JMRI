@@ -266,7 +266,7 @@ public abstract class Apps3 extends AppsBase {
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
                         JOptionPane.ERROR_MESSAGE);
-                log.error(ex.getMessage(), ex);
+                log.error("Exception: ", ex);
             }
         }
         try {

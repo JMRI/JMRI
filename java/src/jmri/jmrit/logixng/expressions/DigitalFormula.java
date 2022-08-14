@@ -357,7 +357,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital expression " + socketSystemName);
+                            log.error("cannot load digital expression {}", socketSystemName);
                         }
                     }
                 } else {

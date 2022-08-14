@@ -27,7 +27,7 @@
         that the help pages are displayed in the user's default browser. This removes the HTML 4
         requirement along with the requirement for the <strong>name</strong> attribute in anchor
         tags. Links within a page now use the <strong>id</strong> attribute which can be placed in
-        any HTML tag, such as the header tags. <strong>Preferences ⇒ Help</strong> is used by the
+        any HTML tag, such as the header tags. <strong>Preferences &rArr; Help</strong> is used by the
         user to select the whether <strong>Window Help</strong> and <strong>General help</strong>
         references are displayed using the distribution help files or <strong>jmri.org</strong>
         help files. The later provides fully formatted help pages.</p>
@@ -109,7 +109,7 @@
           <li>
             <strong>manual</strong> - the most recent version of the DecoderPro et al manuals
             reformatted for use in the help system. (Older ones are stored in the <a href=
-            "WebSite.shtml">main web site</a>)
+            "WebSite.shtml">main website</a>)
           </li>
         </ul>
 
@@ -135,7 +135,7 @@
       <h2 id="web">Web Access to Help Pages</h2>
 
       <div>
-        <p>It is inconvenient to have to maintain two separate web pages for the main web site and
+        <p>It is inconvenient to have to maintain two separate web pages for the main website and
         the help system. To reduce the need for that, we use a particular form for the web pages in
         the help system. [Additional information can also be found <a href=
         "WebSite.shtml">here.</a>]</p>
@@ -213,7 +213,7 @@
         <p>When describing a sequence of user actions or pulldowns, use the double right arrow HTML
         entity <strong>ampersand-rArr-semicolon</strong>, and label the whole sequence as "strong".
         For example:<br>
-        <strong>File ⇒ Store Panels</strong><br>
+        <strong>File &rArr; Store Panels</strong><br>
         A non-blanking space can be used before the right arrow to control line breaks.</p>
 
         <p>You cannot count on any particular location for your files on the local machine, so all
@@ -271,7 +271,7 @@
         <strong>General Help</strong> menu item is selected. The <strong>helpkey</strong>
         specified in the JMRI code is used to display the appropriate help page in the browser.</p>
 
-        <p>Using <strong>Preferences ⇒ Help</strong>, the user can choose to have the local help
+        <p>Using <strong>Preferences &rArr; Help</strong>, the user can choose to have the local help
         page or the <em>jmri.org</em> help page displayed. The local page is in the JMRI
         distribution which means the page is at the same release level as the JMRI code.</p>
 
@@ -306,7 +306,7 @@
 
         <ul>
           <li><strong>index.html</strong> -- This is the web page loaded by the local browser when
-          <strong>Help ⇒ Window Help</strong> or <strong>Help ⇒ General Help</strong> is invoked by
+          <strong>Help &rArr; Window Help</strong> or <strong>Help &rArr; General Help</strong> is invoked by
           JMRI. The page contains the table of contents in the left column and the selected help
           page in an iframe on the right.  At the top are buttons for selecting the table of
           contents or the index.</li>
@@ -388,7 +388,7 @@
 
       <div>
         <p>Changes to Help pages which have been merged should show up automatically on the
-        <a href="WebSite.shtml">JMRI.org web site</a> after a short while. There's a <a href=
+        <a href="WebSite.shtml">JMRI.org website</a> after a short while. There's a <a href=
         "https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">Jenkins job</a> that
         handles periodic updates for the static (from repository, unlike e.g. Javadoc) pages.</p>
 
@@ -402,7 +402,7 @@
       <div>
         <p>When you integrate support for new hardware into JMRI, you should also create a page or
         pages for the help system and the web. There are several steps involved to ensure that your
-        new hardware help is integrated into the JMRI Help system and its web site. All references
+        new hardware help is integrated into the JMRI Help system and its website. All references
         below to files are to the <a href="https://github.com/JMRI/JMRI">JMRI Repository
         structure</a> in Github. Note use of capitalization in references to (fictitious) product
         "X" from manufacturer "M":</p>

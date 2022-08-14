@@ -11,14 +11,15 @@ import javax.annotation.Nonnull;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.*;
+import javax.swing.UIManager;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
-
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.SystemType;
 import jmri.util.swing.JComboBoxUtil;
 
 import org.slf4j.Logger;
@@ -27,26 +28,26 @@ import org.slf4j.LoggerFactory;
 /**
  * JTable to display a TurnoutTableDataModel.
  * Code originally within TurnoutTableAction.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
  */
 public class TurnoutTableJTable extends JTable {
-    
+
     final TurnoutTableDataModel model;
-    
+
     final Hashtable<Turnout, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
     final Hashtable<Turnout, TableCellEditor> editorMapSensor1 = new Hashtable<>();
 
     final Hashtable<Turnout, TableCellRenderer> rendererMapSensor2 = new Hashtable<>();
     final Hashtable<Turnout, TableCellEditor> editorMapSensor2 = new Hashtable<>();
-    
+
     public TurnoutTableJTable(TurnoutTableDataModel mdl){
         super(mdl);
         model = mdl;
     }
-    
+
     @Override
     public String getToolTipText(@Nonnull MouseEvent e) {
         java.awt.Point p = e.getPoint();
@@ -56,7 +57,7 @@ public class TurnoutTableJTable extends JTable {
         int realColumnIndex = convertColumnIndexToModel(colIndex);
         return model.getCellToolTip(this, realRowIndex, realColumnIndex);
     }
-    
+
     /**
      * Disable Windows Key or Mac Meta Keys being pressed acting
      * as a trigger for editing the focused cell.
@@ -164,7 +165,7 @@ public class TurnoutTableJTable extends JTable {
         e.put(t, editor);
         log.debug("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
     }
-    
+
     static class BeanBoxRenderer extends NamedBeanComboBox<Sensor> implements TableCellRenderer {
 
         public BeanBoxRenderer() {
@@ -175,12 +176,14 @@ public class TurnoutTableJTable extends JTable {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                super.setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(table.getBackground());
+            if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
+                if (isSelected) {
+                    setForeground(table.getSelectionForeground());
+                    super.setBackground(table.getSelectionBackground());
+                } else {
+                    setForeground(table.getForeground());
+                    setBackground(table.getBackground());
+                }
             }
             if (value instanceof Sensor) {
                 setSelectedItem(value);
@@ -190,15 +193,15 @@ public class TurnoutTableJTable extends JTable {
             return this;
         }
     }
-    
+
     static class BeanComboBoxEditor extends DefaultCellEditor {
 
         public BeanComboBoxEditor(NamedBeanComboBox<Sensor> beanBox) {
             super(beanBox);
         }
     }
-    
-     
+
+
 private final static Logger log = LoggerFactory.getLogger(TurnoutTableJTable.class);
 
 }

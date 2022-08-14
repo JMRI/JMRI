@@ -41,8 +41,7 @@ import org.slf4j.LoggerFactory;
  * Section has been allocated, either by AutoAllocate or manually by the
  * dispatcher.
  * <p>
- * AutoAllocate requires that AutoRelease is active and that Dispatcher has a
- * LayoutEditor panel.
+ * AutoAllocate requires that AutoRelease is active.
  * <p>
  * AutoAllocate operates conservatively, that is, if there is any doubt that a
  * Section should be allocated, it will not allocate the Section.
@@ -85,10 +84,6 @@ public class AutoAllocate implements Runnable {
             log.error("null DispatcherFrame when constructing AutoAllocate");
             return;
         }
-        if (_dispatcher.getLayoutEditor() == null) {
-            log.error("null LayoutEditor when constructing AutoAllocate");
-            return;
-        }
         taskList = new LinkedBlockingQueue<>();
     }
 
@@ -119,6 +114,9 @@ public class AutoAllocate implements Runnable {
     }
 
     protected void scanAllocationRequests(TaskAllocateRelease task) {
+        log.trace("Add request from [{}] for [{}][{}]",
+                task.getTrainName(),task.getAction().name(),
+                task.getAllocationRequest() == null ? "None" : task.getAllocationRequest().getSectionName());
         taskList.add(task);
     }
 
@@ -203,7 +201,7 @@ public class AutoAllocate implements Runnable {
                     }
                     // is the train held
                     if (activeTrain.holdAllocation()|| (!activeTrain.getStarted()) && activeTrain.getDelayedStart() != ActiveTrain.NODELAY) {
-                        log.debug("[{}]:Allocation is Holding or Delayed", trainName);
+                        log.debug("[{}]:Allocation is Holding or Delayed hold[{}] started[{}], delayedstart[{}]", trainName, activeTrain.holdAllocation(), activeTrain.getStarted(), activeTrain.getDelayedStart() != ActiveTrain.NODELAY);
                         continue;
                     }
                     // apparently holdAllocation() is not set when holding !!!

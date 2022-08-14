@@ -483,7 +483,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                 return (r1,
                         r2) -> (convertBuildDate(r1.getBuilt()).compareToIgnoreCase(convertBuildDate(r2.getBuilt())));
             case BY_OWNER:
-                return (r1, r2) -> (r1.getOwner().compareToIgnoreCase(r2.getOwner()));
+                return (r1, r2) -> (r1.getOwnerName().compareToIgnoreCase(r2.getOwnerName()));
             case BY_RFID:
                 return (r1, r2) -> (r1.getRfid().compareToIgnoreCase(r2.getRfid()));
             case BY_VALUE:

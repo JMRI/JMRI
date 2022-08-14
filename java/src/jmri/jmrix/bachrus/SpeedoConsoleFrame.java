@@ -16,20 +16,12 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
@@ -122,6 +114,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         WRITE66,
         WRITE95
     }
+
+    static final int SPEEDMATCHWARMUPTIME = 60;
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Member Variables">
     //<editor-fold defaultstate="collapsed" desc="General GUI Elements">
@@ -143,9 +138,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JRadioButton numButton = new JRadioButton(Bundle.getMessage("Numeric"));
     protected JRadioButton dialButton = new JRadioButton(Bundle.getMessage("Dial"));
     protected SpeedoDial speedoDialDisplay = new SpeedoDial();
-    protected JRadioButton dirFwdButton = new JRadioButton(Bundle.getMessage("Forward"));
-    protected JRadioButton dirRevButton = new JRadioButton(Bundle.getMessage("Reverse"));
-    protected JRadioButton toggleGridButton = new JRadioButton(Bundle.getMessage("ToggleGrid"));
+    protected JCheckBox dirFwdButton = new JCheckBox(Bundle.getMessage("ScanForward"));
+    protected JCheckBox dirRevButton = new JCheckBox(Bundle.getMessage("ScanReverse"));
+    protected JCheckBox toggleGridButton = new JCheckBox(Bundle.getMessage("ToggleGrid"));
 
     GraphPane profileGraphPane;
 
@@ -369,7 +364,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
         today = new Date();
         result = formatter.format(today);
-        String annotate = "Bachrus MTS-DCC " + Bundle.getMessage("ProfileFor") + " "
+        String annotate = Bundle.getMessage("ProfileFor") + " "
                 + locomotiveAddress.getNumber() + " " + Bundle.getMessage("CreatedOn")
                 + " " + result;
         printTitleText.setText(annotate);
@@ -525,8 +520,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             readAddressButton.setEnabled(false);
             statusLabel.setText(Bundle.getMessage("StatMain"));
         });
-
-        basicPane.add(modePanel);
+        // added to left side later
 
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Speedometer Panel">
@@ -657,7 +651,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Listen to read button
         readAddressButton.addActionListener(e -> readAddress());
 
-        profilePane.add(addrPane, BorderLayout.NORTH);
+        // set up top panel of modePanel and addrPane
+        var topLeftPane = new JPanel();
+        topLeftPane.setLayout(new BorderLayout());
+        topLeftPane.add(modePanel, BorderLayout.NORTH);
+        topLeftPane.add(addrPane, BorderLayout.SOUTH);
+
+        profilePane.add(topLeftPane, BorderLayout.NORTH);
+
 
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Graph and Buttons Panel">
@@ -712,6 +713,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedStep28TargetField.setHorizontalAlignment(JTextField.RIGHT);
         speedStep28TargetUnit.setPreferredSize(new Dimension(35, 16));
         speedMatchWarmUpCheckBox.setSelected(true);
+
+        profileSouthPane.add(new JSeparator());
+
         JPanel speedMatchPane = new JPanel();
         speedMatchPane.setLayout(new FlowLayout());
         speedMatchPane.add(speedStep1TargetLabel);
@@ -834,7 +838,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 || ((dccServices & COMMAND) == COMMAND)) {
             tabbedPane.add(profilePane);
         } else {
-            log.info(Bundle.getMessage("StatNoDCC"));
+            log.info("{} Connection:{}", Bundle.getMessage("StatNoDCC"), _memo.getUserName());
             statusLabel.setText(Bundle.getMessage("StatNoDCC"));
         }
 
@@ -894,6 +898,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     circ = 50.2655F;
                     readerLabel.setText(Bundle.getMessage("Reader60"));
                     break;
+                case 103:
+                    circ = (float) ((5.95+0.9) * Math.PI);
+                    readerLabel.setText(Bundle.getMessage("Reader103"));
+                    break;
                 default:
                     speedTextField.setText(Bundle.getMessage("ReaderErr"));
                     log.error("Invalid reader type");
@@ -920,7 +928,16 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     protected void calcSpeed() {
         float thisScale = (selectedScale == -1) ? customScale : selectedScale;
-        if (series > 0) {
+        if (series == 103) {
+            // KPF-Zeller
+            // calculate kph: r/sec * circumference converted to hours and kph in scaleFace()
+            sampleSpeed = (float) ( (count/8.) * circ * 3600 / 1.0E6 * thisScale * speedTestScaleFactor);
+            // data arrives at constant rate, so we don't average nor switch range
+            avSpeed = sampleSpeed;
+            log.debug("New KPF-Zeller sample: {} Average: {}", sampleSpeed, avSpeed);
+
+        } else if (series > 0 && series <= 6) {
+            // Bachrus
             // Scale the data and calculate kph
             try {
                 freq = 1500000 / count;
@@ -929,7 +946,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 log.error("Exception calculating sampleSpeed", ae);
             }
             avFn(sampleSpeed);
-            log.debug("New sample: {} Average: {}", sampleSpeed, avSpeed);
+            log.debug("New Bachrus sample: {} Average: {}", sampleSpeed, avSpeed);
             log.debug("Acc: {} range: {}", acc, range);
             switchRange();
         }
@@ -1289,6 +1306,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Timer timeout handler for the speed match timer
      */
     protected synchronized void speedMatchTimeout() {
+        log.debug("speedMatchTimeout in states {} {} {}", speedMatchState, speedMatchSetupState, progState);
         switch (speedMatchState) {
             case WAIT_FOR_THROTTLE:
                 tidyUp();
@@ -1386,10 +1404,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 break;
 
             case FORWARD_WARM_UP:
-                //Run 4 minutes at high speed forward
-                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", 240 - speedMatchDuration));
+                //Run for SPEEDMATCHWARMUPTIME seconds at high speed forward
+                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", SPEEDMATCHWARMUPTIME - speedMatchDuration));
 
-                if (speedMatchDuration >= 240) {
+                if (speedMatchDuration >= SPEEDMATCHWARMUPTIME) {
                     speedMatchState = SpeedMatchState.FORWARD_SPEED_MATCH_STEP_1;
                     setupSpeedMatchTimer(true, 0, 5000);
                     speedMatchDuration = 0;
@@ -1440,6 +1458,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         speedMatchDuration = 1;
                     } else {
                         setSpeedMatchError(speedStep28Target);
+                        log.info("forward speed error is {} with vHigh {}", speedMatchError, vHigh);
 
                         if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
                             if (speedMatchWarmUpCheckBox.isSelected()) {
@@ -1450,6 +1469,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                             setupSpeedMatchTimer(false, 0, 5000);
                             speedMatchDuration = 0;
                         } else {
+                            log.info("  setting Vhigh {} was {}", vHigh, lastVHigh);
                             vHigh = getNextSpeedMatchValue(lastVHigh);
 
                             if (((lastVHigh == 1) || (lastVHigh == 255)) && (vHigh == lastVHigh)) {
@@ -1467,10 +1487,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 break;
 
             case REVERSE_WARM_UP:
-                //Run 2 minutes at high speed reverse
-                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", 120 - speedMatchDuration));
+                //Run for SPEEDMATCHWARMUPTIME seconds at high speed reverse
+                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", SPEEDMATCHWARMUPTIME - speedMatchDuration));
 
-                if (speedMatchDuration >= 120) {
+                if (speedMatchDuration >= SPEEDMATCHWARMUPTIME) {
                     speedMatchState = SpeedMatchState.REVERSE_SPEED_MATCH_TRIM;
                 } else {
                     speedMatchDuration += 5;
@@ -1489,12 +1509,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         setSpeedMatchError(speedStep28Target);
 
                         if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            speedMatchState = SpeedMatchState.RESTORE_MOMENTUM;
-                            speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_WRITE;
-                            setupSpeedMatchTimer(false, 0, 1500);
-                            speedMatchDuration = 0;
+                            // done
+                            // next step depends on programming on main vs programming track
+                            if (mainButton.isSelected()) {
+                                log.debug("ending by calling tidyup()");
+                                tidyUp();
+                            } else {
+                                log.debug("ending by going to RESTORE_MOMENTUM");
+                                speedMatchState = SpeedMatchState.RESTORE_MOMENTUM;
+                                speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_WRITE;
+                                setupSpeedMatchTimer(false, 0, 1500);
+                                speedMatchDuration = 0;
+                            }
                         } else {
                             reverseTrim = getNextSpeedMatchValue(lastReverseTrim);
+                            log.info("setting reverse trim {} was {}", reverseTrim, lastReverseTrim);
 
                             if (((lastReverseTrim == 1) || (lastReverseTrim == 255)) && (reverseTrim == lastReverseTrim)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
@@ -1765,7 +1794,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
             // using speed matching timer to trigger each phase of speed matching
             speedMatchState = SpeedMatchState.SETUP;
-            speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_READ;
+
+            // start phase depends on program track vs main track
+            if (mainButton.isSelected()) {
+                log.debug("starting by going to VSTART");
+                speedMatchSetupState = SpeedMatchSetupState.VSTART;
+            } else {
+                log.debug("starting by going to MOMENTUM_ACCEL_READ");
+                speedMatchSetupState = SpeedMatchSetupState.MOMENTUM_ACCEL_READ;
+            }
             speedMatchTimer.setInitialDelay(1500);
             speedMatchTimer.start();
         } else {

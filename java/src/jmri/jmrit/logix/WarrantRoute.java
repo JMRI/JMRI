@@ -36,7 +36,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 
-import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.implementation.SignalSpeedMap;
@@ -317,7 +316,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             return;
         }
         if (Roster.getDefault().getEntryForId(id) == null) {
-            DccLocoAddress dccAddr = _speedUtil.getDccAddress();
             String rosterId = JOptionPane.showInputDialog(this,
                     Bundle.getMessage("makeRosterEntry", _speedUtil.getAddress()),
                     Bundle.getMessage("QuestionTitle"),
@@ -325,27 +323,24 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
             if (log.isDebugEnabled()) {
                 log.debug("Create roster entry {}", rosterId);
             }
-            if (rosterId != null && !rosterId.isEmpty()) {
-                RosterEntry rosterEntry = new RosterEntry();
-                Roster.getDefault().addEntry(rosterEntry);
-                rosterEntry.setId(rosterId);
-                rosterEntry.setDccAddress(String.valueOf(dccAddr.getNumber()));
-                rosterEntry.setProtocol(dccAddr.getProtocol());
-                rosterEntry.ensureFilenameExists();
-                WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class);
-                RosterSpeedProfile mergeProfile = _speedUtil.getMergeProfile();
-                mgr.setMergeProfile(rosterId, mergeProfile);
-                mgr.getMergeProfiles().remove(id);
-                _speedUtil.setRosterId(rosterId);
+            if (rosterId == null || rosterId.isEmpty()) {
+                rosterId = id;
             }
+            RosterEntry rosterEntry = _speedUtil.makeRosterEntry(rosterId);
+            if (rosterEntry == null) {
+                return;
+            }
+            Roster.getDefault().addEntry(rosterEntry);
+            WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class);
+            RosterSpeedProfile mergeProfile = _speedUtil.getMergeProfile();
+            mgr.setMergeProfile(rosterId, mergeProfile);
+            mgr.getMergeProfiles().remove(id);
+            _speedUtil.setRosterId(rosterId);
+            id = rosterId;
         }
 
         JPanel viewPanel = makeViewPanel(id);
         if (viewPanel == null) {
-            if (id.charAt(0) != '$' || id.charAt(id.length()-1) != '$') {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            }
             return;
         }
         _spTable = new JmriJFrame(false, true);
@@ -359,18 +354,24 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         _spTable.setVisible(true);
     }
 
-    JPanel makeViewPanel(String id) {
+    private JPanel makeViewPanel(String id) {
         RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
         RosterEntry re = Roster.getDefault().getEntryForId(id);
         RosterSpeedProfile rosterSpeedProfile;
         if (re != null) {
             rosterSpeedProfile = re.getSpeedProfile();
+            if (rosterSpeedProfile == null) {
+                rosterSpeedProfile = new RosterSpeedProfile(re);
+                re.setSpeedProfile(rosterSpeedProfile);
+            }
         } else {
             rosterSpeedProfile = null;
         }
         if ((speedProfile == null || speedProfile.getProfileSize() == 0) &&
                 (rosterSpeedProfile == null || rosterSpeedProfile.getProfileSize() == 0)) {
             _viewProfile.setEnabled(false);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("NoSpeedProfile", id),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         } else {
             _viewProfile.setEnabled(true);
@@ -379,7 +380,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));
         viewPanel.add(Box.createGlue());
         JPanel panel = new JPanel();
-        panel.add(MergePrompt.makeEditInfoPanel(id));
+        panel.add(MergePrompt.makeEditInfoPanel(re));
         viewPanel.add(panel);
 
         JPanel spPanel = new JPanel();
@@ -404,6 +405,11 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 
     protected void closeProfileTable() {
         if (_spTable != null) {
+            String id = _speedUtil.getRosterId();
+            if (id != null) {
+                RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+                InstanceManager.getDefault(WarrantManager.class).setMergeProfile(id, speedProfile);
+            }
             _spTable.dispose();
             _spTable = null;
         }
@@ -1221,8 +1227,11 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
     private void showRoute(DefaultMutableTreeNode destNode, DefaultTreeModel tree) {
         TreeNode[] nodes = tree.getPathToRoot(destNode);
         _orders = new ArrayList<>();
+        int count = 0;
         for (TreeNode node : nodes) {
-            _orders.add((BlockOrder) ((DefaultMutableTreeNode) node).getUserObject());
+            BlockOrder bo = (BlockOrder) ((DefaultMutableTreeNode) node).getUserObject();
+            bo.setIndex(count++);
+            _orders.add(bo);
         }
         _routeModel.fireTableDataChanged();
         if (log.isDebugEnabled()) {

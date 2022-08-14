@@ -258,6 +258,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
                     pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.Y_AXIS));
 
                     go2 = new JButton(Bundle.getMessage("OpenProgrammer")); // NOI18N
+                    go2.getAccessibleContext().setAccessibleName(Bundle.getMessage("OpenProgrammer"));
                     go2.addActionListener((ActionEvent e1) -> {
                         log.debug("Open programmer pressed"); // NOI18N
                         openButton();

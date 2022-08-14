@@ -4,9 +4,7 @@ import jmri.util.gui.GuiLafPreferencesManager;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +34,9 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriPanel;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.XTableColumnModel;
 
 /**
@@ -149,8 +150,8 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataScroll.getViewport().setPreferredSize(dataTableSize);
 
         dataTable.setSelectionMode(selectionMode);
-        MouseListener mouseHeaderListener = new TableHeaderListener();
-        dataTable.getTableHeader().addMouseListener(mouseHeaderListener);
+        JmriMouseListener mouseHeaderListener = new TableHeaderListener();
+        dataTable.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
 
         dataTable.setDefaultEditor(Object.class, new RosterCellEditor());
 
@@ -227,7 +228,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    protected void showTableHeaderPopup(MouseEvent e) {
+    protected void showTableHeaderPopup(JmriMouseEvent e) {
         JPopupMenu popupMenu = new JPopupMenu();
         for (int i = 0; i < columnModel.getColumnCount(false); i++) {
             TableColumn tc = columnModel.getColumnByModelIndex(i);
@@ -347,24 +348,24 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         }
     }
 
-    class TableHeaderListener extends MouseAdapter {
+    class TableHeaderListener extends JmriMouseAdapter {
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e);
             }
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e);
             }
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e);
             }

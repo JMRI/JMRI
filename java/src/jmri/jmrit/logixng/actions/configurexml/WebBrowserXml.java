@@ -1,9 +1,7 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.FemaleStringActionSocket;
-import jmri.jmrit.logixng.FemaleStringExpressionSocket;
-import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.WebBrowser;
 
 import org.jdom2.Element;
@@ -32,41 +30,55 @@ public class WebBrowserXml extends jmri.managers.configurexml.AbstractNamedBeanM
         Element element = new Element("WebBrowser");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        String systemName;
-        
-        FemaleStringExpressionSocket expressionSocket = p.getStringExpressionSocket();
-        if (expressionSocket.isConnected()) {
-            systemName = expressionSocket.getConnectedSocket().getSystemName();
+        Element e2 = new Element("Socket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        MaleSocket socket = p.getStringExpressionSocket().getConnectedSocket();
+        String socketSystemName;
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
         } else {
-            systemName = p.getStringExpressionSocketSystemName();
+            socketSystemName = p.getStringExpressionSocketSystemName();
         }
-        if (systemName != null) {
-            element.addContent(new Element("expressionSystemName").addContent(systemName));
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
         }
+        element.addContent(e2);
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
-        
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         WebBrowser h = new WebBrowser(sys, uname);
 
         loadCommon(h, shared);
 
+        Element socketElement = shared.getChild("Socket");
+        if (socketElement != null) {
+            Element socketName = socketElement.getChild("socketName");
+            h.getChild(0).setName(socketName.getTextTrim());
+            Element socketSystemName = socketElement.getChild("systemName");
+            if (socketSystemName != null) {
+                h.setStringExpressionSocketSystemName(socketSystemName.getTextTrim());
+            }
+        }
+
+        // For backwards compability
         Element expressionSystemNameElement = shared.getChild("expressionSystemName");
         if (expressionSystemNameElement != null) {
             h.setStringExpressionSocketSystemName(expressionSystemNameElement.getTextTrim());
         }
-        
+        // For backwards compability
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DoStringActionXml.class);
 }

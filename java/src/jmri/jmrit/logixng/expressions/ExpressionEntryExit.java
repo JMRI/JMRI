@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
-import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -21,14 +21,11 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ExpressionEntryExit extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<DestinationPoints> _entryDestinationPoints;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<DestinationPoints> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, DestinationPoints.class, InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class), this);
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private EntryExitState _entryExitState = EntryExitState.Active;
@@ -50,12 +47,8 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionEntryExit copy = new ExpressionEntryExit(sysName, userName);
         copy.setComment(getComment());
-        if (_entryDestinationPoints != null) copy.setDestinationPoints(_entryDestinationPoints);
+        _selectNamedBean.copy(copy._selectNamedBean);
         copy.setBeanState(_entryExitState);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
         copy.set_Is_IsNot(_is_IsNot);
         copy.setStateAddressing(_stateAddressing);
         copy.setStateFormula(_stateFormula);
@@ -64,88 +57,8 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         return manager.registerExpression(copy);
     }
 
-    public void setDestinationPoints(@Nonnull String entryExitName) {
-        assertListenersAreNotRegistered(log, "setEntryExit");
-        DestinationPoints destinationPoints =
-                InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(entryExitName);
-        if (destinationPoints != null) {
-            ExpressionEntryExit.this.setDestinationPoints(destinationPoints);
-        } else {
-            removeDestinationPoints();
-            log.warn("destinationPoints \"{}\" is not found", entryExitName);
-        }
-    }
-
-    public void setDestinationPoints(@Nonnull NamedBeanHandle<DestinationPoints> handle) {
-        assertListenersAreNotRegistered(log, "setEntryExit");
-        _entryDestinationPoints = handle;
-        InstanceManager.getDefault(EntryExitPairs.class).addVetoableChangeListener(this);
-    }
-
-    public void setDestinationPoints(@Nonnull DestinationPoints destinationPoints) {
-        assertListenersAreNotRegistered(log, "setEntryExit");
-        ExpressionEntryExit.this.setDestinationPoints(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(destinationPoints.getDisplayName(), destinationPoints));
-    }
-
-    public void removeDestinationPoints() {
-        assertListenersAreNotRegistered(log, "setEntryExit");
-        if (_entryDestinationPoints != null) {
-            InstanceManager.getDefault(EntryExitPairs.class).removeVetoableChangeListener(this);
-            _entryDestinationPoints = null;
-        }
-    }
-
-    public NamedBeanHandle<DestinationPoints> getEntryExit() {
-        return _entryDestinationPoints;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
+    public LogixNG_SelectNamedBean<DestinationPoints> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
@@ -212,24 +125,6 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         }
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof DestinationPoints) {
-                if (evt.getOldValue().equals(getEntryExit().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("EntryExit_EntryExitInUseEntryExitExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof DestinationPoints) {
-                if (evt.getOldValue().equals(getEntryExit().getBean())) {
-                    removeDestinationPoints();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -264,49 +159,9 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        DestinationPoints destinationPoints;
+        DestinationPoints destinationPoints = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-//        System.out.format("ExpressionEntryExit.execute: %s%n", getLongDescription());
-
-        switch (_addressing) {
-            case Direct:
-                destinationPoints = _entryDestinationPoints != null ? _entryDestinationPoints.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                destinationPoints = InstanceManager.getDefault(EntryExitPairs.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable =
-                        getConditionalNG().getSymbolTable();
-                destinationPoints = InstanceManager.getDefault(EntryExitPairs.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                destinationPoints = _expressionNode != null ?
-                        InstanceManager.getDefault(EntryExitPairs.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-//        System.out.format("ExpressionEntryExit.execute: destinationPoints: %s%n", destinationPoints);
-
-        if (destinationPoints == null) {
-//            log.warn("destinationPoints is null");
-            return false;
-        }
+        if (destinationPoints == null) return false;
 
         EntryExitState checkEntryExitState;
 
@@ -341,35 +196,8 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state;
-
-        switch (_addressing) {
-            case Direct:
-                String entryExitName;
-                if (_entryDestinationPoints != null) {
-                    entryExitName = _entryDestinationPoints.getBean().getDisplayName();
-                } else {
-                    entryExitName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", entryExitName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_stateAddressing) {
             case Direct:
@@ -404,8 +232,9 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_entryDestinationPoints != null)) {
-            _entryDestinationPoints.getBean().addPropertyChangeListener("active", this);
+        if (!_listenersAreRegistered) {
+            _selectNamedBean.addPropertyChangeListener("active", this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -414,7 +243,8 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _entryDestinationPoints.getBean().removePropertyChangeListener("active", this);
+            _selectNamedBean.removePropertyChangeListener("active", this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -471,9 +301,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionEntryExit: bean = {}, report = {}", cdl, report);
-        if (getEntryExit() != null && bean.equals(getEntryExit().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionEntryExit.class);

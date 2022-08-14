@@ -28,8 +28,8 @@
 
       <p>JMRI also has clock displays that can run in stand-alone dialogs or on a PanelPro
       panel.</p>
-      <a href="images/Fast_Clock_Setup_432x573.png"><img src="images/Fast_Clock_Setup_432x573.png"
-      width="432" height="573" alt="Fast Clock Setup config pane" style="float:right"></a>
+      <a href="images/Fast_Clock_Setup_432x573.png"><img src="images/FastClockSetup.png"
+      alt="Fast Clock Setup config pane" style="float:right"></a>
       <h2>Pausing and Running the Fast Clock</h2>
 
       <p>Your fast clock may be set paused or running by using the :</p>
@@ -116,30 +116,27 @@
       <p>The clock can be started up paused or running, depending on the selection.</p>
 
       <p>You can request that your fast clock start at a specified time, by checking <strong>Set
-      Fast Clock Time to</strong> and entering the time after it.<br>
+      Fast Clock Time to</strong> and entering the time after it.
       As with <strong>Fast Clock Time</strong>, the time is entered as hours and minutes using a
       24-hour clock.</p>
 
       <p>If you select a display clock in the <strong>Start Selected Clock</strong> popup menu,
-      that clock display will be automatically started when your file is loaded.<br>
+      that clock display will be automatically started when your file is loaded.
       Clocks displayed on a PanelPro panel are configured using Panel Editor or Layout Editor, and
       are saved and restarted with your panel.</p>
 
-      <p><strong>Important Note: To preserve the settings and options entered in this dialog, you
-      must save your configuration.</strong><br>
-      Fast clock settings are stored as part of your configuration in the same file as your panels
-      (if you have any).<br>
-      The safest and easiest way to ensure that all your configuration items and panels are saved
-      is to save using <strong>Store Configuration and panels...</strong>. (<strong>Store
-      panels...</strong> may be used even if you don't have any panels.) <a href=
-      "images/FastClockSetupSave.png"><img src="images/FastClockSetupSave.png" width="333" height=
-      "140" alt="Fast Clock Setup config pane" style="float:right"></a> <strong>Store</strong>
-      options may be found in the <strong>File</strong> menu while working on the Fast Clock Setup.
-      A prompt will give you the option to save either form when you close the Fast Clock Setup by
-      clicking Apply.</p>
+      <p>
 
-      <p>The clock settings are stored with table content and panels. See <a href=
-      "../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for
+      <a href="images/FastClockSetupSave.png"><img src="images/FastClockSetupReminder.png"
+       alt="Fast Clock Setup config pane" style="float:right"></a>
+
+      <strong>Important Note: To preserve the settings and options entered in this dialog, you must
+      save your configuration. </strong>Fast clock settings are stored as part of your configuration
+      in the same file as your tables and panels.  If changes need to be retained, a reminder will
+      be displayed when the window is closed or the <strong>Done</strong> button is selected.
+      <strong>Store</strong> options may be found in the <strong>File</strong> menu while working
+      on the Fast Clock Setup.
+      See <a href="../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for
       details.</p>
 
       <h2 id="isclockrunning">Clock-related Sensor and Memory</h2>
@@ -181,7 +178,7 @@
         </li>
 
         <li>
-          <a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">CBUS® clocks</a>
+          <a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">CBUS&reg; clocks</a>
         </li>
 
         <li>
@@ -189,7 +186,7 @@
         </li>
       </ul>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

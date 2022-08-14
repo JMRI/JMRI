@@ -2,8 +2,6 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,7 +10,11 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
+import jmri.util.CompareUtil;
+import jmri.util.CompareUtil.CompareType;
+import jmri.util.CompareUtil.CompareOperation;
 import jmri.util.TypeConversionUtil;
 
 /**
@@ -21,14 +23,21 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ExpressionMemory extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanHandle<Memory> _memoryHandle;
+    private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+
+    private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+
     private MemoryOperation _memoryOperation = MemoryOperation.Equal;
+    private CompareType _compareType = CompareType.NumberOrString;
     private CompareTo _compareTo = CompareTo.Value;
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
-    private NamedBeanHandle<Memory> _otherMemoryHandle;
 
     private String _localVariable = "";
     private String _regEx = "";
@@ -51,87 +60,26 @@ public class ExpressionMemory extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionMemory copy = new ExpressionMemory(sysName, userName);
         copy.setComment(getComment());
-        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectOtherMemoryNamedBean.copy(copy._selectOtherMemoryNamedBean);
         _selectTable.copy(copy._selectTable);
         copy.setMemoryOperation(_memoryOperation);
+        copy.setCompareType(_compareType);
         copy.setCompareTo(_compareTo);
         copy.setCaseInsensitive(_caseInsensitive);
         copy.setConstantValue(_constantValue);
-        if (_otherMemoryHandle != null) copy.setOtherMemory(_otherMemoryHandle);
+        copy.setLocalVariable(_localVariable);
+        copy.setRegEx(_regEx);
         copy.setListenToOtherMemory(_listenToOtherMemory);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    public void setMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
-        } else {
-            removeMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
-        }
+    public LogixNG_SelectNamedBean<Memory> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-        addRemoveVetoListener();
-    }
-
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "removeMemory");
-        if (_memoryHandle != null) {
-            _memoryHandle = null;
-            addRemoveVetoListener();
-        }
-    }
-
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
-    }
-
-    public void setOtherMemory(@Nonnull String memoryName) {
-        assertListenersAreNotRegistered(log, "setOtherMemory");
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            setOtherMemory(memory);
-        } else {
-            removeOtherMemory();
-            log.warn("memory \"{}\" is not found", memoryName);
-        }
-    }
-
-    public void setOtherMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setOtherMemory");
-        _otherMemoryHandle = handle;
-        addRemoveVetoListener();
-    }
-
-    public void setOtherMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setOtherMemory");
-        setOtherMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-
-    public void removeOtherMemory() {
-        assertListenersAreNotRegistered(log, "removeOtherMemory");
-        if (_otherMemoryHandle != null) {
-            _otherMemoryHandle = null;
-            addRemoveVetoListener();
-        }
-    }
-
-    public NamedBeanHandle<Memory> getOtherMemory() {
-        return _otherMemoryHandle;
+    public LogixNG_SelectNamedBean<Memory> getSelectOtherMemoryNamedBean() {
+        return _selectOtherMemoryNamedBean;
     }
 
     public LogixNG_SelectTable getSelectTable() {
@@ -179,6 +127,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _memoryOperation;
     }
 
+    public void setCompareType(CompareType compareType) {
+        _compareType = compareType;
+    }
+
+    public CompareType getCompareType() {
+        return _compareType;
+    }
+
     public void setCompareTo(CompareTo compareTo) {
         _compareTo = compareTo;
     }
@@ -195,44 +151,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _caseInsensitive;
     }
 
-    private void addRemoveVetoListener() {
-        if ((_memoryHandle != null) || (_otherMemoryHandle != null)) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                boolean doVeto = false;
-                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
-                    doVeto = true;
-                }
-                if ((_compareTo == CompareTo.Memory)
-                        && (_otherMemoryHandle != null)
-                        && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
-                    doVeto = true;
-                }
-                if (doVeto) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
-                    removeMemory();
-                }
-                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
-                    removeOtherMemory();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -246,109 +164,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return null;
     }
 
-    /**
-     * Compare two values using the comparator set using the comparison
-     * instructions in {@link #_memoryOperation}.
-     *
-     * <strong>Note:</strong> {@link #_memoryOperation} must be one of
-     * {@link #ExpressionMemory.MemoryOperation.LESS_THAN},
-     * {@link #ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #ExpressionMemory.MemoryOperation.EQUAL},
-     * {@link #ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #ExpressionMemory.MemoryOperation.GREATER_THAN}.
-     *
-     * @param value1          left side of the comparison
-     * @param value2          right side of the comparison
-     * @param caseInsensitive true if comparison should be case insensitive;
-     *                        false otherwise
-     * @return true if values compare per _memoryOperation; false otherwise
-     */
-    private boolean compare(String value1, String value2, boolean caseInsensitive) {
-        if (value1 == null) {
-            return value2 == null;
-        } else {
-            if (value2 == null) {
-                return false;
-            }
-            value1 = value1.trim();
-            value2 = value2.trim();
-        }
-        try {
-            int n1 = Integer.parseInt(value1);
-            try {
-                int n2 = Integer.parseInt(value2);
-                log.debug("Compare numbers: n1= {} to n2= {}", n1, n2);
-                switch (_memoryOperation) // both are numbers
-                {
-                    case LessThan:
-                        return (n1 < n2);
-                    case LessThanOrEqual:
-                        return (n1 <= n2);
-                    case Equal:
-                        return (n1 == n2);
-                    case NotEqual:
-                        return (n1 != n2);
-                    case GreaterThanOrEqual:
-                        return (n1 >= n2);
-                    case GreaterThan:
-                        return (n1 > n2);
-                    default:
-                        throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
-                }
-            } catch (NumberFormatException nfe) {
-                return _memoryOperation == MemoryOperation.NotEqual;   // n1 is a number, n2 is not
-            }
-        } catch (NumberFormatException nfe) {
-            try {
-                Integer.parseInt(value2);
-                return _memoryOperation == MemoryOperation.NotEqual;     // n1 is not a number, n2 is
-            } catch (NumberFormatException ex) { // OK neither a number
-            }
-        }
-        log.debug("Compare Strings: value1= {} to value2= {}", value1, value2);
-        int compare;
-        if (caseInsensitive) {
-            compare = value1.compareToIgnoreCase(value2);
-        } else {
-            compare = value1.compareTo(value2);
-        }
-        switch (_memoryOperation) {
-            case LessThan:
-                if (compare < 0) {
-                    return true;
-                }
-                break;
-            case LessThanOrEqual:
-                if (compare <= 0) {
-                    return true;
-                }
-                break;
-            case Equal:
-                if (compare == 0) {
-                    return true;
-                }
-                break;
-            case NotEqual:
-                if (compare != 0) {
-                    return true;
-                }
-                break;
-            case GreaterThanOrEqual:
-                if (compare >= 0) {
-                    return true;
-                }
-                break;
-            case GreaterThan:
-                if (compare > 0) {
-                    return true;
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
-        }
-        return false;
-    }
-
     private boolean matchRegex(String memoryValue, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(memoryValue);
@@ -358,10 +173,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        if (_memoryHandle == null) return false;
+        Memory memory = _selectNamedBean.evaluateNamedBean(getConditionalNG());
+
+        if (memory == null) return false;
 
         // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
-        String memoryValue = getString(_memoryHandle.getBean().getValue());
+        String memoryValue = getString(memory.getValue());
         String otherValue = null;
         boolean result;
 
@@ -370,7 +187,8 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 otherValue = _constantValue;
                 break;
             case Memory:
-                otherValue = getString(_otherMemoryHandle.getBean().getValue());
+                Memory otherMemory = _selectOtherMemoryNamedBean.evaluateNamedBean(getConditionalNG());
+                otherValue = getString(otherMemory.getValue());
                 break;
             case Table:
                 otherValue = getString(_selectTable.evaluateTableData(getConditionalNG()));
@@ -397,7 +215,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case GreaterThanOrEqual:
                 // fall through
             case GreaterThan:
-                result = compare(memoryValue, otherValue, _caseInsensitive);
+                result = CompareUtil.compare(_compareType, _memoryOperation._oper, memoryValue, otherValue, _caseInsensitive);
                 break;
 
             case IsNull:
@@ -439,19 +257,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String memoryName;
-        if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getName();
-        } else {
-            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
+        String memoryName = _selectNamedBean.getDescription(locale);
 
-        String otherMemoryName;
-        if (_otherMemoryHandle != null) {
-            otherMemoryName = _otherMemoryHandle.getName();
-        } else {
-            otherMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
+        String otherMemoryName = _selectOtherMemoryNamedBean.getDescription(locale);
 
         String message;
         String other1;
@@ -528,11 +336,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_memoryHandle != null)) {
-            _memoryHandle.getBean().addPropertyChangeListener("value", this);
-            if (_listenToOtherMemory && (_otherMemoryHandle != null)) {
-                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+        if (!_listenersAreRegistered) {
+            _selectNamedBean.addPropertyChangeListener("value", this);
+            if (_listenToOtherMemory) {
+                _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             }
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -541,10 +350,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _memoryHandle.getBean().removePropertyChangeListener("value", this);
-            if (_listenToOtherMemory && (_otherMemoryHandle != null)) {
-                _otherMemoryHandle.getBean().removePropertyChangeListener("value", this);
+            _selectNamedBean.removePropertyChangeListener("value", this);
+            if (_listenToOtherMemory) {
+                _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
             }
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -563,22 +373,24 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
 
     public enum MemoryOperation {
-        LessThan(Bundle.getMessage("MemoryOperation_LessThan"), true),
-        LessThanOrEqual(Bundle.getMessage("MemoryOperation_LessThanOrEqual"), true),
-        Equal(Bundle.getMessage("MemoryOperation_Equal"), true),
-        GreaterThanOrEqual(Bundle.getMessage("MemoryOperation_GreaterThanOrEqual"), true),
-        GreaterThan(Bundle.getMessage("MemoryOperation_GreaterThan"), true),
-        NotEqual(Bundle.getMessage("MemoryOperation_NotEqual"), true),
-        IsNull(Bundle.getMessage("MemoryOperation_IsNull"), false),
-        IsNotNull(Bundle.getMessage("MemoryOperation_IsNotNull"), false),
-        MatchRegex(Bundle.getMessage("MemoryOperation_MatchRegEx"), true),
-        NotMatchRegex(Bundle.getMessage("MemoryOperation_NotMatchRegEx"), true);
+        LessThan(CompareOperation.LessThan, null, true),
+        LessThanOrEqual(CompareOperation.LessThanOrEqual, null, true),
+        Equal(CompareOperation.Equal, null, true),
+        GreaterThanOrEqual(CompareOperation.GreaterThanOrEqual, null, true),
+        GreaterThan(CompareOperation.GreaterThan, null, true),
+        NotEqual(CompareOperation.NotEqual, null, true),
+        IsNull(null, Bundle.getMessage("MemoryOperation_IsNull"), false),
+        IsNotNull(null, Bundle.getMessage("MemoryOperation_IsNotNull"), false),
+        MatchRegex(null, Bundle.getMessage("MemoryOperation_MatchRegEx"), true),
+        NotMatchRegex(null, Bundle.getMessage("MemoryOperation_NotMatchRegEx"), true);
 
+        private final CompareOperation _oper;
         private final String _text;
         private final boolean _extraValue;
 
-        private MemoryOperation(String text, boolean extraValue) {
-            this._text = text;
+        private MemoryOperation(CompareOperation oper, String text, boolean extraValue) {
+            this._oper = oper;
+            this._text = oper != null ? oper.toString() : text;
             this._extraValue = extraValue;
         }
 
@@ -618,12 +430,8 @@ public class ExpressionMemory extends AbstractDigitalExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionMemory: bean = {}, report = {}", cdl, report);
-        if (getMemory() != null && bean.equals(getMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
-        if (getOtherMemory() != null && bean.equals(getOtherMemory().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
+        _selectOtherMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionMemory.class);

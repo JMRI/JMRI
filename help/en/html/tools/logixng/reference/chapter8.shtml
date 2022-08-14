@@ -69,12 +69,11 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h3>Local variable types</h3>
+      <h3 id="variableTypes">Local variable types</h3>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/local_variable_types.png"><img src=
-        "images/chapter8/local_variable_types.png" alt="Chapter 8 local variable types" width="135"
-        height="188"></a>
+        "images/chapter8/local_variable_types.png" alt="Chapter 8 local variable types"></a>
       </div>
 
       <dl>
@@ -109,6 +108,31 @@
 
         <dt>Formula</dt>
         <dd>Use the value from a formula</dd>
+
+        <dt>Script expression</dt>
+        <dd>Use a one line script command to set the value of the variable.  For example:
+        <code>sensors.getSensor("BlinkSensor")</code>.  This gets a sensor object which can then
+        be set active or inactive.</dd>
+
+        <dt>Script file</dt>
+        <dd>For more complex logic, a script file can be used to set the value.  There are sample
+        scripts at the <strong>jython/LogixNG</strong> directory within the JMRI install location.
+        Note:  The results of the script are passed back to LogixNG using
+        <code>variable.set(<em>some_python_variable</em>)</code>.  This is a Python global variable
+        that is added by the LogixNG scripting support.</dd>
+
+        <dt>LogixNG Table</dt>
+        <dd>Load the contents of a specified LogixNG table into a variable.  The table name is
+        specified in the data column when creating the local variable.  For global variables, use
+        the initial value field.  Here is an example that creates the local variable and provides
+        access to the table rows and columns:
+
+        <div style="margin-left: 2em;">
+          <a href="images/chapter8/local_variable_table_type.png"><img src=
+          "images/chapter8/local_variable_table_type.png" alt="Chapter 8 local variable table_type"></a>
+        </div>
+
+        </dd>
 
       </dl>
 
@@ -322,6 +346,40 @@ WARN  - Log local variables done [JMRI LogixNGThread]
       <p>What to do if the ConditionalNG doesn't do the expected? The debugger provides one tool,
       but another tool is the action <strong>Log local variables</strong>. Each time it's executed,
       it prints all the local variables and their values to the JMRI Sytem Console.</p>
+
+      <p>Options:</p>
+
+      <ul>
+        <li><strong>Include global variables</strong> &mdash; The global variables will be
+        listed after the local variables.</li>
+        <li><strong>Expand arrays and maps</strong> &mdash; the contents of each array and map
+        will be listed.</li>
+      </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/log_variables.png"><img src=
+        "images/chapter8/log_variables.png" alt="Chapter 8 log variables"></a>
+      </div>
+
+      <div style="margin-left: 2em;">
+        <pre>
+WARN  - Log local variables: [JMRI LogixNGThread]
+WARN  -     Name: time, Value: Time is 13:02 [JMRI LogixNGThread]
+WARN  - Global variables: [JMRI LogixNGThread]
+WARN  -     Global Name: gHour, value: 13 [JMRI LogixNGThread]
+WARN  -     Global Name: gMin, value: 2 [JMRI LogixNGThread]
+WARN  -     Global Name: timeMap, [JMRI LogixNGThread]
+WARN  -         theHour -> 13, [JMRI LogixNGThread]
+WARN  -         theMin -> 2, [JMRI LogixNGThread]
+WARN  -         theTime -> The map time is 13:02, [JMRI LogixNGThread]
+WARN  -     Global Name: timeArray, [JMRI LogixNGThread]
+WARN  -         0: 13, [JMRI LogixNGThread]
+WARN  -         1: 2, [JMRI LogixNGThread]
+WARN  -         2: The array time is 13:02, [JMRI LogixNGThread]
+WARN  -     Global Name: null, value: null [JMRI LogixNGThread]
+WARN  - Log local variables done [JMRI LogixNGThread]
+        </pre>
+      </div>
 
       <hr>
 

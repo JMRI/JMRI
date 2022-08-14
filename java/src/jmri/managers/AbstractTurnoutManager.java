@@ -29,13 +29,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         InstanceManager.getDefault(TurnoutOperationManager.class); // force creation of an instance
         init();
     }
-    
+
     final void init() {
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         // set listener for changes in memo
         memo.addPropertyChangeListener(pcl);
     }
-    
+
     final PropertyChangeListener pcl = (PropertyChangeEvent e) -> {
         if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
             handleIntervalChange((Integer) e.getNewValue());
@@ -119,7 +119,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         // if that failed, will throw an IllegalArgumentException
 
         // Some implementations of createNewTurnout() register the new bean,
-        // some don't. 
+        // some don't.
         if (getBySystemName(t.getSystemName()) == null) {
             // save in the maps if successful
             register(t);
@@ -128,13 +128,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         try {
             t.setStraightSpeed("Global");
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("Turnout : {} : {}", t, ex.getMessage());
         }
 
         try {
             t.setDivergingSpeed("Global");
         } catch (jmri.JmriException ex) {
-            log.error(ex.toString());
+            log.error("Turnout : {} : {}", t, ex.getMessage());
         }
         return t;
     }
@@ -235,28 +235,15 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30, primarily used to enable/disable the Add
-     * range box in the Add new turnout panel.
-     *
-     * @param systemName configured system connection name
-     * @return false as default, unless overridden by implementations as supported
-     */
-    @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
-        return false;
-    }
-
-    /**
      * Default Turnout ensures a numeric only system name.
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Nonnull
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return prefix + typeLetter() + checkNumeric(curAddress);
     }
-    
+
     private String defaultClosedSpeed = "Normal";
     private String defaultThrownSpeed = "Restricted";
 
@@ -280,7 +267,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (IllegalArgumentException ex) {
-                    throw new JmriException("Value of requested turnout default closed speed is not valid");
+                    throw new JmriException("Value of requested turnout default closed speed is not valid. " + ex.getMessage());
                 }
             }
         }
@@ -310,7 +297,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (IllegalArgumentException ex) {
-                    throw new JmriException("Value of requested turnout default thrown speed is not valid");
+                    throw new JmriException("Value of requested turnout default thrown speed is not valid. " + ex.getMessage());
                 }
             }
         }
@@ -376,7 +363,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
         return waitUntil;
     }
-    
+
     /**
      * Removes SensorManager and SystemConnectionMemo change listeners.
      * {@inheritDoc}

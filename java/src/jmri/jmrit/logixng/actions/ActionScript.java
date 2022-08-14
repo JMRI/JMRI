@@ -14,7 +14,7 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptEngineSelector;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
@@ -26,7 +26,7 @@ import jmri.util.TypeConversionUtil;
 public class ActionScript extends AbstractDigitalAction {
 
     private NamedBeanAddressing _operationAddressing = NamedBeanAddressing.Direct;
-    private OperationType _operationType = OperationType.JythonCommand;
+    private OperationType _operationType = OperationType.SingleLineCommand;
     private String _operationReference = "";
     private String _operationLocalVariable = "";
     private String _operationFormula = "";
@@ -38,6 +38,9 @@ public class ActionScript extends AbstractDigitalAction {
     private String _scriptLocalVariable = "";
     private String _scriptFormula = "";
     private ExpressionNode _scriptExpressionNode;
+
+    private final ScriptEngineSelector _scriptEngineSelector = new ScriptEngineSelector();
+
 
     public ActionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -63,6 +66,10 @@ public class ActionScript extends AbstractDigitalAction {
         copy.setScriptLocalVariable(_scriptLocalVariable);
         copy.setScriptReference(_scriptReference);
         return manager.registerAction(copy);
+    }
+
+    public ScriptEngineSelector getScriptEngineSelector() {
+        return _scriptEngineSelector;
     }
 
     public void setOperationAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -253,41 +260,39 @@ public class ActionScript extends AbstractDigitalAction {
         OperationType operation = getOperation();
         String script = getTheScript();
 
-        JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
-
         Bindings bindings = new SimpleBindings();
-//        ScriptParams params = new ScriptParams(this);
 
-        // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
-        bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
-        bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
-        bindings.put("digitalActions", InstanceManager.getNullableDefault(DigitalActionManager.class));
-        bindings.put("digitalBooleanActions", InstanceManager.getNullableDefault(DigitalBooleanActionManager.class));
-        bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
-        bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
-        bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
+        LogixNG_ScriptBindings.addScriptBindings(bindings);
 
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         bindings.put("symbolTable", symbolTable);    // Give the script access to the local variable 'symbolTable'
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
+            ScriptEngineSelector.Engine engine =
+                    _scriptEngineSelector.getSelectedEngine();
+
+            if (engine == null) throw new JmriException("Script engine is null");
+
             switch (operation) {
                 case RunScript:
                     try (InputStreamReader reader = new InputStreamReader(
                             new FileInputStream(jmri.util.FileUtil.getExternalFilename(script)),
                             StandardCharsets.UTF_8)) {
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                                .eval(reader, bindings);
+                        engine.getScriptEngine().eval(reader, bindings);
                     } catch (IOException | ScriptException e) {
                         log.warn("cannot execute script \"{}\"", script, e);
                     }
                     break;
 
-                case JythonCommand:
+                case SingleLineCommand:
                     try {
-                        String theScript = String.format("import jmri%n") + script;
-                        scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
-                                .eval(theScript, bindings);
+                        String theScript;
+                        if (engine.isJython()) {
+                            theScript = String.format("import jmri%n") + script;
+                        } else {
+                            theScript = script;
+                        }
+                        engine.getScriptEngine().eval(theScript, bindings);
                     } catch (ScriptException e) {
                         log.warn("cannot execute script", e);
                     }
@@ -405,7 +410,7 @@ public class ActionScript extends AbstractDigitalAction {
 
     public enum OperationType {
         RunScript(Bundle.getMessage("ActionScript_RunScript")),
-        JythonCommand(Bundle.getMessage("ActionScript_JythonCommand"));
+        SingleLineCommand(Bundle.getMessage("ActionScript_SingleLineCommand"));
 
         private final String _text;
 

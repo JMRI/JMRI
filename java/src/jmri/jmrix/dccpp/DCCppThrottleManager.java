@@ -140,8 +140,8 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         // handle loco state reply by finding the proper throttle and asking it to update itself
         } else if (r.getElement(0) == DCCppConstants.LOCO_STATE_REPLY){
             log.debug("LocoState reply received: {}", r);
-            int cab = r.getCabInt();
-            DccLocoAddress locoAddress = new DccLocoAddress(cab, !canBeShortAddress(cab));            
+            int locoId = r.getLocoIdInt();
+            DccLocoAddress locoAddress = new DccLocoAddress(locoId, !canBeShortAddress(locoId));            
             if (throttles.containsKey(locoAddress)) {
                 DCCppThrottle throttle = throttles.get(locoAddress);
                 if (log.isDebugEnabled()) log.debug("Passing locoState to throttle {}", throttle.getLocoAddress());

@@ -235,6 +235,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         _baseMaleSocket = maleSocket;
 
         if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        _logixNG.activate();
         _logixNG.setEnabled(false);
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.configurexml;
 
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
@@ -25,50 +26,73 @@ public class LogixNG_SelectIntegerXml {
 
         LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
-        Element enumElement = new Element(tagName);
+        Element intElement = new Element(tagName);
 
-        enumElement.addContent(new Element("addressing").addContent(selectInt.getAddressing().name()));
-        enumElement.addContent(new Element("value").addContent(Integer.toString(selectInt.getValue())));
-        enumElement.addContent(new Element("reference").addContent(selectInt.getReference()));
-        enumElement.addContent(new Element("localVariable").addContent(selectInt.getLocalVariable()));
-        enumElement.addContent(new Element("formula").addContent(selectInt.getFormula()));
-
-        if (selectInt.getAddressing() == NamedBeanAddressing.Table) {
-            enumElement.addContent(selectTableXml.store(selectInt.getSelectTable(), "table"));
+        intElement.addContent(new Element("addressing").addContent(selectInt.getAddressing().name()));
+        intElement.addContent(new Element("value").addContent(Integer.toString(selectInt.getValue())));
+        if (selectInt.getReference() != null && !selectInt.getReference().isEmpty()) {
+            intElement.addContent(new Element("reference").addContent(selectInt.getReference()));
+        }
+        var memory = selectInt.getMemory();
+        if (memory != null) {
+            intElement.addContent(new Element("memory").addContent(memory.getName()));
+        }
+        intElement.addContent(new Element("listenToMemory").addContent(selectInt.getListenToMemory() ? "yes" : "no"));
+        if (selectInt.getLocalVariable() != null && !selectInt.getLocalVariable().isEmpty()) {
+            intElement.addContent(new Element("localVariable").addContent(selectInt.getLocalVariable()));
+        }
+        if (selectInt.getFormula() != null && !selectInt.getFormula().isEmpty()) {
+            intElement.addContent(new Element("formula").addContent(selectInt.getFormula()));
         }
 
-        return enumElement;
+        if (selectInt.getAddressing() == NamedBeanAddressing.Table) {
+            intElement.addContent(selectTableXml.store(selectInt.getSelectTable(), "table"));
+        }
+
+        return intElement;
     }
 
-    public void load(Element enumElement, LogixNG_SelectInteger selectInt)
+    public void load(Element intElement, LogixNG_SelectInteger selectInt)
             throws JmriConfigureXmlException {
 
-        if (enumElement != null) {
+        if (intElement != null) {
 
             LogixNG_SelectTableXml selectTableXml = new LogixNG_SelectTableXml();
 
             try {
-                Element elem = enumElement.getChild("addressing");
+                Element elem = intElement.getChild("addressing");
                 if (elem != null) {
                     selectInt.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
                 }
 
-                elem = enumElement.getChild("value");
+                elem = intElement.getChild("value");
                 if (elem != null) {
                     selectInt.setValue(Integer.parseInt(elem.getTextTrim()));
                 }
 
-                elem = enumElement.getChild("reference");
+                elem = intElement.getChild("reference");
                 if (elem != null) selectInt.setReference(elem.getTextTrim());
 
-                elem = enumElement.getChild("localVariable");
+                Element memoryName = intElement.getChild("memory");
+                if (memoryName != null) {
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+                    if (m != null) selectInt.setMemory(m);
+                    else selectInt.removeMemory();
+                }
+
+                Element listenToMemoryElem = intElement.getChild("listenToMemory");
+                if (listenToMemoryElem != null) {
+                    selectInt.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
+                }
+
+                elem = intElement.getChild("localVariable");
                 if (elem != null) selectInt.setLocalVariable(elem.getTextTrim());
 
-                elem = enumElement.getChild("formula");
+                elem = intElement.getChild("formula");
                 if (elem != null) selectInt.setFormula(elem.getTextTrim());
 
-                if (enumElement.getChild("table") != null) {
-                    selectTableXml.load(enumElement.getChild("table"), selectInt.getSelectTable());
+                if (intElement.getChild("table") != null) {
+                    selectTableXml.load(intElement.getChild("table"), selectInt.getSelectTable());
                 }
 
             } catch (ParserException e) {
@@ -106,18 +130,18 @@ public class LogixNG_SelectIntegerXml {
 
         try {
             Element elem = shared.getChild(addressingElementName);
-            if (elem != null) {
+            if (addressingElementName != null && elem != null) {
                 selectInt.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
 
             elem = shared.getChild(referenceElementName);
-            if (elem != null) selectInt.setReference(elem.getTextTrim());
+            if (referenceElementName != null && elem != null) selectInt.setReference(elem.getTextTrim());
 
             elem = shared.getChild(localVariableElementName);
-            if (elem != null) selectInt.setLocalVariable(elem.getTextTrim());
+            if (localVariableElementName != null && elem != null) selectInt.setLocalVariable(elem.getTextTrim());
 
             elem = shared.getChild(formulaElementName);
-            if (elem != null) selectInt.setFormula(elem.getTextTrim());
+            if (formulaElementName != null && elem != null) selectInt.setFormula(elem.getTextTrim());
 
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);

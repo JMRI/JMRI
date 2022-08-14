@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions.swing;
 
-import java.awt.event.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -12,10 +13,9 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.CompareTo;
 import jmri.jmrit.logixng.expressions.ExpressionMemory.MemoryOperation;
-import jmri.jmrit.logixng.swing.LogixNG_DataDialog;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
-import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.CompareUtil.CompareType;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -30,6 +30,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectPanel<Memory> _memoryBeanPanel;
     private JComboBox<MemoryOperation> _memoryOperationComboBox;
+    private JComboBox<CompareType> _variableCompareTypeComboBox;
     private JCheckBox _caseInsensitiveCheckBox;
 
     private JTabbedPane _tabbedPane;
@@ -73,19 +74,53 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
         _memoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
 
         JPanel operationAndCasePanel = new JPanel();
-        operationAndCasePanel.setLayout(new BoxLayout(operationAndCasePanel, BoxLayout.Y_AXIS));
+        operationAndCasePanel.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 2;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
 
         _memoryOperationComboBox = new JComboBox<>();
         for (MemoryOperation e : MemoryOperation.values()) {
             _memoryOperationComboBox.addItem(e);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_memoryOperationComboBox);
-        operationAndCasePanel.add(_memoryOperationComboBox);
+        operationAndCasePanel.add(_memoryOperationComboBox, constraint);
 
         _memoryOperationComboBox.addActionListener((e) -> { enableDisableCompareTo(); });
 
+        constraint.gridy = 1;
+        operationAndCasePanel.add(javax.swing.Box.createVerticalStrut(8), constraint);
+
+        constraint.gridwidth = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 2;
+        constraint.anchor = GridBagConstraints.EAST;
+        operationAndCasePanel.add(new JLabel(Bundle.getMessage("ExpressionMemory_CompareType")+" "), constraint);
+
+        constraint.gridx = 1;
+        constraint.anchor = GridBagConstraints.WEST;
+        _variableCompareTypeComboBox = new JComboBox<>();
+        for (CompareType e : CompareType.values()) {
+            _variableCompareTypeComboBox.addItem(e);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_variableCompareTypeComboBox);
+        operationAndCasePanel.add(_variableCompareTypeComboBox, constraint);
+
+        _variableCompareTypeComboBox.addActionListener((e) -> {
+            CompareType type = _variableCompareTypeComboBox.getItemAt(
+                    _variableCompareTypeComboBox.getSelectedIndex());
+            _caseInsensitiveCheckBox.setEnabled(type != CompareType.Number);
+        });
+
+        constraint.gridwidth = 2;
+        constraint.gridx = 0;
+        constraint.gridy = 3;
+        constraint.anchor = GridBagConstraints.WEST;
         _caseInsensitiveCheckBox = new JCheckBox(Bundle.getMessage("ExpressionMemory_CaseInsensitive"));    // NOI18N
-        operationAndCasePanel.add(_caseInsensitiveCheckBox);
+        operationAndCasePanel.add(_caseInsensitiveCheckBox, constraint);
 
         _tabbedPane = new JTabbedPane();
 
@@ -122,11 +157,11 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
 
         if (expression != null) {
-            if (expression.getMemory() != null) {
-                _memoryBeanPanel.setDefaultNamedBean(expression.getMemory().getBean());
+            if (expression.getSelectNamedBean().getNamedBean() != null) {
+                _memoryBeanPanel.setDefaultNamedBean(expression.getSelectNamedBean().getNamedBean().getBean());
             }
-            if (expression.getOtherMemory() != null) {
-                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getOtherMemory().getBean());
+            if (expression.getSelectOtherMemoryNamedBean().getNamedBean() != null) {
+                _compareToMemoryBeanPanel.setDefaultNamedBean(expression.getSelectOtherMemoryNamedBean().getNamedBean().getBean());
             }
             switch (expression.getCompareTo()) {
                 case RegEx:
@@ -137,6 +172,7 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + expression.getCompareTo().name());  // NOI18N
             }
             _memoryOperationComboBox.setSelectedItem(expression.getMemoryOperation());
+            _variableCompareTypeComboBox.setSelectedItem(expression.getCompareType());
             _caseInsensitiveCheckBox.setSelected(expression.getCaseInsensitive());
             _compareToConstantTextField.setText(expression.getConstantValue());
             _compareToLocalVariableTextField.setText(expression.getLocalVariable());
@@ -186,11 +222,12 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
             NamedBeanHandle<Memory> handle
                     = InstanceManager.getDefault(NamedBeanHandleManager.class)
                             .getNamedBeanHandle(memory.getDisplayName(), memory);
-            expression.setMemory(handle);
+            expression.getSelectNamedBean().setNamedBean(handle);
         } else {
-            expression.removeMemory();
+            expression.getSelectNamedBean().removeNamedBean();
         }
         expression.setMemoryOperation(_memoryOperationComboBox.getItemAt(_memoryOperationComboBox.getSelectedIndex()));
+        expression.setCompareType(_variableCompareTypeComboBox.getItemAt(_variableCompareTypeComboBox.getSelectedIndex()));
         expression.setCaseInsensitive(_caseInsensitiveCheckBox.isSelected());
 
 
@@ -202,12 +239,12 @@ public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
                 NamedBeanHandle<Memory> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
                                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-                expression.setOtherMemory(handle);
+                expression.getSelectOtherMemoryNamedBean().setNamedBean(handle);
             } else {
-                expression.removeOtherMemory();
+                expression.getSelectOtherMemoryNamedBean().removeNamedBean();
             }
         } else {
-            expression.removeOtherMemory();
+            expression.getSelectOtherMemoryNamedBean().removeNamedBean();
         }
 
         if (_tabbedPane.getSelectedComponent() == _tabbedPaneCompareTo) {

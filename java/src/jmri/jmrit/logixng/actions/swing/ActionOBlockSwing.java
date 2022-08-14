@@ -9,16 +9,19 @@ import javax.swing.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionOBlock;
 import jmri.jmrit.logixng.actions.ActionOBlock.DirectOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.util.swing.BeanSelectPanel;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 
 /**
  * Configures an ActionOBlock object with a Swing JPanel.
@@ -28,25 +31,9 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class ActionOBlockSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneOBlock;
-    private BeanSelectPanel<OBlock> _oblockBeanPanel;
-    private JPanel _panelOBlockDirect;
-    private JPanel _panelOBlockReference;
-    private JPanel _panelOBlockLocalVariable;
-    private JPanel _panelOBlockFormula;
-    private JTextField _oblockReferenceTextField;
-    private JTextField _oblockLocalVariableTextField;
-    private JTextField _oblockFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<OBlock> _selectNamedBeanSwing;
 
-    private JTabbedPane _tabbedPaneOperation;
-    private JComboBox<DirectOperation> _stateComboBox;
-    private JPanel _panelOperationDirect;
-    private JPanel _panelOperationReference;
-    private JPanel _panelOperationLocalVariable;
-    private JPanel _panelOperationFormula;
-    private JTextField _oblockOperReferenceTextField;
-    private JTextField _oblockOperLocalVariableTextField;
-    private JTextField _oblockOperFormulaTextField;
+    private LogixNG_SelectEnumSwing<DirectOperation> _selectOperationSwing;
 
     private JTabbedPane _tabbedPaneData;
     private JPanel _panelDataDirect;
@@ -57,76 +44,45 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
     private JTextField _oblockDataReferenceTextField;
     private JTextField _oblockDataLocalVariableTextField;
     private JTextField _oblockDataFormulaTextField;
+    private BeanSelectPanel<Memory> _panelMemoryBean;
+    private JPanel _memoryPanel;
+    private JPanel _valuePanel;
+
+
+    public ActionOBlockSwing() {
+    }
+
+    public ActionOBlockSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionOBlock action = (ActionOBlock)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(OBlockManager.class), getJDialog(), this);
+
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
         panel = new JPanel();
+        _memoryPanel = new JPanel();
+        _valuePanel = new JPanel();
 
-        _tabbedPaneOBlock = new JTabbedPane();
-        _panelOBlockDirect = new javax.swing.JPanel();
-        _panelOBlockReference = new javax.swing.JPanel();
-        _panelOBlockLocalVariable = new javax.swing.JPanel();
-        _panelOBlockFormula = new javax.swing.JPanel();
+        JPanel _tabbedPaneNamedBean;
+        JPanel _tabbedPaneOperation;
 
-        _tabbedPaneOBlock.addTab(NamedBeanAddressing.Direct.toString(), _panelOBlockDirect);
-        _tabbedPaneOBlock.addTab(NamedBeanAddressing.Reference.toString(), _panelOBlockReference);
-        _tabbedPaneOBlock.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOBlockLocalVariable);
-        _tabbedPaneOBlock.addTab(NamedBeanAddressing.Formula.toString(), _panelOBlockFormula);
-
-        _oblockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(OBlockManager.class), null);
-        _panelOBlockDirect.add(_oblockBeanPanel);
-
-        _oblockReferenceTextField = new JTextField();
-        _oblockReferenceTextField.setColumns(30);
-        _panelOBlockReference.add(_oblockReferenceTextField);
-
-        _oblockLocalVariableTextField = new JTextField();
-        _oblockLocalVariableTextField.setColumns(30);
-        _panelOBlockLocalVariable.add(_oblockLocalVariableTextField);
-
-        _oblockFormulaTextField = new JTextField();
-        _oblockFormulaTextField.setColumns(30);
-        _panelOBlockFormula.add(_oblockFormulaTextField);
-
-
-        _tabbedPaneOperation = new JTabbedPane();
-        _panelOperationDirect = new javax.swing.JPanel();
-        _panelOperationReference = new javax.swing.JPanel();
-        _panelOperationLocalVariable = new javax.swing.JPanel();
-        _panelOperationFormula = new javax.swing.JPanel();
-
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (DirectOperation e : DirectOperation.values()) {
-            _stateComboBox.addItem(e);
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), DirectOperation.values());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, DirectOperation.values());
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-        _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
-            setDataPanelState();
-        });
-        _panelOperationDirect.add(_stateComboBox);
-
-        _oblockOperReferenceTextField = new JTextField();
-        _oblockOperReferenceTextField.setColumns(30);
-        _panelOperationReference.add(_oblockOperReferenceTextField);
-
-        _oblockOperLocalVariableTextField = new JTextField();
-        _oblockOperLocalVariableTextField.setColumns(30);
-        _panelOperationLocalVariable.add(_oblockOperLocalVariableTextField);
-
-        _oblockOperFormulaTextField = new JTextField();
-        _oblockOperFormulaTextField.setColumns(30);
-        _panelOperationFormula.add(_oblockOperFormulaTextField);
-
 
         _tabbedPaneData = new JTabbedPane();
         _panelDataDirect = new javax.swing.JPanel();
+        _panelDataDirect.setLayout(new BoxLayout(_panelDataDirect, BoxLayout.Y_AXIS));
         _panelDataReference = new javax.swing.JPanel();
         _panelDataLocalVariable = new javax.swing.JPanel();
         _panelDataFormula = new javax.swing.JPanel();
@@ -138,7 +94,12 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
 
         _oblockDataDirectTextField = new JTextField();
         _oblockDataDirectTextField.setColumns(30);
-        _panelDataDirect.add(_oblockDataDirectTextField);
+        _valuePanel.add(_oblockDataDirectTextField);
+        _panelDataDirect.add(_valuePanel);
+
+        _panelMemoryBean = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _memoryPanel.add(_panelMemoryBean);
+        _panelDataDirect.add(_panelMemoryBean);
 
         _oblockDataReferenceTextField = new JTextField();
         _oblockDataReferenceTextField.setColumns(30);
@@ -152,35 +113,11 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         _oblockDataFormulaTextField.setColumns(30);
         _panelDataFormula.add(_oblockDataFormulaTextField);
 
-        setDataPanelState();
+//        setDataPanelState();
+        _valuePanel.setVisible(false);
+        _memoryPanel.setVisible(false);
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneOBlock.setSelectedComponent(_panelOBlockDirect); break;
-                case Reference: _tabbedPaneOBlock.setSelectedComponent(_panelOBlockReference); break;
-                case LocalVariable: _tabbedPaneOBlock.setSelectedComponent(_panelOBlockLocalVariable); break;
-                case Formula: _tabbedPaneOBlock.setSelectedComponent(_panelOBlockFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getOBlock() != null) {
-                _oblockBeanPanel.setDefaultNamedBean(action.getOBlock().getBean());
-            }
-            _oblockReferenceTextField.setText(action.getReference());
-            _oblockLocalVariableTextField.setText(action.getLocalVariable());
-            _oblockFormulaTextField.setText(action.getFormula());
-
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
-                case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
-                case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
-                case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getOperationDirect());
-            _oblockOperReferenceTextField.setText(action.getOperationReference());
-            _oblockOperLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _oblockOperFormulaTextField.setText(action.getOperationFormula());
-
             switch (action.getDataAddressing()) {
                 case Direct: _tabbedPaneData.setSelectedComponent(_panelDataDirect); break;
                 case Reference: _tabbedPaneData.setSelectedComponent(_panelDataReference); break;
@@ -190,14 +127,36 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
             }
             _oblockDataReferenceTextField.setText(action.getDataReference());
             _oblockDataLocalVariableTextField.setText(action.getDataLocalVariable());
+
             _oblockDataFormulaTextField.setText(action.getDataFormula());
 
             _oblockDataDirectTextField.setText(action.getOBlockValue());
-            setDataPanelState();
+            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _panelMemoryBean.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
+            }
+
+            LogixNG_SelectEnum<DirectOperation> selectEnum = action.getSelectEnum();
+            if (selectEnum.getEnum() != null) {
+                switch (selectEnum.getEnum()) {
+                    case GetBlockWarrant:
+                    case GetBlockValue:
+                        _panelMemoryBean.setVisible(true);
+                        break;
+                    case SetValue:
+                        _valuePanel.setVisible(true);
+                        break;
+                    default:
+                }
+            }
         }
 
+        setDataPanelState();
+
+        _selectOperationSwing.addAddressingListener((evt) -> { setDataPanelState(); });
+        _selectOperationSwing.addEnumListener((evt) -> { setDataPanelState(); });
+
         JComponent[] components = new JComponent[]{
-            _tabbedPaneOBlock,
+            _tabbedPaneNamedBean,
             _tabbedPaneOperation,
             _tabbedPaneData};
 
@@ -209,9 +168,22 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
     }
 
     private void setDataPanelState() {
-        boolean newState = _stateComboBox.getSelectedItem() == DirectOperation.SetValue;
+        _valuePanel.setVisible(false);
+        _panelMemoryBean.setVisible(false);
+
+        boolean newState = false;
+
+        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
+            _valuePanel.setVisible(true);
+            newState = true;
+        } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant) ||
+                _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+            _panelMemoryBean.setVisible(true);
+            newState = true;
+        }
+
         _tabbedPaneData.setEnabled(newState);
-        _oblockDataDirectTextField.setEnabled(newState);
+//        _oblockDataDirectTextField.setEnabled(newState);
         _oblockDataReferenceTextField.setEnabled(newState);
         _oblockDataLocalVariableTextField.setEnabled(newState);
         _oblockDataFormulaTextField.setEnabled(newState);
@@ -221,78 +193,11 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        validateBlockSection(errorMessages);
-        validateOperationSection(errorMessages);
+        ActionOBlock action = new ActionOBlock("IQDA1", null);
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
         validateDataSection(errorMessages);
         return errorMessages.isEmpty();
-    }
-
-    private void validateBlockSection(List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionOBlock action = new ActionOBlock("IQDA1", null);
-
-        try {
-            if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockReference) {
-                action.setReference(_oblockReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
-        try {
-            action.setFormula(_oblockFormulaTextField.getText());
-            if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
-
-        if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
-            if (_oblockBeanPanel == null || _oblockBeanPanel.getNamedBean() == null) {
-                errorMessages.add(Bundle.getMessage("ActionOBlock_ErrorBlock"));
-            }
-        }
-    }
-
-    private void validateOperationSection(List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionOBlock action = new ActionOBlock("IQDA2", null);
-
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationReference(_oblockOperReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
-        try {
-            action.setOperationFormula(_oblockOperFormulaTextField.getText());
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
     }
 
     private void validateDataSection(List<String> errorMessages) {
@@ -326,10 +231,14 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
         }
 
         if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
-            DirectOperation oper = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
-            if (oper == DirectOperation.SetValue) {
+            if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant)
+                    || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+                if (_panelMemoryBean.isEmpty() || _panelMemoryBean.getNamedBean() == null) {
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorMemory"));
+                }
+            } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
                 if (_oblockDataDirectTextField.getText().isEmpty()) {
-                    errorMessages.add(Bundle.getMessage("ActionOBlock_ErrorValue"));
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorValue"));
                 }
             }
         }
@@ -350,61 +259,29 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionOBlock but is a: "+object.getClass().getName());
         }
         ActionOBlock action = (ActionOBlock) object;
-
-        if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
-            OBlock oblock = _oblockBeanPanel.getNamedBean();
-            if (oblock != null) {
-                NamedBeanHandle<OBlock> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(oblock.getDisplayName(), oblock);
-                action.setOBlock(handle);
-            } else {
-                action.removeOBlock();
-            }
-        } else {
-            action.removeOBlock();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
 
         try {
-            // Left section
-            if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_oblockReferenceTextField.getText());
-            } else if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_oblockLocalVariableTextField.getText());
-            } else if (_tabbedPaneOBlock.getSelectedComponent() == _panelOBlockFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_oblockFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneOBlock has unknown selection");
-            }
-
             // Center section
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_oblockOperReferenceTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_oblockOperLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_oblockOperFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneOBlock has unknown selection");
-            }
+            _selectOperationSwing.updateObject(action.getSelectEnum());
 
             // Right section
             if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
                 action.setDataAddressing(NamedBeanAddressing.Direct);
                 // Handle optional data field
-                if (action.getOperationDirect() == DirectOperation.SetValue) {
+                if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetValue)) {
                     action.setOBlockValue(_oblockDataDirectTextField.getText());
+                } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockWarrant)
+                        || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetBlockValue)) {
+                    Memory memory = _panelMemoryBean.getNamedBean();
+                    if (memory != null) {
+                        NamedBeanHandle<Memory> handle
+                                = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                        .getNamedBeanHandle(memory.getDisplayName(), memory);
+                        action.getSelectMemoryNamedBean().setNamedBean(handle);
+                    } else {
+                        action.getSelectMemoryNamedBean().removeNamedBean();
+                    }
                 }
             } else if (_tabbedPaneData.getSelectedComponent() == _panelDataReference) {
                 action.setDataAddressing(NamedBeanAddressing.Reference);
@@ -431,9 +308,8 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        if (_oblockBeanPanel != null) {
-            _oblockBeanPanel.dispose();
-        }
+        _selectNamedBeanSwing.dispose();
+        _selectOperationSwing.dispose();
     }
 
 

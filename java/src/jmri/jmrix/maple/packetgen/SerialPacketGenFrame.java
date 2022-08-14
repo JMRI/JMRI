@@ -10,9 +10,9 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+
 import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.SerialMessage;
-import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import jmri.util.StringUtil;
 
@@ -21,7 +21,7 @@ import jmri.util.StringUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003
  */
-public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.maple.SerialListener {
+public class SerialPacketGenFrame extends jmri.util.JmriJFrame {
 
     private MapleSystemConnectionMemo _memo = null;
 
@@ -36,6 +36,8 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public SerialPacketGenFrame(MapleSystemConnectionMemo memo) {
         super();
         _memo = memo;
+        nodeAddrSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 99, 1));
+        nodeAddrSpinner.setToolTipText(Bundle.getMessage("TooltipNodeAddress"));
     }
 
     /** 
@@ -67,12 +69,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(packetTextField);
         getContentPane().add(sendButton);
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
-        });
+        sendButton.addActionListener(this::sendButtonActionPerformed);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -80,18 +77,12 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         JPanel pane3 = new JPanel();
         pane3.setLayout(new FlowLayout());
         pane3.add(new JLabel(Bundle.getMessage("LabelNodeAddress")));
-        nodeAddrSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 99, 1));
-        nodeAddrSpinner.setToolTipText(Bundle.getMessage("TooltipNodeAddress"));
+        
         pane3.add(nodeAddrSpinner);
         pane3.add(pollButton);
         getContentPane().add(pane3);
 
-        pollButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                pollButtonActionPerformed(e);
-            }
-        });
+        pollButton.addActionListener(this::pollButtonActionPerformed);
         pollButton.setToolTipText(Bundle.getMessage("PollToolTipMulti"));
 
         // pack for display
@@ -104,13 +95,13 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
             endAddr = 99;
         }
         SerialMessage msg = SerialMessage.getPoll((Integer) nodeAddrSpinner.getValue(), 1, endAddr);
-        _memo.getTrafficController().sendSerialMessage(msg, this);
+        _memo.getTrafficController().sendSerialMessage(msg, null);
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         String input = packetTextField.getText();
         // TODO check input + feedback on error. Too easy to cause NPE
-        _memo.getTrafficController().sendSerialMessage(createPacket(input), this);
+        _memo.getTrafficController().sendSerialMessage(createPacket(input), null);
     }
 
     SerialMessage createPacket(String s) {
@@ -126,20 +117,6 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
-    /** 
-     * {@inheritDoc}
-     * Ignore messages.
-     */
-    @Override
-    public void message(SerialMessage m) {
-    }
 
-    /** 
-     * {@inheritDoc}
-     * Ignore replies.
-     */
-    @Override
-    public void reply(SerialReply r) {
-    }
 
 }

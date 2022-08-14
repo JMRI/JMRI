@@ -593,7 +593,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             });
                         }
                     } catch (IOException ex) {
-                        log.error(ex.getLocalizedMessage(), ex);
+                        log.error("IOException adding address {}",address, ex);
                     }
                 });
             } else {

@@ -111,6 +111,7 @@ public interface SwingConfiguratorInterface {
      * @param userName user name
      * @return a male socket for the new object
      */
+    @Nonnull
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName)
             throws BadUserNameException, BadSystemNameException;
 
@@ -128,6 +129,15 @@ public interface SwingConfiguratorInterface {
      */
     @Override
     public String toString();
+
+    /**
+     * Set default values for this dialog.
+     * This method is used by tests to be able to run validation without
+     * knowing which data that needs to be entered for the validation to pass.
+     */
+    public default void setDefaultValues() {
+        // Do nothing
+    }
 
     /**
      * Is the SWI ready to be closed?

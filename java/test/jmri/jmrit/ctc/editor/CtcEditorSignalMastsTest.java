@@ -594,7 +594,6 @@ public class CtcEditorSignalMastsTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

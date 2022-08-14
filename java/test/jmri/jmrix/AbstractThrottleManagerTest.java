@@ -13,9 +13,8 @@ import org.junit.jupiter.api.*;
  */
 public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    AbstractThrottleManager t = null;
-    SystemConnectionMemo memo;
-    DebugThrottle throttle;
+    private SystemConnectionMemo memo;
+    private DebugThrottle throttle;
 
     @BeforeEach
     @Override
@@ -24,9 +23,13 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
         memo = Mockito.mock(SystemConnectionMemo.class);
         Mockito.when(memo.getUserName()).thenReturn("Test");
         Mockito.when(memo.getSystemPrefix()).thenReturn("T");
-        tm = t = new AbstractThrottleManager(memo) {
+        tm = new AbstractThrottleManager(memo) {
             @Override
             public void requestThrottleSetup(jmri.LocoAddress a, boolean control) {
+                if (!(a instanceof DccLocoAddress)){
+                    Assertions.fail("DebugThrottle needs a dcclocoaddress : " + a );
+                    return;
+                }
                 throttle = new DebugThrottle((DccLocoAddress) a, adapterMemo);
                 notifyThrottleKnown(throttle, a);
             }
@@ -51,7 +54,7 @@ public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleM
     @AfterEach
     public void tearDown() {
         memo = null;
-        tm = t = null;
+        tm = null;
         JUnitUtil.tearDown();
     }
 

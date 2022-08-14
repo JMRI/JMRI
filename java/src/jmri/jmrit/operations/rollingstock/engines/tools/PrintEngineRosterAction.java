@@ -79,18 +79,11 @@ public class PrintEngineRosterAction extends AbstractAction {
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
-        try {
-            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"), fontSize, .5, .5, .5, .5,
-                    _isPreview, "", landscape, true, null);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
+        try ( HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
+            fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
 
-        numberCharPerLine = writer.getCharactersPerLine();
+            numberCharPerLine = writer.getCharactersPerLine();
 
-        try {
             // create header
             writer.write(createHeader());
 
@@ -133,7 +126,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 
                 // show one of 7 options, built is default
                 if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_OWNER) {
-                    owner = padAttribute(engine.getOwner(), ownerMaxLen);
+                    owner = padAttribute(engine.getOwnerName(), ownerMaxLen);
                 } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_MOVES) {
                     moves = padAttribute(Integer.toString(engine.getMoves()), 5);
                 } else if (sortByComboBox.getSelectedIndex() == panel.enginesModel.SORTBY_DCC_ADDRESS) {
@@ -158,11 +151,14 @@ public class PrintEngineRosterAction extends AbstractAction {
                 }
                 writer.write(s + NEW_LINE);
             }
+            // and force completion of the printing
+            writer.close();
         } catch (IOException we) {
             log.error("Error printing ConsistRosterEntry", we);
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print cancelled");
         }
-        // and force completion of the printing
-        writer.close();
+        
     }
 
     private String createHeader() {

@@ -12,7 +12,7 @@ import jmri.jmrix.can.cbus.swing.modules.CbusConfigPaneProvider;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns configuration objects for a SPROG DCC SPROG 3 Plus
+ * Returns configuration objects for a SPROG DCC [Pi-]SPROG 3 [v2|Plus]
  *
  * @author Andrew Crosland Copyright (C) 2021
  */

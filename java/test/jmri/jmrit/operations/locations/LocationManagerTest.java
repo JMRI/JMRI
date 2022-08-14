@@ -1,21 +1,18 @@
 package jmri.jmrit.operations.locations;
 
-import jmri.Reporter;
-import jmri.implementation.decorators.TimeoutReporter;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import jmri.InstanceManager;
+import jmri.Reporter;
+import jmri.implementation.decorators.TimeoutReporter;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.jupiter.api.Timeout;
-import org.mockito.Mockito;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *

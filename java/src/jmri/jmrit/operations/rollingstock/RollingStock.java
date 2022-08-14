@@ -1127,7 +1127,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return NONE;
     }
 
-    public void setOwner(String owner) {
+    public void setOwnerName(String owner) {
         String old = _owner;
         _owner = owner;
         if (!old.equals(owner)) {
@@ -1135,7 +1135,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
     }
 
-    public String getOwner() {
+    public String getOwnerName() {
         return _owner;
     }
 
@@ -1454,8 +1454,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             e.setAttribute(Xml.TRAIN, getTrainName());
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
         }
-        if (!getOwner().equals(NONE)) {
-            e.setAttribute(Xml.OWNER, getOwner());
+        if (!getOwnerName().equals(NONE)) {
+            e.setAttribute(Xml.OWNER, getOwnerName());
         }
         if (!getValue().equals(NONE)) {
             e.setAttribute(Xml.VALUE, getValue());
@@ -1544,10 +1544,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)) {
-            if (e.getOldValue().equals(getOwner())) {
+            if (e.getOldValue().equals(getOwnerName())) {
                 log.debug("Rolling stock ({}) sees owner name change from ({}) to ({})", this, e.getOldValue(),
                         e.getNewValue()); // NOI18N
-                setOwner((String) e.getNewValue());
+                setOwnerName((String) e.getNewValue());
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)) {

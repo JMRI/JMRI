@@ -29,6 +29,8 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         // define command station options
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
+        options.put("InterrogateOnStart", new Option(Bundle.getMessage("InterrogateOnStart"),
+                new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
 
         validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
                 Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
@@ -45,15 +47,16 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+        setInterrogateOnStart(getOptionState("InterrogateOnStart"));
         // connect to a packetizing traffic controller
-        UhlenbrockPacketizer packets = new UhlenbrockPacketizer();
+        UhlenbrockPacketizer packets = new UhlenbrockPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // create memo
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

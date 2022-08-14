@@ -39,7 +39,7 @@
 
       <p>By installing appropriate files and allowing the user to select a default Locale (as part
       of the <a href="../../../package/apps/TabbedPreferences.shtml#locale">Advanced
-      Preferences</a>), we can customize the JMRI® program to different countries and
+      Preferences</a>), we can customize the JMRI&reg; program to different countries and
       languages.</p>
 
       <h2 id="resourcebundles">Use of Resource Bundles</h2>
@@ -101,7 +101,7 @@ string; to the right of the equals sign is the String that will be displayed.
 
       <p>The easiest way to find the proper suffix letters for a Language and Country is to set the
       JMRI module to your particular Language via the <a href=
-      "../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> ⇒ Display ⇒ Language
+      "../../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a> &rArr; Display &rArr; Language
       tab, quit and restart the program, and then look at the suffix that the JMRI module displays
       on the startup screen/main window (in the bottom line, between the brackets after the Java
       version). You can also check the official <a href=
@@ -145,7 +145,7 @@ string; to the right of the equals sign is the String that will be displayed.
         "index.shtml#buildyourcopy">IDE</a> or however you're doing that
         </li>
 
-        <li>Start the JMRI® application and select "<strong>Preferences</strong>" from the Edit
+        <li>Start the JMRI&reg; application and select "<strong>Preferences</strong>" from the Edit
         menu;</li>
 
         <li>Click the <strong>Display</strong> tab at the left, and the <strong>Locale</strong> tab
@@ -162,7 +162,7 @@ string; to the right of the equals sign is the String that will be displayed.
 
       <p>If there's a problem at this point, check to see what language is listed on the
       application startup screen. Is it showing the same suffix (e.g. _fr or _cs_CZ) as you gave to
-      your files? The suffix JMRI® uses is determined by the Locale you selected in the preferences
+      your files? The suffix JMRI&reg; uses is determined by the Locale you selected in the preferences
       above.</p>
 
       <p>To make your work available to other JMRI users, please share it with us <a href=
@@ -172,24 +172,27 @@ string; to the right of the equals sign is the String that will be displayed.
 
       <h4>Non-Roman characters</h4>
 
-      <p>Languages that involve non-roman letters require some extra care. The .properties files
-      must contain only ISO 8859-1 characters. If you want to use Unicode characters, these must be
-      manually escaped. Please see the <a href=
-      "https://web.archive.org/web/20030217222249/http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">
-      Java internationalization FAQ</a> for more info on how to include those characters in your
-      .properties files, particularly the question on "How do I specify non-ASCII strings in a
-      properties file?".</p>
+      <p>Before Java 11, .properties files were coded in ASCII with no UniCode support.
+      Because of this, you'll see files where diacriticals and other non-ASCII characters
+      have been recoded as decimal strings such as \234. This is no longer necessary with
+      Java 11.  If you want to add non-ASCII characters to a properties file, convert it to
+      UTF-8 (if needed), then go ahead and add them.</p>
 
-      <p>An example is the <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs.properties">java/src/apps/AppsBundle_cs.properties</a>
-      file, which contains diacritical letters for the Czech translation.</p>
+      <h4>Merging Files</h4>
 
-      <p>The "<a href=
-      "http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool
-      can help with this by converting special characters to the right sequences, but you must run
-      your files through it before submitting them to JMRI. Special characters are somewhat
-      machine-specific, so to make they're properly handled, they have to be converted to ISO
-      8859-1 sequences on your computer before submission.</p>
+      Over time, the main .properties file will accumulate new key-value pairs that are not
+      in the translated files.  To merge the main .properties file and a translated one, you
+      use our PropertiesMergeTool.  This is done from the command line with e.g.
+      <pre style="font-family: monospace;">
+      java java/test/jmri/util/i18n/PropertiesMergeTool.java   java/src/apps/AppsBundle.properties java/src/apps/AppsBundle_es.properties
+      </pre>
+
+      <p>The program is invoked with Java and given two arguments:  The main (English default)
+      file and a translated file.  The translated file will be rewritten to include
+      any non-translated key-value pairs from the main file.</p>
+
+      <p>The scripts/update-L10N-files script can be used to process all files for
+      a given language.  See the comments inside the script.</p>
 
       <h3 id="xml">Translating XML files</h3>
       XML files can also be internationalized. There are examples in the decoder definition
@@ -438,7 +441,7 @@ so handling that is part of your user-error handling.
       <p><strong>BundleKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython)
       directory, is used to analyse the bundle keys within a property file. The primary function is
       to identify unused keys. The script is run using PanelPro <strong>Scripting</strong>
-      {<em>Old: <strong>Panels</strong></em>} <strong>⇒ Run Script...</strong>. The output from the
+      {<em>Old: <strong>Panels</strong></em>} <strong>&rArr; Run Script...</strong>. The output from the
       script is written to the Script Output window. The run time will vary based on the number of
       keys to be checked along with the position in the source hierarchy. It will range from
       several to many seconds.</p>
@@ -470,7 +473,7 @@ so handling that is part of your user-error handling.
 
       <p><strong>ClassKeysReport.py</strong>, located in the <strong>scripts</strong> (not jython)
       directory, is used to identify the bundle keys used by a class. The script is run using
-      PanelPro <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>⇒ Run
+      PanelPro <strong>Scripting</strong> {<em>Old: <strong>Panels</strong></em>} <strong>&rArr; Run
       Script...</strong>. The output from the script is written to the Script Output window.</p>
 
       <p>When the script is started, a file selection dialog is displayed. Select either a Java
@@ -520,30 +523,30 @@ so handling that is part of your user-error handling.
 
       <p>When the script is done scanning, it provides an option to export the
       <strong>entire</strong> key list to a CSV file.</p>
-      
+
       <h3 id="translatorshelper">Translators Helper</h3>
-      <p><a href="./images/TranslatorsHelper.jar">TranslatorsHelper.jar</a> is a simple tool for translators. 
-          The program searches for all <code>.properties</code> files in all used languages. 
-          It then counts the untranslated keys for a specific language and file. 
-          This will help translators to find untranslated keys. The source code 
-          of the program is available here 
+      <p><a href="./images/TranslatorsHelper.jar">TranslatorsHelper.jar</a> is a simple tool for translators.
+          The program searches for all <code>.properties</code> files in all used languages.
+          It then counts the untranslated keys for a specific language and file.
+          This will help translators to find untranslated keys. The source code
+          of the program is available here
           <a href="https://github.com/sidlo64/TranslatorsHelper">https://github.com/sidlo64/TranslatorsHelper</a>.</p>
       <p>The program can be started from the command line with the command:</p>
       <p><code>java -jar TranslatorsHelper.jar</code></p>
-      <p>After startup enter the directory with the source code 
-          <code>$your-ide-dir$/JMRI/java/src</code> in the 
+      <p>After startup enter the directory with the source code
+          <code>$your-ide-dir$/JMRI/java/src</code> in the
           <strong>Start directory</strong> field.
           Click the <strong>Run</strong> button to start processing.</p>
-      <p>In the <strong>Languages</strong> tab, the program displays 
+      <p>In the <strong>Languages</strong> tab, the program displays
           all found languages and the number of translated keys.</p>
       <a href="images/TranslatorsHelperLanguages.png"><img src="images/TranslatorsHelperLanguages.png"
-      height="602" width="574" alt="tab Languages"></a>
-      <p>In the <strong>Files</strong> tab it is possible to select a specific language. 
-          The table below the selection shows all found .properties files 
+      alt="tab Languages"></a>
+      <p>In the <strong>Files</strong> tab it is possible to select a specific language.
+          The table below the selection shows all found .properties files
           and the number of translated keys.</p>
       <a href="images/TranslatorsHelperFiles.png"><img src="images/TranslatorsHelperFiles.png"
-      height="602" width="574" alt="tab Files"></a>
-      
+      alt="tab Files"></a>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

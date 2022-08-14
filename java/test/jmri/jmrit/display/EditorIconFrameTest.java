@@ -54,19 +54,15 @@ public class EditorIconFrameTest {
         Editor e = new EditorScaffold(inputString + " IconAdder test Editor");
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
-        
+
+        JFrame frame = e.getIconFrame(inputString);
         if(expectNull) {
-           if("Text".equals(inputString) ) {
-              // "Text" pops up a modal JOptionPane, we need to close it.
-           }
-           JFrame frame = e.getIconFrame(inputString);
-           Assert.assertNull(inputString + " Editor expects null return value", frame);
+            Assert.assertNull(inputString + " Editor expects null return value", frame);
         } else {
-           JFrame frame = e.getIconFrame(inputString);
-           Assert.assertNotNull(inputString + " Editor available", frame );
-           frame.dispose();
+            Assert.assertNotNull(inputString + " Editor available", frame );
+            frame.dispose();
         }
-        
+
         jfo.requestClose();
         JUnitUtil.dispose(e);
     }
@@ -82,7 +78,6 @@ public class EditorIconFrameTest {
     @AfterEach
     public void tearDown(){
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

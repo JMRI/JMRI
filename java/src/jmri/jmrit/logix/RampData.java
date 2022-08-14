@@ -19,6 +19,8 @@ public class RampData {
     private ArrayList<Float> _settings;
     private boolean _upRamp;
     private SpeedUtil _speedUtil;
+    private float _fromSpeed;
+    private float _toSpeed;
 
     static float INCRE_RATE = 1.10f;  // multiplier to increase throttle increments
 
@@ -26,25 +28,32 @@ public class RampData {
         _throttleInterval = throttleIncre; 
         _timeInterval = timeIncre;
         _speedUtil = util;
-        makeThrottleSettings(fromSet, toSet);
+        _fromSpeed = fromSet;
+        _toSpeed = toSet;
+        makeThrottleSettings();
     }
     
     protected boolean isUpRamp() {
         return _upRamp;
     }
 
-    private void makeThrottleSettings(float fromSet, float toSet) {
-        _upRamp = (toSet >= fromSet);
+    private void makeThrottleSettings() {
+        _upRamp = (_toSpeed >= _fromSpeed);
         _settings = new ArrayList<>();
         float lowSetting;
         float highSetting;
-        float throttleIncre = _throttleInterval;
         if (_upRamp) {
-            lowSetting = fromSet;
-            highSetting = toSet;
+            lowSetting = _fromSpeed;
+            highSetting = _toSpeed;
         } else {
-            lowSetting = toSet;
-            highSetting = fromSet;
+            lowSetting = _toSpeed;
+            highSetting = _fromSpeed;
+        }
+        float low = 0.0f;
+        float throttleIncre = _throttleInterval;
+        while (low < lowSetting ) {
+            throttleIncre *= INCRE_RATE;
+            low += throttleIncre;
         }
         while (lowSetting < highSetting) {
             _settings.add(Float.valueOf(lowSetting));
@@ -84,7 +93,7 @@ public class RampData {
     }
 
     protected int getNumSteps() {
-        return _settings.size();
+        return _settings.size() - 1;
     }
 
     protected int getRamptime() {
@@ -110,4 +119,6 @@ public class RampData {
     protected int getRampTimeIncrement() {
         return _timeInterval;
     }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RampData.class);
 }

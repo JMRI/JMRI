@@ -216,9 +216,7 @@ public class SpjFile {
             // get first header record
             h0 = new FirstHeader();
             h0.load(s);
-            if (log.isDebugEnabled()) {
-                log.debug(h0.toString());
-            }
+            log.debug("FirstHeader: {}", h0);
             n = h0.numHeaders();
             headers = new Header[n];
             headers[0] = h0;
@@ -387,7 +385,7 @@ public class SpjFile {
         @SuppressFBWarnings(value = "URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare7;
 
-        String filename;
+        String filename = "";
 
         public int getType() {
             return type;
@@ -449,7 +447,7 @@ public class SpjFile {
 
         public void setName(String name) {
             if (name.length() > 72) {
-                log.error("new filename too long: {}", filename.length());
+                log.error("new filename \"{}\" too long: {}", name, name.length());
             }
             filename = name;
         }

@@ -6,6 +6,7 @@ import jmri.DccLocoAddress;
 import jmri.ThrottleListener;
 import jmri.LocoAddress;
 
+import org.junit.jupiter.api.Assertions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,15 +44,17 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
      */
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, ThrottleListener.DecisionType decision){
+        if (!(address instanceof DccLocoAddress)){
+            Assertions.fail("DebugThrottle needs a dcclocoaddress : " + address );
+            return;
+        }
         if ( decision == ThrottleListener.DecisionType.STEAL ) {
             log.error("1: Got a steal decision");
-            DccLocoAddress a = (DccLocoAddress) address;
-            notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
+            notifyThrottleKnown(new DebugThrottle((DccLocoAddress) address, adapterMemo), address);
         }
         else if ( decision == ThrottleListener.DecisionType.SHARE ) {
             log.error("1: Got a share decision");
-            DccLocoAddress a = (DccLocoAddress) address;
-            notifyThrottleKnown(new DebugThrottle(a, adapterMemo), address);
+            notifyThrottleKnown(new DebugThrottle((DccLocoAddress) address, adapterMemo), address);
         }
         else {
             cancelThrottleRequest(address,l);

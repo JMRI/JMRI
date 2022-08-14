@@ -86,7 +86,7 @@ public class ColorDialogTest {
     }
 
     @Test
-    public void testCTor5() {
+    public void testColorDialogCTor5() {
         DialogRunner dr = new DialogRunner(ColorDialog.FONT, "SetFontSizeColor", Color.RED, "ButtonDone");
         dr.start();
         new ColorDialog(_cpe, _pos, ColorDialog.FONT, null);
@@ -179,7 +179,6 @@ public class ColorDialogTest {
         EditorFrameOperator.clearEditorFrameOperatorThreads();
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

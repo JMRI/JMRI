@@ -81,6 +81,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         version = 1;
                     }
+                    tInfo.setVersion(version);
                     // there are train info options defined, read them
                     if (traininfo.getAttribute("transitname") != null) {
                         // there is a transit name selected
@@ -138,6 +139,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setTrainFromUser(false);
                         }
                     }
+                    if (traininfo.getAttribute("trainfromsetlater") != null) {
+                        tInfo.setTrainFromSetLater(true);
+                        if (traininfo.getAttribute("trainfromuser").getValue().equals("no")) {
+                            tInfo.setTrainFromSetLater(false);
+                        }
+                    }
                     if (traininfo.getAttribute("priority") != null) {
                         tInfo.setPriority(Integer.parseInt(traininfo.getAttribute("priority").getValue()));
                     } else {
@@ -151,29 +158,39 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("allocationmethod") != null) {
                         tInfo.setAllocationMethod(traininfo.getAttribute("allocationmethod").getIntValue());
                     }
-
+                    if (traininfo.getAttribute("nexttrain") != null) {
+                        tInfo.setNextTrain(traininfo.getAttribute("nexttrain").getValue());
+                    }
                     if (traininfo.getAttribute("resetwhendone") != null) {
                         if (traininfo.getAttribute("resetwhendone").getValue().equals("yes")) {
                             tInfo.setResetWhenDone(true);
                         }
                         if (traininfo.getAttribute("delayedrestart") != null) {
+                            // for older files that didnot have seperate restart details for to and fro
+                            // we default that data to this data.
                             switch (traininfo.getAttribute("delayedrestart").getValue()) {
                                 case "no":
                                     tInfo.setDelayedRestart(ActiveTrain.NODELAY);
+                                    tInfo.setReverseDelayedRestart(ActiveTrain.NODELAY);
                                     break;
                                 case "sensor":
                                     tInfo.setDelayedRestart(ActiveTrain.SENSORDELAY);
+                                    tInfo.setReverseDelayedRestart(ActiveTrain.SENSORDELAY);
                                     if (traininfo.getAttribute("delayedrestartsensor") != null) {
                                         tInfo.setRestartSensorName(traininfo.getAttribute("delayedrestartsensor").getValue());
+                                        tInfo.setReverseRestartSensorName(traininfo.getAttribute("delayedrestartsensor").getValue());
                                     }
                                     if (traininfo.getAttribute("resetrestartsensor") != null) {
                                         tInfo.setResetRestartSensor(traininfo.getAttribute("resetrestartsensor").getValue().equals("yes"));
+                                        tInfo.setReverseResetRestartSensor(traininfo.getAttribute("resetrestartsensor").getValue().equals("yes"));
                                     }
                                     break;
                                 case "timed":
                                     tInfo.setDelayedRestart(ActiveTrain.TIMEDDELAY);
+                                    tInfo.setReverseDelayedRestart(ActiveTrain.TIMEDDELAY);
                                     if (traininfo.getAttribute("delayedrestarttime") != null) {
                                         tInfo.setRestartDelayMin((int) traininfo.getAttribute("delayedrestarttime").getLongValue());
+                                        tInfo.setReverseRestartDelayMin((int) traininfo.getAttribute("delayedrestarttime").getLongValue());
                                     }   break;
                                 default:
                                     break;
@@ -184,6 +201,37 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         tInfo.setReverseAtEnd(true);
                         if (traininfo.getAttribute("reverseatend").getValue().equals("no")) {
                             tInfo.setReverseAtEnd(false);
+                        }
+                        if (version > 3) {
+                            // fro delays are independent from to delays
+                            if (traininfo.getAttribute("reversedelayedrestart") != null) {
+                                switch (traininfo.getAttribute("reversedelayedrestart").getValue()) {
+                                    case "no":
+                                        tInfo.setReverseDelayedRestart(ActiveTrain.NODELAY);
+                                        break;
+                                    case "sensor":
+                                        tInfo.setReverseDelayedRestart(ActiveTrain.SENSORDELAY);
+                                        if (traininfo.getAttribute("reversedelayedrestartsensor") != null) {
+                                            tInfo.setReverseRestartSensorName(
+                                                    traininfo.getAttribute("reversedelayedrestartsensor").getValue());
+                                        }
+                                        if (traininfo.getAttribute("reverseresetrestartsensor") != null) {
+                                            tInfo.setReverseResetRestartSensor(
+                                                    traininfo.getAttribute("reverseresetrestartsensor").getValue()
+                                                            .equals("yes"));
+                                        }
+                                        break;
+                                    case "timed":
+                                        tInfo.setReverseDelayedRestart(ActiveTrain.TIMEDDELAY);
+                                        if (traininfo.getAttribute("reversedelayedrestarttime") != null) {
+                                            tInfo.setReverseRestartDelayMin((int) traininfo
+                                                    .getAttribute("reversedelayedrestarttime").getLongValue());
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
                         }
                     }
                     if (traininfo.getAttribute("delayedstart") != null) {
@@ -314,7 +362,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         tInfo.setTransitId(tInfo.getTransitName().split("\\(")[0]);
                         log.debug("v1: t = {}, bs = {}, be = {}", tInfo.getTransitName(), tInfo.getStartBlockName(), tInfo.getDestinationBlockName());
                     }
-                    if ( version == 2 || version == 3) {
+                    if ( version > 1 ) {
                         if (traininfo.getAttribute("transitid") != null) {
                             // there is a transit name selected
                             tInfo.setTransitId(traininfo.getAttribute("transitid").getValue());
@@ -406,7 +454,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "3");
+        traininfo.setAttribute("version", "4");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());
@@ -421,6 +469,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("trainfromroster", "" + (tf.getTrainFromRoster() ? "yes" : "no"));
         traininfo.setAttribute("trainfromtrains", "" + (tf.getTrainFromTrains() ? "yes" : "no"));
         traininfo.setAttribute("trainfromuser", "" + (tf.getTrainFromUser() ? "yes" : "no"));
+        traininfo.setAttribute("trainfromsetlater", "" + (tf.getTrainFromSetLater() ? "yes" : "no"));
         traininfo.setAttribute("priority", Integer.toString(tf.getPriority()));
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
         switch (tf.getDelayedRestart()) {
@@ -439,6 +488,20 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         }
 
         traininfo.setAttribute("reverseatend", "" + (tf.getReverseAtEnd() ? "yes" : "no"));
+        switch (tf.getReverseDelayedRestart()) {
+            case ActiveTrain.SENSORDELAY:
+                traininfo.setAttribute("reversedelayedrestart", "sensor");
+                traininfo.setAttribute("reversedelayedrestartsensor", tf.getReverseRestartSensorName());
+                traininfo.setAttribute("reverseresetrestartsensor", "" + (tf.getReverseResetRestartSensor() ? "yes" : "no"));
+                break;
+            case ActiveTrain.TIMEDDELAY:
+                traininfo.setAttribute("reversedelayedrestart", "timed");
+                traininfo.setAttribute("reversedelayedrestarttime", Integer.toString(tf.getReverseRestartDelayMin()));
+                break;
+            default:
+                traininfo.setAttribute("reversedelayedrestart", "no");
+                break;
+        }
         if (tf.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
             traininfo.setAttribute("delayedstart", "timed");
         } else if (tf.getDelayedStart() == ActiveTrain.SENSORDELAY) {
@@ -457,6 +520,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("loadatstartup", "" + (tf.getLoadAtStartup() ? "yes" : "no"));
         traininfo.setAttribute("allocatealltheway", "" + (tf.getAllocateAllTheWay() ? "yes" : "no"));
         traininfo.setAttribute("allocationmethod", Integer.toString(tf.getAllocationMethod()));
+        traininfo.setAttribute("nexttrain", tf.getNextTrain());
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));

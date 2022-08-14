@@ -19,6 +19,13 @@
 
       <p>The action descriptions are grouped by the socket type and category.</p>
 
+      <p class="noted"><span class="since">since 5.1.3</span><strong>For</strong>, <strong>For each
+      </strong>, <strong>If Then Else</strong>, <strong>Sequence</strong>, and <strong>Table: For
+      each</strong> have been moved from the <strong><em>Common</em></strong> category to the
+      <strong><em>Flow Control</em></strong> category.  <strong>Call Module</strong> has been moved
+      from the <strong><em>Other</em></strong> category to the <strong><em>Flow Control</em></strong>
+      category.</p>
+
       <ul>
         <li>Digital action
           <ul>
@@ -31,7 +38,15 @@
             </li>
 
             <li>
+              <a href="#digital_action_flow_control">Flow Control <span class="since">since 5.1.3</span></a>
+            </li>
+
+            <li>
               <a href="#digital_action_display">Display</a>
+            </li>
+
+            <li>
+              <a href="#digital_action_mqtt">MQTT <span class="since">since 4.99.7</span></a>
             </li>
 
             <li>
@@ -213,13 +228,18 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Clock</h4>
+      <h4>Clock<span class="since">updated 4.99.7</span></h4>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_action.png"><img src="images/chapter5/clock_action.png"
+        alt="Chapter 5 clock action"></a>
+      </div>
 
       <ul>
         <li><strong>Set Fast Clock:</strong> Sets the time on the fast clock to the entered time.
-        The time is entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock. This
-        action sets the fast clock to the specified time regardless of whether the fast clock is
-        running or stopped.</li>
+        The time can be entered as hh:mm where hh is hours and mm is minutes on a 24-hour clock or
+        as the number of minutes since midnight, such as 720 for noon. This action sets the fast
+        clock to the specified time regardless of whether the fast clock is running or stopped.</li>
 
         <li><strong>Start Fast Clock:</strong> Starts the JMRI fast clock running. If the fast
         clock is already running, this action has no effect.</li>
@@ -227,6 +247,44 @@
         <li><strong>Stop Fast Clock:</strong> Pauses the JMRI fast clock. If the fast clock is not
         running, this action has no effect.</li>
       </ul>
+
+      <p>In addition to setting the time using a constant value, the other LogixNG modes can be
+      used.   For example, the new time can be in a memory variable which will be used to set the
+      fast clock time.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_memory.png"><img src="images/chapter5/clock_memory.png"
+        alt="Chapter 5 clock memory source"></a>
+      </div>
+
+      <p>The Memory <strong><em>listen</em></strong> option can used to automatically update the
+      fast clock time when the memory variable changes.  This eliminates the need to have a separate
+      expression to invoke the <strong>Set Fast Clock</strong> action.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Clock Rate<span class="since">since 4.99.7</span></h4>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/clock_rate_action.png"><img src="images/chapter5/clock_rate_action.png"
+        alt="Chapter 5 clock rate action"></a>
+      </div>
+
+      <ul>
+        <li><strong>Set Clock Rate:</strong> Sets the rate for the fast clock to the entered value.
+        For example, a value of 4 will set the fast clock rate to 4:1, which is 15 real minutes for
+        a fast clock hour.</li>
+
+        <li><strong>Increase Clock Rate:</strong> Increase the fast clock speed by the entered
+        value.</li>
+
+        <li><strong>Decrease Clock Rate:</strong> Decrease the fast clock speed by the entered
+        value.</li>
+      </ul>
+
+      <p>The rate values can be whole numbers or decimals, such as .5.  The rate values can also
+      be supplied from the other LogixNG modes, such as a memory variable.</p>
+
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -361,6 +419,9 @@
         <li><strong>Variable:</strong> Select the <strong>Variable</strong> tab and enter the local
         variable name which will provide the value for the selected local variable.</li>
 
+        <li><strong>Reference:</strong> Select the <strong>Reference</strong> tab and enter the
+        reference value which will provide the value for the selected local variable.</li>
+
         <li><strong>Table:</strong> See <a href="chapter11.shtml#tableCellSelection">Simplified
         Table Cell Reference</a>.  The rest of chapter 11 has all of the details on tables.</li>
 
@@ -418,6 +479,12 @@
 
         <li><strong>Clear Block OutOfService:</strong> Sets the status of an Occupancy Block to the
         current normal status. Specify the OBlock by selecting its name.</li>
+
+        <li><strong>Get Allocating Warrant:</strong> Copy the name of the Warrant that has this
+        OBlock allocated to a memory variable.</li>
+
+        <li><strong>Get Block Value (trainName):</strong> Copy the current value of this OBlock to a
+        memory variable.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -462,14 +529,22 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Script</h4>
+      <h4 id="script">Script</h4>
 
       <ul>
         <li><strong>Run script:</strong> Starts the specified script. Specify the script to start
         by entering its name in the field provided or use the "..." file selector.</li>
 
-        <li><strong>Jython command:</strong> Enter the command in the Script field</li>
+        <li><strong>Single line command:</strong> Enter the command in the Script field.</li>
+
+        <li><strong>Type of script:</strong> Supported script types are <strong>Jython Files</strong>
+        and <strong>ECMAScript Files</strong>.</li>
       </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_script.png">
+        <img src="images/chapter5/digital_action_script.png" alt="Chapter 5 digital action script"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -640,13 +715,21 @@
 
         <li>
           <strong>Control Auto Train:</strong> Issues the specified command to an auto run train.
-          Specify the warrant of the train by selecting its name. The Commands are:
+          Specify the warrant of the train by selecting its name. The commands are:
           <ul>
             <li>Halt</li>
 
             <li>Resume</li>
 
             <li>Abort</li>
+
+            <li>Stop</li>
+
+            <li>EStop</li>
+
+            <li>MoveToNext</li>
+
+            <li>SpeedUp</li>
           </ul>
         </li>
 
@@ -654,6 +737,9 @@
         When a DCC address is used, also specify Long or Short. Example: 1234(L) or 10(S).</li>
 
         <li><strong>Set Train Name:</strong> Set the train Name for the selected Warrant.</li>
+
+        <li><strong>Current Location:</strong> Copy the current OBlock name for the selected warrant
+        to a memory variable.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -662,8 +748,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_common.png"><img src=
-        "images/chapter5/digital_action_common.png" alt="Chapter 5 digital action common list"
-        width="204" height="188"></a>
+        "images/chapter5/digital_action_common.png" alt="Chapter 5 digital action common list"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -712,60 +797,6 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>For</h4>
-
-      <p>For is a for-loop. It has four children.</p>
-
-      <ul>
-        <li><strong>Init</strong> - this action is executed only one time. It's used to initialize
-        the loop, for example setting a Memory to a particular value.</li>
-
-        <li><strong>While</strong> - this expression decides if the loop should run one lap more.
-        The loop will continue to run until this condition will be <strong>false</strong>.</li>
-
-        <li><strong>AfterEach</strong> - this action is executed at the end of the loop. It can for
-        example be used to increment a counter in a Memory.</li>
-
-        <li><strong>Do</strong> - this action is executed in each loop. It does the main work.</li>
-      </ul>
-
-      <p>When For is executed, the Init action is run once. After that, the While expression is
-      evaluated. If the While returns <strong>true</strong>, the Do action is executed and at last
-      the AfterEach action is executed. Then the process is repeated, except that the Init action
-      is only executed once.</p>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <h4>If Then Else</h4>
-
-      <p>Reads a digital child expression and if the answer is <strong>true</strong> it executes
-      the <strong>then</strong> child action, else it executes the <strong>else</strong> child
-      action.</p>
-
-      <p>There are two options:</p>
-
-      <ul>
-        <li><strong>Execute on change:</strong> Executes the Then or the Else action only when the
-        If expression has changed from True to False, or from False to True.  Note that the
-        expression is assumed to be changed whenever the LogixNG is first enabled (including when
-        the xml data file is loaded with "enabled" checked). In the simple example  below, Light IL2
-        will be set "on" when the LogixNG is first enabled (Sensor IS1 status is "unknown").  When
-        the sensor is changed to "inactive" the lights will not change.  When the sensor is then
-        changed to "active," the Light IS1 will also go "on".</li>
-
-        <li><strong>Always execute:</strong> Executes the Then or the Else action every time the
-        <strong>If Then Else</strong> action is executed, regardless of whether the expression has
-        changed value.</li>
-      </ul>
-
-      <div style="margin-left: 2em;">
-         <a href="images/chapter5/if_then_else.jpg"><img src=
-         "images/chapter5/if_then_else.jpg" alt="Chapter 5 if then else"
-         width="287" height="165"></a>
-       </div>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
       <h4>Many</h4>
 
       <p>The Many action executes many child actions.</p>
@@ -781,39 +812,6 @@
       <h4>Read string and set string</h4>
 
       <p>Read a string child expression and execute a string child action.</p>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <h4>Sequence</h4>
-
-      <p>The Sequence action executes a series of action/expression pairs. For each pair, the
-      action will be performed and then the expression will wait until it becomes true. When it is
-      true, the next action/expression pair will be started. The sequence will repeat forever or
-      until stopped.</p>
-
-      <div style="margin-left: 2em">
-        <a href="images/chapter5/action_sequence.png"><img src=
-        "images/chapter5/action_sequence.png" alt="Chapter 5 display action" width="614" height=
-        "447"></a>
-      </div>
-
-      <ul>
-        <li><strong>Start:</strong> When the start expression is true, the sequence will start with
-        the first action/expression pair.</li>
-
-        <li><strong>Stop:</strong> When the stop expression is true, the sequence will stop
-        running.</li>
-
-        <li><strong>Reset:</strong> When the reset expression is true, the sequence will be
-        interrupted and return to the first action/expresson pair.</li>
-      </ul>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <h4>Table: For each</h4>
-
-      <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details on
-      table actions.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -856,6 +854,233 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h2 id="digital_action_flow_control">Digital action :: Flow Control
+      <span class="since">since 5.1.3</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_flow_control.png"><img src=
+        "images/chapter5/digital_action_flow_control.png"
+        alt="Chapter 5 digital action flow control list"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Break</h4>
+
+      <p>Breaks the execution of a <strong>For</strong>, <strong>For each</strong> or
+      <strong>Table: For each</strong> action.</p>
+
+      <p>If Break happens in a Module and there is no loop in the Module itself, it breaks the loop
+      in the calling ConditionalNG or Module.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Call module</h4>
+
+      <p>See <a href="chapter10.shtml#DigitalActionModule">Chapter 10 - Modules</a> for
+      details.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Continue</h4>
+
+      <p>Continues the execution of a <strong>For</strong>, <strong>For each</strong> or
+      <strong>Table: For each</strong> action.</p>
+
+      <p>The current execution is aborted and the next loop is executed.</p>
+
+      <p>If Continue happens in a Module and there is no loop in the Module itself, it continues the
+      loop in the calling ConditionalNG or Module.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Error</h4>
+
+      <p>Triggers an error. The user can enter an error message if desired.</p>
+
+      <p>This might be useful if a particular condition should never occur in the ConditionalNG or
+      Module. In this case, the Error action can be used to alert the user.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Exit</h4>
+
+      <p>Exits the execution of the ConditionalNG. If the Exit action is in a Module, the Module and
+      the ConditionalNG will be exited.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>For</h4>
+
+      <p>For is a for-loop. It has four children.</p>
+
+      <ul>
+        <li><strong>Init</strong> - this action is executed only one time. It's used to initialize
+        the loop, for example setting a Memory to a particular value.</li>
+
+        <li><strong>While</strong> - this expression decides if the loop should run one lap more.
+        The loop will continue to run until this condition will be <strong>false</strong>.</li>
+
+        <li><strong>AfterEach</strong> - this action is executed at the end of the loop. It can for
+        example be used to increment a counter in a Memory.</li>
+
+        <li><strong>Do</strong> - this action is executed in each loop. It does the main work.</li>
+      </ul>
+
+      <p>When For is executed, the Init action is run once. After that, the While expression is
+      evaluated. If the While returns <strong>true</strong>, the Do action is executed and at last
+      the AfterEach action is executed. Then the process is repeated, except that the Init action
+      is only executed once.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="foreach">For each<span class="since">since 5.1.3</span></h4>
+
+      <p><strong>For each</strong> takes a Collection, a Map or a Manager as parameter and loops
+      thru all the items.  For maps, each item is a Map.Entry. Use <code>getKey()</code> and
+      <code>getValue()</code> to get the key and the value of each item in the map.  If the
+      parameter is a manager, the method <code>getNamedBeanSet()</code> is called to get all the
+      named beans in the manager.</p>
+
+      <p>Each item is placed in a specified local variable.  The action is then invoked for
+      each item.</p>
+
+      <p>The following example sets all of the sensors to Inactive.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/for_each_sample.png"><img src=
+         "images/chapter5/for_each_sample.png" alt="Chapter 5 for each"></a>
+       </div>
+
+       <p>For another example, see <a href="#lob_lv">Listen on beans - Local variable</a>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>If Then Else</h4>
+
+      <p>Reads a digital child expression and if the answer is <strong>true</strong> it executes
+      the <strong>then</strong> child action, else it executes the <strong>else</strong> child
+      action.</p>
+
+      <p>There are two options:</p>
+
+      <ul>
+        <li><strong>Execute on change:</strong> Executes the Then or the Else action only when the
+        If expression has changed from True to False, or from False to True.  Note that the
+        expression is assumed to be changed whenever the LogixNG is first enabled (including when
+        the xml data file is loaded with "enabled" checked). In the simple example  below, Light IL2
+        will be set "on" when the LogixNG is first enabled (Sensor IS1 status is "unknown").  When
+        the sensor is changed to "inactive" the lights will not change.  When the sensor is then
+        changed to "active," the Light IS1 will also go "on".</li>
+
+        <li><strong>Always execute:</strong> Executes the Then or the Else action every time the
+        <strong>If Then Else</strong> action is executed, regardless of whether the expression has
+        changed value.</li>
+      </ul>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/if_then_else.jpg"><img src=
+         "images/chapter5/if_then_else.jpg" alt="Chapter 5 if then else"></a>
+      </div>
+
+      <h5>Else_If<span class="since">since 5.1.3</span></h5>
+
+      <p>The <strong><em>Else_If</em></strong> option provides a compact method to collapse a
+      repetitive nested <strong><em>If-Then-Else</em></strong> tree.</p>
+
+      <p>To create a new Else_If expression/action pair, right click on the <strong>Else</strong>
+      row and select <strong>Insert new socket before</strong>.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/else_if_insert.png"><img src=
+         "images/chapter5/else_if_insert.png" alt="Chapter 5 else if insert"></a>
+      </div>
+
+      <p>A new expression/action pair will be added before the Else.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/else_if_items.png"><img src=
+         "images/chapter5/else_if_items.png" alt="Chapter 5 else if items"></a>
+      </div>
+
+      <p>Here is simple example of using LogixNG to create signal logic.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/else_if_example.png"><img src=
+         "images/chapter5/else_if_example.png" alt="Chapter 5 else if example"></a>
+      </div>
+
+      <p>The example first checks the turnout block.  If that is ok, it then checks the route
+      to each possible destination signal based on the turnout state.  If nothing works, it sets
+      the signal to display <strong>Stop</strong>.</p>
+
+      <div style="margin-left: 2em;">
+         <a href="images/chapter5/else_if_sample.png"><img src=
+         "images/chapter5/else_if_sample.png" alt="Chapter 5 else if sample"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Return</h4>
+
+      <p>Returns from the Module or the ConditionalNG.</p>
+
+      <p>If Return is in a ConditionalNG, it's the same as Exit. But if it's in a Module, it only
+      exits the Module, not the ConditionalNG.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Sequence</h4>
+
+      <p>The Sequence action executes a series of action/expression pairs. For each pair, the
+      action will be performed and then the expression will wait until it becomes true. When it is
+      true, the next action/expression pair will be started.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/action_sequence_options.png"><img src=
+        "images/chapter5/action_sequence_options.png" alt="Chapter 5 sequence options"></a>
+      </div>
+
+      <p>Options:</p>
+
+      <ul>
+        <li><strong>Start sequence immediately on load</strong> &mdash; Run the sequence when the
+        data file loading is done.</li>
+
+        <li><strong>Run sequence continuously</strong> &mdash; The sequence will repeat forever or
+        until stopped.  If this option is not selected, the sequence will run one time and the
+        sequence can be started again later.</li>
+      </ul>
+
+      <p>When a sequence action is added, it has connections for <strong>Start</strong>, <strong>
+      Stop</strong> and <strong>Reset</strong> expressions.
+
+      <ul>
+        <li><strong>Start:</strong> When the <strong>Start</strong> expression is true, the sequence
+        will start with the first action/expression pair or resume if a stop occurred during the
+        sequence.</li>
+
+        <li><strong>Stop:</strong> When the <strong>Stop</strong> expression is true, the sequence
+        will stop running.</li>
+
+        <li><strong>Reset:</strong> When the <strong>Reset</strong> expression is true, the sequence
+        will be interrupted if running, and return to the first action/expresson pair.</li>
+      </ul>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/action_sequence.png"><img src=
+        "images/chapter5/action_sequence.png" alt="Chapter 5 sequence action"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Table: For each</h4>
+
+      <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details on
+      table actions.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="digital_action_display">Digital action :: Display</h2>
 
       <div style="margin-left: 2em;">
@@ -869,6 +1094,40 @@
       <h4>Icon/Label on panel</h4>
 
       <p>Disable/Enable/Hide/Show an icon or label on a specific panel.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_mqtt.png"><img src=
+        "images/chapter5/digital_action_mqtt.png" alt="Chapter 5 digital action mqtt list"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Publish</h4>
+
+      <p>This action publishes a message. Both the topic and the message can be entered directly in
+      the action or indirectly using a local variable or a memory.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/mqtt_publish.png"><img src=
+        "images/chapter5/mqtt_publish.png" alt="Chapter 5 digital action mqtt publish"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Subscribe</h4>
+
+      <p>This action subscribes to a topic. When someone publishes a message, this action triggers
+      the execution of the CondtionalNG. It can also optionally put the topic and the message into
+      local variables. The topic can use wildcard, like loco/# where # is the wildcard.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/mqtt_subscribe.png"><img src=
+        "images/chapter5/mqtt_subscribe.png" alt="Chapter 5 digital action mqtt subscribe"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -898,16 +1157,8 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/digital_action_other.png"><img src=
-        "images/chapter5/digital_action_other.png" alt="Chapter 5 digital action other list" width=
-        "184" height="188"></a>
+        "images/chapter5/digital_action_other.png" alt="Chapter 5 digital action other list"></a>
       </div>
-
-      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-
-      <h4>Call module</h4>
-
-      <p>See <a href="chapter10.shtml#DigitalActionModule">Chapter 10 - Modules</a> for
-      details.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -915,6 +1166,39 @@
 
       <p>See <a href="chapter7.shtml#ListenOnBeans">Chapter 7 - Listen on beans</a> for
       details.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="lob_lv">Listen on beans - Local variable<span class="since">since 5.1.3</span></h4>
+
+      <p>Add a listener to the bean referenced by a local variable.  The local variable can have
+      either the system name, the user name or the bean itself.  The <strong>Execute</strong> socket
+      provides the logic that will be executed when an event occurs.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/listen_bean_local_variable.png">
+        <img src="images/chapter5/listen_bean_local_variable.png"
+        alt="Chapter 5 listen bean local variable"></a>
+      </div>
+
+      <p>The bean <strong>Type</strong> and the listen local variable name are required.  The other
+      local variables are optional.</p>
+
+      <ul>
+        <li>Bean &mdash; The affected object.</li>
+        <li>Event &mdash; The property name.</li>
+        <li>Value &mdash; The new value.</li>
+      </ul>
+
+      <p>This action is especially useful together with the action <a href="#foreach">For each</a>.
+      This sample listens for sensor state changes and prints a message on the system console.</p>
+
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/listen_bean_lv_sample.png">
+        <img src="images/chapter5/listen_bean_lv_sample.png"
+        alt="Chapter 5 listen bean local variable sample"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -938,9 +1222,9 @@
       <p>Select either or both Log options</p>
 
       <ul>
-        <li><strong>Log to the log:</strong> Help ⇒ System Console.</li>
+        <li><strong>Log to the log:</strong> Help &rArr; System Console.</li>
 
-        <li><strong>Log to the Script Output:</strong> Scripting ⇒ Script Output.</li>
+        <li><strong>Log to the Script Output:</strong> Scripting &rArr; Script Output.</li>
       </ul>
 
       <div style="margin-left: 2em">
@@ -1130,6 +1414,29 @@
 
       <p>The ShutdownComputer action can either shutdown or restart the computer, or shutdown or
       restart JMRI.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="simfeedback">Simulate turnout feedback<span class="since">since 5.1.3</span></h4>
+
+      <p>The <strong>Simulate turnout feedback</strong> action is used to make turnouts behave as
+      expected when using a simulated layout connection.  The feedback delay is 3 seconds.</p>
+
+      <p>The following feedback modes are supported.  The available modes depend on the layout
+      connection type.</p>
+
+      <ul>
+        <li>EXACT</li>
+        <li>INDIRECT</li>
+        <li>MONITORING</li>
+        <li>ONESENSOR</li>
+        <li>TWOSENSOR</li>
+        <li>LNALTERNATE</li>
+      </ul>
+
+      <p>The <a href="chapter6.shtml#connectname">Connection name</a> expression can be used to
+      create a LogixNG that automatically enables turnout feedback when using a simulated layout
+      connection.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

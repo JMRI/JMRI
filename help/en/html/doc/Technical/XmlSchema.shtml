@@ -18,7 +18,7 @@
 
       <p>JMRI uses XML for a number of purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for configuration and panel information, and to
-      create parts of the web site from other files. This page describes how we specify the content
+      create parts of the website from other files. This page describes how we specify the content
       of those files using <a href="http://www.w3schools.com/xml/xml_schema.asp">XML
       schema</a>.</p>
 

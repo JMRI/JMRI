@@ -17,7 +17,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">Using JMRI® to Operate Trains</h1>
+      <h1 id="Top">Using JMRI&reg; to Operate Trains</h1>
 
       <h2>OperationsPro: Cars window</h2>
 
@@ -30,7 +30,7 @@
 
       <hr>
 
-      <p>This window is opened from the main PanelPro/DecoderPro® <strong>Tools</strong> menu, or
+      <p>This window is opened from the main PanelPro/DecoderPro&reg; <strong>Tools</strong> menu, or
       from its Operations menu; and alternatively from <strong>Location</strong> pane
       <strong>Tools</strong> menu, <strong>Show Cars</strong> and various windows'
       <strong>Operations</strong> menus.</p>

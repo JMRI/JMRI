@@ -47,11 +47,11 @@
       </ul>
 
       <h2 id="mandatory">Mandatory Checks</h2>
-      We use multiple
+      <p>We use multiple
       <a href="https://docs.github.com/en/actions">GitHub actions</a>
       to test every proposed change entered into our GitHub code repository
-      before it gets merged.<br>
-      <a href="images/ActionSettings.png"><img src="images/ActionSettings.png" class="floatRight" width="331" height="167" alt="github actions"></a>
+      before it gets merged.</p>
+
       <ul>
         <li>
           <a href="#winCI">Windows CI tests</a>
@@ -73,10 +73,14 @@
           <a href="#process">Process steps</a>
         </li>
       </ul>
-      <p>These checks are defined by files in the .github/ directory.</p>
+      <p>These checks are defined by files in the <code>.github/</code> directory.</p>
 
-      <p>These normally run both on PRs to the main JMRI/JMRI repository, but also on pushes and
-      PRs to your own repository. If you want to turn that off,</p>
+      <p>They normally run both on PRs to the main <code>JMRI/JMRI</code> repository,
+      but also on pushes and PRs to your own repository.</p>
+
+      <p>If you want to turn that off,</p>
+      <a href="images/ActionSettings.png"><img src="images/ActionSettings.png"
+      class="floatRight" alt="github actions"></a>
 
       <ol>
         <li>On the page for your own repository, select "Settings"</li>
@@ -86,48 +90,48 @@
         <li>Pick on option for what can run. The bottom option turns everything off for you
         locally.</li>
       </ol>
-      Note that if you turn this off, the "Actions" tab won't show in the GitHub web interface
-      until you turn it back on.
+
+      <p>Note that if you turn this off, the "Actions" tab won't show in the GitHub web interface
+        until you turn it back on.</p>
 
       <h3 id="winCI">Windows CI tests</h3>
-        This runs "AllTest", our test suite of over 30,000
+        <p>This runs "AllTest", our test suite of over 30,000
         <a href="JUnit.shtml">JUnit tests</a> on a Windows server. A screen buffer (not a real
-        screen) is used for all the GUI tests. All tests must pass.
+        screen) is used for all the GUI tests. All tests must pass.</p>
 
       <h3 id="headless">Headless tests</h3>
-        Reruns the JUnit test suite in "java.awt.Headless=true" mode to ensure that
+        <p>Reruns the JUnit test suite in "java.awt.Headless=true" mode to ensure that
         the parts of JMRI that are meant to run without a GUI really can. This is about 80%
-        of the test suite. These are run on Linux. All tests must pass.
+        of the test suite. These are run on Linux. All tests must pass.</p>
 
       <h3 id="separate">Separate tests</h3>
-        About a hundred JUnit graphical tests are run separately from AllTest
-        to ensure they have a clean environment. These are run on Linux. All tests must pass.
+        <p>About a hundred JUnit graphical tests are run separately from AllTest
+        to ensure they have a clean environment. These are run on Linux. All tests must pass.</p>
 
       <h3 id="static">Static analysis</h3>
-        This runs a series of static analysis checks:
-            <ul>
-                <li>A pass of the ECJ compiler with warnings on
-                <li><a href="SpotBugs.shtml">Spotbugs</a>
-                <li>CheckStyle
-                <li>A Javadoc generation and check
-                <li>A scan of the help files with htmllint
-                <li>And a set of architecture checks of interpackage references, etc.
-            </ul>
-        Any errors or warnings fail this step.
+      <p>This runs a series of static analysis checks:</p>
+        <ul>
+            <li>A pass of the ECJ compiler with warnings on
+            <li><a href="SpotBugs.shtml">Spotbugs</a>
+            <li>CheckStyle
+            <li>A Javadoc generation and check
+            <li>A scan of the help files with htmllint
+            <li>And a set of architecture checks of interpackage references, etc.
+        </ul>
+      <p>Any errors or warnings fail this step.</p>
 
       <h3 id="process">Process steps</h3>
-        There are a few additional actions that are used as process controls:
-            <ul>
-                <li>Checks consistency of TypeScript and Javascript files.
-                <li>Set flags that represent whether a PR might need localization,
-                    and whether it contains updated help files.
-                <li>If needed, reminds the author to add to the release note
-                <li>Prevent PRs marked "WIP" (Work In Progress) from <a href="https://github.com/apps/wip">being merged</a>
-                <li>Require that PRs be approved by a 2nd party before being merged
-                <li>And enforce a 24-hour waiting period so that the world-wide team
-                    can get a look at the PR.
-            </ul>
-
+      <p>There are a few additional actions that are used as process controls:</p>
+        <ul>
+            <li>Checks consistency of TypeScript and Javascript files.
+            <li>Set flags that represent whether a PR might need localization,
+                and whether it contains updated help files.
+            <li>If needed, reminds the author to add to the release note
+            <li>Prevent PRs marked "WIP" (Work In Progress) from <a href="https://github.com/apps/wip">being merged</a>
+            <li>Require that PRs be approved by a 2nd party before being merged
+            <li>And enforce a 24-hour waiting period so that the world-wide team
+                can get a look at the PR.
+        </ul>
 
       <h2 id="optional">Optional Checks</h2>
 
@@ -143,23 +147,25 @@
       </ul>
 
       <h3 id="CodeClimate">Code Climate</h3>
-      The <a href="https://codeclimate.com/github/JMRI/JMRI/">Code Climate</a> points out places
+      <p>The <a href="https://codeclimate.com/github/JMRI/JMRI/">Code Climate</a> points out places
       where the code appears to be complex in various ways. (It also provides coverage information,
       though <a href="#jacoco">JaCoCo</a> seems to do a better job of that.) We recommend you
       look at those results and make updates where they make sense, so that things are continuously
       improving, but not every suggestion it makes is worth it, or even appropriate. We don't
-      require this to be clean before merging.
+      require this to be clean before merging.</p>
+
       <p>Code Climate is controlled by the .codeclimate.yml file.</p>
 
       <h2 id="independent">Independent Checks with Jenkins</h2>
-      JMRI uses the <a href="http://jenkins-ci.org/">Jenkins</a> continuous integration engine for
-      integration and test builds. This includes keeping our <a href="WebSite.shtml">web site</a>
+      <p>JMRI uses the <a href="http://jenkins-ci.org/">Jenkins</a> continuous integration engine for
+      integration and test builds. This includes keeping our <a href="WebSite.shtml">website</a>
       up to date as changes are committed, building installer packages from development builds, and
-      building final releases.
+      building final releases.</p>
+
       <p>Our primary Jenkins engine is at <a href=
       "https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>. Because it's hosted
       outside the US, we force its Java locale to US English by setting the <code>LC_ALL</code>
-      environment variable to <code>en_US</code> in the master Jenkins configuration settings.
+      environment variable to <code>en_US</code> in the master Jenkins configuration settings.</p>
 
       <p id="jenkins">Specific Jenkins results of interest:</p>
 
@@ -210,8 +216,7 @@
 
         <li>Right-click (Ctrl-click on Mac) the entry 'Hudson Builders' and choose 'Add Hudson
         Instance...'
-          <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt=
-          "Add Hudson Instance...">
+          <p><img src="images/NetBeansJenkinsAdd.png" alt="Add Hudson Instance...">
           </p>
         </li>
 
@@ -229,16 +234,14 @@
 
             <dd>60 (change from the default of 5 to avoid overloading the CI server)</dd>
           </dl>
-          <img src="images/NetBeansJenkinsAddDialog.png" width="453" height="240" alt=
-          "Add Hudson Instance dialog">
+          <img src="images/NetBeansJenkinsAddDialog.png" alt="Add Hudson Instance dialog">
         </li>
       </ol>
 
       <p>From now on, the current status of the Jenkins builds can be reviewed in the 'Services'
       window by expanding the 'JMRI' entry under 'Hudson Builders'.</p>
 
-      <p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt=
-      "Jenkins Overview">
+      <p><img src="images/NetBeansJenkinsOverview.png" alt="Jenkins Overview">
       </p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

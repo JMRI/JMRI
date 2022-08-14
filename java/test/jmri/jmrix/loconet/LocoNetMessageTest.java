@@ -320,8 +320,8 @@ public class LocoNetMessageTest {
         LocoNetInterfaceScaffold lnis2 = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo("L2", "LocoNet2"));
         LnTurnoutManager lntm = new LnTurnoutManager(lnis.getSystemConnectionMemo(), lnis, false);
         LnTurnoutManager lntm2 = new LnTurnoutManager(lnis2.getSystemConnectionMemo(), lnis2, false);
-        LnSensorManager lnsm = new LnSensorManager(lnis.getSystemConnectionMemo());
-        LnSensorManager lnsm2 = new LnSensorManager(lnis2.getSystemConnectionMemo());
+        LnSensorManager lnsm = new LnSensorManager(lnis.getSystemConnectionMemo(), false);
+        LnSensorManager lnsm2 = new LnSensorManager(lnis2.getSystemConnectionMemo(), false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setTurnoutManager(lntm2);
@@ -473,6 +473,9 @@ public class LocoNetMessageTest {
     }
 
     @Test
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "BIT_AND",
+        justification = "Would be good to simplify the Bitwise masks, though "
+        + "tests pass with current logic.")
     public void testsetElement() {
 
         LocoNetMessage m = new LocoNetMessage(20);

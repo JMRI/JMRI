@@ -3,11 +3,11 @@ package jmri.jmrit.display;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map.Entry;
+
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
@@ -16,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.Timer;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
@@ -24,6 +25,8 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -578,7 +581,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     @Override
-    public void doMousePressed(MouseEvent e) {
+    public void doMousePressed(JmriMouseEvent e) {
         log.debug("doMousePressed buttonLive={}, getMomentary={}", buttonLive(), getMomentary());
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
@@ -592,7 +595,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     @Override
-    public void doMouseReleased(MouseEvent e) {
+    public void doMouseReleased(JmriMouseEvent e) {
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button release
             try {
@@ -605,7 +608,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     @Override
-    public void doMouseClicked(MouseEvent e) {
+    public void doMouseClicked(JmriMouseEvent e) {
         if (buttonLive() && !getMomentary()) {
             // this button responds to clicks
             if (!e.isMetaDown() && !e.isAltDown()) {

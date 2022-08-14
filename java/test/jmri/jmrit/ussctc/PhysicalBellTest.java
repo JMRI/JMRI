@@ -15,11 +15,13 @@ public class PhysicalBellTest {
 
     @Test
     public void testConstruction() {
-        new PhysicalBell("Bell output");
+        Assert.assertNotNull( new PhysicalBell("Bell output"));
     }
  
-    @Test 
+    @Test
     public void testBellStroke() {
+
+        Turnout layoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); layoutTurnout.setUserName("Bell output");
         layoutTurnout.setCommandedState(Turnout.CLOSED);
  
         PhysicalBell bell = new PhysicalBell("Bell output");
@@ -27,11 +29,9 @@ public class PhysicalBellTest {
         Assert.assertEquals(Turnout.CLOSED, layoutTurnout.getState());
         bell.ring();
         Assert.assertEquals(Turnout.THROWN, layoutTurnout.getState());
-        jmri.util.JUnitUtil.waitFor(()->{return layoutTurnout.getState()==Turnout.CLOSED;}, "stroke didn't end");
+        JUnitUtil.waitFor(()->{return layoutTurnout.getState()==Turnout.CLOSED;}, "stroke didn't end");
     }
-    
-    Turnout layoutTurnout;
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -39,8 +39,7 @@ public class PhysicalBellTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         
-        layoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); layoutTurnout.setUserName("Bell output");
-    }
+   }
 
     @AfterEach
     public void tearDown() {
