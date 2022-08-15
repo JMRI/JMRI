@@ -155,11 +155,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 maxColumnWidth = Math.max(maxColumnWidth, columnWidth[col]);
             }
         }
-        StringBuilder columnLine = new StringBuilder();
-        while (columnLine.length()+2 < maxColumnWidth) {
-            columnLine.append("----------------------");
-        }
-        String columnPadding = String.format("%"+Integer.toString(maxColumnWidth)+"s", "");
+        String columnLine = "-".repeat(maxColumnWidth+2);
+        String columnPadding = " ".repeat(maxColumnWidth);
         StringBuilder sb = new StringBuilder();
         sb.append("+");
         for (int col=0; col <= bean.numColumns(); col++) {
