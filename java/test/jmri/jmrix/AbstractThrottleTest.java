@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.util.JUnitUtil;
 
-import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
