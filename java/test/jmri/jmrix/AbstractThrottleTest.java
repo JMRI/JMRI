@@ -1643,19 +1643,10 @@ public class AbstractThrottleTest {
 
     @Test
     public void testGetFunctionNoWarnings() {
-
         Assertions.assertFalse(instance.getFunctionNoWarn(-1));
         Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(-1));
         Assertions.assertFalse(instance.getFunctionNoWarn(9999999));
         Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(999999));
-        // Check final status of logging
-        JUnitAppender.end();
-        Level severity = Level.WARN; // level at or above which we'll complain
-        boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
-        String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
-        JUnitAppender.verifyNoBacklog();
-        JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
     }
 
     public static final class AbstractThrottleImpl extends AbstractThrottle {
