@@ -43,10 +43,6 @@ public class IfThenElseSwing extends AbstractDigitalActionSwing {
         JPanel typePanel = new JPanel();
         typePanel.add(_typeComboBox);
         panel.add(typePanel);
-
-        JPanel labelPanel = new JPanel();
-        labelPanel.add(new JLabel(Bundle.getMessage("IfThenElse_Info")));
-        panel.add(labelPanel);
     }
 
     /** {@inheritDoc} */
