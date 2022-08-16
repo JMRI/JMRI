@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2022 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
+The Uhlenbrock Lissy Receiver #68600 has Article number 6860, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220815"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 and decoder.4.15.2.xsd -->
+
+    <decoder>
+        <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="Lissy Receiver 68600" productID="6860" formFactor="Stationary" comment="Lissy Receiver">
+              <versionCV />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6860.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Board address" >
+              <decVal min="1" max="4095"/>
+              <label xml:lang="it">Indirizzo Primario: </label>
+              <label xml:lang="fr">Adresse décodeur: </label>
+              <label xml:lang="de">Moduladresse: </label>
+              <label xml:lang="nl">Decoderadres: </label>
+              <label>Module Address: </label>
+              <tooltip>Also used as 1st Sensor Address. Enter as decimal value (0-4095)</tooltip>
+            </variable>
+            <variable CV="6860.1" item="Sensor 2 Address" mask="VVVVVVVVVVVVVVVV" default="2">
+              <decVal min="1" max="4095"/>
+              <label xml:lang="de">1. Melderadresse: </label>
+              <label xml:lang="nl">Adres melder 2: </label>
+              <label>Sensor 2 Address: </label>
+              <tooltip>Enter as decimal value (0-4095)</tooltip>
+            </variable>
+
+            <variable CV="6860.2" item="Function" default="2">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumLissyFunction.xml"/>
+              <label>Function Mode:</label>
+              <label xml:lang="de">Funktion:</label>
+              <label xml:lang="nl">Functie:</label>
+              <tooltip>Selection of the different modes</tooltip>
+              <tooltip xml:lang="de">Auswahl der verschiedenen Funktionen</tooltip>
+              <tooltip xml:lang="nl">Functie van de module</tooltip>
+            </variable>
+
+            <variable CV="6860.3" item="Direction" default="0">
+              <enumVal max="10">
+                <enumChoice value="0">
+                  <choice>when driving from sensor 1 to sensor 2</choice>
+                  <choice xml:lang="de">bei Fahrtrichtung von Sensor 1 nach Sensor 2</choice>
+                  <choice xml:lang="nl">in rijrichting van sensor 1 naar 2</choice>
+                </enumChoice>
+                <enumChoice value="1">
+                  <choice>when driving from sensor 2 to sensor 1</choice>
+                  <choice xml:lang="de">bei Fahrtrichtung von Sensor 2 nach Sensor 1</choice>
+                  <choice xml:lang="nl">1 toets en 1 lamp</choice>
+                </enumChoice>
+                <enumChoice value="2">
+                  <choice>in both directions (only holding point)</choice>
+                  <choice xml:lang="de">in beiden Fahrtrichtungen (nur Aufenthaltsstelle)</choice>
+                  <choice xml:lang="nl">in beide richtingen (alleen stopplaats)</choice>
+                </enumChoice>
+              </enumVal>
+              <label>Function activated:</label>
+              <label xml:lang="de">Automatik aktiv:</label>
+              <label xml:lang="nl">Functie actief:</label>
+              <tooltip>Driving direction, for activating the automatic function in LNCV 2.</tooltip>
+              <tooltip xml:lang="de">Fahrtrichtung, in der die Automatikfunktionen gemäß LNCV 2 aktiv sind.</tooltip>
+            </variable>
+
+            <variable CV="6860.4" item="Holding Time" default="0">
+              <decVal/>
+              <label xml:lang="de">Aufenthaltszeit:</label>
+              <label xml:lang="nl">Wachttijd:</label>
+              <label>Holding time:</label>
+              <tooltip>for shuttle traffic and terminus (automatic Function as set in LNCV 2). Value in seconds.</tooltip>
+              <tooltip xml:lang="de">für Pendelverkehr und Aufenthaltsstelle (Automatikfunktionen gemäß LNCV 2). Wert in Sekunden.</tooltip>
+            </variable>
+            <variable CV="6860.5" item="Delay" default="0">
+              <decVal/>
+              <label xml:lang="de">Wartezeit:</label>
+              <label xml:lang="nl">Vertraging:</label>
+              <label>Delay:</label>
+              <tooltip>Delay between switching the locomotive’s route and the departure of the waiting locomotive. Value in seconds.</tooltip>
+              <tooltip xml:lang="de">Wartezeit zwischen dem Schalten der lokindividuellen Fahrstraße und dem Anfahren der wartenden Lok. Wert in Sekunden.</tooltip>
+            </variable>
+            <variable CV="6860.1" item="Signal Address" mask="VVVVVVVVVVVV" default="0">
+              <decVal min="1" max="2000"/>
+              <label xml:lang="de">Adresse des Ausfahrtsignals: </label>
+              <label xml:lang="nl">Adres Vertreksein: </label>
+              <label>Exit Signal Address: </label>
+              <tooltip>&lt;html&gt;Solenoid address of the exit signal for the automatic mode set in LNCV 2.&lt;br\&gt;
+                In automatic modes 4, 6, 20 and 22 the signal is set by the module;&lt;br\&gt;
+                in automatic modes 5, 7-10, 21 and 23-26 the signal is monitored stopping the train.&lt;br\&gt;
+                Note: This signal must always be specified in automatic mode. (0-2000)&lt;/html&gt;</tooltip>
+              <tooltip xml:lang="de">&lt;html&gt;Magnetartikeladresse des Ausfahrtsignals zu den Automatikfunktionen gemäß LNCV 2.&lt;br\&gt;
+                Bei den Automatikfunktionen 4, 6, 20 und 22 wird das Signal vom Modul gestellt;&lt;br\&gt;
+                bei den Automatikfunktionen 5, 7-10, 21 und 23-26 wird das Signal für den Zughalt beobachtet.&lt;br\&gt;
+                Hinweis: Dieses Signal muss im Automatikbetrieb immer angegeben werden. (0-2000)&lt;/html&gt;</tooltip>
+            </variable>
+
+            <variable CV="6860.7" item="Message 1 Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStatusChoice.xml"/>
+              <label xml:lang="de">Bericht 1 Ereignis:</label>
+              <label xml:lang="nl">Melding 1 Actie:</label>
+              <label>Message 1 Event:</label>
+              <tooltip>The appropriate instruction is sent, when the sensor is passed.</tooltip>
+              <tooltip xml:lang="de">Der entsprechende Befehl wird ausgesendet, wenn der Sensor überfahren wird.</tooltip>
+            </variable>
+            <variable CV="6860.7" item="Message 1 Address" mask="10" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de"> Adresse</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>&lt;html&gt;0 = no address instruction is sent.&lt;br\&gt;
+                2001 - 2024 = switch an Intellibox route&lt;/html&gt;</tooltip>
+              <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet.&lt;br\&gt;
+                2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="6860.8" item="Message 2 Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStatusChoice.xml"/>
+              <label xml:lang="de">Bericht 2 Ereignis:</label>
+              <label xml:lang="nl">Melding 2 Actie:</label>
+              <label>Message 2 Event:</label>
+              <tooltip>The appropriate instruction is sent, when the sensor is passed.</tooltip>
+              <tooltip xml:lang="de">Der entsprechende Befehl wird ausgesendet, wenn der Sensor überfahren wird.</tooltip>
+            </variable>
+            <variable CV="6860.8" item="Message 2 Address" mask="10" default="1">
+              <decVal min="0" max="2000"/>
+              <label xml:lang="de"> Adresse</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>&lt;html&gt;0 = no address instruction is sent.&lt;br\&gt;
+                2001 - 2024 = switch an Intellibox route&lt;/html&gt;</tooltip>
+              <tooltip xml:lang="de">&lt;html&gt;0 = Es wird kein Adressbefehl gesendet.&lt;br\&gt;
+                2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
+            </variable>
+
+            <variable CV="6860.10" item="Lamp 10 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumStatusChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 10 On?</tooltip>
+            </variable>
+            <variable CV="6860.10" item="Lamp 10 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 10 On</tooltip>
+            </variable>
+            <variable CV="6860.10" item="Lamp 10 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 10 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.10" item="Lamp 10 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 10 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.11" item="Lamp 1 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 1 On?</tooltip>
+            </variable>
+            <variable CV="6860.11" item="Lamp 1 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 1 On</tooltip>
+            </variable>
+            <variable CV="6860.11" item="Lamp 1 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 1 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.11" item="Lamp 1 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 1 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.12" item="Lamp 2 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 2 On?</tooltip>
+            </variable>
+            <variable CV="6860.12" item="Lamp 2 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 2 On</tooltip>
+            </variable>
+            <variable CV="6860.12" item="Lamp 2 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 2 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.12" item="Lamp 2 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 2 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.13" item="Lamp 3 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 3 On?</tooltip>
+            </variable>
+            <variable CV="6860.13" item="Lamp 3 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 3 On</tooltip>
+            </variable>
+            <variable CV="6860.13" item="Lamp 3 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 3 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.13" item="Lamp 3 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 3 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.14" item="Lamp 4 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 4 On?</tooltip>
+            </variable>
+            <variable CV="6860.14" item="Lamp 4 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 4 On</tooltip>
+            </variable>
+            <variable CV="6860.14" item="Lamp 4 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 4 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.14" item="Lamp 4 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 4 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.15" item="Lamp 5 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 5 On?</tooltip>
+            </variable>
+            <variable CV="6860.15" item="Lamp 5 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 5 On</tooltip>
+            </variable>
+            <variable CV="6860.15" item="Lamp 5 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 5 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.15" item="Lamp 5 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 5 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.16" item="Lamp 6 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 6 On?</tooltip>
+            </variable>
+            <variable CV="6860.16" item="Lamp 6 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 6 On</tooltip>
+            </variable>
+            <variable CV="6860.16" item="Lamp 6 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 6 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.16" item="Lamp 6 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 6 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.17" item="Lamp 7 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 7 On?</tooltip>
+            </variable>
+            <variable CV="6860.17" item="Lamp 7 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 7 On</tooltip>
+            </variable>
+            <variable CV="6860.17" item="Lamp 7 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 7 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.17" item="Lamp 7 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 7 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.18" item="Lamp 8 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 8 On?</tooltip>
+            </variable>
+            <variable CV="6860.18" item="Lamp 8 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 8 On</tooltip>
+            </variable>
+            <variable CV="6860.18" item="Lamp 8 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 8 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.18" item="Lamp 8 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 8 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.19" item="Lamp 9 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 9 On?</tooltip>
+            </variable>
+            <variable CV="6860.19" item="Lamp 9 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 9 On</tooltip>
+            </variable>
+            <variable CV="6860.19" item="Lamp 9 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 9 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.19" item="Lamp 9 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 9 On Address (1-2048)</tooltip>
+            </variable>
+
+            <!-- CV 20-29: Settings Lamps 1-10 Off -->
+
+            <variable CV="6860.20" item="Lamp 10 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 10 On?</tooltip>
+            </variable>
+            <variable CV="6860.20" item="Lamp 10 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 10 On</tooltip>
+            </variable>
+            <variable CV="6860.20" item="Lamp 10 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 10 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.20" item="Lamp 10 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 10 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.21" item="Lamp 1 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 1 On?</tooltip>
+            </variable>
+            <variable CV="6860.21" item="Lamp 1 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 1 On</tooltip>
+            </variable>
+            <variable CV="6860.21" item="Lamp 1 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 1 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.21" item="Lamp 1 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 1 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.22" item="Lamp 2 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 2 On?</tooltip>
+            </variable>
+            <variable CV="6860.22" item="Lamp 2 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 2 On</tooltip>
+            </variable>
+            <variable CV="6860.22" item="Lamp 2 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 2 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.22" item="Lamp 2 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 2 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.23" item="Lamp 3 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 3 On?</tooltip>
+            </variable>
+            <variable CV="6860.23" item="Lamp 3 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 3 On</tooltip>
+            </variable>
+            <variable CV="6860.23" item="Lamp 3 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 3 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.23" item="Lamp 3 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 3 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.24" item="Lamp 4 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 4 On?</tooltip>
+            </variable>
+            <variable CV="6860.24" item="Lamp 4 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 4 On</tooltip>
+            </variable>
+            <variable CV="6860.24" item="Lamp 4 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 4 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.24" item="Lamp 4 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 4 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.25" item="Lamp 5 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 5 On?</tooltip>
+            </variable>
+            <variable CV="6860.25" item="Lamp 5 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 5 On</tooltip>
+            </variable>
+            <variable CV="6860.25" item="Lamp 5 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 5 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.25" item="Lamp 5 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 5 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.26" item="Lamp 6 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 6 On?</tooltip>
+            </variable>
+            <variable CV="6860.26" item="Lamp 6 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 6 On</tooltip>
+            </variable>
+            <variable CV="6860.26" item="Lamp 6 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 6 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.26" item="Lamp 6 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 6 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.27" item="Lamp 7 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 7 On?</tooltip>
+            </variable>
+            <variable CV="6860.27" item="Lamp 7 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 7 On</tooltip>
+            </variable>
+            <variable CV="6860.27" item="Lamp 7 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 7 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.27" item="Lamp 7 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 7 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.28" item="Lamp 8 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 8 On?</tooltip>
+            </variable>
+            <variable CV="6860.28" item="Lamp 8 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 8 On</tooltip>
+            </variable>
+            <variable CV="6860.28" item="Lamp 8 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 8 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.28" item="Lamp 8 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 8 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6860.29" item="Lamp 9 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 9 On?</tooltip>
+            </variable>
+            <variable CV="6860.29" item="Lamp 9 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 9 On</tooltip>
+            </variable>
+            <variable CV="6860.29" item="Lamp 9 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 9 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6860.29" item="Lamp 9 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 9 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <!--          TODO add Start Key-Finish Key functions - LNCV 100 to 199 -->
+
+           </variables>
+      </decoder>
+
+      <!-- Programming tabbed panes layout -->
+      <pane>
+        <name>LNCV Module</name>
+        <name xml:lang="de">LNCV Modul</name>
+        <name xml:lang="nl">LNCV Module</name>
+
+        <column>
+
+            <label>
+              <text>&lt;html&gt;&lt;h1&gt;Lissy Receiver Settings&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Lissy Ontvanger Instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+              <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Lissy Empfänger Eingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            </label>
+
+            <label>
+              <text>Before writing, open a Programming session using the LocoNet LNCV Tool.</text>
+              <text xml:lang="nl">Voordat je waarden schrijft eerst een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+              <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV Werkzeugs einen LNCV Programmieraufgang starten.</text>
+              <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez une session de programmation avec l'Util LNCV.</text>
+              <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+            </label>
+
+            <separator/>
+
+          <row>
+            <column>
+              <display item="Function"/>
+              <display item="Direction"/>
+              <display item="Holding Time"/>
+              <display item="Delay"/>
+              <display item="Signal Address"/>
+              <label>
+                <text>  </text>
+              </label>
+              <row>
+                <display item="Message 1 Event"/>
+                <display item="Message 1 Address"/>
+              </row>
+              <row>
+                <display item="Message 2 Event"/>
+                <display item="Message 2 Address"/>
+              </row>
+            </column>
+          </row>
+        </column>
+
+      </pane>
+
+  </decoder-config>

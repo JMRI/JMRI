@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		                                    -->
+<!-- version 1 - include file for Uhlenbrock Lissy Receivers 68600/68610    -->
+<!-- 																		                                    -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice value="0">
+      <choice>Read Loco Data w/twin sensor</choice>
+      <choice xml:lang="de">Lokdaten auslesen über einen Doppelsensor</choice>
+      <choice xml:lang="nl">Loc lezen via dubbelsensor</choice>
+    </enumChoice>
+    <enumChoice value="1">
+      <choice>Read Loco Data w/separate sensors</choice>
+      <choice xml:lang="de">Lokdaten auslesen über 2 Einzelsensoren</choice>
+      <choice xml:lang="nl">Loc lezen via  2 onafh. sensors</choice>
+    </enumChoice>
+    <enumChoice value="2">
+      <choice>Switching operation with double sensor</choice>
+      <choice xml:lang="de">Schaltbetrieb mit Doppelsensor</choice>
+      <choice xml:lang="nl">Wis instelling Knop 2</choice>
+    </enumChoice>
+    <enumChoice value="3">
+      <choice>Switching operation with 2 single sensors</choice>
+      <choice xml:lang="de">Schaltbetrieb mit 2 Einzelsensoren</choice>
+      <choice xml:lang="nl">Wis instelling Knop 3</choice>
+    </enumChoice>
+    <enumChoice value="4">
+      <choice>Time controlled shuttle traffic terminus</choice>
+      <choice xml:lang="de">Endstelle für Pendelverkehr zeitgesteuert</choice>
+      <choice xml:lang="nl">Wis instelling Knop 4</choice>
+    </enumChoice>
+    <enumChoice value="20">
+      <choice>Time controlled shuttle traffic terminus w/block status msg.</choice>
+      <choice xml:lang="de">Endstelle für Pendelverkehr zeitgesteuert m/Blockzustandsmeldung</choice>
+      <choice xml:lang="nl">Wis instelling Knop 4</choice>
+    </enumChoice>
+    <enumChoice value="5">
+      <choice>Signal controlled shuttle traffic terminus</choice>
+      <choice xml:lang="de">Endstelle für Pendelverkehr signalgesteuert</choice>
+      <choice xml:lang="nl">Wis instelling Knop 5</choice>
+    </enumChoice>
+    <enumChoice value="21">
+      <choice>Signal controlled shuttle traffic terminus w/block status msg.</choice>
+      <choice xml:lang="de">Endstelle für Pendelverkehr signalgesteuert m/Blockzustandsmeldung</choice>
+      <choice xml:lang="nl">Wis instelling Knop 5</choice>
+    </enumChoice>
+    <enumChoice value="6">
+      <choice>Time controlled holding point</choice>
+      <choice xml:lang="de">Aufenthaltsstelle zeitgesteuert</choice>
+      <choice xml:lang="nl">Wis instelling Knop 6</choice>
+    </enumChoice>
+    <enumChoice value="22">
+      <choice>Time controlled holding point w/block status msg.</choice>
+      <choice xml:lang="de">Aufenthaltsstelle zeitgesteuert m/Blockzustandsmeldung</choice>
+      <choice xml:lang="nl">Wis instelling Knop 6</choice>
+    </enumChoice>
+    <enumChoice value="7">
+      <choice>Block section/station block</choice>
+      <choice xml:lang="de">Blockstelle/Bahnhofsblock</choice>
+      <choice xml:lang="nl">Wis instelling Knop 7</choice>
+    </enumChoice>
+    <enumChoice value="23">
+      <choice>Block section/station block w/block status msg.</choice>
+      <choice xml:lang="de">Blockstelle/Bahnhofsblock m/Blockzustandsmeldung</choice>
+      <choice xml:lang="nl">Wis instelling Knop 7</choice>
+    </enumChoice>
+    <enumChoice value="8">
+      <choice>Entry manager</choice>
+      <choice xml:lang="de">Einfahrtsmanager</choice>
+      <choice xml:lang="nl">Wis instelling Knop 8</choice>
+    </enumChoice>
+    <enumChoice value="24">
+      <choice>Entry manager w/block status msg.</choice>
+      <choice xml:lang="de">Einfahrtsmanager m/Blockzustandsmeldung</choice>
+      <choice xml:lang="nl">Wis instelling Knop 8</choice>
+    </enumChoice>
+    <enumChoice value="9">
+      <choice>Exit manager, chronol. track sequence</choice>
+      <choice xml:lang="de">Ausfahrtsmanager, chronologische Gleisreihenfolge</choice>
+      <choice xml:lang="nl">Wis instelling Knop 9</choice>
+    </enumChoice>
+    <enumChoice value="25">
+      <choice>Exit managers, chron. track sequence w/block status msg.</choice>
+      <choice xml:lang="de">Ausfahrtsmanager, chronologische Gleisreihenfolge m/Meldung</choice>
+      <choice xml:lang="nl">Wis instelling Knop 9</choice>
+    </enumChoice>
+    <enumChoice value="10">
+      <choice>Exit manager, random track sequence</choice>
+      <choice xml:lang="de">Ausfahrtsmanager, zufällige Gleisreihenfolge</choice>
+      <choice xml:lang="nl">Wis instelling Knop 10</choice>
+    </enumChoice>
+    <enumChoice value="26">
+      <choice>Exit managers, random track seq. w/block status msg.</choice>
+      <choice xml:lang="de">Ausfahrtsmanager, zufällige Gleisreihenfolge m/Meldung</choice>
+      <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
+    </enumChoice>
+    <enumChoice value="96">
+      <choice>Delete current operating status</choice>
+      <choice xml:lang="de">Löschen der augenblicklichen Betriebszustände</choice>
+      <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
+    </enumChoice>
+    <enumChoice value="97">
+      <choice>Delete all LNCVs from LNCV 20</choice>
+      <choice xml:lang="de">Löschen aller LNCVs des Schaltbetriebs ab LNCV 20</choice>
+      <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
+    </enumChoice>
+    <enumChoice value="98">
+      <choice>Set all LNCVs to 0 (except LNCV 0&amp;1)</choice>
+      <choice xml:lang="de">Setzt alle LNCVs auf Wert 0 (ausser LNCV 0&amp;1)</choice>
+      <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
+    </enumChoice>
+    <enumChoice value="99">
+      <choice>Restore factory defaults (keep address)</choice>
+      <choice xml:lang="de">Werkseinstellung wiederherstellen, ohne Adressänderung</choice>
+      <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
+    </enumChoice>
+  </enumVal>
