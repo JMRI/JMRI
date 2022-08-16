@@ -91,7 +91,7 @@
       <choice xml:lang="nl">Wis instelling Knop 9</choice>
     </enumChoice>
     <enumChoice value="25">
-      <choice>Exit managers, chron. track sequence w/block status msg.</choice>
+      <choice>Exit manager, chron. track sequence w/block status msg.</choice>
       <choice xml:lang="de">Ausfahrtsmanager, chronologische Gleisreihenfolge m/Meldung</choice>
       <choice xml:lang="nl">Wis instelling Knop 9</choice>
     </enumChoice>
@@ -101,7 +101,7 @@
       <choice xml:lang="nl">Wis instelling Knop 10</choice>
     </enumChoice>
     <enumChoice value="26">
-      <choice>Exit managers, random track seq. w/block status msg.</choice>
+      <choice>Exit manager, random track seq. w/block status msg.</choice>
       <choice xml:lang="de">Ausfahrtsmanager, zufällige Gleisreihenfolge m/Meldung</choice>
       <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
     </enumChoice>
