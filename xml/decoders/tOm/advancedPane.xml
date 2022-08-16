@@ -12,21 +12,24 @@
 <!-- for more details.                                                      -->
 
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
+<!-- Version 2 - Petr Sidlo - 2022-08-14 - small fix                        -->
 
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>Advanced</name>
+    <name xml:lang="cs">Pokročilé</name>
     <column>
       <separator/>
       <label>
         <text>Electrical coupler</text>
+        <text xml:lang="cs">Elektrické spřáhlo</text>
       </label>
 
       <label>
         <text> </text>
       </label>
 
-      <display item="Electrical Coupler Output mapping" label="Output mapping" />
-      <display item="ECoupler Mode" label="Coupler mode" />
+      <display item="Electrical Coupler Output mapping" />
+      <display item="ECoupler Mode" />
       <display item="Electrical Coupler, kick time" />
       <display item="Decoupling, Locomotive move Time" />
       <display item="Decoupling, Locomotive moving speed" />
@@ -44,12 +47,12 @@
       </label>
        <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
         <griditem>
-          <display item="SPP Timeout" label="Timeout" tooltip="16ms*Value Ex: =16ms*255=~4s"/>
-          <display item="SPP Timeout" format="hslider" label="" tooltip="16ms*Value Ex: =16ms*255=~4s"/>
+          <display item="SPP Timeout" />
+          <display item="SPP Timeout" format="hslider" label="" />
         </griditem>
         <griditem>
-          <display item="SPP start delay" label="Start delay" tooltip="Start delay in seconds"/>
-          <display item="SPP start delay" format="hslider" label="" tooltip="Start delay in seconds"/>
+          <display item="SPP start delay" />
+          <display item="SPP start delay" format="hslider" label="" />
         </griditem>
       </grid>
 
@@ -65,8 +68,8 @@
       <label>
         <text> </text>
       </label>
-      <display item="SUSI interface" format="checkbox" label="SUSI/LocoWire interface enabled" />
-      <display item="SUSI interface active" label="SUSI or LocoWire" />
+      <display item="SUSI interface" format="checkbox" />
+      <display item="SUSI interface active" />
       <display item="SUSI Indicator" />
       <display item="SUSI transport"  />
     </column>
@@ -75,6 +78,7 @@
       <separator/>
       <label>
         <text>Memory Settings</text>
+        <text xml:lang="cs">Nastavení paměti</text>
       </label>
       <label>
         <text> </text>
@@ -87,6 +91,7 @@
       <separator/>
       <label>
         <text>RailCom Settings</text>
+        <text xml:lang="cs">Nastavení RailCom</text>
       </label>
       <label>
         <text> </text>
@@ -101,6 +106,7 @@
       <separator/>
       <label>
         <text>Controlled Stops</text>
+        <text xml:lang="cs">Řízené zastavení</text>
       </label>
       <label>
         <text> </text>
