@@ -1015,10 +1015,10 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 }
             }
             ed.setAllEditable(isEditable());
-            ed.setAllPositionable(allPositionable());
+            //ed.setAllPositionable(allPositionable());
             //ed.setShowCoordinates(showCoordinates());
             ed.setAllShowToolTip(showToolTip());
-            ed.setAllControlling(allControlling());
+            //ed.setAllControlling(allControlling());
             ed.setShowHidden(isVisible());
             ed.setPanelMenuVisible(frame.getJMenuBar().isVisible());
             ed.setScroll(getScrollable());
