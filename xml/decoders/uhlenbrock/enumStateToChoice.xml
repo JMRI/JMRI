@@ -16,24 +16,14 @@
 <!-- Requires JMRI 5.1.3 for variable type EnumVal w/ mask on digits -->
 <!-- 																		                                    -->
 <enumVal max="10" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <enumChoice value="0">
+  <enumChoice choice="1" value="0">
     <choice>Turnout Thrown (Red)</choice>
     <choice xml:lang="nl">Wissel Afb. (Rood)</choice>
     <choice xml:lang="de">Weiche Rund (Rot)</choice>
   </enumChoice>
-  <enumChoice value="1">
+  <enumChoice choice="2" value="1">
     <choice>Turnout Closed (Green)</choice>
     <choice xml:lang="nl">Wissel Recht (Groen)</choice>
     <choice xml:lang="de">Weiche Gerade (Grün)</choice>
-  </enumChoice>
-  <enumChoice value="2">
-    <choice>Sensor Unoccupied</choice>
-    <choice xml:lang="nl">Melder Vrij</choice>
-    <choice xml:lang="de">Melder Frei</choice>
-  </enumChoice>
-  <enumChoice value="3">
-    <choice>Sensor Occupied</choice>
-    <choice xml:lang="nl">Melder Bezet</choice>
-    <choice xml:lang="de">Melder Belegt</choice>
   </enumChoice>
 </enumVal>
