@@ -4,10 +4,12 @@ import jmri.configurexml.LoadAndStoreTestBase;
 import jmri.jmrix.openlcb.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -53,8 +55,8 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @BeforeEach
     @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     @Override
-    public void setUp() {
-        super.setUp();
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
 
         messages = new ArrayList<>();
