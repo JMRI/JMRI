@@ -119,6 +119,8 @@ public class PositionablePointView extends LayoutTrackView {
     }
 
     private void setTypeAnchor() {
+        addUndoEvent("setType");
+
         setIdent(layoutEditor.getFinder().uniqueName("A", 1));
 
         // type = PointType.ANCHOR;
@@ -149,6 +151,8 @@ public class PositionablePointView extends LayoutTrackView {
     }
 
     private void setTypeEndBumper() {
+        addUndoEvent("setType");
+
         setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
 
         // type = PointType.END_BUMPER;
@@ -168,6 +172,8 @@ public class PositionablePointView extends LayoutTrackView {
     }
 
     private void setTypeEdgeConnector() {
+        addUndoEvent("setType");
+
         setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
 
         // type = PointType.EDGE_CONNECTOR;
@@ -1986,6 +1992,37 @@ public class PositionablePointView extends LayoutTrackView {
         // positionable points don't have blocks...
         // nothing to see here, move along...
     }
+
+    boolean undoActive = false;
+
+    public void undoChange(String key, Object data) {
+        undoActive = true;
+
+        log.info("need to undo {} for {}", key, data);
+        if (key.equals("setType")) {
+            if (data == PointType.ANCHOR) {
+                setTypeAnchor();
+            }
+            if (data == PointType.END_BUMPER) {
+                setTypeEndBumper();
+            }
+            if (data == PointType.EDGE_CONNECTOR) {
+                setTypeEdgeConnector();
+            }
+        }
+
+        undoActive = false;
+    }
+
+    private void addUndoEvent(String key) {
+        log.info("=-=- view type = {}", getType());
+        if (!undoActive) {
+            if (key.equals("setType")) {
+                InstanceManager.getDefault(jmri.UndoManager.class).addUndoEvent(this, key, getType());
+            }
+        }
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
 }

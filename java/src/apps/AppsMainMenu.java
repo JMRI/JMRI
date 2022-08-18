@@ -106,6 +106,14 @@ public class AppsMainMenu {
         a.putValue(Action.NAME, Bundle.getMessage("MenuItemPaste"));  // NOI18N
         editMenu.add(a);
 
+        editMenu.add(new JSeparator());
+        editMenu.add(new AbstractAction(Bundle.getMessage("MenuItemUndo")) {  // NOI18N
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jmri.InstanceManager.getDefault(jmri.UndoManager.class).undoEvent();
+            }
+        });
+
         // prefs
         prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(Bundle.getMessage("MenuItemPreferences"));  // NOI18N
 
