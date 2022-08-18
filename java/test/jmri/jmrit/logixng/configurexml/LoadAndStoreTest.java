@@ -3,16 +3,17 @@ package jmri.jmrit.logixng.configurexml;
 import jmri.configurexml.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.stream.Stream;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
-import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -55,8 +56,8 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     @BeforeEach
     @Override
-    public void setUp() {
-        super.setUp();
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
+        super.setUp(tempDir);
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);

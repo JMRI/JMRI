@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.stream.Stream;
 
 import jmri.ConfigureManager;
@@ -17,6 +18,7 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.provider.Arguments;
 
 /**
@@ -363,9 +365,9 @@ public class LoadAndStoreTestBase {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
