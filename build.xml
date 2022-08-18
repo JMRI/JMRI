@@ -282,7 +282,6 @@
         <pathelement location="${libdir}/cucumber-expressions-6.2.2.jar"/>
         <pathelement location="${libdir}/gherkin-5.1.0.jar"/>
         <pathelement location="${libdir}/gherkin-jvm-deps-1.0.4.jar"/>
-        <pathelement location="${libdir}/picocontainer-2.15.jar"/>
         <pathelement location="${libdir}/tag-expressions-1.1.1.jar"/>
         <pathelement location="${libdir}/typetools-0.5.0.jar"/>
         <pathelement location="${libdir}/datatable-1.1.12.jar"/>
