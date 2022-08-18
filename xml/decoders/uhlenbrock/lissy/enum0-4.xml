@@ -16,15 +16,18 @@
 <!-- 																		                                    -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice value="0">
-    <choice>Absolute (step 0-127)</choice>
-    <choice xml:lang="de">als absoluter Wert (0-127)</choice>
+    <choice>0</choice>
   </enumChoice>
   <enumChoice value="1">
-    <choice>Relative to current (0-255%)</choice>
-    <choice xml:lang="de">Relativ von aktueller (0-255%)</choice>
+    <choice>1</choice>
   </enumChoice>
   <enumChoice value="2">
-    <choice>In KM/H</choice>
-    <choice xml:lang="de">in Km/h</choice>
+    <choice>2</choice>
+  </enumChoice>
+  <enumChoice value="3">
+    <choice>3</choice>
+  </enumChoice>
+  <enumChoice value="4">
+    <choice>4</choice>
   </enumChoice>
 </enumVal>
