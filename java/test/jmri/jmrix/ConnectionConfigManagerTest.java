@@ -15,12 +15,9 @@ import jmri.profile.Profile;
 import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.prefs.InitializationException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  * Tests for ConnectionConfigManager.
@@ -29,7 +26,7 @@ import org.junit.jupiter.api.BeforeAll;
  */
 public class ConnectionConfigManagerTest {
 
-    private Path workspace;
+    private Path workspace = null;
     public final static String MFG1 = "Mfg1";
     public final static String MFG2 = "Mfg2";
     public final static String MFG3 = "Mfg3";
@@ -39,25 +36,16 @@ public class ConnectionConfigManagerTest {
     public final static String TYPE_D = "TypeD";
     // private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
-    @BeforeAll
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterAll
-    public static void tearDownClass() throws Exception {
-    }
-
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
         JUnitUtil.resetInstanceManager();
     }
 
     @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetFileUtilSupport();
         FileUtil.delete(this.workspace.toFile());
@@ -72,7 +60,6 @@ public class ConnectionConfigManagerTest {
         List<String> types = Arrays.asList(result);
         Assert.assertTrue(types.contains(MFG1));
         Assert.assertTrue(types.contains(MFG2));
-        JUnitUtil.resetInstanceManager();
     }
 
     @Test
@@ -86,7 +73,6 @@ public class ConnectionConfigManagerTest {
         List<String> types = Arrays.asList(result);
         Assert.assertTrue(types.contains(MFG2));
         Assert.assertTrue(types.contains(MFG3));
-        JUnitUtil.resetInstanceManager();
     }
 
     @Test
@@ -110,7 +96,6 @@ public class ConnectionConfigManagerTest {
         Assert.assertEquals(2, result.length);
         Assert.assertEquals(TYPE_A, result[0]);
         Assert.assertEquals(TYPE_B, result[1]);
-        JUnitUtil.resetInstanceManager();
     }
 
     /**
@@ -124,11 +109,9 @@ public class ConnectionConfigManagerTest {
         String id = Long.toString((new Date()).getTime());
         Profile profile = new Profile(this.getClass().getSimpleName(), id, new File(this.workspace.toFile(), id));
         ConnectionConfigManager instance = new ConnectionConfigManager();
-        try {
-            instance.initialize(profile);
-        } catch (InitializationException ex) {
-            Assert.fail(ex.getMessage());
-        }
+
+        Assertions.assertDoesNotThrow( () -> { instance.initialize(profile); } );
+
     }
 
     /**
@@ -153,14 +136,16 @@ public class ConnectionConfigManagerTest {
         Assert.assertEquals(1, instance.getConnections().length);
         Assert.assertFalse(instance.add(c));
         Assert.assertEquals(1, instance.getConnections().length);
-        NullPointerException npe = null;
-        try {
-            // deliberately passing invalid value
-            instance.add(null);
-        } catch (NullPointerException ex) {
-            npe = ex;
-        }
-        Assert.assertNotNull(npe);
+
+        // deliberately passing invalid value
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> { instanceAddNull(instance); } );
+        Assertions.assertNotNull(ex);
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION", justification = "passing null to non-null to check exception")
+    @SuppressWarnings("null")
+    private void instanceAddNull(ConnectionConfigManager instance){
+        instance.add(null);
     }
 
     /**
@@ -200,14 +185,11 @@ public class ConnectionConfigManagerTest {
         ConnectionConfig c = new TestConnectionConfig();
         Assert.assertTrue(instance.add(c));
         Assert.assertEquals(c, instance.getConnections(0));
-        IndexOutOfBoundsException ioobe = null;
-        try {
-            // don't care about returned result - expecting exception to be thrown
-            instance.getConnections(42);
-        } catch (IndexOutOfBoundsException ex) {
-            ioobe = ex;
-        }
-        Assert.assertNotNull(ioobe);
+        Exception exc = Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            ConnectionConfig connection = instance.getConnections(42);
+            Assertions.fail(connection +" should not have been found");
+        } );
+        Assertions.assertNotNull(exc);
     }
 
     /**
