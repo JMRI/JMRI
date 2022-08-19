@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test common functioning of LayoutTrack.
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public abstract class LayoutTrackTest {
 
     protected LayoutEditor layoutEditor = null;
