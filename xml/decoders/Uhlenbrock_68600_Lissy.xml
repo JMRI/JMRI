@@ -3814,7 +3814,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 3 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 3 Address" label="S1 Cmd 3 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 3 Option 1"/>
@@ -3858,7 +3858,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 4 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 4 Address" label="S1 Cmd 4 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 4 Option 1"/>
@@ -3902,7 +3902,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 5 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 5 Address" label="S1 Cmd 5 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 5 Option 1"/>
@@ -3946,7 +3946,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 6 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 6 Address" label="S2 Cmd 1 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 6 Option 1"/>
@@ -3990,7 +3990,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 7 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 7 Address" label="S2 Cmd 2 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 7 Option 1"/>
@@ -4034,7 +4034,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 8 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 8 Address" label="S2 Cmd 3 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 8 Option 1"/>
@@ -4078,7 +4078,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 9 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 9 Address" label="S2 Cmd 4 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 9 Option 1"/>
@@ -4122,7 +4122,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Function 10 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Function 10 Address" label="S2 Cmd 5 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Function 10 Option 1"/>
@@ -4257,7 +4257,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 4 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 4 Address" label="S1 Cmd 4 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 4 Option 1"/>
@@ -4284,7 +4284,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 5 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 5 Address" label="S1 Cmd 5 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 5 Option 1"/>
@@ -4311,7 +4311,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 6 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 6 Address" label="S2 Cmd 1 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 6 Option 1"/>
@@ -4338,7 +4338,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 7 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 7 Address" label="S2 Cmd 2 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 7 Option 1"/>
@@ -4365,7 +4365,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 8 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 8 Address" label="S2 Cmd 3 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 8 Option 1"/>
@@ -4392,7 +4392,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 9 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 9 Address" label="S3 Cmd 4 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 9 Option 1"/>
@@ -4419,7 +4419,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Speed 10 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Speed 10 Address" label="S2 Cmd 5 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Speed 10 Option 1"/>
@@ -4510,7 +4510,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 3 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 3 Address" label="S1 Cmd 3 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 3 Option 1"/>
@@ -4537,7 +4537,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 4 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 4 Address" label="S1 Cmd 4 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 4 Option 1"/>
@@ -4564,7 +4564,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 5 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 5 Address" label="S1 Cmd 5 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 5 Option 1"/>
@@ -4591,7 +4591,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 6 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 6 Address" label="S2 Cmd 1 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 6 Option 1"/>
@@ -4618,7 +4618,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 7 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 7 Address" label="S2 Cmd 2 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 7 Option 1"/>
@@ -4645,7 +4645,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 8 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 8 Address" label="S2 Cmd 3 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 8 Option 1"/>
@@ -4672,7 +4672,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 9 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 9 Address" label="S2 Cmd 4 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 9 Option 1"/>
@@ -4699,7 +4699,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <value>3</value>
             </qualifier>
             <row>
-              <display item="Switch Solenoid 10 Address" label="S1 Cmd 2 - Addr.:"/>
+              <display item="Switch Solenoid 10 Address" label="S2 Cmd 5 - Addr.:"/>
             </row>
           </group>
           <display item="Switch Solenoid 10 Option 1"/>
