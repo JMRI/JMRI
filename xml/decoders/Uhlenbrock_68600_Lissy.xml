@@ -3576,12 +3576,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           <!--The locomotive specific holding time is only available in the Time controlled shuttle traffic,
           Externally controlled shuttle traffic, Holding point and block section modes.-->
 
-          <!--  TODO for 68610 change:-->
-          <!--  A.2.2 LNCV-Tabelle des LISSY-Empfängers 68610-->
-          <!--  Prinzipiell gilt die LNCV-Tabelle des LISSY-Empfängers 68 600. Unten aufgeführt sind nur die LNCVs, die in ihrer Bedeutung abweichen oder zusätzlich vorhanden sind.-->
-          <!--  Funktion „Bahnhofssteuerung mit Umfahrgleis“-->
-          <!--applies to LNCVs 13 + 120-127-->
-
         </variables>
     </decoder>
 
@@ -3674,6 +3668,15 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Signal Address"/>
               <display item="Block Option Signal" format="checkbox"/>
             </row>
+            <label>
+              <qualifier>
+                <variableref>Direction</variableref>
+                <relation>eq</relation>
+                <value>2</value>
+              </qualifier>
+              <text>In driving direction S2 to S1, the signal numbered S1+1 automatically switches.</text>
+              <text xml:lang="de">In Fahrtrichtung S2 nach S1 wirkt automatisch das Signal mit Adresse S1+1.</text>
+            </label>
             <display item="Signal S2.7 Address"/>
             <display item="Signal S2.23 Address"/>
             <display item="Signal S1.7 Address"/>
