@@ -122,8 +122,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function29Through36Packet(
                 address.getNumber(), address.isLongAddress(),
-                getFunction(29), getFunction(30), getFunction(31), getFunction(32),
-                getFunction(33), getFunction(34), getFunction(35), getFunction(36)
+                getFunctionNoWarn(29), getFunctionNoWarn(30), getFunctionNoWarn(31), getFunctionNoWarn(32),
+                getFunctionNoWarn(33), getFunctionNoWarn(34), getFunctionNoWarn(35), getFunctionNoWarn(36)
         );
 
         station.sendPacket(result, 1);
@@ -137,8 +137,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function37Through44Packet(
                 address.getNumber(), address.isLongAddress(),
-                getFunction(37), getFunction(38), getFunction(39), getFunction(40),
-                getFunction(41), getFunction(42), getFunction(43), getFunction(44)
+                getFunctionNoWarn(37), getFunctionNoWarn(38), getFunctionNoWarn(39), getFunctionNoWarn(40),
+                getFunctionNoWarn(41), getFunctionNoWarn(42), getFunctionNoWarn(43), getFunctionNoWarn(44)
         );
 
         station.sendPacket(result, 1);
@@ -152,8 +152,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function45Through52Packet(
                 address.getNumber(), address.isLongAddress(),
-                getFunction(45), getFunction(46), getFunction(47), getFunction(48),
-                getFunction(49), getFunction(50), getFunction(51), getFunction(52)
+                getFunctionNoWarn(45), getFunctionNoWarn(46), getFunctionNoWarn(47), getFunctionNoWarn(48),
+                getFunctionNoWarn(49), getFunctionNoWarn(50), getFunctionNoWarn(51), getFunctionNoWarn(52)
         );
 
         station.sendPacket(result, 1);
@@ -167,8 +167,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function53Through60Packet(
                 address.getNumber(), address.isLongAddress(),
-                getFunction(53), getFunction(54), getFunction(55), getFunction(56),
-                getFunction(57), getFunction(58), getFunction(59), getFunction(60)
+                getFunctionNoWarn(53), getFunctionNoWarn(54), getFunctionNoWarn(55), getFunctionNoWarn(56),
+                getFunctionNoWarn(57), getFunctionNoWarn(58), getFunctionNoWarn(59), getFunctionNoWarn(60)
         );
 
         station.sendPacket(result, 1);
@@ -182,8 +182,8 @@ public class SprogThrottle extends AbstractThrottle {
 
         byte[] result = jmri.NmraPacket.function61Through68Packet(
                 address.getNumber(), address.isLongAddress(),
-                getFunction(61), getFunction(62), getFunction(63), getFunction(64),
-                getFunction(65), getFunction(66), getFunction(67), getFunction(68)
+                getFunctionNoWarn(61), getFunctionNoWarn(62), getFunctionNoWarn(63), getFunctionNoWarn(64),
+                getFunctionNoWarn(65), getFunctionNoWarn(66), getFunctionNoWarn(67), getFunctionNoWarn(68)
         );
 
         station.sendPacket(result, 1);
