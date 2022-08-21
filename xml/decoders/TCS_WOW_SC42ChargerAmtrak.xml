@@ -17,11 +17,11 @@
 	<version author="Michael Mosher" version="2" lastUpdated="20191111"/>
 	<!-- Add CV 177-181 & new bit in CV182 -->
 	<version author="Konrad Malkowski" version="3" lastUpdated="20220622"/>
-	<!-- Add definition for Bachmann HO-Scale VIA Rail SC-42 Charger -->
+	<!-- Add definition for Bachmann HO-Scale Amtrak SC-42 Charger -->
 	<decoder>
-		<family name="WOW VIA Rail SC-42 Charger Sound Set 4" mfg="Train Control Systems" >
-			<model model="VIA Rail SC-42 Charger" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
-				lowVersionID="4" highVersionID="4" productID="1972">
+		<family name="WOW Amtrak SC-42 Charger Sound Set 4" mfg="Train Control Systems" >
+			<model model="Amtrak SC-42 Charger" numOuts="8" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin"
+				lowVersionID="5" highVersionID="5" productID="1716">
 				<output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
 				<output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
@@ -43,7 +43,7 @@
 				<functionlabel num="2" lockable="false">Horn - Long Blast (Blink Ditch Lights)</functionlabel>
 				<functionlabel num="3" lockable="true">Horn - Short Blast (Blink Ditch Lights)</functionlabel>
 				<functionlabel num="4" lockable="true">Whoosh (Number boards)</functionlabel>
-				<functionlabel num="5" lockable="true">Train Brake (Forward Beamer)</functionlabel>
+				<functionlabel num="5" lockable="true">Train Brake (Strobe Light)</functionlabel>
 				<functionlabel num="6" lockable="true">Startup/Shutdown (Marker Lights)</functionlabel>
 				<functionlabel num="7" lockable="true">None (Dim Headlights)</functionlabel>
 				<functionlabel num="8" lockable="true">1x Mute, 2x Mode, 4x Assist</functionlabel>
