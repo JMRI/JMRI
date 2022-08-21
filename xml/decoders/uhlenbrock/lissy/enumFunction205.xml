@@ -148,9 +148,9 @@
       <choice xml:lang="nl">Wis alle LNCV's vanaf 20</choice>
     </enumChoice>
     <enumChoice value="98">
-      <choice>Set all LNCVs to 0 (except LNCV 0&amp;1)</choice>
-      <choice xml:lang="de">Setzt alle LNCVs auf Wert 0 (ausser LNCV 0&amp;1)</choice>
-      <choice xml:lang="nl">Zet alle LNCV's op 0 (beh. LNCV 0&amp;1)</choice>
+      <choice>Set all LNCVs to 0 (except LNCV 0 &amp; LNCV 1)</choice>
+      <choice xml:lang="de">Setzt alle LNCVs auf Wert 0 (ausser LNCV 0 &amp; LNCV 1)</choice>
+      <choice xml:lang="nl">Zet alle LNCV's op 0 (beh. LNCV 0 &amp; LNCV 1)</choice>
     </enumChoice>
     <enumChoice value="99">
       <choice>Restore factory defaults (keep address)</choice>

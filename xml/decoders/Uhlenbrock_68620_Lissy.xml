@@ -16,7 +16,7 @@ Neither could not be combined in 1 file due to the way the art, nr. is encoded i
 See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.0" lastUpdated="20220820"/>
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220821"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 and decoder.4.15.2.xsd -->
     <decoder>
         <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary">
@@ -42,8 +42,9 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
 
             <!--LNCV1 not used in 68620 -->
 
-            <variable CV="6862.2" item="Function" default="2">
+            <variable CV="6862.2" item="Function" default="3">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumFunction.xml"/>
+              <!-- enums are limited to 1, 3 and 90+ for 68620 using excludes -->
               <label>Function Mode:</label>
               <label xml:lang="de">Funktion:</label>
               <label xml:lang="nl">Functie:</label>
@@ -75,23 +76,8 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip xml:lang="nl">Berichtenprotocol van de ontvangermodule.</tooltip>
             </variable>
 
-            <variable CV="6862.15" item="Presets LokBoss" mask="XXXXXVXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">  LokBoss Betrieb:</label>
-              <label xml:lang="nl">  LokBoss compatibel:</label>
-              <label>  Use with LOK-Boss:</label>
-              <tooltip>Select if the LISSY receiver is operated with a Fleischmann LOK-Boss throttle.</tooltip>
-              <tooltip xml:lang="de">Auswählen wenn der LISSY-Empfänger an einem Fleischmann LokBoss Regler betrieben wird.</tooltip>
-            </variable>
+            <!-- 68620 has no LokBoss support nor Save Status-->
 
-            <variable CV="6862.15" item="Presets Save Status" mask="XXXXXVXXX" default="1">
-              <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-              <label xml:lang="de">Betriebszustand sichern:</label>
-              <label xml:lang="nl">Onthoudt bedrijfsstatus:</label>
-              <label>Store operating status:</label>
-              <tooltip>Save current operating status when switching power off</tooltip>
-              <tooltip xml:lang="de">Aktuellen Betriebszustand sichern beim Abschalten der Betriebsspannung</tooltip>
-            </variable>
             <!-- 68610 version 205+ has extra options 4 + 5 to LNCV15 (bits 4 + 5):-->
 
             <variable CV="6862.16" item="Version" mask="VVVVVVVVVVVVVVVV" readOnly="yes">
@@ -101,7 +87,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>Firmware Version:</label>
             </variable>
 
-            <!--TODO add CVs 20-109 LISSY-Einzelempfängers 68620 -->
+            <!-- CVs 20-109 LISSY-Einzelempfängers 68620 -->
             <!--LNCVs für das Schalten von Loksonderfunktionen-->
             <!--20-29   Fahrzeugadressen für Funktionsbefehle. default 20=20000 -->
             <!--30-39   Werte für die Funktionen. default 30=1-->
@@ -188,7 +174,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.40" item="Switch Function 1 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -293,7 +279,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.41" item="Switch Function 2 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -398,7 +384,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.42" item="Switch Function 3 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -503,7 +489,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.43" item="Switch Function 4 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -608,7 +594,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.44" item="Switch Function 5 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -713,7 +699,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.45" item="Switch Function 6 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -818,7 +804,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.46" item="Switch Function 7 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -923,7 +909,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.47" item="Switch Function 8 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -1028,7 +1014,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.48" item="Switch Function 9 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -1133,7 +1119,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label>F12:</label>
             </variable>
 
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.49" item="Switch Function 10 Option 2" mask="XXXXXXXXXXXXXVXX" default="0">
               <qualifier>
                 <variableref>Function</variableref>
@@ -1191,7 +1177,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.70" item="Switch Speed 1 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1199,7 +1185,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.70" item="Switch Speed 1 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1221,7 +1207,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.71" item="Switch Speed 2 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1229,7 +1215,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.71" item="Switch Speed 2 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1251,7 +1237,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.72" item="Switch Speed 3 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1259,7 +1245,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.72" item="Switch Speed 3 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1281,7 +1267,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.73" item="Switch Speed 4 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1289,7 +1275,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.73" item="Switch Speed 4 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1311,7 +1297,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.74" item="Switch Speed 5 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1319,7 +1305,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.74" item="Switch Speed 5 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1341,7 +1327,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.75" item="Switch Speed 6 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1349,7 +1335,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.75" item="Switch Speed 6 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1371,7 +1357,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.76" item="Switch Speed 7 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1379,7 +1365,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.76" item="Switch Speed 7 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1401,7 +1387,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.77" item="Switch Speed 8 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1409,7 +1395,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.77" item="Switch Speed 8 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1431,7 +1417,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.78" item="Switch Speed 9 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1439,7 +1425,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.78" item="Switch Speed 9 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1461,7 +1447,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <tooltip>Enter value according to unit selected in next field</tooltip>
               <tooltip xml:lang="de">Eingabe gemäß zunächst ausgewählte Einheit</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.79" item="Switch Speed 10 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> Aktivieren:</label>
@@ -1469,7 +1455,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <label> when:</label>
             </variable>
             <variable CV="6862.79" item="Switch Speed 10 Option 3" mask="XXXVVXXX" default="0">
-              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3.xml"/>
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumSpeedfunctionOptions3-Single.xml"/>
               <label xml:lang="de"> Einheit:</label>
               <label xml:lang="nl"> Eenheid:</label>
               <label> Unit:</label>
@@ -1504,7 +1490,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
                 1 - 2000 = Magnetartikel schalten&lt;br\&gt;
                 2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.100" item="Switch Solenoid 1 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> wenn:</label>
@@ -1538,7 +1524,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
                 1 - 2000 = Magnetartikel schalten&lt;br\&gt;
                 2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
             </variable>
-            <!--no Direction option in 68620-->
+            <!--no Direction option 1 in 68620-->
             <variable CV="6862.101" item="Switch Solenoid 2 Option 2" mask="XXXXXVXX" default="0">
               <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
               <label xml:lang="de"> wenn:</label>
@@ -1572,7 +1558,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.102" item="Switch Solenoid 3 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1606,7 +1592,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.103" item="Switch Solenoid 4 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1640,7 +1626,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.104" item="Switch Solenoid 5 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1674,7 +1660,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.105" item="Switch Solenoid 6 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1708,7 +1694,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.106" item="Switch Solenoid 7 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1742,7 +1728,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.107" item="Switch Solenoid 8 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1776,7 +1762,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.108" item="Switch Solenoid 9 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1810,7 +1796,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               1 - 2000 = Magnetartikel schalten&lt;br\&gt;
               2001 - 2024 = Intellibox-Fahrstraße schalten&lt;/html&gt;</tooltip>
           </variable>
-          <!--no Direction option in 68620-->
+          <!--no Direction option 1 in 68620-->
           <variable CV="6862.109" item="Switch Solenoid 10 Option 2" mask="XXXXXVXX" default="0">
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/lissy/enumLocfunctionOptions2.xml"/>
             <label xml:lang="de"> wenn:</label>
@@ -1821,7 +1807,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
 
           <!-- No Entry/Exit Manager CVs on 68620 -->
 
-          <!--Locomotive specific hold time, is in 68610 only -->
+          <!--Locomotive specific hold time is in 68610 only -->
 
         </variables>
     </decoder>
@@ -1852,6 +1838,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
 
         <row>
           <column>
+            <display item="Version"/>
             <display item="Presets Save Status" format="checkbox"/>
             <display item="Presets LokBoss" format="checkbox"/>
             <label>
@@ -1862,7 +1849,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
             </label>
             <display item="Sensor 2 Address"/>
             <display item="Automation Activation Address"/>
-            <!--some items removed for 68620-->
+            <!--some items removed for 68620, no Message 1/2 -->
           </column>
 
           <separator/>
@@ -1870,7 +1857,7 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
           <column>
             <display item="Function"/>
             <display item="Presets Protocol"/>
-            <!--some items removed for 68620-->
+            <!--some items removed for 68620 , no Direction -->
           </column>
         </row>
       </column>
@@ -1922,7 +1909,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 1 Address" label="S1 Cmd 1 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 1 Option 1"/>
           <display item="Switch Function 1 F0" format="checkbox"/>
           <display item="Switch Function 1 F1" format="checkbox"/>
           <display item="Switch Function 1 F2" format="checkbox"/>
@@ -1966,7 +1952,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 2 Address" label="S1 Cmd 2 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 2 Option 1"/>
           <display item="Switch Function 2 F0" format="checkbox"/>
           <display item="Switch Function 2 F1" format="checkbox"/>
           <display item="Switch Function 2 F2" format="checkbox"/>
@@ -2010,7 +1995,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 3 Address" label="S1 Cmd 3 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 3 Option 1"/>
           <display item="Switch Function 3 F0" format="checkbox"/>
           <display item="Switch Function 3 F1" format="checkbox"/>
           <display item="Switch Function 3 F2" format="checkbox"/>
@@ -2054,7 +2038,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 4 Address" label="S1 Cmd 4 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 4 Option 1"/>
           <display item="Switch Function 4 F0" format="checkbox"/>
           <display item="Switch Function 4 F1" format="checkbox"/>
           <display item="Switch Function 4 F2" format="checkbox"/>
@@ -2098,7 +2081,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 5 Address" label="S1 Cmd 5 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 5 Option 1"/>
           <display item="Switch Function 5 F0" format="checkbox"/>
           <display item="Switch Function 5 F1" format="checkbox"/>
           <display item="Switch Function 5 F2" format="checkbox"/>
@@ -2142,7 +2124,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 6 Address" label="S2 Cmd 1 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 6 Option 1"/>
           <display item="Switch Function 6 F0" format="checkbox"/>
           <display item="Switch Function 6 F1" format="checkbox"/>
           <display item="Switch Function 6 F2" format="checkbox"/>
@@ -2186,7 +2167,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 7 Address" label="S2 Cmd 2 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 7 Option 1"/>
           <display item="Switch Function 7 F0" format="checkbox"/>
           <display item="Switch Function 7 F1" format="checkbox"/>
           <display item="Switch Function 7 F2" format="checkbox"/>
@@ -2230,7 +2210,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 8 Address" label="S2 Cmd 3 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 8 Option 1"/>
           <display item="Switch Function 8 F0" format="checkbox"/>
           <display item="Switch Function 8 F1" format="checkbox"/>
           <display item="Switch Function 8 F2" format="checkbox"/>
@@ -2274,7 +2253,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 9 Address" label="S2 Cmd 4 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 9 Option 1"/>
           <display item="Switch Function 9 F0" format="checkbox"/>
           <display item="Switch Function 9 F1" format="checkbox"/>
           <display item="Switch Function 9 F2" format="checkbox"/>
@@ -2318,7 +2296,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Function 10 Address" label="S2 Cmd 5 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Function 10 Option 1"/>
           <display item="Switch Function 10 F0" format="checkbox"/>
           <display item="Switch Function 10 F1" format="checkbox"/>
           <display item="Switch Function 10 F2" format="checkbox"/>
@@ -2372,7 +2349,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 1 Address" label="S1 Cmd 1 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 1 Option 1"/>
           <display item="Switch Speed 1 Option 2"/>
           <display item="Switch Speed 1 Speed"/>
           <display item="Switch Speed 1 Option 3"/>
@@ -2399,7 +2375,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 2 Address" label="S1 Cmd 2 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 2 Option 1"/>
           <display item="Switch Speed 2 Option 2"/>
           <display item="Switch Speed 2 Speed"/>
           <display item="Switch Speed 2 Option 3"/>
@@ -2426,7 +2401,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 3 Address" label="S1 Cmd 3 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 3 Option 1"/>
           <display item="Switch Speed 3 Option 2"/>
           <display item="Switch Speed 3 Speed"/>
           <display item="Switch Speed 3 Option 3"/>
@@ -2453,7 +2427,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 4 Address" label="S1 Cmd 4 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 4 Option 1"/>
           <display item="Switch Speed 4 Option 2"/>
           <display item="Switch Speed 4 Speed"/>
           <display item="Switch Speed 4 Option 3"/>
@@ -2480,7 +2453,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 5 Address" label="S1 Cmd 5 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 5 Option 1"/>
           <display item="Switch Speed 5 Option 2"/>
           <display item="Switch Speed 5 Speed"/>
           <display item="Switch Speed 5 Option 3"/>
@@ -2507,7 +2479,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 6 Address" label="S2 Cmd 1 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 6 Option 1"/>
           <display item="Switch Speed 6 Option 2"/>
           <display item="Switch Speed 6 Speed"/>
           <display item="Switch Speed 6 Option 3"/>
@@ -2534,7 +2505,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 7 Address" label="S2 Cmd 2 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 7 Option 1"/>
           <display item="Switch Speed 7 Option 2"/>
           <display item="Switch Speed 7 Speed"/>
           <display item="Switch Speed 7 Option 3"/>
@@ -2561,7 +2531,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 8 Address" label="S2 Cmd 3 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 8 Option 1"/>
           <display item="Switch Speed 8 Option 2"/>
           <display item="Switch Speed 8 Speed"/>
           <display item="Switch Speed 8 Option 3"/>
@@ -2588,7 +2557,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 9 Address" label="S3 Cmd 4 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 9 Option 1"/>
           <display item="Switch Speed 9 Option 2"/>
           <display item="Switch Speed 9 Speed"/>
           <display item="Switch Speed 9 Option 3"/>
@@ -2615,7 +2583,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Speed 10 Address" label="S2 Cmd 5 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Speed 10 Option 1"/>
           <display item="Switch Speed 10 Option 2"/>
           <display item="Switch Speed 10 Speed"/>
           <display item="Switch Speed 10 Option 3"/>
@@ -2652,7 +2619,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 1 Address" label="S1 Cmd 1 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 1 Option 1"/>
           <display item="Switch Solenoid 1 Option 2"/>
           <display item="Switch Solenoid 1 Target"/>
           <display item="Switch Solenoid 1 State"/>
@@ -2679,7 +2645,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 2 Address" label="S1 Cmd 2 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 2 Option 1"/>
           <display item="Switch Solenoid 2 Option 2"/>
           <display item="Switch Solenoid 2 Target"/>
           <display item="Switch Solenoid 2 State"/>
@@ -2706,7 +2671,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 3 Address" label="S1 Cmd 3 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 3 Option 1"/>
           <display item="Switch Solenoid 3 Option 2"/>
           <display item="Switch Solenoid 3 Target"/>
           <display item="Switch Solenoid 3 State"/>
@@ -2733,7 +2697,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 4 Address" label="S1 Cmd 4 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 4 Option 1"/>
           <display item="Switch Solenoid 4 Option 2"/>
           <display item="Switch Solenoid 4 Target"/>
           <display item="Switch Solenoid 4 State"/>
@@ -2760,7 +2723,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 5 Address" label="S1 Cmd 5 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 5 Option 1"/>
           <display item="Switch Solenoid 5 Option 2"/>
           <display item="Switch Solenoid 5 Target"/>
           <display item="Switch Solenoid 5 State"/>
@@ -2787,7 +2749,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 6 Address" label="S2 Cmd 1 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 6 Option 1"/>
           <display item="Switch Solenoid 6 Option 2"/>
           <display item="Switch Solenoid 6 Target"/>
           <display item="Switch Solenoid 6 State"/>
@@ -2814,7 +2775,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 7 Address" label="S2 Cmd 2 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 7 Option 1"/>
           <display item="Switch Solenoid 7 Option 2"/>
           <display item="Switch Solenoid 7 Target"/>
           <display item="Switch Solenoid 7 State"/>
@@ -2841,7 +2801,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 8 Address" label="S2 Cmd 3 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 8 Option 1"/>
           <display item="Switch Solenoid 8 Option 2"/>
           <display item="Switch Solenoid 8 Target"/>
           <display item="Switch Solenoid 8 State"/>
@@ -2868,7 +2827,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 9 Address" label="S2 Cmd 4 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 9 Option 1"/>
           <display item="Switch Solenoid 9 Option 2"/>
           <display item="Switch Solenoid 9 Target"/>
           <display item="Switch Solenoid 9 State"/>
@@ -2895,7 +2853,6 @@ See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.
               <display item="Switch Solenoid 10 Address" label="S2 Cmd 5 - Addr.:"/>
             </row>
           </group>
-          <display item="Switch Solenoid 10 Option 1"/>
           <display item="Switch Solenoid 10 Option 2"/>
           <display item="Switch Solenoid 10 Target"/>
           <display item="Switch Solenoid 10 State"/>
