@@ -1,15 +1,19 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
+import java.text.MessageFormat;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import org.junit.Assume;
 
 /**
@@ -99,7 +103,6 @@ public class YardEditFrameTest extends OperationsTestCase {
         // clean up the frame
         f.setVisible(false);
         JUnitUtil.dispose(f);
-
     }
 
     @Test
@@ -155,6 +158,172 @@ public class YardEditFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(fl);
     }
 
+    @Test
+    public void testDeleteButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Delete", Track.YARD);
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, t);
+
+        JemmyUtil.enterClickAndLeave(f.deleteTrackButton);
+        t = l.getTrackByName("Test Yard Delete", null);
+        Assert.assertNull("track should not exist", t);
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testLIFO() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Order", Track.YARD);
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, t);
+
+        JemmyUtil.enterClickAndLeave(f.orderLIFO);
+        Assert.assertEquals("service order", Track.LIFO, t.getServiceOrder());
+        JemmyUtil.enterClickAndLeave(f.orderFIFO);
+        Assert.assertEquals("service order", Track.FIFO, t.getServiceOrder());
+        JemmyUtil.enterClickAndLeave(f.orderNormal);
+        Assert.assertEquals("service order", Track.NORMAL, t.getServiceOrder());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testErrorTrackName() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, null);
+
+        // no track name entered
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addTrackButton);
+        JemmyUtil.pressDialogButton(f,
+                MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("add")}),
+                Bundle.getMessage("ButtonOK"));
+
+        // hyphen feature requires at least 2 characters
+        f.trackNameTextField.setText("-");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addTrackButton);
+        JemmyUtil.pressDialogButton(f,
+                MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("add")}),
+                Bundle.getMessage("ButtonOK"));
+        
+        // track name too long (25 characters)
+        f.trackNameTextField.setText("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addTrackButton);
+        JemmyUtil.pressDialogButton(f,
+                MessageFormat.format(Bundle.getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("add")}),
+                Bundle.getMessage("ButtonOK"));
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testErrorTrackLength() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, null);
+
+        // the length field is empty
+        f.trackNameTextField.setText("new yard track");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addTrackButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonOK"));
+        
+        // bad inches conversion
+        f.trackLengthTextField.setText("A\"");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonOK"));
+
+        // bad centimeter conversion
+        f.trackLengthTextField.setText("Acm");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonOK"));
+
+        // too large of a number
+        f.trackLengthTextField.setText("100000");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonOK"));
+
+        f.trackLengthTextField.setText("300");
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        Track t = l.getTrackByName("new yard track", null);
+        
+        // place a car on track
+        JUnitOperationsUtil.createAndPlaceCar("CP", "X10001", "Boxcar", "40", "DAB", "1984", t, 0);
+        
+        // track is too short for a 40 foot car, need room for couplers
+        f.trackLengthTextField.setText("40");
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonOK"));
+        // force track to 40 feet
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonNo"));
+        Assert.assertEquals("track length", 300, t.getLength());
+        
+        // again, but say yes this time
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonOK"));
+        // force track to 40 feet
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTrackLength"), Bundle.getMessage("ButtonYes"));
+        Assert.assertEquals("track length", 40, t.getLength());
+        
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testTrackLengthInches() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Length", Track.YARD);
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, t);
+
+        f.trackLengthTextField.setText("24\"");
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        // confirm HO default
+        Assert.assertEquals("ratio", 87, Setup.getScaleRatio());
+        Assert.assertEquals("track length", 174, t.getLength());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testTrackLengthCentimeters() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Length", Track.YARD);
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, t);
+
+        f.trackLengthTextField.setText("240cm");
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        // confirm HO default
+        Assert.assertEquals("ratio", 87, Setup.getScaleRatio());
+        // length conversion 240 x 87 / 100
+        Assert.assertEquals("track length", 208, t.getLength());
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testTypes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Car Types", Track.YARD);
+        t.setLength(100);
+        YardEditFrame f = new YardEditFrame();
+        f.initComponents(l, t);
+        
+        Assert.assertTrue("Boxcar is accepted", t.isTypeNameAccepted("Boxcar"));
+
+        JFrameOperator jfo = new JFrameOperator(f);
+        JCheckBoxOperator jbo = new JCheckBoxOperator(jfo, "Boxcar");
+        jbo.doClick();
+        
+        Assert.assertFalse("Boxcar is not accepted", t.isTypeNameAccepted("Boxcar"));
+        
+        jbo.doClick();
+        Assert.assertTrue("Boxcar is accepted", t.isTypeNameAccepted("Boxcar"));
+
+        JUnitUtil.dispose(f);
+    }
+
     // Ensure minimal setup for log4J
     @Override
     @BeforeEach
@@ -165,7 +334,7 @@ public class YardEditFrameTest extends OperationsTestCase {
 
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
-        
+
         JUnitOperationsUtil.loadTrain(l);
     }
 }

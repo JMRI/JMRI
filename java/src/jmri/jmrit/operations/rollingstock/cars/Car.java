@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -930,6 +931,36 @@ public class Car extends RollingStock {
             buf.append(EXTENSION_REGEX + HAZARDOUS_EXTENSION);
         }
         return buf.toString();
+    }
+    
+    /**
+     * Loads the car's with a final destination which is the ship address for the
+     * schedule item. Also sets the next load and wait count that will kick in when
+     * the car arrives at the spur with this schedule.
+     * @param scheduleItem The schedule item to be applied this this car
+     *
+     */
+    public void loadNext(ScheduleItem scheduleItem) {
+        if (scheduleItem == null) {
+            return;
+        }
+        // set the car's next load
+        setNextLoadName(scheduleItem.getShipLoadName());
+        // set the car's final destination and track
+        setFinalDestination(scheduleItem.getDestination());
+        setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+        // set the car's pickup day
+        setNextPickupScheduleId(scheduleItem.getPickupTrainScheduleId());
+        // set the wait count
+        setNextWait(scheduleItem.getWait());
+        // bump hit count for this schedule item
+        scheduleItem.setHits(scheduleItem.getHits() + 1);
+
+        log.debug("Car ({}) type ({}) next load ({}) final destination ({}, {}) next wait: {}", toString(),
+                getTypeName(), getNextLoadName(), getFinalDestinationName(),
+                getFinalDestinationTrackName(), getNextWait()); // NOI18N
+        // set all cars in kernel to the next load
+        updateKernel();
     }
 
     @Override

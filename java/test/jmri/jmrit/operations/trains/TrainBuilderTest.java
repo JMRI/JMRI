@@ -6447,6 +6447,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         // don't allow cars with the load "Flour" to depart staging
         northEndStaging1.setShipLoadOption(Track.EXCLUDE_LOADS);
         northEndStaging1.addShipLoadName("Flour");
+        
+        String s = Bundle.getMessage("Exclude") + " " + northEndStaging1.getShipLoadNames().length + " " + Bundle.getMessage("Loads");
+        Assert.assertEquals("Confirm option", s, northEndStaging1.getShipLoadOptionString());
 
         // allow staging to generate custom loads for cars
         northEndStaging1.setAddCustomLoadsAnyStagingTrackEnabled(true);
@@ -15401,6 +15404,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // don't accept "Bags" into staging
         stagingTrack2.setLoadOption(Track.EXCLUDE_LOADS);
         stagingTrack2.addLoadName("Bags");
+        
+        // confirm
+        String s = Bundle.getMessage("Exclude") + " " + stagingTrack2.getLoadNames().length + " " + Bundle.getMessage("Loads");
+        Assert.assertEquals("Confirm", s, stagingTrack2.getLoadOptionString());
 
         // add staging to the start of the route
         Route route = train.getRoute();
