@@ -1640,6 +1640,14 @@ public class AbstractThrottleTest {
 
     }
 
+    @Test
+    public void testGetFunctionNoWarnings() {
+        Assertions.assertFalse(instance.getFunctionNoWarn(-1));
+        Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(-1));
+        Assertions.assertFalse(instance.getFunctionNoWarn(9999999));
+        Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(999999));
+    }
+
     public static final class AbstractThrottleImpl extends AbstractThrottle {
 
         private LocoAddress locoAddress;

@@ -21,8 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
-                <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -107,8 +106,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li>Fixed a problem adding sensors with names like NS50:1
-                </li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -118,21 +116,7 @@
 
         <h4>OpenLCB / LCC</h4>
             <ul>
-                <li>Several fixes to JMRI's OpenLCB hub to reduce chance of duplicated traffic.</li>
-            </ul>
-
-        <h4>Piko</h4>
-        <ul>
-          <li>A new definition file was added for the Uhlenbrock LocoNet IR Receiver #63830, that can
-            connect the Piko Digi-fern Remote Control to LocoNet.</li>
-        </ul>
-
-        <h4>Raspberry Pi</h4>
-            <ul>
-                <li>A simulator is now added that simulates a Raspberry Pi.
-                The simulator is very simple and is mostly intended to be
-                able to load panels for a Raspberry Pi on a non Pi computer
-                like Windows.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -152,9 +136,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Updated [Pi-]SPROG (3v2|Plus) NV edit GUI</li>
-                <li>Added Pi-SPROG 3 (not v2) NV edit GUI</li>
-                <li>Added F29+ support to SPROG Command Station mode.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -184,8 +166,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>An include file enum-WeekdaysSun.xml that can be used to create a drop down of Weekdays was added to
-            xml/decoders/parts/</li>
+          <li></li>
         </ul>
 
         <h4>Arnold</h4>
@@ -215,15 +196,12 @@
 
         <h4>Digikeijs (Digirails)</h4>
             <ul>
-                <li>New decoder definition for DR5088RC with LNCV programming capabilities.<br>
-                  Thanks to Dennis Cherry for testing on actual hardware.<br>
-                Awaiting response from Digikeijs to complete the settings stored in LNCV4.</li>
-              <li>The Stationary family of decoders was renamed to Feedback (Inputs).</li>
+                <li></li>
             </ul>
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Add support for DCS240+</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -338,7 +316,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Added support for Lokommander II decoders. Including automatic identification of the right decoder type based on productID.</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -348,23 +326,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Updated the Lissy Reporter support, including
-                improved display of the messages. Note that this
-                has changed the format of the reports, so users
-                who have written scripts to use this might need to
-                check and update them.</li>
-                <li>Added a decoder definition to configure the 63810 Mobile Station Adapter.<br>
-                Use the LNCV tool to program.</li>
-                <li>Added decoder definitions for Occupancy Feedback modules #63320/40 (2-rail) and #63330/50
-                (3-rail).<br>
-                Use the LNCV Tool for programming.</li>
-                <li>Added Funk-Master LN+DCC 66410 definition. Renamed  model 66400 FunkMaster to Funk-Master LN.</li>
-                <li>Added a decoder definition to configure the 63450 LocoNet Display module, also with LNCV</li>
-                <li>New definition to program the IRIS LocoNet IR-Receiver #63830.</li>
-                <li>Fixed a bug in the Switch Module #63410 definition that could mix up combined CV values of type
-                XXXXC.</li>
-                <li>Added setting Route 1 in the Track Control Signal indicator #69230</li>
-                <li>Added a decoder definition to configure the 63400 LocoNet Switch Control module</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -395,20 +357,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>To simplify writing a decoder definition, variable declarations for decimal and hex values without a
-              "mask" with max &gt; 255  now will get an appropriately sized mask assigned so that they store any
-              valid entry.<br>
-              Variables with a max &lt;= 255 or with an explicit mask are not affected.
-            </li>
-          <li>In decoder definitions, enumVal variables can now use a so-called "radix" mask to map values on specific
-            digits in the CV value. Requires decoder-4-15-2.xsd schema in the xml declaration.</li>
-            <li>Values of type DecVar can now be presented using an offset and factor to reflect their application. For
-              example if address 1 had to be entered as 0 (and 2 as 1) an offset of +1 would fix this for the user.
-              Likewise, a factor of 50 would present a setting "in steps of 50 milliseconds" in ms units while saving
-              it in the CV just like it used to.<br>
-              Requires schema decoder-4-15-2.xsd. When a min or max is applied, the author should update that for the
-              numbers as entered. Entries smaller than the offset are replaced by 0.
-            </li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -420,11 +369,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Support transits and sections that use multiple panels connected by edge
-             connectors.</li>
-             <li>The "Use connectivity from Layout Editor panels" option in Dispatcher Options
-             no longer uses a specified panel.  All Layout Editor panels are used for layout
-             connectivity.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -459,43 +404,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The action <i>Simulate turnout feedback</i> has been added.
-          It's useful to simulate feedback based turnout actions when a
-          simulator connection is used, for example the <i>LocoNet simulator</i>.</li>
-          <li>The expression <i>Connection name</i> has been added.
-          It's useful together with <i>Simulate turnout feedback</i> so
-          that simulation only happens for simulated connections.</li>
-          <li>The action <i>For each</i> has been added. It's useful when
-          you want to loop thru all items in a list, for example all the
-          sensors in the sensor manager.</li>
-          <li>The formula function <i>new</i> has been added. It allows
-          you to create a new instance of a class.</li>
-          <li>Several formula constants have been added. See the modules
-          <i>Java</i> and <i>Layout</i>. Examples are constants like
-          <i>sensors</i> and <i>turnouts</i> that gives you direct access
-          to the managers. And <i>InstanceManager</i> that gives you direct
-          access to the instance manager. The constants <i>null</i> and
-          <i>None</i> has the null value in Java, the None value in Jython.</li>
-          <li>The action <i>Listen On Beans - Table</i> is improved.</li>
-          <li>The action <i>Listen On Beans - Local variable</i> has been
-          added. It can be used together with the <i>For each</i> action
-          to listen to all beans of a manager.</li>
-          <li>The expressions <i>Local Variable</i> and <i>Memory</i> now
-          have the choice "Type" which allows you to select whenether the
-          data should be treated as a number or a string. If "Number" is
-          choosen, it's required that both operands are numbers. Otherwise
-          an exception will occur.</li>
-          <li>The action <i>Local Variable</i> can now copy the value of a
-          reference.</li>
-          <li>The action <i>If Then Else</i> now supports <i>Else_If</i>
-          statements.</li>
-          <li>The new category <i>Flow Control</i> is added. The actions
-          <i>Call Module</i>, <i>For</i>, <i>For Each</i>, <i>Table: For
-          Each</i> and <i>Sequence</i> are moved to this category, as well
-          as the expression <i>Call Module</i>.</li>
-          <li>The actions <i>Break</i>, <i>Continue</i>, <i>Error</i>,
-          <i>Exit</i> and <i>Return</i> have been added to the <i>Flow
-          Control</i> category.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -608,13 +517,6 @@
                 <li></li>
             </ul>
 
-   <h3>Speedometer</h3>
-        <a id="Speedometer" name="Speedometer"></a>
-        <ul>
-            <li>Expanded user documentation</li>
-        </ul>
-
-
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
@@ -678,15 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li><i>jmri.jmrix.SystemConnectionMemoManager</i> has new utility methods to find a connection by its connection name.<br>
-            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("L2", LocoNetSystemConnectionMemo.class);</code><br>
-            <code>LocoNetSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("LocoNet", LocoNetSystemConnectionMemo.class);</code><br>
-            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnection("M", MqttSystemConnectionMemo.class);</code>
-            <code>MqttSystemConnectionMemo memo = SystemConnectionMemoManager.getConnectionByUserName("MQTT", MqttSystemConnectionMemo.class);</code>
-            </li>
-            <li>The PlantUML library has been updated to the current version.  This is used for
-                developer documentation.
-            </li>
             <li></li>
         </ul>
 
