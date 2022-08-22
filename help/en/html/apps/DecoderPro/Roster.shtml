@@ -42,7 +42,7 @@
         <dt>Roster ID</dt>
 
         <dd>Your name for the new locomotive, see above. You can change an entry's ID later, in
-        which case it will appear in new selection boxes, etc, with the new ID name.</dd>
+        which case it will appear in new selection boxes, etc. with the new ID name.</dd>
 
         <dt>DCC Address</dt>
 
@@ -134,7 +134,7 @@
         <dd>
           Although it is possible to find the XML files defining Roster entries in the preferences
           directory, it's better not to mess with them directly. The "Export" command will create a
-          new file representing a Roster entry, including all of the comments, CV values, etc. You
+          new file representing a Roster entry, including all comments, CV values, etc. You
           can then take that to another copy of DecoderPro and import it into that Roster. Export
           does not change your current Roster in any way, it just makes a copy for you of a
           specific entry.
@@ -147,7 +147,7 @@
 
         <dd>
           The combination of "Export" then "Import" allows you to bring a locomotives Roster entry
-          when you move to another layout, with it's own DecoderPro installation.
+          when you move to another layout, with its own DecoderPro installation.
           <p>When you select "Import ...", you'll be asked to locate an XML file to import. It
           should have been created by an "Export" command. You'll also be asked for the ID of the
           new Roster entry to be created. This can be the same as it was before it was exported, or
