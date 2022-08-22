@@ -3,23 +3,22 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 
-import jmri.*;
 import jmri.util.*;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of LayoutTurnoutView
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testGetCoordsForConnectionType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertEquals("ltRH.getCoordsForConnectionType(NONE) is equal to...",
                 new Point2D.Double(150.0, 100.0),
@@ -144,7 +143,6 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testGetBounds() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
             // the commented out tests were from the older code,
             // which relied on execution order of the side-effects
@@ -182,7 +180,6 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
     @Test
     public void testSetUpDefaultSize() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         // note: Not really testing anything here,
@@ -217,28 +214,16 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
 
 
     // from here down is testing infrastructure
-    @BeforeAll
-    @javax.annotation.OverridingMethodsMustInvokeSuper
-    public static void beforeClass() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-            JUnitUtil.resetInstanceManager();
-            JUnitUtil.initInternalTurnoutManager();
-            JUnitUtil.initInternalSensorManager();
-            JUnitUtil.initInternalSignalHeadManager();
-        }
-    }
 
-    @AfterAll
-    @javax.annotation.OverridingMethodsMustInvokeSuper
-    public static void afterClass() {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-    }
-
+    @Override
     @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
 
             Point2D point = new Point2D.Double(150.0, 100.0);
@@ -275,6 +260,7 @@ public class LayoutTurnoutViewTest extends LayoutTrackViewTest {
         }
     }
 
+    @Override
     @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
