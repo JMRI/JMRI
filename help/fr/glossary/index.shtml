@@ -5,7 +5,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- sort routine Copyright http://www.kryogenix.org/code/browser/sorttable/ -->
 
-  <title>JiMRI: Glossary</title>
+  <title>JMRI: Glossaire</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="model railroad JiMRI decoderpro panelpro operations GUI I18N">
   <!-- Style -->
@@ -37,7 +37,7 @@
     <!--#include virtual="../html/Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JiMRI : Glossaire</h1>
+      <h1>JMRI : Glossaire</h1>
 
       <p>Cette page est le glossaire de JiMRI, fournissant de brèves définitions pour les termes
       spécifiques à JiMRI, et des liens vers d'autres informations complémentaires.<br>

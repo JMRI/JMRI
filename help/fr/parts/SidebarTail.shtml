@@ -1,0 +1,25 @@
+<!-- SidebarTail.shtml -->
+    <!-- Final items in typical sidebar (French) *) = link to English TODO translate that page -->
+
+    <div class="noted">
+      <h3 style="padding-left: 2em;">Syst&egrave;me d'Aide JMRI:</h3>
+      <p>
+        <a href="/help/fr/webtoc.shtml">Table des Mati&egrave;res</a>
+        <a href="/help/fr/webindex.shtml">Index</a>
+        <br>
+        <a href="/help/fr/glossary/index.shtml">Glossaire</a>
+        <a href="/help/en/html/FAQ.shtml">FAQ *)</a>
+      </p>
+    </div>
+
+    <p style="padding-left: 1em;">
+      <a href="/donations.shtml">
+      <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32" style="float: left" alt="Donate to JMRI" />
+        Faites un don à &aacute; JMRI.org</a>
+    </p>
+
+    <!-- JS to highlight items in the sidebar -->
+    <script src="/web/js/jquery-2.0.3.min.js"></script>
+    <script src="/web/js/here.js"></script>
+
+<!-- /SidebarTail.shtml -->

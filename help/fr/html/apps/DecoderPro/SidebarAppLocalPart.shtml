@@ -3,14 +3,14 @@
 
 <dt class="dtheader">DecoderPro&reg;</dt>
 <dd>
-  <ul>
+	<ul>
     <li><a href="./Tour.shtml">Aper&#231;u rapide</a></li>
     <li><a href="./MoreInfo.shtml">D&#233;tails</a></li>
     <li><a href="./Files.shtml">Fichiers de Configuration</a></li>
     <li><a href="./Roster.shtml">Travailler avec l'Inventaire</a></li>
     <li><a href="./FAQ.shtml">FAQ</a></li>
     <li><a href="./Install.shtml">Configuration JMRI</a></li>
-  </ul>
+	</ul>
 </dd>
 
 <dt class="dtheader">Avanc&#233;es</dt>
