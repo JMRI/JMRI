@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 import org.jdom2.Element;
@@ -8,8 +9,16 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 /**
  * Represents a car delivery schedule for a location
@@ -29,6 +38,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "scheduleListChange"; // NOI18N
     public static final String DISPOSE = "scheduleDispose"; // NOI18N
+    
+    public static final String SCHEDULE_OKAY = ""; // NOI18N
 
     public Schedule(String id, String name) {
         log.debug("New schedule ({}) id: {}", name, id);
@@ -301,6 +312,285 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         return null;
     }
+    
+    /**
+     * Check to see if schedule is valid for the track.
+     * @param track The track associated with this schedule
+     *
+     * @return SCHEDULE_OKAY if schedule okay, otherwise an error message.
+     */
+    public String checkScheduleValid(Track track) {
+        String status = SCHEDULE_OKAY;
+        List<ScheduleItem> scheduleItems = getItemsBySequenceList();
+        if (scheduleItems.size() == 0) {
+            return Bundle.getMessage("empty");
+        }
+        for (ScheduleItem si : scheduleItems) {
+            // check train schedules
+            if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+                    InstanceManager.getDefault(TrainScheduleManager.class)
+                            .getScheduleById(si.getSetoutTrainScheduleId()) == null) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"),
+                        new Object[] { si.getSetoutTrainScheduleId() });
+                break;
+            }
+            if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
+                    InstanceManager.getDefault(TrainScheduleManager.class)
+                            .getScheduleById(si.getPickupTrainScheduleId()) == null) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"),
+                        new Object[] { si.getPickupTrainScheduleId() });
+                break;
+            }
+            if (!track.getLocation().acceptsTypeName(si.getTypeName())) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
+                break;
+            }
+            if (!track.isTypeNameAccepted(si.getTypeName())) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
+                break;
+            }
+            // check roads, accepted by track, valid road, and there's at least one car with
+            // that road
+            if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+                    (!track.isRoadNameAccepted(si.getRoadName()) ||
+                            !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
+                            InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(),
+                                    si.getRoadName()) == null)) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getRoadName() });
+                break;
+            }
+            // check loads
+            List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName());
+            if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
+                    (!track.isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
+                            !loads.contains(si.getReceiveLoadName()))) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getReceiveLoadName() });
+                break;
+            }
+            if (!si.getShipLoadName().equals(ScheduleItem.NONE) && !loads.contains(si.getShipLoadName())) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getShipLoadName() });
+                break;
+            }
+            // check destination
+            if (si.getDestination() != null &&
+                    (!si.getDestination().acceptsTypeName(si.getTypeName()) ||
+                            InstanceManager.getDefault(LocationManager.class)
+                                    .getLocationById(si.getDestination().getId()) == null)) {
+                status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getDestination() });
+                break;
+            }
+            // check destination track
+            if (si.getDestination() != null && si.getDestinationTrack() != null) {
+                if (!si.getDestination().isTrackAtLocation(si.getDestinationTrack())) {
+                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
+                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")" });
+                    break;
+                }
+                if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
+                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
+                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")" });
+                    break;
+                }
+                if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+                        !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
+                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
+                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")" });
+                    break;
+                }
+                if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
+                        !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(),
+                                si.getTypeName())) {
+                    status = MessageFormat.format(Bundle.getMessage("NotValid"),
+                            new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")" });
+                    break;
+                }
+            }
+        }
+        return status;
+    }
+    
+    private static boolean debugFlag = false;
+    
+    /*
+     * Match mode search
+     */
+    public String searchSchedule(Car car, Track track) {
+        if (debugFlag) {
+            log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(),
+                    car.getLoadName());
+        }
+        // has the car already been assigned a schedule item? Then verify that its still
+        // okay
+        if (!car.getScheduleItemId().equals(Track.NONE)) {
+            ScheduleItem si = getItemById(car.getScheduleItemId());
+            if (si != null) {
+                String status = checkScheduleItem(si, car, track);
+                if (status.equals(Track.OKAY)) {
+                    return Track.OKAY;
+                }
+                log.debug("Car ({}) with schedule id ({}) failed check, status: {}", car.toString(),
+                        car.getScheduleItemId(), status);
+            }
+        }
+        // search schedule for a match
+        for (int i = 0; i < getSize(); i++) {
+            ScheduleItem si = track.getNextScheduleItem();
+            if (debugFlag) {
+                log.debug("Item id: ({}) requesting type ({}) load ({}) final dest ({}, {})", si.getId(),
+                        si.getTypeName(), si.getReceiveLoadName(), si.getDestinationName(),
+                        si.getDestinationTrackName()); // NOI18N
+            }
+            String status = checkScheduleItem(si, car, track);
+            if (status.equals(Track.OKAY)) {
+                log.debug("Found item match ({}) car ({}) type ({}) load ({}) ship ({}) destination ({}, {})",
+                        si.getId(), car.toString(), car.getTypeName(), si.getReceiveLoadName(), si.getShipLoadName(),
+                        si.getDestinationName(), si.getDestinationTrackName()); // NOI18N
+                car.setScheduleItemId(si.getId()); // remember which item was a match
+                return Track.OKAY;
+            } else {
+                if (debugFlag) {
+                    log.debug("Item id: ({}) status ({})", si.getId(), status);
+                }
+            }
+        }
+        if (debugFlag) {
+            log.debug("No Match");
+        }
+        car.setScheduleItemId(Car.NONE); // clear the car's schedule id
+        return Track.SCHEDULE + " " + Bundle.getMessage("noMatch");
+    }
+    
+    public String checkScheduleItem(ScheduleItem si, Car car, Track track) {
+        // if car is already assigned to this schedule item allow it to be dropped off
+        // on the wrong day (car arrived late)
+        if (!car.getScheduleItemId().equals(si.getId()) &&
+                !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+                !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                        .equals(si.getSetoutTrainScheduleId())) {
+            TrainSchedule trainSch = InstanceManager.getDefault(TrainScheduleManager.class)
+                    .getScheduleById(si.getSetoutTrainScheduleId());
+            if (trainSch != null) {
+                return Track.SCHEDULE +
+                        " (" +
+                        getName() +
+                        ") " +
+                        Bundle.getMessage("requestCarOnly") +
+                        " (" +
+                        trainSch.getName() +
+                        ")";
+            }
+        }
+        // Check for correct car type, road, load
+        if (!car.getTypeName().equals(si.getTypeName())) {
+            return Track.SCHEDULE +
+                    " (" +
+                    getName() +
+                    ") " +
+                    Bundle.getMessage("requestCar") +
+                    " " +
+                    Track.TYPE +
+                    " (" +
+                    si.getTypeName() +
+                    ")";
+        }
+        if (!si.getRoadName().equals(ScheduleItem.NONE) && !car.getRoadName().equals(si.getRoadName())) {
+            return Track.SCHEDULE +
+                    " (" +
+                    getName() +
+                    ") " +
+                    Bundle.getMessage("requestCar") +
+                    " " +
+                    Track.TYPE +
+                    " (" +
+                    si.getTypeName() +
+                    ") " +
+                    Track.ROAD +
+                    " (" +
+                    si.getRoadName() +
+                    ")";
+        }
+        if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) && !car.getLoadName().equals(si.getReceiveLoadName())) {
+            return Track.SCHEDULE +
+                    " (" +
+                    getName() +
+                    ") " +
+                    Bundle.getMessage("requestCar") +
+                    " " +
+                    Track.TYPE +
+                    " (" +
+                    si.getTypeName() +
+                    ") " +
+                    Track.LOAD +
+                    " (" +
+                    si.getReceiveLoadName() +
+                    ")";
+        }
+        // don't try the random feature if car is already assigned to this schedule item
+        if (car.getFinalDestinationTrack() != track &&
+                !si.getRandom().equals(ScheduleItem.NONE) &&
+                !car.getScheduleItemId().equals(si.getId())) {
+            try {
+                int value = Integer.parseInt(si.getRandom());
+                double random = 100 * Math.random();
+                log.debug("Selected random {}, created random {}", si.getRandom(), random);
+                if (random > value) {
+                    return MessageFormat.format(Bundle.getMessage("scheduleRandom"),
+                            new Object[] { Track.SCHEDULE, getName(), si.getId(), value, random });
+                }
+            } catch (NumberFormatException e) {
+                log.error("Random value {} isn't a number", si.getRandom());
+            }
+        }
+        return Track.OKAY;
+    }
+    
+    public boolean checkScheduleAttribute(String attribute, String carType, Car car) {
+        List<ScheduleItem> scheduleItems = getItemsBySequenceList();
+        for (ScheduleItem si : scheduleItems) {
+            if (si.getTypeName().equals(carType)) {
+                // check to see if schedule services car type
+                if (attribute.equals(Track.TYPE)) {
+                    return true;
+                }
+                // check to see if schedule services car type and load
+                if (attribute.equals(Track.LOAD) &&
+                        (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                                car == null ||
+                                si.getReceiveLoadName().equals(car.getLoadName()))) {
+                    return true;
+                }
+                // check to see if schedule services car type and road
+                if (attribute.equals(Track.ROAD) &&
+                        (si.getRoadName().equals(ScheduleItem.NONE) ||
+                                car == null ||
+                                si.getRoadName().equals(car.getRoadName()))) {
+                    return true;
+                }
+                // check to see if train schedule allows delivery
+                if (attribute.equals(Track.TRAIN_SCHEDULE) &&
+                        (si.getSetoutTrainScheduleId().isEmpty() ||
+                                InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                                        .equals(si.getSetoutTrainScheduleId()))) {
+                    return true;
+                }
+                // check to see if at least one schedule item can service car
+                if (attribute.equals(Track.ALL) &&
+                        (si.getReceiveLoadName().equals(ScheduleItem.NONE) ||
+                                car == null ||
+                                si.getReceiveLoadName().equals(car.getLoadName())) &&
+                        (si.getRoadName().equals(ScheduleItem.NONE) ||
+                                car == null ||
+                                si.getRoadName().equals(car.getRoadName())) &&
+                        (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
+                                InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
+                                        .equals(si.getSetoutTrainScheduleId()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
