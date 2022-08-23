@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: The Python/Jython language</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: The Python/Jython language</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -71,24 +72,24 @@
         helps readability; using tabs can cause lots of confusion and is not recommended. Mixing
         spaces and tabs is likely to cause lots of confusion; please don't do that)
         <p>For example, this is a syntax error:</p>
-
         <pre>
-   a = 15
-      print a
-   b = 21  
+  a = 15
+    print a
+  b = 21
 </pre>because those statements, though logically grouped at the same level in the program, aren't
 indented the same. This sounds like a pain at first, but you rapidly get used to it. Then it makes
 things like the following pretty easy to read, without having to worry about where the { and } go:
 
-        <pre>
-        if ( now == -1 ) :
-                done = 1
-        else :
-                done = 0
-        print done 
+  <pre>
+  if ( now == -1 ) :
+          done = 1
+  else :
+          done = 0
+  print done
 </pre>If you do get a message about "Syntax error", look at the indicated line number to see if
 your indentation isn't lined up.
       </div>
+
       <a id="newJython"></a>
       <h2>Is JMRI's support for Python complete?</h2>
       JMRI scripting uses <a href="http://www.jython.org" target="_blank">Jython</a>, a
