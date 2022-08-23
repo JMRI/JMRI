@@ -1,14 +1,15 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 
 import jmri.*;
 import jmri.util.*;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test simple functioning of LayoutTurnout.
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
@@ -42,7 +44,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testNew() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertNotNull("LayoutTurnout right hand not null", ltRH);
         Assert.assertNotNull("LayoutTurnout left hand not null", ltLH);
@@ -54,63 +55,59 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testToString() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String s = ltRH.toString();
         Assert.assertNotNull("LayoutTurnout right hand toString() not null", s);
-        Assert.assertEquals(s, "LayoutTurnout Right Hand");
+        Assert.assertEquals("LayoutTurnout Right Hand", s);
 
         s = ltLH.toString();
         Assert.assertNotNull("LayoutTurnout left hand toString() not null", s);
-        Assert.assertEquals(s, "LayoutTurnout Left Hand");
+        Assert.assertEquals("LayoutTurnout Left Hand", s);
 
         s = ltWY.toString();
         Assert.assertNotNull("LayoutTurnout wye toString() not null", s);
-        Assert.assertEquals(s, "LayoutTurnout Wye");
+        Assert.assertEquals("LayoutTurnout Wye", s);
 
         s = ltDX.toString();
         Assert.assertNotNull("LayoutTurnout double crossover toString() not null", s);
-        Assert.assertEquals(s, "LayoutTurnout Double XOver");
+        Assert.assertEquals("LayoutTurnout Double XOver", s);
 
         s = ltRX.toString();
         Assert.assertNotNull("LayoutTurnout right hand crossover toString() not null", s);
-        Assert.assertEquals(s, "LayoutTurnout Right Hand XOver");
+        Assert.assertEquals("LayoutTurnout Right Hand XOver", s);
 
         s = ltLX.toString();
         Assert.assertNotNull("LayoutTurnout left hand crossover toString() not null", s);
-        Assert.assertEquals(s, "LayoutTurnout Left Hand XOver");
+        Assert.assertEquals("LayoutTurnout Left Hand XOver", s);
     }
 
     @Test
     public void testGetVersion() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getVersion(), 1);
-        Assert.assertEquals(ltLH.getVersion(), 1);
-        Assert.assertEquals(ltWY.getVersion(), 1);
-        Assert.assertEquals(ltDX.getVersion(), 1);
-        Assert.assertEquals(ltRX.getVersion(), 1);
-        Assert.assertEquals(ltLX.getVersion(), 1);
+        assertEquals(1, ltRH.getVersion());
+        assertEquals(1, ltLH.getVersion());
+        assertEquals(1, ltWY.getVersion());
+        assertEquals(1, ltDX.getVersion());
+        assertEquals(1, ltRX.getVersion());
+        assertEquals(1, ltLX.getVersion());
     }
 
     @Test
     public void testSetVersion() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ltRH.setVersion(2);
-        Assert.assertEquals(ltRH.getVersion(), 2);
+        assertEquals(2, ltRH.getVersion());
         ltLH.setVersion(2);
-        Assert.assertEquals(ltLH.getVersion(), 2);
+        assertEquals(2, ltLH.getVersion());
         ltWY.setVersion(2);
-        Assert.assertEquals(ltWY.getVersion(), 2);
+        assertEquals(2, ltWY.getVersion());
         ltDX.setVersion(2);
-        Assert.assertEquals(ltDX.getVersion(), 2);
+        assertEquals(2, ltDX.getVersion());
         ltRX.setVersion(2);
-        Assert.assertEquals(ltRX.getVersion(), 2);
+        assertEquals(2, ltRX.getVersion());
         ltLX.setVersion(2);
-        Assert.assertEquals(ltLX.getVersion(), 2);
+        assertEquals(2, ltLX.getVersion());
     }
 
     @Test
     public void testUseBlockSpeed() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse(ltRH.useBlockSpeed());
         Assert.assertFalse(ltLH.useBlockSpeed());
         Assert.assertFalse(ltWY.useBlockSpeed());
@@ -121,175 +118,162 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getTurnoutName(), "");
-        Assert.assertEquals(ltLH.getTurnoutName(), "");
-        Assert.assertEquals(ltWY.getTurnoutName(), "");
-        Assert.assertEquals(ltDX.getTurnoutName(), "");
-        Assert.assertEquals(ltRX.getTurnoutName(), "");
-        Assert.assertEquals(ltLX.getTurnoutName(), "");
+        assertEquals("", ltRH.getTurnoutName());
+        assertEquals("", ltLH.getTurnoutName());
+        assertEquals("", ltWY.getTurnoutName());
+        assertEquals("", ltDX.getTurnoutName());
+        assertEquals("", ltRX.getTurnoutName());
+        assertEquals("", ltLX.getTurnoutName());
     }
 
     @Test
     public void testGetSecondTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getSecondTurnoutName(), "");
-        Assert.assertEquals(ltLH.getSecondTurnoutName(), "");
-        Assert.assertEquals(ltWY.getSecondTurnoutName(), "");
-        Assert.assertEquals(ltDX.getSecondTurnoutName(), "");
-        Assert.assertEquals(ltRX.getSecondTurnoutName(), "");
-        Assert.assertEquals(ltLX.getSecondTurnoutName(), "");
+        assertEquals("", ltRH.getSecondTurnoutName());
+        assertEquals("", ltLH.getSecondTurnoutName());
+        assertEquals("", ltWY.getSecondTurnoutName());
+        assertEquals("", ltDX.getSecondTurnoutName());
+        assertEquals("", ltRX.getSecondTurnoutName());
+        assertEquals("", ltLX.getSecondTurnoutName());
     }
 
     @Test
     public void testGetBlockName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getBlockName(), "");
-        Assert.assertEquals(ltLH.getBlockName(), "");
-        Assert.assertEquals(ltWY.getBlockName(), "");
-        Assert.assertEquals(ltDX.getBlockName(), "");
-        Assert.assertEquals(ltRX.getBlockName(), "");
-        Assert.assertEquals(ltLX.getBlockName(), "");
+        assertEquals("", ltRH.getBlockName());
+        assertEquals("", ltLH.getBlockName());
+        assertEquals("", ltWY.getBlockName());
+        assertEquals("", ltDX.getBlockName());
+        assertEquals("", ltRX.getBlockName());
+        assertEquals("", ltLX.getBlockName());
     }
 
     @Test
     public void testGetBlockBName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getBlockBName(), "");
-        Assert.assertEquals(ltLH.getBlockBName(), "");
-        Assert.assertEquals(ltWY.getBlockBName(), "");
-        Assert.assertEquals(ltDX.getBlockBName(), "");
-        Assert.assertEquals(ltRX.getBlockBName(), "");
-        Assert.assertEquals(ltLX.getBlockBName(), "");
+        assertEquals("", ltRH.getBlockBName());
+        assertEquals("", ltLH.getBlockBName());
+        assertEquals("", ltWY.getBlockBName());
+        assertEquals("", ltDX.getBlockBName());
+        assertEquals("", ltRX.getBlockBName());
+        assertEquals("", ltLX.getBlockBName());
     }
 
     @Test
     public void testGetBlockCName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getBlockCName(), "");
-        Assert.assertEquals(ltLH.getBlockCName(), "");
-        Assert.assertEquals(ltWY.getBlockCName(), "");
-        Assert.assertEquals(ltDX.getBlockCName(), "");
-        Assert.assertEquals(ltRX.getBlockCName(), "");
-        Assert.assertEquals(ltLX.getBlockCName(), "");
+        assertEquals("", ltRH.getBlockCName());
+        assertEquals("", ltLH.getBlockCName());
+        assertEquals("", ltWY.getBlockCName());
+        assertEquals("", ltDX.getBlockCName());
+        assertEquals("", ltRX.getBlockCName());
+        assertEquals("", ltLX.getBlockCName());
     }
 
     @Test
     public void testGetBlockDName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getBlockDName(), "");
-        Assert.assertEquals(ltLH.getBlockDName(), "");
-        Assert.assertEquals(ltWY.getBlockDName(), "");
-        Assert.assertEquals(ltDX.getBlockDName(), "");
-        Assert.assertEquals(ltRX.getBlockDName(), "");
-        Assert.assertEquals(ltLX.getBlockDName(), "");
+        assertEquals("", ltRH.getBlockDName());
+        assertEquals("", ltLH.getBlockDName());
+        assertEquals("", ltWY.getBlockDName());
+        assertEquals("", ltDX.getBlockDName());
+        assertEquals("", ltRX.getBlockDName());
+        assertEquals("", ltLX.getBlockDName());
     }
 
     @Test
     public void testGetSignalHead() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.NONE));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.NONE));
         JUnitAppender.assertWarnMessage("Right Hand.getSignalHead(NONE); Unhandled point type");
 
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA3));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD1));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD2));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA1));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA2));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTA3));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB1));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTB2));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC1));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTC2));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD1));
+        assertNull(ltRH.getSignalHead(LayoutTurnout.Geometry.POINTD2));
     }
 
     @Test
     public void testGetLinkedTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getLinkedTurnoutName(), "");
-        Assert.assertEquals(ltLH.getLinkedTurnoutName(), "");
-        Assert.assertEquals(ltWY.getLinkedTurnoutName(), "");
-        Assert.assertEquals(ltDX.getLinkedTurnoutName(), "");
-        Assert.assertEquals(ltRX.getLinkedTurnoutName(), "");
-        Assert.assertEquals(ltLX.getLinkedTurnoutName(), "");
+        assertEquals("", ltRH.getLinkedTurnoutName());
+        assertEquals("", ltLH.getLinkedTurnoutName());
+        assertEquals("", ltWY.getLinkedTurnoutName());
+        assertEquals("", ltDX.getLinkedTurnoutName());
+        assertEquals("", ltRX.getLinkedTurnoutName());
+        assertEquals("", ltLX.getLinkedTurnoutName());
     }
 
     @Test
     public void testSetLinkedTurnoutName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ltRH.setLinkedTurnoutName("Foo");
-        Assert.assertEquals(ltRH.getLinkedTurnoutName(), "Foo");
+        assertEquals("Foo", ltRH.getLinkedTurnoutName());
 
         ltLH.setLinkedTurnoutName("Foo");
-        Assert.assertEquals(ltLH.getLinkedTurnoutName(), "Foo");
+        assertEquals("Foo", ltLH.getLinkedTurnoutName());
 
         ltWY.setLinkedTurnoutName("Foo");
-        Assert.assertEquals(ltWY.getLinkedTurnoutName(), "Foo");
+        assertEquals("Foo", ltWY.getLinkedTurnoutName());
 
         ltDX.setLinkedTurnoutName("Foo");
-        Assert.assertEquals(ltDX.getLinkedTurnoutName(), "Foo");
+        assertEquals("Foo", ltDX.getLinkedTurnoutName());
 
         ltRX.setLinkedTurnoutName("Foo");
-        Assert.assertEquals(ltRX.getLinkedTurnoutName(), "Foo");
+        assertEquals("Foo", ltRX.getLinkedTurnoutName());
 
         ltLX.setLinkedTurnoutName("Foo");
-        Assert.assertEquals(ltLX.getLinkedTurnoutName(), "Foo");
+        assertEquals("Foo", ltLX.getLinkedTurnoutName());
     }
 
     @Test
     public void testGetLinkType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltRH.getLinkType());
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltLH.getLinkType());
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltWY.getLinkType());
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltDX.getLinkType());
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltRX.getLinkType());
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltLX.getLinkType());
     }
 
     @Test
     public void testSetLinkType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ltRH.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        assertEquals(LayoutTurnout.LinkType.THROAT_TO_THROAT, ltRH.getLinkType());
         ltLH.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        assertEquals(LayoutTurnout.LinkType.THROAT_TO_THROAT, ltLH.getLinkType());
         ltWY.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        assertEquals(LayoutTurnout.LinkType.THROAT_TO_THROAT, ltWY.getLinkType());
         ltDX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        assertEquals(LayoutTurnout.LinkType.THROAT_TO_THROAT, ltDX.getLinkType());
         ltRX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        assertEquals(LayoutTurnout.LinkType.THROAT_TO_THROAT, ltRX.getLinkType());
         ltLX.setLinkType(LayoutTurnout.LinkType.THROAT_TO_THROAT);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.THROAT_TO_THROAT);
+        assertEquals(LayoutTurnout.LinkType.THROAT_TO_THROAT, ltLX.getLinkType());
 
         ltRH.setLinkType(LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltRH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltRH.getLinkType());
         ltLH.setLinkType(LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltLH.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltLH.getLinkType());
         ltWY.setLinkType(LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltWY.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltWY.getLinkType());
         ltDX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltDX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltDX.getLinkType());
         ltRX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltRX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltRX.getLinkType());
         ltLX.setLinkType(LayoutTurnout.LinkType.NO_LINK);
-        Assert.assertEquals(ltLX.getLinkType(), LayoutTurnout.LinkType.NO_LINK);
+        assertEquals(LayoutTurnout.LinkType.NO_LINK, ltLX.getLinkType());
     }
 
     @Test
     public void testGetTurnoutType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals(ltRH.getTurnoutType(), LayoutTurnout.TurnoutType.RH_TURNOUT);
-        Assert.assertEquals(ltLH.getTurnoutType(), LayoutTurnout.TurnoutType.LH_TURNOUT);
-        Assert.assertEquals(ltWY.getTurnoutType(), LayoutTurnout.TurnoutType.WYE_TURNOUT);
-        Assert.assertEquals(ltDX.getTurnoutType(), LayoutTurnout.TurnoutType.DOUBLE_XOVER);
-        Assert.assertEquals(ltRX.getTurnoutType(), LayoutTurnout.TurnoutType.RH_XOVER);
-        Assert.assertEquals(ltLX.getTurnoutType(), LayoutTurnout.TurnoutType.LH_XOVER);
+        assertEquals(LayoutTurnout.TurnoutType.RH_TURNOUT, ltRH.getTurnoutType());
+        assertEquals(LayoutTurnout.TurnoutType.LH_TURNOUT, ltLH.getTurnoutType() );
+        assertEquals(LayoutTurnout.TurnoutType.WYE_TURNOUT, ltWY.getTurnoutType());
+        assertEquals(LayoutTurnout.TurnoutType.DOUBLE_XOVER, ltDX.getTurnoutType());
+        assertEquals(LayoutTurnout.TurnoutType.RH_XOVER, ltRX.getTurnoutType());
+        assertEquals(LayoutTurnout.TurnoutType.LH_XOVER, ltLX.getTurnoutType());
     }
 
     @Test
     public void testGetConnectA() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull(ltRH.getConnectA());
         Assert.assertNull(ltLH.getConnectA());
         Assert.assertNull(ltWY.getConnectA());
@@ -300,7 +284,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetConnectB() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull(ltRH.getConnectB());
         Assert.assertNull(ltLH.getConnectB());
         Assert.assertNull(ltWY.getConnectB());
@@ -311,7 +294,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetConnectC() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull(ltRH.getConnectC());
         Assert.assertNull(ltLH.getConnectC());
         Assert.assertNull(ltWY.getConnectC());
@@ -322,7 +304,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetConnectD() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull(ltRH.getConnectD());
         Assert.assertNull(ltLH.getConnectD());
         Assert.assertNull(ltWY.getConnectD());
@@ -333,7 +314,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetTurnout() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull(ltRH.getTurnout());
         Assert.assertNull(ltLH.getTurnout());
         Assert.assertNull(ltWY.getTurnout());
@@ -344,20 +324,16 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetContinuingSense() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        Assert.assertEquals(ltRH.getContinuingSense(), Turnout.CLOSED);
-        Assert.assertEquals(ltLH.getContinuingSense(), Turnout.CLOSED);
-        Assert.assertEquals(ltWY.getContinuingSense(), Turnout.CLOSED);
-        Assert.assertEquals(ltDX.getContinuingSense(), Turnout.CLOSED);
-        Assert.assertEquals(ltRX.getContinuingSense(), Turnout.CLOSED);
-        Assert.assertEquals(ltLX.getContinuingSense(), Turnout.CLOSED);
+        assertEquals(Turnout.CLOSED, ltRH.getContinuingSense());
+        assertEquals(Turnout.CLOSED, ltLH.getContinuingSense());
+        assertEquals(Turnout.CLOSED, ltWY.getContinuingSense());
+        assertEquals(Turnout.CLOSED, ltDX.getContinuingSense());
+        assertEquals(Turnout.CLOSED, ltRX.getContinuingSense());
+        assertEquals(Turnout.CLOSED, ltLX.getContinuingSense());
     }
 
     @Test
     public void testIsDisabledDefault() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         Assert.assertFalse("ltRH.isDisabled() is False", ltRH.isDisabled());
         Assert.assertFalse("ltLH.isDisabled() is False", ltLH.isDisabled());
         Assert.assertFalse("ltWY.isDisabled() is False", ltWY.isDisabled());
@@ -368,8 +344,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testSetDisabled() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         ltRH.setDisabled(true);
         Assert.assertTrue("ltRH.isDisabled() is True", ltRH.isDisabled());
         ltLH.setDisabled(true);
@@ -386,8 +360,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testIsDisabledWhenOccupied() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         Assert.assertFalse("ltRH.isDisabledWhenOccupied() is False", ltRH.isDisabledWhenOccupied());
         Assert.assertFalse("ltLH.isDisabledWhenOccupied() is False", ltLH.isDisabledWhenOccupied());
         Assert.assertFalse("ltWY.isDisabledWhenOccupied() is False", ltWY.isDisabledWhenOccupied());
@@ -398,8 +370,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testSetDisableWhenOccupied() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         ltRH.setDisableWhenOccupied(true);
         Assert.assertTrue("ltRH.isDisabledWhenOccupied() is True", ltRH.isDisabledWhenOccupied());
         ltLH.setDisableWhenOccupied(true);
@@ -416,7 +386,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetConnectionInvalid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         try {
@@ -470,7 +439,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetConnectionValid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         try {
@@ -518,7 +486,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testSetConnection() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         try {
@@ -547,7 +514,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testSetConnectsInvalid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         ltRH.setConnectA(null, HitPointType.POS_POINT);
@@ -589,7 +555,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testSetConnectsValid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
 
         ltRH.setConnectA(null, HitPointType.NONE);
@@ -600,30 +565,28 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testGetStateDefault() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LayoutEditor exists", layoutEditor);
+        assertNotNull( layoutEditor, "LayoutEditor exists");
 
-        Assert.assertEquals("ltRH.getState() is UNKNOWN", ltRH.getState(), Turnout.UNKNOWN);
-        Assert.assertEquals("ltLH.getState() is UNKNOWN", ltLH.getState(), Turnout.UNKNOWN);
-        Assert.assertEquals("ltWY.getState() is UNKNOWN", ltWY.getState(), Turnout.UNKNOWN);
-        Assert.assertEquals("ltDX.getState() is UNKNOWN", ltDX.getState(), Turnout.UNKNOWN);
-        Assert.assertEquals("ltRX.getState() is UNKNOWN", ltRX.getState(), Turnout.UNKNOWN);
-        Assert.assertEquals("ltLX.getState() is UNKNOWN", ltLX.getState(), Turnout.UNKNOWN);
+        assertEquals(Turnout.UNKNOWN, ltRH.getState(), "ltRH.getState() is UNKNOWN");
+        assertEquals(Turnout.UNKNOWN, ltLH.getState(), "ltLH.getState() is UNKNOWN");
+        assertEquals(Turnout.UNKNOWN, ltWY.getState(), "ltWY.getState() is UNKNOWN");
+        assertEquals(Turnout.UNKNOWN, ltDX.getState(), "ltDX.getState() is UNKNOWN");
+        assertEquals(Turnout.UNKNOWN, ltRX.getState(), "ltRX.getState() is UNKNOWN");
+        assertEquals(Turnout.UNKNOWN, ltLX.getState(), "ltLX.getState() is UNKNOWN");
     }
 
     @Test
     public void testSupportingTurnoutTwoSensor() throws JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        Turnout tOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT1");
-        Turnout tTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT2");
+        Turnout tOne = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        Turnout tTwo = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
         Assert.assertNotNull("exists", tOne);
         Assert.assertNotNull("exists", tTwo);
 
-        Sensor t1Closed = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IST1Closed");
-        Sensor t1Thrown = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IST1Thrown");
-        Sensor t2Closed = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IST2Closed");
-        Sensor t2Thrown = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IST2Thrown");
+        Sensor t1Closed = InstanceManager.getDefault(SensorManager.class).provideSensor("IST1Closed");
+        Sensor t1Thrown = InstanceManager.getDefault(SensorManager.class).provideSensor("IST1Thrown");
+        Sensor t2Closed = InstanceManager.getDefault(SensorManager.class).provideSensor("IST2Closed");
+        Sensor t2Thrown = InstanceManager.getDefault(SensorManager.class).provideSensor("IST2Thrown");
 
         tOne.provideFirstFeedbackSensor("IST1Thrown");
         tOne.provideSecondFeedbackSensor("IST1Closed");
@@ -647,17 +610,17 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("tOne name fetchable", tOne.getDisplayName(), ltRX.getTurnoutName());
         Assert.assertEquals("tTwo name fetchable", tTwo.getDisplayName(), ltRX.getSecondTurnoutName());
 
-        Assert.assertEquals("0 sensor states known getState UNKNOWN", ltRX.getState(), Turnout.UNKNOWN);
+        assertEquals(Turnout.UNKNOWN, ltRX.getState(), "0 sensor states known getState UNKNOWN");
 
         t1Closed.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("only 1 sensor known INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
+        assertEquals(Turnout.INCONSISTENT, ltRX.getState(), "only 1 sensor known INCONSISTENT");
 
         t1Thrown.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("only 2 sensor known INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
-        Assert.assertEquals("main turnout known ", tOne.getState(), Turnout.CLOSED);
+        assertEquals(Turnout.INCONSISTENT, ltRX.getState(), "only 2 sensor known INCONSISTENT");
+        assertEquals(Turnout.CLOSED, tOne.getState(), "main turnout known ");
 
         t2Closed.setKnownState(Sensor.ACTIVE);
-        Assert.assertEquals("only 3 sensor known INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
+        assertEquals(Turnout.INCONSISTENT, ltRX.getState(), "only 3 sensor known INCONSISTENT");
 
         t2Thrown.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals("t1 CLOSED", Turnout.CLOSED, tOne.getState());
@@ -665,10 +628,10 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("both turnouts CLOSED", Turnout.CLOSED, ltRX.getState());
 
         t2Closed.setKnownState(Sensor.INACTIVE);
-        Assert.assertEquals("t2 leg status INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
+        assertEquals(Turnout.INCONSISTENT, ltRX.getState(), "t2 leg status INCONSISTENT");
         t2Thrown.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("t2 THROWN", Turnout.THROWN, tTwo.getState());
-        Assert.assertEquals("t2 THROWN t1 CLOSED INCONSISTENT", ltRX.getState(), Turnout.INCONSISTENT);
+        assertEquals(Turnout.INCONSISTENT, ltRX.getState(), "t2 THROWN t1 CLOSED INCONSISTENT");
 
         // remove turnouts and check num listeners
         ltRX.setSecondTurnout("");
@@ -679,28 +642,20 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("t1 start listeners ", start1Listeners, tOne.getPropertyChangeListeners().length);
 
         tOne.dispose();
-        tOne = null;
-
         tTwo.dispose();
-        tTwo = null;
 
         t1Closed.dispose();
-        t1Closed = null;
         t1Thrown.dispose();
-        t1Thrown = null;
+
         t2Closed.dispose();
-        t2Closed = null;
         t2Thrown.dispose();
-        t2Thrown = null;
     }
 
     @Test
     public void testSupportingTurnoutLogic() throws JmriException {
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        Turnout stOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS1");
-        Turnout stTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS2");
+        Turnout stOne = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITS1");
+        Turnout stTwo = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITS2");
 
         // not a test of using a String to set the Turnout
         ltRX.setTurnout("ITS1");
@@ -764,15 +719,11 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("t1 CLOSED when t2 CLOSED", Turnout.CLOSED, stOne.getCommandedState());
 
         stOne.dispose();
-        stOne = null;
-
         stTwo.dispose();
-        stTwo = null;
     }
 
     @Test
     public void testThrowWhenOccupiedOneTurnout() throws JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertEquals("ltRH starts unknown state", Turnout.UNKNOWN, ltRH.getState());
         ltRH.setState(Turnout.CLOSED);
@@ -782,7 +733,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         ltRH.setState(Turnout.CLOSED);
         Assert.assertEquals("no change null Turnout and disabled", Turnout.UNKNOWN, ltRH.getState());
 
-        Turnout otOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS1");
+        Turnout otOne = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITS1");
         ltRH.setTurnout("ITS1");
         otOne.setCommandedState(Turnout.UNKNOWN);
         Assert.assertEquals("turnout set ", Turnout.UNKNOWN, otOne.getState());
@@ -794,10 +745,10 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         ltRH.setDisabled(false);
 
         LayoutBlock layoutBlock = new LayoutBlock("ILB1", "Test Block");
-        Sensor occSensor = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("ISOccupancy1");
+        Sensor occSensor = InstanceManager.getDefault(SensorManager.class).provideSensor("ISOccupancy1");
         occSensor.setKnownState(Sensor.ACTIVE);
         layoutBlock.setOccupancySensorName("ISOccupancy1");
-        Assert.assertEquals("Occupied when sensor active", layoutBlock.getOccupancy(), LayoutBlock.OCCUPIED);
+        assertEquals(LayoutBlock.OCCUPIED, layoutBlock.getOccupancy(), "Occupied when sensor active");
 
         ltRHv.setLayoutBlock(layoutBlock);
 
@@ -838,20 +789,15 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         Assert.assertEquals("ltRH THROWN when occupied, occ when active not disabled", Turnout.THROWN, otOne.getCommandedState());
 
         layoutBlock.dispose();
-        layoutBlock = null;
-
         otOne.dispose();
-        otOne = null;
-
     }
 
     @Test
     public void testSecondaryTurnoutStateWhenSet() throws JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // not testing occupancy as that was covered in previous test
-        Turnout stOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS1");
-        Turnout stTwo = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITS2");
+        Turnout stOne = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITS1");
+        Turnout stTwo = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITS2");
 
         // not a test of using a String to set the Turnout
         ltRX.setTurnout("ITS1");
@@ -889,14 +835,13 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
 
     @Test
     public void testToggle() throws JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // null Turnout
         Assert.assertEquals("starts UNKNOWN", Turnout.UNKNOWN, ltRH.getState());
         ltRH.toggleTurnout();
         Assert.assertEquals("still UNKNOWN no Turnout to toggle", Turnout.UNKNOWN, ltRH.getState());
 
-        Turnout ptOne = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("ITP1");
+        Turnout ptOne = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITP1");
         ltRH.setTurnout("ITP1");
 
         ptOne.setCommandedState(Turnout.UNKNOWN);
@@ -909,77 +854,6 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
         ltRH.toggleTurnout();
         Assert.assertEquals("THROWN to CLOSED when toggled", Turnout.CLOSED, ptOne.getCommandedState());
     }
-
-    // from here down is testing infrastructure
-    @BeforeAll
-    @javax.annotation.OverridingMethodsMustInvokeSuper
-    public static void beforeClass() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-            JUnitUtil.resetInstanceManager();
-            JUnitUtil.initInternalTurnoutManager();
-            JUnitUtil.initInternalSensorManager();
-            JUnitUtil.initInternalSignalHeadManager();
-            layoutEditor = new LayoutEditor();
-        }
-    }
-
-    @AfterAll
-    @javax.annotation.OverridingMethodsMustInvokeSuper
-    public static void afterClass() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-    }
-
-    @BeforeEach
-    @javax.annotation.OverridingMethodsMustInvokeSuper
-    public void setUp() {
-        super.setUp();
-
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-
-            layoutEditor = new LayoutEditor();
-
-            Point2D point = new Point2D.Double(150.0, 100.0);
-            Point2D delta = new Point2D.Double(50.0, 75.0);
-
-            ltRH = new LayoutRHTurnout("Right Hand", layoutEditor); // point, 33.0, 1.1, 1.2,
-            ltRHv = new LayoutRHTurnoutView(ltRH, point, 33.0, 1.1, 1.2, layoutEditor);
-            layoutEditor.addLayoutTrack(ltRH, ltRHv);
-
-            point = MathUtil.add(point, delta);
-            ltLH = new LayoutLHTurnout("Left Hand", layoutEditor); // point, 66.0, 1.3, 1.4,
-            ltLHv = new LayoutLHTurnoutView(ltLH, point, 66.0, 1.3, 1.4, layoutEditor);
-            layoutEditor.addLayoutTrack(ltLH, ltLHv);
-
-            point = MathUtil.add(point, delta);
-            ltWY = new LayoutWye("Wye", layoutEditor); // point, 99.0, 1.5, 1.6,
-            ltWYv = new LayoutWyeView(ltWY, point, 99.0, 1.5, 1.6, layoutEditor);
-            layoutEditor.addLayoutTrack(ltWY, ltWYv);
-
-            point = MathUtil.add(point, delta);
-            ltDX = new LayoutDoubleXOver("Double XOver", layoutEditor); // point, 132.0, 1.7, 1.8,
-            ltDXv = new LayoutDoubleXOverView(ltDX, point, 132.0, 1.7, 1.8, layoutEditor);
-            layoutEditor.addLayoutTrack(ltDX, ltDXv);
-
-            point = MathUtil.add(point, delta);
-            ltRX = new LayoutRHXOver("Right Hand XOver", layoutEditor); // point, 165.0, 1.9, 2.0,
-            ltRXv = new LayoutRHXOverView(ltRX, point, 165.0, 1.9, 2.0, layoutEditor);
-            layoutEditor.addLayoutTrack(ltRX, ltRXv);
-
-            point = MathUtil.add(point, delta);
-            ltLX = new LayoutLHXOver("Left Hand XOver", layoutEditor); // point, 198.0, 2.1, 2.2,
-            ltLXv = new LayoutLHXOverView(ltLX, point, 198.0, 2.1, 2.2, layoutEditor);
-            layoutEditor.addLayoutTrack(ltLX, ltLXv);
-        }
-    }
-
-    private static LayoutEditor layoutEditor = null;
 
     private LayoutRHTurnout ltRH = null;
     private LayoutRHTurnoutView ltRHv = null;
@@ -999,7 +873,53 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
     private LayoutLHXOver ltLX = null;
     private LayoutLHXOverView ltLXv = null;
 
+    @Override
+    @BeforeEach
+    @javax.annotation.OverridingMethodsMustInvokeSuper
+    public void setUp() {
+        super.setUp();
 
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        Point2D delta = new Point2D.Double(50.0, 75.0);
+
+        ltRH = new LayoutRHTurnout("Right Hand", layoutEditor); // point, 33.0, 1.1, 1.2,
+        ltRHv = new LayoutRHTurnoutView(ltRH, point, 33.0, 1.1, 1.2, layoutEditor);
+        layoutEditor.addLayoutTrack(ltRH, ltRHv);
+
+        point = MathUtil.add(point, delta);
+        ltLH = new LayoutLHTurnout("Left Hand", layoutEditor); // point, 66.0, 1.3, 1.4,
+        ltLHv = new LayoutLHTurnoutView(ltLH, point, 66.0, 1.3, 1.4, layoutEditor);
+        layoutEditor.addLayoutTrack(ltLH, ltLHv);
+
+        point = MathUtil.add(point, delta);
+        ltWY = new LayoutWye("Wye", layoutEditor); // point, 99.0, 1.5, 1.6,
+        ltWYv = new LayoutWyeView(ltWY, point, 99.0, 1.5, 1.6, layoutEditor);
+        layoutEditor.addLayoutTrack(ltWY, ltWYv);
+
+        point = MathUtil.add(point, delta);
+        ltDX = new LayoutDoubleXOver("Double XOver", layoutEditor); // point, 132.0, 1.7, 1.8,
+        ltDXv = new LayoutDoubleXOverView(ltDX, point, 132.0, 1.7, 1.8, layoutEditor);
+        layoutEditor.addLayoutTrack(ltDX, ltDXv);
+
+        point = MathUtil.add(point, delta);
+        ltRX = new LayoutRHXOver("Right Hand XOver", layoutEditor); // point, 165.0, 1.9, 2.0,
+        ltRXv = new LayoutRHXOverView(ltRX, point, 165.0, 1.9, 2.0, layoutEditor);
+        layoutEditor.addLayoutTrack(ltRX, ltRXv);
+
+        point = MathUtil.add(point, delta);
+        ltLX = new LayoutLHXOver("Left Hand XOver", layoutEditor); // point, 198.0, 2.1, 2.2,
+        ltLXv = new LayoutLHXOverView(ltLX, point, 198.0, 2.1, 2.2, layoutEditor);
+        layoutEditor.addLayoutTrack(ltLX, ltLXv);
+
+    }
+
+    @Override
     @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {
@@ -1063,13 +983,7 @@ public class LayoutTurnoutTest extends LayoutTrackTest {
             ltLXv = null;
         }
 
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
-        layoutEditor = null;
-
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutTest.class);

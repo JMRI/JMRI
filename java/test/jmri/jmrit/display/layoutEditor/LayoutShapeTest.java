@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -8,23 +7,24 @@ import java.util.ArrayList;
 import jmri.jmrit.display.layoutEditor.LayoutShape.LayoutShapeType;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of LayoutShape
  *
  * @author George Warner Copyright (C) 2019
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutShapeTest {
 
-    private static LayoutEditor layoutEditor = null;
+    private static LayoutEditor layoutEditor = new LayoutEditor();
     private LayoutShape ls = null;
 
     @Test
     public void testNew() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
         Assert.assertEquals("ls.getNumberPoints() equals 4", 4, ls.getNumberPoints());
@@ -32,7 +32,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testToString() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -43,7 +42,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testGetDisplayName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -52,7 +50,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testGetType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -61,7 +58,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testSetType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -80,7 +76,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testGetBounds() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -91,7 +86,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testSetCoordsCenter() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
         Assert.assertEquals("ls.getNumberPoints() equals 4", 4, ls.getNumberPoints());
@@ -110,7 +104,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testScaleCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -128,7 +121,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testTranslateCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -146,7 +138,6 @@ public class LayoutShapeTest {
 
     @Test
     public void testFindHitPointType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutShape not null", ls);
 
@@ -178,31 +169,24 @@ public class LayoutShapeTest {
     @BeforeAll
     public static void beforeClass() {
         JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-            layoutEditor = new LayoutEditor();
-        }
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterAll
     public static void afterClass() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-            layoutEditor = null;
-        }
+        JUnitUtil.dispose(layoutEditor);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            ls = new LayoutShape("Yard Fence", new Point2D.Double(50.0, 100.0), layoutEditor);
-            ls.addPoint(new Point2D.Double(100.0, 100.0));
-            ls.addPoint(new Point2D.Double(100.0, 150.0));
-            ls.addPoint(new Point2D.Double(50.0, 150.0));
-        }
+        JUnitUtil.resetProfileManager();
+
+        ls = new LayoutShape("Yard Fence", new Point2D.Double(50.0, 100.0), layoutEditor);
+        ls.addPoint(new Point2D.Double(100.0, 100.0));
+        ls.addPoint(new Point2D.Double(100.0, 150.0));
+        ls.addPoint(new Point2D.Double(50.0, 150.0));
     }
 
     @AfterEach
