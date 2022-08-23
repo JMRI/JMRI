@@ -110,7 +110,7 @@ which checks the dates of the control files to make sure they've benen updated w
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.30 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.30/openlcb-0.7.30.jar or the maven central repository.
+ - Local build with PR #204 from https://github.com/openlcb/OpenLCB_Java/pull/204
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
