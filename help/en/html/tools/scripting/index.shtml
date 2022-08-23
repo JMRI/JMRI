@@ -20,7 +20,7 @@
 
       <div class="noted">
         <span class="since">since 4.23.3</span>
-        <p>Note: The PanelPro main menu is being changed. The four scripting related menu items
+        <p>Note: The PanelPro main menu has changed. The four scripting related menu items
         have moved from the <strong>Panels</strong> menu item to the new <strong>Scripting</strong>
         menu item. The menu references in the scripting related documents show the new menu path
         with the old value in braces.</p>

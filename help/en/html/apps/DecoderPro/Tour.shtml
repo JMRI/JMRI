@@ -244,7 +244,7 @@
 
       <div class="flex-container">
         <div class="flex-item-30">
-          <a href="./images/RosterEntry5.png"><img src="./images/RosterEntry5.png" alt="Rosters"></a>
+          <a href="./images/DP5Roster.png"><img src="./images/DP5Roster.png" alt="Rosters"></a>
         </div>
         <div class="flex-item-70">
           <h3>Locomotive Rosters</h3>
@@ -255,8 +255,8 @@
           which can be quite long. The roster can also store locomotive information for you.
           The "Roster Entry" sheet displays this info and allows you to edit it.</p>
 
-          <p>Click "Save" to store the roster information to a file on your computer's local
-          disk; you'll be reminded to do this if you close the programmer with any unstored
+          <p>Click "Save to Roster" to store the roster information to a file on your computer's
+          local disk; you'll be reminded to do this if you close the programmer with any unstored
           information.</p>
 
           <p>The "ID" field at the top is the name you'll use next time to select this
@@ -267,7 +267,7 @@
 
       <div class="flex-container">
         <div class="flex-item-30">
-          <a href="./images/SelLoco5.png"><img src="./images/SelLoco5.png" alt="Selecting a roster entry"></a>
+          <a href="./images/DP5FileMenu.png"><img src="./images/DP5FileMenu.png" alt="Selecting a roster entry"></a>
         </div>
         <div class="flex-item-70">
           <h3>Selecting an existing Roster Entry</h3>

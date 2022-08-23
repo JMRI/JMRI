@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <title>JiMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
+  <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
   <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -14,7 +14,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JiMRI : Guide d'Utilisation de DecoderPro</h1>
+      <h1>JMRI : Guide d'Utilisation de DecoderPro</h1>
 
       <h2>Utiliser la transformation XSLT pour les décodeurs complexes</h2>
 
@@ -54,13 +54,13 @@
         <li>Modèle de fichier décodeur : <strong>18 kByte</strong>, 390 lignes.</li>
       </ul>
 
-      <p>Pour JiMRI lui-même ou la vitesse de fonctionnement du DecoderPro, ces deux approches sont
+      <p>Pour JMRI lui-même ou la vitesse de fonctionnement du DecoderPro, ces deux approches sont
       les mêmes : le modèle de fichier est transformé (expansé) en interne en définition de
       décodage en XML et traité comme s'il était écrit entièrement à la main. Pour la
       <strong>maintenance</strong>, il est bien plus facile de maintenir ~600 lignes de XML que
       20600.</p>
 
-      <p>JiMRI fournit une option pour appliquer une <strong>feuille de style XSLT</strong> à un
+      <p>JMRI fournit une option pour appliquer une <strong>feuille de style XSLT</strong> à un
       fichier décodeur, <strong>avant</strong> que le fichier soit chargé dans DecoderPro et avant
       qu'il soit interprété comme variables et panneaux de CV. Cela permet d'écrire à la main des
       définitions de CV uniques et leurs panneaux, et <strong>d'ajouter du contenu généré</strong>
@@ -79,10 +79,10 @@
       </ul>
 
       <p>Le modèle de décodeur doit être placé dans le dossier <strong>xml/decoders</strong> de
-      l'installation de JiMRI. Il est <strong>basé sur le modèle de Petr Sidlo. dccdoma.cz -
+      l'installation de JMRI. Il est <strong>basé sur le modèle de Petr Sidlo. dccdoma.cz -
       ARD-SCOM-MX decoder</strong> - génère les mêmes panneaux de décodeur que l'original (à partir
       de 12/2019). La feuille de style (<strong>scom.xsl</strong>) doit être placée également dans
-      le dossier <strong><code>xml/decoder</code></strong> de l'installation JiMRI.</p>
+      le dossier <strong><code>xml/decoder</code></strong> de l'installation JMRI.</p>
 
       <p>Le modèle peut être traité à partir de la ligne de commande pour générer le XML du
       décodeur, afin que vous puissiez inspecter les effets de la modification de la feuille de
@@ -100,7 +100,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       <h2>Appliquer la feuille de style au fichier décodeur.</h2>
 
       <p>Une <strong>instruction pour traiter le fichier comme un modèle</strong> doit être
-      présente dans le fichier, afin d'agir comme un modèle. Sinon, JiMRI le prendrait comme une
+      présente dans le fichier, afin d'agir comme un modèle. Sinon, JMRI le prendrait comme une
       définition de décodeur "ordinaire" - tous les éléments d'affichage (voir ci-dessous)
       "détournés" pour contenir les données pour le traitement du modèle. apparaîtraient dans
       l'interface utilisateur !</p>
@@ -129,7 +129,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       générés sont est composé d'une liste de chaînes de caractères (c'est-à-dire que les noms des
       aspects du signal sont répétés pour chaque mât de signal). chaque mât de signal), et nous
       devons fournir une telle entrée à la feuille de style. Le fichier décodeur est <strong>la
-      seule entrée</strong> fournie pour la feuille de style par le cadre JiMRI.</p>
+      seule entrée</strong> fournie pour la feuille de style par le cadre JMRI.</p>
 
       <p>Le fichier de modèle de décodeur est <strong>encore interprété comme une définition de
       décodeur</strong> et doit adhérer strictement au schéma XML <code>decoder.xsd</code>. Pour
@@ -356,7 +356,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       remplace les boucles en invoquant un modèle à partir de ce modèle lui-même. La seule mise en
       garde est que le nombre d'itérations est <strong>limité</strong> à environ 100 ( ?), avant
       que l'espace de la pile ne soit épuisé. L'exemple se trouve dans <code><a href=
-      "https://github.com/JiMRI/JiMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>,
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>,
       cherchez le modèle <code>AllLEDGroups</code> :</p>
 
       <div class="wide"><pre>
@@ -486,7 +486,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       Cela peut être utile pour les <strong>valeurs de choix</strong>, ou même les <strong>panneaux
       d'interface utilisateur</strong> répétés sans contenu variable. Un exemple d'utilisation est
       à nouveau dans <code><a href=
-      "https://github.com/JiMRI/JiMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
+      "https://github.com/JMRI/JMRI/blob/master/xml/decoders/TamValleyDepot_QuadLn_S_11.xsl">TamsValleyDepot_QuadLn_s_11.xsl</a></code>.
       (LedPaneHeader)</p>
 
       <p>Les variables individuelles sont générées à l'aide de <em>xsl:template</em>, mais la
@@ -512,12 +512,12 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       xmlns:xi="http://www.w3.org/2001/XInclude" <strong>-- c'est la déclaration du préfixe</strong>.
       &gt;
       </pre></div>
-      <p>Le deuxième problème est que le <em>xi:include</em> doit utiliser des URLs que JiMRI est
+      <p>Le deuxième problème est que le <em>xi:include</em> doit utiliser des URLs que JMRI est
       capable de <strong>résoudre localement</strong>. Dans le cas contraire, le DecoderPro
       tenterait de télécharger des parties de la définition depuis Internet, ce qui nécessite une
       connexion en ligne - et est lent. Le préfixe <strong>http://jmri.org/xml</strong> est garanti
-      pour résoudre dans le répertoire <strong>xml</strong> de votre installation locale de JiMRI.
-      Pour plus de cartographie, veuillez consulter les autres documents JiMRI.</p>
+      pour résoudre dans le répertoire <strong>xml</strong> de votre installation locale de JMRI.
+      Pour plus de cartographie, veuillez consulter les autres documents JMRI.</p>
 
       <p>Traduction 2021-03-25</p>
       <!--#include virtual="/Footer.shtml" -->
