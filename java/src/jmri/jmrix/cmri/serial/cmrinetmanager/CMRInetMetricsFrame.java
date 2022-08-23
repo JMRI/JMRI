@@ -63,7 +63,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         // For the class
         setTitle(Bundle.getMessage("MetricsWindowTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName()); // NOI18N
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setPreferredSize(new Dimension(845, 400)); // 415 375
+        setPreferredSize(new Dimension(860, 410)); // 415 375
         networkMetricsBorderTitled = BorderFactory.createTitledBorder(networkMetricsBorder, "Error Metrics", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
         // Set up the CMRInet ERROR metrics table
