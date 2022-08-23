@@ -1,13 +1,10 @@
-<HTML LANG="fr">
+<!DOCTYPE html>
+<html lang="fr">
     <HEAD>
-        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <TITLE>JMRI Help System: Index</TITLE>
         <META NAME="Author" CONTENT="Bob Jacobsen">
         <META NAME="keywords" CONTENT="JMRI Help Index">
-        <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-        <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-        <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-        <LINK REL="home" TITLE="Home" HREF="/">
+      <!--#include virtual="/Style.shtml" -->
     </HEAD>
     <BODY>
         <!--#include virtual="/Header.shtml" -->
