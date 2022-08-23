@@ -182,6 +182,7 @@ Ceci sera affich&#233; de la m&#234;me mani&#232;re que les autres mappings, exc
 
 <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

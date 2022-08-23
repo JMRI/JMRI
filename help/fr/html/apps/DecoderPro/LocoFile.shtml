@@ -80,6 +80,7 @@
               &lt;cvvalue name="4" value="0" /&gt;<br></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
-  </div>
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

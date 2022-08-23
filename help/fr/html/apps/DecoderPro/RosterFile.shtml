@@ -40,6 +40,7 @@ Plus de renseignement <a href="../../setup/Files.shtml">Configuration Fichiers J
     
  <!--#include virtual="/Footer.shtml" -->
   </div> <!-- close #mainContent -->
-</div> <!-- close #mBody -->    
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

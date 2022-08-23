@@ -60,6 +60,7 @@ Configurer les machines Windows ainsi il y a un r&#233;pertoire partag&#233;, et
 
  <!--#include virtual="/Footer.shtml" -->
  </div> <!-- close #mainContent -->
-</div> <!-- close #mBody -->    
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

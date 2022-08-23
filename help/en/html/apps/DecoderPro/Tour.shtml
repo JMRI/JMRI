@@ -146,12 +146,12 @@
           This is shown as black numbers on an orange background, since the value differs from what's
           expected or last seen in the decoder.</dd>
 
-          <dt style="background:yellow;">From File</dt>
+          <dt style="background:orange;">From File</dt>
 
           <dd>The field contains values read from a locomotive file. This is shown on yellow,
           since we're not certain that the file agrees with the decoder contents.</dd>
 
-          <dt style="background:white;">Read</dt>
+          <dt style="background:orange;">Read</dt>
 
           <dd>The value shown has been read from the decoder. This is shown as white to
           indicate that the value is trustworthy.</dd>

@@ -6,6 +6,7 @@
   <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
   <title>JMRI: DecoderPro Rosters</title>
   <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -99,6 +100,7 @@
         alt="DP pane tabs" width="531" height="47"></a>
         </dd>
       </dl>
+
       <a id="menu" name="menu"></a>
       <h3>Menu Inventaire</h3>
       <img src="images/DPRosterMenu.png" width="207" height="313" align="right" alt=""> Les
@@ -108,10 +110,10 @@
       <dl>
         <dt><a id="create" name="create"></a>Créer ...</dt>
 
-        <dd>"Créer" est utilisé pour créer une nouvelle 'entrée Inventaire, même si vous n'avez pas
+        <dd>"Créer" est utilisé pour créer une nouvelle 'Entrée Inventaire, même si vous n'avez pas
         actuellement de connexion à un réseau. Lorsque vous sélectionnez cette option, vous avez
         une fenêtre dans laquelle vous pouvez sélectionner un type de décodeur. Choisissez le type
-        de décodeur à droite, le format que vous voulez, et cliquez sur "Ouvrir". Vous verrez une
+        de décodeur à droite, le format que vous voulez et cliquez sur "Ouvrir". Vous verrez une
         fenêtre de style DecoderPro pour modifier le contenu de la nouvelle entrée. N'oubliez pas
         de cliquez sur "Enregistrer" lorsque vous avez terminé!</dd>
 
@@ -180,5 +182,6 @@
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
+  <script src="/js/main.js"></script>
 </body>
 </html>

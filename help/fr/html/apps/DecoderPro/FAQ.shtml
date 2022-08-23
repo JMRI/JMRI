@@ -110,6 +110,7 @@ Red&#233;marrer JMRI et v&#233;rifiez vos param&#232;tres de connection.
     
 		<!--#include virtual="/Footer.shtml" -->
 		</div>
-	</div>
+  </div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>

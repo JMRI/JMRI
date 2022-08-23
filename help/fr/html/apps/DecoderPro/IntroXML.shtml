@@ -119,6 +119,7 @@ vous imprimez &#224; partir du format "de base", et une liste de tout lorsque vo
     
 <!--#include virtual="/Footer.shtml" -->
 </div>
-</div>
+</div>  <!-- close #mBody -->
+<script src="/js/main.js"></script>
 </body>
 </html>
