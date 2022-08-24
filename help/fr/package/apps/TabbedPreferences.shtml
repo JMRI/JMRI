@@ -549,14 +549,13 @@
         <strong>Profil de vitesse de session</strong>. (par défaut)</li>
 
         <li><strong>Fusionner tout</strong> - Ne pas demander et toujours fusionner tous les
-        <strong>profils de vitesse de session</strong>. profils de vitesse de session dans les
+        <strong>profils de vitesse de session</strong> de session dans les
         profils de vitesse de la liste.</li>
       </ul>
 
       <p>Traduction 2021-03-26</p>
 
-      <p><!--#include virtual="/Footer" -->
-      </p>
+      <!--#include virtual="/Footer" -->
     </div>
     <!-- closes #mainContent-->
   </div>

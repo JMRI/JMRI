@@ -1,22 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Updated by Herv&#233; Blorec le 2017-02-06-->
-<title>JMRI Hardware Support - OpenLCB</title>
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!-- Updated by Herv&#233; Blorec le 2017-02-06-->
+  <title>JMRI Hardware Support - OpenLCB</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-	<!--#include virtual="Sidebar" -->
-	<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
 <h1>Documentation Mat&#233;rielle: OpenLCB</h1>
 
@@ -125,8 +119,9 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 incluant des liens vers des outils vari&#233;s </li>
 </ul>
 
-<!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
-</body>
+      <!--#include virtual="/Footer.shtml" -->
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+    <script src="/js/main.js"></script>
+  </body>
 </html>
