@@ -11,10 +11,10 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="AcknowledgementsSidebar.shtml" -->
-	<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="AcknowledgementsSidebar.shtml" -->
+    <div id="mainContent">
 
 		<h2>Remerciements: Personnes qui ont contribuées à JMRI</h2>
 		Un certain nombre de personnes ont contribué par leurs efforts à JMRI.

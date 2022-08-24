@@ -11,11 +11,12 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mainContent" class="no-sidebar">
-  <h1>JMRI Système d'Aide</h1>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mainContent" class="no-sidebar">
 
-  <p>Ceci est la page d'aide de haut niveau JMRI.</p>
+    <h1>JMRI Système d'Aide</h1>
+
+    <p>Ceci est la page d'aide de haut niveau JMRI.</p>
 
   <p>La <a href="Acknowledgements.shtml">page de remerciements</a>
   montre que beaucoup de personnes ont été en mesure de contribuer.</p>
