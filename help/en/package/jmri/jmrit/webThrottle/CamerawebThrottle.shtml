@@ -56,7 +56,6 @@
       <p><img src="images/JMRI_webThrottle-(tools).png" alt="JMRI Tools Menu" /></p>
 
       <p>When this opens click <strong>Add... </strong>and a window will pop up. In <strong>System Name</strong> you want to enter I<strong>MWTVIDEOURL:XXXX </strong>where XXXX is the address of the engine you are wanting to run with the camera. For instance if I had UP 6936 in my roster I would add <strong>IMWTVIDEOURL:6936</strong>, and if I also wanted to run BNSF 326 I would add IMWTVIDEOURL:326 to the System Name. Don't enter anything for User Name, hit <strong>Create </strong>when done. If you have multiple entries to create you can just keep adding DCC addresses without closing that window by just changing the number at the end. </p>
-      </p>
      
       <p><img src="images/JMRI_webThrottle-(memvariable).png" alt="JMRI Memory Variables table"  height="700"/>
       </p>
