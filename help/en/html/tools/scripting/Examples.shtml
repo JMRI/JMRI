@@ -5,7 +5,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Scripting Examples</title>
-  <meta name="author" content="Bob Jacobsen"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Bob Jacobsen">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -369,10 +370,19 @@
       <p><a href="../../../../../jython/TurnoutReset.py">TurnoutReset.py</a>
       </p>
 
-      <p>Reset a Turnout to Closed every time it's clicked Thrown This might be used so that a
+      <p>Reset a Turnout to Closed every time it's clicked Thrown. This might be used so that a
       Turnout icon on a panel sits in one position, ready to be clicked and fire a Route. The top
       of the file defines the needed code. There are some lines near the bottom you should edit to
       adapt it to your particular layout.</p>
+
+      <p><a href="../../../../../jython/TurnoutStatePersistence.py">TurnoutStatePersistence.py</a>
+      </p>
+
+      <p>Persist the state of turnouts between sessions. Before closing JMRI, this script stores to a .csv file the
+        state of (each) turnout on the layout, and reads back in the last known status after a restart.<br>
+        Add it to your preferences to load at startup.
+        You may want to edit the script so that only actual turnouts are stored, skipping e.g. turnouts used on
+        signals.</p>
 
       <p><a href="../../../../../jython/TwoOutputTurnouts.py">TwoOutputTurnouts.py</a>
       </p>
