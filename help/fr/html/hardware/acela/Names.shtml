@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<!-- Updated by Blorec Herv&#233;  2017-01-15-->
-<title>JMRI Hardware Support - CTI Acela System Names</title>
+  <!-- Updated by Blorec Herv&#233;  2017-01-15-->
+  <title>JMRI Hardware Support - CTI Acela System Names</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
@@ -142,7 +142,9 @@ Bouton "Enregistrer" sur la
 <h2>Limitations</h2>
 
 <ul>
-<li> CTI prend en charge un grand espace d'adressage pour les entr&#233;es et les sorties. JMRI limite actuellement cela &#224; 1024 entr&#233;es et 1024 sorties (&#233;quivalent &#224; 64 modules Sentry et 64 modules YardMaster). JMRI a actuellement ceci cod&#233; en dur - mais c'est juste une question de priorit&#233;s de d&#233;veloppeur .
+  <li> CTI prend en charge un grand espace d'adressage pour les entr&#233;es et les sorties. JMRI limite actuellement
+  cela &#224; 1024 entr&#233;es et 1024 sorties (&#233;quivalent &#224; 64 modules Sentry et 64 modules YardMaster).
+    JMRI a actuellement ceci cod&#233; en dur - mais c'est juste une question de priorit&#233;s de d&#233;veloppeur.
 </ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
