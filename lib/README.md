@@ -430,8 +430,3 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 - No longer used as of JMRI 5.1.3
-
-##### picocontainer-2.15.jar
-- version 2.15
-- Used for testing only, not at runtime
-- No longer used as of JMRI 5.1.4
