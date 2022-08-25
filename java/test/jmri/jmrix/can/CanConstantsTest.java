@@ -2,7 +2,6 @@ package jmri.jmrix.can;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,10 +10,12 @@ import org.junit.jupiter.api.*;
  */
 public class CanConstantsTest {
 
+     // no testCtor as class only supplies static methods
+
     @Test
-    public void testCTor() {
-        CanConstants t = new CanConstants();
-        Assert.assertNotNull("exists",t);
+    public void testCanConstants() {
+        Assertions.assertEquals(0,CanConstants.CANRS);
+        Assertions.assertEquals(1,CanConstants.CANUSB);
     }
 
     @BeforeEach
