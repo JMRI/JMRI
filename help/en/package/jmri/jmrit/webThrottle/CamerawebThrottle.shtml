@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</h1>
+
+      <p>Usage: &lt;your JMRI server IP&gt;:&lt;port&gt;/web/webThrottle.html</p>
+
+      <p>This application shows feedback and controls not only locomotives, but also turnouts,
+      routes, lights and other devices through JMRI panels.</p>
+
+      <p><strong>webThrottle</strong> is completely resizable and it adjusts automatically to the
+      size and orientation of the device screen.</p>
+
+      <p>It runs on the most recent browsers on computers, smartphones and tablets.<br>
+      Your device and browser must support HTML5 and websockets.<br>
+      Tested on Safari, Firefox and Google Chrome running on Windows, MAC, iPad/iPhone and Android
+      - it should run on Internet Explorer 10.<br>
+      <strong>There is nothing to install on your device !</strong></p>
+
+      <p>To start using JMRI through a web browser, you just need to activate the included
+      <strong>Web Server</strong>. You may found additional information <a href=
+      "/help/en/html/web/index.shtml">here</a>.</p>
+
+      <p>To get help, please click '?' at each page top right.<br>
+      You will find important and useful information there.<br>
+      There is specific Help for each page type (Roster, Loco, Panel, ...).</p>
+
+      <h3>Screen samples...</h3>
+
+      <p><img src="images/JMRI_webThrottle.png" height="300" alt="The default screen">
+      </p>
+
+      <p><img src="images/JMRI_webThrottle-(loco).png" height="300" alt="A loco throttle">
+      </p>
+
+      <p><img src="images/JMRI_webThrottle-(panel).png" height="300" alt="An interactive panel">
+      </p>
+
+      <p><img src="images/JMRI_webThrottle-(iframes).png" height="300" alt=
+      "Multi throttle screens in iframes">
+      </p>
+
+      <p>The following setup will be handled in two sections, one for local internal streaming and control, and the next for streaming to remote engineers on the internet. Local streaming is good for testing or if you end up with too many engineers for a room, but not for the layout itself. Internal setup is useful to do before, as much of the setup applies to remote engineers on the internet.</p>
+      <p>You must also have every engine you want to run with the CabCam added to JMRI's roster. You can get as fancy or as spartan as you want with this, you can just add <strong>NMRA standard CV definitions</strong> decoders to your roster, the important bit is the DCC address is in the roster so it shows up in WebThrottle.</p>
+      <p><strong>Internal Setup</strong>First you are going to need to get the streaming URL for your CabCam which can be obtained from the <a href="https://siliconvalleylines.com/2022/08/11/cabcam-goes-uv4l/" target="_blank" rel="noreferrer noopener">CabCam setup instructions.</a> Setting the Memory Variables. Open Tools&gt;Tables&gt;Memory Variables.</p>
+      
+      <p><img src="images/JMRI_webThrottle-(tools).png" alt="JMRI Tools Menu" /></p>
+
+      <p>When this opens click <strong>Add... </strong>and a window will pop up. In <strong>System Name</strong> you want to enter I<strong>MWTVIDEOURL:XXXX </strong>where XXXX is the address of the engine you are wanting to run with the camera. For instance if I had UP 6936 in my roster I would add <strong>IMWTVIDEOURL:6936</strong>, and if I also wanted to run BNSF 326 I would add IMWTVIDEOURL:326 to the System Name. Don't enter anything for User Name, hit <strong>Create </strong>when done. If you have multiple entries to create you can just keep adding DCC addresses without closing that window by just changing the number at the end. </p>
+     
+      <p><img src="images/JMRI_webThrottle-(memvariable).png" alt="JMRI Memory Variables table"  height="700"/>
+      </p>
+      
+      <p>Now you need your CabCam streaming address. If you have a few cameras you can create parking spots for the camera URLS by adding a new variable and naming it IMWTCAMERAURL:# where # is the camera number. Take your streaming URL, it needs to be a IP stream so it needs to end in something like video.mjpeg or stream.h264 etc, so it will look somewhat like this. <strong>http://internalcabcamIP:8080/stream/video.mjpeg</strong></p>
+
+      <p>Take that address and put it into <strong>Value</strong>.</p>
+
+      
+
+      <p><img src="images/JMRI_webThrottle-(memvariable2).png" alt="JMRI Memory Variables table with URL"  height="700"/>
+      </p>
+      
+
+      <p> If you have not told this to start automatically head to Edit&gt;Preferences&gt;Web Server&gt; and check start automatically. Or you can go to Tools&gt;Servers&gt; Start JMRI Web Server when you want to start it. Now head to your web browser and navigate to the ip and port of your JMRI web server. The URL should look something like <strong>http://internalIPofJMRIwebserver:12080/web/webThrottle.html</strong>. 12080 is the default port but you can change that in your settings. When you get to the JMRI WebThrottle page click on the engine you assigned a camera too and you should be presented with your throttle and camera.</p>
+
+      
+
+      <p><img src="images/JMRI_webThrottle-(camthrottle).png" alt="Camera Throttle in use" height="600"/>
+      </p>
+      
+      <p>At this point you can use the throttle internally to your network or setup a VPN on your router to allow friend and family to remotely operate on your layout. The VPN may honestly be the best way for you to do this with friends as it is the most secure  way to do this. I won't go over how to setup a VPN on your router as there are so many different ways to do it. Just Google your router name and VPN and you should find the instructions.</p>
+      
+      <p><strong>WebThrottle Over the Internet (WOT)</strong></p>
+      
+      <p>Sometimes there are use cases where you wouldn't want to setup a VPN and would rather have your remote engineers go to a URL or your DDNS or external IP addresses and use the throttle. This requires more setup on your end and is more unsecure. A good setting for this is if you have less tech savvy remote engineers, or at a club or historical society etc. To start this off you will need to google how to setup port forwarding on your router. I am again going to leave you to handle this as there are so many different routers. Once you are logged into your router you will need to take the IP of your JMRI computer and have the internal port be your JMRI webs servers port, generally 12080 and then set your external port. You can set this to the same port number or you can change the port to something fun like the number of your favorite locomotive, eg 4014 etc.<a rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers" target="_blank"> Just make sure to reference the list of port numbers</a> and their uses so you don't end up using a important port. Ports above 49152 are pretty much fair game.</p>
+      
+      <p>To connect to your JMRI Webserver from the internet to make sure you did this right you can google "What is my IP" and insert that into this URL <strong>http://externalIP:theportyouchose</strong> ex <strong>http://45.123.241.33:12080</strong> and you should see your Server. </p>
+      
+      <p>Next you want to forward the port for your camera. You will input the IP of the camera, port 8080 for the internal port, and then chose an external port you want to use. If you have multiple cameras chose sequential ports eg. Port 49501 for camera 1, 49502 for camera 2 etc. You can test this by going to the stream of your camera using the external IP eg <strong>http://yourexternalIP:49501/stream/video.mjpeg</strong> and you should see the stream. That URL you used to see the external stream is what you will put into the memory variable above instead of the internal URL for the locomotive you want to allow be remote operated.</p>
+      
+      <p>One cool thing you can do with this is setup a CNAME off your website and have people go to a subdomain of your website to run trains. This would end up with a URL like <strong>http://layout.franksawesomebnsflayout.com:6936 </strong>. To do this you will need to log into the DNS section of your domain host. Find the custom records bit and add a CNAME and put whatever you want to come before your websites URL, eg layout, in the hostname bit, leave the TTL, and under data you are either going to put your external IP(this changes so you may need to update this from time to time) or input a URL given to you by a dynamic DNS service like NoIP. These can range from free with some nagging to refresh to a paid service. Many routers have a DDNS service built in but you will need to google how to set that up for your router. </p>
+      
+    
+      <p>This is the package/jmri/jmrit/webThrottle/webThrottle help page</p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
