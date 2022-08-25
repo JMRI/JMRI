@@ -1,16 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JiMRI: Preferences Pane</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JiMRI help preferences"><!-- Style -->
+  <meta name="keywords" content="JiMRI help preferences">
+  <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
   <!--#include virtual="/Header" -->
@@ -18,8 +14,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JiMRI : Volet Préférences</h1>
-      Le volet Préférences est l'endroit où vous configurez le fonctionnement de base de votre
-      application JiMRI.
+
+      <p>Le volet Préférences est l'endroit où vous configurez le fonctionnement de base de votre
+      application JiMRI.</p>
       <p>L'écran est divisé en deux sections : sur le côté gauche se trouve une liste des groupes
       de préférences qui peuvent être définis. En cliquant sur chaque élément, la partie de droite
       se remplit des différentes options qui peuvent être configurées pour cet onglet. <a href=
@@ -27,10 +24,8 @@
       "../../html/setup/images/PrefsConnections_fr.png" height="195" width="425" align="right" alt=
       ""></a></p>
 
-      <p>.</p>
-
       <p><a href="#Connexion">Connexions</a><br>
-      . <a href="#Defaults">Par Défauts</a><br>
+      <a href="#Defaults">Par Défauts</a><br>
       <a href="#FileLocations">Emplacements de fichiers</a><br>
       <a href="#Startup">Démarrer</a><br>
       <a href="#Display">Affichage</a><br>
@@ -46,7 +41,7 @@
       <a href="#SRCP%20Server">Serveur SCRP</a><br>
       <a href="#Simple%20Server">Serveur Simple</a><br>
       <a href="#Warrants"></a>Bulletins d'Ordre<br></p>
-      .
+
       <p>Peut-être que la commande la plus importante se trouve au bas de cette section : Le bouton
       <strong>Sauvegarde</strong> !</p>
 
@@ -109,8 +104,9 @@
       </dl>
 
       <p>Il y a un <a href="*">page d'aide séparée</a> avec des informations sur le partage de
-      fichiers entre ordinateurs à l'aide de Dropbox. <a name="Démarrage" id="Démarrage"></a></p>
-      .
+      fichiers entre ordinateurs à l'aide de Dropbox.</p>
+
+      <a name="Démarrage" id="Démarrage"></a>
       <h2>Démarrage</h2>
 
       <p><em>Démarrage</em> Les préférences permettent aux fenêtres et aux fichiers d'être ouverts,
@@ -137,31 +133,30 @@
 
         <dt>Ajouter un bouton à la fenêtre principale</dt>
 
-        <dt>.</dt>
-
-        <dt>Ajouter des boutons supplémentaires à la fenêtre principale de JiMRI qui sont.
-        connectés à des actions spécifiques dans les menus pour un accès accès facile et rapide à
-        cette action.</dt>
+        <dd>Ajouter des boutons supplémentaires à la fenêtre principale de JiMRI qui sont.
+        connectés à des actions spécifiques dans les menus pour un accès facile et rapide à
+        cette action.</dd>
 
         <dt>Ouvrir un fichier</dt>
 
-        <dt>Chargez automatiquement les fichiers du panneau au démarrage du du programme. Vous
+        <dd>Chargez automatiquement les fichiers du panneau au démarrage du du programme. Vous
         pouvez charger autant de fichiers de panneau que vous le souhaitez ; chacun d'eux sera
-        complètement chargé avant que le suivant ne soit lancé.</dt>
+        complètement chargé avant que le suivant ne soit lancé.</dd>
 
         <dt>Exécuter le script</dt>
 
-        <dt>Lancer automatiquement un script au démarrage du programme. Vous pouvez exécuter autant
+        <dd>Lancer automatiquement un script au démarrage du programme. Vous pouvez exécuter autant
         de scripts que vous le souhaitez ; chacun sera exécuté jusqu'à son terme avant que le
         suivant ne soit lancé. Notez que tous les fichiers dont dépend le script doivent être
-        ouverts avant l'exécution du script.</dt>
+        ouverts avant l'exécution du script.</dd>
 
         <dt>Définir un itinéraire</dt>
 
-        <dt>Définir un itinéraire lorsque le programme démarre. Vous pouvez définir autant de
+        <dd>Définir un itinéraire lorsque le programme démarre. Vous pouvez définir autant de
         routes que vous le souhaitez ; chacune sera définie dans l'ordre. Notez que tous les
-        fichiers dont dépend l'itinéraire doivent être ouverts avant de définir l'itinéraire.</dt>
+        fichiers dont dépend l'itinéraire doivent être ouverts avant de définir l'itinéraire.</dd>
       </dl>
+
       <a name="Display" id="Display"></a>
       <h2>Affichage</h2>
 
@@ -212,7 +207,7 @@
         manquerez rien. Pour plus d'informations sur la façon de configurer ce système, et en
         particulier sur la façon de contribuer à de nouvelles et meilleures traductions, veuillez
         consulter notre <a href="../../html/doc/Technical/I8N.shtml">page
-        d'internationalisation</a> .</dd>
+        d'internationalisation</a>.</dd>
 
         <dt>Console</dt>
 
@@ -225,11 +220,13 @@
       <a href="images/PrefsMsgPane421.png"><img src="images/PrefsMsgPane421.png" height="214"
       width="375" align="right" alt="JiMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
       "Messages"></a>
+
       <h2>Messages</h2>
       Ceci vous permet de modifier la manière dont les messages d'information et d'avertissement
       sont affichés dans JiMRI.<br>
       Il vous permettra également de configurer les réponses par défaut et la la question qui
       s'affiche. <a name="Roster" id="Roster"></a>
+
       <h2>Inventaire</h2>
       <a href="images/PrefsRoster47.png"><img src="images/PrefsRoster47.png" height="184" width=
       "416" align="right" alt="JiMRI v4.7 Roster Prefs tab"></a>
@@ -337,11 +334,13 @@
         même si elles sont modifiées.<br>
         <br></dt>
       </dl>
+
       <a name="Throttle" id="Throttle"></a>
       <h2>Régulateur</h2>
       Cet onglet du volet des préférences vous permet de choisir si les fonctionnalités étendues de
       Régulateur sont disponibles, et lesquelles peuvent être utilisées. <a name="WiThrottle" id=
       "WiThrottle"></a>
+
       <h2>WiThrottle</h2>
 
       <dl>
@@ -403,14 +402,15 @@
       fonctionner avec différentes configurations. Chaque profil spécifie un ensemble de
       préférences. Vous pouvez ensuite sélectionner celui que vous souhaitez utiliser.
       <p>Pour plus d'informations, consultez la page d'aide <a href=".">.
-      "../../html/setup/profiles.shtml"&gt;Profils de configuration</a> . <a name="RailroadName"
-      id="RailroadName"></a></p>
-      .
+      "../../html/setup/profiles.shtml"&gt;Profils de configuration</a>.</p>
+
+      <a name="RailroadName" id="RailroadName"></a>
       <h2>Nom du Chemin de Fer</h2>
 
       <p>L'onglet Nom du Chemin de Fer vous permet de spécifier le nom de votre réseau de chemin de
       fer (module), car il est utilisé par plusieurs protocoles de serveurs .</p>
       <a name="JSONServer" id="JSONServer"></a>
+
       <h2>Serveur JSON</h2>
 
       <p>JiMRI <a href="../../html/web/JsonServlet.shtml">serveur JSON</a> est utilisé par les
@@ -420,6 +420,7 @@
       <p>Sur ce volet, vous pouvez spécifier le port de la connexion. (généralement laissé à la
       valeur par défaut) et la fréquence à laquelle le serveur vérifie si la connexion a échoué via
       un message Heartbeat</p>
+
       <a name="WebServer" id="WebServer"></a>
       <h2>Serveur Web</h2>
       Le serveur Web de JiMRI vous permet de vous connecter à JiMRI depuis un navigateur web sur
@@ -444,19 +445,23 @@
 
       <p>Sur ce volet, vous pouvez spécifier le port pour la connexion. (généralement laissé par
       défaut).</p>
+
       <a name="Warrants" id="Warrants"></a>
       <h2>Bulletins d'Ordre</h2>
+
       Cet onglet définit les paramètres utilisés dans le calcul des itinéraires et des changements
       de vitesse pour les <a href=".">Bulletins d'Ordres</a> et pour contrôler les événements que
       les trains mandatés peuvent rencontrer.
+
       <h3>Tableaux de noms de vitesse</h3>
       Lorsqu'un train en circulation automatique rencontre un aspect de signal qui demande un
       changement de vitesse, le tableau des vitesse fournit les informations sur ce que doit être
       le changement de vitesse . D'autres paramètres commandent la façon dont le changement de
       vitesse est effectué.
+
       <h2>Tableau des noms de vitesse des aspects</h2>
       Le tableau de nom de vitesse d'aspect fait correspondre les noms de vitesse d'aspects trouvés
-      dans les définition d'un système de signalisation à une valeur. Il est important que tous les
+      dans les définitions d'un système de signalisation à une valeur. Il est important que tous les
       noms de vitesse utilisés dans votre système de signalisation soient répertoriés dans le
       tableau de correspondance des vitesses. Les rangées peuvent être ajoutées ou supprimées pour
       se conformer aux aspects du système de signalisation.
@@ -478,11 +483,13 @@
         <li><strong>Kilomètres par heure</strong> - la valeur est une vitesse absolue à l'échelle
         en kilomètres par heure. .</li>
       </ul>
+
       Le choix de l'interprétation est une question de ce que vous voulez qu'il se passe lorsqu'un
       train soumit à un bulletin d'ordre atteint un signal ou un aspect de Canton. Peourcent Normal
       fera toujours en sorte que le train change de vitesse et... Peourcent Régulateur le fera très
       probablement aussi. Les deux derniers choix sont les plus typiques, mais si le train est déjà
-      dans la limite de vitesse demandée, aucun changement de vitesse n'est nécessaire. l
+      dans la limite de vitesse demandée, aucun changement de vitesse n'est nécessaire.
+
       <h2>Tableau des noms d'apparence du feu</h2>
       Le <strong>Tableau d'apparence des Feux</strong> est utilisé lorsque des têtes de signaux
       sont utilisées comme signaux. Il fait correspondre les noms d'apparence des têtes de signal
@@ -520,11 +527,12 @@
         millisecondes seraient appropriées.</li>
       </ul>
       Vous devriez expérimenter en observant comment les NXWarrants commencent et se terminent. ou
-      en envoyant des commandes "Stop" et "Reprendre" à un bulletin d'ordre enregistré. .
+      en envoyant des commandes "Stop" et "Reprendre" à un bulletin d'ordre enregistré.
+
       <h3>Facteur du Régulateur</h3>
       La valeur du <strong>Facteur de réglage de vitesse</strong> ainsi que l'<strong>Échelle de
       réseau</strong> permet d'ajuster un réglage du Régulateur pour qu'il corresponde à une
-      vitesse de la voie du réseau. Le facteur d'accélérateur défini ici est un défaut global,.
+      vitesse de la voie du réseau. Le facteur d'accélérateur défini ici est un défaut global.
       <p>Pour plus d'informations sur les paramètres de vitesse dde bulletin d'ordre, voir .
       <a href="../jmri/jmrit/logix/speedChanges.shtml">Modification des Vitesse de Bulletins
       d'Ordre</a> et suivez ses liens.</p>
