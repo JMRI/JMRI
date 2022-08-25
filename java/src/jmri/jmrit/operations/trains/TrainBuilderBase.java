@@ -1302,7 +1302,8 @@ public class TrainBuilderBase extends TrainCommon {
             // owners, and built date were checked in the routine checkDepartureStagingTrack().
             if (!_train.isCarRoadNameAccepted(car.getRoadName())) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarWrongRoad"),
-                        new Object[] { car.toString(), car.getTypeName(), car.getRoadName() }));
+                        new Object[]{car.toString(), car.getLocationName(), car.getTrackName(), car.getTypeName(),
+                                car.getRoadName()}));
                 _carList.remove(car);
                 i--;
                 continue;
@@ -1310,7 +1311,8 @@ public class TrainBuilderBase extends TrainCommon {
             if (!_train.isTypeNameAccepted(car.getTypeName())) {
                 if (showCar) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarWrongType"),
-                            new Object[] { car.toString(), car.getTypeName(), }));
+                            new Object[]{car.toString(), car.getLocationName(), car.getTrackName(),
+                                    car.getTypeName(),}));
                 }
                 _carList.remove(car);
                 i--;
@@ -1318,8 +1320,8 @@ public class TrainBuilderBase extends TrainCommon {
             }
             if (!_train.isOwnerNameAccepted(car.getOwnerName())) {
                 addLine(_buildReport, SEVEN,
-                        MessageFormat.format(Bundle.getMessage("buildExcludeCarOwnerAtLoc"), new Object[] {
-                                car.toString(), car.getOwnerName(), (car.getLocationName() + ", " + car.getTrackName()) }));
+                        MessageFormat.format(Bundle.getMessage("buildExcludeCarOwnerAtLoc"), new Object[]{
+                                car.toString(), car.getOwnerName(), car.getLocationName(), car.getTrackName()}));
                 _carList.remove(car);
                 i--;
                 continue;
@@ -1327,8 +1329,8 @@ public class TrainBuilderBase extends TrainCommon {
             if (!_train.isBuiltDateAccepted(car.getBuilt())) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildExcludeCarBuiltAtLoc"),
-                                new Object[] { car.toString(), car.getBuilt(),
-                                        (car.getLocationName() + ", " + car.getTrackName()) }));
+                                new Object[]{car.toString(), car.getBuilt(),
+                                        car.getLocationName(), car.getTrackName()}));
                 _carList.remove(car);
                 i--;
                 continue;

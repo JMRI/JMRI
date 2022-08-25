@@ -378,30 +378,25 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
     // Save, Delete, Add
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        if (ae.getSource() == addTrackButton) {
+            addNewTrack();
+        }
+        if (_track == null) {
+            return; // not possible
+        }
         if (ae.getSource() == saveTrackButton) {
-            log.debug("track save button activated");
-            if (_track != null) {
-                if (!checkUserInputs(_track)) {
-                    return;
-                }
-                saveTrack(_track);
-                checkTrackPickups(_track); // warn user if there are car types that will be stranded
-            } else {
-                addNewTrack();
+            if (!checkUserInputs(_track)) {
+                return;
             }
+            saveTrack(_track);
+            checkTrackPickups(_track); // warn user if there are car types that
+                                       // will be stranded
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
         }
         if (ae.getSource() == deleteTrackButton) {
-            log.debug("track delete button activated");
             deleteTrack();
-        }
-        if (ae.getSource() == addTrackButton) {
-            addNewTrack();
-        }
-        if (_track == null) {
-            return;
         }
         if (ae.getSource() == setButton) {
             selectCheckboxes(true);
@@ -410,107 +405,123 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             selectCheckboxes(false);
         }
         if (ae.getSource() == addDropButton) {
-            String id = "";
-            if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
-                if (comboBoxDropTrains.getSelectedItem() == null) {
-                    return;
-                }
-                Train train = ((Train) comboBoxDropTrains.getSelectedItem());
-                Route route = train.getRoute();
-                id = train.getId();
-                if (!checkRoute(route)) {
-                    JOptionPane.showMessageDialog(this,
-                            MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
-                                    new Object[] { train.getName() }),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                selectNextItemComboBox(comboBoxDropTrains);
-            } else {
-                if (comboBoxDropRoutes.getSelectedItem() == null) {
-                    return;
-                }
-                Route route = ((Route) comboBoxDropRoutes.getSelectedItem());
-                id = route.getId();
-                if (!checkRoute(route)) {
-                    JOptionPane.showMessageDialog(this,
-                            MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
-                                    new Object[] { route.getName() }),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                selectNextItemComboBox(comboBoxDropRoutes);
-            }
-            _track.addDropId(id);
+            addDropId();
         }
         if (ae.getSource() == deleteDropButton) {
-            String id = "";
-            if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
-                if (comboBoxDropTrains.getSelectedItem() == null) {
-                    return;
-                }
-                id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
-                selectNextItemComboBox(comboBoxDropTrains);
-            } else {
-                if (comboBoxDropRoutes.getSelectedItem() == null) {
-                    return;
-                }
-                id = ((Route) comboBoxDropRoutes.getSelectedItem()).getId();
-                selectNextItemComboBox(comboBoxDropRoutes);
-            }
-            _track.deleteDropId(id);
+            deleteDropId();
         }
         if (ae.getSource() == addPickupButton) {
-            String id = "";
-            if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
-                if (comboBoxPickupTrains.getSelectedItem() == null) {
-                    return;
-                }
-                Train train = ((Train) comboBoxPickupTrains.getSelectedItem());
-                Route route = train.getRoute();
-                id = train.getId();
-                if (!checkRoute(route)) {
-                    JOptionPane.showMessageDialog(this,
-                            MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
-                                    new Object[] { train.getName() }),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                selectNextItemComboBox(comboBoxPickupTrains);
-            } else {
-                if (comboBoxPickupRoutes.getSelectedItem() == null) {
-                    return;
-                }
-                Route route = ((Route) comboBoxPickupRoutes.getSelectedItem());
-                id = route.getId();
-                if (!checkRoute(route)) {
-                    JOptionPane.showMessageDialog(this,
-                            MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
-                                    new Object[] { route.getName() }),
-                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                selectNextItemComboBox(comboBoxPickupRoutes);
-            }
-            _track.addPickupId(id);
+            addPickupId();
         }
         if (ae.getSource() == deletePickupButton) {
-            String id = "";
-            if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
-                if (comboBoxPickupTrains.getSelectedItem() == null) {
-                    return;
-                }
-                id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
-                selectNextItemComboBox(comboBoxPickupTrains);
-            } else {
-                if (comboBoxPickupRoutes.getSelectedItem() == null) {
-                    return;
-                }
-                id = ((Route) comboBoxPickupRoutes.getSelectedItem()).getId();
-                selectNextItemComboBox(comboBoxPickupRoutes);
-            }
-            _track.deletePickupId(id);
+            deletePickupId();
         }
+    }
+    
+    private void addDropId() {
+        String id = "";
+        if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
+            if (comboBoxDropTrains.getSelectedItem() == null) {
+                return;
+            }
+            Train train = ((Train) comboBoxDropTrains.getSelectedItem());
+            Route route = train.getRoute();
+            id = train.getId();
+            if (!checkRoute(route)) {
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
+                                new Object[] { train.getName() }),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            selectNextItemComboBox(comboBoxDropTrains);
+        } else {
+            if (comboBoxDropRoutes.getSelectedItem() == null) {
+                return;
+            }
+            Route route = ((Route) comboBoxDropRoutes.getSelectedItem());
+            id = route.getId();
+            if (!checkRoute(route)) {
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
+                                new Object[] { route.getName() }),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            selectNextItemComboBox(comboBoxDropRoutes);
+        }
+        _track.addDropId(id);
+    }
+    
+    private void deleteDropId() {
+        String id = "";
+        if (trainDrop.isSelected() || excludeTrainDrop.isSelected()) {
+            if (comboBoxDropTrains.getSelectedItem() == null) {
+                return;
+            }
+            id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
+            selectNextItemComboBox(comboBoxDropTrains);
+        } else {
+            if (comboBoxDropRoutes.getSelectedItem() == null) {
+                return;
+            }
+            id = ((Route) comboBoxDropRoutes.getSelectedItem()).getId();
+            selectNextItemComboBox(comboBoxDropRoutes);
+        }
+        _track.deleteDropId(id);
+    }
+    
+    private void addPickupId() {
+        String id = "";
+        if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
+            if (comboBoxPickupTrains.getSelectedItem() == null) {
+                return;
+            }
+            Train train = ((Train) comboBoxPickupTrains.getSelectedItem());
+            Route route = train.getRoute();
+            id = train.getId();
+            if (!checkRoute(route)) {
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("TrackNotByTrain"),
+                                new Object[] { train.getName() }),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            selectNextItemComboBox(comboBoxPickupTrains);
+        } else {
+            if (comboBoxPickupRoutes.getSelectedItem() == null) {
+                return;
+            }
+            Route route = ((Route) comboBoxPickupRoutes.getSelectedItem());
+            id = route.getId();
+            if (!checkRoute(route)) {
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("TrackNotByRoute"),
+                                new Object[] { route.getName() }),
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            selectNextItemComboBox(comboBoxPickupRoutes);
+        }
+        _track.addPickupId(id);
+    }
+    
+    private void deletePickupId() {
+        String id = "";
+        if (trainPickup.isSelected() || excludeTrainPickup.isSelected()) {
+            if (comboBoxPickupTrains.getSelectedItem() == null) {
+                return;
+            }
+            id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
+            selectNextItemComboBox(comboBoxPickupTrains);
+        } else {
+            if (comboBoxPickupRoutes.getSelectedItem() == null) {
+                return;
+            }
+            id = ((Route) comboBoxPickupRoutes.getSelectedItem()).getId();
+            selectNextItemComboBox(comboBoxPickupRoutes);
+        }
+        _track.deletePickupId(id);
     }
 
     protected void addNewTrack() {
@@ -666,7 +677,6 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
             return false;
         }
         if (TrainCommon.splitString(trackName).length() > MAX_NAME_LENGTH) {
-            log.error("Track name must be less than {} charaters", Integer.toString(MAX_NAME_LENGTH + 1)); // NOI18N
             JOptionPane.showMessageDialog(this,
                     MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                             new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }),
@@ -1166,9 +1176,6 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         }
         JCheckBox b = (JCheckBox) ae.getSource();
         log.debug("checkbox change {}", b.getText());
-        if (_location == null) {
-            return;
-        }
         if (b.isSelected()) {
             _track.addTypeName(b.getText());
         } else {
@@ -1268,6 +1275,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         if (e.getPropertyName().equals(Track.DESTINATIONS_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY)) {
             updateDestinationOption();
+        }
+        if (e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)) {
+            trackLengthTextField.setText(Integer.toString(_track.getLength()));
         }
     }
 

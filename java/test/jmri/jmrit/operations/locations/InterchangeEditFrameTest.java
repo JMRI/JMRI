@@ -6,6 +6,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -145,6 +149,220 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(fl);
     }
+    
+    @Test
+    public void testTrainDropIds() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Drop Ids", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        JemmyUtil.enterClickAndLeave(f.trainDrop);
+        // add does nothing, nothing selected
+        JemmyUtil.enterClickAndLeave(f.addDropButton);
+        
+        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
+        f.comboBoxDropTrains.setSelectedIndex(1);
+        JemmyUtil.enterClickAndLeave(f.addDropButton);
+        Assert.assertEquals("one drop id", 1, t.getDropIds().length);
+        Assert.assertEquals("drop id", "1", t.getDropIds()[0]);
+        
+        JemmyUtil.enterClickAndLeave(f.deleteDropButton);
+        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
+        
+        Assert.assertEquals("option", Track.TRAINS, t.getDropOption());
+        JemmyUtil.enterClickAndLeave(f.anyDrops);
+        Assert.assertEquals("option", Track.ANY, t.getDropOption());
+        JemmyUtil.enterClickAndLeave(f.excludeTrainDrop);
+        Assert.assertEquals("option", Track.EXCLUDE_TRAINS, t.getDropOption());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testTrainPickupIds() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Pickup Ids", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        JemmyUtil.enterClickAndLeave(f.trainPickup);
+        // add does nothing, nothing selected
+        JemmyUtil.enterClickAndLeave(f.addPickupButton);
+        
+        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
+        f.comboBoxPickupTrains.setSelectedIndex(1);
+        JemmyUtil.enterClickAndLeave(f.addPickupButton);
+        Assert.assertEquals("one pickup id", 1, t.getPickupIds().length);
+        Assert.assertEquals("pickup id", "1", t.getPickupIds()[0]);
+        
+        JemmyUtil.enterClickAndLeave(f.deletePickupButton);
+        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
+        
+        Assert.assertEquals("option", Track.TRAINS, t.getPickupOption());
+        JemmyUtil.enterClickAndLeave(f.anyPickups);
+        Assert.assertEquals("option", Track.ANY, t.getPickupOption());
+        JemmyUtil.enterClickAndLeave(f.excludeTrainPickup);
+        Assert.assertEquals("option", Track.EXCLUDE_TRAINS, t.getPickupOption());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testRouteDropIds() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Drop Ids", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        JemmyUtil.enterClickAndLeave(f.routeDrop);
+        // add does nothing, nothing selected
+        JemmyUtil.enterClickAndLeave(f.addDropButton);
+        
+        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
+        f.comboBoxDropRoutes.setSelectedIndex(1);
+        JemmyUtil.enterClickAndLeave(f.addDropButton);
+        Assert.assertEquals("one drop id", 1, t.getDropIds().length);
+        Assert.assertEquals("drop id", "1", t.getDropIds()[0]);
+        
+        JemmyUtil.enterClickAndLeave(f.deleteDropButton);
+        Assert.assertEquals("no drop ids", 0, t.getDropIds().length);
+        
+        Assert.assertEquals("option", Track.ROUTES, t.getDropOption());
+        JemmyUtil.enterClickAndLeave(f.anyDrops);
+        Assert.assertEquals("option", Track.ANY, t.getDropOption());
+        JemmyUtil.enterClickAndLeave(f.excludeRouteDrop);
+        Assert.assertEquals("option", Track.EXCLUDE_ROUTES, t.getDropOption());
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testRoutePickupIds() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Pickup Ids", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        JemmyUtil.enterClickAndLeave(f.routePickup);
+        // add does nothing, nothing selected
+        JemmyUtil.enterClickAndLeave(f.addPickupButton);
+        
+        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
+        f.comboBoxPickupRoutes.setSelectedIndex(1);
+        JemmyUtil.enterClickAndLeave(f.addPickupButton);
+        Assert.assertEquals("one pickup id", 1, t.getPickupIds().length);
+        Assert.assertEquals("pickup id", "1", t.getPickupIds()[0]);
+        
+        JemmyUtil.enterClickAndLeave(f.deletePickupButton);
+        Assert.assertEquals("no pickup ids", 0, t.getPickupIds().length);
+        
+        Assert.assertEquals("option", Track.ROUTES, t.getPickupOption());
+        JemmyUtil.enterClickAndLeave(f.anyPickups);
+        Assert.assertEquals("option", Track.ANY, t.getPickupOption());
+        JemmyUtil.enterClickAndLeave(f.excludeRoutePickup);
+        Assert.assertEquals("option", Track.EXCLUDE_ROUTES, t.getPickupOption());
+
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testRoutePickupError() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Pickup Error", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        // create a route not serviced by this location
+        Location locB = lManager.getLocationByName("Test Loc B"); 
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route routeB = routeManager.newRoute("Bad Route B");
+        routeB.addLocation(locB);
+        
+        JemmyUtil.enterClickAndLeave(f.routePickup);
+        f.comboBoxPickupRoutes.setSelectedItem(routeB);
+        // try to add a route not serviced by this track
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addPickupButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testRouteDropError() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Drop Error", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        // create a route not serviced by this location
+        Location locB = lManager.getLocationByName("Test Loc B"); 
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route routeB = routeManager.newRoute("Bad Route B");
+        routeB.addLocation(locB);
+        
+        JemmyUtil.enterClickAndLeave(f.routeDrop);
+        f.comboBoxDropRoutes.setSelectedItem(routeB);
+        // try to add a route not serviced by this track
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addDropButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testTrainPickupError() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Pickup Error", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        // create a route not serviced by this location
+        Location locB = lManager.getLocationByName("Test Loc B"); 
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route routeB = routeManager.newRoute("Bad Route B");
+        routeB.addLocation(locB);
+        // now the train with this route
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainB = trainManager.newTrain("New Test Train B");
+        trainB.setRoute(routeB);
+        
+        JemmyUtil.enterClickAndLeave(f.trainPickup);
+        f.comboBoxPickupTrains.setSelectedItem(trainB);
+        // try to add a train not serviced by this track
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addPickupButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testTrainDropError() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Yard Drop Error", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+        
+        // create a route not serviced by this location
+        Location locB = lManager.getLocationByName("Test Loc B"); 
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route routeB = routeManager.newRoute("Bad Route B");
+        routeB.addLocation(locB);
+        // now the train with this route
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainB = trainManager.newTrain("New Test Train B");
+        trainB.setRoute(routeB);
+        
+        JemmyUtil.enterClickAndLeave(f.trainDrop);
+        f.comboBoxDropTrains.setSelectedItem(trainB);
+        // try to add a train not serviced by this track
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addDropButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        
+        JUnitUtil.dispose(f);
+    }
+
 
     // Ensure minimal setup for log4J
     @Override

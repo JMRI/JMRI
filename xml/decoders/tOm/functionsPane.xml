@@ -15,6 +15,7 @@
 
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>tOm Function Map</name>
+    <name xml:lang="cs">tOm Mapování funkcí</name>
     <column>
       <separator/>
       <label>
@@ -22,9 +23,11 @@
       </label>
       <label>
         <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
       </label>
       <label>
         <text>enables Shunting Speed</text>
+        <text xml:lang="cs">povolí posunovací rychlost.</text>
       </label>
       <label>
         <text> </text>
@@ -46,9 +49,11 @@
       </label>
       <label>
         <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
       </label>
       <label>
         <text>switches off Acceleration, Deceleration</text>
+        <text xml:lang="cs">vypne Zrychlování a Zpomalování.</text>
       </label>
       <label>
         <text> </text>
@@ -70,9 +75,11 @@
       </label>
       <label>
         <text>Select which function</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
       </label>
       <label>
         <text>disables Constant Braking Distance</text>
+        <text xml:lang="cs">zakáže konstantní brzdnou dráhu CBD.</text>
       </label>
       <label>
         <text> </text>
