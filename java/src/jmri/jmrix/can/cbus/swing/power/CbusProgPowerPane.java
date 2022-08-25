@@ -5,7 +5,6 @@ import javax.swing.JLabel;
 
 import jmri.JmriException;
 import jmri.PowerManager;
-import static jmri.PowerManager.PROGPOWER;
 import jmri.jmrit.powerpanel.PowerPane;
 
 import org.slf4j.Logger;

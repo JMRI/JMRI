@@ -27,11 +27,14 @@ public class SprogCbusModeSwitcherAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         SprogCbusModeSwitcherFrame f;
+        ConfigurationManager.ProgModeSwitch s = _memo.getProgModeSwitch();
         
-        if (_memo.getProgModeSwitch().equals(ConfigurationManager.ProgModeSwitch.EITHER)) {
+        SprogCbusModeSwitcherManager m = new SprogCbusModeSwitcherManager();
+        
+        if (s.equals(ConfigurationManager.ProgModeSwitch.EITHER)) {
             f = new SprogCbusSimpleModeSwitcherFrame(_memo);
-        } else if (_memo.getProgModeSwitch().equals(ConfigurationManager.ProgModeSwitch.SPROG3PLUS)) {
-            f = new SprogCbusSprog3PlusModeSwitcherFrame(_memo);
+        } else if (s.equals(ConfigurationManager.ProgModeSwitch.SPROG3PLUS)) {
+            f = new SprogCbusSprog3PlusModeSwitcherFrame(_memo, m);
         } else {
             return;
         }

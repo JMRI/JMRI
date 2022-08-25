@@ -30,8 +30,11 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
     private JRadioButton progArButton;
     private JRadioButton progOnlyButton;
     
-    public SprogCbusSprog3PlusModeSwitcherFrame(CanSystemConnectionMemo memo) {
+    private SprogCbusModeSwitcherManager _manager = null;
+    
+    public SprogCbusSprog3PlusModeSwitcherFrame(CanSystemConnectionMemo memo, SprogCbusModeSwitcherManager manager) {
         super(memo, Bundle.getMessage("SprogCbusPlusModeSwitcher"));
+        _manager = manager;
     }
     
     
@@ -221,7 +224,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
      * @param enable true if prog track power control is enabled
      */
     protected final void fireProgPowerPropertyChange(boolean enable) {
-        firePropertyChange(PROGPOWERENABLE, null, enable);
+        _manager.fireProgPowerPropertyChange(enable);
     }
     
     /**
