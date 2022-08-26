@@ -21,27 +21,30 @@ import org.junit.jupiter.api.*;
  */
 public class CbusCommandStationTest {
 
-    private CbusCommandStation t;
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold lnis;
+    private CbusCommandStation t = null;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold lnis = null;
 
     @Test
-    public void testCTor() {
+    public void testCtor() {
         Assert.assertNotNull("exists",t);
     }
 
     @Test
-    public void testgetSystemPrefix() {
+    public void testgetCanSystemPrefix() {
+        Assert.assertNotNull(t);
         Assert.assertEquals("sys prefix", "M", t.getSystemPrefix());
     }
 
     @Test
-    public void testgetUserName() {
+    public void testgetCanUserName() {
+        Assert.assertNotNull(t);
         Assert.assertEquals("user name obtainable", "CAN", t.getUserName());
     }
     
     @Test
     public void testgetSimLoopbacktc() {
+        Assert.assertNotNull(memo);
         TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback();
         memo.setTrafficController(tc);
         CbusCommandStation ta = new CbusCommandStation(memo);
@@ -54,7 +57,8 @@ public class CbusCommandStationTest {
     // test originates from loconet
     @Test
     public void testSendPacket() {
-        
+        Assert.assertNotNull(t);
+        Assert.assertNotNull(lnis);
         byte msg[] = jmri.NmraPacket.accDecPktOpsMode(1, 4, 53);
         t.sendPacket(msg, 1);
         Assert.assertEquals("nmra packet 1",
@@ -198,11 +202,13 @@ public class CbusCommandStationTest {
 
     @AfterEach
     public void tearDown() {
-        memo.dispose();
+        Assertions.assertNotNull(lnis);
         lnis.terminateThreads();
+        lnis = null;
+        Assertions.assertNotNull(memo);
+        memo.dispose();
         memo = null;
         t = null;
-        lnis = null;
         JUnitUtil.tearDown();
     }
 
