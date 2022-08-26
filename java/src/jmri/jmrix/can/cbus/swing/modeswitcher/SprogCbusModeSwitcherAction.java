@@ -29,12 +29,10 @@ public class SprogCbusModeSwitcherAction extends AbstractAction {
         SprogCbusModeSwitcherFrame f;
         ConfigurationManager.ProgModeSwitch s = _memo.getProgModeSwitch();
         
-        SprogCbusModeSwitcherManager m = new SprogCbusModeSwitcherManager();
-        
         if (s.equals(ConfigurationManager.ProgModeSwitch.EITHER)) {
             f = new SprogCbusSimpleModeSwitcherFrame(_memo);
         } else if (s.equals(ConfigurationManager.ProgModeSwitch.SPROG3PLUS)) {
-            f = new SprogCbusSprog3PlusModeSwitcherFrame(_memo, m);
+            f = new SprogCbusSprog3PlusModeSwitcherFrame(_memo);
         } else {
             return;
         }

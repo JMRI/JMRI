@@ -26,7 +26,6 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
     jmri.jmrix.can.TrafficController tc;
     CbusPreferences preferences;
     CbusDccProgrammerManager pm;
-    SprogCbusModeSwitcherManager manager;
 
     @Test
     public void testInitComponents () throws Exception{
@@ -85,7 +84,6 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         prog = new CbusDccProgrammer(tc);
-        manager = new SprogCbusModeSwitcherManager();
 
         preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
 
@@ -96,7 +94,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         pm.setAddressedModePossible(true);
 
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new SprogCbusSprog3PlusModeSwitcherFrame(memo, manager);
+            frame = new SprogCbusSprog3PlusModeSwitcherFrame(memo);
         }
     }
 

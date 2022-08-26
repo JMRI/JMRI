@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import static jmri.PowerManager.*;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.swing.modules.sprogdcc.Sprog3PlusPaneProvider;
@@ -30,11 +29,8 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
     private JRadioButton progArButton;
     private JRadioButton progOnlyButton;
     
-    private SprogCbusModeSwitcherManager _manager = null;
-    
-    public SprogCbusSprog3PlusModeSwitcherFrame(CanSystemConnectionMemo memo, SprogCbusModeSwitcherManager manager) {
+    public SprogCbusSprog3PlusModeSwitcherFrame(CanSystemConnectionMemo memo) {
         super(memo, Bundle.getMessage("SprogCbusPlusModeSwitcher"));
-        _manager = manager;
     }
     
     
@@ -65,31 +61,26 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(true);
-                fireProgPowerPropertyChange(false);
             } else if (preferences.getProgTrackMode() == PROG_ON_MODE) {
                 progOnButton.setSelected(true);
                 mode = PROG_ON_MODE;
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(true);
-                fireProgPowerPropertyChange(false);
             } else if (preferences.getProgTrackMode() == PROG_AR_MODE) {
                 progArButton.setSelected(true);
                 mode = PROG_AR_MODE;
                 pm.setGlobalProgrammerAvailable(false);
                 pm.setAddressedModePossible(true);
-                fireProgPowerPropertyChange(false);
             } else if (preferences.getProgTrackMode() == PROG_ONLY_MODE) {
                 progOnlyButton.setSelected(true);
                 mode = PROG_ONLY_MODE;
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(false);
-                fireProgPowerPropertyChange(true);
             } else {
                 // Default if inconsistent preference
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
                 pm.setAddressedModePossible(true);
-                fireProgPowerPropertyChange(false);
             }
             // Reset hardware mode and preferences in case there was any inconsistency
             setHardwareMode(mode);
@@ -216,16 +207,6 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
         }
     }
     
-    
-    /**
-     * Fires a {@link java.beans.PropertyChangeEvent} for the programming track
-     * power state using property name "progpowerenable".
-     *
-     * @param enable true if prog track power control is enabled
-     */
-    protected final void fireProgPowerPropertyChange(boolean enable) {
-        _manager.fireProgPowerPropertyChange(enable);
-    }
     
     /**
      * disconnect from the CBUS

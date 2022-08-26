@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.powerpanel.PowerPane;
+import jmri.jmrix.can.cbus.CbusPreferences;
+import static jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame.PROG_ONLY_MODE;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +19,19 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusProgPowerPane extends PowerPane {
     
+    protected CbusPreferences preferences;
+
     public CbusProgPowerPane() {
         super();
+        
+        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        if (preferences.getProgTrackMode() == PROG_ONLY_MODE) {
+            onButton.setEnabled(true);
+            offButton.setEnabled(true);
+        } else {
+            onButton.setEnabled(false);
+            offButton.setEnabled(false);
+        }
     }
     
     @Override
@@ -61,6 +74,10 @@ public class CbusProgPowerPane extends PowerPane {
         if (PowerManager.PROGPOWERENABLE.equals(ev.getPropertyName())) {
             onButton.setEnabled((boolean)ev.getNewValue());
             offButton.setEnabled((boolean)ev.getNewValue());
+            onOffStatus.setIcon(unknownIcon);
+        }
+        if (PowerManager.PROGPOWER.equals(ev.getPropertyName())) {
+            super.propertyChange(ev);
         }
     }
     

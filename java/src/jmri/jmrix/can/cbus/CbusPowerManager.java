@@ -148,6 +148,16 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
     }
     
     /**
+     * Fires a {@link java.beans.PropertyChangeEvent} for the programming track
+     * power state using property name "progpowerenable".
+     *
+     * @param enable true if prog track power control is enabled
+     */
+    public final void fireProgPowerEnablePropertyChange(boolean enable) {
+        firePropertyChange(PROGPOWERENABLE, null, enable);
+    }
+    
+    /**
      * {@inheritDoc}
      */
     @Override

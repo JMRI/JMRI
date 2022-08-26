@@ -7,8 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusDccProgrammerManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
@@ -34,6 +33,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
     
     protected CbusPreferences preferences;
     protected CbusDccProgrammerManager pm = null;
+    protected CbusPowerManager manager;
     protected CanSystemConnectionMemo _memo = null;
     protected ProgModeSwitch _pms;
     protected TrafficController tc;
@@ -59,6 +59,8 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
         // connect to the CanInterface
         tc = _memo.getTrafficController();
         addTc(tc);
+        
+        manager = (CbusPowerManager)InstanceManager.getNullableDefault(jmri.PowerManager.class);
     }
     
     
@@ -98,6 +100,17 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
     }
     
 
+    /**
+     * Fires a {@link java.beans.PropertyChangeEvent} for the programming track
+     * power state using property name "progpowerenable".
+     *
+     * @param enable true if prog track power control is enabled
+     */
+    protected final void fireProgPowerPropertyChange(boolean enable) {
+        manager.fireProgPowerEnablePropertyChange(enable);
+    }
+    
+    
     /**
      * Switch the hardware to the requested operating mode
      * 
