@@ -142,7 +142,7 @@ public class CbusEventRequestDataModelTest {
         
         t.setValueAt("do button Click",0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         
-        JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>0); }, " outbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcis.outbound.isEmpty()); }, " outbound 1 didn't arrive");
         Assert.assertEquals(" 1 outbound increased", 1,(tcis.outbound.size() ) );
         Assert.assertEquals("table sends request event for long 7 node 1234 ", "[5f8] 92 04 D2 00 07",
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
@@ -199,7 +199,7 @@ public class CbusEventRequestDataModelTest {
     }
     
     private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
     public void setUp() {
@@ -214,6 +214,7 @@ public class CbusEventRequestDataModelTest {
     @AfterEach
     public void tearDown() {        
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         tcis = null;
         memo = null;
