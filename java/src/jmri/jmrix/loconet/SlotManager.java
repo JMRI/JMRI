@@ -57,7 +57,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests
 
-    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests
+    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
+
     /**
      * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
      * TODO add slottype, eg systemslot, std slot, expanded slot etc
