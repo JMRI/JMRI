@@ -538,7 +538,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public String setDestination(Location destination, Track track, boolean force) {
         // first determine if rolling stock can be move to the new destination
         if (!force) {
-            String status = rsTestDestination(destination, track);
+            String status = rsCheckDestination(destination, track);
             if (!status.equals(Track.OKAY)) {
                 return status;
             }
@@ -597,11 +597,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK
      */
-    public String testDestination(Location destination, Track track) {
-        return rsTestDestination(destination, track);
+    public String checkDestination(Location destination, Track track) {
+        return rsCheckDestination(destination, track);
     }
 
-    private String rsTestDestination(Location destination, Track track) {
+    private String rsCheckDestination(Location destination, Track track) {
         // first perform a code check
         if (destination != null && !destination.isTrackAtLocation(track)) {
             return ERROR_TRACK;

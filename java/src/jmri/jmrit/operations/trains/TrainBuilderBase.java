@@ -1024,7 +1024,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected boolean setLocoDestination(Engine engine, RouteLocation rl, RouteLocation rld) {
         // engine to staging?
         if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
-            String status = engine.testDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
+            String status = engine.checkDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
             if (status.equals(Track.OKAY)) {
                 addEngineToTrain(engine, rl, rld, _terminateStageTrack);
                 return true; // done
@@ -1046,7 +1046,7 @@ public class TrainBuilderBase extends TrainCommon {
                 if (!checkDropTrainDirection(engine, rld, track)) {
                     continue;
                 }
-                String status = engine.testDestination(destination, track);
+                String status = engine.checkDestination(destination, track);
                 if (status.equals(Track.OKAY)) {
                     addEngineToTrain(engine, rl, rld, track);
                     return true; // done
@@ -2706,7 +2706,7 @@ public class TrainBuilderBase extends TrainCommon {
                                 testTrack.getReservedLengthDrops() - testTrack.getReserved(),
                                 testTrack.getAvailableTrackSpace() }));
             }
-            String status = car.testDestination(testDestination, testTrack);
+            String status = car.checkDestination(testDestination, testTrack);
             // Can be a caboose or car with FRED with a custom load
             // is the destination a spur with a schedule demanding this car's custom load?
             if (status.equals(Track.OKAY) &&
@@ -2725,7 +2725,7 @@ public class TrainBuilderBase extends TrainCommon {
                         MessageFormat.format(Bundle.getMessage("buildTrackFullHasAlternate"),
                                 new Object[] { testDestination.getName(), testTrack.getName(),
                                         testTrack.getAlternateTrack().getName() }));
-                status = car.testDestination(testDestination, testTrack.getAlternateTrack());
+                status = car.checkDestination(testDestination, testTrack.getAlternateTrack());
                 if (!status.equals(Track.OKAY)) {
                     addLine(_buildReport, SEVEN,
                             MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
@@ -2831,7 +2831,7 @@ public class TrainBuilderBase extends TrainCommon {
             return null;
         }
         // no need to check train and track direction into staging, already done
-        String status = car.testDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
+        String status = car.checkDestination(_terminateStageTrack.getLocation(), _terminateStageTrack);
         if (status.equals(Track.OKAY)) {
             return _terminateStageTrack;
             // only generate a new load if there aren't any other tracks available for this
@@ -3046,7 +3046,7 @@ public class TrainBuilderBase extends TrainCommon {
             int rnd = (int) (Math.random() * loads.size());
             car.setLoadName(loads.get(rnd));
             // check to see if car is now accepted by staging
-            String status = car.testDestination(stageTrack.getLocation(), stageTrack); // will staging accept this car?
+            String status = car.checkDestination(stageTrack.getLocation(), stageTrack); // will staging accept this car?
             if (status.equals(Track.OKAY) || (status.startsWith(Track.LENGTH) && stageTrack != _terminateStageTrack)) {
                 car.setLoadGeneratedFromStaging(true);
                 car.setFinalDestination(stageTrack.getLocation());
@@ -3100,7 +3100,7 @@ public class TrainBuilderBase extends TrainCommon {
             if (car.getKernel() != null && !car.isLead()) {
                 continue;
             }
-            if (car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
+            if (car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
                 Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
                 if (alternate != null &&
                         car.getDestinationTrack() == alternate &&

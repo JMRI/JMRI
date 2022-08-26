@@ -1767,7 +1767,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         log.debug("Car ({}) destination is staging, check train ({}) termination track ({})",
                                 car.toString(), getName(), getTerminationTrack().getName());
                     }
-                    String status = car.testDestination(getTerminationTrack().getLocation(), getTerminationTrack());
+                    String status = car.checkDestination(getTerminationTrack().getLocation(), getTerminationTrack());
                     if (!status.equals(Track.OKAY)) {
                         addLine(buildReport,
                                 MessageFormat.format(Bundle.getMessage("trainCanNotDeliverToStaging"),

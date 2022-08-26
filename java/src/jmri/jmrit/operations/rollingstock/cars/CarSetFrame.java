@@ -447,7 +447,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
                 car.setFinalDestinationTrack(finalDestTrack);
                 String status = getTestCar(car, car.getLoadName())
-                        .testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
+                        .checkDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
                 if (!status.equals(Track.OKAY)) {
                     JOptionPane.showMessageDialog(this,
                             MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), car.toString(), status),
@@ -513,7 +513,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                         return false;
                     }
                     // use a test car with a load of "RWE" and no length
-                    String status = getTestCar(car, car.getReturnWhenEmptyLoadName()).testDestination(locationRWE,
+                    String status = getTestCar(car, car.getReturnWhenEmptyLoadName()).checkDestination(locationRWE,
                             trackRWE);
                     if (!status.equals(Track.OKAY)) {
                         JOptionPane.showMessageDialog(this,
@@ -559,7 +559,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                         return false;
                     }
                     // use a test car with a load of "RWL" and no length
-                    String status = getTestCar(car, car.getReturnWhenLoadedLoadName()).testDestination(locationRWL,
+                    String status = getTestCar(car, car.getReturnWhenLoadedLoadName()).checkDestination(locationRWL,
                             trackRWL);
                     if (!status.equals(Track.OKAY)) {
                         JOptionPane.showMessageDialog(this,
