@@ -1,21 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <!-- Translated by Herv&#233; BLOREC bzh56420@yahoo.fr on 2017-01-01 -->
 <head>
-<title>JMRI: Setup</title>
-<!-- Style -->
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI: Setup</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
 <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 <a name="Top"></a>
@@ -61,19 +55,20 @@ ouvrir le programme de la mani&#232;re habituelle pour votre syst&#232;me. Windo
 [&#192; suivre]</p>
 <a name="setprefs"></a><h2>R&#233;glages des Pr&#233;f&#233;rences</h2>
 	<ul>
-	<li>Le <a href="../../package/apps/TabbedPreferences.shtml">Volet Pr&#233;f&#233;rences</a></li>
-	<li><a href="profiles.shtml">Configuration Profils</a></li>
-	<li><a href="Files.shtml">Emplacements de Fichier</a></li>
+	  <li>Le <a href="../../package/apps/TabbedPreferences.shtml">Volet Pr&#233;f&#233;rences</a></li>
+	  <li><a href="profiles.shtml">Configuration Profils</a></li>
+	  <li><a href="Files.shtml">Emplacements de Fichier</a></li>
 	</ul>
 <a name="debug"></a><h2>R&#233;soudre les Probl&#232;mes</h2>
 	<ul>
   	<li><a href="https://jmri.org/install/Debug.shtml">D&#233;bogage d'une installation</a></li>
   	<li><a href="../setup/Errors.shtml">Codes Erreurs</a></li>
-	<li><a href="https://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows seulement)</li>
-	<li><a href="Faq.shtml">Questions Fr&#233;quemment Pos&#233;es</a></li>
+	  <li><a href="https://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows seulement)</li>
+	  <li><a href="Faq.shtml">Questions Fr&#233;quemment Pos&#233;es</a></li>
 	</ul>
 <!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
+<script src="/js/main.js"></script>
 </body>
 </html>
