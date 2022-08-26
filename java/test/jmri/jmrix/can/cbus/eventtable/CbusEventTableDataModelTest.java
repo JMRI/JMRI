@@ -9,7 +9,6 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusPreferences;
 
 import jmri.util.JUnitUtil;
 
@@ -46,6 +45,7 @@ public class CbusEventTableDataModelTest {
         Assert.assertTrue(t.getRowCount()==0);
         
         CanReply m = new CanReply();
+        Assertions.assertNotNull(tcis);
         m.setHeader(tcis.getCanid());
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         m.setNumDataElements(5);
@@ -92,7 +92,7 @@ public class CbusEventTableDataModelTest {
 
     @Test
     public void testCanMessage() {
-        
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("no listener to start with",0,tcis.numListeners());
         
         CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
@@ -216,6 +216,7 @@ public class CbusEventTableDataModelTest {
         
         // uses loopback in setvalueat tests
         TrafficControllerScaffold tcisl = new TrafficControllerScaffoldLoopback();
+        Assertions.assertNotNull(memo);
         memo.setTrafficController(tcisl);
         
         CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
@@ -260,7 +261,7 @@ public class CbusEventTableDataModelTest {
         Assert.assertEquals("SESSION_ON_COLUMN 0", 0 ,(int) t.getValueAt(0,CbusEventTableDataModel.SESSION_ON_COLUMN));
         
         t.setValueAt("do button Click",0,CbusEventTableDataModel.ON_BUTTON_COLUMN);
-        JUnitUtil.waitFor(()->{ return(tcisl.outbound.size()>0); }, " outbound 1 didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tcisl.outbound.isEmpty()); }, " outbound 1 didn't arrive");
         Assert.assertEquals(" 1 outbound increased", 1,(tcisl.outbound.size() ) );
         Assert.assertEquals("table sends on event for short 2003 ", "[5f8] 98 00 00 07 D3",
             tcisl.outbound.elementAt(tcisl.outbound.size() - 1).toString());
@@ -383,9 +384,9 @@ public class CbusEventTableDataModelTest {
         t.dispose();
     
     }
-    
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
+
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws java.io.IOException {
@@ -396,12 +397,13 @@ public class CbusEventTableDataModelTest {
         memo.setTrafficController(tcis);
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         
-        jmri.InstanceManager.store(new CbusPreferences(),CbusPreferences.class );
     }
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
         memo.dispose();
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
         memo = null;
         tcis = null;
