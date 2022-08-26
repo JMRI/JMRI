@@ -11,6 +11,8 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
@@ -565,6 +567,8 @@ public class TrackTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "X10002", "Tank car", "40", "DAB", "1984", null, 0);
         
         Assert.assertEquals("Confirm", Track.OKAY, t.scheduleNext(c1));
+        Assert.assertEquals("Confirm schedule item", siBoxcar.getId(), c1.getScheduleItemId());
+        c1.setScheduleItemId(Car.NONE);
         
         siBoxcar.setRoadName("PC");
         Assert.assertNotEquals("Confirm not road PC", Track.OKAY, t.scheduleNext(c1));
@@ -573,10 +577,14 @@ public class TrackTest extends OperationsTestCase {
         siBoxcar.setRoadName("CP");
         t.setScheduleMode(Track.SEQUENTIAL);
         Assert.assertEquals("Confirm Boxcar", Track.OKAY, t.scheduleNext(c1));
+        Assert.assertEquals("Confirm schedule item", siBoxcar.getId(), c1.getScheduleItemId());
+        c1.setScheduleItemId(Car.NONE);
         
         // next car expected is Tank car
         Assert.assertNotEquals("Confirm not Boxcar", Track.OKAY, t.scheduleNext(c1));
         Assert.assertEquals("Confirm Tank car", Track.OKAY, t.scheduleNext(c2));
+        Assert.assertEquals("Confirm schedule item", siTankcar.getId(), c2.getScheduleItemId());
+        c2.setScheduleItemId(Car.NONE);
         
         // test train schedule
         TrainSchedule ts = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("Test Train Schedule");
@@ -586,10 +594,14 @@ public class TrackTest extends OperationsTestCase {
         
         InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(ts.getId());
         Assert.assertEquals("Confirm schedule active", Track.OKAY, t.scheduleNext(c1));
+        Assert.assertEquals("Confirm schedule item", siBoxcar.getId(), c1.getScheduleItemId());
+        c1.setScheduleItemId(Car.NONE);
         
         // next car expected is Tank car
         Assert.assertEquals("Confirm Tank car", Track.OKAY, t.scheduleNext(c2));
-        
+        Assert.assertEquals("Confirm schedule item", siTankcar.getId(), c2.getScheduleItemId());
+        c2.setScheduleItemId(Car.NONE);
+ 
         // test Boxcar load
         siBoxcar.setReceiveLoadName("New Load");
         Assert.assertNotEquals("Confirm schedule active wrong load", Track.OKAY, t.scheduleNext(c1));
@@ -603,5 +615,53 @@ public class TrackTest extends OperationsTestCase {
         jmri.util.JUnitAppender.assertErrorMessage(
                 "ERROR Track " + t.getName() + " current schedule item is null!");
     }
+    
+    @Test
+    public void testSchedule() {
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestSchedule");
+        Track t = l.addTrack("New track 1", Track.SPUR);
+        t.setLength(100);
+        
+        Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).newSchedule("schedule");
+        ScheduleItem siBoxcar = schedule.addItem("Boxcar");
+        t.setSchedule(schedule);
+        
+        // create cars
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "X10001", "Boxcar", "40", "DAB", "1984", t, 0);
+        
+        // create train
+        Train train = InstanceManager.getDefault(TrainManager.class).newTrain("Test Schedule Train");
+        c1.setTrain(train);
+        
+        // test train schedule
+        TrainSchedule ts = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("Test Train Schedule");
+        siBoxcar.setPickupTrainScheduleId(ts.getId());
+        // test ship load
+        siBoxcar.setShipLoadName("Ship Load Name");
+        // test wait
+        siBoxcar.setWait(23);
+        
+        Assert.assertEquals("Confirm destination", Track.OKAY, c1.setDestination(l, t));
+        Assert.assertEquals("Confirm pick up", Track.NONE, c1.getPickupScheduleId());
+        Assert.assertEquals("Confirm load name", "E", c1.getLoadName());
+        Assert.assertEquals("Confirm wait", 0, c1.getWait());
+        
+        // setting the destination to null triggers the car update
+        Assert.assertEquals("Confirm destination", Track.OKAY, c1.setDestination(null, null));
+        Assert.assertEquals("Confirm pick up", ts.getId(), c1.getPickupScheduleId());
+        // load doesn't change due to wait count greater than 0
+        Assert.assertEquals("Confirm load name", "E", c1.getLoadName());
+        Assert.assertEquals("Confirm wait", 23, c1.getWait());
+        
+        // reset wait to zero
+        siBoxcar.setWait(0);
+        
+        Assert.assertEquals("Confirm destination", Track.OKAY, c1.setDestination(l, t));
 
+        // setting the destination to null triggers the car update
+        Assert.assertEquals("Confirm destination", Track.OKAY, c1.setDestination(null, null));
+        Assert.assertEquals("Confirm pick up", ts.getId(), c1.getPickupScheduleId());
+        Assert.assertEquals("Confirm load name", "Ship Load Name", c1.getLoadName());
+        Assert.assertEquals("Confirm wait", 0, c1.getWait());
+    }
 }

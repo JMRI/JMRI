@@ -2039,23 +2039,18 @@ public class TrainTest extends OperationsTestCase {
 
         // Schedule sch1 should cause c2 to be delivered to Chelmsford Freight 2
         Assert.assertEquals("c2 destination", "Chelmsford Freight 2", c2.getDestinationTrackName());
-        Assert.assertEquals("c2 next load", "", c2.getNextLoadName());
         // Schedule sch1 and sch2 should reject c3, to be delivered to Chelmsford Yard 3
         Assert.assertEquals("c3 destination", "Chelmsford Yard 3", c3.getDestinationTrackName());
-        Assert.assertEquals("c3 next load", "", c3.getNextLoadName());
         Assert.assertEquals("c4 destination", "Chelmsford Yard 3", c4.getDestinationTrackName());
         // Schedule sch1 should cause c5 & c13 to be delivered to Chelmsford Freight 2
         Assert.assertEquals("c5 destination", "Chelmsford Freight 2", c5.getDestinationTrackName());
-        Assert.assertEquals("c5 next load", "Tin", c5.getNextLoadName());
         Assert.assertEquals("c6 destination", "Chelmsford Yard 3", c6.getDestinationTrackName());
         Assert.assertEquals("c7 destination", "Chelmsford Freight 4", c7.getDestinationTrackName());
         Assert.assertEquals("c9 destination", "Chelmsford Freight 1", c9.getDestinationTrackName());
-        Assert.assertEquals("c9 next load", "Scrap", c9.getNextLoadName());
         Assert.assertEquals("c10 destination", "Chelmsford Freight 4", c10.getDestinationTrackName());
         Assert.assertEquals("c11 destination", "Chelmsford Freight 4", c11.getDestinationTrackName());
         // C13 is part of kernel
         Assert.assertEquals("c13 destination", "Chelmsford Freight 2", c13.getDestinationTrackName());
-        Assert.assertEquals("c13 next load", "Tin", c13.getNextLoadName());
 
         // move and terminate train
         train1.move();
@@ -2231,6 +2226,7 @@ public class TrainTest extends OperationsTestCase {
         InstanceManager.getDefault(CarLoads.class).addName("Boxcar", "Metal 1");
         InstanceManager.getDefault(CarLoads.class).addName("Flat Car", "Metal 2");
         InstanceManager.getDefault(CarLoads.class).addName("Gon", "Metal 3");
+        InstanceManager.getDefault(CarLoads.class).addName("Gon", "Tin");
 
         Schedule sch2 = smanager.newSchedule("Schedule 2");
         ScheduleItem sch2Item1 = sch2.addItem("Coil Car");
@@ -2396,7 +2392,6 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c7 load from staging", "L", c7.getLoadName());
         Assert.assertEquals("c8 load from staging", "E", c8.getLoadName());
         Assert.assertEquals("c9 load from staging", "Metal 2", c9.getLoadName());
-        Assert.assertEquals("c9 next load from staging", "Scrap", c9.getNextLoadName());
         Assert.assertEquals("c10 load from staging", "E", c10.getLoadName());
         Assert.assertEquals("c11 load from staging", "E", c11.getLoadName());
         Assert.assertEquals("c13 load from staging", "Metal 3", c13.getLoadName());
@@ -2432,7 +2427,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("c12 track from staging terminated", "Westford Yard 1", c12.getTrackName());
         Assert.assertEquals("c12 load from staging terminated", "E", c12.getLoadName());
         Assert.assertEquals("c13 track from staging terminated", "Chelmsford Freight 2", c13.getTrackName());
-        Assert.assertEquals("c13 load from staging terminated", "E", c13.getLoadName());
+        Assert.assertEquals("c13 load from staging terminated", "Tin", c13.getLoadName());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
