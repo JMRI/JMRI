@@ -116,7 +116,7 @@
 
         <h4>OpenLCB / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated openlcb.jar to pick up "send AMD in response to AME" fix.</li>
             </ul>
 
         <h4>RFID</h4>
