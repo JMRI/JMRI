@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JiMRI: Preferences Pane</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JiMRI help preferences">
+  <meta name="keywords" content="JMRI help preferences">
   <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -13,10 +13,10 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JiMRI : Volet Préférences</h1>
+      <h1>JMRI : Volet Préférences</h1>
 
       <p>Le volet Préférences est l'endroit où vous configurez le fonctionnement de base de votre
-      application JiMRI.</p>
+      application JMRI.</p>
       <p>L'écran est divisé en deux sections : sur le côté gauche se trouve une liste des groupes
       de préférences qui peuvent être définis. En cliquant sur chaque élément, la partie de droite
       se remplit des différentes options qui peuvent être configurées pour cet onglet. <a href=
@@ -568,5 +568,6 @@
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>
