@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -29,8 +28,8 @@ public class CbusEventTablePrintActionTest {
     @Test
     public void testCTor() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        CbusEventTableDataModel eventModel = new CbusEventTableDataModel(memo,0);
+        CbusEventTableDataModel eventModel = new CbusEventTableDataModel(null,0,0);
+        // assertThat(t).isNotNull();
         
         CbusEventTablePrintAction t = new CbusEventTablePrintAction("PreviewTable",
         eventModel,"CBUS Event Table Print Preview Test",true);
@@ -39,15 +38,14 @@ public class CbusEventTablePrintActionTest {
         
         eventModel.skipSaveOnDispose();
         eventModel.dispose();
-        memo.dispose();
         
     }
     
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testPreview() {
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        CbusEventTableDataModel eventModel = new CbusEventTableDataModel(memo, 2);
+        
+        CbusEventTableDataModel eventModel = new CbusEventTableDataModel(null,0,0);
         // assertThat(t).isNotNull();
         
         eventModel.provideEvent(0, 7);
@@ -69,7 +67,6 @@ public class CbusEventTablePrintActionTest {
         
         eventModel.skipSaveOnDispose();
         eventModel.dispose();
-        memo.dispose();
         
     }
     
