@@ -1373,7 +1373,7 @@ public class TrainBuilderBase extends TrainCommon {
                         // a car's load changes when the wait count reaches 0
                         String oldLoad = car.getLoadName();
                         if (car.getTrack().isSpur()) {
-                            car.updateLoad(); // has the wait count reached 0?
+                            car.updateLoad(car.getTrack()); // has the wait count reached 0?
                         }
                         String newLoad = car.getLoadName();
                         if (!oldLoad.equals(newLoad)) {
