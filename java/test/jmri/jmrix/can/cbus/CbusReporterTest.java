@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import jmri.IdTag;
 import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -207,6 +206,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
         r.setProperty(CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY, true);
 
+        Assertions.assertNotNull(memo);
         jmri.SensorManager sm = memo.get(jmri.SensorManager.class);
         jmri.Sensor followerSensor = sm.getBySystemName(sm.createSystemName("+1",sm.getSystemPrefix()));
         Assert.assertNull("No sensor at start",followerSensor);
@@ -244,7 +244,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     }
 
     private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo = null;
 
     // ((CbusReporterManager)memo.get(jmri.ReporterManager.class));
 
@@ -268,6 +268,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         if (r!=null) {
             r.dispose();
         }
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         tcis.terminateThreads();
