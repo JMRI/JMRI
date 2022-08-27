@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: DecoderPro Frequently Asked Questions</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: DecoderPro Frequently Asked Questions</title>
+  <!--#include virtual="/Style.shtml" -->
   <!-- FAQ-Head -->
 
   <script type="text/javascript">
@@ -90,7 +91,7 @@
           If you do have an engine on the track (only one!), clean the wheels and the track and try
           again. Error 306 means that JMRI is not getting the expected signal from the command
           station. If this happens when you are first setting things up, check your wiring,
-          connections, and com port selection. This<a href="../Errors.shtml">list of all error
+          connections, and com port selection. This <a href="../Errors.shtml">list of all error
           messages</a> also provides some suggestions about how to clear them.
         </dd>
 
