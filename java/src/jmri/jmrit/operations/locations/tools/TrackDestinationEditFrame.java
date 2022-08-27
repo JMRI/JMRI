@@ -424,11 +424,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);
                                     String itemId = track.getScheduleItemId();
-                                    testDest = car.testDestination(destination, track);
+                                    testDest = car.checkDestination(destination, track);
                                     track.setScheduleMode(Track.SEQUENTIAL);
                                     track.setScheduleItemId(itemId);
                                 } else {
-                                    testDest = car.testDestination(destination, track);
+                                    testDest = car.checkDestination(destination, track);
                                 }
                                 if (testDest.equals(Track.OKAY)) {
                                     break; // done

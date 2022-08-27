@@ -55,10 +55,8 @@
       &lt;CVvalue name="3" value="0" /&gt;<br>
       &lt;CVvalue name="4" value="0" /&gt;<br></p>
       <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- close #mainContent -->
-  </div>
-  <!-- closes #mBody -->
+    </div><!-- close #mainContent -->
+  </div><!-- closes #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

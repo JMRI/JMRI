@@ -1,0 +1,26 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for html/apps pages -->
+
+	  <hr class="hide">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI&reg; is...</div>
+        <dl>
+	 
+	    <!--#include virtual="/help/fr/parts/SidebarApplications.shtml" -->
+
+      <!--#include virtual="/help/fr/parts/SidebarTools.shtml" -->
+
+      <!--#include virtual="/help/fr/parts/SidebarLayoutAutomation.shtml" -->
+	    
+	    <!--#include virtual="/help/fr/parts/SidebarSupportedHardware.shtml" -->
+		
+	    <!--#include virtual="/help/fr/parts/SidebarInstall.shtml" -->
+
+         </dl>
+    
+	 <!--#include virtual="/help/fr/parts/SidebarTail.shtml" -->
+   
+	</div> <!-- closes #side -->
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
+<!-- /Sidebar.shtml -->

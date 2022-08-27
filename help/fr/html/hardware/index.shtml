@@ -1,24 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233;  2017-01-10-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2017-01-10-->
 <head>
   <title>JMRI: Hardware Support</title>
-
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
 <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 <h1>JMRI: Materiel pris en Charge</h1>
@@ -26,8 +18,8 @@
       <p>JMRI prend en charge un large &#233;ventail de "Centrale" DCC produits par 
       diff&#233;rents fournisseurs pour l'automatisation de r&#233;seaux miniatures. 
       Nous prenons en charge des r&#233;seaux non DCC. S'il y a un moyen de
-      faire communiquer un ordinateur avec une partie donn&#233;e d'un &#233;
-      quipement de r&#233;seau miniature, il est possible de le connecter &#224; JMRI.</p>
+      faire communiquer un ordinateur avec une partie donn&#233;e d'un &#233;quipement
+      de r&#233;seau miniature, il est possible de le connecter &#224; JMRI.</p>
        
       <p>Cette page donne la liste d'&#233;quipement de r&#233;seau qui est
       connu de JMRI pour travailler avec, et fournit des liens vers des
@@ -56,7 +48,6 @@
             ou un XPA et modem compatible Hayes </a></p>
             <p> Note: vous ne pouvez pas programmer de  d&#233;codeurs avec
             cette configuration </p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -67,7 +58,6 @@
           <dd>
             <p class="dl">Configurer:<a href="bachrus/index.shtml">Compteur de
             Vitesse Bachrus MTS-DCC pour train miniature </a></p> 
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.jlcenterprises.net/">C/MRI</a></dt>
@@ -77,7 +67,6 @@
             de Bruce Chubb</a> par une connexion via s&#233;rie directe, 
             <a href="cmri/CMRI.shtml#usb">adaptateur USB-s&#233;rie</a>,
             ou <a href="cmri/CMRI.shtml#net">connexion r&#233;seau</a>.</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -87,7 +76,6 @@
           <dd>
             <p class="dl">Configurer: Cartes &#201;lectroniques CTI via l'adaptateur
             <a href="acela/index.shtml">Acela</a>.</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -99,7 +87,6 @@
             <p class="dl">Configurer: Centrale EasyDCC via
             <a href="easydcc/EasyDCC.shtml">S&#233;rie</a> ou 
             <a href="TerminalServer.shtml">Serveur Terminal</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -110,7 +97,6 @@
           <dd>
             <p class="dl">Configurer: <a href="dccpp/index.shtml">Centrale
             DCC++ Open Source Arduino</a>.</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -122,7 +108,6 @@
           <dd>
             <p class="dl">Configurer: <a href="misc/DccSpecialties.shtml">Produits
             famille Hare, Wabbit, Block Watcher ou PSX</a>.</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -134,7 +119,6 @@
           <dd>
             <p class="dl">Informations G&#233;n&#233;rales sur
             <a href="XBee/index.shtml">la connexions &#224; un r&#233;seau Digi XBee</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -172,7 +156,6 @@
             Interface Digitrax PR2 </a> ou <a href="loconet/PR3.shtml">Interface PR3</a>.</p>
             <p class="dl">Configurer: connexion directe &#224; un une <a href=
             "loconet/Uhlenbrock.shtml">Intellibox </a>.</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -183,8 +166,6 @@
           <dd>
             <p class="dl">Configurer la connexion &#224; une centrale
             <a href="ecos/index.shtml">ECoS</a>.</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -195,7 +176,6 @@
           <dd>
             <p class="dl">Configurer: (LocoNet)
             <a href="loconet/Fleischmann.shtml">Les communications Twin Centre</a></p> 
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -212,7 +192,6 @@
             XPA et modem compatible Hayes </a></p>
             <p> S'il vous pla&#238;t consulter les notes ci-dessus pour les
             restrictions que JMRI peut apportere sur ce syst&#232;me sp&#233;cifique</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -226,7 +205,6 @@
             Controls ZTC640 interface, ou un XPA et modem compatible Hayes</a></p> 
             <p>S'il vous pla&#238;t consulter les notes ci-dessus pour les
             restrictions que JMRI peut apporter sur ce syst&#232;me sp&#233;cifique</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
@@ -236,7 +214,6 @@
           <dd>
             <p>Connexion: c&#226;ble S&#233;rie</p>
             <p class="dl">Configurer: <a href="tmcc/index.shtml">Centrale TMCC </a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.maplesystems.com">
@@ -248,8 +225,6 @@
             <p> &#233;cran tactile Syst&#232;mes Maple </p>
             <p class="dl">Configurer: <a href="maple/index.shtml">connexion via
             une liaison s&#233;rie</a></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.marklin.com/digital/">
@@ -260,14 +235,12 @@
             <p class="dl">Configurer la connexion &#224; la centrale
             <a href="marklin/index.shtml">CS2</a></p>
             <a href="ecos/index.shtml">CS</a> Centrale - voir ESU ECoS
-            <p>&nbsp;</p>
           </dd>
 
           <dt><a href="can/cbus/index.shtml">CBUS&reg;</a></dt>
           <dd>
             <p class="dl">Configuration: <a href="can/cbus/index.shtml">
             r&#233;seaux CBUS MERG</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.modelrectifier.com">
@@ -280,7 +253,6 @@
             via DecoderPro en utilisant tou syst&#232;me DCC pris en charge.</p>
             <p>Pour avoir plus d'information sur la connexion de JMRI &#224; une
             centrale MRC, voir la page <a href="mrc/index.shtml">syst&#232;me MRC</a>.
-            <p>&nbsp;</p>
          </dd>
 
           <dt class=im><a href="http://www.proto87.com/model-trains-DCC-decoders.html">
@@ -290,7 +262,6 @@
           <dd>
             <p><a href="rps/index.shtml">Configurer la connexion</a> &#224; un
             syst&#232;me de d&#233;tection de position RPS</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.ncedcc.com/">
@@ -303,7 +274,6 @@
             <a href="nce/NCE.shtml#vianetwork"> Serveur Terminal</a>.<br>
             Configurer une connexion &#224; un PowerCab via un
             <a href="nce/NCE.shtml#powercab">adapteur USB NCE</a>.</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.oaktreesystems.com/">
@@ -316,7 +286,6 @@
             d'interfaces I0-24, IO-48 et O-48 et le r&#233;gulateur manuel HH2.<br>
             ( Remarque: RCI est pour &#234;tre remplac&#233; par
             <a href="http://www.oaktreesystems.com/main.html">Layout Control System(LCS)</a>)</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://openlcb.org/">
@@ -327,8 +296,6 @@
           <dd>
             <p class="dl">Configurer: <a href="openlcb/index.shtml">des
             r&#233;seaux OpenLCB</a></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://protrak.org"><img src=
@@ -339,9 +306,6 @@
           <dd>
             <p class="dl">Configurer: <a href="grapevine/index.shtml">n&#339;uds
             Grapevine</a></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.qsisolutions.com/products/q-programmer.html">
@@ -352,7 +316,6 @@
           <dd>
             <p>Connexion: Programmateur Quantum</p>
             <p class="dl">Configurer: <a href="qsi/index.shtml">connexion USB</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.raspberrypi.org">
@@ -363,8 +326,6 @@
           <dd>
             <p class="dl"><a href="pi/index.shtml">Information G&#233;n&#233;rale
             sur la connexion aux broches GPIO d'un Raspberry PI.</a></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.roco.com/"><img src=
@@ -380,7 +341,6 @@
             un XPA et  modem compatibles Hayes</a></p>
             <p>S'il vous pla&#238;t consulter les notes ci-dessus pour les
             restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.sprog-dcc.co.uk/"><img
@@ -391,7 +351,6 @@
           <dd>
             <p class="dl">Configurer: <a href="sprog/SPROG.shtml">SPROG</a>
             que ce soit un programmateur DCC autonome ou centrale DCC</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://srcpd.sourceforge.net/">
@@ -402,8 +361,6 @@
           <dd>
             <p class="dl">Configurer: <a href="SRCP/index.shtml">Connexion au
             serveur SRCP</a></p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.tams-online.de/">
@@ -412,7 +369,6 @@
           <dt><a href="tams/index.shtml">TAMS</a></dt>
           <dd><p class="dl">Configurer la connexion &#224; centrale Master
             Control de <a href="tams/index.shtml">TAMS</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.uhlenbrock.de/">
@@ -428,7 +384,6 @@
             <a href="loconet/Uhlenbrock.shtml"> Port s&#233;rie int&#233;gr&#233; </a></p>
             <p class="dl">Configurer: Uhlenbrock Intellibox-II via
             <a href="loconet/Uhlenbrock.shtml#usb">une connexion USB int&#233;gr&#233;e</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.viessmann-modell.com/"><img src=
@@ -442,7 +397,6 @@
             XPA et modem compatibles Hayes </a> </p>
             <p>S'il vous pla&#238;t consulter les notes ci-dessus pour les
             restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">Wangrow</dt>
@@ -450,7 +404,6 @@
           <dd>
             <p>Connexion: Wangrow Serial Port</p>
             <p class="dl">Configurer: <a href="nce/Wangrow.shtml">System One</a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.x10.com">X10</a></dt>
@@ -459,7 +412,6 @@
             <p>Connection: X10 contr&#244;leurs courant-porteur</p>
             <p class="dl">Configure: <a href="powerline/index.shtml">CM11 et
             contr&#244;leurs compatibles </a></p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im"><a href="http://www.zimo.at/"><img src="images/zimo.gif"
@@ -468,8 +420,6 @@
           <dt><a href="zimo/Zimo.shtml">ZIMO</a></dt>
           <dd>
             <p class="dl">Configurer: <a href="zimo/Zimo.shtml">Zimo MX-1</a> </p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
           </dd>
 
           <dt class="im">
@@ -485,7 +435,6 @@
             <p>S'il vous pla&#238;t consulter les notes ci-dessus pour les
             restrictions que JMRI peut apporter &#224; ce ce syst&#232;me
             sp&#233;cifique</p>
-            <p>&nbsp;</p>
           </dd>
         </dl>
       </div><!-- closes .list -->
@@ -533,5 +482,6 @@
     <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -30,6 +30,7 @@ public class TrainManifestHeaderText {
     private static String consist = Bundle.getMessage("Consist");
     private static String kernel = Bundle.getMessage("Kernel");
     private static String owner = Bundle.getMessage("Owner");
+    private static String division = Bundle.getMessage("Division");
     private static String rwe = Bundle.getMessage("RWELabel"); // add "RWE:" in Switch List
     private static String comment = Bundle.getMessage("Comment");
     private static String drop_comment = Bundle.getMessage("SetOut_Msg");
@@ -187,6 +188,14 @@ public class TrainManifestHeaderText {
     public static void setStringHeader_Owner(String s) {
         owner = s;
     }
+    
+    public static String getStringHeader_Division() {
+        return division;
+    }
+
+    public static void setStringHeader_Division(String s) {
+        division = s;
+    }
 
     public static String getStringHeader_RWE() {
         return rwe;
@@ -308,6 +317,10 @@ public class TrainManifestHeaderText {
         if (!getStringHeader_Owner().equals(Bundle.getMessage("Owner"))) {
             e.addContent(values = new Element(Xml.OWNER));
             values.setAttribute(Xml.TEXT, getStringHeader_Owner());
+        }
+        if (!getStringHeader_Division().equals(Bundle.getMessage("Division"))) {
+            e.addContent(values = new Element(Xml.DIVISION));
+            values.setAttribute(Xml.TEXT, getStringHeader_Division());
         }
         if (!getStringHeader_RWE().equals(Bundle.getMessage("RWELabel"))) {
             e.addContent(values = new Element(Xml.RWE));
@@ -432,6 +445,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.OWNER) != null) {
             if ((a = emts.getChild(Xml.OWNER).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Owner(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.DIVISION) != null) {
+            if ((a = emts.getChild(Xml.DIVISION).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Division(a.getValue());
             }
         }
         if (emts.getChild(Xml.RWE) != null) {

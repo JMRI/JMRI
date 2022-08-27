@@ -250,7 +250,7 @@ public class Car extends RollingStock {
         return _scheduleId;
     }
     
-    private ScheduleItem getScheduleItem(Track track) {
+    public ScheduleItem getScheduleItem(Track track) {
         ScheduleItem si = null;
         // arrived at spur?
         if (track != null && track.isSpur() && !getScheduleItemId().equals(NONE)) {
@@ -671,15 +671,15 @@ public class Car extends RollingStock {
 
     /**
      * Used to determine if a car can be set out at a destination (location). Track
-     * is optional. In addition to all of the tests that testLocation performs,
+     * is optional. In addition to all of the tests that checkDestination performs,
      * spurs with schedules are also checked.
      *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK, CAPACITY, SCHEDULE,
      *         CUSTOM
      */
     @Override
-    public String testDestination(Location destination, Track track) {
-        String status = super.testDestination(destination, track);
+    public String checkDestination(Location destination, Track track) {
+        String status = super.checkDestination(destination, track);
         if (!status.equals(Track.OKAY)) {
             return status;
         }
@@ -745,7 +745,37 @@ public class Car extends RollingStock {
         loadNext(destinationTrack);
         return status;
     }
+    
+    /**
+     * Called when setting a car's destination to this spur. Loads the car with
+     * a final destination which is the ship address for the schedule item. Also
+     * loads the schedule id so the car can get updated from the schedule when
+     * it arrives.
+     * 
+     * @param scheduleItem The schedule item to be applied this this car
+     */
+    public void loadNext(ScheduleItem scheduleItem) {
+        if (scheduleItem == null) {
+            return;
+        }
+        setScheduleItemId(scheduleItem.getId());
+        // set the car's final destination and track
+        setFinalDestination(scheduleItem.getDestination());
+        setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+        // bump hit count for this schedule item
+        scheduleItem.setHits(scheduleItem.getHits() + 1);
+        // set all cars in kernel same final destination
+        updateKernel();
+    }
 
+    /**
+     * Called when car is delivered to track. Updates the car's wait, pickup
+     * day, and load if spur. If staging, can swap default loads, force load to
+     * default empty, or replace custom loads with the default empty load. Can
+     * trigger RWE or RWL.
+     * 
+     * @param track the destination track for this car
+     */
     public void loadNext(Track track) {
         setLoadGeneratedFromStaging(false);
         if (track != null) {
@@ -800,7 +830,7 @@ public class Car extends RollingStock {
         String loadName = NONE;
         ScheduleItem si = getScheduleItem(track);
         if (si != null) {
-            loadName = si.getShipLoadName();
+            loadName = si.getShipLoadName(); // can be NONE
         }
         if (!loadName.equals(NONE)) {
             setLoadName(loadName);
@@ -897,27 +927,6 @@ public class Car extends RollingStock {
         return buf.toString();
     }
     
-    /**
-     * Loads the car's with a final destination which is the ship address for the
-     * schedule item. Also sets the next load and wait count that will kick in when
-     * the car arrives at the spur with this schedule.
-     * @param scheduleItem The schedule item to be applied this this car
-     *
-     */
-    public void loadNext(ScheduleItem scheduleItem) {
-        if (scheduleItem == null) {
-            return;
-        }
-        setScheduleItemId(scheduleItem.getId());
-        // set the car's final destination and track
-        setFinalDestination(scheduleItem.getDestination());
-        setFinalDestinationTrack(scheduleItem.getDestinationTrack());
-        // bump hit count for this schedule item
-        scheduleItem.setHits(scheduleItem.getHits() + 1);
-        // set all cars in kernel same final destination
-        updateKernel();
-    }
-
     @Override
     public void reset() {
         setScheduleItemId(getPreviousScheduleId()); // revert to previous

@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Panels Menu</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Panels Menu</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header.shtml" -->
 
@@ -13,9 +15,9 @@
 
       <div class="noted">
         <span class="since">since 4.23.3</span>
-        <p>Note: The PanelPro main menu is being changed. See <a href=
+        <p>Note: The PanelPro main menu has changed. See <a href=
         "../../../../html/apps/LoadStoreWork.shtml">Loading and Storing Your Work</a> for details.
-        The menu references below are the for the new menu structure.</p>
+        The menu references below are for the new menu structure.</p>
       </div>
 
       <p>The JMRI "Panels" menu contains the following items:</p>
@@ -36,6 +38,7 @@
       <p>Continue to the help pages for <a href="PanelEditor.shtml">Panel Editor</a>, <a href=
       "ControlPanelEditor.shtml">Control Panel Editor</a>, <a href="LayoutEditor.shtml">Layout
       Editor</a> or <a href="SwitchboardEditor.shtml">Switchboard Editor</a>.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

@@ -321,8 +321,8 @@ public class Engine extends RollingStock {
      * @return status, see RollingStock.java
      */
     @Override
-    public String testDestination(Location destination, Track track) {
-        return super.testDestination(destination, track);
+    public String checkDestination(Location destination, Track track) {
+        return super.checkDestination(destination, track);
     }
 
     /**
