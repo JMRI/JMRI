@@ -4,8 +4,8 @@
 
 		<dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
 		<dd>Devices, command stations, networks, and protocols:
-		    <ul>
-                <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a>
+		  <ul>
+        <li><a href="/help/en/html/hardware/anyma/index.shtml">Anyma DMX</a>
 				<li><a href="/help/en/html/hardware/arduino/index.shtml">Arduinos</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="/help/en/html/hardware/bachrus/index.shtml">Bachrus</a>
@@ -59,6 +59,6 @@
                 <li><a href="/help/en/html/hardware/XPressNet/index.shtml">XPressNet</a>
 				<li><a href="/help/en/html/hardware/zimo/Zimo.shtml">Zimo MX-1</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">ZTC Controls</a>
-		    </ul>
+		  </ul>
 		</dd>
 <!-- /SidebarSupportedHardware.shtml -->

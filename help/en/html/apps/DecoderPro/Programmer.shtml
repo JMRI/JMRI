@@ -129,7 +129,7 @@
           <p>Each pane of the programmer consists of (nested) rows and/or columns. Columns lay out
           variables from top to bottom. Rows lay out variables from left to right. You can nest
           these to achieve various effects; for an example of this, see the "Speed Table" pane of
-          the Comprehensive.xml file. It has two columns, the left of each uses a row to put some
+          the Comprehensive.xml file. It has two columns; the left of each uses a row to put some
           sliders from left to right.</p>
         </dd>
 
@@ -293,7 +293,7 @@
 
       <ol>
         <li>The "name" in the "display" element is effectively a "standard name", that can be used
-        in decoder definition files from many different manufacturers. Since this is separate from
+        in decoder definition files from different manufacturers. Since this is separate from
         the "label" on the decoder variable, it's possible to have a generic programmer file that
         works for many types of different decoders, while still displaying specific variable names.
         For more on this, please <a href="#display">see above</a>.
