@@ -32,23 +32,22 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     public void checkOnMsgSent() {
         Assert.assertEquals("ON message", "[5f8] 90 01 C8 01 41",
         tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        Assert.assertEquals("ON state", jmri.Light.ON, t.getState());
+        Assert.assertEquals("ON state", Light.ON, t.getState());
     }
 
     @Override
     public void checkOffMsgSent() {
         Assert.assertEquals("OFF message", "[5f8] 91 01 C8 01 41",
         tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        Assert.assertEquals("OFF state", jmri.Light.OFF, t.getState());
+        Assert.assertEquals("OFF state", Light.OFF, t.getState());
     }    
 
     @Test
-    public void testNullEvent() {
-        try {
+    public void testNullEvent() throws Exception {
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
             t = new CbusLight("ML",null,tcis);
-            Assert.fail("Should have thrown an exception");
-        } catch (NullPointerException e) {
-        }
+        });
+        Assertions.assertNotNull(ex);
     }
 
     @Test

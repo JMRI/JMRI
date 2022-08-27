@@ -199,7 +199,7 @@ public class CbusAddressTest {
         Assert.assertTrue((new CbusAddress("+001")).equals(new CbusAddress("+001")));
         Assert.assertTrue((new CbusAddress("+001")).equals(new CbusAddress("x9800000001")));
         Assert.assertTrue((new CbusAddress("+200001")).equals(new CbusAddress("x9000020001")));
-        Assert.assertFalse((new CbusAddress("+200001")).equals(null));
+        Assert.assertNotNull( new CbusAddress("+200001"));
         Assert.assertFalse((new CbusAddress("+200001")).equals("foo"));
         Assert.assertFalse((new CbusAddress("+001")).equals(new CbusAddress("+002")));
         Assert.assertFalse((new CbusAddress("+N123E123")).equals(new CbusAddress("+N456E123")));
@@ -321,13 +321,13 @@ public class CbusAddressTest {
         Assert.assertEquals("-N34E456;-N34E17","-N34E457;-N34E18",CbusAddress.getIncrement("-N34E456;-N34E17"));
         Assert.assertEquals("-N34E456;+N34E17","-N34E457;+N34E18",CbusAddress.getIncrement("-N34E456;+N34E17"));
     }
-    
+
     @Test
-    public void testhashcode() {
+    public void testCbusAddressHashcode() {
         CbusAddress a = new CbusAddress("X9801D203A4");
         Assert.assertEquals("a hashcode is present",530,a.hashCode());
     }
-    
+
     @Test
     public void testMatchRequest() {
         
