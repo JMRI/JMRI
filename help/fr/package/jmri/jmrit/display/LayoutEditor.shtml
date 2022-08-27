@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -1444,7 +1444,7 @@
       Pour ceux qui envisagent d'installer des signaux, La mise en place d'un panneau avec des
       cantons définis et signaux placés peuvent aider à décider où placer les cantons et les
       signaux avant de les installer sur votre réseau.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

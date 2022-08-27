@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -300,7 +300,7 @@
       "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">ici</a>.
       </p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

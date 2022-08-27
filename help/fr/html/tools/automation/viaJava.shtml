@@ -18,7 +18,7 @@
 
 <body>
 <!-- Page Body -->
-    <!--#include virtual="/Header.shtml" -->
+    <!--#include virtual="/Header_fr.shtml" -->
     <div id="mBody">
         <!--#include virtual="Sidebar" -->
         <div id="mainContent">
@@ -193,7 +193,7 @@ quelque chose que vous voulez finalement voir contribuer &#224; JMRI lui-m&#234;
 
 <p>Retour &#224; la <a href="index.shtml">page d'Aide Automatisation</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

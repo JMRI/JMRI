@@ -15,7 +15,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -83,7 +83,7 @@
 
       <h2>Préférences Régulateurs:</h2>
       Ouvrez le <a href="ThrottlesPreferencesPane.shtml">Volet Préférences régulateurs.</a> 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

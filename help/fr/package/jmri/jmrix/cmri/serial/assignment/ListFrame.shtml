@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -31,7 +31,7 @@
       broches pour votre n&Aring;"ud C/MRI.JMRI: Connector Pin
       Assignments.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

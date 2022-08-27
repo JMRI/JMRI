@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -288,7 +288,7 @@
       "../../../../html/doc/Technical/Names.shtml">noms de système</a>. Par exemple, si la seconde
       connexion est pour un système LocoNet, référerez vous au aiguillage LocoNet LTnn; ou un
       capteur LocoNet LSnn, etc (ou nn est le numéro de l'élément)</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

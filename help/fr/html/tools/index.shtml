@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -325,7 +325,7 @@ beaucoup de puissance pour commander votre r&#233;seau de la fa&#231;on que vous
 <p>Ex&#233;cutez vos propres scripts ou des scripts partag&#233;s par un autre utilisateur JMRI depuis
 le menu Panneaux --> Ex&#233;cution Script...</p>
 
-		<!--#include virtual="/Footer.shtml" -->
+		<!--#include virtual="/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
 </body>

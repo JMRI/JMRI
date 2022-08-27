@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -86,7 +86,7 @@
       voie rayonnante. Après avoir diminué le rayon de retour à sa dernière valeur, ajouter des
       segments voie. Les segments de voie seront alignés assez précisément avec le centre du
       pont.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

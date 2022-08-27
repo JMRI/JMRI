@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -168,7 +168,7 @@ num&#233;rotation peut &#234;tre utilis&#233; &#224; nouveau.-->
       retournées. Ceci signifie que vous pouvez supprimer cats ( maintenant redondant ) dans de
       nombreux emplacements. Jenkins vale signaler.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

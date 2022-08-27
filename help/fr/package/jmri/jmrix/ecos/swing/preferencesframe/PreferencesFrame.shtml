@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -105,7 +105,7 @@
       retir&eacute; de l'Ecos, ce param&egrave;tre d&eacute;termine
       comment JMRI devrait r&eacute;agir.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

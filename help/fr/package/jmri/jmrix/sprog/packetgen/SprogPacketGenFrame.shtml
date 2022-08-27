@@ -24,14 +24,14 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
       <h1>Envoi Message SPROG</h1>Ceci est la page d'aide
       help/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

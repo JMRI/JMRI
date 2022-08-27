@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -747,7 +747,7 @@ variable version-number a une valeur trop faible:</p>
   affichage d&#233;pendra de la valeur par d&#233;faut depuis le fichier qui pourrait induire en erreur l'utilisateur.
 </p>
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
  </div><!-- closes #mainContent-->
 </div>  <!-- close #mBody -->
 <script src="/js/main.js"></script>

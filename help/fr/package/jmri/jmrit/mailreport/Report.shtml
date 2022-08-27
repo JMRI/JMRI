@@ -22,7 +22,7 @@
   <!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04
 --> <!-- Style -->
    <!-- /Style -->
-   <!--#include virtual="/Header.shtml" -->
+   <!--#include virtual="/Header_fr.shtml" -->
 <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -70,7 +70,7 @@
       <p>Enfin,appuyer sur envoyer. Si tout va bien, la
       fen&ecirc;tre va se fermer quelques secondes apr&egrave;s que
       l'information ait &eacute;t&eacute; envoy&eacute;.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

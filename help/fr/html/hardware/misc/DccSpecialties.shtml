@@ -9,7 +9,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -50,7 +50,7 @@
       scripts</a> depuis le site web JMRI, et il est aussi disponible dans <a href=
       "https://jmri.org/jython">des exemples de répertoires de scripts</a> dans le <a href=
       "https://jmri.org/download">Téléchargements JMRI</a> .</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

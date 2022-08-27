@@ -13,7 +13,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -90,7 +90,7 @@
       fabricant pour la construction et la commande des couplages. Ces couplages devraient mieux
       fontionner lors qu'ils sont construits avec un dispositif WiFi, mais commandés par un
       régulateur du fabricant de votre système DCC.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

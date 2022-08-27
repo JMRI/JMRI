@@ -11,7 +11,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -192,7 +192,7 @@
       </ul>
       Enregistrez et reémarrez. <a name="tools" id="tools"></a>
       <h2>Outils JMRI Uhlenbrock</h2>
-      N/A <!--#include virtual="/Footer.shtml" -->
+      N/A <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

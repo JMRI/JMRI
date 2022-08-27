@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="AcknowledgementsSidebar.shtml" -->
     <div id="mainContent">
@@ -1100,7 +1100,7 @@
 		</a>depuis sa création à Janvier 2009.  Un Code Swarm est une représentation visuelle dynamique et passionnante 
 		des modifications que les développeurs apportent aux fichiers qui composent un projet.. Plus d'informations sont disponibles sur
 		la page <a href="https://jmri.org/community/visuals/codeswarm.shtml">Code Swarm</a> .</p>
-		<!--#include virtual="/Footer.shtml" -->
+		<!--#include virtual="/Footer_fr.shtml" -->
   </div>
   </div>
   <script src="/js/main.js"></script>

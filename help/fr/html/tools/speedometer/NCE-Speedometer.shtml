@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -234,7 +234,7 @@
           <p>Dans ce cas, la valeur sur l' Indicateur de vitesse pour la fenêtre du capteur n ° 1
           et n ° 2 du capteur serait le même numéro. Le capteur # 1 serait mis à "Enter" et le
           capteur n° 2 serait fixé à "Exit".</p>
-          <!--#include virtual="/Footer.shtml" -->
+          <!--#include virtual="/Footer_fr.shtml" -->
         </li>
       </ol>
     </div>

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -21,7 +21,7 @@
       menu sur le c&ocirc;t&eacute;, qui vient du fichier "Sidebar"
       dans le m&ecirc;me r&eacute;pertoire.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- ferme #mainContent-->
   </div><!-- ferme #mBody-->
   <script src="/js/main.js"></script><!-- drives the title bar etc -->

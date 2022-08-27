@@ -9,7 +9,7 @@
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -32,7 +32,7 @@
       <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
       .
       <p>Traduction 2021-03-20</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

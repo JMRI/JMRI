@@ -16,7 +16,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -120,7 +120,7 @@
       travaillent cocher une dans le milieu de la table, puis faites glisser le dernier curseur
       vers le bas . Notez que les valeurs ne changent pas dessous celle que vous avez cochée. Ils
       ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

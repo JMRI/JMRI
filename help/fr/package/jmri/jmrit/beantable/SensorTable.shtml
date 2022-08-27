@@ -22,7 +22,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -137,7 +137,7 @@
           jusqu'&agrave; ce que l'&eacute;tat soit le m&ecirc;me
           avant et apr&egrave;s que le chronom&egrave;tre ait
           &eacute;t&eacute; lanc&eacute;.</p>
-        </dd><!--#include virtual="/Footer.shtml" -->
+        </dd><!--#include virtual="/Footer_fr.shtml" -->
       </dl>
     </div>
   </div>

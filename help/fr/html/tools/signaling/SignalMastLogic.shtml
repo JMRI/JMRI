@@ -16,7 +16,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -226,7 +226,7 @@
         Logique Mât de Signalisation</a>.
         <p>Retour à la <a href="index.shtml#tools">page principale d'aide Signalisation</a></p>
       </div>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

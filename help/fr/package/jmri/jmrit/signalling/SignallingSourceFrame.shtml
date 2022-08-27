@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -35,7 +35,7 @@
       est possible de d&eacute;couvrir automatiquement toutes les
       logiques M&acirc;t Signal bas&eacute;es sur le panneau.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

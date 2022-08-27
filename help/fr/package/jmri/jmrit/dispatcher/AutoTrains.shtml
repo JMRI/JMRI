@@ -12,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+</head><!--#include virtual="/Header_fr.shtml" -->
 
 <body>
   <div class="nomenu" id="mBody">
@@ -79,7 +79,7 @@
       Automatique</strong>. Avant de refermer son régulateur, l'opérateur devra conduire le train
       dans la même situation il se trouvait lorsque Le fonctionnement en mode manuel été initié.
       Ceci assure reprise automatique en douceur de l'opération. &lt;/p&gt; 
-      <!--#include virtual="/Footer.shtml" --></p>
+      <!--#include virtual="/Footer_fr.shtml" --></p>
     </div>
   </div>
 </body>

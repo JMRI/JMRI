@@ -12,7 +12,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -170,7 +170,7 @@
  $ sudo apt-get install libopenal-dev
 </pre>
       <p>Pour Ubuntu 12-04, logithèque ---&gt;OpenAl.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

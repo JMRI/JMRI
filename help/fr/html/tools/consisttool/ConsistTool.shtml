@@ -16,7 +16,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
@@ -266,7 +266,7 @@
       <p>Pour rappeler un existantes couplage, vous pouvez sélectionner l'entrée appropriée de la
       boîte déroulante à côté de l'actuel ID de couplage</p>
       <img src="images/ConsistTool-SelectConsist.jpg" alt="Select à Consist"> 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

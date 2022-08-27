@@ -8,7 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -85,7 +85,7 @@
       <h3>Autre source d'info</h3>
 
       <p><a href="http://www.maplesystems.com">site web Maple Systems</a> 
-      <!--#include virtual="/Footer.shtml" --></p>
+      <!--#include virtual="/Footer_fr.shtml" --></p>
     </div>
     <!-- closes #mainContent-->
   </div>

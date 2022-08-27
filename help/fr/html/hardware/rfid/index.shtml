@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -125,7 +125,7 @@
 
         <li>Le menu contextuel sur l'icône vous permettra de changer la mise en forme.</li>
       </ul>
-      &lt;<!--#include virtual="/Footer.shtml" -->
+      &lt;<!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

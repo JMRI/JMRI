@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -139,7 +139,7 @@ dans le menu <b>Panneau</b>.
         l'&#233;tat actuel du Capteur.</li>
 </ol>
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
 </body>

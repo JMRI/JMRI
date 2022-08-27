@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -76,7 +76,7 @@
       &ecirc;tre obtenus aupr&egrave;s de toute distribution jmri,
       ou via le Web &agrave; l'adresse <a href=
       "https://jmri.org/xml">https://jmri.org/xml</a>. 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
 </div>  <!-- close #mBody -->
 <script src="/js/main.js"></script>

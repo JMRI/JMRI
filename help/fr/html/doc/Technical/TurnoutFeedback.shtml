@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -228,7 +228,7 @@ confirmation que l'aiguillage a chang&#233;.
 Avec le r&#233;glage MONITORING, quand quelque chose en dehord de JMRI ( un autre programme , un r&#233;gulateur manuel)
 change l'&#233;tat de l'aiguillage, JMRI l'accepte et change ses &#233;tats internes pour l'aiguillage.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mainContent" class="no-sidebar">
 
     <h1>JMRI Système d'Aide</h1>

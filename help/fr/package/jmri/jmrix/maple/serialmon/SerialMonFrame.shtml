@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <h2>Moniteur Trafic Maple</h2>
 
@@ -94,6 +94,6 @@
   s'il vous pla&Atilde;&reg;t voir la <a href=
   "../../AbstractMonFrame.shtml">page Fen&Atilde;&ordf;tre Moniteur
   de Communications</a>.</p>
-  <!--#include virtual="/Footer.shtml" -->
+  <!--#include virtual="/Footer_fr.shtml" -->
 </body>
 </html>

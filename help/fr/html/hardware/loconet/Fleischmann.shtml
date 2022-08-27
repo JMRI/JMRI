@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -20,7 +20,7 @@
     <p>JMRI peut communiquer avec Fleischmann Twin Centre de plusieurs fa&#231;ons. Pour avoir plus de d&#233;tails, voir la page
     <a href="Uhlenbrock.shtml"> sur la configuration des &#233;quipements compatibles avec Uhlenbrock</a>.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

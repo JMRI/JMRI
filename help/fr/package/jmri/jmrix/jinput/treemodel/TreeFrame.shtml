@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -53,7 +53,7 @@
       <p>Cette fonctionnalitÃ© a Ã©tÃ© ajoutÃ©e sur une base expÃ©rimentale dans JMRI 2.1.5. Dans
       cette version, vos informations de configuration ne sont pas rÃ©tablie aprÃ¨s vous ayez
       quittÃ© et redÃ©marrÃ©ez le programme. Ce sera ajoutÃ© dans la prochaine Version JMRI.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

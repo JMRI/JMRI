@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -77,7 +77,7 @@
       <p>Note: Si cette fenêtre devrait être laissée ouverte accidentellement, l'allocation d'une
       Section d'une autre manière fera automatiquement annuler l'opération dans cette fenêtre, et
       cette fenêtre disparaît.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

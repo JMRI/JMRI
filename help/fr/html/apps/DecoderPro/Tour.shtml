@@ -9,7 +9,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -307,7 +307,7 @@
         d'informations disponibles sur <a href="MoreInfo.shtml">comment travaille DecoderPro</a> ,
         y compris la façon d'<a href="CreateDecoder.shtml">ajouter de nouveaux Types de Décodeur</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>

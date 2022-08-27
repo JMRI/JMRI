@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -88,7 +88,7 @@
       programme JMRI.</p>
 
       <p>Ceci est la page d'aide
-      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer.shtml" -->
+      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

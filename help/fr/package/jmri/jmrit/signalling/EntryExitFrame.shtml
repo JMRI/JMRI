@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
       <!--#include virtual="Sidebar" -->
       <div id="mainContent">
@@ -302,7 +302,7 @@
     verrouillage. Pour ce faire, s&eacute;lectionnez &agrave;
     nouveau l'Itin&eacute;raire et s&eacute;lectionnez "Effacer" .</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

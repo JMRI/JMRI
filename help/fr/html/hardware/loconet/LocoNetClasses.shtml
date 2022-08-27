@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
   <div id="mainContent">
@@ -269,7 +269,7 @@ Cela complique grandement la classe, mais elle est acceptable pour l'instant.</p
 
 <p>LocoNet&reg; est une marque s&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

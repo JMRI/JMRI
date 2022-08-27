@@ -15,7 +15,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -121,7 +121,7 @@
       ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.</p>
       Ceci est la page d'aide
       help/en/package/jmri/jmrit/symbolicprog/tabbedframe/PaneOpsProgFrame.shtml 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

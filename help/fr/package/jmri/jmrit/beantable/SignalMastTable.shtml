@@ -14,7 +14,7 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -39,7 +39,7 @@
       <p>Pour plus d'informations sur la création et l'affichage des panneaux, y compris la manière
       de montrer les signaux sur vos panneaux, s'il vous plaît voir les <a href=
       "../../../../html/apps/PanelPro/Panels.shtml">pages Panneaux</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -8,7 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -520,7 +520,7 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       Pour plus de cartographie, veuillez consulter les autres documents JMRI.</p>
 
       <p>Traduction 2021-03-25</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>

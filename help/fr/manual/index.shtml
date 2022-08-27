@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <!--#include virtual="Sidebar.shtml" -->
 
   <div id="mainContent">
@@ -268,7 +268,7 @@ fin de l'ancienne liste, &#224; supprimer -->
       versions Java et les Exigences matérielles</a>.<br>
       Obtenir la dernière version de Java en téléchargement libre l'adresse: <a href=
       "http://java.com/download/" target="_blank">java.com/download</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

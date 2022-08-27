@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -21,7 +21,7 @@
       mati&egrave;re en haut et en bas d'une page simple, sans menu
       lat&eacute;ral (sur le web).</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- ferme #mainContent-->
   </div><!-- ferme #mBody-->
   <script src="/js/main.js"></script><!-- drives the title bar etc -->
