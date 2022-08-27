@@ -1,15 +1,14 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
-import org.junit.*;
-import org.junit.rules.Timeout;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -20,57 +19,18 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  *
  * @author George Warner Copyright (C) 2019
  */
+@Timeout(10)
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class MoveSelectionDialogTest {
-
-    private static LayoutEditor layoutEditor = null;
-    private static MoveSelectionDialog moveSelectionDialog = null;
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
-
-    /*
-     * This is called before each test
-     */
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            layoutEditor = new LayoutEditor();
-            layoutEditor.setVisible(true);
-            moveSelectionDialog = new MoveSelectionDialog(layoutEditor);
-            layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
-        }
-    }
-
-    /*
-     * This is called after each test
-     */
-    @After
-    public void tearDown() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-            layoutEditor = null;
-            moveSelectionDialog = null;
-        }
-        JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.tearDown();
-    }
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("layoutEditor exists", layoutEditor);
         Assert.assertNotNull("MoveSelectionDialog exists", moveSelectionDialog);
     }
 
     @Test
     public void testMoveSelectionCanceled() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         moveSelectionDialog.moveSelection();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
 
@@ -80,7 +40,6 @@ public class MoveSelectionDialogTest {
 
     @Test
     public void testMoveSelection() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         moveSelectionDialog.moveSelection();
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
@@ -125,4 +84,34 @@ public class MoveSelectionDialogTest {
         moveSelectionButtonOperator.doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
+
+    private LayoutEditor layoutEditor = null;
+    private MoveSelectionDialog moveSelectionDialog = null;
+
+    /**
+     * This is called before each test.
+     */
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        layoutEditor = new LayoutEditor(this.getClass().getName());
+        layoutEditor.setVisible(true);
+        moveSelectionDialog = new MoveSelectionDialog(layoutEditor);
+        layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
+    }
+
+    /**
+     * This is called after each test.
+     */
+    @AfterEach
+    public void tearDown() {
+        // new jmri.jmrit.display.EditorFrameOperator(layoutEditor).closeFrameWithConfirmations();
+        Assertions.assertNotNull(layoutEditor);
+        layoutEditor.dispose();
+        layoutEditor = null;
+        moveSelectionDialog = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
+
 }

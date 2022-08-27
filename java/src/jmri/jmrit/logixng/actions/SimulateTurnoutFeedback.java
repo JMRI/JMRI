@@ -68,6 +68,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
             addTurnoutListener(t);
         }
         tm.addPropertyChangeListener("beans", this);
+        tm.addVetoableChangeListener(this);
     }
 
     /** {@inheritDoc} */
@@ -90,6 +91,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
                 removeTurnoutListener(t);
             }
             tm.removePropertyChangeListener("beans", this);
+            tm.removeVetoableChangeListener(this);
             _listenersAreRegistered = false;
         }
     }
@@ -158,9 +160,11 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
                 }
             } else if (evt.getOldValue() != null) {
                 String sysName = evt.getOldValue().toString();
-                Turnout turnout = _turnouts.get(sysName)._turnout;
-                if (_listenersAreRegistered && (turnout != null)) {
-                    removeTurnoutListener(turnout);
+                TurnoutInfo turnoutInfo = _turnouts.get(sysName);
+                if (_listenersAreRegistered
+                        && (turnoutInfo != null)
+                        && (turnoutInfo._turnout != null)) {
+                    removeTurnoutListener(turnoutInfo._turnout);
                 }
             }
         }
@@ -180,6 +184,15 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
                     ti._turnout.removePropertyChangeListener("CommandedState", _turnoutListener);
                     ti._hasListener = false;
                 }
+            }
+        }
+    }
+
+    @Override
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+        if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+            if (evt.getOldValue() instanceof Turnout) {
+                removeTurnoutListener((Turnout) evt.getOldValue());
             }
         }
     }
