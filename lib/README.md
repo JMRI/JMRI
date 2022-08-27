@@ -512,6 +512,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### UmlGraph-5.7
 - from http://www.umlgraph.org/download.html
 - only used for ant javadoc-uml with earlier Java
+- removed in JMRI 5.1.3
 
 ##### javacsv.jar
 - version 2.0
