@@ -23,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.ConsistManager;
@@ -1454,6 +1455,10 @@ public class TrainCommon {
                                                 3);
             }
             return "";
+        } else if (attribute.equals(Setup.DIVISION)) {
+            return SPACE +
+                    padAndTruncateIfNeeded(car.getDivisionName(),
+                            InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength());
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }
@@ -1848,6 +1853,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.PICKUP_COMMENT)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Pickup_Comment(),
                         InstanceManager.getDefault(CarLoads.class).getMaxLoadCommentLength()) + SPACE);
+            } else if (attribute.equals(Setup.DIVISION)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Division(),
+                        InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength()) + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {

@@ -1074,7 +1074,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         for (Track track : tracks) {
             String status = "";
             if (isDestination) {
-                status = rs.testDestination(this, track);
+                status = rs.checkDestination(this, track);
             } else {
                 status = rs.testLocation(this, track);
             }

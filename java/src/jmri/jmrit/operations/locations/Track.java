@@ -1905,16 +1905,13 @@ public class Track extends PropertyChangeSupport {
         }
         if (!car.getScheduleItemId().equals(Car.NONE)) {
             log.debug("Car ({}) has schedule item id ({})", car.toString(), car.getScheduleItemId());
-            Schedule sch = getSchedule();
-            if (sch != null) {
-                ScheduleItem si = sch.getItemById(car.getScheduleItemId());
-                if (si != null) {
-                    car.loadNext(si);
-                    return OKAY;
-                }
-                log.debug("Schedule id ({}) not valid for track ({})", car.getScheduleItemId(), getName());
-                car.setScheduleItemId(Car.NONE);
+            ScheduleItem si = car.getScheduleItem(this);
+            if (si != null) {
+                car.loadNext(si);
+                return OKAY;
             }
+            log.debug("Schedule id ({}) not valid for track ({})", car.getScheduleItemId(), getName());
+            car.setScheduleItemId(Car.NONE);
         }
         // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
@@ -1937,7 +1934,7 @@ public class Track extends PropertyChangeSupport {
             // bump schedule
             bumpSchedule();
         } else if (currentSi != null) {
-            // build return message
+            // build return failure message
             String scheduleName = "";
             String currentTrainScheduleName = "";
             TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)

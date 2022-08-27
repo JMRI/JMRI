@@ -117,8 +117,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         destp.add(sortByFinalDestination);
         destp.add(sortByRwe);
         destp.add(sortByRwl);
-        destp.add(sortByDivision);
         cp1.add(destp);
+        cp1.add(sortByDivision);
         cp1.add(sortByTrain);
 
         JPanel movep = new JPanel();
