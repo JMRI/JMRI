@@ -416,9 +416,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### cucumber-junit-4.3.1.jar
 - version 4.3.1
 
-##### cucumber-jvm-deps-1.0.5.jar
-- version 1.0.5
-
 ##### cucumber-jvm-deps-1.0.6.jar
 - version 1.0.6
 
