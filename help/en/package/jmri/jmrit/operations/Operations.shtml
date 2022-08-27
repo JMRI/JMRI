@@ -1995,11 +1995,13 @@
       "[ ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular prefixes are "Spot" and
       "Pull" for set outs and pick ups respectively. If you want to use the text color options, the
       set out, pick up, and move prefixes must be unique.
+      
       <p>For locomotive or car pick ups, the "Location" or "Track" attribute provides the track
-      name where the rolling stock is currently residing. For set outs, the "Destination" or
-      "Track" attribute specifies the track name where the rolling stock is to be eventually
-      placed. The "Local Move Message Format" requires both the "Location" (where the car is) and
-      "Destination" (where to spot the car) attributes.</p>
+        name where the rolling stock is currently residing. For set outs, the "Destination" or
+        "Track" attribute specifies the track name where the rolling stock is to be eventually
+        placed. The "Local Move Message Format" requires both the "Location" (where the car is) and
+        "Destination" (where to spot the car) attributes. For local moves, you can substitute the "Track"
+        attribute for the "Destination" attribute.</p>
 
       <p>The program allows you to optionally display a pick up (PickUp Msg) or set out (SetOut
       Msg) message based on the car type and load. See <a href="#EditCarLoads">Edit Car Loads</a>
