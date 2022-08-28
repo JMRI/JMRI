@@ -331,6 +331,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     @Override
     public void testAutoSystemNames() {
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
 
@@ -346,9 +347,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
     }
 
-
-    private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis = null;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
     @Override
@@ -362,9 +362,14 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(tcis);
+        Assertions.assertNotNull(memo);
+        if ( l!= null ) {
+            l.dispose();
+            l = null;
+        }
         tcis.terminateThreads();
         tcis = null;
-        l.dispose();
         memo.dispose();
         JUnitUtil.tearDown();
 

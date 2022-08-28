@@ -8,9 +8,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusPowerManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -41,10 +39,10 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
     
         t.dispose();
     }
-    
+
     @Test
     public void testSetFlags() throws jmri.JmriException {
-        
+        Assertions.assertNotNull(memo);
         CbusPowerManager pwr = (CbusPowerManager) memo.get(PowerManager.class);
         t = new CbusBasicNodeWithMgrsCommandStation(memo,125);
         t.setCsNum(0); // default CS
@@ -62,8 +60,8 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
     }
     
     private CbusBasicNodeWithMgrsCommandStation t;
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
     
     @BeforeEach
     public void setUp() {
@@ -78,8 +76,9 @@ public class CbusBasicNodeWithMgrsCommandStationTest {
 
     @AfterEach
     public void tearDown() {
-        
+        Assertions.assertNotNull(memo);
         memo.dispose();
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
         memo = null;
         tcis = null;

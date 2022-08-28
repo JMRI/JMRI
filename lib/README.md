@@ -125,7 +125,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - from http://www.slf4j.org
 
 ##### openlcb.jar
- - Local build with PR #204 from https://github.com/openlcb/OpenLCB_Java/pull/204
+ - Local build with PR #204, #205 from https://github.com/openlcb/OpenLCB_Java/pull/205
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -512,6 +512,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### UmlGraph-5.7
 - from http://www.umlgraph.org/download.html
 - only used for ant javadoc-uml with earlier Java
+- removed in JMRI 5.1.3
 
 ##### javacsv.jar
 - version 2.0

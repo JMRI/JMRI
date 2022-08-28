@@ -76,7 +76,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>The DCS240+ doesn't accept service-mode read
+                    requests for about 350-400msec after the completion of the prior one.
+                    A short delay has been added to handle this.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -116,7 +118,7 @@
 
         <h4>OpenLCB / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated openlcb.jar to pick up "send AMD in response to AME" fix.</li>
             </ul>
 
         <h4>RFID</h4>

@@ -81,6 +81,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                     mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);  // never transponding!
             this.getSystemConnectionMemo().configureManagersPR2();
+            this.getSystemConnectionMemo().getSlotManager().serviceModeReplyDelay = 500;
 
             // start operation
             packets.startThreads();
@@ -110,6 +111,7 @@ public class UsbDcs210PlusAdapter extends LocoBufferAdapter {
                     mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart);
 
             this.getSystemConnectionMemo().configureManagersMS100();
+            this.getSystemConnectionMemo().getSlotManager().serviceModeReplyDelay = 500;
 
             // start operation
             packets.startThreads();

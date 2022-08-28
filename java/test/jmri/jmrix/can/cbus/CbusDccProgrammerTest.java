@@ -91,8 +91,8 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 */
     
     protected Programmer programmer2;
-    private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis = null;
+    private CanSystemConnectionMemo memo = null;
 
     @Override
     @BeforeEach
@@ -112,8 +112,10 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         programmer2.dispose();
         programmer2 = null;
         programmer = null;
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
         tcis = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();
