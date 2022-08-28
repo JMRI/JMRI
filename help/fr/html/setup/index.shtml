@@ -38,8 +38,8 @@
 	<li>Version 2.14.1: Java 1.5 (ou 1.6 si vous voulez glissez et d&#233;poser)</li>
 	<li>Version 3.10.1: Java 1.7 ou plus r&#233;cent.</li>
 	<li>Version 4.2: Java 1.8.</li>
-  <li>Les Versions 4.2 - 4.25.5: Java 8 (pas release 311) ou Java 11 (recommendé)</li>
-  <li>Les Version 4.25.6 - 4.26: Java 8 ou Java 11 (recommendé)</li>
+  <li>Les Versions 4.2 - 4.25.5: Java 8 (pas release 311) ou Java 11 (recommend&eacute;)</li>
+  <li>Les Version 4.25.6 - 4.26: Java 8 ou Java 11 (recommend&eacute;)</li>
   <li>Les Versions 4.99 - 5.x: Java 11</li>
 </ul>
 

@@ -45,12 +45,12 @@
       <p>Cliquez sur un titre pour trier la liste vers le haut ou vers le bas.</p>
 
       <table class="sortable" summary="">
-        <!-- Le tableau du glossaire JiMRI, trier en cliquant sur un en-t&#234;te -->
+        <!-- Le tableau du glossaire JMRI, trier en cliquant sur un en-t&#234;te -->
         <!-- Copiez &#233;galement toutes les modifications apport&#233;es &#224; help/fr/glossary/index.shtml pour garder les deux &#224; jour -->
 
         <tr style="text-align : left">
           <th>App</th>
-          <th width="10%">Terme JiMRI (US)</th>
+          <th width="10%">Terme JMRI (US)</th>
           <th>Message</th>
           <th width="10%">Deutsch</th>
           <th width="10%">Italiano</th>
