@@ -1,8 +1,8 @@
 package jmri.jmrix.can.cbus.swing.console;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.nio.file.Path;
 
@@ -10,11 +10,8 @@ import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -32,7 +29,7 @@ public class CbusConsoleDecodeOptionsPaneTest  {
     public void testInitComponents() throws Exception{
         // for now, just makes sure there isn't an exception.
         CbusConsoleDecodeOptionsPane t = new CbusConsoleDecodeOptionsPane(mainConsolePane);
-        assertThat(t).isNotNull();
+        assertNotNull(t);
         t.dispose();
     }
     
@@ -123,9 +120,9 @@ public class CbusConsoleDecodeOptionsPaneTest  {
     @TempDir 
     protected Path tempDir;
     
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tc;
-    private CbusConsolePane mainConsolePane;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tc = null;
+    private CbusConsolePane mainConsolePane = null;
 
     @BeforeEach
     public void setUp() {
@@ -144,9 +141,13 @@ public class CbusConsoleDecodeOptionsPaneTest  {
 
     @AfterEach
     public void tearDown() {
+        assertNotNull(mainConsolePane);
         mainConsolePane.dispose();
+        assertNotNull(tc);
         tc.terminateThreads();
+        assertNotNull(memo);
         memo.dispose();
+        mainConsolePane = null;
         tc = null;
         memo = null;
         
