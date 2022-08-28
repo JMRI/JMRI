@@ -13061,10 +13061,10 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     /**
-     * The program allows up to two caboose changes in a train's route. Route Acton
-     * to Westford has caboose changes at Boston and Harvard. Test adding caboose
-     * later in train's route. Should add caboose with road name that matches
-     * engine.
+     * The program allows up to two caboose changes in a train's route. Route
+     * Acton to Westford has caboose changes at Boston and Harvard. Test adding
+     * caboose later in train's route. Should add caboose with road name that
+     * matches engine.
      */
     @Test
     public void testCabooseChangesWithEngine() {
@@ -13153,9 +13153,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Route rte1 = rmanager.newRoute("Route Acton-Boston-Chelmsford-Harvard-Westford");
         rte1.addLocation(acton);
         RouteLocation rlBoston = rte1.addLocation(boston);
-        rte1.addLocation(chelmsford);
+        RouteLocation rlChelmsford = rte1.addLocation(chelmsford);
         RouteLocation rlHarvard = rte1.addLocation(harvard);
         rte1.addLocation(westford);
+
+        // improve test coverage
+        Setup.setUseDepartureTimeEnabled(true);
 
         // Create train
         Train train1 = tmanager.newTrain("TestCabooseChangesWithEngine");
@@ -13183,6 +13186,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         train1.reset();
         // now require engine road UP
         train1.setNumberEngines("1");
+        
+        // improve test coverage
+        rlBoston.setDepartureTime("12:45");
+        rlChelmsford.setComment("No work at Chelmsford");
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train should build", true, train1.isBuilt());
@@ -13194,6 +13201,46 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
         Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
         Assert.assertEquals("Caboose is part of train", westford, c6.getDestination());
+
+        Assert.assertEquals("Engine is part of train", westford, e1.getDestination());
+
+        train1.reset();
+
+        // remove engine in route at Harvard
+        train1.setThirdLegOptions(Train.ADD_CABOOSE | Train.CHANGE_ENGINES);
+        train1.setThirdLegNumberEngines("0");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations, should use caboose with road UP
+        Assert.assertEquals("Caboose is not part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c2.getDestination());
+        Assert.assertEquals("Caboose is part of train", harvard, c3.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
+        Assert.assertEquals("Caboose is part of train", westford, c6.getDestination());
+
+        Assert.assertEquals("Engine is part of train", harvard, e1.getDestination());
+
+        train1.reset();
+
+        // remove caboose and engine in route at Harvard
+        train1.setThirdLegOptions(Train.REMOVE_CABOOSE | Train.CHANGE_ENGINES);
+        train1.setThirdLegNumberEngines("0");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm caboose destinations, should use caboose with road UP
+        Assert.assertEquals("Caboose is not part of train", null, c1.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c2.getDestination());
+        Assert.assertEquals("Caboose is part of train", harvard, c3.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c4.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c5.getDestination());
+        Assert.assertEquals("Caboose is not part of train", null, c6.getDestination());
+
+        Assert.assertEquals("Engine is part of train", harvard, e1.getDestination());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
