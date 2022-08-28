@@ -10,7 +10,7 @@
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
           "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -22,11 +22,12 @@
 </head>
 
 <body>
- <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>L'&Eacute;diteur Panneau de Commande</h1>
+
       L'<b>&Eacute;diteur Panneau de Commande</b> est
       tout simplement une vue alternative et un contr&ocirc;leur
       avec exactement le m&ecirc;me contenu de donn&eacute;es que

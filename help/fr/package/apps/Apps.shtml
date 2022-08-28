@@ -12,8 +12,8 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Fen&ecirc;tre Principale</h1>La fen&ecirc;tre
       principale JMRI est celle o&ugrave; vous obtenez acc&egrave;s

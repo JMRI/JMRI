@@ -2,17 +2,17 @@
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JiMRI: Preferences Pane</title>
+  <title>JMRI: Preferences Pane</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
   <!--#include virtual="/Style.shtml" -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 <body>
   <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : Volet Préférences</h1>
 
       <p>Le volet Préférences est l'endroit où vous configurez le fonctionnement de base de votre
@@ -32,7 +32,7 @@
       <a href="#Messages">Messages</a><br>
       <a href="#Roster">Inventaire</a><br>
       <a href="#Throttle">Régulateur</a><br>
-      <a href="images/JiMRIPrefsChanges.png"><img src="images/JiMRIPrefsChanges.png" height="112"
+      <a href="images/JMRIPrefsChanges.png"><img src="images/JMRIPrefsChanges.png" height="112"
       width="250" align="right" alt="Save ? dialog"></a> <a href="#WiThrottle">WiThrottle</a><br>
       <a href="#Profiles">Configurer les profils</a><br>
       <a href="#RailroadName">Nom du chemin de fer</a><br>
@@ -51,9 +51,9 @@
       invitera à le faire après avoir enregistré les Préférences.</p>
       <a name="Connexion" id="Connexion"></a>
       <h2>Connexions</h2>
-      Vous pouvez sélectionner n'importe laquelle des diverses connexions de Réseau JiMRI.
+      Vous pouvez sélectionner n'importe laquelle des diverses connexions de Réseau JMRI.
       <p><a href="images/Ops_SetConnection214.png"><img src="." height="222" width="423" align=
-      "right" alt="JiMRI v2.14 Connection Prefs tab"></a> Chaque connexion a son propre onglet.
+      "right" alt="JMRI v2.14 Connection Prefs tab"></a> Chaque connexion a son propre onglet.
       Pour commencer, il faut d'abord sélectionnez d'abord le fabricant de votre système DCC, puis
       le type de connexion que vous utilisez. Vous verrez alors apparaître une série de paramètres
       les plus courants qui doivent être définis. Si vous avez besoin de modifier certains des
@@ -73,8 +73,8 @@
       <p>N'oubliez pas d'appuyer sur <strong>Sauvegarder</strong>!</p>
       <a name="Défauts" id="Défauts"></a>
       <h2 style="float:clear">Défauts</h2>
-      <a href="images/JiMRI_PrefsDefaults.png"><img src="images/JiMRI_PrefsDefaults.png" height=
-      "222" width="419" align="right" alt="JiMRI v2.14 Defaults Prefs tab"></a>
+      <a href="images/JMRI_PrefsDefaults.png"><img src="images/JMRI_PrefsDefaults.png" height=
+      "222" width="419" align="right" alt="JMRI v2.14 Defaults Prefs tab"></a>
       <p>Si vous utilisez plusieurs connexions, par exemple une connexion LocoNet et une connexion
       MERG, le volet Defauts vous permet de sélectionner quelle connexion vous souhaitez utiliser
       dans un but particulier.</p>
@@ -82,7 +82,7 @@
       <p>Il s'agit de la connexion interne.</p>
 
       <p>La connexion interne est la connexion par défaut, cependant, puisque cela est presque
-      toujours indésirable, les applications JiMRI vous informeront si la Connexion interne est la
+      toujours indésirable, les applications JMRI vous informeront si la Connexion interne est la
       connexion par défaut pour chaque but. Pour faire taire cette notification, modifiez les
       propriétés du profil, en définissant la propriété
       <code>jmri-managers.allInternalDefaults</code> à <em>true</em>.</p>
@@ -133,7 +133,7 @@
 
         <dt>Ajouter un bouton à la fenêtre principale</dt>
 
-        <dd>Ajouter des boutons supplémentaires à la fenêtre principale de JiMRI qui sont.
+        <dd>Ajouter des boutons supplémentaires à la fenêtre principale de JMRI qui sont.
         connectés à des actions spécifiques dans les menus pour un accès facile et rapide à
         cette action.</dd>
 
@@ -199,9 +199,9 @@
         <dt>Locale</dt>
 
         <dd><a href="../../Acknowledgements.shtml">De nombreuses personnes</a> ont contribué à des
-        "internationalisations" de JiMRI. Ce site convertit (une grande partie) du texte à l'écran
+        "internationalisations" de JMRI. Ce site convertit (une grande partie) du texte à l'écran
         dans une langue autre que l'anglais. Si vous sélectionnez votre pays ou région et la langue
-        ici, puis enregistrez et redémarrez les préférences, JiMRI utilisera une
+        ici, puis enregistrez et redémarrez les préférences, JMRI utilisera une
         internationalisation pour ce pays et cette langue si elle est disponible. Les éléments qui
         n'ont pas été traduits continueront d'apparaître en anglais, vous ne manquerez donc vous ne
         manquerez rien. Pour plus d'informations sur la façon de configurer ce système, et en
@@ -211,25 +211,25 @@
 
         <dt>Console</dt>
 
-        <dt>Ceci vous permet de personnaliser l'aspect de la console du système JiMRI. Il est
+        <dt>Ceci vous permet de personnaliser l'aspect de la console du système JMRI. Il est
         possible de choisir parmi des couleurs prédéfinies et de choisir la taille et le style de
         la police. Vous pouvez également choisir d'enregistrer la taille et l'emplacement de la
         fenêtre de la console système qu'elle apparaisse toujours au même endroit et à la même
         taille.</dt>
       </dl>
       <a href="images/PrefsMsgPane421.png"><img src="images/PrefsMsgPane421.png" height="214"
-      width="375" align="right" alt="JiMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
+      width="375" align="right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
       "Messages"></a>
 
       <h2>Messages</h2>
       Ceci vous permet de modifier la manière dont les messages d'information et d'avertissement
-      sont affichés dans JiMRI.<br>
+      sont affichés dans JMRI.<br>
       Il vous permettra également de configurer les réponses par défaut et la la question qui
       s'affiche. <a name="Roster" id="Roster"></a>
 
       <h2>Inventaire</h2>
       <a href="images/PrefsRoster47.png"><img src="images/PrefsRoster47.png" height="184" width=
-      "416" align="right" alt="JiMRI v4.7 Roster Prefs tab"></a>
+      "416" align="right" alt="JMRI v4.7 Roster Prefs tab"></a>
       <dl>
         <dd><a id="programmeur" name="programmeur"></a>
         </dd>
@@ -349,7 +349,7 @@
         <dd>
           Si sélectionné, surveille si un paquet à envoyer depuis l' appareil mobile connecté. Si
           le serveur WiThrottle ne ne reçoit aucune communication dans le temps choisi, le
-          Régulateur JiMRI concerné mettra son train à l'arrêt.
+          Régulateur JMRI concerné mettra son train à l'arrêt.
           <p>Le temps choisi est approximatif ; la réponse peut se faire quelques quelques secondes
           plus tôt ou plus tard.</p>
         </dd>
@@ -394,11 +394,11 @@
       </dl>
       Le bouton "Sauvegarder", en bas à gauche, mmet en vigueur les réglages modifiés. Pour un
       <a href=".">"../jmri/jmrit/withrottle/UserInterface.shtml"&gt;Régulateur connecté</a> pour
-      utiliser les nouveaux paramètres, vous devrez redémarrer JiMRI (puis WiThrottle). puis
+      utiliser les nouveaux paramètres, vous devrez redémarrer JMRI (puis WiThrottle). puis
       redémarrer WiThrottle) comme indiqué dans la boîte de dialogue. <a name="Profils" id=
       "Profils"></a>
       <h2>Profils de configuration</h2>
-      Les profils de configuration JiMRI facilitent le paramétrage de vos applications JiMRI pour
+      Les profils de configuration JMRI facilitent le paramétrage de vos applications JMRI pour
       fonctionner avec différentes configurations. Chaque profil spécifie un ensemble de
       préférences. Vous pouvez ensuite sélectionner celui que vous souhaitez utiliser.
       <p>Pour plus d'informations, consultez la page d'aide <a href=".">.
@@ -413,9 +413,9 @@
 
       <h2>Serveur JSON</h2>
 
-      <p>JiMRI <a href="../../html/web/JsonServlet.shtml">serveur JSON</a> est utilisé par les
+      <p>JMRI <a href="../../html/web/JsonServlet.shtml">serveur JSON</a> est utilisé par les
       applications sur d'autres ordinateurs, y compris les tablettes et les téléphones, pour se
-      connecter à JiMRI afin de faire fonctionner votre chemin de fer.</p>
+      connecter à JMRI afin de faire fonctionner votre chemin de fer.</p>
 
       <p>Sur ce volet, vous pouvez spécifier le port de la connexion. (généralement laissé à la
       valeur par défaut) et la fréquence à laquelle le serveur vérifie si la connexion a échoué via
@@ -423,7 +423,7 @@
 
       <a name="WebServer" id="WebServer"></a>
       <h2>Serveur Web</h2>
-      Le serveur Web de JiMRI vous permet de vous connecter à JiMRI depuis un navigateur web sur
+      Le serveur Web de JMRI vous permet de vous connecter à JMRI depuis un navigateur web sur
       votre ordinateur, tablette ou téléphone et de travailler avec votre chemin de fer.
       <p>Cet onglet vous permet de contrôler ce que le serveur Web fournit. Pour plus
       d'informations, consultez la page <a href=".">Préférences du serveur web.</a> . <a id=
@@ -431,7 +431,7 @@
 
       <h2>Serveur SRCP</h2>
 
-      <p>La page JiMRI <a href=".">serveur SRCP</a> est un moyen standard de connecter un
+      <p>La page JMRI <a href=".">serveur SRCP</a> est un moyen standard de connecter un
       utilisateur "client" à un serveur .</p>
 
       <p>Sur ce volet, vous pouvez spécifier le port pour la connexion. (généralement laissé par
@@ -439,9 +439,9 @@
       <a id="Simple_Server" name="Simple_Server"></a>
       <h2>Serveur simple</h2>
 
-      <p>Le serveur simple de JiMRI fait partie de <a href=".">.
-      "../../html/hardware/jmriclient/index.shtml"&gt;JiMRIClient</a>, une méthode pour connecter à
-      distance un programme JiMRI à un autre.</p>
+      <p>Le serveur simple de JMRI fait partie de <a href=".">.
+      "../../html/hardware/jmriclient/index.shtml"&gt;JMRIClient</a>, une méthode pour connecter à
+      distance un programme JMRI à un autre.</p>
 
       <p>Sur ce volet, vous pouvez spécifier le port pour la connexion. (généralement laissé par
       défaut).</p>
@@ -500,7 +500,7 @@
       nécessaire pour convertir les réglages du Régulateur et les vitesses de la voie vers et
       depuis les vitesses à l'échelle.
       <p>Le <strong>Nombre maximal de Cantons dans l'itinéraire</strong> est la profondeur à
-      laquelle. JiMRI recherchera un itinéraire lors de la définition d'un bulletin d'ordre. Il
+      laquelle. JMRI recherchera un itinéraire lors de la définition d'un bulletin d'ordre. Il
       s'agit d'une valeur globale qui peut être surchargée lors de la création d'un bulletin
       d'ordre.</p>
 
@@ -541,7 +541,7 @@
       Dans la version 4.9.2, Bulletin d'Ordre calcule une vitesse de voie lorsqu'il traverse un
       chemin dont la longueur et le réglage du Régulateur sont connus. Ces mesures sont effectuées
       pour chaque adresse qui est enregistrée sous un bulletin d'ordre et sont conservées pour
-      toute la session de réseau. Lorsque JiMRI est quitté, à l'arrêt. Ces profils de vitesse de
+      toute la session de réseau. Lorsque JMRI est quitté, à l'arrêt. Ces profils de vitesse de
       session peuvent être fusionnés avec les profils de vitesse de l'Inventaire. Les choix
       suivants sont disponibles à l'arrêt.
       <ul>

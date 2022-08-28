@@ -10,7 +10,7 @@
 
   <title>JMRI: CBUS&reg; Event Capture Tool</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,11 +23,13 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Outil de capture
-      d'&eacute;v&eacute;nement CBUS&reg;</h1>CBUS <a href=
+      d'&eacute;v&eacute;nement CBUS&reg;</h1>
+
+      <p>CBUS <a href=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg">
       <img src=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg"
@@ -36,8 +38,7 @@
       L'outil de capture de l'&eacute;v&eacute;nement
       CBUS peut simplifier la configuration de JMRI pour bien
       travailler avec votre installation <a href=
-      "../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>
-      .
+      "../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>.</p>
 
       <p>Pour <a href=
       "../../../../../../../html/hardware/can/cbus/index.html">configurer

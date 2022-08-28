@@ -3,17 +3,16 @@
 <html lang="fr">
 <head>
     <title>JMRI: Adding/Editing Logix Conditionals</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
-
-<!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Ajouter/Modifier Conditions Logix</h1>
 

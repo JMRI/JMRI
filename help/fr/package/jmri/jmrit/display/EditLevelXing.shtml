@@ -10,7 +10,7 @@
   <title>JMRI: Edit Level Crossing Help</title>
     <meta name="author" content="Bob Jacobsen">
   <meta name=
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -22,8 +22,8 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>&#233;diter Croisement</h1>Un croisement est une
       pi&#232;ce particuli&#232;re de la voie qui repr&#233;sente

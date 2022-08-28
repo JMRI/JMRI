@@ -8,18 +8,20 @@
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 
   <title>JMRI: DecoderPro Operations Mode Programmer</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI: Opérations DecoderPro en mode programmateur</h1>
+
       <a name="contents" id="contents"></a>
       <h2>Contenus</h2>
 

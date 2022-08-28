@@ -7,11 +7,12 @@
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI CBUS Bootloader"><!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : Outil bootloader CBUS®</h1>
 
       <p>L'outil bootloader vous permet de mettre à jour le firmware dans un nœud CBUS

@@ -7,7 +7,7 @@
 <META NAME="keywords" CONTENT="JMRI help Light Control">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -18,13 +18,13 @@
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1>Commande Lumi&#232;re </h1>
+      <h1>Commande Lumi&#232;re </h1>
 
-Entrez le nom du syst&#232;me de lumi&#232;re 
+<p>Entrez le nom du syst&#232;me de lumi&#232;re
 que vous souhaitez commander dans la bo&#238;te &#224; droite de "lumi&#232;re".
 Par exemple, entrer 678 et en appuyant sur le bouton ON ou OFF
 , vous devriez &#234;tre en mesure de changer l'&#233;tat de la lumi&#232;re num&#233;ro 678
@@ -36,7 +36,7 @@ qui est une lumi&#232;re interne num&#233;ro 123 . Appuyer sur le bouton On ou O
 changerera seulement l'&#233;tat de la lumi&#232;re interne et ne changera pas une
 lumi&#232;re sur le r&#233;seau. Voir "
 <a href="../../../../html/doc/Technical/Names.shtml"> Noms </a>
-"Voire l'aide g&#233;n&#233;rale pour plus d'informations.
+"Voire l'aide g&#233;n&#233;rale pour plus d'informations.</p>
 
 <h2>Boutons de Commande Lumi&#232;re et &#201;tats </h2>
 

@@ -7,17 +7,18 @@
   <title>JMRI: éditer Pont Tournant</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor turntable"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>éditer Pont Tournant</h1>
       Un Dessin de pont tournant est une représentation schématique d'un pont tournant sur le
       réseau. Un pont tournant est dessiné comme un cercle avec un nombre variable de connexions de

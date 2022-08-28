@@ -10,7 +10,7 @@
 
   <title>JMRI: Multi-Decoder Control</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,10 +23,11 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>A l'origine,
+      <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>
+      <p>A l'origine,
       DCC n'a pas fourni un moyen commode de programmer Les valeurs
       de configuration des (CV) quand vous avez plus d'un
       d&eacute;codeur install&eacute; dans une locomotive. Par
@@ -35,7 +36,7 @@
       fournir du son, et ils ont tous deux utiliser les m&ecirc;mes
       CV, la programmation d'un d&eacute;codeur fera modifier les
       param&egrave;tres de l'autre, g&eacute;n&eacute;ralement
-      d'une mani&egrave;re ind&eacute;sirable.
+      d'une mani&egrave;re ind&eacute;sirable.</p>
 
       <p>Il y a diff&eacute;rentes astuces qui peuvent &ecirc;tre
       utilis&eacute;es avec des adresses longues et courtes et la

@@ -6,11 +6,12 @@
   <meta name="keywords" content="JMRI help CBUS NODE Manager CONFIG TOOL configuration variable">
   <title>JMRI : CBUS® ; Node Manager</title><!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : Gestionnaire de Nœuds CBUS</h1>
 
       <ul class="snav">

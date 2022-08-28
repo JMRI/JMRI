@@ -7,14 +7,14 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
   <!--#include virtual="/Style.shtml" -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
       <h1>JMRI: Ancien Panneau Préférences</h1>
 
       <p class="important">Cette page décrit un ancien panneau des Préférences qui a été remplacé

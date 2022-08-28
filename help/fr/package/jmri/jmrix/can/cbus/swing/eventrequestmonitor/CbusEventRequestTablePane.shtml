@@ -7,11 +7,12 @@
   "JMRI CBUS help support event request feedback monitor monitoring tool">
   <title>JMRI: CBUS® Event Request Table</title><!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : Tableau de contrôle des Demandes d'Événements CBUS</h1>
 
       <ul class="snav">

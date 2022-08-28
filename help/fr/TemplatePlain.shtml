@@ -8,13 +8,13 @@
   <title>JMRI: ???Page Title</title>
   <!--#include virtual="/Style.shtml" -->
   <!-- If UTF-8 is used, uncomment next line: -->
-  <!--  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+  <!--  <meta http-equiv="content-type" content="text/html; charset=utf-8">-->
 </head>
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Titre Page???</h1>
       <p>Contenu???? Ce fichier indique la

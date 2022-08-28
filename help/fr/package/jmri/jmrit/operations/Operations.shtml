@@ -9,17 +9,18 @@
   <meta name="keywords" content=
   "JMRI Help Operations Setup Settings Cars Engines Locomotives Trains itinéraires Locations Schedules">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h2>Exploitations JMRI</h2>
       Le programme d'Exploitations vous permet de créer des manifestes de train générés par
       ordinateur pour vos chemins de fer. Un <a href="#PrintingManifests">manifeste du train</a>

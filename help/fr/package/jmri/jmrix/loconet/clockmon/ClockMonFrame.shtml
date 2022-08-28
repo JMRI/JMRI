@@ -11,7 +11,7 @@
   <meta name="keywords" content=
   "JMRI help loconet fast clock monitor">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,8 +24,8 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>LocoNet Fast Clock Control</h1>This is the
       help/jmri/jmrix/loconet/clockmon/ClockMonFrame help page

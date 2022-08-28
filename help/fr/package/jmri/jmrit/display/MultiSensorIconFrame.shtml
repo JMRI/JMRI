@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help MultiSensorIcon">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,11 +24,13 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>The MultiSensorIcon</h1>This is the
-      help/jmri/jmrit/display/MultiSensorIconFrame help page 
+      <h1>The MultiSensorIcon</h1>
+
+      <p>This is the help/jmri/jmrit/display/MultiSensorIconFrame help page</p>
+
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>

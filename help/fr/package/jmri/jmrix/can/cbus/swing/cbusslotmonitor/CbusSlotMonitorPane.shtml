@@ -8,11 +8,12 @@
   <meta name="keywords" content="JMRI CBUS Command station throttle session monitor cancmd">
   <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : Moniteur de Centrale CBUS</h1>
 
       <p>Tableau principal - Suivi des sessions de train.</p>

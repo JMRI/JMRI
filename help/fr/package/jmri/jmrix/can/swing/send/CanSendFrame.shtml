@@ -7,11 +7,12 @@
   "JMRI help CBUS Simulator simulate offline command station emulate emulator">
   <title>JMRI: CBUS® Simulator</title><!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : Outil de simulation du réseau CBUS</h1>
 
       <ul class="snav">

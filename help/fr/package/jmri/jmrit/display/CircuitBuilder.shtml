@@ -17,10 +17,10 @@
 
 <body>
 <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1>G&#233;n&#233;rateur de Circuit</h1>
+      <h1>G&#233;n&#233;rateur de Circuit</h1>
 <p>
 <b>Le G&#233;n&#233;rateur Circuit</b> est une vue d'un <b>&#201;diteur de Panneau de Configuration</b> Panneau utilis&#233; pour cr&#233;er des circuits de voie qui sont mis en &oelig;uvre dans JMRI par
 OCantonss, Portails et OChemins. Le nom d'une voie ayant un appareil qui peut d&#233;tecter l'occupation est le

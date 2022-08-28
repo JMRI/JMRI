@@ -8,11 +8,12 @@
   <meta name="keywords" content="JMRI SPROG CBUS Simple Mode Switcher Tool">
   <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI : CBUS Outil de commutation de mode simple</h1>
 
       <p>Le sélecteur de mode permet de contrôler les modes de programmation disponibles pour la

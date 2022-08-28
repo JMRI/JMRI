@@ -11,7 +11,7 @@
   <meta name="author" content="Matthew Harris">
   <meta name="keywords" content="JMRI help Id Tag Add Edit">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,17 +24,18 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Ajout/Modification d'&eacute;tiquettes ID</h1>Pour
+      <h1>Ajout/Modification d'&eacute;tiquettes ID</h1>
+      <p>Pour
       cr&eacute;er une &eacute;tiquette d'identification, cliquez
       sur le bouton "Ajouter ..." sur la <a href=
       "IdTagTable.shtml">Table ID Tag</a>. Cela ouvrira une petite
       fen&ecirc;tre avec un espace pour entrer un nom
       syst&egrave;me et un nom utilisateur pour la nouvelle
       &eacute;tiquette d'identification , plus une bouton
-      "Ajouter".
+      "Ajouter".</p>
 
       <p>Vous devez entrer un nom syst&egrave;me unique. Les Noms
       syst&egrave;me des &eacute;tiquettes ID doivent avoir le

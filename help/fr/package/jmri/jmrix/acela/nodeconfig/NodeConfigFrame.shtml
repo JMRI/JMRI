@@ -19,11 +19,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1> Bienvenue sur les Pages d'aide Acela</h1>
+      <h1> Bienvenue sur les Pages d'aide Acela</h1>
 
 <p>
 Merci d'avoir lu ceci, j'espère que les quelques minutes que vous consacrerez à la lecture vous épargneront des heures sur la route.

@@ -10,7 +10,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet PM4">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -20,8 +20,8 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Configurer PM4 Digitrax</h1><a href=
       "../../../../../html/apps/LocoTools/images/DS64.jpg"><img src="../../../../../html/apps/LocoTools/images/DS64.jpg"

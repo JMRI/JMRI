@@ -10,7 +10,7 @@
 
   <title>JMRI: SPROG II Update Tool</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,8 +23,8 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h2>JMRI: Outil de Mise &agrave; Jour SPROG II</h2>
       <p>L'Outil de Mise &agrave; Jour SPROG II vous permets
