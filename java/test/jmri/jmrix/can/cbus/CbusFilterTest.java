@@ -33,7 +33,7 @@ public class CbusFilterTest {
     private Vector<Integer> _increments;
     private Vector<Integer> _nodes;
     
-    public class FtTestFilterFrame extends CbusFilterFrame {
+    private class FtTestFilterFrame extends CbusFilterFrame {
         
         public FtTestFilterFrame() {
         super(null,null);
@@ -115,9 +115,7 @@ public class CbusFilterTest {
         Assert.assertEquals("increment filter id values match nodes", expectedNodes, _nodes);
         Assert.assertEquals("increment filter id values match ",expected , _increments);
         
-        t = null;
         tff.dispose();
-        tff = null;
     }
     
     // for use in any future debug
@@ -147,9 +145,6 @@ public class CbusFilterTest {
         t.setFilter(CbusFilterType.CFOUT.ordinal(),true);
         Assert.assertTrue("message 138",t.filter(m)==CbusFilterType.CFOUT.ordinal());
         Assert.assertTrue("message 139",t.filter(r)==CbusFilterType.CFIN.ordinal());
-        t = null;
-        m = null;
-        r = null;
     }
     
     // test opc filters

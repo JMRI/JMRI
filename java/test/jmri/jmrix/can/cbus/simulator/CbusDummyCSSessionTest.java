@@ -29,7 +29,7 @@ public class CbusDummyCSSessionTest {
         Assert.assertNotNull("exists",t);        
         
         t.sendPloc();
-        JUnitUtil.waitFor(()->{ return(tc.inbound.size()>0); }, "ploc didn't arrive");
+        JUnitUtil.waitFor(()->{ return(!tc.inbound.isEmpty()); }, "ploc didn't arrive");
         Assert.assertEquals("ploc sent", "[5f8] E1 01 C4 D2 80 00 00",
         tc.inbound.elementAt(tc.inbound.size() - 1).toString());
         
@@ -48,10 +48,9 @@ public class CbusDummyCSSessionTest {
         t.dispose();
         cs.dispose();
     }
-    
+
     private TrafficControllerScaffold tc;
-    private CanSystemConnectionMemo memo;
-    
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
     public void setUp() {
@@ -66,6 +65,7 @@ public class CbusDummyCSSessionTest {
     public void tearDown() {
         
         tc.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         tc = null;
         memo = null;

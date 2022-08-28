@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.configtool;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -11,24 +9,24 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testInitComp() {
-        
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         Assert.assertEquals("no listener to start with",0,tcis.numListeners());
         
         ((ConfigToolPane)panel).initComponents(memo);
         
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("listening",1,tcis.numListeners());
         
         Assert.assertNotNull("exists", panel);
@@ -88,8 +86,8 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     private String getStringCaptureTwo( JFrameOperator jfo ){
         return ( new JTextFieldOperator(jfo,1).getText() );
     }
-    
-    private CanSystemConnectionMemo memo; 
+
+    private CanSystemConnectionMemo memo = null; 
     private TrafficControllerScaffold tcis;
  
     @Override
@@ -110,8 +108,10 @@ public class ConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     public void tearDown() {
         JUnitUtil.resetWindows(false,false);
         panel.dispose();
+        Assertions.assertNotNull(tcis);
         Assert.assertEquals("no listener after dispose",0,tcis.numListeners());
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         tcis = null;
         memo = null;
