@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
 	<!--#include virtual="../Sidebar.shtml" -->
 	<div id="mainContent">
@@ -153,7 +153,7 @@ sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</co
 	<li><a href="../index.shtml">Page d'AidePrincipale du support CAN</a> includant des liens pour obtenir plus d'outils.</li>
 	</ul>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

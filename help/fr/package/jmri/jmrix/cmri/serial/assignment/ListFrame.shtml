@@ -10,7 +10,7 @@
 
   <title>JMRI: Connector Pin Assignments</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -22,16 +22,16 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h2>JMRI: Affectation des broches du connecteur</h2>
       <p>Cet outil vous permet de v&Atilde;&copy;rifier l'affectation des
       broches pour votre n&Aring;"ud C/MRI.JMRI: Connector Pin
       Assignments.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

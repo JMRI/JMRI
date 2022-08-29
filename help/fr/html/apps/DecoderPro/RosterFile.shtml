@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -38,7 +38,7 @@ r&#233;pertoire appel&#233; "roster". Vous avez besoin de d&#233;placer le fichi
 
 Plus de renseignement <a href="../../setup/Files.shtml">Configuration Fichiers JMRI</a>
     
- <!--#include virtual="/Footer.shtml" -->
+ <!--#include virtual="/Footer_fr.shtml" -->
   </div> <!-- close #mainContent -->
 </div>  <!-- close #mBody -->
 <script src="/js/main.js"></script>

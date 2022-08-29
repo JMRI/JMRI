@@ -12,7 +12,7 @@
   <meta name="keywords" content=
   "JMRI help configure grapevine node">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,9 +24,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Configurer les N&Aring;"uds Grapevine</h1>Ceci est la
       page d'aide
@@ -130,7 +130,7 @@
           l'adresse d'un noeud de Grapevine. Il ouvre une <a href=
           "RenumberFrame.shtml">nouvelle fen&Atilde;&ordf;tre</a> .</p>
 
-          <!--#include virtual="/Footer.shtml" -->
+          <!--#include virtual="/Footer_fr.shtml" -->
         </dd>
       </dl>
     </div>

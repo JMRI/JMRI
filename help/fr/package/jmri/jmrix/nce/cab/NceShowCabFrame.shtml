@@ -11,7 +11,7 @@
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Show Cabs">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,9 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Montrer Cabines NCE</h1>
 
@@ -60,7 +60,7 @@
       r&Atilde;&copy;ponse de l'adresse de la Cab
       purg&Atilde;&copy;e. *commande manuelle</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

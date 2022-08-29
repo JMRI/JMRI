@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
  <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
   <div id="mainContent">
@@ -93,7 +93,7 @@ disponible sous plusieurs formes.
 Pour en savoir plus, consultez les
 <a href="https://jmri.org/xml/XSLT/">informations sur la page d&#233;codeur</a>.
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
 </div><!-- closes #mainContent-->
 </div><!-- closes #mBody-->
 <script src="/js/main.js"></script>

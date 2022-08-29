@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Signal Mast Add">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,9 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Ajout M&acirc;ts de signaux</h1><a href=
       "SignalMastAdd.png"><img src="SignalMastAdd.png" align=
@@ -75,7 +75,7 @@
         pas pr&eacute;sent sur le chemin de fer, comme un heurtoir,
         ou &agrave; marquer la fin d'une section de signalisation
         de la voie et le d&eacute;but du territoire sans
-        information. <!--#include virtual="/Footer.shtml" --></li>
+        information. <!--#include virtual="/Footer_fr.shtml" --></li>
       </ul>
     </div>
   </div>

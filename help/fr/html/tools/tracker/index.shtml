@@ -1,38 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; 2013-10-05-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; 2013-10-05-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Block Tracking</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="java model railroad JMRI block tracking">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h2>JMRI: Suivi en Cantons</h2>
+      <h2>JMRI: Suivi en Cantons</h2>
 
-      <h3>Renseignements g&eacute;n&eacute;raux</h3>Les
+      <h3>Renseignements g&eacute;n&eacute;raux</h3>
+      <p>Les
       Syst&egrave;mes de contr&ocirc;le de mod&egrave;le
       ferroviaire ne peut g&eacute;n&eacute;ralement pas vous dire
       quel train occupe un portion particuli&egrave;re de voie
-      &agrave; un moment donn&eacute;.
+      &agrave; un moment donn&eacute;.</p>
 
       <p>Cela est regrettable, car il y a beaucoup de raisons pour
       vouloir le savoir. Par exemple, vous voudrez peut-&ecirc;tre
@@ -181,8 +171,9 @@
         etc, qui sont n&eacute;cessaires.</li>
       </ul>
 
-    <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

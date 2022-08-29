@@ -21,11 +21,12 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Ajout/Edition des T&ecirc;tes de signal</h1><a href=
+      <h1>Ajout/Edition des T&ecirc;tes de signal</h1>
+      <a href=
       "../../../../images/SigAdd.gif"><img src=
       "../../../../images/SigAdd.gif" align="right" width="181"
       height="218" hspace="0" vspace="0" alt=
@@ -365,7 +366,7 @@
       t&ecirc;te de signal est &eacute;quivalent &agrave; cliquer
       "Annuler". Une seule t&ecirc;te de signal peut &ecirc;tre
       &eacute;dit&eacute;e &agrave; la fois
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

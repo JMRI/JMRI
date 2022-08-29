@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -73,7 +73,7 @@ jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
 	<li>Retour &#224; la page <a href="index.shtml">support d'Aide Principale R&#233;seau CAN</a>.
 	</ul>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

@@ -10,7 +10,7 @@
 
   <title>JMRI: Select PR3 Mode</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -22,9 +22,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h2>JMRI: S&Atilde;&copy;lectionnez le mode PR3</h2>Une
       <a href=
@@ -52,7 +52,7 @@
       pla&Atilde;&reg;t voir ses <a href=
       "../../../../../../html/hardware/loconet/PR3.shtml">page de
       r&Atilde;&copy;f&Atilde;&copy;rence JMRI</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

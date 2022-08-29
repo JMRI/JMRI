@@ -1,0 +1,34 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for html/tools pages in French -->
+ <hr class="hide">
+
+    <div id="side"> <!-- Block of text on left side of page -->
+        <div style="text-align: center">JMRI&reg; c'est...</div>
+        <dl>
+
+        <!--#include virtual="../../parts/SidebarTools.shtml" -->
+
+        <!--#include virtual="../../parts/SidebarLayoutAutomation.shtml" -->
+
+        <dt><a href="/help/fr/html/hardware/">Materiel pris en Charge</a></dt>
+	<!-- THE ABOVE MUST BE AN ABSOLUTE ADDRESS LINK SO THIS SIDEBAR CAN BE REFERENCED AT MULTIPLE LEVELS IN THE DIRECTORY HIERARCHY -->
+        <dd>JMRI prend en charge un large éventail de systèmes, de stations de commande
+          et de protocoles DCC.</dd>
+	<!-- If someday we want to show the whole list, replace the link above with #include virtual="../../parts/SidebarSupportedHardware.shtml" -->
+
+        <!--#include virtual="../../parts/SidebarApplications.shtml" -->
+
+         </dl>
+
+    <!--#include virtual="../../parts/SidebarTail.shtml" -->
+
+    </div> <!-- closes #side -->
+
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
+<!-- /Sidebar.shtml -->
+
+<!-- ===**======**======**=====**=======**==========**==========**=====**====**=====  -->
+
+<!-- Use Sidebar in Tools Directory unless something unique to add -->
+<!-- Use an #include virtual="Sidebar.shtml" -->

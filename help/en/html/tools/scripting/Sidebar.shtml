@@ -21,11 +21,11 @@
 
            <!--#include virtual="../../../parts/SidebarApplications.shtml" -->
 
-         </dl>
+        </dl>
 
          <!--#include virtual="../../../parts/SidebarTail.shtml" -->
 
-        </div>
+    </div>
   <!-- button is in /Header -->
   <script src="/js/side.js"></script>
 <!-- /Sidebar.shtml -->

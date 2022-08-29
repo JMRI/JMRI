@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -58,7 +58,7 @@ sont nomm&#233;s si disponibles sur <a href="Names.shtml">une page s&#233;par&#2
       "IntroStructure.shtml">Structure de la biblioth&egrave;que
       JMRI</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
   <script src="/js/main.js"></script>

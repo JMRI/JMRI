@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -388,7 +388,7 @@ Vous devriez &#234;tre capable de communiquer avec d'autres utilisateurs JMRI qu
 <p>Syst&#232;mes <a href="http://www.ncedcc.com/"> NCE et
 Catalogue Cabs</a></p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
       </div>
     </div>
     <script src="/js/main.js"></script>

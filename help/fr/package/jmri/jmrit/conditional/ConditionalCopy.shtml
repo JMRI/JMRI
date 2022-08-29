@@ -4,16 +4,17 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional State Variables and Actions List</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="author" content="Pete cressman">
   <meta name="keywords" content="JMRI help Logix Conditional Copy">
   <!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Liste de copies conditions</h1>
 
       <dl>
@@ -88,7 +89,7 @@
       .
       <p>Traduction 2021-03-27</p>
       <!--#include virtual="LogixDocList.shtml" -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
