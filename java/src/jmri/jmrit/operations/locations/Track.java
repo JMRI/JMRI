@@ -1618,7 +1618,7 @@ public class Track extends PropertyChangeSupport {
     }
     
     public void bumpMoves() {
-        setMoves(getMoves() + 1);;
+        setMoves(getMoves() + 1);
     }
 
     public int getBlockingOrder() {
