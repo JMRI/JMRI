@@ -89,7 +89,7 @@
             you use. </li>
           </ul>
 
-          <p>For now, we stay with the default "Comprehensive Programmer".</p>
+          <p>For now, we stay with the "Comprehensive Programmer".</p>
         </div>
       </div>
 
@@ -146,12 +146,12 @@
           This is shown as black numbers on an orange background, since the value differs from what's
           expected or last seen in the decoder.</dd>
 
-          <dt style="background:orange;">From File</dt>
+          <dt style="background:yellow;">From File</dt>
 
           <dd>The field contains values read from a locomotive file. This is shown on yellow,
           since we're not certain that the file agrees with the decoder contents.</dd>
 
-          <dt style="background:orange;">Read</dt>
+          <dt style="background:white;">Read</dt>
 
           <dd>The value shown has been read from the decoder. This is shown as white to
           indicate that the value is trustworthy.</dd>
@@ -236,7 +236,7 @@
         <div class="flex-item-70">
           <h3>Direct CV Programming</h3>
 
-          <p>Its also possible to program the CVs directly using the CV Programmer. The "Read"
+          <p>It is also possible to program the CVs directly using the CV Programmer. The "Read"
           and "Write" buttons allow you to work with individual CV contents. Changes made here
           will also update any associated values found on other programmer tabs.</p>
         </div>
@@ -244,46 +244,46 @@
 
       <div class="flex-container">
         <div class="flex-item-30">
-          <a href="./images/DP5Roster.png"><img src="./images/DP5Roster.png" alt="Rosters"></a>
+          <a href="./images/DP5Roster.png"><img src="./images/DP5Roster.png" alt="The Roster"></a>
         </div>
         <div class="flex-item-70">
-          <h3>Locomotive Rosters</h3>
+          <h3>Locomotive Roster</h3>
 
           <p>DecoderPro maintains a Roster of your locomotives. You can save the decoder
           configuration, and then later work with the stored CV values instead of having to
           read them from the decoder. This saves the time it takes to read a complete decoder,
           which can be quite long. The roster can also store locomotive information for you.
-          The "Roster Entry" sheet displays this info and allows you to edit it.</p>
+          </p>
+          <p>From the DecoderPro main screen, you can select a specific locomotive to work on by
+          selecting it from the Roster list and then clicking the "Program" button.
+          The programmer opens with the current values already present on the "Roster Entry" sheet.
+          After you made changes and wrote them to the decoder, click "Save to Roster" to store the
+          roster information to a file on your computer's local disk; you'll be reminded to do this
+          if you close the programmer with any unstored information.</p>
 
-          <p>Click "Save to Roster" to store the roster information to a file on your computer's
-          local disk; you'll be reminded to do this if you close the programmer with any unstored
-          information.</p>
-
-          <p>The "ID" field at the top is the name you'll use next time to select this
-          locomotive.</p>
           <p>For more info, see <a href="./Roster.shtml">Roster Help</a>.</p>
         </div>
       </div>
 
       <div class="flex-container">
         <div class="flex-item-30">
-          <a href="./images/DP5FileMenu.png"><img src="./images/DP5FileMenu.png" alt="Selecting a roster entry"></a>
+          <img src="./images/DP5FileMenu.png" alt="The File Menu">
         </div>
-        <div class="flex-item-70">
-          <h3>Selecting an existing Roster Entry</h3>
-
-          <p>From the DecoderPro main screen, you can select a specific locomotive to work on by
-          selecting it from the Roster list and then clicking the "Program" button.<br>
-          The programmer opens with the current values already present.</p>
-          <p>You can print the current locomotive's information from the programmer windows.
-          From the "File..." menu, select "Print...", and fill out the dialog box that's
-          presented.</p>
+        <div class="flex-item-30">
+          <img src="./images/DP5SettingsMenu.png" alt="The File Menu">
+        </div>
+        <div class="flex-item-30">
+          <img src="./images/DP5RosterMenu.png" alt="The File Menu">
         </div>
       </div>
 
+      <p>A combination of menus allow you to access and manipulate your roster entries.<br>
+      For example you can print the information for a selected roster entry by choosing "Print Rostre &gt; Selected
+      Entry" from the File menu.</p>
+
       <h2>More Info</h2>
       <p>For information on how to set up and use DecoderPro, please see <a href="index.shtml">the
-       DecoderPro User Guide</a>.</p>
+      DecoderPro User Guide</a>.</p>
       <p>Here's more information on <a href="MoreInfo.shtml">how DecoderPro works</a> and
       <a href="CreateDecoder.shtml">how to add a new Decoder Type</a>.</p>
 
