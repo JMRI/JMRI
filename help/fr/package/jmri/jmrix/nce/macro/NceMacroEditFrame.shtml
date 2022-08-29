@@ -17,105 +17,106 @@
       
       <p>Cet outil vous permet de revoir,
       modifier et enregistrer des styles macros NCE. Il vous permet
-      ?galement de sauvegarder et de restaurer toutes
-      les macros des centrales de commande NCE et ? partir
+      également de sauvegarder et de restaurer toutes
+      les macros des centrales de commande NCE et à partir
       d'un fichier. Le format de fichier est identique au
       NCE, de sorte que vous pouvez restaurer un fichier qui a
-      ?t? g?n?r?e par la
-      commande de sauvegarde des NCE. Tr?s utile, car
+      été générée par la
+      commande de sauvegarde des NCE. Très utile, car
       la restauration et les commandes de sauvegarde dans la
-      m?moire EPROM 2007 ne fonctionnent pas
+      mémoire EPROM 2007 ne fonctionnent pas
       actuellement ! Nous vous recommandons de fixer la vitesse
-      ? 9600 bauds lorsque vous utilisez cette outil.</p>
+      à 9600 bauds lorsque vous utilisez cette outil.</p>
 
       <h2>Sauvegarde</h2>
       <p>Pour sauvegarder toutes vos macros dans un
       fichier, appuyez sur le bouton "Sauvegarde"
-      situ? sur la rang?e du bas de
-      l'?diteur de macro JMRI. Un nom de fichier par
-      d?faut appara?tra dans la
-      fen?tre Enregistrer, vous pouvez changer le nom
+      situé sur la rangée du bas de
+      l'éditeur de macro JMRI. Un nom de fichier par
+      défaut apparaîtra dans la
+      fenêtre Enregistrer, vous pouvez changer le nom
       si vous le souhaitez. Appuyez sur le bouton "Sauvegarder" et
-      l'?diteur de macro JMRI va lire la
-      m?moire de la centrale de commande NCE et
+      l'éditeur de macro JMRI va lire la
+      mémoire de la centrale de commande NCE et
       stockera le contenu dans le fichier que vous
-      s?lectionn?.</p>
+      sélectionné.</p>
 
       <h2>Restaurer</h2>
-      <p>Pour restaurer tous vos macros ?
+      <p>Pour restaurer tous vos macros à
       partir d'un fichier, appuyez sur le bouton "Restaurer"
-      situ? sur la rang?e du bas de
-      l'?diteur de macro JMRI.
-      S?lectionnez un fichier en tapant le nom, ou en
+      situé sur la rangée du bas de
+      l'éditeur de macro JMRI.
+      Sélectionnez un fichier en tapant le nom, ou en
       cliquant sur lui. Appuyez sur le bouton "Ouvrir" et
-      l'?diteur de macro JMRI va ?crire
-      dans la m?moire de la centrale de commande des
+      l'éditeur de macro JMRI va écrire
+      dans la mémoire de la centrale de commande des
       NCE le contenu du fichier que vous avez
-      s?lectionn?. L'?diteur
-      de macro JMRI va v?rifier le contenu du fichier
-      avant d'?crire dans la m?moire de
-      la centrale de commande pour v?rifier que le
+      sélectionné. L'éditeur
+      de macro JMRI va vérifier le contenu du fichier
+      avant d'écrire dans la mémoire de
+      la centrale de commande pour vérifier que le
       fichier est en effet un fichier de sauvegarde de macro NCE!</p>
 
       <h2>Obtenir</h2>
       <p>Pour revoir une macro, entrez le
-      num?ro de la macro dans la zone de texte sous la
+      numéro de la macro dans la zone de texte sous la
       rubrique "Macro" et appuyez sur le bouton "Obtenir". Ceci va
-      r?cup?rer les macro de la
-      m?moire de la centrale de commande. S'il ya
-      actuellement un macro, la "R?ponse:" sera "macro
-      trouv?e". Si la macro n'existe pas, la
-      "R?ponse:" sera "macro vide ". Si il y a une macro,
-      l'?diteur JMRI NCE affichera une liste
-      d'accessoires que la macro est programm?e pour activer.</p>
+      récupérer les macro de la
+      mémoire de la centrale de commande. S'il ya
+      actuellement un macro, la "Réponse:" sera "macro
+      trouvée". Si la macro n'existe pas, la
+      "Réponse:" sera "macro vide". Si il y a une macro,
+      l'éditeur JMRI NCE affichera une liste
+      d'accessoires que la macro est programmée pour activer.</p>
 
       <p>Pour modifier une adresse d'accessoire, tapez une nouvelle
-      adresse accessoire et appuyez sur le bouton ?
-      c&Atilde;&acute;t? de la bo?te  d'adresse accessoire ?
-      "Direct" ou "D?vi?. Si vous voulez
+      adresse accessoire et appuyez sur le bouton à
+      côté de la boîte d'adresse accessoire à
+      "Direct" ou "Dévié. Si vous voulez
       la sauvegarder dans la centrale de commande NCE, vous devez
-      appuyez sur le bouton "Sauvegarder" situ? au bas
-      de l'?diteur. Le bouton "Enregistrer" ne devient
-      actif que si la macro a ?t? modifi?e.</p>
+      appuyez sur le bouton "Sauvegarder" situé au bas
+      de l'éditeur. Le bouton "Enregistrer" ne devient
+      actif que si la macro a été modifiée.</p>
 
       <h2>Ajouter</h2>
-      <p>Pour ajouter un accessoire ? une
+      <p>Pour ajouter un accessoire à une
       macro, entrez l'adresse de l'accessoire, puis appuyez sur le
-      bouton "Ajouter" jusqu'? ce que l'action
-      d?sir?e "D?vi?" ou "Direct" appara?sse.
+      bouton "Ajouter" jusqu'à ce que l'action
+      désirée "Dévié" ou "Direct" apparaisse.
       Encore une fois, utilisez le bouton "Sauvegarder" si vous
-      souhaitez mettre ? jour la m?moire de la
+      souhaitez mettre à jour la mémoire de la
       centrale de commande NCE.</p>
 
       <h2>Supprimer</h2>
       <p>Pour supprimer un accessoire, appuyez sur
       le bouton "Supprimer" en face de l'accessoire que vous
       souhaitez supprimer. Et "Enregistrer" si vous voulez mettre
-      ? jour la m?moire de la centrale de
+      à jour la mémoire de la centrale de
       commande NCE.</p>
 
-      <h2>Lien macro</h2>Pour lier cette macro ? une autre,
+      <h2>Lien macro</h2>
+      <p>Pour lier cette macro à une autre,
       entrer dans la macro avec laquelle vous souhaitez
-      cr?er un lien dans la derni?re zone
-      de texte de l'?diteur JMRI NCE . Appuyez sur le
+      créer un lien dans la dernière zone
+      de texte de l'éditeur JMRI NCE. Appuyez sur le
       Bouton "Lien Macro" et "Enregistrer" si vous
-      voulez mettre ? jour la m?moire centrale
+      voulez mettre à jour la mémoire centrale
       de commande des NCE. Pour supprimer le lien, appuyez sur
-      "Supprimer" et "Enregistrer".
+      "Supprimer" et "Enregistrer".</p>
 
-      <h2>Pr?c?dent et Suivant</h2>
-      <p>Les boutons "Pr?c?dent" et "Suivant"
+      <h2>Précédent et Suivant</h2>
+      <p>Les boutons "Précédent" et "Suivant"
       vous permettent de rechercher les macros. Si vous cherchez
       une macro vide, cliquez sur la case "Macro Vide"
-      situ?e dans le coin sup?rieur
-      droit. Et enfin, si vous ?tes un fan
-      irr?ductible des macros NCE et ne pouvez pas
+      située dans le coin supérieur
+      droit. Et enfin, si vous ètes un fan
+      irréductible des macros NCE et ne pouvez pas
       supporter l'utilisation des termes
-      "D?vi?" et "Direct pour d?crire un
-      aiguillage, cliquez sur la bo?te "Aiguillages
-      NCE"et les boutons accessoires deviennent
-      "Normal" et "Arri?re", tout comme votre
-      r?gulateur NCE!</p>
+      "Dévié" et "Direct pour décrire un
+      aiguillage, cliquez sur la boîte "Aiguillages
+      NCE" et les boutons accessoires deviennent
+      "Normal" et "Arrière", tout comme votre
+      régulateur NCE!</p>
 
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
