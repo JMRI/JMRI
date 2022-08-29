@@ -10,7 +10,7 @@
   <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -317,7 +317,7 @@
 
       <p>LocoNet® est une marque déposée de <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

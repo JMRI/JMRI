@@ -1,6 +1,5 @@
 package jmri.jmrit.ctc;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,8 +17,8 @@ import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /*
@@ -28,12 +27,9 @@ import org.junit.jupiter.api.io.TempDir;
 */
 public class CtcManagerVetoTest {
 
-//     @Rule
-//     public final ExpectedException thrown = ExpectedException.none();
-
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testDeleteVetos() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
@@ -44,7 +40,7 @@ public class CtcManagerVetoTest {
 
         String msg = "";
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        Sensor sensor = sm.getSensor("S-Alpha-Main");
+        Sensor sensor = sm.provideSensor("S-Alpha-Main");
         try {
             sm.deleteBean(sensor, "CanDelete");
         } catch (java.beans.PropertyVetoException ex) {
@@ -54,6 +50,7 @@ public class CtcManagerVetoTest {
 
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
         SignalMast mast = smm.getSignalMast("SM-Alpha-Left-A");
+        Assertions.assertNotNull(mast);
         try {
             smm.deleteBean(mast, "CanDelete");
         } catch (java.beans.PropertyVetoException ex) {
@@ -62,7 +59,7 @@ public class CtcManagerVetoTest {
         Assert.assertTrue(msg.contains("Signal Mast is in use by CTC"));
 
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
-        Turnout turnout = tm.getTurnout("T-Alpha-Left");
+        Turnout turnout = tm.provideTurnout("T-Alpha-Left");
         try {
             tm.deleteBean(turnout, "CanDelete");
         } catch (java.beans.PropertyVetoException ex) {
@@ -72,6 +69,7 @@ public class CtcManagerVetoTest {
 
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         Block block = bm.getBlock("B-Alpha-Main");
+        Assertions.assertNotNull(block);
         try {
             bm.deleteBean(block, "CanDelete");
         } catch (java.beans.PropertyVetoException ex) {
@@ -82,7 +80,6 @@ public class CtcManagerVetoTest {
 
     @Test
     public void testDeleteSignalHeadVeto() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Heads-SSL.xml");  // NOI18N
@@ -93,6 +90,7 @@ public class CtcManagerVetoTest {
 
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
         SignalHead head = shm.getSignalHead("SH-Alpha-Left-AU");
+        Assertions.assertNotNull(head);
         try {
             shm.deleteBean(head, "CanDelete");
         } catch (java.beans.PropertyVetoException ex) {
@@ -102,7 +100,7 @@ public class CtcManagerVetoTest {
     }
 
     @BeforeEach
-    public void setUp(@TempDir File folder) throws Exception {
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         JUnitUtil.resetInstanceManager();

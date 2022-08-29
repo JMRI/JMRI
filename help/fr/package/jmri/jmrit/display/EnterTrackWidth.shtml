@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Track">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,11 +23,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div  id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>R&eacute;glage Largeur Voie</h1>La bo&icirc;te de
+      <h1>R&eacute;glage Largeur Voie</h1>
+
+      <p>La bo&icirc;te de
       dialogue R&eacute;glage Largeur de Voie permet de changer les
       largeurs des deux types de voies utilis&eacute;s dans les
       sch&eacute;mas de voies dans le TCO. La voie peut &ecirc;tre
@@ -40,13 +42,13 @@
       d'&eacute;vitement</i> par d&eacute;faut. La
       sp&eacute;cification du type <i>voie principale</i> pour des
       segments sp&eacute;cifiques de la voie est une option que
-      vous pouvez ou non choisir d'en profiter.
+      vous pouvez ou non choisir d'en profiter.</p>
 
       <p>Chaque type de voie peut &ecirc;tre dessin&eacute; en
       utilisant une largeur de voie diff&eacute;rente. La
       modification de la largeur d'un type de voie modifie les
       largeurs de toutes les voies de ce type dans le sch&eacute;ma
-      de voie.</p><!--#include virtual="/Footer.shtml" -->
+      de voie.</p><!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -540,7 +540,7 @@ cela peut se produire? Si la case est modifiable, et que quelqu'un entre un autr
 </code></pre>pour laisser tomber les tests pour les balises JavaDoc manquantes et certaines erreurs
 HTML bénignes. ( Pour l'instant ).
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

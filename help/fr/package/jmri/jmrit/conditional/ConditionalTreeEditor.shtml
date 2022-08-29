@@ -14,11 +14,12 @@
     table td { text-align: center; }
   </style>
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Éditeur Arborescence Condition</h1>
 
       <p>L'Éditeur arborescence Condition utilise une seule fenêtre pour afficher et modifier
@@ -385,7 +386,7 @@
       .
       <p>Traduction2021-03-28</p>
       <!--#include virtual="LogixDocList.shtml" -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help monitor">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,15 +23,17 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Fen&Atilde;&ordf;tre Moniteur de Communication</h1>JMRI
+      <h1>Fen&Atilde;&ordf;tre Moniteur de Communication</h1>
+
+      <p>JMRI
       offre une fen&Atilde;&ordf;tre de communication pour
       surveiller pour que vous puissiez voir ce qui se passe sur le
       lien de communication entre le programme et le
-      mat&Atilde;&copy;riel du r&Atilde;&copy;seau.
+      mat&Atilde;&copy;riel du r&Atilde;&copy;seau.</p>
 
       <p>Une fois que vous ouvrez une fen&Atilde;&ordf;tre du
       moniteur, il affichera automatiquement &Atilde;  l'
@@ -121,7 +123,7 @@
         donn&Atilde;&copy;es et fermez le fichier.</li>
       </ol>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

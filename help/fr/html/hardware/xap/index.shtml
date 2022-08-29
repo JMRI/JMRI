@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -65,7 +65,7 @@ remplit le nom d'utilisateur JMRI, par exemple:
 d'utilisateur JMRI pour tout ce que vous souhaitez via le tableau
 habituel, si d&eacute;sir&eacute;.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

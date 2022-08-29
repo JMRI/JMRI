@@ -9,7 +9,7 @@
 
   <title>JMRI: Menu D&eacute;bogage</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -21,13 +21,12 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Menu D&eacute;bogage</h1>Le menu JMRI
-      "D&eacute;boger" contient les &eacute;l&eacute;ments
-      suivants:
+      <h1>JMRI: Menu D&eacute;bogage</h1>
+      <p>Le menu JMRI "D&eacute;boger" contient les &eacute;l&eacute;ments suivants:</p>
 
       <ul>
         <li>Moniteur Utilisation M&eacute;moire</li>
@@ -99,7 +98,7 @@
 
       <p>Ceci est la page d'aide
       help/en/package/jmri/jmrit.DebugMenu.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -12,7 +12,7 @@
   <meta name="keywords" content=
   "JMRI help monitor grapevine traffic message packet">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,9 +24,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Moniteur de Trafic CTI Acela ic</h1>
 
@@ -36,7 +36,7 @@
       "../../AbstractMonFrame.shtml">page Fen&ecirc;tre
       Moniteur de Communications</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

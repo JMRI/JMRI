@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Block">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,11 +23,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Cr&eacute;er/Modifier Un Canton</h1>Les cantons sont des
+      <h1>Cr&eacute;er/Modifier Un Canton</h1>
+
+      <p>Les cantons sont des
       tron&ccedil;ons de voie dont l'occupation peut &ecirc;tre
       suivie individuellement. Diviser la voie en cantons est
       facultative. Les cantons mis en place dans un sch&eacute;ma
@@ -42,7 +44,7 @@
       principale utilisation des cantons est de faciliter la
       signalisation, mais les cantons peuvent &ecirc;tre
       utilis&eacute;s pour contr&ocirc;ler sur le r&eacute;seau
-      d'autres fonctions d'animations.
+      d'autres fonctions d'animations.</p>
 
       <p>Si un nom de canton est entr&eacute; dans le champ
       <b>Canton: Nom</b> de la barre d'outil avant l'ajout d'un
@@ -243,7 +245,7 @@
       Courante:</b>. Lorsque les panneaux sont enregistr&eacute;s
       sur le disque, seuls les cantons dont le compteur
       d'utilisation est sup&eacute;rieur &agrave; 0 sont
-      sauv&eacute;s.</p><!--#include virtual="/Footer.shtml" -->
+      sauv&eacute;s.</p><!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Coordinate Edit Help</title>
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Coordinate Edit Help">
@@ -23,14 +23,16 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>L'&Eacute;diteur de Propri&eacute;t&eacute;s
-      &Eacute;tiquette et Ic&ocirc;ne</h1>Cet &eacute;diteur vous
+      &Eacute;tiquette et Ic&ocirc;ne</h1>
+
+      <p>Cet &eacute;diteur vous
       permet de modifier les propri&eacute;t&eacute;s des
-      &eacute;l&eacute;ments sur votre panneau.
+      &eacute;l&eacute;ments sur votre panneau.</p>
 
       <h2>R&eacute;glage des Coordonn&eacute;es X et Y</h2>Il y a
       deux zones de texte o&ugrave; vous pouvez
@@ -85,7 +87,7 @@
       (Orthogonal).
 
       <h2>Modification du texte</h2>Entrez le texte souhait&eacute;
-      dans la zone de texte. <!--#include virtual="/Footer.shtml" -->
+      dans la zone de texte. <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

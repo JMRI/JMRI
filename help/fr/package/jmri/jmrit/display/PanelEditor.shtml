@@ -7,18 +7,20 @@
   <title>JMRI: L'Éditeur de Panneaux</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>L'Éditeur de Panneaux</h1>
+
       <img src="PanelEditor.png" align="right" alt="">
       <p>Un panneau est un ensemble d'icônes représentant les différentes composantes d'un réseau.
       Certaines des icônes disponibles dans JMRI comprennent les aiguillages, signaux, et capteurs.
@@ -288,7 +290,7 @@
       "../../../../html/doc/Technical/Names.shtml">noms de système</a>. Par exemple, si la seconde
       connexion est pour un système LocoNet, référerez vous au aiguillage LocoNet LTnn; ou un
       capteur LocoNet LSnn, etc (ou nn est le numéro de l'élément)</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

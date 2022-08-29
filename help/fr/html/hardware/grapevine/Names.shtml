@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -170,7 +170,7 @@ d&#233;finir une cible de signal en utilisant nom syst&#232;me Grapevine GH1203.
 Pour plus d'informations sur le mat&#233;riel Grapevine consulter le
 <a href="http://www.protrak.cc"> site web ProTrak </a>.
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

@@ -1,27 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Blorec Herv&#233; 2013-09-27-->
 
   <title>JMRI: Getting Started with Scripting</title>
-    <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 <h2>JMRI: Mise en Route avec des Scripts</h2>
@@ -92,25 +82,25 @@ print 1+2
 
 &gt;&gt;&gt; turnouts.provideTurnout("1").getCommandedState()
 1
-
-</pre>Notez que ce n'est qu'en ex&eacute;cutant une version
-compl&egrave;te de l'application JMRI; toutes les fen&ecirc;tres et
-les menus sont pr&eacute;sent&eacute;s de la m&ecirc;me
-fa&ccedil;on, la configuration est faite par le panneau des
-pr&eacute;f&eacute;rences, etc. que la connexion Jython ajoute une
-ligne de commande &agrave; partir de laquelle vous pouvez manipuler
-directement les choses.<br>
+</pre>
+      <p>Notez que ce n'est qu'en ex&eacute;cutant une version
+      compl&egrave;te de l'application JMRI; toutes les fen&ecirc;tres et
+      les menus sont pr&eacute;sent&eacute;s de la m&ecirc;me
+      fa&ccedil;on, la configuration est faite par le panneau des
+      pr&eacute;f&eacute;rences, etc. que la connexion Jython ajoute une
+      ligne de commande &agrave; partir de laquelle vous pouvez manipuler
+      directement les choses.<br>
       Cela montre aussi certaines des simplifications que Jython et
       le langage Python apporte &agrave; l'usage du code JMRI. La
-      fonction membre de Java:
+      fonction membre de Java:</p>
       <pre>
 turnout.SetCommandedState (jmri.Turnout.CLOSED);
 </pre>peut aussi &ecirc;tre exprim&eacute;e en Jython:
       <pre>
 turnout.commandedState = CLOSED  # DROIT
-</pre><br>
-      Il en r&eacute;sulte un code beaucoup plus facile &agrave;
-      lire.
+</pre>
+      <p>Il en r&eacute;sulte un code beaucoup plus facile &agrave;
+      lire.</p>
 
       <p>Il ya beaucoup de livres utiles et de didacticiels Python
       en ligne. Pour plus d'informations sur le langage Jython et
@@ -121,15 +111,17 @@ turnout.commandedState = CLOSED  # DROIT
       "http://www.jython.org/">site web jython.org</a> est
       &eacute;galement tr&egrave;s utile.</p>
 
-      <h3>Acc&egrave;s &agrave; JMRI</h3>JMRI utilise longuement le
+      <h3>Acc&egrave;s &agrave; JMRI</h3>
+      <p>JMRI utilise longuement le
       mod&egrave;le-type pour obtenir l'acc&egrave;s aux objets. En
-      Java il en r&eacute;sulte un code verbeux comme a
+      Java il en r&eacute;sulte un code verbeux comme a</p>
       <pre>
-    L'aiguillage t2 = InstanceManager.turnoutManagerInstance () newTurnout ("LT2", "turnout 2.");
-    t2.SetCommandedState (Turnout.THROWN)
-</pre>Jython simplifie ceci, en nous permettant de fournir des
-variables utiles, et par le raccourcissement de certaines
-m&eacute;thodes d'appels
+Turnout t2 = InstanceManager.turnoutManagerInstance() newTurnout ("LT2", "turnout 2.");
+t2.SetCommandedState(Turnout.THROWN);
+</pre>
+      <p>Jython simplifie ceci, en nous permettant de fournir des
+      variables utiles, et par le raccourcissement de certaines
+      m&eacute;thodes d'appels.</p>
 
       <p>Pour avoir acc&egrave;s &agrave; des gestionnaires Cible
       Signal, capteur et aiguillage et de l'objet CommandStation,
@@ -163,32 +155,35 @@ m&eacute;thodes d'appels
         <li>arr&ecirc;t (gestionnaire d'arr&ecirc;t en cours)</li>
 
         <li>audio/</li>
-      </ul>Ceux-ci peuvent ensuite &ecirc;tre
-      r&eacute;f&eacute;renc&eacute;es directement dans Jython
-      comme a
-      <pre>
-    t2 = turnouts.provideTurnout ("12");
-   
-    dcc.sendPacket (new byte [] {0x12, 0x32, 0x4E}, 5)
-</pre>Notez que la variable T2 n'a pas besoin d'&ecirc;tre
-d&eacute;clar&eacute;e.
+      </ul>
+
+      <p>Ceux-ci peuvent ensuite &ecirc;tre r&eacute;f&eacute;renc&eacute;es directement dans Jython
+      comme a</p>
+<pre>
+t2 = turnouts.provideTurnout ("12");
+
+dcc.sendPacket (new byte [] {0x12, 0x32, 0x4E}, 5)
+</pre>
+      <p>Notez que la variable T2 n'a pas besoin d'&ecirc;tre
+      d&eacute;clar&eacute;e.</p>
 
       <p>Jython fournit un raccourci pour les param&egrave;tres qui
       ont &eacute;t&eacute; d&eacute;finis avec les m&eacute;thodes
       obtenir et d&eacute;finir comme Java-Bean:</p>
-      <pre>
-    t2.SetCommandedState (Turnout.THROWN)
-</pre>peut &ecirc;tre &eacute;crite comme
-      <pre>
-    t2.commandedState = THROWN #(DEVIE)
-</pre>O&ugrave; l'attribution invoque en r&eacute;alit&eacute; la
-m&eacute;thode d'ensemble. Notez &eacute;galement que THROWN a
-&eacute;t&eacute; d&eacute;fini lors de l'ex&eacute;cution du
-script Python au d&eacute;marrage, CLOSED, ACTIVE, INACTIVE, RED,
-YELLOW et GREEN sont &eacute;galement d&eacute;finis. (Les
-raccourcis sont tous d&eacute;finis dans un fichier appel&eacute;
-"jmri_defaults.py" que vous pouvez trouver dans le
-r&eacute;pertoire "jython" de la distribution)
+<pre>
+t2.SetCommandedState (Turnout.THROWN)
+</pre> peut &ecirc;tre &eacute;crite comme
+<pre>
+t2.commandedState = THROWN #(DEVIE)
+</pre>
+      <p>O&ugrave; l'attribution invoque en r&eacute;alit&eacute; la
+      m&eacute;thode d'ensemble. Notez &eacute;galement que THROWN a
+      &eacute;t&eacute; d&eacute;fini lors de l'ex&eacute;cution du
+      script Python au d&eacute;marrage, CLOSED, ACTIVE, INACTIVE, RED,
+      YELLOW et GREEN sont &eacute;galement d&eacute;finis. (Les
+      raccourcis sont tous d&eacute;finis dans un fichier appel&eacute;
+      "jmri_defaults.py" que vous pouvez trouver dans le
+      r&eacute;pertoire "jython" de la distribution)</p>
 
       <p>Un m&eacute;canisme similaire peut &ecirc;tre
       utilis&eacute; pour v&eacute;rifier l'&eacute;tat de
@@ -198,29 +193,31 @@ r&eacute;pertoire "jython" de la distribution)
 1
 &gt; Sensors.provideSensor&gt;&gt; print ("3"). KnownState == INACTIVE
 0
-
-</pre>Notez que Jython utilise des "1" pour indiquer vrai, et "0"
-pour indiquer faux, de sorte que capteur 3 est actuellement actif
-dans cet exemple. Vous pouvez &eacute;galement utiliser les
-symboles "true" et "false", respectivement.
+</pre>
+      <p>Notez que Jython utilise des "1" pour indiquer vrai, et "0"
+      pour indiquer faux, de sorte que capteur 3 est actuellement actif
+      dans cet exemple. Vous pouvez &eacute;galement utiliser les
+      symboles "true" et "false", respectivement.</p>
 
       <p>Vous pouvez appeler directement des m&eacute;thodes plus
       compliqu&eacute;es, par exemple envoyer un paquet DCC sur les
       rails, vous tapez:</p>
       <pre>
-    dcc.sendPacket ([0x01, 0x03, 0xbb], 4)
-</pre>Cela envoie ce paquet de trois octets quatre fois, puis
-retourne &agrave; la ligne de commande.
+dcc.sendPacket ([0x01, 0x03, 0xbb], 4)
+</pre>
+      <p>Cela envoie ce paquet de trois octets quatre fois, puis
+      retourne &agrave; la ligne de commande.</p>
 
       <h3>Les fichiers de script, les auditeurs et les
-      classes</h3>Scripting ne serait pas tr&egrave;s
+      classes</h3>
+      <p>Scripting ne serait pas tr&egrave;s
       int&eacute;ressant si vous aviez &agrave; taper les commandes
       &agrave; chaque fois. Ainsi, vous pouvez mettre des scripts
       dans un fichier texte et les ex&eacute;cuter en
       s&eacute;lectionnant l'&eacute;l&eacute;ment de menu
       "Ex&eacute;cuter le script ..." , ou en utilisant les
       "Pr&eacute;f&eacute;rences avanc&eacute;es" pour
-      ex&eacute;cuter le fichier script et le programme commence.
+      ex&eacute;cuter le fichier script et le programme commence.</p>
 
       <p>Bien que les &eacute;nonc&eacute;es ci-dessus que nous
       avons montr&eacute;es &eacute;taient si rapides que vous ne
@@ -263,8 +260,9 @@ retourne &agrave; la ligne de commande.
       Mais ne vous souciez pas de cela jusqu'&agrave; ce que vous
       ayez eu plus d'exp&eacute;rience avec les scripts.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

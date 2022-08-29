@@ -9,9 +9,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: R&eacute;glage des options</h1>
 
@@ -36,7 +36,7 @@
       <p>Ceci est la page d'aide
       apps.AppConfixPanelErrorPage.shtml</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

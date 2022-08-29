@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
 	<!--#include virtual="../Sidebar.shtml" -->
 	<div id="mainContent">
@@ -98,7 +98,7 @@ LED verte clignote toujours pour indiquer qu'il est correct (que la boucle est b
 Plus d'informations sur le mat&#233;riel Acela peut &#234;tre consult&#233;e sur le
 <a href="http://www.cti-electronics.com/app_sw.htm">site  web CTI</a>.
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

@@ -43,8 +43,11 @@
       also contain any <a href=
       "http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a> you
       want to apply to all classes in the package. If you don't have any annotations you want to
-      include, please include <span class="wide">
-      <code>@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})</code></span> which helps some
+      include, please include</p>
+      <div class="wide">
+        <code>@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})</code>
+      </div>
+      <p>which helps some
       of our build systems minimize recompilation. (For more on that annotation, see <a href=
 "https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/3.1.7/edu/umd/cs/findbugs/annotations/DefaultAnnotation.html">
       here</a>)</p>
@@ -202,19 +205,21 @@ public void methodName() {
       embedded in it</a>.</p>
 
       <p>You can also define custom UML diagrams using <a href="http://plantuml.com">PlantUML</a>.
-      For an example of the source syntax to define state and sequence diagrams, see the
-      <span class="wide"><a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">java/src/jmri/jmrix/lenz/XNetProgrammer.java</a></span>
-      file. The resulting diagrams are visible in its <a href=
+      For an example of the source syntax to define state and sequence diagrams, see the</p>
+      <div class="wide"><code>
+        <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/lenz/XNetProgrammer.java#L32">java/src/jmri/jmrix/lenz/XNetProgrammer.java</a>
+        </code>
+      </div>
+      <p>file. The resulting diagrams are visible in its <a href=
       "https://jmri.org/JavaDoc/doc/jmri/jmrix/lenz/XNetProgrammer.html">Javadoc output</a>.</p>
 
-      <p>PlantUml can also be used for standalone diagrams, c.f. <a href=
+      <p>PlantUML can also be used for standalone diagrams, c.f. <a href=
       "SystemStructure.shtml">the connection sequence diagram</a>. To do this, create a .txt file,
       and then manually process with</p>
-
-      <div class="wide"><pre>
- java -jar lib/plantuml.jar help/en/my/file/path/name
-      </pre></div>
+      <div class="wide">
+        <code>java -jar lib/plantuml.jar help/en/my/file/path/name</code>
+      </div>
       <p>A .png with the diagram will be created alongside the source.</p>
 
       <h2>Processing</h2>

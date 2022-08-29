@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -77,7 +77,7 @@
       <a href="XmlEditors.shtml">des &eacute;diteurs</a> , ainsi
       que quelques commentaires sur chacun d'eux .</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
   <script src="/js/main.js"></script>
