@@ -16,7 +16,7 @@
       <h1>Envoi Message SPROG</h1>
 
       <p>Ceci est la page d'aide
-      help/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame</p>
+      help/jmri/jmrix/sprog/packetgen/ SprogPacketGenFrame</p>
 
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>

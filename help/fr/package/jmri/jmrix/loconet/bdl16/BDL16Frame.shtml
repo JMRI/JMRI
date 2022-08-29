@@ -23,18 +23,18 @@ align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
 
       <p>L'outil de programmation JMRI BDL168 vous permet de
       configurer les options internes d'un BDL168 directement
-      ? partir de votre ordinateur.</p>
+      à partir de votre ordinateur.</p>
 
-      <p>Pour ouvrir cet outil ? partir de la page de
-      d?marrage JMRI s?lectionnez
+      <p>Pour ouvrir cet outil à partir de la page de
+      démarrage JMRI sélectionnez
       l'onglet LocoNet puis trouver l'outil sur la liste
-      d?roulante.</p>
+      déroulante.</p>
 
       <p>Pour l'utiliser, vous mettez l'adresse d'une carte BDL168
       dans le champ texte et cliquez sur "Lire BDL168". L'outil
-      relira l'?tat actuel des
-      diff?rentes options et d?finira les
-      cases ? cocher pour correspondre ? leurs
+      relira l'état actuel des
+      différentes options et définira les
+      cases à cocher pour correspondre à leurs
       valeurs actuelles.</p>
 
       <p>Vous pouvez alors, si vous le souhaitez, modifier les
@@ -42,9 +42,9 @@ align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
       modifications permanentes.</p>
 
       <h3>Limitations</h3>
-      <p>En raison de la fa?on dont
+      <p>En raison de la façon dont
       fonctionne la carte BDL168, cet outil ne peut pas changer
-      l'adresse de base de l'unit?.</p>
+      l'adresse de base de l'unité.</p>
 
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>

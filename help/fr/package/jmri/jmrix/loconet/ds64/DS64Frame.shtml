@@ -38,9 +38,10 @@
       cases et cliquez sur &quot;&Eacute;crire dans DS64" pour
       rendre vos modifications permanentes.</p>
 
-      <h3>Limitations</h3>En raison de la fa&ccedil;on dont
+      <h3>Limitations</h3>
+      <p>En raison de la fa&ccedil;on dont
       fonctionne la carte DS64, cet outil ne peut pas changer
-      l&apos;adresse de base de l&apos;unit&eacute;.
+      l&apos;adresse de base de l&apos;unit&eacute;.</p>
 
       <p>A l'heure actuelle, les itin&eacute;raires DS64 ne
       peuvent pas &ecirc;tre programm&eacute; par cet

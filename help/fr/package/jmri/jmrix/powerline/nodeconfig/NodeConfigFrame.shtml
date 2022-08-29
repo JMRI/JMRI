@@ -16,13 +16,14 @@
     <div id="mainContent" class="no-sidebar">
 
       <h1>Configurer les périphériques
-      Powerline</h1>Ceci est la page d'aide
-      help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame
+      Powerline</h1>
+      <p>Ceci est la page d'aide
+      help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame</p>
 
       <p>Les Appareils Powerline ont besoin d'être
       configurés avant les travaux de saisie.</p>
 
-      <p>Le logiciel de Noeuds vient dans ...
+      <p>Le logiciel de Nœuds vient dans ...
       variétés distinctes:</p>
 
       <dl>

@@ -17,11 +17,12 @@
 
       <h1>OpenLCB: Parcourir la Configuration</h1>
 
-      <p>L'outil "Configurer Nœuds" OpenLCB vous permet de voir directement les noeuds de votre
+      <p>L'outil "Configurer Nœuds" OpenLCB vous permet de voir directement les nœuds de votre
       réseau OpenLCB et de faire quelques manipulations. Il fonctionne avec votre L'installation
       OpenLCB pour recueillir les informations que vous avez besoin pour exécuter l'outil, il n'y a
       pas de fichiers locaux de configuration sur votre ordinateur.</p>
-      <table summary="">
+
+      <table>
         <tr>
           <td>La première fois que vous ouvrez la fenêtre de l'outil, il montre un arbre des Nœuds
           OpenLCB accessibles. Pour la plupart des installations, il s'agit juste la liste de
@@ -31,7 +32,7 @@
         </tr>
 
         <tr>
-          <td>Vous pouvez cliquer pour ouvrir chaque noeud et en savoir plus sur lui.</td>
+          <td>Vous pouvez cliquer pour ouvrir chaque nœud et en savoir plus sur lui.</td>
           <td><a href="OpenNodeInfo.png"><img src="OpenNodeInfo.png" alt=
           "Après avoir cliquer pour ouvrir"></a>
           </td>
@@ -45,10 +46,10 @@
         </tr>
 
         <tr>
-          <td>Si vous cliquez sur la rubrique "CDI" , pour Configuration Description Information,
+          <td>Si vous cliquez sur la rubrique "CDI", pour Configuration Description Information,
           vous aurez un outil de configuration DecoderPro - comme pour le nœud. Notez que ceci est
-          entièrement pris à partir du noeud OpenLCB lui-même. Il n'est pas nécessaire de trouver
-          un fichier de configuration décodeur, sélectionner le type de carte à droite , etc</td>
+          entièrement pris à partir du nœud OpenLCB lui-même. Il n'est pas nécessaire de trouver
+          un fichier de configuration décodeur, sélectionner le type de carte à droite, etc</td>
           <td><a href="StartConfigWindow.png"><img src="StartConfigWindow.png" alt=""></a>
           </td>
         </tr>

@@ -71,11 +71,12 @@
         passe.</dd>
       </dl>
 
-      <h2>Journalisation dans un fichier</h2>Parfois, il est utile
+      <h2>Journalisation dans un fichier</h2>
+      <p>Parfois, il est utile
       de capturer ce qui se passe. Par exemple, vous pouvez
       rencontrer un bug (!!), et que vous voulez envoyer une copie
       de ce qui se arrive aux gens qui tentent d'y
-      rem&eacute;dier.
+      rem&eacute;dier.</p>
 
       <p>De petites quantit&eacute;s de donn&eacute;es
       peuvent &ecirc;tre copi&eacute;es &agrave;
