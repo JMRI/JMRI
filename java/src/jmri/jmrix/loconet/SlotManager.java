@@ -473,7 +473,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     void checkLoconetProtocol(LocoNetMessage m , int slot) {
         // detect protocol if not yet set
         if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
-            if (slotMap.get(slot).slotType != SlotType.SYSTEM || slot == 0 ) {
+            if (_slots[slot].getSlotType() != SlotType.SYSTEM || slot == 0 ) {
             if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
                     (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
                 if ((m.getElement(7) & 0b01000000) == 0b01000000) {
