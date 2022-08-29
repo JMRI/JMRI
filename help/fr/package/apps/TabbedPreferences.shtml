@@ -8,6 +8,7 @@
   <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
@@ -19,10 +20,7 @@
       application JMRI.</p>
       <p>L'écran est divisé en deux sections : sur le côté gauche se trouve une liste des groupes
       de préférences qui peuvent être définis. En cliquant sur chaque élément, la partie de droite
-      se remplit des différentes options qui peuvent être configurées pour cet onglet. <a href=
-      "../../html/setup/images/PrefsConnections_fr.png"><img src=
-      "../../html/setup/images/PrefsConnections_fr.png" height="195" width="425" align="right" alt=
-      ""></a></p>
+      se remplit des différentes options qui peuvent être configurées pour cet onglet.</p>
 
       <p><a href="#Connexion">Connexions</a><br>
       <a href="#Defaults">Par Défauts</a><br>
@@ -49,11 +47,13 @@
       "Sauvegarder" lorsque vous quittez cette fenêtre. Les modifications apportées aux Préférences
       ne prendront effet que lorsque le programme est arrêté et redémarré. Le programme vous
       invitera à le faire après avoir enregistré les Préférences.</p>
+
       <a name="Connexion" id="Connexion"></a>
       <h2>Connexions</h2>
       Vous pouvez sélectionner n'importe laquelle des diverses connexions de Réseau JMRI.
-      <p><a href="images/Ops_SetConnection214.png"><img src="." height="222" width="423" align=
-      "right" alt="JMRI v2.14 Connection Prefs tab"></a> Chaque connexion a son propre onglet.
+      <p><a href="../../html/setup/images/PrefsConnexions_fr.png"><img src=
+      "../../html/setup/images/PrefsConnexions_fr.png" height="195" width="425" align="right" alt=
+      ""></a>Chaque connexion a son propre onglet.
       Pour commencer, il faut d'abord sélectionnez d'abord le fabricant de votre système DCC, puis
       le type de connexion que vous utilisez. Vous verrez alors apparaître une série de paramètres
       les plus courants qui doivent être définis. Si vous avez besoin de modifier certains des
@@ -217,8 +217,8 @@
         fenêtre de la console système qu'elle apparaisse toujours au même endroit et à la même
         taille.</dt>
       </dl>
-      <a href="images/PrefsMsgPane421.png"><img src="images/PrefsMsgPane421.png" height="214"
-      width="375" align="right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
+      <a href="images/PrefsMessages.png"><img src="images/PrefsMessages.png" height="193"
+      width="479" align="right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
       "Messages"></a>
 
       <h2>Messages</h2>
@@ -564,10 +564,8 @@
       <p>Traduction 2021-03-26</p>
 
       <!--#include virtual="/Footer" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
