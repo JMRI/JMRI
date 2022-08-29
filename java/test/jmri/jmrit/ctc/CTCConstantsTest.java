@@ -1,6 +1,5 @@
 package jmri.jmrit.ctc;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /*
@@ -10,9 +9,12 @@ import org.junit.jupiter.api.*;
 */
 public class CTCConstantsTest {
 
+    // no testCtor as tested class only supplies static methods
+
     @Test
-    public void testCtor() {
-        Assert.assertNotNull("CTCConstants Constructor Return", new CTCConstants());
+    public void testConstants() {
+        Assertions.assertEquals(0, CTCConstants.LEFTTRAFFIC );
+        Assertions.assertEquals(2, CTCConstants.RIGHTTRAFFIC );
     }
 
     @BeforeEach
