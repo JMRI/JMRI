@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -155,7 +155,7 @@ Bouton "Enregistrer" sur la
 <p>Des informations compl&#233;mentaires sur le mat&#233;riel  peuvent &#234;tre trouv&#233;es sur le 
 <a href="http://www.cti-electronics.com/app_sw.htm">Site web CTI</a>.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

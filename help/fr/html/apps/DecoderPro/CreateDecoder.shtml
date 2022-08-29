@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -36,15 +36,15 @@ existant. Dans cette section nous allons utiliser cette m&#233;thode.</p>
 <dd class="first">
 <p>Bien que vous puissiez appeler votre fichier comme bon vous semble, il travaillera
 mieux si vous utilisez les m&#234;mes conventions que les fichiers fournis.
-C'est <TT>"manufacturer name"_"decoder family".xml</TT>, par exemple:
-<TT>Digitrax_1x2.xml</TT>et <TT>Atlas_DualMode.xml</TT></p>
+C'est <code>"manufacturer name"_"decoder family".xml</code>, par exemple:
+<code>Digitrax_1x2.xml</code>et <code>Atlas_DualMode.xml</code></p>
 
 <p>Pour les fichiers fournis, nous utilisons la m&#234;me casse, etc,
 que celles que les fabricants de d&#233;codeurs utilisent dans leurs documentations. </p>
 
-<p>Ce nouveau fichier prendra place dans le sous-r&#233;pertoire <TT>decoders</TT> dans le
-r&#233;pertoire preferences <TT>JMRI</TT>  ainsi le programme pourra le trouver. Le
-fichier<TT>DecoderProConfig2.xml</TT> se trouve dans le r&#233;pertoire preferences, ainsi
+<p>Ce nouveau fichier prendra place dans le sous-r&#233;pertoire <code>decoders</code> dans le
+r&#233;pertoire preferences <code>JMRI</code>  ainsi le programme pourra le trouver. Le
+fichier<code>DecoderProConfig2.xml</code> se trouve dans le r&#233;pertoire preferences, ainsi
 vous pouvez chercher ici pour localiser le fichier.
 (Voir la <a href="Files.shtml#location"><em> page de configuration des fichiers</em></a>
 pour plus de d&#233;tails
@@ -362,7 +362,7 @@ d&#233;codeurs disponibles est construite .</p>
  <p>Pour des informations plus avanc&#233;es sur le contenu des fichiers, svp voir la page
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>.
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
 </div>  <!-- close #mBody -->
 <script src="/js/main.js"></script>

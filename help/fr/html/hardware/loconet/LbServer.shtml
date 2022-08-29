@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
   <div id="mainContent">

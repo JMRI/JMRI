@@ -7,17 +7,18 @@
   <title>JMRI: Adding/Editing Lights</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Add Edit"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Ajouter/éditer Lumières</h1>
       <a name="addLight" id="addLight"></a>
       <h2>Ajout d'une Nouvelle Lumière</h2>
@@ -255,7 +256,7 @@
       directement. Tenter de définir l'<strong>Intensité Cible</strong> en dehors de l'intervalle
       <strong>Intensité Minimum à l'Intensité Maximum</strong> se traduira par l'<strong>Intensité
       Cible</strong> fixée à la limite pertinente.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -1,33 +1,26 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2011-01-09-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2011-01-09-->
 <head>
-    <title>Menus R&#233;gulateur</title>
-    <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
-	<meta name="Description" content="Throttle documentation for JMRI project">
-	<meta name="Keywords" content="JMRI">
+  <title>Menus R&#233;gulateur</title>
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+	<meta name="description" content="Throttle documentation for JMRI project">
 	<meta name="author" content="Lionel Jeanson">
-	<meta name="language" content="fr">
-    <!-- Style -->
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-    <link rel="icon" href="/images/jmri.ico" type="image/png">
-    <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>Menus Fen&#234;tre R&#233;gulateur</h1>
-<h2><a name="FileMenu">Fichier menu</a></h2>
+      <h1>Menus Fen&#234;tre R&#233;gulateur</h1>
+      <h2><a name="FileMenu">Fichier menu</a></h2>
 
-<img src="images/ThrottlesMenu3.png" alt="" ><br >
+<img src="images/ThrottlesMenu3.png" alt="" ><br>
+
 <h3>Charger un r&#233;gulateur</h3>
 
 Cette entr&#233;e de menu  permet de charger une configuration de la fen&#234;tre r&#233;gulateur dans la
@@ -55,7 +48,7 @@ Boutons de fonction seront enregistr&#233;es dans ce fichier.
 
 <h2><a name="EditMenu">Modifier le menu </a> </h2>
 
-<img src="images/ThrottlesMenu1.png" alt=""> <br>
+<img src="images/ThrottlesMenu1.png" alt="">
 
 <h3> Propri&#233;t&#233;s du Cadre</h3>
 
@@ -99,7 +92,7 @@ erreur, cette option de menu vous permet de restaurer la fen&#234;tre.</p>
 
 <p>Une autre fa&#231;on d'utiliser cette option, c'est quand l'utilisation des fonctions du
 r&#233;gulateur
-pour les d&#233;codeurs qui ne sont <u> pas </u> associ&#233;s &#224; une machine (comme une 
+pour les d&#233;codeurs qui ne sont <em>pas</em> associ&#233;s &#224; une machine (comme une
 voiture voyageur allum&#233;e ou fourgon de queue ou une unit&#233; de Fred). Dans ces cas, l'&#233;cran 
 peut &#234;tre sauv&#233; en &#233;tant en mesure de d&#233;sactiver (ou fermer) le
 Panneau de Commande. Soyez un peu cr&#233;atif avec le redimensionnement de la fen&#234;tre, et vous
@@ -107,14 +100,16 @@ pourrez avoir plusieurs de ces fen&#234;tres de r&#233;gulateur dans la m&#234;m
 un fen&#234;tre unique compl&#232;te de r&#233;gulateurs.</p>
 
 <h3> Voir tous les boutons de fonction -! Fonctionnalit&#233; d&#233;m&#233;nag&#233; &#224;
-    "Bouton R&#233;initialisation" entr&#233;e dans menu "Edition" </h3>
+    "Bouton R&#233;initialisation" entr&#233;e dans menu "Edition"</h3>
 
 <h3>Obtenez tous les composants de r&#233;gulateur dans les limites actuelles</h3>
 
-Assurez-vous que toutes les fen&#234;tres int&#233;rieures du R&#233;gulateur actuel sont &#224; l'int&#233;rieur des limites de la Fen&#234;tre du R&#233;gulateur. <br>
+<p>Assurez-vous que toutes les fen&#234;tres int&#233;rieures du R&#233;gulateur actuel sont &#224; l'int&#233;rieur
+  des limites de la Fen&#234;tre du R&#233;gulateur.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

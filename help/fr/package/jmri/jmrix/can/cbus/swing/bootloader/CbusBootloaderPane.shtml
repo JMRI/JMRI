@@ -7,11 +7,12 @@
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content="JMRI CBUS Bootloader"><!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI : Outil bootloader CBUS®</h1>
 
       <p>L'outil bootloader vous permet de mettre à jour le firmware dans un nœud CBUS
@@ -56,7 +57,7 @@
       <p>CBUS est une marque déposée du Dr Michael Bolton</p>
       .
       <p>Traduction 2021-03-23</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

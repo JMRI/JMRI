@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -59,7 +59,7 @@ communication-rs232-basics/#SerialTerm</a></li>
 <h2>Credits</h2>
 <p> Les informations sur cette page ont &#233;t&#233; fournies par Dick Bronson et Walter Thompson.</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

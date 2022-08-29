@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -49,7 +49,7 @@ Cliquer sur "Close" fermerera l'&#233;cran.
 Paul Bender <br>
 paul.bender @ acm.org
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

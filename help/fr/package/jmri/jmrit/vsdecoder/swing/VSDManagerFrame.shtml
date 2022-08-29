@@ -9,7 +9,7 @@
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -21,11 +21,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>D&eacute;codeur Son Virtuel JMRI</h1>Ceci est la page de
+      <h1>D&eacute;codeur Son Virtuel JMRI</h1>
+
+      <p>Ceci est la page de
       r&eacute;f&eacute;rence rapide pour l'outil D&eacute;codeur
       Son Virtuel JMRI.<br>
       <br>
@@ -47,8 +49,8 @@
       Devez avoir &eacute;galement le syst&egrave;me audio OpenAL
       ou JavaSound install&eacute; sur votre votre ordinateur. Voir
       <a href="https://jmri.org/help/en/html/tools/Audio.shtml">les
-      pages d'aides Audio JMRI</a>pour plus de d&eacute;tails .<br>
-      <hr>
+      pages d'aides Audio JMRI</a>pour plus de d&eacute;tails.
+      </p>
 
       <h2>Fen&ecirc;tre Gestionnaire D&eacute;codeurSV</h2>
 
@@ -311,7 +313,7 @@
                 <br>
                 <a id="prefs" name="prefs">( Ceci est la page
                 d'aide de jmri.jmrit.vsdecoder.VSDecoderFrame ) 
-                <!--#include virtual="/Footer.shtml"--></a>
+                <!--#include virtual="/Footer_fr.shtml"--></a>
               </div>
             </div>
           </dd>

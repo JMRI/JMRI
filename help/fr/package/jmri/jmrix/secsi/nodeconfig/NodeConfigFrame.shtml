@@ -12,7 +12,7 @@
   <meta name="keywords" content=
   "JMRI help configure grapevine node">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,9 +24,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Configurer les N&Aring;"uds SECSI.</h1>Ceci est la page
       d'aide: help/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame
@@ -59,7 +59,7 @@
         probl&Atilde;&uml;mes, s'il vous pla&Atilde;&reg;t
         permettez-nous maintenant d'am&Atilde;&copy;liorer le
         support pour ces cartes.</dd>
-      </dl><!--#include virtual="/Footer.shtml" -->
+      </dl><!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

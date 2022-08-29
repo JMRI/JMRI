@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -20,7 +20,7 @@
       <p>JMRI peut se connecter &aacute;  un syst&egrave;me de noeuds TracTronics SECSI.</p>
       <p>La lettre syst&egrave;me est "V", ainsi par exemple le premier capteur sur le noeud 5 serait VS5001.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

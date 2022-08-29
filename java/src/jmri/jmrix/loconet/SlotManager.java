@@ -57,7 +57,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
 
-    /**
+
+    public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests
+
+    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
+
+     /**
      * a Map of the CS slots.
      */
     public List<SlotMapEntry> slotMap = new ArrayList<SlotMapEntry>();
@@ -468,7 +473,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     void checkLoconetProtocol(LocoNetMessage m , int slot) {
         // detect protocol if not yet set
         if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
-            if (slotMap.get(slot).slotType != SlotType.SYSTEM || slot == 0 ) {
+            if (_slots[slot].getSlotType() != SlotType.SYSTEM || slot == 0 ) {
             if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
                     (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
                 if ((m.getElement(7) & 0b01000000) == 0b01000000) {
@@ -945,7 +950,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Scedule a delayed slot read.
+     * Schedule a delayed slot read.
      * @param slotNo - the slot.
      * @param delay - delay in msecs.
      */
@@ -1596,9 +1601,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param status The error code, if any
      */
     protected void sendProgrammingReply(ProgListener p, int value, int status) {
-        int delay = 20;  // value in service mode
+        int delay = serviceModeReplyDelay;  // value in service mode
         if (!mServiceMode) {
-            delay = 100;  // value in ops mode
+            delay = opsModeReplyDelay;  // value in ops mode
         }
 
         // delay and run on GUI thread

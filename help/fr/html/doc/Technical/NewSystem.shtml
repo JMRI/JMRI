@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -270,7 +270,7 @@ obtenir avec l'habituel m&#233;canisme  option1/option2/option3. Les outils disp
 
 </div><!-- closes #list-->
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

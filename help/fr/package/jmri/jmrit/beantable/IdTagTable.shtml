@@ -8,7 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Id Tag Table Help</title>
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <meta name="author" content="Matthew Harris">
   <meta name="keywords" content="JMRI help Id Tag Table">
@@ -23,13 +23,15 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Le Tableau &eacute;tiquette ID</h1>Vous pouvez utiliser
+      <h1>Le Tableau &eacute;tiquette ID</h1>
+      
+      <p>Vous pouvez utiliser
       le Tableau &eacute;tiquette ID pour regarder le contenu des
-      objets IdTag JMRI.
+      objets IdTag JMRI.</p>
 
       <p>Notez que vous pouvez trier le tableau par chacune des
       colonnes, cliquez simplement sur la t&ecirc;te de
@@ -44,7 +46,7 @@
       d'identification, consultez le <a href=
       "../../../../html/tools/IdTags.shtml">page d'aide IdTag</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

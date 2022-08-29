@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -68,7 +68,7 @@ vous devez configurer &#224; la fois JMRI et le Serveur Terminal, et de faire
 <p>D&#233;marrez JMRI. Si tout est OK, l'application va d&#233;marrer et vous montrer
 	qu'il est correctement connect&#233;</p>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

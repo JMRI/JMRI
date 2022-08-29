@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -209,7 +209,7 @@ apr&#232;s un court moment.Il y a une
 <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
 qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

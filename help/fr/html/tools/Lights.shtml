@@ -1,39 +1,31 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; le 2017-01-02 -->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2017-01-02 -->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Light Documentation</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-	<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI:Documentation Lumi&#232;re</h1>
+      <h1>JMRI:Documentation Lumi&#232;re</h1>
 
 <h2>Qu'est ce que les Lumi&#232;res?</h2>
 
 <p>Les Lumi&#232;res sont des bits de sortie num&#233;rique qui fonctionnent comme des interrupteurs marche/arr&#234;t. Les Lumi&#232;res
-ont &#233;t&#233; cr&#233;&#233;es pour fournir un contr&#244;le ais&#233; des voyants du panneau de commande et l'&#233;clairage des paysages
-. Les Lumi&#232;res peuvent aussi &#234;tre utilis&#233;es &#224; des fins qui n&#233;cessitent une commutation marche/arr&#234;t
-.Les Lumi&#232;re peuvent &#234;tre utilis&#233;es, par exemple, pour activer un dispositif d&#233;coupleur &#233;lectromagn&#233;tique
- pour un temps pr&#233;-d&#233;termin&#233; en r&#233;ponse &#224; un bouton du panneau de contr&#244;le.
+ont &#233;t&#233; cr&#233;&#233;es pour fournir un contr&#244;le ais&#233; des voyants du panneau de commande et l'&#233;clairage des paysages.
+Les Lumi&#232;res peuvent aussi &#234;tre utilis&#233;es &#224; des fins qui n&#233;cessitent une commutation marche/arr&#234;t.
+Les Lumi&#232;re peuvent &#234;tre utilis&#233;es, par exemple, pour activer un dispositif d&#233;coupleur
+&#233;lectromagn&#233;tique
+pour un temps pr&#233;-d&#233;termin&#233; en r&#233;ponse &#224; un bouton du panneau de contr&#244;le.
 Initialement d&#233;velopp&#233; pour une utilisation avec le C/MRI, les Lumi&#232;res actuellement sont &#233;galement
 mises en oeuvre sur LocoNet (Digitrax) et les syst&#232;mes Oaktree et CBUS&reg; MERG.</p>
 <p>Les  Lumi&#232;res partagent les bits de sortie num&#233;rique disponibles avec les Aiguillages. Une
@@ -52,8 +44,7 @@ l'Horlogechangent d'une mani&#232;re sp&#233;cifi&#233;e par l'utilisateur, la L
 <a href="Logix.shtml">Logix</a>, si plus de logique complexe de contr&#244;le est n&#233;cessaire.</p>
 <p>Le Tableau Lumi&#232;re contient une colonne 'Activ&#233;'. Pour qu'une Lumi&#232;re soit
 d&#233;clench&#233;e par son Capteur de commande, l'Horloge acc&#233;l&#233;r&#233;e, l'Aiguillage de commande,
-elle doit &#234;tre "activ&#233;e", ce qui revient &#224; cocher la case dans la colonne 'Activ&#233;e' 
-. Vous pouvez d&#233;cocher cette case pour d&#233;sactiver le d&#233;clenchement temporaire d'une
+elle doit &#234;tre "activ&#233;e", ce qui revient &#224; cocher la case dans la colonne 'Activ&#233;e'. Vous pouvez d&#233;cocher cette case pour d&#233;sactiver le d&#233;clenchement temporaire d'une
 Lumi&#232;re , c'est &#224; dire &#233;viter qu'elle commute lors du contr&#244;le des m&#233;canismes des feux
 .</p>
 
@@ -89,8 +80,9 @@ comme l'action d'une de ses
 conditions. Si vous avez besoin d'une logique plus puissante pour contr&#244;ler votre lumi&#232;re, consid&#233;rez
 l'aide d'un <a href="Logix.shtml">Logix</a>.</p>
 
-<p>Notez que activ&#233;e/d&#233;sactiv&#233;e s'applique uniquement &#224; un m&#233;canisme de commande automatis&#233; de la Lumi&#232;re.
- Un Etat "d&#233;sactiv&#233;" n'emp&#234;chera pas une Lumi&#232;re
+<p>Notez que activ&#233;e/d&#233;sactiv&#233;e s'applique uniquement &#224; un m&#233;canisme de commande
+automatis&#233; de la Lumi&#232;re.
+Un Etat "d&#233;sactiv&#233;" n'emp&#234;chera pas une Lumi&#232;re
 d'&#234;tre activ&#233;e ou d&#233;sactiv&#233;e en utilisant le bouton dans le Tableau Lumi&#232;re ou en 
 &#233;tant contr&#244;l&#233;e par un automate Logix.</p>
    
@@ -298,8 +290,9 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 		</dd>
 	</dl>
 
-		<!--#include virtual="/Footer.shtml" -->
-	</div><!-- closes #mainContent-->
-</div><!-- closes #mBody-->
+		  <!--#include virtual="/Footer_fr.shtml" -->
+	  </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

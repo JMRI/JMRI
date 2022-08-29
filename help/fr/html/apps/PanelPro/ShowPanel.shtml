@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
 
@@ -112,7 +112,7 @@ Puis changez la deuxi&#232;me ligne de votre fichier de panneau en:
 <p>Pour plus d'informations techniques &#224; ce sujet, voir la
 <a href="../../doc/Technical/XmlUsage.shtml#xslt">page JMRI XML</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>
