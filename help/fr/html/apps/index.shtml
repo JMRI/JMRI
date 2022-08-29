@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
 	<!--#include virtual="Sidebar.shtml" -->
 
@@ -69,7 +69,7 @@
 	configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
   </ul>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div> <!-- close #mainContent -->
   </div> <!-- close #mBody -->
   <script src="/js/main.js"></script>

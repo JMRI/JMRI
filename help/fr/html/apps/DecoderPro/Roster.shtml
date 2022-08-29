@@ -6,10 +6,10 @@
   <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
   <title>JMRI: DecoderPro Rosters</title>
   <!--#include virtual="/Style.shtml" -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -204,7 +204,7 @@
           les entrees</a>.</dd>
 
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>

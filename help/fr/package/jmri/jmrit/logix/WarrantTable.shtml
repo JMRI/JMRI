@@ -11,7 +11,7 @@
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.%20css"
   media="screen">
@@ -23,9 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Cr&eacute;ation et &Eacute;dition de Mandat</h1>Un mandat
       contient les informations n&eacute;cessaires pour faire

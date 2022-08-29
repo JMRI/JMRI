@@ -5,18 +5,20 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Outil Moniteur MÃ©moire</title><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
-<body>
-  Memory Monitor Tool Memory Monitor Tool <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI: Outil Moniteur de MÃ©moire</h1>
+
       <a href="MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg" width="194" height="56"
       align="right" alt=""></a> L'Outil Moniteur de MÃ©moire vous permet de voir combien de
       mÃ©moire JMRI utilise dans votre ordinateur.
@@ -73,7 +75,7 @@
         <li>The right column is the total memory available to JMRI.</li>
       </ul>
       At the top of the left column, the maximum memory that can be available to JMRI is displayed.
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

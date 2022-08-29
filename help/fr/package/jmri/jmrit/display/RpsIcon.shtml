@@ -10,7 +10,7 @@
 
   <title>JMRI: RPS Icon</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -22,11 +22,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Ic&ocirc;ne RPS</h1>RPS est un syst&egrave;me
+      <h1>JMRI: Ic&ocirc;ne RPS</h1>
+
+      <p>RPS est un syst&egrave;me
       permettant de mesurer les positions du mat&eacute;riel
       roulant sur votre r&eacute;seau. Plus d'informations sur RPS
       est disponible sur la <a href=
@@ -34,7 +36,7 @@
       d'aide sur RPS</a>. Les ic&ocirc;nes Reporter RPS se
       d&eacute;place sur le TCO pour montrer o&ugrave;
       l'&eacute;quipement correspondant se trouve sur le
-      r&eacute;seau.
+      r&eacute;seau.</p>
 
       <p><img align="right" height="45" width="45" src=
       "../../../../images/bangdesk.gif" alt="Cute image de work">
@@ -315,7 +317,7 @@
         pour une image avec le num&eacute;ro du train.</li>
       </ul>Une belle interface graphique pour faire cela est
       &agrave; venir, mais elle n'est pas encore l&agrave;. 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

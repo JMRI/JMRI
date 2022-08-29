@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help OS Indicator">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,9 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Bouton cod&eacute;</h1><b>Ce n'est pas encore
       compl&egrave;tement mis en oeuvre</b>
@@ -47,7 +47,7 @@
         le code est en cours.</dd>
       </dl>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

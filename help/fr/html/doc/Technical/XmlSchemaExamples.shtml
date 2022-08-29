@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -145,7 +145,7 @@ peu probable qu'il soit utilis&eacute; ailleur:
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </pre>
 
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
   <script src="/js/main.js"></script>

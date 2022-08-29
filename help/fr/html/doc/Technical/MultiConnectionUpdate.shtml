@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -148,7 +148,7 @@ avec les serial/network refactoring
       d&eacute;marrage , boutons, etc Nous n'allons pas les faire
       migrer pour pour eux.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

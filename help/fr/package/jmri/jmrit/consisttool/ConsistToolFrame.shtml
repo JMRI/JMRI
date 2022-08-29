@@ -18,11 +18,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-<h1> Outil de Couplage</h1>
+      <h1> Outil de Couplage</h1>
 
 <h2> Utilisation de l'Outil de Couplage</h2>
 <p>
@@ -120,7 +120,7 @@ voir la
 <a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool"> page couplage</a> principale.
 <p>La page d'aide package\JMRI\jmrit\consisttool</p>
 
-<!--#include virtual="/Footer.shtml" -->
+<!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

@@ -11,7 +11,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Route Add Edit">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,11 +23,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Commande de l'aiguillage</h1>Saisissez le num&eacute;ro
+      <h1>Commande de l'aiguillage</h1>
+
+      <p>Saisissez le num&eacute;ro
       de l'accessoire ou le nom syst&egrave;me d'aiguillage pour
       l'accessoire ou l'aiguillage que vous souhaitez commander
       dans la case &agrave; droite de "aiguillage". Pour Par
@@ -46,7 +48,7 @@
       l'&eacute;tat de l'aiguillage interne et ne changera pas un
       aiguillage sur le r&eacute;seau. Voir " <a href=
       "../../../../html/doc/Technical/Names.shtml">Noms</a> " dans
-      l'aide g&eacute;n&eacute;rale pour plus d'informations.
+      l'aide g&eacute;n&eacute;rale pour plus d'informations.</p>
 
       <p>Pour plus d'informations sur les aiguillages JMRI,
       consultez le <a href=
@@ -149,7 +151,7 @@
       <p>Ceci est la page d'aide
       help/fr/package/jmri/jmrit/simpletournoutctrl/SimpleTurnoutCtrl.shtml</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

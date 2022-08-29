@@ -11,7 +11,7 @@
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help DCC Analyzer">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -23,16 +23,18 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Analyseur de paquets DCC
-      NCE</h1>S&eacute;lectionnez le "port
+      NCE</h1>
+
+      <p>S&eacute;lectionnez le "port
       s&eacute;rie" et appuyer sur le bouton "Ouvrir" avant
       d'utiliser les boutons radio. La vitesse de transmission est
       fix&eacute; &aacute; 38.4Kbps. Appuyez sur le bouton
-      "Init" pour initialiser l'analyseur.
+      "Init" pour initialiser l'analyseur.</p>
 
       <p>La case "+" vous permet de supprimer des paquets
       identiques. Chaque fois que le programme d&eacute;tecte
@@ -386,7 +388,7 @@
       commande est d&eacute;cod&eacute;e par
       l'analyseur.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

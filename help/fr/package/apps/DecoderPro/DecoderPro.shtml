@@ -9,9 +9,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Fen&ecirc;tre Principale DecoderPro</h1>
       <p>La fen&ecirc;tre principale DecoderPro vous donne acc&egrave;s
@@ -88,7 +88,7 @@
       programme JMRI.</p>
 
       <p>Ceci est la page d'aide
-      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer.shtml" -->
+      apps.DecoderPro.DecoderPro.shtml</p><!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
   <script src="/js/main.js"></script>

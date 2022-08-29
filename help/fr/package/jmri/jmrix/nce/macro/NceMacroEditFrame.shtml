@@ -10,7 +10,7 @@
   <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Help NCE Edit Macro">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -22,9 +22,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Modifier macro NCE</h1>Cet outil vous permet de revoir,
       modifier et enregistrer des styles macros NCE. Il vous permet
@@ -132,7 +132,7 @@
       "Normal" et "Arri&Atilde;&uml;re", tout comme votre
       r&Atilde;&copy;gulateur NCE!
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

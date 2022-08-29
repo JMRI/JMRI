@@ -1,18 +1,16 @@
 package jmri.jmrit.ctc;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalMastManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -25,8 +23,8 @@ public class CtcRunMiscTest {
     static final boolean PAUSE = false;
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testAction() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Misc_Scenarios.xml");  // NOI18N
@@ -44,47 +42,47 @@ public class CtcRunMiscTest {
         // ** Misc run time test scenarios **
 
         // Do auto code button
-        sm.getSensor("IS7:LEVER").setKnownState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(()->{return sm.getSensor("IS7:SWRI").getKnownState() == Sensor.ACTIVE;},"7/8 turnout thrown indicator not active");
-        Assert.assertTrue(sm.getSensor("IS7:SWRI").getKnownState() == Sensor.ACTIVE);
+        sm.provideSensor("IS7:LEVER").setKnownState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(()->{return sm.provideSensor("IS7:SWRI").getKnownState() == Sensor.ACTIVE;},"7/8 turnout thrown indicator not active");
+        Assert.assertTrue(sm.provideSensor("IS7:SWRI").getKnownState() == Sensor.ACTIVE);
 
-        sm.getSensor("IS8:RDGL").setKnownState(Sensor.INACTIVE);
-        sm.getSensor("IS8:NGL").setKnownState(Sensor.INACTIVE);
-        sm.getSensor("IS8:LDGL").setKnownState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(()->{return sm.getSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE;},"7/8 signal left indicator not active");
-        Assert.assertTrue(sm.getSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE);
+        sm.provideSensor("IS8:RDGL").setKnownState(Sensor.INACTIVE);
+        sm.provideSensor("IS8:NGL").setKnownState(Sensor.INACTIVE);
+        sm.provideSensor("IS8:LDGL").setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return sm.provideSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE;},"7/8 signal left indicator not active");
+        Assert.assertTrue(sm.provideSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE);
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Stop JMRI fast clock
-        sm.getSensor("ISCLOCKRUNNING").setKnownState(Sensor.INACTIVE);
+        sm.provideSensor("ISCLOCKRUNNING").setKnownState(Sensor.INACTIVE);
 
         // Enable fleeting
-        sm.getSensor("IS:FLEETING").setKnownState(Sensor.ACTIVE);
+        sm.provideSensor("IS:FLEETING").setKnownState(Sensor.ACTIVE);
 
         // Enable debug
-        sm.getSensor("IS:DEBUGCTC").setKnownState(Sensor.ACTIVE);
+        sm.provideSensor("IS:DEBUGCTC").setKnownState(Sensor.ACTIVE);
 
         // Turnout local control
-        sm.getSensor("IS6:LOCKTOGGLE").setKnownState(Sensor.ACTIVE);
-        sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
-        JUnitUtil.waitFor(()->{return sm.getSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE;},"5/6 unlocked indicator not active");
-        Assert.assertTrue(sm.getSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE);
+        sm.provideSensor("IS6:LOCKTOGGLE").setKnownState(Sensor.ACTIVE);
+        sm.provideSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return sm.provideSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE;},"5/6 unlocked indicator not active");
+        Assert.assertTrue(sm.provideSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE);
 
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Reload run time
-        sm.getSensor("IS:RELOADCTC").setKnownState(Sensor.ACTIVE);
+        sm.provideSensor("IS:RELOADCTC").setKnownState(Sensor.ACTIVE);
         // See if the reload reset the signal indicaotr state
-        JUnitUtil.waitFor(()->{return sm.getSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE;},"7/8 normal indicator not active");
-        Assert.assertTrue(sm.getSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return sm.provideSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE;},"7/8 normal indicator not active");
+        Assert.assertTrue(sm.provideSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE);
 
         if (PAUSE) JUnitUtil.waitFor(5000);
 
     }
 
     @BeforeEach
-    public void setUp(@TempDir File folder) throws Exception {
+    public void setUp(@TempDir File folder) throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         JUnitUtil.resetInstanceManager();

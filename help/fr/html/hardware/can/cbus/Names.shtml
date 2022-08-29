@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -38,7 +38,7 @@ Et ceci est la forme la plus simple, il est utilis&#233; pour envoyer des "&#233
 <h3>Aide JMRI</h3>
 <p>Retour &#224; la page d'aide principale de <a href="index.shtml">CBUS</a>.
     
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

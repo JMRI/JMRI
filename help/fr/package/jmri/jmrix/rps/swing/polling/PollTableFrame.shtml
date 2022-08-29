@@ -21,9 +21,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Contr&ocirc;le de Scrutation RPS</h1>
       <a href=
@@ -127,7 +127,7 @@
       est commenc&eacute;, cliquez sur "Stocker maintenant
       les valeurs par d&eacute;fauts".</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>

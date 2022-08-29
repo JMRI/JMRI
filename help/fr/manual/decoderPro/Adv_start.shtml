@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -46,7 +46,7 @@ so.&nbsp; This is done just &nbsp;as you would in the <a href="Basic_Programming
 <p><a href="index.shtml#AdvanceProgram">Back to Index</a></p>
 </div>
 
-    <!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>

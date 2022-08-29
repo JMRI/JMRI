@@ -12,7 +12,7 @@
   <meta name="keywords" content=
   "JMRI help Digitrax SDF Sound File Editor">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
+  <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
@@ -24,9 +24,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>SDF &eacute;diteur de fichiers audio</h1>
 
@@ -292,7 +292,7 @@
       fen&egrave;tre afin que les gens sachent ce que font
       les options.</p>
       
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
 </body>
