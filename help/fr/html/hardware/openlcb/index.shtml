@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <!-- Updated by Herv&#233; Blorec le 2017-02-06-->
-  <title>JMRI Hardware Support - OpenLCB</title>
+  <title>JMRI Mat&#233;rielle - OpenLCB</title>
   <!--#include virtual="/Style.shtml" -->
 </head>
 
@@ -50,9 +50,8 @@ Un autre format pour les ID d'&#233;v&#233;nement est une
 cha&#238;ne hexad&#233;cimale continue, tels que
 "<code>x0102030405060709</code>".
 <p>
-Ces noms de syst&#232;me peut devenir tr&#232;s long, dans lequel
-cas, les "noms utilisateur" deviennent beaucoup plus utile.
-
+<p>Ces noms de syst&#232;me peut devenir tr&#232;s long, dans lequel
+cas, les "noms utilisateur" deviennent beaucoup plus utile.</p>
 
 <h2> Capteurs</h2>
 <p>
@@ -85,7 +84,7 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 <h3>C&#226;blage</h3>
 <p>Les options de connexion OpenLCB sont <a href="Connections.shtml">sur une page s&#233;par&#233;e</a>.
 
-<a name="tools"></a><h2>JOutils JMRI OpenLCB</h2
+<a name="tools"></a><h2>JOutils JMRI OpenLCB</h2>
 <img src="images/OpenLCBmenu.png" width="172" height="126" align="right" alt="Menu">
 <p>Quand JMRI est connect&#233; &#224; un r&#233;seau via ce syst&#232;me, un menu <b>OpenLCB</b> est montr&#233;:</p>
 <ul>   
@@ -97,7 +96,7 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 	<a href="images/OpenLCBSendFrame.png">
 	<img src="images/OpenLCBSendFrame.png" alt="Send Frame Pane" width="456" height="349"></a></li>
 	<li>Naviguer et r&#233;gler la Configuration avec l'outil
-	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configurer No&#339;uds</a><br>
+	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configurer N&#339;uds</a><br>
 	<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
 	    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
 	    width="128" height="149" alt="Configuration Tool pane"></a>multiple connexions
@@ -111,12 +110,13 @@ la lettre type est "T" au lieu de "S", par exemple "<code> MT1.2.3.4.5.6.7.8; 1.
 </ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
+
 <h3>Aide JMRI</h3>
 <ul>
-<li>Comment <a href="Connections.shtml">Connecter JMRI &#224; une installation OpenLCB</a></li>
-<li>La page d'aide sur les <a href="Details.shtml">D&#233;tails Techniques OpenLCB </a></li>
-<li>La <a href="../can/index.shtml">page principale d'Aide</a> pour la prise en charge de JMRI CAN,
-incluant des liens vers des outils vari&#233;s </li>
+  <li>Comment <a href="Connections.shtml">Connecter JMRI &#224; une installation OpenLCB</a></li>
+  <li>La page d'aide sur les <a href="Details.shtml">D&#233;tails Techniques OpenLCB </a></li>
+  <li>La <a href="../can/index.shtml">page principale d'Aide</a> pour la prise en charge de JMRI CAN,
+  incluant des liens vers des outils vari&#233;s </li>
 </ul>
 
       <!--#include virtual="/Footer_fr.shtml" -->

@@ -15,9 +15,10 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Fen&ecirc;tre Principale</h1>La fen&ecirc;tre
-      principale JMRI est celle o&ugrave; vous obtenez acc&egrave;s
-      &agrave; toutes les fonctionnalit&eacute;s JMRI.
+      <h1>JMRI: Fen&ecirc;tre Principale</h1>
+
+      <p>La fen&ecirc;tre principale JMRI est celle o&ugrave; vous obtenez acc&egrave;s
+      &agrave; toutes les fonctionnalit&eacute;s JMRI.</p>
 
       <p>Aide pour les fen&ecirc;tres principales
       particuli&egrave;res:</p>
