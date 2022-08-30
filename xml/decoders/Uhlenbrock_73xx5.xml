@@ -57,6 +57,13 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
+           <model model="73310" numOuts="2" numFns="14" maxMotorCurrent="0.8A" formFactor="HO" connector="NEM651" productID="73310" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="15" width="8.6" height="3.9" units="mm"/>
+            </model>
             <model model="73405" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="Wires" productID="73405" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
@@ -74,6 +81,15 @@
                 <output name="Shunting" label="mode"/>
                 <output name="Start/brake" label="inertia"/>
                 <size length="9.5" width="7.8" height="2.4" units="mm"/>
+            </model>
+            <model model="73416" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="NEM651" productID="73416" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="9.5" width="7.8" height="2.8" units="mm"/>
             </model>
             <model model="74120" numOuts="4" numFns="12" maxMotorCurrent="1.2A" formFactor="HO" connector="NEM652" productID="74120" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
