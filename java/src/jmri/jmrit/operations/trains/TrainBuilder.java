@@ -146,7 +146,7 @@ public class TrainBuilder extends TrainBuilderBase {
     private void determineIfTrainTerminatesIntoStaging() throws BuildFailedException {
         // does train terminate into staging?
         _terminateStageTrack = null;
-        List<Track> stagingTracksTerminate = _terminateLocation.getTracksByMovesList(Track.STAGING);
+        List<Track> stagingTracksTerminate = _terminateLocation.getTracksByMoves(Track.STAGING);
         if (stagingTracksTerminate.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"),
@@ -212,7 +212,7 @@ public class TrainBuilder extends TrainBuilderBase {
         }
 
         // determine if train is departing staging
-        List<Track> stagingTracks = _departLocation.getTracksByMovesList(Track.STAGING);
+        List<Track> stagingTracks = _departLocation.getTracksByMoves(Track.STAGING);
         if (stagingTracks.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"),
@@ -1249,6 +1249,7 @@ public class TrainBuilder extends TrainBuilderBase {
                 car.setLoadGeneratedFromStaging(true);
                 // is car part of kernel?
                 car.updateKernel();
+                track.bumpMoves();
                 track.bumpSchedule();
                 return true; // done, car now has a custom load
             }
@@ -1722,13 +1723,11 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         car.updateKernel(); // car part of kernel?
         if (car.getDestinationTrack() != track) {
+            track.bumpMoves();
             // car is being routed to this track
             if (track.getSchedule() != null) {
                 car.setScheduleItemId(track.getCurrentScheduleItem().getId());
                 track.bumpSchedule();
-            } else {
-                // bump the track move count
-                track.setMoves(track.getMoves() + 1);
             }
         }
         return true; // done, car has a new destination
@@ -1985,7 +1984,7 @@ public class TrainBuilder extends TrainBuilderBase {
                         if (tracks.get(1) != null) {
                             car.setFinalDestination(car.getDestination());
                             car.setFinalDestinationTrack(tracks.get(1));
-                            tracks.get(1).setMoves(tracks.get(1).getMoves() + 1); // bump the number of moves
+                            tracks.get(1).bumpMoves(); // bump the number of moves
                         }
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
@@ -2291,11 +2290,17 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         // did we find a destination?
         if (trackSave != null) {
+            if (trackSave.isSpur()) {
+                car.setScheduleItemId(trackSave.getScheduleItemId());
+                trackSave.bumpSchedule();
+                log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
+                        trackSave.getName(), car.getScheduleItemId());
+            }
             if (finalDestinationTrackSave != null) {
                 car.setFinalDestination(finalDestinationTrackSave.getLocation());
                 car.setFinalDestinationTrack(finalDestinationTrackSave);
                 if (trackSave.isAlternate()) {
-                    finalDestinationTrackSave.setMoves(finalDestinationTrackSave.getMoves() + 1); // bump move count
+                    finalDestinationTrackSave.bumpMoves(); // bump move count
                 }
             }
             addCarToTrain(car, rl, rldSave, trackSave);

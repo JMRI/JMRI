@@ -907,7 +907,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      *             Track.STAGING
      * @return list of tracks at this location ordered by moves
      */
-    public List<Track> getTracksByMovesList(String type) {
+    public List<Track> getTracksByMoves(String type) {
 
         List<Track> moveList = new ArrayList<>();
 
@@ -925,15 +925,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
                 moveList.add(track);
             }
         }
-        // bias tracks with schedules to the start of the list
         // remove any alternate tracks from the list
+        // bias tracks with schedules to the start of the list
         List<Track> out = new ArrayList<>();
         for (int i = 0; i < moveList.size(); i++) {
             Track track = moveList.get(i);
-            if (!track.getScheduleId().equals(NONE)) {
-                out.add(track);
+            if (track.isAlternate()) {
                 moveList.remove(i--);
-            } else if (track.isAlternate()) {
+            } else if (!track.getScheduleId().equals(NONE)) {
+                out.add(track);
                 moveList.remove(i--);
             }
         }
