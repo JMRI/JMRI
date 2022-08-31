@@ -1,0 +1,38 @@
+<!-- SidebarTail.shtml -->
+    <!-- Final items in typical sidebar (French) -->
+    <!-- *) = links to English TODO translate those pages to french -->
+
+    <h4 style="padding-left: 2em;">Syst&egrave;me d'Aide JMRI</h4>
+    <div style="display: flex; justify-content: space-between;"><!-- spread left-right TODO move to /css -->
+      <span>
+        <a href="/help/fr/webtoc.shtml">Table des Mati&egrave;res</a>
+      </span>
+      <span>
+        <a href="/help/fr/webindex.shtml">Index</a>
+      </span>
+    </div>
+    <div style="display: flex; justify-content: space-between;"><!-- spread left-right TODO move to /css -->
+      <span>
+        <a href="/help/fr/glossary/index.shtml">Glossaire</a>
+      </span>
+      <span>
+        <a href="/help/en/html/FAQ.shtml">FAQ</a> *)
+      </span>
+    </div>
+
+    <dl>
+      <dd>Des pages marqu&eacute; *) sont en Anglais.</dd>
+    </dl>
+
+    <p style="padding-left: 1em;">
+      <a href="/donations.shtml">
+      <img src="https://sourceforge.net/images/project-support.jpg" width="88" height="32"
+      style="float: left; padding-right: 1em;" alt="Donner &agrave; JMRI"/>
+      Faites un don à JMRI.org</a>
+    </p>
+
+    <!-- JS to highlight items in the sidebar -->
+    <script src="/web/js/jquery-2.0.3.min.js"></script>
+    <script src="/web/js/here.js"></script>
+
+<!-- /SidebarTail.shtml -->

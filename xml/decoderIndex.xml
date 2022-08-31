@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.1.2plus+jake+20220812T1944Z+R269ca2172f on Fri Aug 12 15:45:03 EDT 2022-->
-  <decoderIndex version="25">
+  <!--Written by JMRI version 5.1.3plus+jake+20220828T1936Z+Rbf714fd278 on Sun Aug 28 15:37:22 EDT 2022-->
+  <decoderIndex version="27">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -34082,8 +34082,14 @@
       </family>
       <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2.xml">
         <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
-          <output name="1" label="FL" />
-          <output name="2" label="RL" />
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
           <output name="3" label="Aux1" />
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
@@ -34091,8 +34097,14 @@
           <size length="12.9" width="9.2" height="3.3" units="mm" />
         </model>
         <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="3" highVersionID="3" connector="Next18" productID="2010216">
-          <output name="1" label="FL" />
-          <output name="2" label="RL" />
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
           <output name="3" label="Aux1" />
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
@@ -34102,8 +34114,14 @@
           <size length="14.2" width="9.2" height="3.3" units="mm" />
         </model>
         <model model="Lokommander 2 Mini" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM651/NEM652" productID="2010210,2010211,2010207,2010212">
-          <output name="1" label="FL" />
-          <output name="2" label="RL" />
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
           <output name="3" label="Aux1" />
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
@@ -34113,8 +34131,14 @@
           <size length="19.5" width="11" height="3.3" units="mm" />
         </model>
         <model model="Lokommander 2 Mini M21" numOuts="8" numFns="15" lowVersionID="3" highVersionID="3" connector="21MTC" productID="2010208,2010209,2010228">
-          <output name="1" label="FL" />
-          <output name="2" label="RL" />
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
           <output name="3" label="Aux1" />
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
@@ -34126,8 +34150,14 @@
       </family>
       <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2_p22.xml">
         <model model="Lokommander 2 Mini P22" numOuts="12" numFns="15" lowVersionID="3" highVersionID="3" connector="PluX22" productID="2010217">
-          <output name="1" label="FL" />
-          <output name="2" label="RL" />
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
           <output name="3" label="Aux1" />
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
@@ -34141,8 +34171,14 @@
           <size length="20.5" width="15" height="3.2" units="mm" />
         </model>
         <model model="Lokommander 2 Mini W22" numOuts="12" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM652" productID="2010218,2010229">
-          <output name="1" label="FL" />
-          <output name="2" label="RL" />
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
           <output name="3" label="Aux1" />
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
@@ -38774,6 +38810,21 @@
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_67800.xml">
         <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable 4 Servo Decoder" />
       </family>
+      <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68600_Lissy.xml">
+        <model model="Lissy Receiver 68600" productID="6860" formFactor="Stationary" comment="2 Sensor Lissy Receiver">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68610_Lissy.xml">
+        <model model="Lissy Receiver 68610" productID="6861" formFactor="Stationary" comment="2 Sensor Lissy Receiver">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68620_Lissy.xml">
+        <model model="Lissy Receiver 68620" productID="6862" formFactor="Stationary" comment="Single Sensor Lissy Receiver">
+          <versionCV />
+        </model>
+      </family>
       <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73100.xml">
         <model model="73100" numOuts="4" numFns="14" maxMotorCurrent="1.5A" formFactor="N" productID="73100" comment="N-Scale, wired">
           <output name="1" label="White" connection="wire" />
@@ -38859,6 +38910,13 @@
           <output name="Start/brake" label="inertia" />
           <size length="30.2" width="16" height="3.8" units="mm" />
         </model>
+        <model model="73310" numOuts="2" numFns="14" maxMotorCurrent="0.8A" formFactor="HO" connector="NEM651" productID="73310" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="15" width="8.6" height="3.9" units="mm" />
+        </model>
         <model model="73405" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="Wires" productID="73405" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
           <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
           <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
@@ -38876,6 +38934,15 @@
           <output name="Shunting" label="mode" />
           <output name="Start/brake" label="inertia" />
           <size length="9.5" width="7.8" height="2.4" units="mm" />
+        </model>
+        <model model="73416" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="NEM651" productID="73416" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="9.5" width="7.8" height="2.8" units="mm" />
         </model>
         <model model="74120" numOuts="4" numFns="12" maxMotorCurrent="1.2A" formFactor="HO" connector="NEM652" productID="74120" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
           <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />

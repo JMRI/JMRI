@@ -1,17 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content=
   "JMRI help CBUS Simulator simulate offline command station emulate emulator">
-  <title>JMRI: CBUS® Simulator</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: CBUS® Simulator</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI : Outil de simulation du réseau CBUS</h1>
 
       <ul class="snav">
@@ -43,11 +43,9 @@
       <p>Vous pouvez ajouter des Centrales, des Nœuds ou des répondeurs d'événements
       supplémentaires en sélectionnant Ajouter dans le menu supérieur.</p>
 
-      <p>.</p>
-
       <h2><a name="direction" id="direction">Direction et délai</a>
       </h2>
-      .
+
       <p>La direction et le délai sont uniques à chaque objet simulé.</p>
 
       <ul>
@@ -118,7 +116,7 @@
 
       <h2><a name="nodes" id="nodes">Nœuds</a>
       </h2>
-      &lt;...
+
       <p>Aucun nœud n'est simulé par défaut.</p>
 
       <p>Lorsque vous sélectionnez un nœud, en entrant en mode SLiM, vous devrez appuyer sur le
@@ -140,10 +138,10 @@
 
       <h3><a name="opc" id="opc">Codes d'Opération Pris en Charge</a>
       </h3>
-      .
+
       <h4>Reçus par le simulateur ( depuis d'autres applications JMRI, et depuis l'extérieur de
       JMRI )</h4>
-      .
+
       <p>Centrale Standard ( basée sur le firmware CANCMD v3 )</p>
 
       <ul>
@@ -209,7 +207,7 @@
 
       <h4>Envoyé par le simulateur ( comme entrant vers d'autres applications JMRI, et vers le
       réseau externe)</h4>
-      .
+
       <p>Centrale Standard</p>
 
       <ul>
@@ -270,13 +268,13 @@
       <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale
       d'assistance CBUS de JMRI</a>.</p>
 
-      <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
-      .
+      <p>CBUS® est une marque déposée du Dr Michael Bolton.</p>
+
       <p>Traduction 2021-03-19</p>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

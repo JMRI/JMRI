@@ -1,43 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JiMRI: Preferences Pane</title>
+  <title>JMRI: Preferences Pane</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JiMRI help preferences"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help preferences">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
+
 <body>
   <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JiMRI : Volet Préférences</h1>
-      Le volet Préférences est l'endroit où vous configurez le fonctionnement de base de votre
-      application JiMRI.
+      <h1>JMRI : Volet Préférences</h1>
+
+      <p>Le volet Préférences est l'endroit où vous configurez le fonctionnement de base de votre
+      application JMRI.</p>
       <p>L'écran est divisé en deux sections : sur le côté gauche se trouve une liste des groupes
       de préférences qui peuvent être définis. En cliquant sur chaque élément, la partie de droite
-      se remplit des différentes options qui peuvent être configurées pour cet onglet. <a href=
-      "../../html/setup/images/PrefsConnections_fr.png"><img src=
-      "../../html/setup/images/PrefsConnections_fr.png" height="195" width="425" align="right" alt=
-      ""></a></p>
-
-      <p>.</p>
+      se remplit des différentes options qui peuvent être configurées pour cet onglet.</p>
 
       <p><a href="#Connexion">Connexions</a><br>
-      . <a href="#Defaults">Par Défauts</a><br>
+      <a href="#Defaults">Par Défauts</a><br>
       <a href="#FileLocations">Emplacements de fichiers</a><br>
       <a href="#Startup">Démarrer</a><br>
       <a href="#Display">Affichage</a><br>
       <a href="#Messages">Messages</a><br>
       <a href="#Roster">Inventaire</a><br>
       <a href="#Throttle">Régulateur</a><br>
-      <a href="images/JiMRIPrefsChanges.png"><img src="images/JiMRIPrefsChanges.png" height="112"
+      <a href="images/JMRIPrefsChanges.png"><img src="images/JMRIPrefsChanges.png" height="112"
       width="250" align="right" alt="Save ? dialog"></a> <a href="#WiThrottle">WiThrottle</a><br>
       <a href="#Profiles">Configurer les profils</a><br>
       <a href="#RailroadName">Nom du chemin de fer</a><br>
@@ -46,7 +39,7 @@
       <a href="#SRCP%20Server">Serveur SCRP</a><br>
       <a href="#Simple%20Server">Serveur Simple</a><br>
       <a href="#Warrants"></a>Bulletins d'Ordre<br></p>
-      .
+
       <p>Peut-être que la commande la plus importante se trouve au bas de cette section : Le bouton
       <strong>Sauvegarde</strong> !</p>
 
@@ -54,11 +47,13 @@
       "Sauvegarder" lorsque vous quittez cette fenêtre. Les modifications apportées aux Préférences
       ne prendront effet que lorsque le programme est arrêté et redémarré. Le programme vous
       invitera à le faire après avoir enregistré les Préférences.</p>
+
       <a name="Connexion" id="Connexion"></a>
       <h2>Connexions</h2>
-      Vous pouvez sélectionner n'importe laquelle des diverses connexions de Réseau JiMRI.
-      <p><a href="images/Ops_SetConnection214.png"><img src="." height="222" width="423" align=
-      "right" alt="JiMRI v2.14 Connection Prefs tab"></a> Chaque connexion a son propre onglet.
+      Vous pouvez sélectionner n'importe laquelle des diverses connexions de Réseau JMRI.
+      <p><a href="../../html/setup/images/PrefsConnexions_fr.png"><img src=
+      "../../html/setup/images/PrefsConnexions_fr.png" height="195" width="425" align="right" alt=
+      ""></a>Chaque connexion a son propre onglet.
       Pour commencer, il faut d'abord sélectionnez d'abord le fabricant de votre système DCC, puis
       le type de connexion que vous utilisez. Vous verrez alors apparaître une série de paramètres
       les plus courants qui doivent être définis. Si vous avez besoin de modifier certains des
@@ -78,8 +73,8 @@
       <p>N'oubliez pas d'appuyer sur <strong>Sauvegarder</strong>!</p>
       <a name="Défauts" id="Défauts"></a>
       <h2 style="float:clear">Défauts</h2>
-      <a href="images/JiMRI_PrefsDefaults.png"><img src="images/JiMRI_PrefsDefaults.png" height=
-      "222" width="419" align="right" alt="JiMRI v2.14 Defaults Prefs tab"></a>
+      <a href="images/JMRI_PrefsDefaults.png"><img src="images/JMRI_PrefsDefaults.png" height=
+      "222" width="419" align="right" alt="JMRI v2.14 Defaults Prefs tab"></a>
       <p>Si vous utilisez plusieurs connexions, par exemple une connexion LocoNet et une connexion
       MERG, le volet Defauts vous permet de sélectionner quelle connexion vous souhaitez utiliser
       dans un but particulier.</p>
@@ -87,7 +82,7 @@
       <p>Il s'agit de la connexion interne.</p>
 
       <p>La connexion interne est la connexion par défaut, cependant, puisque cela est presque
-      toujours indésirable, les applications JiMRI vous informeront si la Connexion interne est la
+      toujours indésirable, les applications JMRI vous informeront si la Connexion interne est la
       connexion par défaut pour chaque but. Pour faire taire cette notification, modifiez les
       propriétés du profil, en définissant la propriété
       <code>jmri-managers.allInternalDefaults</code> à <em>true</em>.</p>
@@ -109,8 +104,9 @@
       </dl>
 
       <p>Il y a un <a href="*">page d'aide séparée</a> avec des informations sur le partage de
-      fichiers entre ordinateurs à l'aide de Dropbox. <a name="Démarrage" id="Démarrage"></a></p>
-      .
+      fichiers entre ordinateurs à l'aide de Dropbox.</p>
+
+      <a name="Démarrage" id="Démarrage"></a>
       <h2>Démarrage</h2>
 
       <p><em>Démarrage</em> Les préférences permettent aux fenêtres et aux fichiers d'être ouverts,
@@ -137,31 +133,30 @@
 
         <dt>Ajouter un bouton à la fenêtre principale</dt>
 
-        <dt>.</dt>
-
-        <dt>Ajouter des boutons supplémentaires à la fenêtre principale de JiMRI qui sont.
-        connectés à des actions spécifiques dans les menus pour un accès accès facile et rapide à
-        cette action.</dt>
+        <dd>Ajouter des boutons supplémentaires à la fenêtre principale de JMRI qui sont.
+        connectés à des actions spécifiques dans les menus pour un accès facile et rapide à
+        cette action.</dd>
 
         <dt>Ouvrir un fichier</dt>
 
-        <dt>Chargez automatiquement les fichiers du panneau au démarrage du du programme. Vous
+        <dd>Chargez automatiquement les fichiers du panneau au démarrage du du programme. Vous
         pouvez charger autant de fichiers de panneau que vous le souhaitez ; chacun d'eux sera
-        complètement chargé avant que le suivant ne soit lancé.</dt>
+        complètement chargé avant que le suivant ne soit lancé.</dd>
 
         <dt>Exécuter le script</dt>
 
-        <dt>Lancer automatiquement un script au démarrage du programme. Vous pouvez exécuter autant
+        <dd>Lancer automatiquement un script au démarrage du programme. Vous pouvez exécuter autant
         de scripts que vous le souhaitez ; chacun sera exécuté jusqu'à son terme avant que le
         suivant ne soit lancé. Notez que tous les fichiers dont dépend le script doivent être
-        ouverts avant l'exécution du script.</dt>
+        ouverts avant l'exécution du script.</dd>
 
         <dt>Définir un itinéraire</dt>
 
-        <dt>Définir un itinéraire lorsque le programme démarre. Vous pouvez définir autant de
+        <dd>Définir un itinéraire lorsque le programme démarre. Vous pouvez définir autant de
         routes que vous le souhaitez ; chacune sera définie dans l'ordre. Notez que tous les
-        fichiers dont dépend l'itinéraire doivent être ouverts avant de définir l'itinéraire.</dt>
+        fichiers dont dépend l'itinéraire doivent être ouverts avant de définir l'itinéraire.</dd>
       </dl>
+
       <a name="Display" id="Display"></a>
       <h2>Affichage</h2>
 
@@ -204,35 +199,37 @@
         <dt>Locale</dt>
 
         <dd><a href="../../Acknowledgements.shtml">De nombreuses personnes</a> ont contribué à des
-        "internationalisations" de JiMRI. Ce site convertit (une grande partie) du texte à l'écran
+        "internationalisations" de JMRI. Ce site convertit (une grande partie) du texte à l'écran
         dans une langue autre que l'anglais. Si vous sélectionnez votre pays ou région et la langue
-        ici, puis enregistrez et redémarrez les préférences, JiMRI utilisera une
+        ici, puis enregistrez et redémarrez les préférences, JMRI utilisera une
         internationalisation pour ce pays et cette langue si elle est disponible. Les éléments qui
         n'ont pas été traduits continueront d'apparaître en anglais, vous ne manquerez donc vous ne
         manquerez rien. Pour plus d'informations sur la façon de configurer ce système, et en
         particulier sur la façon de contribuer à de nouvelles et meilleures traductions, veuillez
         consulter notre <a href="../../html/doc/Technical/I8N.shtml">page
-        d'internationalisation</a> .</dd>
+        d'internationalisation</a>.</dd>
 
         <dt>Console</dt>
 
-        <dt>Ceci vous permet de personnaliser l'aspect de la console du système JiMRI. Il est
+        <dt>Ceci vous permet de personnaliser l'aspect de la console du système JMRI. Il est
         possible de choisir parmi des couleurs prédéfinies et de choisir la taille et le style de
         la police. Vous pouvez également choisir d'enregistrer la taille et l'emplacement de la
         fenêtre de la console système qu'elle apparaisse toujours au même endroit et à la même
         taille.</dt>
       </dl>
-      <a href="images/PrefsMsgPane421.png"><img src="images/PrefsMsgPane421.png" height="214"
-      width="375" align="right" alt="JiMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
+      <a href="images/PrefsMessages.png"><img src="images/PrefsMessages.png" height="193"
+      width="479" align="right" alt="JMRI v4.2 Roster Prefs tab"></a> <a name="Messages" id=
       "Messages"></a>
+
       <h2>Messages</h2>
       Ceci vous permet de modifier la manière dont les messages d'information et d'avertissement
-      sont affichés dans JiMRI.<br>
+      sont affichés dans JMRI.<br>
       Il vous permettra également de configurer les réponses par défaut et la la question qui
       s'affiche. <a name="Roster" id="Roster"></a>
+
       <h2>Inventaire</h2>
       <a href="images/PrefsRoster47.png"><img src="images/PrefsRoster47.png" height="184" width=
-      "416" align="right" alt="JiMRI v4.7 Roster Prefs tab"></a>
+      "416" align="right" alt="JMRI v4.7 Roster Prefs tab"></a>
       <dl>
         <dd><a id="programmeur" name="programmeur"></a>
         </dd>
@@ -337,11 +334,13 @@
         même si elles sont modifiées.<br>
         <br></dt>
       </dl>
+
       <a name="Throttle" id="Throttle"></a>
       <h2>Régulateur</h2>
       Cet onglet du volet des préférences vous permet de choisir si les fonctionnalités étendues de
       Régulateur sont disponibles, et lesquelles peuvent être utilisées. <a name="WiThrottle" id=
       "WiThrottle"></a>
+
       <h2>WiThrottle</h2>
 
       <dl>
@@ -350,7 +349,7 @@
         <dd>
           Si sélectionné, surveille si un paquet à envoyer depuis l' appareil mobile connecté. Si
           le serveur WiThrottle ne ne reçoit aucune communication dans le temps choisi, le
-          Régulateur JiMRI concerné mettra son train à l'arrêt.
+          Régulateur JMRI concerné mettra son train à l'arrêt.
           <p>Le temps choisi est approximatif ; la réponse peut se faire quelques quelques secondes
           plus tôt ou plus tard.</p>
         </dd>
@@ -395,34 +394,36 @@
       </dl>
       Le bouton "Sauvegarder", en bas à gauche, mmet en vigueur les réglages modifiés. Pour un
       <a href=".">"../jmri/jmrit/withrottle/UserInterface.shtml"&gt;Régulateur connecté</a> pour
-      utiliser les nouveaux paramètres, vous devrez redémarrer JiMRI (puis WiThrottle). puis
+      utiliser les nouveaux paramètres, vous devrez redémarrer JMRI (puis WiThrottle). puis
       redémarrer WiThrottle) comme indiqué dans la boîte de dialogue. <a name="Profils" id=
       "Profils"></a>
       <h2>Profils de configuration</h2>
-      Les profils de configuration JiMRI facilitent le paramétrage de vos applications JiMRI pour
+      Les profils de configuration JMRI facilitent le paramétrage de vos applications JMRI pour
       fonctionner avec différentes configurations. Chaque profil spécifie un ensemble de
       préférences. Vous pouvez ensuite sélectionner celui que vous souhaitez utiliser.
       <p>Pour plus d'informations, consultez la page d'aide <a href=".">.
-      "../../html/setup/profiles.shtml"&gt;Profils de configuration</a> . <a name="RailroadName"
-      id="RailroadName"></a></p>
-      .
+      "../../html/setup/profiles.shtml"&gt;Profils de configuration</a>.</p>
+
+      <a name="RailroadName" id="RailroadName"></a>
       <h2>Nom du Chemin de Fer</h2>
 
       <p>L'onglet Nom du Chemin de Fer vous permet de spécifier le nom de votre réseau de chemin de
       fer (module), car il est utilisé par plusieurs protocoles de serveurs .</p>
       <a name="JSONServer" id="JSONServer"></a>
+
       <h2>Serveur JSON</h2>
 
-      <p>JiMRI <a href="../../html/web/JsonServlet.shtml">serveur JSON</a> est utilisé par les
+      <p>JMRI <a href="../../html/web/JsonServlet.shtml">serveur JSON</a> est utilisé par les
       applications sur d'autres ordinateurs, y compris les tablettes et les téléphones, pour se
-      connecter à JiMRI afin de faire fonctionner votre chemin de fer.</p>
+      connecter à JMRI afin de faire fonctionner votre chemin de fer.</p>
 
       <p>Sur ce volet, vous pouvez spécifier le port de la connexion. (généralement laissé à la
       valeur par défaut) et la fréquence à laquelle le serveur vérifie si la connexion a échoué via
       un message Heartbeat</p>
+
       <a name="WebServer" id="WebServer"></a>
       <h2>Serveur Web</h2>
-      Le serveur Web de JiMRI vous permet de vous connecter à JiMRI depuis un navigateur web sur
+      Le serveur Web de JMRI vous permet de vous connecter à JMRI depuis un navigateur web sur
       votre ordinateur, tablette ou téléphone et de travailler avec votre chemin de fer.
       <p>Cet onglet vous permet de contrôler ce que le serveur Web fournit. Pour plus
       d'informations, consultez la page <a href=".">Préférences du serveur web.</a> . <a id=
@@ -430,7 +431,7 @@
 
       <h2>Serveur SRCP</h2>
 
-      <p>La page JiMRI <a href=".">serveur SRCP</a> est un moyen standard de connecter un
+      <p>La page JMRI <a href=".">serveur SRCP</a> est un moyen standard de connecter un
       utilisateur "client" à un serveur .</p>
 
       <p>Sur ce volet, vous pouvez spécifier le port pour la connexion. (généralement laissé par
@@ -438,25 +439,29 @@
       <a id="Simple_Server" name="Simple_Server"></a>
       <h2>Serveur simple</h2>
 
-      <p>Le serveur simple de JiMRI fait partie de <a href=".">.
-      "../../html/hardware/jmriclient/index.shtml"&gt;JiMRIClient</a>, une méthode pour connecter à
-      distance un programme JiMRI à un autre.</p>
+      <p>Le serveur simple de JMRI fait partie de <a href=".">.
+      "../../html/hardware/jmriclient/index.shtml"&gt;JMRIClient</a>, une méthode pour connecter à
+      distance un programme JMRI à un autre.</p>
 
       <p>Sur ce volet, vous pouvez spécifier le port pour la connexion. (généralement laissé par
       défaut).</p>
+
       <a name="Warrants" id="Warrants"></a>
       <h2>Bulletins d'Ordre</h2>
+
       Cet onglet définit les paramètres utilisés dans le calcul des itinéraires et des changements
       de vitesse pour les <a href=".">Bulletins d'Ordres</a> et pour contrôler les événements que
       les trains mandatés peuvent rencontrer.
+
       <h3>Tableaux de noms de vitesse</h3>
       Lorsqu'un train en circulation automatique rencontre un aspect de signal qui demande un
       changement de vitesse, le tableau des vitesse fournit les informations sur ce que doit être
       le changement de vitesse . D'autres paramètres commandent la façon dont le changement de
       vitesse est effectué.
+
       <h2>Tableau des noms de vitesse des aspects</h2>
       Le tableau de nom de vitesse d'aspect fait correspondre les noms de vitesse d'aspects trouvés
-      dans les définition d'un système de signalisation à une valeur. Il est important que tous les
+      dans les définitions d'un système de signalisation à une valeur. Il est important que tous les
       noms de vitesse utilisés dans votre système de signalisation soient répertoriés dans le
       tableau de correspondance des vitesses. Les rangées peuvent être ajoutées ou supprimées pour
       se conformer aux aspects du système de signalisation.
@@ -478,11 +483,13 @@
         <li><strong>Kilomètres par heure</strong> - la valeur est une vitesse absolue à l'échelle
         en kilomètres par heure. .</li>
       </ul>
+
       Le choix de l'interprétation est une question de ce que vous voulez qu'il se passe lorsqu'un
       train soumit à un bulletin d'ordre atteint un signal ou un aspect de Canton. Peourcent Normal
       fera toujours en sorte que le train change de vitesse et... Peourcent Régulateur le fera très
       probablement aussi. Les deux derniers choix sont les plus typiques, mais si le train est déjà
-      dans la limite de vitesse demandée, aucun changement de vitesse n'est nécessaire. l
+      dans la limite de vitesse demandée, aucun changement de vitesse n'est nécessaire.
+
       <h2>Tableau des noms d'apparence du feu</h2>
       Le <strong>Tableau d'apparence des Feux</strong> est utilisé lorsque des têtes de signaux
       sont utilisées comme signaux. Il fait correspondre les noms d'apparence des têtes de signal
@@ -493,7 +500,7 @@
       nécessaire pour convertir les réglages du Régulateur et les vitesses de la voie vers et
       depuis les vitesses à l'échelle.
       <p>Le <strong>Nombre maximal de Cantons dans l'itinéraire</strong> est la profondeur à
-      laquelle. JiMRI recherchera un itinéraire lors de la définition d'un bulletin d'ordre. Il
+      laquelle. JMRI recherchera un itinéraire lors de la définition d'un bulletin d'ordre. Il
       s'agit d'une valeur globale qui peut être surchargée lors de la création d'un bulletin
       d'ordre.</p>
 
@@ -520,11 +527,12 @@
         millisecondes seraient appropriées.</li>
       </ul>
       Vous devriez expérimenter en observant comment les NXWarrants commencent et se terminent. ou
-      en envoyant des commandes "Stop" et "Reprendre" à un bulletin d'ordre enregistré. .
+      en envoyant des commandes "Stop" et "Reprendre" à un bulletin d'ordre enregistré.
+
       <h3>Facteur du Régulateur</h3>
       La valeur du <strong>Facteur de réglage de vitesse</strong> ainsi que l'<strong>Échelle de
       réseau</strong> permet d'ajuster un réglage du Régulateur pour qu'il corresponde à une
-      vitesse de la voie du réseau. Le facteur d'accélérateur défini ici est un défaut global,.
+      vitesse de la voie du réseau. Le facteur d'accélérateur défini ici est un défaut global.
       <p>Pour plus d'informations sur les paramètres de vitesse dde bulletin d'ordre, voir .
       <a href="../jmri/jmrit/logix/speedChanges.shtml">Modification des Vitesse de Bulletins
       d'Ordre</a> et suivez ses liens.</p>
@@ -533,7 +541,7 @@
       Dans la version 4.9.2, Bulletin d'Ordre calcule une vitesse de voie lorsqu'il traverse un
       chemin dont la longueur et le réglage du Régulateur sont connus. Ces mesures sont effectuées
       pour chaque adresse qui est enregistrée sous un bulletin d'ordre et sont conservées pour
-      toute la session de réseau. Lorsque JiMRI est quitté, à l'arrêt. Ces profils de vitesse de
+      toute la session de réseau. Lorsque JMRI est quitté, à l'arrêt. Ces profils de vitesse de
       session peuvent être fusionnés avec les profils de vitesse de l'Inventaire. Les choix
       suivants sont disponibles à l'arrêt.
       <ul>
@@ -549,17 +557,15 @@
         <strong>Profil de vitesse de session</strong>. (par défaut)</li>
 
         <li><strong>Fusionner tout</strong> - Ne pas demander et toujours fusionner tous les
-        <strong>profils de vitesse de session</strong>. profils de vitesse de session dans les
+        <strong>profils de vitesse de session</strong> de session dans les
         profils de vitesse de la liste.</li>
       </ul>
 
       <p>Traduction 2021-03-26</p>
 
-      <p><!--#include virtual="/Footer" -->
-      </p>
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+      <!--#include virtual="/Footer" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

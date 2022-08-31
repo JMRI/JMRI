@@ -1,23 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-01-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-01-->
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: SlipTurnout Icon Editor Help</title>
   <meta name="author" content="Kevin Dickerson">
-  <meta name="keywords" content="JMRI help Panel Editor"><!-- Style -->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI help Panel Editor">
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>L'Éditeur de Traversée</h1>
 
       <p>L'éditeur manuel de traversée nécessitent plus d'une adresse accessoire (aiguillage) et
@@ -37,8 +33,8 @@
 
       <p>La façon dont les icônes sont modifiées dans l'Éditeur d'Icônes de Traversée Jonction est
       la même que celle utilisée qui modifie les icônes dans les autres Editeur d'Icônes. Les
-      boutons <strong>Changer Icône...</strong> et le Catalogue de fonction sont identique aux
-      autres Éditeur d'Icônes. Le menu <strong>Trouver des Icônes</strong> et de ses éléments sont
+      boutons <strong>Changer Icône...</strong> et le Catalogue de fonction sont identiques aux
+      autres Éditeurs d'Icônes. Le menu <strong>Trouver des Icônes</strong> et de ses éléments sont
       également identiques.</p>
 
       <p>Voir les <a href="IconAdder.shtml">pages Éditeurs d'Icônes</a> et l'image<a href=
@@ -48,7 +44,7 @@
       <h2>Contenu de l'éditeur d'Icônes de Traversée Jonction</h2>
 
       <p>Chaque type de "Traversée" utilise un nombre fixe d'aiguillages et d'itinéraires.
-      Typiquement, chaque «Traversée» utilise deux aiguillages et a entre trois et quatre
+      Typiquement, chaque « Traversée » utilise deux aiguillages et a entre trois et quatre
       itinéraires différents .</p>
 
       <p>Chaque traversée doit avoir tous les aiguillages nécessaires ajoutés, lorsque tous les
@@ -109,8 +105,10 @@
 
       <p>Lorsque les quatre aiguillages sont utilisés, vous devez placer les quatre aiguillages de
       la Table aiguillage aux emplacements correspondants dans le TCO.</p>
-      <!--#include virtual="/Footer.shtml" -->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

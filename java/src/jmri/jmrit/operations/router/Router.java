@@ -138,7 +138,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         // want.
         // Also ignores spur schedule since the car's destination is already
         // set.
-        _status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
+        _status = clone.checkDestination(clone.getDestination(), clone.getDestinationTrack());
         if (!_status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
                     new Object[]{car.toString(), car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
@@ -375,7 +375,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"),
                     new Object[]{clone.getDestinationTrackName(), clone.getDestinationName()}));
             Location dest = clone.getDestination();
-            List<Track> yards = dest.getTracksByMovesList(Track.YARD);
+            List<Track> yards = dest.getTracksByMoves(Track.YARD);
             log.debug("Found {} yard(s) at destination ({})", yards.size(), clone.getDestinationName());
             for (Track track : yards) {
                 String status = car.setDestination(dest, track);
@@ -602,7 +602,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 tracks = new ArrayList<>(Arrays.asList(track));
                 showRoute(car, trains, tracks);
 
-                _status = car.testDestination(track.getLocation(), track);
+                _status = car.checkDestination(track.getLocation(), track);
                 if (_status.startsWith(Track.LENGTH)) {
                     // if the issue is length at the interim track, add message
                     // to build report

@@ -146,7 +146,7 @@ public class TrainBuilder extends TrainBuilderBase {
     private void determineIfTrainTerminatesIntoStaging() throws BuildFailedException {
         // does train terminate into staging?
         _terminateStageTrack = null;
-        List<Track> stagingTracksTerminate = _terminateLocation.getTracksByMovesList(Track.STAGING);
+        List<Track> stagingTracksTerminate = _terminateLocation.getTracksByMoves(Track.STAGING);
         if (stagingTracksTerminate.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTerminateStaging"),
@@ -212,7 +212,7 @@ public class TrainBuilder extends TrainBuilderBase {
         }
 
         // determine if train is departing staging
-        List<Track> stagingTracks = _departLocation.getTracksByMovesList(Track.STAGING);
+        List<Track> stagingTracks = _departLocation.getTracksByMoves(Track.STAGING);
         if (stagingTracks.size() > 0) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDepartStaging"),
@@ -1192,7 +1192,7 @@ public class TrainBuilder extends TrainBuilderBase {
             // need to set car load so testDestination will work properly
             String oldCarLoad = car.getLoadName(); // should be the default empty
             car.setLoadName(si.getReceiveLoadName());
-            String status = car.testDestination(track.getLocation(), track);
+            String status = car.checkDestination(track.getLocation(), track);
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN,
                         MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
@@ -1249,6 +1249,7 @@ public class TrainBuilder extends TrainBuilderBase {
                 car.setLoadGeneratedFromStaging(true);
                 // is car part of kernel?
                 car.updateKernel();
+                track.bumpMoves();
                 track.bumpSchedule();
                 return true; // done, car now has a custom load
             }
@@ -1624,7 +1625,7 @@ public class TrainBuilder extends TrainBuilderBase {
         if (!checkBasicMoves(car, track)) {
             return false;
         }
-        String status = car.testDestination(track.getLocation(), track);
+        String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackSequentialMode"),
@@ -1722,13 +1723,11 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         car.updateKernel(); // car part of kernel?
         if (car.getDestinationTrack() != track) {
+            track.bumpMoves();
             // car is being routed to this track
             if (track.getSchedule() != null) {
                 car.setScheduleItemId(track.getCurrentScheduleItem().getId());
                 track.bumpSchedule();
-            } else {
-                // bump the track move count
-                track.setMoves(track.getMoves() + 1);
             }
         }
         return true; // done, car has a new destination
@@ -1745,7 +1744,7 @@ public class TrainBuilder extends TrainBuilderBase {
         if (!checkBasicMoves(car, track)) {
             return false;
         }
-        String status = car.testDestination(track.getLocation(), track);
+        String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN,
                     MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
@@ -1830,7 +1829,7 @@ public class TrainBuilder extends TrainBuilderBase {
         // car?
         // note the default mode for all track types is MATCH
         if (car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack().getScheduleMode() == Track.MATCH) {
-            String status = car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+            String status = car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
             // keep going if the only issue was track length and the track accepts the car's
             // load
             if (!status.equals(Track.OKAY) &&
@@ -1965,7 +1964,7 @@ public class TrainBuilder extends TrainBuilderBase {
                         new Object[] { car.toString() }));
                 // is car going into staging?
                 if (rld == _train.getTrainTerminatesRouteLocation() && _terminateStageTrack != null) {
-                    String status = car.testDestination(car.getDestination(), _terminateStageTrack);
+                    String status = car.checkDestination(car.getDestination(), _terminateStageTrack);
                     if (status.equals(Track.OKAY)) {
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAssignedToStaging"),
                                 new Object[] { car.toString(), _terminateStageTrack.getName() }));
@@ -1985,7 +1984,7 @@ public class TrainBuilder extends TrainBuilderBase {
                         if (tracks.get(1) != null) {
                             car.setFinalDestination(car.getDestination());
                             car.setFinalDestinationTrack(tracks.get(1));
-                            tracks.get(1).setMoves(tracks.get(1).getMoves() + 1); // bump the number of moves
+                            tracks.get(1).bumpMoves(); // bump the number of moves
                         }
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
@@ -2008,7 +2007,7 @@ public class TrainBuilder extends TrainBuilderBase {
                     // is train direction correct? and drop to interchange or spur?
                     if (checkDropTrainDirection(car, rld, car.getDestinationTrack()) &&
                             checkTrainCanDrop(car, car.getDestinationTrack())) {
-                        String status = car.testDestination(car.getDestination(), car.getDestinationTrack());
+                        String status = car.checkDestination(car.getDestination(), car.getDestinationTrack());
                         if (status.equals(Track.OKAY)) {
                             addCarToTrain(car, rl, rld, car.getDestinationTrack());
                             return true;
@@ -2291,11 +2290,17 @@ public class TrainBuilder extends TrainBuilderBase {
         }
         // did we find a destination?
         if (trackSave != null) {
+            if (trackSave.isSpur()) {
+                car.setScheduleItemId(trackSave.getScheduleItemId());
+                trackSave.bumpSchedule();
+                log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
+                        trackSave.getName(), car.getScheduleItemId());
+            }
             if (finalDestinationTrackSave != null) {
                 car.setFinalDestination(finalDestinationTrackSave.getLocation());
                 car.setFinalDestinationTrack(finalDestinationTrackSave);
                 if (trackSave.isAlternate()) {
-                    finalDestinationTrackSave.setMoves(finalDestinationTrackSave.getMoves() + 1); // bump move count
+                    finalDestinationTrackSave.bumpMoves(); // bump move count
                 }
             }
             addCarToTrain(car, rl, rldSave, trackSave);

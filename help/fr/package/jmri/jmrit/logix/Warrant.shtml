@@ -1,31 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-03 -->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-03 -->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Panel Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Panel">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Mandat</h1>Un Mandat est une collection d'informations
       suffisantes pour ex&eacute;cuter un train automatis&eacute;.
@@ -400,8 +386,11 @@
         enregistr&eacute;e. Lorsque la machine ou le couplage de
         train est modifi&eacute;e, plus ou moins de puissance peut
         &ecirc;tre n&eacute;cessaire.</li>
-      </ul><br>
+      </ul>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

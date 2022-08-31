@@ -1,33 +1,21 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Edit Block Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Block">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Cr&eacute;er/Modifier Un Canton</h1>Les cantons sont des
+      <h1>Cr&eacute;er/Modifier Un Canton</h1>
+
+      <p>Les cantons sont des
       tron&ccedil;ons de voie dont l'occupation peut &ecirc;tre
       suivie individuellement. Diviser la voie en cantons est
       facultative. Les cantons mis en place dans un sch&eacute;ma
@@ -42,7 +30,7 @@
       principale utilisation des cantons est de faciliter la
       signalisation, mais les cantons peuvent &ecirc;tre
       utilis&eacute;s pour contr&ocirc;ler sur le r&eacute;seau
-      d'autres fonctions d'animations.
+      d'autres fonctions d'animations.</p>
 
       <p>Si un nom de canton est entr&eacute; dans le champ
       <b>Canton: Nom</b> de la barre d'outil avant l'ajout d'un
@@ -243,8 +231,11 @@
       Courante:</b>. Lorsque les panneaux sont enregistr&eacute;s
       sur le disque, seuls les cantons dont le compteur
       d'utilisation est sup&eacute;rieur &agrave; 0 sont
-      sauv&eacute;s.</p><!--#include virtual="/Footer.shtml" -->
+      sauv&eacute;s.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

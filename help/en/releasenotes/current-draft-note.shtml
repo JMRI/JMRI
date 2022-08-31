@@ -78,7 +78,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>The DCS240+ doesn't accept service-mode read
+                    requests for about 350-400msec after the completion of the prior one.
+                    A short delay has been added to handle this.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -118,7 +120,7 @@
 
         <h4>OpenLCB / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated openlcb.jar to pick up "send AMD in response to AME" fix.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -332,7 +334,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added a new definition for Lissy Receiver #68600, 68610 and #68620. Use LNCV programming.</li>
+                <li>Added definitions for the UB 73310 and UB 73416 decoders</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -480,7 +483,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Updated the PocketTesterExample script to run with current code</li>
         </ul>
 
     <h3>Signals</h3>

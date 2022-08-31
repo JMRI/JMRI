@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		                                    -->
+<!-- version 1 - include file for Uhlenbrock Lissy Receivers 68600/68610    -->
+<!-- 																		                                    -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice value="0">
+    <choice>Not influenced by train category</choice>
+    <choice xml:lang="de">Keine Automatik-Beeinflussung durch Kategorien</choice>
+    <choice xml:lang="nl">Geen invloed van Treincategorie</choice>
+  </enumChoice>
+  <enumChoice value="1">
+    <choice>By all but train category 1</choice>
+    <choice xml:lang="de">Alle außer Zugkategorie 1</choice>
+    <choice xml:lang="nl">Alle m.u.v. Treincategorie 1</choice>
+  </enumChoice>
+  <enumChoice value="2">
+    <choice>By all but train category 2</choice>
+    <choice xml:lang="de">Alle außer Zugkategorie 2</choice>
+    <choice xml:lang="nl">Alle m.u.v. Treincategorie 2</choice>
+  </enumChoice>
+  <enumChoice value="3">
+    <choice>By all but train category 3</choice>
+    <choice xml:lang="de">Alle außer Zugkategorie 3</choice>
+    <choice xml:lang="nl">Alle m.u.v. Treincategorie 3</choice>
+  </enumChoice>
+  <enumChoice value="4">
+    <choice>By all but train category 4</choice>
+    <choice xml:lang="de">Alle außer Zugkategorie 4</choice>
+    <choice xml:lang="nl">Alle m.u.v. Treincategorie 4</choice>
+  </enumChoice>
+  <enumChoice value="11">
+    <choice>Only by train category 1</choice>
+    <choice xml:lang="de">Nur für Zugkategorie 1</choice>
+    <choice xml:lang="nl">Alleen door Treincategorie 1</choice>
+  </enumChoice>
+  <enumChoice value="12">
+    <choice>Only by train category 2</choice>
+    <choice xml:lang="de">Nur für Zugkategorie 2</choice>
+    <choice xml:lang="nl">Alleen door Treincategorie 2</choice>
+  </enumChoice>
+  <enumChoice value="13">
+    <choice>Only by train category 3</choice>
+    <choice xml:lang="de">Nur für Zugkategorie 3</choice>
+    <choice xml:lang="nl">Alleen door Treincategorie 3</choice>
+  </enumChoice>
+  <enumChoice value="14">
+    <choice>Only by train category 4</choice>
+    <choice xml:lang="de">Nur für Zugkategorie 4</choice>
+    <choice xml:lang="nl">Alleen door Treincategorie 4</choice>
+  </enumChoice>
+</enumVal>

@@ -1,0 +1,36 @@
+<!-- Sidebar.shtml -->
+<!-- This is the common sidebar definition for html/web pages in French -->
+	<hr class="hide">
+	<div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI acc&#232;s web</div>
+	    <dl>
+
+        <dt><h3><a href="index.shtml">Utilisation de base</a></h3></dt>
+        <dd>JMRI a un support int&#233;gr&#233; pour voir votre r&#233;seau depuis un navigateur web.
+          <ul>
+            <li><a href="index.shtml#Start">D&#233;marrage</a></li>
+            <li><a href="index.shtml#Configure">Configuration</a></li>
+            <li><a href="index.shtml#URLs">URLs</a></li>
+          </ul>
+        </dd>
+
+        <dt><h3>Servlets</h3></dt>
+        <dd> D&#233;tails des composants web de JMRI.
+          <ul>
+            <li><a href="FrameServlet.shtml">Frames</a></li>
+            <li><a href="JsonServlet.shtml">JSON</a></li>
+            <li><a href="RosterServlet.shtml">Liste</a></li>
+            <li><a href="PanelServlet.shtml">Panneau</a></li>
+          </ul>
+        </dd>
+
+        <!--#include virtual="../../parts/SidebarApplications.shtml" -->
+	    </dl>
+
+      <!--#include virtual="../../parts/SidebarTail.shtml" -->
+
+	</div> <!-- closes #side -->
+
+<!-- button is in /Header -->
+<script src="/js/side.js"></script>
+<!-- /Sidebar.shtml -->

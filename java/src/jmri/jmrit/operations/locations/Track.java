@@ -732,7 +732,7 @@ public class Track extends PropertyChangeSupport {
     public void addDropRS(RollingStock rs) {
         int old = _dropRS;
         _dropRS++;
-        setMoves(getMoves() + 1);
+        bumpMoves();
         setReserved(getReserved() + rs.getTotalLength());
         _reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
@@ -1616,6 +1616,10 @@ public class Track extends PropertyChangeSupport {
         _moves = moves;
         setDirtyAndFirePropertyChange("trackMoves", old, moves); // NOI18N
     }
+    
+    public void bumpMoves() {
+        setMoves(getMoves() + 1);
+    }
 
     public int getBlockingOrder() {
         return _blockingOrder;
@@ -1714,7 +1718,7 @@ public class Track extends PropertyChangeSupport {
             if (schedule == null) {
                 _scheduleName = NONE;
             } else {
-                // set the id to the first item in the list
+                // set the sequence to the first item in the list
                 if (schedule.getItemsBySequenceList().size() > 0) {
                     setScheduleItemId(schedule.getItemsBySequenceList().get(0).getId());
                 }
@@ -1764,21 +1768,21 @@ public class Track extends PropertyChangeSupport {
         return currentSi;
     }
 
+    /**
+     * Increments the schedule count if there's a schedule and the schedule is
+     * running in sequential mode. Resets the schedule count if the maximum is
+     * reached and then goes to the next item in the schedule's list.
+     */
     public void bumpSchedule() {
-        // bump the track move count
-        setMoves(getMoves() + 1);
-        // bump the schedule count
-        setScheduleCount(getScheduleCount() + 1);
-        if (getScheduleCount() < getCurrentScheduleItem().getCount()) {
-            return;
+        if (getSchedule() != null && getScheduleMode() == SEQUENTIAL) {
+            // bump the schedule count
+            setScheduleCount(getScheduleCount() + 1);
+            if (getScheduleCount() >= getCurrentScheduleItem().getCount()) {
+                setScheduleCount(0);
+                // go to the next item in the schedule
+                getNextScheduleItem();
+            }
         }
-        setScheduleCount(0);
-        // is the schedule in match mode?
-        if (getScheduleMode() == MATCH) {
-            return;
-        }
-        // go to the next item on the schedule
-        getNextScheduleItem();
     }
 
     public ScheduleItem getNextScheduleItem() {
@@ -1907,19 +1911,16 @@ public class Track extends PropertyChangeSupport {
             return OKAY;
         }
         if (!car.getScheduleItemId().equals(Car.NONE)) {
-            String id = car.getScheduleItemId();
             log.debug("Car ({}) has schedule item id ({})", car.toString(), car.getScheduleItemId());
-            Schedule sch = getSchedule();
-            if (sch != null) {
-                ScheduleItem si = sch.getItemById(id);
-                car.setScheduleItemId(Car.NONE);
-                if (si != null) {
-                    car.loadNext(si);
-                    return OKAY;
-                }
-                log.debug("Schedule id ({}) not valid for track ({})", id, getName());
+            ScheduleItem si = car.getScheduleItem(this);
+            if (si != null) {
+                car.loadNext(si);
+                return OKAY;
             }
+            log.debug("Schedule id ({}) not valid for track ({})", car.getScheduleItemId(), getName());
+            car.setScheduleItemId(Car.NONE);
         }
+        // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("matchMessage"), new Object[] { getScheduleName() });
@@ -1937,11 +1938,10 @@ public class Track extends PropertyChangeSupport {
                 (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                         car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
             car.loadNext(currentSi);
-            car.setScheduleItemId(Car.NONE);
             // bump schedule
             bumpSchedule();
         } else if (currentSi != null) {
-            // build return message
+            // build return failure message
             String scheduleName = "";
             String currentTrainScheduleName = "";
             TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)

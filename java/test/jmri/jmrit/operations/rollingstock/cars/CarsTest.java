@@ -83,9 +83,6 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute(Xml.WAIT, "0");
         e.setAttribute(Xml.PICKUP_SCHEDULE_ID, "TESTPICKUPSCHEDULE");
         e.setAttribute(Xml.SCHEDULE_ID, "TESTSCHEDULEID");
-        e.setAttribute(Xml.NEXT_LOAD, "TESTLOAD2");
-        e.setAttribute(Xml.NEXT_WAIT, "0");
-        e.setAttribute(Xml.NEXT_PICKUP_SCHEDULE_ID, "TESTNEXTPICKUPSCHEDULEID");
         e.setAttribute(Xml.NEXT_DEST_ID, "TESTNEXTDESTID");
         e.setAttribute(Xml.NEXT_DEST_TRACK_ID, "TESTNEXTDESTTRACKID");
         e.setAttribute(Xml.PREVIOUS_NEXT_DEST_ID, "TESTPREVOIUSNEXTDESTID");

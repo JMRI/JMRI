@@ -1,22 +1,21 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the BootloaderPane class
  *
  * @author Bob Andrew Crosland (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    private jmri.jmrix.can.CanSystemConnectionMemo memo;
-    private jmri.jmrix.can.TrafficController tcis;
+    private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
+    private jmri.jmrix.can.TrafficController tcis = null;
 
     @Override 
     @Test
@@ -27,7 +26,6 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testInitComponentsNoArgs() throws Exception{
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // for now, just makes ure there isn't an exception.
         ((CbusBootloaderPane) panel).initComponents();
     }
@@ -56,8 +54,9 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
     @AfterEach
     @Override
     public void tearDown() {
-        
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         tcis = null;
         memo = null;
