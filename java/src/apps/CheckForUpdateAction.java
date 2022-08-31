@@ -131,7 +131,6 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
         // show
         frame.setVisible(true);
-
     }
 
     @Nonnull String getNumber(@Nonnull BufferedReader reader) throws java.io.IOException {
