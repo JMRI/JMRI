@@ -12,9 +12,9 @@
 
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
-
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI: Ancien Panneau Préférences</h1>
 
       <p class="important">Cette page décrit un ancien panneau des Préférences qui a été remplacé
@@ -192,6 +192,7 @@
           entrées existantes, même s'il a changé.</p>
         </dd>
       </dl>
+
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
