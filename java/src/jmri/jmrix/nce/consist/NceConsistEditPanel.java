@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import org.slf4j.Logger;
@@ -208,7 +209,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             try {
                 initComponents((NceSystemConnectionMemo) context);
             } catch (Exception e) {
-                log.error("NceConsistEdit initContext failed");
+                log.error("NceConsistEdit initContext failed"); // NOI18N
             }
         }
     }
@@ -230,7 +231,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         if (memo != null) {
             x.append(memo.getUserName());
         } else {
-            x.append("NCE_");
+            x.append("NCE_"); // NOI18N
         }
         x.append(": ");
         x.append(Bundle.getMessage("NceConsistEditTitle"));
@@ -241,10 +242,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public List<JMenu> getMenus() {
         // build menu
-        JMenu toolMenu = new JMenu("Tools");
-        toolMenu.add(new NceConsistRosterMenu("Roster", jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new NceConsistRosterMenu(Bundle.getMessage("RosterTitle"),
+                jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
         List<JMenu> l = new ArrayList<>();
         l.add(toolMenu);
         return l;
@@ -275,7 +278,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         getButton.setToolTipText(Bundle.getMessage("ToolTipGet"));
 
         consistTextField.setText(Integer.toString(CONSIST_MAX));
-        consistTextField.setToolTipText(MessageFormat.format(Bundle.getMessage("ToolTipConsist"), new Object[] {CONSIST_MIN, CONSIST_MAX}));
+        consistTextField.setToolTipText(MessageFormat.format(Bundle.getMessage("ToolTipConsist"), CONSIST_MIN, CONSIST_MAX));
         consistTextField.setMaximumSize(new Dimension(consistTextField
                 .getMaximumSize().width,
                 consistTextField.getPreferredSize().height));

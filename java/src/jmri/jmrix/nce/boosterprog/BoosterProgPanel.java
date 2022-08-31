@@ -159,7 +159,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                 public void programmingOpReply(int value, int retval) {
                 }
             });
-        } catch (ProgrammerException e) {
+        } catch (ProgrammerException ignored) {
         } finally {
             releaseProgrammer();
         }
@@ -185,7 +185,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                             public void programmingOpReply(int value, int retval) {
                             }
                         });
-                    } catch (ProgrammerException e) {
+                    } catch (ProgrammerException ignored) {
                     } finally {
                         releaseProgrammer();
                     }
@@ -208,7 +208,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                     synchronized (this) {
                         try {
                             wait(1500);  // needed for booster to reset
-                        } catch (InterruptedException i) {
+                        } catch (InterruptedException ignored) {
                         }
                     }
                     durationPart2();

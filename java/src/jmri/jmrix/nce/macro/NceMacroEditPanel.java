@@ -107,8 +107,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private boolean macroModified = false; // when true, macro has been modified by user
 
     // member declarations
-    JLabel textMacro = new JLabel(Bundle.getMessage("Macro"));
-    JLabel textReply = new JLabel(Bundle.getMessage("Reply"));
+    JLabel textMacro = new JLabel(Bundle.getMessage("MacroLabel"));
+    JLabel textReply = new JLabel(Bundle.getMessage("ReplyLabel"));
     JLabel macroReply = new JLabel();
 
     // major buttons
@@ -554,7 +554,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
             // is the user trying to link a macro?
             if (deleteButton10.getText().equals(LINK)) {
-                if (macroValid == false) { // Error user input incorrect
+                if (!macroValid) { // Error user input incorrect
                     JOptionPane.showMessageDialog(this,
                             Bundle.getMessage("GetMacroNumber"), Bundle.getMessage("NceMacro"),
                             JOptionPane.ERROR_MESSAGE);
