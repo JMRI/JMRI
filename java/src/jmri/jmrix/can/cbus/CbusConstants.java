@@ -371,4 +371,6 @@ public final class CbusConstants {
      * Number of slots supported by the command station
      */
     public static final int CBUS_MAX_SLOTS = 32;
+    public static final int DEFAULT_CS_NN = 65534;
+    public static final int CAB_NN = 65535;
 }

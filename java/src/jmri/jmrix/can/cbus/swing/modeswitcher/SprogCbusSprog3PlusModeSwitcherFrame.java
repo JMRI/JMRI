@@ -20,10 +20,12 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
     public static final int PROG_OFF_MODE = 0; // Prog track off when not programming
     public static final int PROG_ON_MODE = 1;  // Prog track follows main when not programming
     public static final int PROG_AR_MODE = 2;  // Prog track is auto-reverse power district, no programming on progtrack
+    public static final int PROG_ONLY_MODE = 3;// Prog track only, no main. Power control will manipulate prog track
 
     private JRadioButton progOffButton;
     private JRadioButton progOnButton;
     private JRadioButton progArButton;
+    private JRadioButton progOnlyButton;
     
     public SprogCbusSprog3PlusModeSwitcherFrame(CanSystemConnectionMemo memo) {
         super(memo, Bundle.getMessage("SprogCbusPlusModeSwitcher"));
@@ -43,10 +45,12 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
             progOffButton = new JRadioButton(Bundle.getMessage("ProgOffMode"));
             progOnButton = new JRadioButton(Bundle.getMessage("ProgOnMode"));
             progArButton = new JRadioButton(Bundle.getMessage("ProgArMode"));
+            progOnlyButton = new JRadioButton(Bundle.getMessage("ProgOnlyMode"));
             ButtonGroup buttons = new ButtonGroup();
             buttons.add(progOffButton);
             buttons.add(progOnButton);
             buttons.add(progArButton);
+            buttons.add(progOnlyButton);
             
             // Get current preferences
             // It is expected that the saved preferences will usually match the hardware.
@@ -54,18 +58,27 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
             if (preferences.getProgTrackMode() == PROG_OFF_MODE) {
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(true);
             } else if (preferences.getProgTrackMode() == PROG_ON_MODE) {
                 progOnButton.setSelected(true);
                 mode = PROG_ON_MODE;
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(true);
             } else if (preferences.getProgTrackMode() == PROG_AR_MODE) {
                 progArButton.setSelected(true);
                 mode = PROG_AR_MODE;
                 pm.setGlobalProgrammerAvailable(false);
+                pm.setAddressedModePossible(true);
+            } else if (preferences.getProgTrackMode() == PROG_ONLY_MODE) {
+                progOnlyButton.setSelected(true);
+                mode = PROG_ONLY_MODE;
+                pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(false);
             } else {
                 // Default if inconsistent preference
                 progOffButton.setSelected(true);
                 pm.setGlobalProgrammerAvailable(true);
+                pm.setAddressedModePossible(true);
             }
             // Reset hardware mode and preferences in case there was any inconsistency
             setHardwareMode(mode);
@@ -78,16 +91,25 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                     mode = PROG_ON_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
+                    pm.setAddressedModePossible(true);
                 } else if (progArButton.isSelected()) {
                     log.info("Setting prog track to auto-reverse");
                     mode = PROG_AR_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(false);
+                    pm.setAddressedModePossible(true);
+                } else if (progOnlyButton.isSelected()) {
+                    log.info("Setting prog track only mode");
+                    mode = PROG_ONLY_MODE;
+                    setHardwareMode(mode);
+                    pm.setGlobalProgrammerAvailable(true);
+                    pm.setAddressedModePossible(false);
                 } else {
                     log.info("Setting prog track off when not programming");
                     mode = PROG_OFF_MODE;
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
+                    pm.setAddressedModePossible(true);
                 }
                 preferences.setProgTrackMode(mode);
             };
@@ -95,9 +117,11 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
             progOffButton.addActionListener(listener);
             progOnButton.addActionListener(listener);
             progArButton.addActionListener(listener);
+            progOnlyButton.addActionListener(listener);
             modePane.add(progOffButton);
             modePane.add(progOnButton);
             modePane.add(progArButton);
+            modePane.add(progOnlyButton);
 
             panel.add(label, BorderLayout.NORTH);
             panel.add(modePane, BorderLayout.CENTER);

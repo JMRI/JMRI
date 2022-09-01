@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import jmri.jmrix.can.cbus.CbusConstants;
 import static jmri.jmrix.can.cbus.CbusConstants.*;
 
 // import org.slf4j.Logger;
@@ -658,8 +659,8 @@ public class CbusNodeConstants {
         }
         result.put(126, "Reserved for CAN_RS Modules");
         result.put(127, "Reserved for CAN_USB Modules");
-        result.put(65534, "Reserved for Command Station");
-        result.put(65535, "Reserved, used by all CABS");
+        result.put(CbusConstants.DEFAULT_CS_NN, "Reserved for Command Station");
+        result.put(CbusConstants.CAB_NN, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
     }
     

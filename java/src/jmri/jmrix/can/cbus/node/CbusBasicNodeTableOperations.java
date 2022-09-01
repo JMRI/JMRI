@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -196,7 +197,7 @@ public class CbusBasicNodeTableOperations extends CbusBasicNodeTable {
         if ( getRowCount() > 0 ) {
             for (int i = 0; i < getRowCount(); i++) {
                 // log.debug("get next available i {} rowcount {}",i,getRowCount() );
-                if ( _mainArray.get(i).getNodeNumber() < 65534 ) {
+                if ( _mainArray.get(i).getNodeNumber() < CbusConstants.DEFAULT_CS_NN ) {
                     if ( _mainArray.get(i).getNodeNumber() >= higherthan ) {
                         higherthan = _mainArray.get(i).getNodeNumber() + 1;
                     }

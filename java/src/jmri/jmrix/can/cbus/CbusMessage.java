@@ -307,8 +307,11 @@ public class CbusMessage {
         return m.getOpCode() == CbusConstants.CBUS_ARST;
     }
 
+    // CBUS Programmer Commands
+    
     /**
-     * CBUS programmer commands
+     * Get a CanMessage to read a CV
+     * 
      * @param cv CV to read
      * @param mode Programming Mode
      * @param header CAN ID
@@ -334,7 +337,7 @@ public class CbusMessage {
     }
 
     /**
-     * CBUS programmer commands
+     * Get a CanMessage to read a CV with hint
      *
      * CBUS VCVS works like a QCVS read but the programmer will first check if
      * the CV contents are equal to the startVal. This can speed up CV reads by
@@ -367,7 +370,8 @@ public class CbusMessage {
     }
 
     /**
-     * Get a CanMessage to write a CV.
+     * Get a CanMessage to write a CV
+     * 
      * @param cv Which CV, 0-65534
      * @param val New CV value, 0-255
      * @param mode Programming Mode
@@ -394,8 +398,11 @@ public class CbusMessage {
         return m;
     }
 
+    // CBUS Ops mode programmer commands
+    
     /**
-     * CBUS Ops mode programmer commands
+     * Get a message to write a CV
+     * 
      * @param mAddress Loco Address, non-DCC format
      * @param mLongAddr If Loco Address is a long address
      * @param header CAN ID
@@ -420,6 +427,8 @@ public class CbusMessage {
         return m;
     }
 
+    // CBUS Power Control
+    
     /**
      * Get a CanMessage to send track power on
      *
