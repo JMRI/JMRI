@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr">
-<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
+<!-- Copyright Bob Jacobsen 2008 -->
 <head>
-  <title>JMRI: Monitor SPROG Slots</title>
+  <title>JMRI: Outil Configuration Tie</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help monitor sprog slots">
+  <meta name="keywords" content="JMRI help OpenLCB Tie">
   <!--#include virtual="/Style.shtml" -->
 </head>
-
 <body>
   <!--#include virtual="/Header_fr.shtml" -->
+
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
-      <h1>Moniteur d'emplacements SPROG</h1>
+      <h1>OpenLCB Outil Configuration Tie</h1>
 
-      <p>Ceci est le page d'aide
-      help/jmri/jmrix/sprog/sprogslotmon/ SprogSlotMonFrame</p>
+      <img src="FrameExample.gif" alt="Tie Config Frame Tool image">
+      <p>Pas de description</p>
 
       <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <!-- close #mBody -->
   <script src="/js/main.js"></script>
 </body>
 </html>

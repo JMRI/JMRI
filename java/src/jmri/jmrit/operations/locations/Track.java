@@ -732,7 +732,7 @@ public class Track extends PropertyChangeSupport {
     public void addDropRS(RollingStock rs) {
         int old = _dropRS;
         _dropRS++;
-        setMoves(getMoves() + 1);
+        bumpMoves();
         setReserved(getReserved() + rs.getTotalLength());
         _reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
@@ -1616,6 +1616,10 @@ public class Track extends PropertyChangeSupport {
         _moves = moves;
         setDirtyAndFirePropertyChange("trackMoves", old, moves); // NOI18N
     }
+    
+    public void bumpMoves() {
+        setMoves(getMoves() + 1);
+    }
 
     public int getBlockingOrder() {
         return _blockingOrder;
@@ -1764,10 +1768,13 @@ public class Track extends PropertyChangeSupport {
         return currentSi;
     }
 
+    /**
+     * Increments the schedule count if there's a schedule and the schedule is
+     * running in sequential mode. Resets the schedule count if the maximum is
+     * reached and then goes to the next item in the schedule's list.
+     */
     public void bumpSchedule() {
-        // bump the track move count
-        setMoves(getMoves() + 1);
-        if (getScheduleMode() == SEQUENTIAL) {
+        if (getSchedule() != null && getScheduleMode() == SEQUENTIAL) {
             // bump the schedule count
             setScheduleCount(getScheduleCount() + 1);
             if (getScheduleCount() >= getCurrentScheduleItem().getCount()) {

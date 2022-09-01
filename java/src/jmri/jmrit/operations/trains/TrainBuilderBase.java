@@ -1037,7 +1037,7 @@ public class TrainBuilderBase extends TrainCommon {
         } else {
             // find a destination track for this engine
             Location destination = rld.getLocation();
-            List<Track> destTracks = destination.getTracksByMovesList(null);
+            List<Track> destTracks = destination.getTracksByMoves(null);
             if (destTracks.size() == 0) {
                 addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildNoTracksAtDestination"),
                         new Object[] { rld.getName() }));
@@ -2678,7 +2678,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         // now find a track for this car
-        for (Track testTrack : testDestination.getTracksByMovesList(null)) {
+        for (Track testTrack : testDestination.getTracksByMoves(null)) {
             // normally don't move car to a track with the same name at the same location
             if (splitString(car.getLocationName()).equals(splitString(testTrack.getLocation().getName())) &&
                     splitString(car.getTrackName()).equals(splitString(testTrack.getName())) &&

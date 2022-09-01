@@ -2369,7 +2369,8 @@
       when determining which track to select during the train build process. You can modify the
       "Moves" count for a track by double clicking on the cell in the table and entering a new
       value. Note that the program will reset all track move counts for a location when a new track
-      is added to that location. To remove the "Moves" column from the table, simply select the
+      is added to that location, and will reset track move counts for all locations when a schedule
+      is added to a spur. To remove the "Moves" column from the table, simply select the
       "Show Track Moves" tool a second time.</p>
 
       <h4 id="ModifyLocationByCarType">Modify Location by Car Type</h4>
