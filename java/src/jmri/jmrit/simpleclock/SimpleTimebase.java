@@ -208,8 +208,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setRate(double factor) throws TimebaseRateException {
         if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
-            log.error("rate of {} is out of reasonable range", factor);
-            throw new TimebaseRateException();
+            log.error("rate of {} is out of reasonable range {} - {}", factor, MINIMUM_RATE, MAXIMUM_RATE);
+            throw new TimebaseRateException(Bundle.getMessage("IncorrectRate", factor, MINIMUM_RATE, MAXIMUM_RATE));
         }
         if (internalMaster && (!notInitialized)) {
             log.error("Probable Error - questionable attempt to change fast clock rate");
@@ -245,8 +245,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
         if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
-            log.error("rate of {} is out of reasonable range", factor);
-            throw new TimebaseRateException();
+            log.error("rate of {} is out of reasonable range {} - {}", factor, MINIMUM_RATE, MAXIMUM_RATE);
+            throw new TimebaseRateException(Bundle.getMessage("IncorrectRate", factor, MINIMUM_RATE, MAXIMUM_RATE));
         }
         double oldFactor = hardwareFactor;
         Date now = getTime();
