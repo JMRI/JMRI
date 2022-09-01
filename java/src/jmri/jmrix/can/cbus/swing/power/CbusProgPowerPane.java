@@ -28,9 +28,11 @@ public class CbusProgPowerPane extends PowerPane {
         if (preferences.getProgTrackMode() == PROG_ONLY_MODE) {
             onButton.setEnabled(true);
             offButton.setEnabled(true);
+            onOffStatus.setEnabled(true);
         } else {
             onButton.setEnabled(false);
             offButton.setEnabled(false);
+            onOffStatus.setEnabled(false);
         }
     }
     
@@ -74,7 +76,10 @@ public class CbusProgPowerPane extends PowerPane {
         if (PowerManager.PROGPOWERENABLE.equals(ev.getPropertyName())) {
             onButton.setEnabled((boolean)ev.getNewValue());
             offButton.setEnabled((boolean)ev.getNewValue());
-            onOffStatus.setIcon(unknownIcon);
+            onOffStatus.setEnabled((boolean)ev.getNewValue());
+            if ((boolean)ev.getNewValue()) {
+                setStatus();
+            }
         }
         if (PowerManager.PROGPOWER.equals(ev.getPropertyName())) {
             super.propertyChange(ev);

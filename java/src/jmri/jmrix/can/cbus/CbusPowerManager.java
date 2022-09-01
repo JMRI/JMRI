@@ -86,7 +86,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
                 _csNN = csnode.getNodeNumber();
             }
         } else {
-            log.info("Unable to fetch Master Command Station from Node Manager, using default NN {}", CbusConstants.DEFAULT_CS_NN);
+            log.debug("Unable to fetch Master Command Station from Node Manager, using default NN {}", CbusConstants.DEFAULT_CS_NN);
         }
         return _csNN;
     }
@@ -143,8 +143,18 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
      * @param old the old power state
      * @param current the new power state
      */
-    protected final void fireProgPowerPropertyChange(int old, int current) {
+    public final void fireProgPowerPropertyChange(int old, int current) {
         firePropertyChange(PROGPOWER, old, current);
+    }
+    
+    /**
+     * Fires a {@link java.beans.PropertyChangeEvent} for the programming track
+     * power state using property name "progpower".
+     *
+     * @param current the new power state
+     */
+    public final void fireProgPowerPropertyChange(int current) {
+        firePropertyChange(PROGPOWER, null, current);
     }
     
     /**

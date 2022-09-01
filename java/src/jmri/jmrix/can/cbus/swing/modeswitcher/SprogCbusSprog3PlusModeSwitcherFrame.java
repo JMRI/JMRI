@@ -94,7 +94,6 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                     setHardwareMode(mode);
                     pm.setGlobalProgrammerAvailable(true);
                     pm.setAddressedModePossible(true);
-                    fireProgPowerPropertyChange(false);
                 } else if (progArButton.isSelected()) {
                     log.info("Setting prog track to auto-reverse");
                     mode = PROG_AR_MODE;

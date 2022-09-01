@@ -108,6 +108,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
      */
     protected final void fireProgPowerPropertyChange(boolean enable) {
         manager.fireProgPowerEnablePropertyChange(enable);
+        manager.fireProgPowerPropertyChange(PowerManager.UNKNOWN);
     }
     
     
