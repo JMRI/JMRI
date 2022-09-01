@@ -5,18 +5,22 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI OpenLCB: Browse Configuration</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI OpenLCB"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI OpenLCB">
+  <!--#include virtual="/Style.shtml" -->
 </head>
+
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+
       <h1>OpenLCB: Browse Configuration</h1>
-      The "Configure Nodes" OpenLCB tool lets you directly see the nodes on your OpenLCB network
+
+      <p>The "Configure Nodes" OpenLCB tool lets you directly see the nodes on your OpenLCB network
       and do some back manipulations on them. It works with your OpenLCB installation to gather the
       information you need as you run the tool; there are no local configuration files in your
-      computer.
+      computer.</p>
+
       <table>
         <tr>
           <td>When you first open the tool window, it shows a tree of accessible OpenLCB nodes. For
@@ -75,6 +79,7 @@
           </td>
         </tr>
       </table>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

@@ -15074,7 +15074,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm track move counts are correct
         Assert.assertEquals("Westend spur 1", 0, westendSpur1.getMoves());
         Assert.assertEquals("Midtown spur 1", 22, midtownSpur1.getMoves());
-        Assert.assertEquals("Midtown spur 2", 46, midtownSpur2.getMoves());
+        Assert.assertEquals("Midtown spur 2", 45, midtownSpur2.getMoves());
         Assert.assertEquals("Midtown yard", 2, midtownYard.getMoves());
         Assert.assertEquals("Eastend spur 1", 61, eastendSpur1.getMoves());
 

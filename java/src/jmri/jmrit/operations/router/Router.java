@@ -375,7 +375,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"),
                     new Object[]{clone.getDestinationTrackName(), clone.getDestinationName()}));
             Location dest = clone.getDestination();
-            List<Track> yards = dest.getTracksByMovesList(Track.YARD);
+            List<Track> yards = dest.getTracksByMoves(Track.YARD);
             log.debug("Found {} yard(s) at destination ({})", yards.size(), clone.getDestinationName());
             for (Track track : yards) {
                 String status = car.setDestination(dest, track);
