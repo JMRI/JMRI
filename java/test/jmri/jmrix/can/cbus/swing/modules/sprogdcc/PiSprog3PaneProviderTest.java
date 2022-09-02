@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.modules.sprogdcc;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.jmrix.can.cbus.swing.modules.*;
@@ -10,18 +8,18 @@ import jmri.jmrix.can.cbus.simulator.moduletypes.SprogPiSprog3;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test for Pi-SPROG 3 pane provider
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PiSprog3PaneProviderTest {
     
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PiSprog3PaneProvider t = new PiSprog3PaneProvider();
         Assertions.assertNotNull(t, "exists");
     }
@@ -38,8 +36,8 @@ public class PiSprog3PaneProviderTest {
         node.dispose();
     }
 
-    private CanSystemConnectionMemo memo;
-    private CbusNodeNVTableDataModel model;
+    private CanSystemConnectionMemo memo = null;
+    private CbusNodeNVTableDataModel model = null;
 
     @BeforeEach
     public void setUp() {
@@ -50,8 +48,10 @@ public class PiSprog3PaneProviderTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(model);
         model.dispose();
         model = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();
