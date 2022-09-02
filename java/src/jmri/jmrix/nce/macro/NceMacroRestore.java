@@ -71,7 +71,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     javax.swing.JLabel textMacro = new javax.swing.JLabel();
     javax.swing.JLabel macroNumber = new javax.swing.JLabel();
 
-    private NceTrafficController tc;
+    private final NceTrafficController tc;
 
     public NceMacroRestore(NceTrafficController t) {
         super();
@@ -165,7 +165,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 for (int i = 0; i < 10; i++) {
                     int j = i << 1;    // i = word index, j = byte index
 
-                    byte b[] = StringUtil.bytesFromHexString(macroLine[i + 1]);
+                    byte[] b = StringUtil.bytesFromHexString(macroLine[i + 1]);
 
                     macroAccy[j] = b[0];
                     macroAccy[j + 1] = b[1];

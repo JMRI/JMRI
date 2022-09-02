@@ -107,7 +107,6 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                 sendButtonActionPerformed(e);
             }
         });
-
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -118,7 +117,9 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         if (m == null) {
             macroReply.setText(Bundle.getMessage("error"));
             JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumber"), Bundle.getMessage("NceMacro"), JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("EnterMacroNumber"),
+                    Bundle.getMessage("NceMacro"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
         macroReply.setText(Bundle.getMessage("waiting"));

@@ -556,14 +556,16 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             if (deleteButton10.getText().equals(LINK)) {
                 if (!macroValid) { // Error user input incorrect
                     JOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("GetMacroNumber"), Bundle.getMessage("NceMacro"),
+                            Bundle.getMessage("GetMacroNumber"),
+                            Bundle.getMessage("NceMacro"),
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 int linkMacro = validMacro(accyTextField10.getText());
                 if (linkMacro == -1) {
                     JOptionPane.showMessageDialog(this,
-                            Bundle.getMessage("EnterMacroNumberLine10"), Bundle.getMessage("NceMacro"),
+                            Bundle.getMessage("EnterMacroNumberLine10"),
+                            Bundle.getMessage("NceMacro"),
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -608,7 +610,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         if (mN < 0) {
             macroReply.setText(Bundle.getMessage("error"));
             JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumber"), Bundle.getMessage("NceMacro"),
+                    Bundle.getMessage("EnterMacroNumber"),
+                    Bundle.getMessage("NceMacro"),
                     JOptionPane.ERROR_MESSAGE);
             macroValid = false;
             return mN;
@@ -722,7 +725,8 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         accyNum = getAccyRow(macroAccy, index, textAccy10, accyTextField10, cmdButton10);
         if (accyNum < 0) {
             JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("EnterMacroNumberLine10"), Bundle.getMessage("NceMacro"),
+                    Bundle.getMessage("EnterMacroNumberLine10"),
+                    Bundle.getMessage("NceMacro"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -742,9 +746,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         if (doWrite) {
             writeRequested = true;
-            for (int i = 0; i < macroSize; i++) {
-                macroData[i] = macroArray[i];
-            }
+            System.arraycopy(macroArray, 0, macroData, 0, macroSize);
         }
 
         // Set up a separate thread to access CS memory
@@ -778,7 +780,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                             break;
                         } else {
                             macroReply.setText(Bundle.getMessage("macroFound"));
-                            if (checkBoxEmpty.isSelected() == false) {
+                            if (!checkBoxEmpty.isSelected()) {
                                 macroSearchInc = false;
                                 macroSearchDec = false;
                                 macroValid = true;
@@ -1037,7 +1039,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     // Updates the accessory line when the user hits the command button
     private void updateAccyCmdPerformed(JTextField accyTextField, JButton cmdButton, JLabel textAccy,
             JButton deleteButton) {
-        if (macroValid == false) { // Error user input incorrect
+        if (!macroValid) { // Error user input incorrect
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("GetMacroNumber"), Bundle.getMessage("NceMacro"),
                     JOptionPane.ERROR_MESSAGE);
