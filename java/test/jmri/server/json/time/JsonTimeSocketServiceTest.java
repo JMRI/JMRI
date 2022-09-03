@@ -34,6 +34,7 @@ public class JsonTimeSocketServiceTest {
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         Timebase manager = InstanceManager.getDefault(Timebase.class);
         TimebaseTimeListener listener = new TimebaseTimeListener();
+        Assertions.assertEquals(0, listener.getTime().getTime());
         StdDateFormat formatter = new StdDateFormat();
         int rate = 60; // rate is one minute every six seconds
         Assert.assertEquals("No change listeners", 0, manager.getPropertyChangeListeners().length);
@@ -172,8 +173,12 @@ public class JsonTimeSocketServiceTest {
     
     private static class TimebaseTimeListener implements PropertyChangeListener {
 
-        private Date time = null;
-        
+        private Date time = new Date();
+
+        private TimebaseTimeListener() {
+            time.setTime(0);
+        }
+
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals("time")) {
