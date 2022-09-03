@@ -358,8 +358,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jhidrawplugin.jar
 - see jinput.jar
 
-##### jsoup-1.14.3.jar
-- version 1.14.3
+##### jsoup-1.15.3.jar
+- version 1.15.3
 - used to rebuild Help metadata
 
 ##### objenesis-2.2.jar
@@ -451,7 +451,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
 - Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
-##### mockito-core mockito-inline mockito-junit-jupiter 
+##### mockito-core mockito-inline mockito-junit-jupiter
 - version 3.5.11
 
 ##### OpenIDE Utilities
