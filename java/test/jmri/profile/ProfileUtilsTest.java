@@ -23,14 +23,14 @@ public class ProfileUtilsTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
     public void tearDown() {
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ProfileUtilsTest {
         Profile destination;
         try {
             File dir = new File(folder, "source");
-            dir.mkdirs();
+            Assertions.assertTrue(dir.mkdirs());
             source = new Profile("source", dir.getName(), dir);
             dir = new File(folder, "dest");
             destination = new Profile("destination", dir.getName(), dir);
@@ -59,7 +59,10 @@ public class ProfileUtilsTest {
             return;
         }
         File profile = new File(destination.getPath(), Profile.PROFILE);
-        if (profile.listFiles((File pathname) -> (pathname.getName().endsWith(source.getUniqueId()))).length > 0) {
+        File[] profilePaths = profile.listFiles((File pathname) ->
+            pathname.getName().endsWith(source.getUniqueId()));
+        Assertions.assertNotNull(profilePaths);
+        if ( profilePaths.length > 0 ) { 
             fail("Source ID remains in destination profile.");
         }
     }
@@ -70,10 +73,10 @@ public class ProfileUtilsTest {
         Profile destination;
         try {
             File dir = new File(folder, "source");
-            dir.mkdirs();
+            Assertions.assertTrue(dir.mkdirs());
             source = new Profile("source", dir.getName(), dir);
             dir = new File(folder, "dest");
-            dir.mkdirs();
+            Assertions.assertTrue(dir.mkdirs());
             destination = new Profile("destination", dir.getName(), dir);
             // Should cause copy() to throw IllegalArgumentException
             ProfileManager.getDefault().setActiveProfile(destination);

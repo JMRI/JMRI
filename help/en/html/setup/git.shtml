@@ -54,7 +54,7 @@
 
         <p>Next, locate the JMRI user files location directory for that profile on your computer's file system.
            To do that, go to
-            Help-&gt;Locations and press Open User Files Location.<br>
+            Help-&gt;File Locations and press [Open User Files Location].<br>
             <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682" height="139" alt="user filess location"></a><br>
             This will open a window on your desktop showing that directory.
 
@@ -111,7 +111,7 @@
         <li>Preferences -&gt; Roster -&gt; Roster -&gt; Roster Location -&gt; Reset. Do not enter a
         Roster Location. That way it will follow the User Files Location.</li>
 
-        <li>Preferences -&gt; Locations -&gt; User Files Location and set it to the JMRI folder you
+        <li>Preferences -&gt; File Locations -&gt; User Files Location and set it to the JMRI folder you
         created in with the "git clone".</li>
       </ul>
 

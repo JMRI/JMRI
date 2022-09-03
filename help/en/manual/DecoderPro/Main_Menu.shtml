@@ -522,25 +522,25 @@
       </h4>
 
       <ul>
-        <li><strong>Window Help...</strong>
+        <li><strong>Window Help</strong>
         </li>
 
-        <li><strong>General Help...</strong>
+        <li><strong>General Help</strong>
         </li>
 
-        <li><strong>License...</strong>
+        <li><strong>License</strong>
         </li>
 
-        <li><strong>Locations...</strong>
+        <li><strong>File Locations</strong>
         </li>
 
-        <li><strong>Context....</strong>
+        <li><strong>Context</strong>
         </li>
 
-        <li><strong>System Console...</strong>
+        <li><strong>System Console</strong>
         </li>
 
-        <li><strong>Upload Debugging Info...</strong>
+        <li><strong>Report Issue...</strong>
         </li>
       </ul>
 
