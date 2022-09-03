@@ -74,7 +74,7 @@
         anywhere within your Program Location as they will be lost in a JMRI upgrade.
         Unfortunately, JMRI currently defaults the Scripts Location to the Jython sample scripts
         folder located within your JMRI Program Location. To resolve this, change the Scripts
-        Location in Preferences (Preferences-&gt;Locations) so that your location will be displayed
+        Location in Preferences (Preferences-&gt;File Locations) so that your location will be displayed
         automatically.</p>
 
         <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a>

@@ -200,7 +200,7 @@
             directory to find it.</li>
           </ul>
           The easiest way to find the preferences location is to start a JMRI program, e.g.
-          DecoderPro or PanelPro, select "Locations..." from the "Help" menu and click on [User
+          DecoderPro or PanelPro, select "File Locations" from the "Help" menu and click on [User
           Files Location].<br>
           <br>
           A special treat for Windows users: if you go to the Windows Start Menu, in the JMRI

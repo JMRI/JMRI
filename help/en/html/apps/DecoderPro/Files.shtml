@@ -52,7 +52,7 @@
               </ul>
 
               <p>The easiest way to find it is to start a JMRI program, e.g. DecoderPro or
-              PanelPro, and select "Locations ..." from the "Help" menu. A special treat for
+              PanelPro, and select "File Locations" from the "Help" menu. A special treat for
               Windows users: if you go to the Windows Start Menu, in the JMRI section, you can
               select "Preferences" to have it open that directory for you.</p>
 
