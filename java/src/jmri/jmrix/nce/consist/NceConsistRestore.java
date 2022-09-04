@@ -96,7 +96,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 consistNumber.setText(Integer.toString(consistNum++));
 
                 if (line == null) { // while loop does not break out quick enough
-                    log.error("NCE consist file terminator :0000 not found");
+                    log.error("NCE consist file terminator :0000 not found"); // NOI18N
                     break;
                 }
                 
@@ -113,15 +113,16 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 }
 
                 if (!consistAddr.equalsIgnoreCase(consistLine[0])) {
-                    log.error("Restore file selected is not a vaild backup file");
-                    log.error("Consist memory address in restore file should be {} read {}",
-                            consistAddr, consistLine[0]);
+                    log.error("Restore file selected is not a valid backup file"); // NOI18N
+                    log.error("Consist memory address in restore file should be {}, read {}",
+                            consistAddr, consistLine[0]); // NOI18N
                     break;
                 }
 
                 // consist file found, give the user the choice to continue
                 if (curConsist == CS_CONSIST_MEM) {
-                    if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("RestoreTakesAwhile"),
+                    if (JOptionPane.showConfirmDialog(null,
+                            Bundle.getMessage("RestoreTakesAwhile"),
                             Bundle.getMessage("NceConsistRestore"),
                             JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                         break;
@@ -157,7 +158,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 }
                 // failed
                 if (waiting > 0) {
-                    log.error("timeout waiting for reply");
+                    log.error("timeout waiting for reply"); // NOI18N
                     break;
                 }
             }
@@ -167,15 +168,18 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             fstatus.dispose();
 
             if (fileValid) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SuccessfulRestore"),
-                        Bundle.getMessage("NceConsistRestore"), JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("SuccessfulRestore"),
+                        Bundle.getMessage("NceConsistRestore"),
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("RestoreFailed"),
-                        Bundle.getMessage("NceConsistRestore"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("RestoreFailed"),
+                        Bundle.getMessage("NceConsistRestore"),
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
             // this is the end of the try-with-resources that opens in.
-            return;
         }
     }
 
@@ -197,21 +201,21 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     @Override
     public void reply(NceReply r) {
-        log.debug("waiting for {} responses", waiting);
+        log.debug("waiting for {} responses", waiting); // NOI18N
 
         if (waiting <= 0) {
-            log.error("unexpected response");
+            log.error("unexpected response"); // NOI18N
             return;
         }
         waiting--;
         if (r.getNumDataElements() != replyLen) {
-            log.error("reply length incorrect");
+            log.error("reply length incorrect"); // NOI18N
             return;
         }
         if (replyLen == REPLY_1) {
             // Looking for proper response
             if (r.getElement(0) != NceMessage.NCE_OKAY) {
-                log.error("reply incorrect");
+                log.error("reply incorrect"); // NOI18N
             }
         }
 
@@ -224,4 +228,5 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceConsistRestore.class);
+
 }
