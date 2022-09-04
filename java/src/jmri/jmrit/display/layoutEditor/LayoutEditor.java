@@ -7023,12 +7023,55 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     public boolean deletePanel() {
-        // verify deletion
-        if (!super.deletePanel()) {
-            return false; // return without deleting if "No" response
+        if (canDeletePanel()) {
+            // verify deletion
+            if (!super.deletePanel()) {
+                return false; // return without deleting if "No" response
+            }
+            clearLayoutTracks();
+            return true;
         }
-        clearLayoutTracks();
-        return true;
+        return false;
+    }
+
+    /**
+     * Check for conditions that prevent a delete.
+     * <ul>
+     * <li>The panel has active edge connector links</li>
+     * <li>The panel is used by EntryExit</li>
+     * </ul>
+     * @return true if ok to delete
+     */
+    public boolean canDeletePanel() {
+        var messages = new ArrayList<String>();
+
+        var points = getPositionablePoints();
+        for (PositionablePoint point : points) {
+            if (point.getType() == PositionablePoint.PointType.EDGE_CONNECTOR) {
+                var panelName = point.getLinkedEditorName();
+                if (!panelName.isEmpty()) {
+                    messages.add(Bundle.getMessage("ActiveEdgeConnector", point.getId(), point.getLinkedEditorName()));
+                }
+            }
+        }
+
+        var entryExitPairs = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
+        if (!entryExitPairs.getNxSource(this).isEmpty()) {
+            messages.add(Bundle.getMessage("ActiveEntryExit"));
+        }
+
+        if (!messages.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("PanelRelationshipsError"));
+            for (String message : messages) {
+                msg.append(message);
+            }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        return messages.isEmpty();
     }
 
     /**

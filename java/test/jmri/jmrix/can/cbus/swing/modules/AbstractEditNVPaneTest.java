@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus.swing.modules;
 
-import java.awt.GraphicsEnvironment;
-
-import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -11,18 +8,19 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
- * Test simple functioning of CbusNodeInfoPane
+ * Test simple functioning of AbstractEditNVPane
  *
  * @author Andrew Crosland Copyright (C) 2021
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class AbstractEditNVPaneTest {
     
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         CbusNode nd = new CbusNode(memo, 12345);
         int [] nvs = new int[] {1, 1};
         nd.getNodeNvManager().setNVs(nvs);
@@ -31,9 +29,9 @@ public class AbstractEditNVPaneTest {
     }
     
     // Abstract class cannot be instantiated directly
-    public class AbstractEditNVPaneImpl extends AbstractEditNVPane {
+    private static class AbstractEditNVPaneImpl extends AbstractEditNVPane {
 
-        public AbstractEditNVPaneImpl(CbusNodeNVTableDataModel dataModel, CbusNode node) {
+        AbstractEditNVPaneImpl(CbusNodeNVTableDataModel dataModel, CbusNode node) {
             super(dataModel, node);
         }
 
@@ -47,8 +45,8 @@ public class AbstractEditNVPaneTest {
         }
     }
     
-    private CanSystemConnectionMemo memo;
-    private CbusNodeNVTableDataModel model;
+    private CanSystemConnectionMemo memo = null;
+    private CbusNodeNVTableDataModel model = null;
 
     @BeforeEach
     public void setUp() {
@@ -59,8 +57,10 @@ public class AbstractEditNVPaneTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(model);
         model.dispose();
         model = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

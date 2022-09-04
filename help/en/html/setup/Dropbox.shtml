@@ -84,14 +84,14 @@
         <li>Create a JMRI folder in Dropbox on the first computer.</li>
 
         <li>If you have already created items (roster entries, panels etc.) go to
-        Help&#8209;&gt;Locations and press Open User Files Location.<br>
+        Help&#8209;&gt;File Locations and press Open User Files Location.<br>
           <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682"
           height="139" alt="user files location"></a><br>
           This will open a window on your desktop showing a directory. Remember where that is,
           because you'll move items from there later.
         </li>
 
-        <li>Still on the Help&#8209;&gt;Locations window, check to see if your Roster Location is
+        <li>Still on the Help&#8209;&gt;File Locations window, check to see if your Roster Location is
         different from the User Files Location. If so, click Open Roster Location to open a window
         on that location. You'll copy files from there later.<br>
           <a href="images/Help_Locations_Roster.png"><img src="images/Help_Locations_Roster.png"
@@ -110,7 +110,7 @@
           height="157" alt="roster set"></a>
         </li>
 
-        <li>Restart JMRI and use Help &#8209;&gt; Locations to make sure everything is changed
+        <li>Restart JMRI and use Help &#8209;&gt; File Locations to make sure everything is changed
         correctly.</li>
 
         <li>If you have already created any files of the types listed at this link (see <a href=
@@ -129,7 +129,7 @@
         <li>Preferences &#8209;&gt; Roster &#8209;&gt; Roster &#8209;&gt; Roster Location &#8209;&gt; Reset. Do not enter a
         Roster Location. That way it will follow the User Files Location.</li>
 
-        <li>Preferences &#8209;&gt; Locations &#8209;&gt; User Files Location and set it to the JMRI folder you
+        <li>Preferences &#8209;&gt; File Locations &#8209;&gt; User Files Location and set it to the JMRI folder you
         created in Dropbox.</li>
       </ul>
       <!--#include virtual="/Footer.shtml" -->

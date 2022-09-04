@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>Help Menu</title><!--#include virtual="/Style.shtml" -->
+  <title>Help Menu</title>
+  <!--#include virtual="/Style.shtml" -->
 
   <style>
     .dp-center {text-align: center;}
@@ -36,40 +37,40 @@
 
       <hr>
 
-      <p><strong>Window Help...</strong>
+      <p><strong>Window Help</strong>
       </p>
 
       <blockquote>
         <p>Displays help that for the current window.</p>
       </blockquote>
 
-      <p><strong>General Help...</strong>
+      <p><strong>General Help</strong>
       </p>
 
       <blockquote>
         <p>Displays general information about DecoderPro and other JMRI programs.</p>
       </blockquote>
 
-      <p><strong>License...</strong>
+      <p><strong>License</strong>
       </p>
 
       <blockquote>
         <p>Displays the License agreement under which JMRI operates.</p>
       </blockquote>
 
-      <p><strong>Locations...</strong>
+      <p><strong>File Locations</strong>
       </p>
 
       <blockquote>
         <p>Opens an information box showing the location of JMRI programs and files related to
         DecoderPro.</p>
 
-        <p class="dp-center"><img style="width: 861px; height: 201px;" alt="Location" src=
+        <p class="dp-center"><img style="width: 861px; height: 201px;" alt="JMRI Program File Locations pane" src=
         "images/Main_Help_01.png"><br>
         </p>
       </blockquote>
 
-      <p><strong>Context...</strong>
+      <p><strong>Context</strong>
       </p>
 
       <p style="margin-left: 40px;">Opens the <strong>JMRI Context</strong> window that shows the
@@ -79,7 +80,7 @@
       "778">
       </p>
 
-      <p><strong>System Console...</strong>
+      <p><strong>System Console</strong>
       </p>
 
       <p style="margin-left: 40px;">Opens the JMRI System Console window that displays the Java
@@ -93,11 +94,11 @@
       <p><strong>Report Issue...</strong>
       </p>
 
-      <p style="margin-left: 40px;">Opens the <strong>Report Issue...</strong> Window you so that
+      <p style="margin-left: 40px;">Opens the <strong>Report Issue</strong> Window you so that
       can submit a bug report or feature request.</p>
 
       <p style="margin-left: 40px; text-align: center;"><img src="images/Main_Help_04.png" alt=
-      "help" height="311" width="577">
+      "help" height="556" width="512">
       </p>
 
       <hr>
