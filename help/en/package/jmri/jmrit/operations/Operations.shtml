@@ -3429,13 +3429,11 @@
       </p>
 
       <p>First select the car type you wish to modify. The window will then show which locations
-      and tracks can service that car type. Select or deselect the locations and tracks you want to
-      service, and press the "Save" button to modify your locations and tracks. You can also copy
-      how an existing car is serviced by your locations and apply those rules to another car. To
-      make a car type behave like another, first select the car your would like to copy, then
-      select the "copy" checkbox, the car type will now appear to the right of the checkbox, then
-      select the type of car you want to modify, and press "Save" to have both car types serviced
-      by the same locations and tracks.</p>
+        and tracks can service that car type. Select or deselect the locations and tracks you want
+        to service, and press the "Save" button to modify your locations and tracks. You can also
+        copy how an existing car is serviced by your locations and apply those rules to another car.
+        To make a car type behave like another, select the car type you would like to copy using the
+        right side "Copy Type" menu. Then select the "Copy" checkbox, and press "Save".</p>
 
       <h4 id="ModifyLocationsByCarLoad">Modify Locations by Car Load</h4>
       The tool "Modify Locations by Car Load" allows you to quickly select a car type and decide
@@ -5068,13 +5066,13 @@
       <p><img src="images/ModifyTrainsByCarType.png" alt="">
       </p>
 
-      <p>First select the car type you wish to modify. The window will then show which trains can
-      service that car type. Select or deselect the trains you want to service, and press the
-      "Save" button to modify your trains. You can also copy how an existing car is serviced by
-      your trains and apply those rules to another car. To make a car type behave like another,
-      first select the car your would like to copy, then select the "copy" checkbox, the car type
-      will now appear to the right of the checkbox, then select the type of car you want to modify,
-      and press "Save" to have both car types serviced by the same trains.</p>
+      <p>First select the car type you wish to modify using the left menu. The window will then
+        show which trains can service that car type. Select or deselect the trains you want to
+        service, and press the "Save" button to modify your trains. You can also copy how an
+        existing car is serviced by your trains and apply those rules to another car. To make a car
+        type behave like another, select the car type you would like to copy using the right side
+        "Copy Type" menu. Then select the "Copy" checkbox, and press "Save" to have both car
+        types serviced by the same trains.</p>
 
       <h4 id="ShowCarTypesServiced">Show Car Types Serviced</h4>
 
