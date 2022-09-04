@@ -42,6 +42,7 @@ public class XmlFileLocationAction extends AbstractAction {
     public void actionPerformed(ActionEvent ev) {
 
         JFrame frame = new jmri.util.JmriJFrame(); // to ensure fits
+        frame.setTitle(Bundle.getMessage("TitleFileLocations"));
 
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
