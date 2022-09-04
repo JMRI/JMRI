@@ -1174,10 +1174,12 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         final int minHeight = 50;
 
         for (GraphicsDevice gd : GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+            int width = Math.min(minWidth, frame.getWidth());
+            int height = Math.min(minHeight, frame.getHeight());
             if (frame.getLocation().getX() >= gd.getDefaultConfiguration().getBounds().getMinX()
-                    && frame.getLocation().getX()+minWidth < gd.getDefaultConfiguration().getBounds().getMaxX()
+                    && frame.getLocation().getX()+width <= gd.getDefaultConfiguration().getBounds().getMaxX()
                     && frame.getLocation().getY() >= gd.getDefaultConfiguration().getBounds().getMinY()
-                    && frame.getLocation().getY()+minHeight < gd.getDefaultConfiguration().getBounds().getMaxY()) {
+                    && frame.getLocation().getY()+height <= gd.getDefaultConfiguration().getBounds().getMaxY()) {
                 return true;
             }
         }
