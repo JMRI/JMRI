@@ -364,6 +364,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
             logixNG_Manager.activateAllLogixNGs();
         }
+        if (!GraphicsEnvironment.isHeadless()) {
+            JmriJFrame.checkWindowPositions();
+        }
 
         log.debug("End constructor");
     }

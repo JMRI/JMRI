@@ -122,6 +122,9 @@ public abstract class AppsBase {
         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
             logixNG_Manager.activateAllLogixNGs();
         }
+        if (!java.awt.GraphicsEnvironment.isHeadless()) {
+            jmri.util.JmriJFrame.checkWindowPositions();
+        }
     }
 
     /**

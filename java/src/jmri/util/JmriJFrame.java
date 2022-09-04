@@ -1,6 +1,6 @@
 package jmri.util;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
@@ -19,14 +19,26 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.InputMap;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.KeyStroke;
+
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
@@ -37,8 +49,6 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JFrame extended for common JMRI use.
@@ -1157,6 +1167,86 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return this;
     }
 
+    private static boolean windowIsVisible(JmriJFrame frame) {
+        // These are the minimal visible size of the window so that the user
+        // can select and move around the window.
+        final int minWidth = 50;
+        final int minHeight = 50;
+
+        for (GraphicsDevice gd : GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+            if (frame.getLocation().getX() >= gd.getDefaultConfiguration().getBounds().getMinX()
+                    && frame.getLocation().getX()+minWidth < gd.getDefaultConfiguration().getBounds().getMaxX()
+                    && frame.getLocation().getY() >= gd.getDefaultConfiguration().getBounds().getMinY()
+                    && frame.getLocation().getY()+minHeight < gd.getDefaultConfiguration().getBounds().getMaxY()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void checkWindowPositions() {
+        HashMap<String, JmriJFrame> invisibleFrames = new HashMap<>();
+        for (JmriJFrame j : getJmriJFrameManager()) {
+            if (!windowIsVisible(j)) {
+                invisibleFrames.put(j.getName(), j);
+            }
+        }
+
+        if (!invisibleFrames.isEmpty()) {
+
+            JmriJFrame dialog  = new JmriJFrame(true, true);
+            dialog.setTitle(Bundle.getMessage("JmriJFrame_UnreachableWindows"));
+
+            Container contentPanel = dialog.getContentPane();
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+
+            JPanel labelPanel = new JPanel();
+            labelPanel.add(new JLabel("These windows are unreachable"));
+            contentPanel.add(labelPanel);
+
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            for (String name : invisibleFrames.keySet()) {
+                listModel.addElement(name);
+            }
+            JList<String> list = new JList<>(listModel);
+            list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            JScrollPane listScrollPane = new JScrollPane(list);
+            contentPanel.add(listScrollPane);
+
+            JPanel buttonPanel = new JPanel();
+            JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+            closeButton.addActionListener((evt) -> { dialog.dispose(); });
+            buttonPanel.add(closeButton);
+            JButton moveSelectedButton = new JButton(Bundle.getMessage("JmriJFrame_MoveSelectedWindows"));
+            moveSelectedButton.addActionListener((evt) -> {
+                List<String> selection = list.getSelectedValuesList();
+                for (String name : selection) {
+                    JmriJFrame frame = invisibleFrames.get(name);
+                    if (frame != null) {
+                        frame.setLocation(0, 0);
+                        frame.setVisible(true);
+                    }
+                }
+//                dialog.dispose();
+            });
+            buttonPanel.add(moveSelectedButton);
+            JButton moveAllButton = new JButton(Bundle.getMessage("JmriJFrame_MoveAllWindows"));
+            moveAllButton.addActionListener((evt) -> {
+                for (JmriJFrame frame : invisibleFrames.values()) {
+                    frame.setLocation(0, 0);
+                    frame.setVisible(true);
+                }
+//                dialog.dispose();
+            });
+            buttonPanel.add(moveAllButton);
+            contentPanel.add(buttonPanel);
+
+            dialog.setLocationRelativeTo(null);
+            dialog.pack();
+            dialog.setVisible(true);
+        }
+    }
+
     private static JmriJFrameManager getJmriJFrameManager() {
         return InstanceManager.getOptionalDefault(JmriJFrameManager.class).orElseGet(() -> {
             return InstanceManager.setDefault(JmriJFrameManager.class, new JmriJFrameManager());
@@ -1172,6 +1262,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJFrame.class);
 
 }

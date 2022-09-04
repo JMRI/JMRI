@@ -83,6 +83,9 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         }
                     }
                 }
+                if (!java.awt.GraphicsEnvironment.isHeadless()) {
+                    jmri.util.JmriJFrame.checkWindowPositions();
+                }
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile", e);  // NOI18N
             }
