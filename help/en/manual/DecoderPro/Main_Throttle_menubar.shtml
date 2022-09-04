@@ -291,16 +291,16 @@
       </h3>
 
       <ul>
-        <li><strong>Window Help...</strong>
+        <li><strong>Window Help</strong>
         </li>
 
-        <li><strong>General Help...</strong>
+        <li><strong>General Help</strong>
         </li>
 
-        <li><strong>License...</strong>
+        <li><strong>License</strong>
         </li>
 
-        <li><strong>Locations...</strong>
+        <li><strong>File Locations</strong>
         </li>
 
         <li><strong>Context</strong>
@@ -309,7 +309,7 @@
         <li><strong>System Console</strong>
         </li>
 
-        <li><strong>Upload Debugging Info..</strong>.</li>
+        <li><strong>Report Issue...</strong>.</li>
       </ul>
 
       <hr>
@@ -318,6 +318,7 @@
         <p><a href="Main_Throttle.shtml">Back</a>
         </p>
       </div>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
