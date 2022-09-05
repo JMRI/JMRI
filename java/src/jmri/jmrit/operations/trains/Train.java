@@ -2972,11 +2972,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             // save the current status
             setOldStatusCode(getStatusCode());
             setStatusCode(CODE_RUN_SCRIPTS);
-            JmriScriptEngineManager.getDefault().initializeAllEngines(); // create
-                                                                         // the
-                                                                         // python
-                                                                         // interpreter
-                                                                         // thread
+            // create the python interpreter thread
+            JmriScriptEngineManager.getDefault().initializeAllEngines();
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
             int numberOfThreads = root.activeCount();
@@ -2996,8 +2993,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 try {
                     wait(40);
                 } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // retain if needed
-                                                        // later
+                    Thread.currentThread().interrupt();
                 }
                 if (count++ > 100) {
                     break; // 4 seconds maximum 40*100 = 4000
