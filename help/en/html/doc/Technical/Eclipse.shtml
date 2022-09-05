@@ -232,9 +232,10 @@
       <h2>JUnit Testing and Test Coverage</h2>
       <p>If you wish to run the test coverage tool, you need to add this VM argument to the run
       configuration:</p>
-      <code>
-     -Djmri.shutdownmanager=jmri.util.MockShutDownManager
-     </code>
+
+      <div class="wide">
+      <code>-Djmri.shutdownmanager=jmri.util.MockShutDownManager</code>
+      </div>
 
       <p>If you want to run a test coverage report accessing all of the tests in sub-directories,
       you'll need to create a test class that will invoke all of the tests within a directory and
@@ -301,9 +302,9 @@ public class JUnitOperationsTests {
         System.exit(result.wasSuccessful() ? 0 : 1);
     }
 }
-
 </pre>
     </div>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

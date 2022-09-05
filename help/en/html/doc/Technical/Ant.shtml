@@ -79,7 +79,10 @@
 
         <dt>Check for vulnerabilities in JMRI dependencies</dt>
 
-        <dd><code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code>
+        <dd>
+          <span class="wide">
+              <code>mvn compile net.ossindex:ossindex-maven-plugin:audit</code>
+          </span>
         </dd>
 
         <dt>Check for newer versions of JMRI dependencies</dt>

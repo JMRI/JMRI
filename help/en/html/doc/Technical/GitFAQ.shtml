@@ -759,7 +759,7 @@ can then look at the exact changes in that commit to see what went wrong.
               </blockquote>
             </li>
 
-            <li>It's now in your repository on a branch of it's own, where you can sanity test
+            <li>It's now in your repository on a branch of its own, where you can sanity test
             things as usual.</li>
 
             <li>When you are happy, push your local repo's committed content to your GitHub

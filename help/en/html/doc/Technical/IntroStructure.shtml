@@ -253,11 +253,12 @@
       <p>To get a specific Turnout instance that represents something on the layout, you make a
       request of a TurnoutManager. This is also an interface, with a similar implementation
       pattern. In turn, you got that TurnoutManager from the InstanceManager.</p>
-
+      <div class="wide">
       <pre style="font-family: monospace;">
-      TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-      Turnout turnout = manager.getTurnout("IT12");
-      </pre>
+ TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
+ Turnout turnout = manager.getTurnout("IT12");
+</pre>
+      </div>
       <p>The generic <a href="https://www.jmri.org/JavaDoc/doc/jmri/Manager.html">Manager&lt;T&gt;</a> class provides the basic interface.
       which is then extended for specifics i.e.
       <a href="https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a>.

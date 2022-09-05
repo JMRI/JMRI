@@ -32,7 +32,7 @@
       French, "de" is German, and "de_CH" is German as spoken in Switzerland.</p>
 
       <p>When Java looks for resources (see <a href="#resourcebundles">below</a>), it searches
-      first for a file with the complete current Locale at the end of it's name (e.g.
+      first for a file with the complete current Locale at the end of its name (e.g.
       foo_de_CH.properties). If that fails, it tries for a file ending in just the current Locale's
       language: foo_de.properties. And if that fails, it goes to the defaults with no suffix:
       foo.properties. A similar mechanism is used within XML files.</p>
