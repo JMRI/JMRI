@@ -1,14 +1,14 @@
 package jmri.jmrix.nce.boosterprog;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
+
+import java.awt.*;
 
 /**
  * Panel for configuring an NCE booster.
@@ -79,43 +79,50 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
 
-        add(new JLabel(Bundle.getMessage("Warn1")));
-        add(new JLabel(Bundle.getMessage("Warn2")));
-
         JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        JLabel warn = new JLabel(Bundle.getMessage("Warn1"));
+        warn.setAlignmentX(Component.LEFT_ALIGNMENT);
+        p.add(warn);
+        warn = new JLabel(Bundle.getMessage("Warn2"));
+        warn.setAlignmentX(Component.LEFT_ALIGNMENT);
+        p.add(warn);
+        box.add(p);
+
+        box.add(Box.createRigidArea(new Dimension(0,5)));
+
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         JButton b = new JButton(Bundle.getMessage("ButtonSet"));
         p.add(new JLabel(Bundle.getMessage("LabelStart")));
         start.setText("30");
         p.add(start);
+        p.add(Box.createHorizontalGlue());
         p.add(b);
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setStartPushed();
-            }
-        });
+        b.addActionListener(e -> setStartPushed());
         box.add(p);
 
         p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.setLayout(new FlowLayout());
         b = new JButton(Bundle.getMessage("ButtonSet"));
         p.add(new JLabel(Bundle.getMessage("LabelDuration")));
         length.setText("420");
         p.add(length);
+        p.add(Box.createHorizontalGlue());
         p.add(b);
-        b.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setDurationPushed();
-            }
-        });
+        b.addActionListener(e -> setDurationPushed());
         box.add(p);
 
         add(box);
+        add(Box.createVerticalGlue());
 
-        add(status);
+        p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(new JLabel(Bundle.getMessage("StatusLabel") + " "));
+        p.add(status);
         status.setText(Bundle.getMessage("StatusOK"));
+        p.setAlignmentX(Component.LEFT_ALIGNMENT);
+        add(p);
     }
 
     private AddressedProgrammer p = null;
@@ -159,7 +166,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                 public void programmingOpReply(int value, int retval) {
                 }
             });
-        } catch (ProgrammerException e) {
+        } catch (ProgrammerException ignored) {
         } finally {
             releaseProgrammer();
         }
@@ -185,7 +192,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                             public void programmingOpReply(int value, int retval) {
                             }
                         });
-                    } catch (ProgrammerException e) {
+                    } catch (ProgrammerException ignored) {
                     } finally {
                         releaseProgrammer();
                     }
@@ -208,7 +215,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
                     synchronized (this) {
                         try {
                             wait(1500);  // needed for booster to reset
-                        } catch (InterruptedException i) {
+                        } catch (InterruptedException ignored) {
                         }
                     }
                     durationPart2();
