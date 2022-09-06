@@ -144,7 +144,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             }
             shunterMode[i].setToolTipText(Bundle.getMessage("ShuntButtonToolTip"));
             add(shunterMode[i], cL);
-            if (cL.gridx == 6) {
+            if (cL.gridx == 5) {
                 cL.gridx++;
                 // add divider
                 add(new JLabel("|"), cL);
