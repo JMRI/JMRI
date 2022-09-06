@@ -58,8 +58,6 @@ public class RosterEntryPane extends javax.swing.JPanel {
     Component pane;
     RosterEntry re;
 
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-
     public RosterEntryPane(RosterEntry r) {
 
         maxSpeedSpinner.setModel(new SpinnerNumberModel(1.00d, 0.00d, 1.00d, 0.01d));
@@ -83,7 +81,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         re = r;
 
         // add options
-        id.setToolTipText(rb.getString("ToolTipID"));
+        id.setToolTipText(Bundle.getMessage("ToolTipID"));
 
         addrSel.setEnabled(false);
         addrSel.setLocked(false);
@@ -133,10 +131,10 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
 
         JPanel selPanel = addrSel.getCombinedJPanel();
-        selPanel.setToolTipText(rb.getString("ToolTipDccAddress"));
-        decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
-        decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
-        dateUpdated.setToolTipText(rb.getString("ToolTipDateUpdated"));
+        selPanel.setToolTipText(Bundle.getMessage("ToolTipDccAddress"));
+        decoderModel.setToolTipText(Bundle.getMessage("ToolTipDecoderModel"));
+        decoderFamily.setToolTipText(Bundle.getMessage("ToolTipDecoderFamily"));
+        dateUpdated.setToolTipText(Bundle.getMessage("ToolTipDateUpdated"));
         id.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -145,7 +143,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 if (checkDuplicate()) {
-                    JOptionPane.showMessageDialog(pane, rb.getString("ErrorDuplicateID"));
+                    JOptionPane.showMessageDialog(pane, Bundle.getMessage("ErrorDuplicateID"));
                 }
             }
         });
@@ -164,8 +162,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         cL.ipadx = 3;
         cL.anchor = GridBagConstraints.NORTHWEST;
         cL.insets = new Insets(0, 0, 0, 15);
-        JLabel row0Label = new JLabel(rb.getString("FieldID") + ":");
-        id.getAccessibleContext().setAccessibleName(rb.getString("FieldID"));
+        JLabel row0Label = new JLabel(Bundle.getMessage("FieldID") + ":");
+        id.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldID"));
         gbLayout.setConstraints(row0Label, cL);
         super.add(row0Label);
 
@@ -177,8 +175,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(id);
 
         cL.gridy++;
-        JLabel row1Label = new JLabel(rb.getString("FieldRoadName") + ":");
-        roadName.getAccessibleContext().setAccessibleName(rb.getString("FieldRoadName"));
+        JLabel row1Label = new JLabel(Bundle.getMessage("FieldRoadName") + ":");
+        roadName.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldRoadName"));
         gbLayout.setConstraints(row1Label, cL);
         super.add(row1Label);
 
@@ -188,8 +186,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(roadName);
 
         cL.gridy++;
-        JLabel row2Label = new JLabel(rb.getString("FieldRoadNumber") + ":");
-        roadNumber.getAccessibleContext().setAccessibleName(rb.getString("FieldRoadNumber"));
+        JLabel row2Label = new JLabel(Bundle.getMessage("FieldRoadNumber") + ":");
+        roadNumber.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldRoadNumber"));
         gbLayout.setConstraints(row2Label, cL);
         super.add(row2Label);
 
@@ -199,8 +197,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(roadNumber);
 
         cL.gridy++;
-        JLabel row3Label = new JLabel(rb.getString("FieldManufacturer") + ":");
-        mfg.getAccessibleContext().setAccessibleName(rb.getString("FieldManufacturer"));
+        JLabel row3Label = new JLabel(Bundle.getMessage("FieldManufacturer") + ":");
+        mfg.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldManufacturer"));
         gbLayout.setConstraints(row3Label, cL);
         super.add(row3Label);
 
@@ -210,8 +208,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(mfg);
 
         cL.gridy++;
-        JLabel row4Label = new JLabel(rb.getString("FieldOwner") + ":");
-        owner.getAccessibleContext().setAccessibleName(rb.getString("FieldOwner"));
+        JLabel row4Label = new JLabel(Bundle.getMessage("FieldOwner") + ":");
+        owner.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldOwner"));
         gbLayout.setConstraints(row4Label, cL);
         super.add(row4Label);
 
@@ -221,8 +219,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(owner);
 
         cL.gridy++;
-        JLabel row5Label = new JLabel(rb.getString("FieldModel") + ":");
-        model.getAccessibleContext().setAccessibleName(rb.getString("FieldModel"));
+        JLabel row5Label = new JLabel(Bundle.getMessage("FieldModel") + ":");
+        model.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldModel"));
         gbLayout.setConstraints(row5Label, cL);
         super.add(row5Label);
 
@@ -232,8 +230,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(model);
 
         cL.gridy++;
-        JLabel row6Label = new JLabel(rb.getString("FieldDCCAddress") + ":");
-        selPanel.getAccessibleContext().setAccessibleName(rb.getString("FieldDCCAddress"));
+        JLabel row6Label = new JLabel(Bundle.getMessage("FieldDCCAddress") + ":");
+        selPanel.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDCCAddress"));
         gbLayout.setConstraints(row6Label, cL);
         super.add(row6Label);
 
@@ -242,8 +240,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(selPanel);
 
         cL.gridy++;
-        JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit") + ":");
-        maxSpeedSpinner.getAccessibleContext().setAccessibleName(rb.getString("FieldSpeedLimit"));
+        JLabel row7Label = new JLabel(Bundle.getMessage("FieldSpeedLimit") + ":");
+        maxSpeedSpinner.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldSpeedLimit"));
         gbLayout.setConstraints(row7Label, cL);
         super.add(row7Label);
 
@@ -252,11 +250,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(maxSpeedSpinner);
 
         cL.gridy++;
-        JLabel row8Label = new JLabel(rb.getString("FieldComment") + ":");
+        JLabel row8Label = new JLabel(Bundle.getMessage("FieldComment") + ":");
         // ensure same font on textarea as textfield
         // as this is not true in all GUI types.
         comment.setFont(owner.getFont());
-        commentScroller.getAccessibleContext().setAccessibleName(rb.getString("FieldComment"));
+        commentScroller.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldComment"));
         gbLayout.setConstraints(row8Label, cL);
         super.add(row8Label);
 
@@ -266,8 +264,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(commentScroller);
 
         cL.gridy++;
-        JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily") + ":");
-        decoderFamily.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderFamily"));
+        JLabel row9Label = new JLabel(Bundle.getMessage("FieldDecoderFamily") + ":");
+        decoderFamily.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDecoderFamily"));
         gbLayout.setConstraints(row9Label, cL);
         super.add(row9Label);
 
@@ -277,8 +275,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(decoderFamily);
 
         cL.gridy++;
-        JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel") + ":");
-        decoderModel.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderModel"));
+        JLabel row10Label = new JLabel(Bundle.getMessage("FieldDecoderModel") + ":");
+        decoderModel.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDecoderModel"));
         gbLayout.setConstraints(row10Label, cL);
         super.add(row10Label);
 
@@ -288,11 +286,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(decoderModel);
 
         cL.gridy++;
-        JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment") + ":");
+        JLabel row11Label = new JLabel(Bundle.getMessage("FieldDecoderComment") + ":");
         // ensure same font on textarea as textfield
         // as this is not true in all GUI types.
         decoderComment.setFont(owner.getFont());
-        decoderCommentScroller.getAccessibleContext().setAccessibleName(rb.getString("FieldDecoderComment"));
+        decoderCommentScroller.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDecoderComment"));
         gbLayout.setConstraints(row11Label, cL);
         super.add(row11Label);
 
@@ -302,8 +300,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         super.add(decoderCommentScroller);
 
         cL.gridy++;
-        JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated") + ":");
-        dateUpdated.getAccessibleContext().setAccessibleName(rb.getString("FieldDateUpdated"));
+        JLabel row13Label = new JLabel(Bundle.getMessage("FieldDateUpdated") + ":");
+        dateUpdated.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldDateUpdated"));
         gbLayout.setConstraints(row13Label, cL);
         super.add(row13Label);
 

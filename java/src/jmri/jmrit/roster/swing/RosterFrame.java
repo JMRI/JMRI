@@ -117,7 +117,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     int clickDelay = 0;
-    final JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("ButtonEdit"));
+    final JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("EditOnly"));
     final JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
     final JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingTrack"));
     final JTextPane dateUpdated = new JTextPane();
@@ -266,7 +266,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         rosterMedia.setEnabled(false);
         rosterMedia.addActionListener((ActionEvent e) -> {
-            log.debug("Open programmer pressed");
+            log.debug("Open Media pressed");
             edit.setSelected(true);
             startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
         });
@@ -384,7 +384,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return true;
     }
 
-    //@TODO The disabling of the closewindow menu item doesn't quite work as this in only invoked on the closing window, and not the one that is left
+    //@TODO The disabling of the closeWindow menu item doesn't quite work as this in only invoked on the closing window, and not the one that is left
     void closeWindow(WindowEvent e) {
         saveWindowDetails();
         //Save any changes made in the roster entry details
@@ -454,7 +454,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rtable.getTable().setName(rostertableref);
 
         // Allow only one column to be sorted at a time -
-        // Java allows multiple column sorting, but to effectly persist that, we
+        // Java allows multiple column sorting, but to effectively persist that, we
         // need to be intelligent about which columns can be meaningfully sorted
         // with other columns; this bypasses the problem by only allowing the
         // last column sorted to affect sorting
@@ -1206,6 +1206,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             rtable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
+
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("Program"));
         menuItem.addActionListener((ActionEvent e1) -> startProgrammer(null, re, programmer1));
         if (re == null) {
@@ -1240,6 +1241,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         progMenu.add(contextEdit);
         popupMenu.add(progMenu);
+
         popupMenu.addSeparator();
         menuItem = new JMenuItem(Bundle.getMessage("LabelsAndMedia"));
         menuItem.addActionListener((ActionEvent e1) -> editMediaButton());
