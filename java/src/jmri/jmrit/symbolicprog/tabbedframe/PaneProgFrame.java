@@ -1475,20 +1475,20 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (activeButton == readChangesButton || activeButton == readAllButton
                 || activeButton == writeChangesButton || activeButton == writeAllButton) {
             if (activeButton == readChangesButton) {
-                for (JPanel jPanel : paneList) {
-                    activeComponents.add(((PaneProgPane) jPanel).readChangesButton);
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).readChangesButton);
                 }
             } else if (activeButton == readAllButton) {
-                for (JPanel jPanel : paneList) {
-                    activeComponents.add(((PaneProgPane) jPanel).readAllButton);
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).readAllButton);
                 }
             } else if (activeButton == writeChangesButton) {
-                for (JPanel jPanel : paneList) {
-                    activeComponents.add(((PaneProgPane) jPanel).writeChangesButton);
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).writeChangesButton);
                 }
-            } else {
-                for (JPanel jPanel : paneList) {
-                    activeComponents.add(((PaneProgPane) jPanel).writeAllButton);
+            } else if (activeButton == writeAllButton) {
+                for (int i = 0; i < paneList.size(); i++) {
+                    activeComponents.add(((PaneProgPane) paneList.get(i)).writeAllButton);
                 }
             }
             for (int i = 0; i < tabPane.getTabCount(); i++) {
@@ -1856,8 +1856,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // dispose the list of panes
-        for (JPanel jPanel : paneList) {
-            PaneProgPane p = (PaneProgPane) jPanel;
+        for (int i = 0; i < paneList.size(); i++) {
+            PaneProgPane p = (PaneProgPane) paneList.get(i);
             p.dispose();
         }
         paneList.clear();

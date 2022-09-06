@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -169,13 +168,13 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    private class RosterAttributesTableModel extends AbstractTableModel {
+    private static class RosterAttributesTableModel extends AbstractTableModel {
 
         Vector<KeyValueModel> attributes;
         String[] titles;
         boolean wasModified;
 
-        private class KeyValueModel {
+        private static class KeyValueModel {
 
             public KeyValueModel(String k, String v) {
                 key = k;
@@ -193,7 +192,7 @@ public class RosterMediaPane extends JPanel {
         }
 
         public void setModel(RosterEntry r) {
-            attributes = new Vector<KeyValueModel>(r.getAttributes().size());
+            attributes = new Vector<>(r.getAttributes().size());
             for (String key : r.getAttributes()) {
                 attributes.add(new KeyValueModel(key, r.getAttribute(key)));
             }
@@ -208,13 +207,8 @@ public class RosterMediaPane extends JPanel {
                 }
             }
             //remove undefined keys
-            Iterator<String> ite = r.getAttributes().iterator();
-            while (ite.hasNext()) {
-                if (!keyExist(ite.next())) // not very efficient algorithm!
-                {
-                    ite.remove();
-                }
-            }
+            // not very efficient algorithm!
+            r.getAttributes().removeIf(s -> !keyExist(s));
             wasModified = false;
         }
 
