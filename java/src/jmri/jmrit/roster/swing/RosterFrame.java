@@ -84,7 +84,7 @@ import org.slf4j.LoggerFactory;
  * No reset toolbar support yet. No glass pane support (See DecoderPro3Panes
  * class and usage below). Special panes (Roster entry, attributes, graphics)
  * not included. How do you pick a programmer file? (hardcoded) Initialization
- * needs partial deferal, too for 1st pane to appear.
+ * needs partial deferral, too for 1st pane to appear.
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
