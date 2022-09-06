@@ -111,7 +111,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
             // set off
             message = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
             result = service.doPost(REPORTER, "JR1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown");
+            fail("Expected exception not thrown " + result);
         } catch (JsonException ex) {
             assertEquals("Not found thrown", 404, ex.getCode());
         }
@@ -156,6 +156,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         location1.setReporter(reporter1);
         InstanceManager.getDefault(LocationManager.class).register(location1);
         ObjectNode message = mapper.createObjectNode();
+        assertNotNull(message);
         // add a reporter
         assertNotNull(manager.getReporter("IR1"));
         service.doDelete(REPORTER, "IR1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
