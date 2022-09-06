@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -34,26 +33,29 @@ public class JsonMenuItemTest {
     }
 
     @Test
-    public void testContstructor() {
-        try {
-            new JsonMenuItem(null);
-            fail("should have thrown NPE");
-        } catch (NullPointerException ex) {
-            // passes
-        }
-        try {
-            new JsonMenuItem(mapper.createObjectNode());
-            fail("should have thrown IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
-            // passes
-        }
+    public void testContstructor() throws Exception {
+
+        Exception ex = Assertions.assertThrows(NullPointerException.class,() -> {
+            setCtorNull(); });
+        Assertions.assertNotNull(ex, "should have thrown NPE");
+
+        ex = Assertions.assertThrows(IllegalArgumentException.class,() -> {
+            Assertions.assertNotNull(new JsonMenuItem(mapper.createObjectNode())); });
+        Assertions.assertNotNull(ex, "should have thrown IllegalArgumentException");
+
         ObjectNode node = mapper.createObjectNode();
         node.put("path", "/");
-        try {
-            new JsonMenuItem(node);
-        } catch (NullPointerException | IllegalArgumentException ex) {
-            fail("should not have thrown exception");
-        }
+
+        Assertions.assertDoesNotThrow( () -> {
+            Assertions.assertNotNull(new JsonMenuItem(node)); });
+
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "testing exception when null passed")
+    private void setCtorNull() throws Exception {
+        Assertions.assertNotNull(new JsonMenuItem(null));
+        Assertions.fail("Should have thrown NPE");
     }
 
     @Test
