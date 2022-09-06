@@ -106,8 +106,8 @@ public class QuickPromptUtil {
             @CheckForNull Predicate<T> validator,
             @CheckForNull Function<String, T> converter) {
         String result = oldValue == null ? "" : oldValue.toString(); // NOI18N
-        JButton okOption = new JButton(Bundle.getMessage("InputDialogOK")); // NOI18N
-        JButton cancelOption = new JButton(Bundle.getMessage("InputDialogCancel")); // NOI18N
+        JButton okOption = new JButton(Bundle.getMessage("ButtonOK")); // NOI18N
+        JButton cancelOption = new JButton(Bundle.getMessage("ButtonCancel")); // NOI18N
         okOption.setDefaultCapable(true);
 
         ValidatingInputPane<T> validating = new ValidatingInputPane<T>(converter)

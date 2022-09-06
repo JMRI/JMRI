@@ -93,6 +93,7 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         lctf.typeComboBox.setSelectedItem("Flat");
         JemmyUtil.enterClickAndLeave(lctf.clearButton);
         JemmyUtil.enterClickAndLeave(lctf.saveButton); 
+        lctf.copyComboBox.setSelectedItem("Flat");
         JemmyUtil.enterClickAndLeave(lctf.copyCheckBox);
         lctf.typeComboBox.setSelectedItem("Boxcar");
         

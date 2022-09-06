@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.modules;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
@@ -17,19 +16,19 @@ public class CbusConfigPaneProviderTest {
     @Test
     public void testCtor() {
         CbusConfigPaneProviderImpl t = new CbusConfigPaneProviderImpl();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
-    
-    // Abstract class cannot be instantiated directly
-    public class CbusConfigPaneProviderImpl extends CbusConfigPaneProvider {
 
-        public CbusConfigPaneProviderImpl() {
+    // Abstract class cannot be instantiated directly
+    private static class CbusConfigPaneProviderImpl extends CbusConfigPaneProvider {
+
+        CbusConfigPaneProviderImpl() {
             super();
         }
 
         @Override
         public String getModuleType() {
-            return null;
+            return "CbusConfigPaneProviderImpl";
         }
         
         @Override

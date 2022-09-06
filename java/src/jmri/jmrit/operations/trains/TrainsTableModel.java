@@ -213,6 +213,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILT_COLUMN:
                 return Bundle.getMessage("Built");
             case CAR_ROAD_COLUMN:
+                return Bundle.getMessage("RoadCar");
             case LOCO_ROAD_COLUMN:
                 return Bundle.getMessage("Road");
             case LOAD_COLUMN:
