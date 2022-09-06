@@ -107,9 +107,9 @@
         <div class="flex-item-70">
           <h3>Creation de l'entree</h3>
 
-          <p>After a single decoder is selected in the listing on the left, the right-hand side will open and
-          allow entering a unique roster ID and the (current) decoder address.</p>
-          <p>Continue by clicking "Open Programmer".</p>
+          <p>Une fois qu'un seul décodeur est sélectionné dans la liste de gauche, le côté droit
+            s'ouvre et permettre la saisie d'un ID de liste unique et de l'adresse (actuelle)
+            du décodeur. Continuez en cliquant sur « Ouvrir le programmeur ».</p>
         </div>
       </div>
 
@@ -121,10 +121,11 @@
         <div class="flex-item-70">
           <h3>Remplir les détails</h3>
 
-          <p>You will be presented a new pane, opening on the first tab "Roster Entry".<br>
-            Enter any information on the locomotive model and the decoder installed. None of this is
-            programmed in the decoder, except for the Address, but you can't change it here. Still,
-            you can keep some notes here to track your model's internals.</p>
+          <p>Un nouveau volet vous sera présenté, s'ouvrant sur le premier onglet « Entrée de liste ».
+            Entrez toute information sur le modèle de locomotive et le décodeur installé. Rien
+            de tout cela n'est programmé dans le décodeur, à l'exception de l'adresse, mais
+            vous ne pouvez pas le modifier ici. Encore vous pouvez garder quelques notes ici
+            pour suivre les internes de votre modèle.</p>
         </div>
       </div>
 
