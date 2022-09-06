@@ -1549,8 +1549,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         log.debug("setBusy({})", stat);
         _busy = stat;
 
-        for (JPanel jPanel : paneList) {
-            ((PaneProgPane) jPanel).enableButtons(!stat);
+        for (int i = 0; i < paneList.size(); i++) {
+            if (stat) {
+                ((PaneProgPane) paneList.get(i)).enableButtons(false);
+            } else {
+                ((PaneProgPane) paneList.get(i)).enableButtons(true);
+            }
         }
         if (!stat) {
             paneFinished();
@@ -1571,8 +1575,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readChanges() {
         log.debug("readChanges starts");
         justChanges = true;
-        for (JPanel jPanel : paneList) {
-            ((PaneProgPane) jPanel).setToRead(justChanges, true);
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane) paneList.get(i)).setToRead(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1597,8 +1601,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readAll() {
         log.debug("readAll starts");
         justChanges = false;
-        for (JPanel jPanel : paneList) {
-            ((PaneProgPane) jPanel).setToRead(justChanges, true);
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane) paneList.get(i)).setToRead(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1655,8 +1659,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeAll() {
         log.debug("writeAll starts");
         justChanges = false;
-        for (JPanel jPanel : paneList) {
-            ((PaneProgPane) jPanel).setToWrite(justChanges, true);
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane) paneList.get(i)).setToWrite(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1680,8 +1684,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeChanges() {
         log.debug("writeChanges starts");
         justChanges = true;
-        for (JPanel jPanel : paneList) {
-            ((PaneProgPane) jPanel).setToWrite(justChanges, true);
+        for (int i = 0; i < paneList.size(); i++) {
+            ((PaneProgPane) paneList.get(i)).setToWrite(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
