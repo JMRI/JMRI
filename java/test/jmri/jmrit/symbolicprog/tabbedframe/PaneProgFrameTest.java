@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
@@ -16,6 +15,7 @@ import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for PaneProgFrame.
@@ -26,8 +26,8 @@ public class PaneProgFrameTest {
 
     // test creating a pane in config file
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testPane() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
 
         // create test object
@@ -56,8 +56,8 @@ public class PaneProgFrameTest {
 
     // show me the specially-created frame
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testFrame() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
@@ -79,14 +79,14 @@ public class PaneProgFrameTest {
         p.pack();
         p.setVisible(true);
 
-        JFrame f = jmri.util.JmriJFrame.getFrame("Programming: test frame");
+        JFrame f = jmri.util.JmriJFrame.getFrame("Editing: test frame"); // frame title starts with Editing
         Assertions.assertNotNull(f, "found frame");
         p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testLoadDecoderFileUpdateMaxFnNum() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // create test Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "our id 4")
