@@ -37,13 +37,13 @@ public class PrintRosterEntry implements PaneContainer {
 
     /**
      * List of {@link jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane} JPanels.
-     * Built up at line 158 or passed as argument paneList in line 196 via
+     * Built up at line 150 or passed as argument paneList in line 188 via
      * {link #PrintRosterEntry(RosterEntry, List, FunctionLabelPane, RosterMediaPane, JmriJFrame)}
      */
-    List<JPanel> _paneList = new ArrayList<JPanel>();
-    FunctionLabelPane _flPane = null;
-    RosterMediaPane _rMPane = null;
-    JmriJFrame _parent = null;
+    List<JPanel> _paneList = new ArrayList<>();
+    FunctionLabelPane _flPane;
+    RosterMediaPane _rMPane;
+    JmriJFrame _parent;
 
     /**
      * Constructor for a Print roster item (programmer tabs) selection pane.
@@ -58,12 +58,12 @@ public class PrintRosterEntry implements PaneContainer {
         _rMPane = new RosterMediaPane(rosterEntry);
         _parent = parent;
         JLabel progStatus = new JLabel(Bundle.getMessage("StateIdle"));
-        ResetTableModel resetModel = new ResetTableModel(progStatus, null);  // no programmer
+        ResetTableModel resetModel = new ResetTableModel(progStatus, null); // no programmer
 
         log.debug("Try PrintRosterEntry {} from file {}", _rosterEntry.getDisplayName(), programmerFilename);
         XmlFile pf = new XmlFile() {
         };
-        Element base = null;  // base of programmer file
+        Element base;  // base of programmer file
         try {
             Element root = pf.rootFromName(programmerFilename);
             if (root == null) {
@@ -136,21 +136,27 @@ public class PrintRosterEntry implements PaneContainer {
         List<Element> rawPaneList = base.getChildren("pane");
         log.debug("rawPaneList size = {}", rawPaneList.size());
         for (Element elPane : rawPaneList) {
-            // load each pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
+            // load each non-empty pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
             Element _name = elPane.getChild("name"); // multiple languages
             // There is no name attribute of pane in Basic.xml nor (for the Comprehensive programmer) in include.parts.Basic.xml
             // Instead, it's a separate element inside programmer.pane, fixed 4.7.2
-            String name = "Tab name"; // temporary fake name
+            String name = "Tab name"; // temporary fake name NOI18N
             if (_name != null) {
-                name = _name.getText(); // because it's used in line 163, can't translate it now, TODO I18N
-                log.debug("Tab '{}' added", name);
+                name = _name.getText(); // because it's used in line 150, no need to translate it now
+                log.debug("Tab '{}' found", name);
             } else {
                 log.debug("Did not find name element in pane");
             }
             PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, decoderFile.getModelElement(), _rosterEntry);
             // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 278)
-            _paneList.add(p);
-            log.debug("_paneList size = {}", _paneList.size());
+            if (p.isEmpty()) {
+                rawPaneList.remove(elPane);
+                log.debug("tab {} is empty, skipping", name);
+            } else {
+                // skip tab if empty (won't show up on printout anyway)
+                _paneList.add(p);
+                log.debug("_paneList size = {}", _paneList.size());
+            }
         }
     }
 
@@ -196,10 +202,10 @@ public class PrintRosterEntry implements PaneContainer {
     /**
      * Write a series of 'pages' to graphic output using HardcopyWriter.
      *
-     * @param preview true if output sould got to the Preview panel, false to output to a printer
+     * @param preview true if output should go to the Preview panel, false to output to a printer
      */
     public void doPrintPanes(boolean preview) {
-        HardcopyWriter w = null;
+        HardcopyWriter w;
         try {
             w = new HardcopyWriter(_parent, _rosterEntry.getId(), 10, .8, .5, .5, .5, preview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
@@ -213,10 +219,10 @@ public class PrintRosterEntry implements PaneContainer {
         }
         log.debug("List size length: {}", _paneList.size());
         for (int i = 0; i < _paneList.size(); i++) {
-            log.debug("start printing page {}", i);
+            log.debug("start printing page {}", i + 1);
             PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             if (pane.includeInPrint()) {
-                pane.printPane(w);
+                pane.printPane(w); // takes care of all I18N
             }
         }
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(), w.getCharactersPerLine() + 1);
@@ -224,7 +230,7 @@ public class PrintRosterEntry implements PaneContainer {
     }
 
     /**
-     * Ceate and display a pane to the user to select which Programmer tabs to include in printout.
+     * Create and display a pane to the user to select which Programmer tabs to include in printout.
      *
      * @param preview true if output should got to a Preview pane on screen, false to output to a printer (dialog)
      */
@@ -243,31 +249,21 @@ public class PrintRosterEntry implements PaneContainer {
         JPanel select = new JPanel();
         select.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ItemsLabel")));
         // add checkboxes for all items
-        final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<JCheckBox, PaneProgPane>();
+        final Hashtable<JCheckBox, PaneProgPane> printList = new Hashtable<>();
         select.setLayout(new BoxLayout(select, BoxLayout.PAGE_AXIS));
         final JCheckBox funct = new JCheckBox(Bundle.getMessage("LabelFunctionList"));
-        funct.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _flPane.includeInPrint(funct.isSelected());
-            }
-        });
+        funct.addActionListener(evt -> _flPane.includeInPrint(funct.isSelected()));
         _flPane.includeInPrint(false);
         select.add(funct);
 
-        log.debug("List size length: {}", _paneList.size());
-        for (int i = 0; i < _paneList.size(); i++) {
-            final PaneProgPane pane = (PaneProgPane) _paneList.get(i);
+        log.debug("_paneList size length: {}", _paneList.size());
+        for (JPanel jPanel : _paneList) {
+            final PaneProgPane pane = (PaneProgPane) jPanel;
             pane.includeInPrint(false);
-            final JCheckBox item = new JCheckBox(_paneList.get(i).getName());
+            final JCheckBox item = new JCheckBox(jPanel.getName());
             // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 146)
             printList.put(item, pane);
-            item.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    pane.includeInPrint(item.isSelected());
-                }
-            });
+            item.addActionListener(evt -> pane.includeInPrint(item.isSelected()));
             select.add(item);
         }
         p1.add(select);
@@ -275,17 +271,14 @@ public class PrintRosterEntry implements PaneContainer {
         // Add "Select All" checkbox below titled set of item boxes
         JPanel selectAllBox = new JPanel();
         final JCheckBox selectAll = new JCheckBox(Bundle.getMessage("SelectAll"));
-        selectAll.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _flPane.includeInPrint(selectAll.isSelected());
-                funct.setSelected(selectAll.isSelected());
-                Enumeration<JCheckBox> en = printList.keys();
-                while (en.hasMoreElements()) {
-                    JCheckBox check = en.nextElement();
-                    printList.get(check).includeInPrint(selectAll.isSelected());
-                    check.setSelected(selectAll.isSelected());
-                }
+        selectAll.addActionListener(evt -> {
+            _flPane.includeInPrint(selectAll.isSelected());
+            funct.setSelected(selectAll.isSelected());
+            Enumeration<JCheckBox> en = printList.keys();
+            while (en.hasMoreElements()) {
+                JCheckBox check = en.nextElement();
+                printList.get(check).includeInPrint(selectAll.isSelected());
+                check.setSelected(selectAll.isSelected());
             }
         });
         selectAllBox.add(selectAll);
@@ -293,18 +286,10 @@ public class PrintRosterEntry implements PaneContainer {
 
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
         JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                frame.dispose();
-            }
-        });
-        ok.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doPrintPanes(preview);
-                frame.dispose();
-            }
+        cancel.addActionListener(evt -> frame.dispose());
+        ok.addActionListener(evt -> {
+            doPrintPanes(preview);
+            frame.dispose();
         });
         JPanel buttons = new JPanel();
         buttons.add(cancel);
@@ -314,7 +299,6 @@ public class PrintRosterEntry implements PaneContainer {
         frame.add(p1);
         frame.pack();
         frame.setVisible(true);
-
     }
 
     /**
@@ -329,7 +313,7 @@ public class PrintRosterEntry implements PaneContainer {
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         w.write(icon.getImage(), new JLabel(icon));
         w.setFontStyle(Font.BOLD);
-        //Add a number of blank lines
+        // add a number of blank lines
         int height = icon.getImage().getHeight(null);
         int blanks = (height - w.getLineAscent()) / w.getLineHeight();
 
@@ -346,4 +330,5 @@ public class PrintRosterEntry implements PaneContainer {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);
+
 }

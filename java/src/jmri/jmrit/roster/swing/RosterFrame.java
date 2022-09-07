@@ -674,7 +674,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             return hideBottomPane;
         }
         // call parent getProperty method to return any properties defined
-        // in the class heirarchy.
+        // in the class hierarchy.
         return super.getProperty(key);
     }
 
@@ -822,7 +822,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (id != null) {
             log.debug("locoSelected ID {}", id);
             if (re != null) {
-                //We remove the propertychangelistener if we had a previoulsy selected entry;
+                // we remove the propertychangelistener if we had a previously selected entry;
                 re.removePropertyChangeListener(rosterEntryUpdateListener);
             }
             // convert to roster entry
@@ -849,14 +849,21 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * Prepare a roster entry to be printed, and display a selection list.
      *
      * @see jmri.jmrit.roster.PrintRosterEntry#printPanes(boolean)
-     * @param preview true if output should got to a Preview pane on screen, false
+     * @param preview true if output should go to a Preview pane on screen, false
      *            to output to a printer (dialog)
      */
     protected void printLoco(boolean preview) {
         log.debug("Selected entry: {}", re.getDisplayName());
-        PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer2 + ".xml");
-        // uses Basic programmer (programmer2) when printing a selected entry from (this) top Roster frame
+        String programmer = "Basic";
+        if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+            programmer = this.getProgrammerConfigManager().getDefaultFile();
+        } else {
+            log.error("programmer is NULL");
+        }
+        PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer + ".xml");
+        // uses programmer set in prefs when printing a selected entry from (this) top Roster frame
         // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
+        // one would expect to see more tabs on printout using Comprehensive or just 1 tab for Basic
         pre.printPanes(preview);
     }
 
@@ -1293,7 +1300,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     /**
      * Start the identify operation after [Identify Loco] button pressed.
      * <p>
-     * This defines what happens when the identify is done.
+     * This defines what happens when Identify is done.
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
@@ -1580,7 +1587,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
             // Disable Identify in toolBar
-            // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+            // This relies on it being the 2nd item in the toolbar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
             // Because of I18N, we don't look for a particular Action name here
             getToolBar().getComponents()[1].setEnabled(false);
             serModeProCon = null;
@@ -1734,4 +1741,5 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
     }
     private final static Logger log = LoggerFactory.getLogger(RosterFrame.class);
+
 }

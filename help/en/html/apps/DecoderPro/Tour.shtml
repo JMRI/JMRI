@@ -270,10 +270,10 @@
           <img src="./images/DP5FileMenu.png" alt="The File Menu">
         </div>
         <div class="flex-item-30">
-          <img src="./images/DP5SettingsMenu.png" alt="The File Menu">
+          <img src="./images/DP5SettingsMenu.png" alt="The Settings Menu">
         </div>
         <div class="flex-item-30">
-          <img src="./images/DP5RosterMenu.png" alt="The File Menu">
+          <img src="./images/DP5RosterMenu.png" alt="The Roster Menu">
         </div>
       </div>
 

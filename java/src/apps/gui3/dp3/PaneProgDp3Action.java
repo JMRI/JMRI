@@ -472,19 +472,19 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         primaryAddr = variableModel.findVar("Short Address"); // NOI18N
 
         if (primaryAddr == null) {
-            log.debug("DCC Address monitor didnt find a Short Address variable"); // NOI18N
+            log.debug("DCC Address monitor didn't find a Short Address variable"); // NOI18N
         } else {
             primaryAddr.addPropertyChangeListener(dccNews);
         }
         extendAddr = variableModel.findVar("Long Address"); // NOI18N
         if (extendAddr == null) {
-            log.debug("DCC Address monitor didnt find an Long Address variable"); // NOI18N
+            log.debug("DCC Address monitor didn't find a Long Address variable"); // NOI18N
         } else {
             extendAddr.addPropertyChangeListener(dccNews);
         }
         addMode = (EnumVariableValue) variableModel.findVar("Address Format"); // NOI18N
         if (addMode == null) {
-            log.debug("DCC Address monitor didnt find an Address Format variable"); // NOI18N
+            log.debug("DCC Address monitor didn't find an Address Format variable"); // NOI18N
         } else {
             addMode.addPropertyChangeListener(dccNews);
         }
