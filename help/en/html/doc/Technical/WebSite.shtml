@@ -165,51 +165,55 @@
           authenticate with the administrator password to modify this file).
           <ul>
             <li>To turn on server-side includes, find the section that looks like
-
+            <div class="wide">
               <pre>
-        # This may also be "None", "All", or any combination of "Indexes",
-        # "Includes", "FollowSymLinks", "ExecCGI", or "MultiViews".
-        #
-        # Note that "MultiViews" must be named *explicitly* --- "Options All"
-        # doesn't give it to you.
-        #
-            Options Indexes FollowSymLinks MultiViews
-        </pre>Add the word "Includes" to the last line so it looks like
+  # This may also be "None", "All", or any combination of "Indexes",
+  # "Includes", "FollowSymLinks", "ExecCGI", or "MultiViews".
+  #
+  # Note that "MultiViews" must be named *explicitly* --- "Options All"
+  # doesn't give it to you.
+  #
+      Options Indexes FollowSymLinks MultiViews
+</pre>
+            </div>
 
-              <pre>
-            Options Includes Indexes FollowSymLinks MultiViews
-        </pre>
+        Add the word "Includes" to the last line, so it looks like:
+
+        <pre>
+ Options Includes Indexes FollowSymLinks MultiViews
+</pre>
             </li>
 
             <li>Now, configure the server to handle files with ".shtml" extensions. Find the
             section that looks like (the leading comment may be different):
 
               <pre>
-            #
-            # To use server-parsed HTML files
-            #
-            #AddType text/html .shtml
-            #AddHandler server-parsed .shtml
+  #
+  # To use server-parsed HTML files
+  #
+  #AddType text/html .shtml
+  #AddHandler server-parsed .shtml
         </pre>and un-comment the last two lines so that it looks like
 
               <pre>
-            #
-            # To use server-parsed HTML files
-            #
-            AddType text/html .shtml
-            AddHandler server-parsed .shtml
-        </pre>Then find the reference to the include_module and make sure it's loaded by a line
-like:
+ #
+ # To use server-parsed HTML files
+ #
+ AddType text/html .shtml
+ AddHandler server-parsed .shtml
+</pre>
+            Then find the reference to the include_module and make sure it's loaded by a line
+            like:
 
               <pre>
-        LoadModule include_module libexec/apache2/mod_include.so
+ LoadModule include_module libexec/apache2/mod_include.so
         </pre>By default, that's commented out with a leading # character.
             </li>
 
             <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to
             provide redirects</a>. We use this to allow people with old URLs in bookmarks to reach
-            the right current pages.
-              <p>Find a section that looks like:</p>
+            the right current pages.<br>
+            Find a section that looks like:
 
               <pre>
         DocumentRoot "/Library/WebServer/Documents"
@@ -223,16 +227,19 @@ like:
             #   AllowOverride FileInfo AuthConfig Limit
             #
             AllowOverride None
-        </pre>Change the last line to allow overrides (which is what a .htaccess file does):
+</pre>
+            Change the last line to allow overrides (which is what a .htaccess file does):
 
-              <pre>
-            AllowOverride All
-        </pre>Then find the reference to the rewrite_module and make sure it's loaded by a line
-like:
+            <pre>
+ AllowOverride All
+</pre>
+            Then find the reference to the rewrite_module and make sure it's loaded by a line
+            like:
 
-              <pre>
-        LoadModule rewrite_module libexec/apache2/mod_rewrite.so
-        </pre>By default, that's commented out with a leading # character.
+            <pre>
+ LoadModule rewrite_module libexec/apache2/mod_rewrite.so
+</pre>
+              By default, that's commented out with a leading # character.
               <p>JMRI's website uses index.shtml files as index pages. To make sure that those
               will display by default, e.g. if you use a partial URL like <a href=
               "https://jmri.org/download">https://jmri.org/download</a>, find the line containing
@@ -243,7 +250,7 @@ like:
               Find the follow line and make sure it's not commented out:</p>
 
               <pre>
-        LoadModule php5_module libexec/apache2/libphp5.so
+LoadModule php5_module libexec/apache2/libphp5.so
         </pre>
             </li>
           </ul>
@@ -260,18 +267,19 @@ like:
             <li>Change to the web server directory
 
               <pre>
-        cd /Library/WebServer/Documents
+ cd /Library/WebServer/Documents
         </pre><a id="locallink"></a>
             </li>
 
             <li>Set symbolic links to bring in content from the two repositories:
 
               <pre>
-        ~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website
-        </pre>where "~me/git/website" is the path to the JMRI/website repository that you just
-checked out, and "~me/git/JMRI" is the path to the JMRI/website repository. setSymLinks.sh sets up
-symbolic links that let your web server see the top of the JMRI website as if the files were
-directly present.
+ ~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website
+        </pre>
+              where "~me/git/website" is the path to the JMRI/website repository that you just
+              checked out, and "~me/git/JMRI" is the path to the JMRI/website repository.
+              <code>setSymLinks.sh</code> sets up symbolic links that let your web server see
+              the top of the JMRI website as if the files were directly present.
             </li>
           </ul>
         </li>
@@ -285,10 +293,10 @@ directly present.
       </ol>
 
       <h3 id="catalog">Installing a local XML catalog</h3>
-      Many JMRI XML files contain XIncludes that reference other XML files with URLs like
+      <p>Many JMRI XML files contain XIncludes that reference other XML files with URLs like
       "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd". When a JMRI program encounters those,
       it automatically converts those to a local file reference. Other tools, like NetBeans and
-      xmllint, don't know to do that.
+      xmllint, don't know how to do that.</p>
       <p>Installing a local XML catalog, and then telling your tools to use it, can solve this.</p>
 
       <ul>
@@ -305,24 +313,24 @@ directly present.
         might have to sudo to do this; that there's no .xml suffix on the created file; and if
         there's already a file there you'll have to manually merge the contents; but at least you
         won't have to update this in the future!):
-
+          <div class="wide">
           <pre>
-            &lt;?xml version='1.0'?&gt;
-            &lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
+  &lt;?xml version='1.0'?&gt;
+  &lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
 
-              &lt;rewriteURI uriStartString="http://jmri.org/xml/"
-             rewritePrefix="http://localhost/xml/" /&gt;
+    &lt;rewriteURI uriStartString="http://jmri.org/xml/"
+   rewritePrefix="http://localhost/xml/" /&gt;
 
-            &lt;/catalog&gt;
-            </pre>This catalog redirects all HTTP references to the "xml" directory at the JMRI
-website to the "xml" directory on your local web server.
+  &lt;/catalog&gt;
+          </pre></div>
+          This catalog redirects all HTTP references to the "xml" directory at the JMRI
+          website to the "xml" directory on your local web server.
         </li>
       </ul>
+
       <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>

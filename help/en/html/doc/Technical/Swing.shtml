@@ -85,18 +85,19 @@
       greatly reducing the number of classes that need to be loaded to populate a menu.</p>
 
       <p>To create an action, e.g. for a menu item, the simplest form is:</p>
-
+      <div class="wide">
       <pre><code>
-      new jmri.util.swing.JmriNamedPaneAction("Log4J Tree", "jmri.jmrit.log.Log4JTreePane");
-      </code></pre>The first argument is the human-readable name, and the 2nd is the name of the
-panel class.
+ new jmri.util.swing.JmriNamedPaneAction("Log4J Tree", "jmri.jmrit.log.Log4JTreePane");
+      </code></pre></div>
+        <p>The first argument is the human-readable name, and the 2nd is the name of the
+        panel class.</p>
       <p>An example of a fuller form:</p>
-
+      <div class="wide">
       <pre><code>
-      new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),<br>
-                new jmri.util.swing.sdi.JmriJFrameInterface(),<br>
-                "jmri.jmrit.log.Log4JTreePane");
-      </code></pre>
+ new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),<br>
+          new jmri.util.swing.sdi.JmriJFrameInterface(),<br>
+          "jmri.jmrit.log.Log4JTreePane");
+</code></pre></div>
 <!-- without <br> does not reflow on iPad when viewd online, causing rest of the page to shrink-->
 
       <ul>
@@ -121,16 +122,17 @@ panel class.
       <code>jmri.util.swing.JmriNamedPaneAction</code>, providing the appropriate constructors, and
       including a <code>@Override public JmriPanel makePanel()</code> method that does any
       case-specific initialization that's needed before the panel can be used. For an example (may
-      have been changed) see <a href=
+      have been changed) see </p>
+      <div class="wide"><a href=
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/loconet/swing/LnNamedPaneAction.java">
-      jmri.jmrix.loconet.swing.LnNamedPaneAction</a>.</p>
+      jmri.jmrix.loconet.swing.LnNamedPaneAction</a>.</div>
 
       <p>If none that can be used, look into using JmriAbstractAction as the base for a separate
       class implementing Action.</p>
 
       <h3>Menus, ToolsBars, Buttons, etc</h3>
-      If you're using JmriPanels as described above, JMRI also provides tools for creating menus,
-      toolbars, button fields, etc more easily.
+      <p>If you're using JmriPanels as described above, JMRI also provides tools for creating menus,
+      toolbars, button fields, etc more easily.</p>
       <p>Generic creation of menus, toolbars and navigation trees from XML definition files are
       provided by the <a href=
       "https://jmri.org/JavaDoc/doc/jmri/util/swing/JMenuUtil.html">jmri.util.swing.JMenuUtil</a>,
@@ -144,7 +146,7 @@ panel class.
       "I8N.shtml">usual way</a>.</p>
 
       <h2 id="windows">Window Control</h2>
-      JMRI provides three different ways of embedding JmriPanels in windows:
+      <p>JMRI provides three different ways of embedding JmriPanels in windows:</p>
       <ul>
         <li>The jmri.util.swing.sdi package provides the traditional JMRI "single-document
         interface", where there are multiple independent windows</li>
@@ -198,11 +200,10 @@ panel class.
 
         <li>WindowMenu</li>
       </ul>
+
       <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
   <script src="/js/main.js"></script>
 </body>
 </html>
