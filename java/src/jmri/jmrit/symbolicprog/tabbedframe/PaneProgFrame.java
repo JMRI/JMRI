@@ -67,6 +67,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     RosterEntryPane _rPane = null;
     FunctionLabelPane _flPane = null;
     RosterMediaPane _rMPane = null;
+    String _frameEntryId;
 
     List<JPanel> paneList = new ArrayList<>();
     int paneListIndex;
@@ -309,6 +310,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             JPanel temp = new JPanel();
             bottom.add(temp);
             temp.add(modePane);
+        } else {
+            // set title to Editing
+            super.setTitle(Bundle.getMessage("TitleEditPane", _frameEntryId));
         }
 
         // add space for (programming) status message
@@ -568,6 +572,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _opsMode = opsMode;
         filename = pProgrammerFile;
         mProgrammer = pProg;
+        _frameEntryId = pFrameEntryId;
 
         // create the tables
         cvModel = new CvTableModel(progStatus, mProgrammer);
@@ -652,7 +657,6 @@ abstract public class PaneProgFrame extends JmriJFrame
                         model.setProgrammer(pf);
                     }
                     log.debug("Found programmer: {}", cvModel.getProgrammer());
-
                 }
 
                 // done after setting facades in case new possibilities appear
