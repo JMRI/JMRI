@@ -2427,7 +2427,7 @@ public class PaneProgPane extends javax.swing.JPanel
         _varModel = null;
     }
 
-    public boolean isEmpty() {
+    public boolean hasEmptyLists() {
         return (varList.isEmpty() && cvList.isEmpty());
     }
 
@@ -2442,7 +2442,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
-        if (isEmpty()) {
+        if (hasEmptyLists()) {
             return;
         }
 

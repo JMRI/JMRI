@@ -149,7 +149,7 @@ public class PrintRosterEntry implements PaneContainer {
             }
             PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, decoderFile.getModelElement(), _rosterEntry);
             // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 265)
-            if (p.isEmpty()) {
+            if (p.hasEmptyLists()) {
                 rawPaneList.remove(elPane);
                 log.debug("tab {} is empty, skipping", name);
             } else {
