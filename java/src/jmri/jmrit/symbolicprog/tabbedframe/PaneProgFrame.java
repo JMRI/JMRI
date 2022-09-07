@@ -28,6 +28,7 @@ import jmri.util.JmriJFrame;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.junit.Assume;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
@@ -1479,22 +1480,27 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (activeButton == readChangesButton || activeButton == readAllButton
                 || activeButton == writeChangesButton || activeButton == writeAllButton) {
             if (activeButton == readChangesButton) {
-                for (int i = 0; i < paneList.size(); i++) {
-                    activeComponents.add(((PaneProgPane) paneList.get(i)).readChangesButton);
+                for (JPanel jPanel : paneList) {
+                    Assume.assumeTrue(jPanel instanceof PaneProgPane);
+                    activeComponents.add(((PaneProgPane) jPanel).readChangesButton);
                 }
             } else if (activeButton == readAllButton) {
-                for (int i = 0; i < paneList.size(); i++) {
-                    activeComponents.add(((PaneProgPane) paneList.get(i)).readAllButton);
+                for (JPanel jPanel : paneList) {
+                    Assume.assumeTrue(jPanel instanceof PaneProgPane);
+                    activeComponents.add(((PaneProgPane) jPanel).readAllButton);
                 }
             } else if (activeButton == writeChangesButton) {
-                for (int i = 0; i < paneList.size(); i++) {
-                    activeComponents.add(((PaneProgPane) paneList.get(i)).writeChangesButton);
+                for (JPanel jPanel : paneList) {
+                    Assume.assumeTrue(jPanel instanceof PaneProgPane);
+                    activeComponents.add(((PaneProgPane) jPanel).writeChangesButton);
                 }
-            } else if (activeButton == writeAllButton) {
-                for (int i = 0; i < paneList.size(); i++) {
-                    activeComponents.add(((PaneProgPane) paneList.get(i)).writeAllButton);
+            } else { // (activeButton == writeAllButton) {
+                for (JPanel jPanel : paneList) {
+                    Assume.assumeTrue(jPanel instanceof PaneProgPane);
+                    activeComponents.add(((PaneProgPane) jPanel).writeAllButton);
                 }
             }
+
             for (int i = 0; i < tabPane.getTabCount(); i++) {
                 rectangles.add(tabPane.getUI().getTabBounds(tabPane, i));
             }
@@ -1553,11 +1559,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         log.debug("setBusy({})", stat);
         _busy = stat;
 
-        for (int i = 0; i < paneList.size(); i++) {
+        for (JPanel jPanel : paneList) {
+            Assume.assumeTrue(jPanel instanceof PaneProgPane);
             if (stat) {
-                ((PaneProgPane) paneList.get(i)).enableButtons(false);
+                ((PaneProgPane) jPanel).enableButtons(false);
             } else {
-                ((PaneProgPane) paneList.get(i)).enableButtons(true);
+                ((PaneProgPane) jPanel).enableButtons(true);
             }
         }
         if (!stat) {
@@ -1579,8 +1586,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readChanges() {
         log.debug("readChanges starts");
         justChanges = true;
-        for (int i = 0; i < paneList.size(); i++) {
-            ((PaneProgPane) paneList.get(i)).setToRead(justChanges, true);
+        for (JPanel jPanel : paneList) {
+            Assume.assumeTrue(jPanel instanceof PaneProgPane);
+            ((PaneProgPane) jPanel).setToRead(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1605,8 +1613,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean readAll() {
         log.debug("readAll starts");
         justChanges = false;
-        for (int i = 0; i < paneList.size(); i++) {
-            ((PaneProgPane) paneList.get(i)).setToRead(justChanges, true);
+        for (JPanel jPanel : paneList) {
+            Assume.assumeTrue(jPanel instanceof PaneProgPane);
+            ((PaneProgPane) jPanel).setToRead(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1663,8 +1672,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeAll() {
         log.debug("writeAll starts");
         justChanges = false;
-        for (int i = 0; i < paneList.size(); i++) {
-            ((PaneProgPane) paneList.get(i)).setToWrite(justChanges, true);
+        for (JPanel jPanel : paneList) {
+            Assume.assumeTrue(jPanel instanceof PaneProgPane);
+            ((PaneProgPane) jPanel).setToWrite(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1688,8 +1698,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean writeChanges() {
         log.debug("writeChanges starts");
         justChanges = true;
-        for (int i = 0; i < paneList.size(); i++) {
-            ((PaneProgPane) paneList.get(i)).setToWrite(justChanges, true);
+        for (JPanel jPanel : paneList) {
+            Assume.assumeTrue(jPanel instanceof PaneProgPane);
+            ((PaneProgPane) jPanel).setToWrite(justChanges, true);
         }
         setBusy(true);
         enableButtons(false);
@@ -1860,8 +1871,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // dispose the list of panes
-        for (int i = 0; i < paneList.size(); i++) {
-            PaneProgPane p = (PaneProgPane) paneList.get(i);
+        for (JPanel jPanel : paneList) {
+            Assume.assumeTrue(jPanel instanceof PaneProgPane);
+            PaneProgPane p = (PaneProgPane) jPanel;
             p.dispose();
         }
         paneList.clear();

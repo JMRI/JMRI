@@ -148,7 +148,7 @@ public class PrintRosterEntry implements PaneContainer {
                 log.debug("Did not find name element in pane");
             }
             PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, decoderFile.getModelElement(), _rosterEntry);
-            // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 278)
+            // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 265)
             if (p.isEmpty()) {
                 rawPaneList.remove(elPane);
                 log.debug("tab {} is empty, skipping", name);
@@ -258,13 +258,15 @@ public class PrintRosterEntry implements PaneContainer {
 
         log.debug("_paneList size length: {}", _paneList.size());
         for (JPanel jPanel : _paneList) {
-            final PaneProgPane pane = (PaneProgPane) jPanel;
-            pane.includeInPrint(false);
-            final JCheckBox item = new JCheckBox(jPanel.getName());
-            // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 146)
-            printList.put(item, pane);
-            item.addActionListener(evt -> pane.includeInPrint(item.isSelected()));
-            select.add(item);
+            if (jPanel instanceof PaneProgPane) {
+                final PaneProgPane pane = (PaneProgPane) jPanel;
+                pane.includeInPrint(false);
+                final JCheckBox item = new JCheckBox(jPanel.getName());
+                // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 145)
+                printList.put(item, pane);
+                item.addActionListener(evt -> pane.includeInPrint(item.isSelected()));
+                select.add(item);
+            }
         }
         p1.add(select);
 
