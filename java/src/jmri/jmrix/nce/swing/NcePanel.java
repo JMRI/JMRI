@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JPanel extension to handle automatic creation of window title and help
- * reference for Nce panels
+ * reference for NcePanels.
  * <p>
  * For use with JmriAbstractAction, etc
  *
@@ -38,7 +38,7 @@ abstract public class NcePanel extends jmri.util.swing.JmriPanel implements NceP
             try {
                 initComponents((NceSystemConnectionMemo) context);
             } catch (Exception e) {
-                log.error("NcePanel initContext failed", e);
+                log.error("NcePanel initContext failed", e); // NOI18N
             }
         }
     }

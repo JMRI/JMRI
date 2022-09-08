@@ -993,14 +993,14 @@ this name.
       which enforces certain restrictions. For user names, that's that leading and trailing
       whitespace (spaces, tabs) are not allowed.
       <p>The code to make sure that names are in normal form has been localized to a single routine
-      for user names:<br></p>
-
-      <pre style="font-family: monospace;">
-          String userName = NamedBean.normalizeUserName(input);
-</pre><br>
-      Please use that, and only that, when creating a user name from human input or other source.
+      for user names:</p>
+      <div class="wide">
+<pre style="font-family: monospace;">
+ String userName = NamedBean.normalizeUserName(input);
+</pre></div>
+      <p>Please use that, and only that, when creating a user name from human input or other source.
       Do not explicitly call <code>String#toUpper()</code>, <code>String#strip()</code> or any
-      other formatting operation; having those spread across the code is unmaintainable.
+      other formatting operation; having those spread across the code is unmaintainable.</p>
       <p>Because system names may vary from type to type and manager to manager, there are two
       manager-specific methods of interest: <code>manager.validateSystemNameFormat(input,
       locale)</code> and <code>manager.makeSystemName(input)</code>. Since most NamedBeans are
@@ -1029,8 +1029,7 @@ this name.
       <ul>
         <li>JComboBox format:<br>
         <a href="images/ComboBox.png"><img src="images/ComboBox.png" alt="combobox"></a>
-        <span class="wide">
-          <!-- pre allowed inside span because class "wide" contains {display: block} -->
+        <div class="wide">
 <pre style="font-family: monospace;">
 import jmri.swing.NamedBeanComboBox;
 
@@ -1044,12 +1043,12 @@ selectComboBox = new <a href=
 // to get the selected item:
 selectComboBox.getSelectedItem()
 </pre>
-        </span>
+        </div>
         </li>
 
         <li>Table format:<br>
         <a href="images/TableSelector.png"><img src="images/TableSelector.png" alt="table selector"></a>
-  <span class="wide">
+  <div class="wide">
           <pre style="font-family: monospace;">
 import jmri.jmrit.picker.*;
 <a href=
@@ -1069,7 +1068,7 @@ public void valueChanged(ListSelectionEvent e) {
     System.out.println("  Selected: "+panel.getSelectedBeanHandle());
 }
 </pre>
-  </span>
+  </div>
           This allows the user to select either the system name or (non-blank) user name in a row,
           which then becomes the preferred name for the resulting <a href=
           "https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>. For more information

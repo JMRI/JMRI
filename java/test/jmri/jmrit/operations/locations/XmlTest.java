@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import java.awt.Point;
 import java.io.File;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Tests for the Operations Locations/Xml class Last manually cross-checked on
@@ -57,6 +59,20 @@ public class XmlTest extends OperationsTestCase {
         t3.addRoadName("Track 3 Road");
         t3.setRoadOption(Track.EXCLUDE_ROADS);
         t4.addTypeName("Track 4 Type");
+        
+        // test icons
+        l1.setTrainIconEast(new Point(124, 543));
+        l1.setTrainIconWest(new Point(32, 52));
+        l1.setTrainIconSouth(new Point(63, 81));
+        l1.setTrainIconNorth(new Point(23, 632));
+        l1.setTrainIconRangeX(45);
+        l1.setTrainIconRangeY(54);
+        
+        // test default print
+        l2.setDefaultPrinterName("Default Name For Printer");
+        
+        // test switch list state
+        Setup.setSwitchListRealTime(false);
         
         // test load features
         t1.addLoadName("Track 1 Load");
@@ -150,6 +166,7 @@ public class XmlTest extends OperationsTestCase {
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         Division division = dm.newDivision("testDivisionName");
         division.setComment("divisionComment");
+        l3.setDivision(division);
         
         // test comments
         t2.setComment("Track 2 comment");
@@ -292,6 +309,7 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("Boxcar"));
+                Assert.assertEquals("Location 1 printer name", "Default Name For Printer", loc.getDefaultPrinterName());
                 List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 1 has n tracks", 1, list.size());
                 Track t = list.get(0);
@@ -321,6 +339,19 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 2 car type", true, loc.acceptsTypeName("Boxcar"));
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
+                
+                // icons
+                Assert.assertEquals("Location 2 Icon East", 124, loc.getTrainIconEast().x);
+                Assert.assertEquals("Location 2 Icon East", 543, loc.getTrainIconEast().y);
+                Assert.assertEquals("Location 2 Icon West", 32, loc.getTrainIconWest().x);
+                Assert.assertEquals("Location 2 Icon West", 52, loc.getTrainIconWest().y);
+                Assert.assertEquals("Location 2 Icon North", 23, loc.getTrainIconNorth().x);
+                Assert.assertEquals("Location 2 Icon North", 632, loc.getTrainIconNorth().y);
+                Assert.assertEquals("Location 2 Icon South", 63, loc.getTrainIconSouth().x);
+                Assert.assertEquals("Location 2 Icon South", 81, loc.getTrainIconSouth().y);
+                
+                Assert.assertEquals("Location 2 Icon Range", 45, loc.getTrainIconRangeX());
+                Assert.assertEquals("Location 2 Icon Range", 54, loc.getTrainIconRangeY());
 
                 List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 2 has n tracks", 2, list.size());
@@ -372,6 +403,7 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("boxCar"));
                 Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
                 Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("Boxcar"));
+                Assert.assertEquals("Location 3 division", "testDivisionName", loc.getDivisionName());
 
                 List<Track> list = loc.getTracksByNameList(null);
                 Assert.assertEquals("Location 3 has n tracks", 1, list.size());
