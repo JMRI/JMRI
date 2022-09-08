@@ -527,7 +527,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 SwingUtilities.invokeLater(() -> {
                     engineSetFrame = new EngineSetFrame();
                     engineSetFrame.initComponents();
-                    engineSetFrame.loadEngine(engine);
+                    engineSetFrame.load(engine);
                 });
                 break;
             case EDIT_COLUMN:
