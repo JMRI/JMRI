@@ -3,7 +3,6 @@ package jmri.jmrit.dispatcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
@@ -121,7 +120,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private JCheckBoxMenuItem trainsCanBeFloated = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAllowFloat"));
     private JCheckBoxMenuItem frameAlwaysOnTop = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAlwaysOnTop"));
     private JCheckBoxMenuItem frameOnTopOnSpeedChange = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameOnTopOnSpeedChange"));
-    private boolean useOnTopOnSpeedChange;
 
     jmri.UserPreferencesManager prefMan;
 
@@ -130,8 +128,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         prefMan = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         frameHasScrollBars.setSelected(prefMan.getSimplePreferenceState(hasScrollBars));
         trainsCanBeFloated.setSelected(prefMan.getSimplePreferenceState(canFloat));
-        frameAlwaysOnTop.setSelected(prefMan.getSimplePreferenceState(alWaysOnTop));;
-        frameOnTopOnSpeedChange.setSelected(prefMan.getSimplePreferenceState(onTopOnSpeedChange));;
+        frameAlwaysOnTop.setSelected(prefMan.getSimplePreferenceState(alWaysOnTop));
+        frameOnTopOnSpeedChange.setSelected(prefMan.getSimplePreferenceState(onTopOnSpeedChange));
 
 
         autoTrainsFrame = this;
@@ -175,9 +173,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     atnn.setOnTopOnSpeedChange(frameOnTopOnSpeedChange.isSelected());
                 }
             }
-        });
-        frameOnTopOnSpeedChange.addActionListener(e -> {
-            useOnTopOnSpeedChange = frameOnTopOnSpeedChange.isSelected();
         });
 
         menuBar.add(optMenu);
@@ -357,7 +352,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     sb.append("(rev)");
                 }
                 throttleStatus.setText(sb.toString());
-                Object x = this.getParent();
                 if (useOnTopOnSpeedChange) {
                     // bring to front without getting focus
                     setAlwaysOnTop(true);
