@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Help Menu</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Help Menu</title>
+  <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -14,19 +15,19 @@
       <p>The JMRI "Help" menu contains the following items:</p>
 
       <dl style="margin-left: 2em">
-        <dt>Window Help...</dt>
+        <dt>Window Help</dt>
 
         <dd>Open the window specific help page in the browser.</dd>
 
-        <dt>General Help...</dt>
+        <dt>General Help</dt>
 
         <dd>Open the general help page in the browser.</dd>
 
-        <dt>License...</dt>
+        <dt>License</dt>
 
         <dd>Display the license for JMRI.</dd>
 
-        <dt>Locations...</dt>
+        <dt>File Locations</dt>
 
         <dd>
           <p>Display the JMRI file location information.</p>
@@ -41,10 +42,10 @@
         <dd>
           <p>Show the current test, production and installed versions.</p>
           <a href="images/help_check_for_updates.png"><img src="images/help_check_for_updates.png"
-          alt="Help Check for Updates" width="302" height="131"></a>
+          alt="Help Check for Updates" width="521" height="237"></a>
         </dd>
 
-        <dt>Context...</dt>
+        <dt>Context</dt>
 
         <dd>
           <p>Display the run time information about JMRI. This can be useful for problem
@@ -55,7 +56,7 @@
           in another program, such as email.</p>
         </dd>
 
-        <dt>System Console...</dt>
+        <dt>System Console</dt>
 
         <dd>
           Display the current contents of the session log file. See <a href=
@@ -67,9 +68,10 @@
         <dd>
           <p>Create an issue on GitHub.</p>
           <a href="images/help_report_issue.png"><img src="images/help_report_issue.png" alt=
-          "Help Report Issue" width="400" height="423"></a>
+          "Help Report Issue" width="512" height="556"></a>
         </dd>
       </dl>
+
       <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>

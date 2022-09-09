@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.Route;
@@ -140,6 +138,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             updateCarsComboBox();
         }
         updateRoute();
+        if (ae.getSource().equals(trainsComboBox)) {
+            pack();
+        }
     }
 
     private void updateRoute() {

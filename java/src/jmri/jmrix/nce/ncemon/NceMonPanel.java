@@ -72,8 +72,11 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         try {
             memo.getNceTrafficController().addNceListener(this);
         } catch (java.lang.NullPointerException e) {
-            log.error("Unable to start the NCE Command monitor");
-            JOptionPane.showMessageDialog(null, "An Error has occurred that prevents the NCE Command Monitor from being loaded.\nPlease check the System Console for more information", "No Connection", JOptionPane.WARNING_MESSAGE);
+            log.error("Unable to start the NCE Command monitor"); // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("DialogMonError"),
+                    Bundle.getMessage("DialogMonErrorTitle"),
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 

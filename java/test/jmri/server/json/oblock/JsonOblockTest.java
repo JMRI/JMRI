@@ -1,10 +1,7 @@
 package jmri.server.json.oblock;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -32,14 +29,16 @@ public class JsonOblockTest {
             constructor = JsonOblock.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
-            Assert.fail("Instance of JsonOblock created");
+            Assertions.fail("Instance of JsonOblock created");
         } catch (InvocationTargetException ex) {
             // because the constructor throws UnsupportedOperationException, and
             // that is thrown by newInstance() into an InvocationTargetException
             // we pass an InvocationTargetException that is caused by an
             // UnsupportedOperationException and fail everything else by
             // rethrowing the unexpected exception to get a stack trace
-            if (!ex.getCause().getClass().equals(UnsupportedOperationException.class)) {
+            var cause = ex.getCause();
+            Assertions.assertNotNull(cause);
+            if (!cause.getClass().equals(UnsupportedOperationException.class)) {
                 throw ex;
             }
         }

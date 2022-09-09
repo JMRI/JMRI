@@ -19,7 +19,7 @@
 
       <p>The Roster information presented in the selection box, and used for automatic selection of
       a Locomotive, is stored in a number of individual files. You can find their location by
-      choosing "Locations" from the main JMRI Help menu. Click the "Open Roster Location" button to
+      choosing "File Locations" from the main JMRI Help menu. Click the "Open Roster Location" button to
       open the directory in Finder/Explorer. More information is available on the <a href=
       "Files.shtml#location">"Configuration Files" Help page</a>. You should only use the Roster
       menu to manipulate the Roster file, to ensure that it stays self-consistent.</p>

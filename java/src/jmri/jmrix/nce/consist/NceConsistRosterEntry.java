@@ -277,8 +277,9 @@ public class NceConsistRosterEntry {
         if ((a = e.getAttribute("id")) != null) {
             _id = a.getValue();
         } else {
-            log.warn("no id attribute in consist element when reading ConsistRoster");
+            log.warn("no id attribute in consist element when reading ConsistRoster"); // NOI18N
         }
+
         if ((a = e.getAttribute("consistNumber")) != null) {
             _consistNumber = a.getValue();
         }
@@ -297,88 +298,88 @@ public class NceConsistRosterEntry {
 
         List<Element> elementList = e.getChildren("loco");
 
-        for (int i = 0; i < elementList.size(); i++) {
+        for (Element element : elementList) {
             String locoName = "";
             String locoMidNumber = "";
-            if ((a = ((elementList.get(i))).getAttribute("locoName")) != null) {
+            if ((a = element.getAttribute("locoName")) != null) {
                 locoName = a.getValue();
             }
-            if ((a = ((elementList.get(i))).getAttribute("locoMidNumber")) != null) {
+            if ((a = element.getAttribute("locoMidNumber")) != null) {
                 locoMidNumber = a.getValue();
             }
 
             if (locoName.equals("lead")) {
-                if ((a = ((elementList.get(i))).getAttribute("dccLocoAddress")) != null) {
+                if ((a = element.getAttribute("dccLocoAddress")) != null) {
                     _loco1DccAddress = a.getValue();
                 }
-                if ((a = ((elementList.get(i))).getAttribute("longAddress")) != null) {
+                if ((a = element.getAttribute("longAddress")) != null) {
                     setLoco1LongAddress(a.getValue().equals("yes"));
                 }
-                if ((a = ((elementList.get(i))).getAttribute("locoDir")) != null) {
+                if ((a = element.getAttribute("locoDir")) != null) {
                     _loco1Direction = (a.getValue());
                 }
             }
             if (locoName.equals("rear")) {
-                if ((a = ((elementList.get(i))).getAttribute("dccLocoAddress")) != null) {
+                if ((a = element.getAttribute("dccLocoAddress")) != null) {
                     _loco2DccAddress = a.getValue();
                 }
-                if ((a = ((elementList.get(i))).getAttribute("longAddress")) != null) {
+                if ((a = element.getAttribute("longAddress")) != null) {
                     setLoco2LongAddress(a.getValue().equals("yes"));
                 }
-                if ((a = ((elementList.get(i))).getAttribute("locoDir")) != null) {
+                if ((a = element.getAttribute("locoDir")) != null) {
                     _loco2Direction = (a.getValue());
                 }
             }
             if (locoName.equals("mid") && locoMidNumber.equals("1")) {
-                if ((a = ((elementList.get(i))).getAttribute("dccLocoAddress")) != null) {
+                if ((a = element.getAttribute("dccLocoAddress")) != null) {
                     _loco3DccAddress = a.getValue();
                 }
-                if ((a = ((elementList.get(i))).getAttribute("longAddress")) != null) {
+                if ((a = element.getAttribute("longAddress")) != null) {
                     setLoco3LongAddress(a.getValue().equals("yes"));
                 }
-                if ((a = ((elementList.get(i))).getAttribute("locoDir")) != null) {
+                if ((a = element.getAttribute("locoDir")) != null) {
                     _loco3Direction = (a.getValue());
                 }
             }
             if (locoName.equals("mid") && locoMidNumber.equals("2")) {
-                if ((a = ((elementList.get(i))).getAttribute("dccLocoAddress")) != null) {
+                if ((a = element.getAttribute("dccLocoAddress")) != null) {
                     _loco4DccAddress = a.getValue();
                 }
-                if ((a = ((elementList.get(i))).getAttribute("longAddress")) != null) {
+                if ((a = element.getAttribute("longAddress")) != null) {
                     setLoco4LongAddress(a.getValue().equals("yes"));
                 }
-                if ((a = ((elementList.get(i))).getAttribute("locoDir")) != null) {
+                if ((a = element.getAttribute("locoDir")) != null) {
                     _loco4Direction = (a.getValue());
                 }
             }
             if (locoName.equals("mid") && locoMidNumber.equals("3")) {
-                if ((a = ((elementList.get(i))).getAttribute("dccLocoAddress")) != null) {
+                if ((a = element.getAttribute("dccLocoAddress")) != null) {
                     _loco5DccAddress = a.getValue();
                 }
-                if ((a = ((elementList.get(i))).getAttribute("longAddress")) != null) {
+                if ((a = element.getAttribute("longAddress")) != null) {
                     setLoco5LongAddress(a.getValue().equals("yes"));
                 }
-                if ((a = ((elementList.get(i))).getAttribute("locoDir")) != null) {
+                if ((a = element.getAttribute("locoDir")) != null) {
                     _loco5Direction = (a.getValue());
                 }
             }
             if (locoName.equals("mid") && locoMidNumber.equals("4")) {
-                if ((a = ((elementList.get(i))).getAttribute("dccLocoAddress")) != null) {
+                if ((a = element.getAttribute("dccLocoAddress")) != null) {
                     _loco6DccAddress = a.getValue();
                 }
-                if ((a = ((elementList.get(i))).getAttribute("longAddress")) != null) {
+                if ((a = element.getAttribute("longAddress")) != null) {
                     setLoco6LongAddress(a.getValue().equals("yes"));
                 }
-                if ((a = ((elementList.get(i))).getAttribute("locoDir")) != null) {
+                if ((a = element.getAttribute("locoDir")) != null) {
                     _loco6Direction = (a.getValue());
                 }
             }
         }
         if (_loco1DccAddress.equals("")) {
-            log.warn("no lead loco attribute in consist element when reading ConsistRoster");
+            log.warn("no lead loco attribute in consist element when reading ConsistRoster"); // NOI18N
         }
         if (_loco2DccAddress.equals("")) {
-            log.warn("no rear loco attribute in consist element when reading ConsistRoster");
+            log.warn("no rear loco attribute in consist element when reading ConsistRoster"); // NOI18N
         }
     }
 
@@ -480,7 +481,7 @@ public class NceConsistRosterEntry {
     /**
      * Prints the roster information. Updated to allow for multiline comment
      * field. Created separate write statements for text and line feeds to work
-     * around the HardcopyWriter bug that misplaces borders
+     * around the HardcopyWriter bug that misplaces borders.
      * @param w stream to printer
      */
     public void printEntry(Writer w) {
@@ -550,8 +551,7 @@ public class NceConsistRosterEntry {
             }
 
             // If there is a comment field, then wrap it using the new
-            // wrapCommment
-            // method and print it
+            // wrapComment method and print it
             if (!(_comment.isEmpty())) {
                 Vector<String> commentVector = wrapComment(_comment, textSpace);
 

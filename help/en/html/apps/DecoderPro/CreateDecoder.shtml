@@ -43,11 +43,10 @@
 
           <p>This new file should go in the <code>decoders</code> subdirectory in the
           <code>JMRI</code> User Files Location so that the program can find it.
-          You can select "Locations..."
-          from the JMRI Help menu find the User Files Location. (See the <a href=
+          You can select "File Locations"
+          from the JMRI Help menu to find (and open) the User Files Location. (See the <a href=
           "../../doc/Technical/ProfileFileStructure.shtml"><em>configuration files page</em></a>
-          for further details about
-          how to find that directory and its contents)</p>
+          for further details about how to find that directory and its contents)</p>
 
           <p>If you're modifying a decoder definition, it is best to start with the most recent
           version, which can always be found here on the JMRI website at <a href=

@@ -108,7 +108,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Internationalization of the NCE tools was completed. New items are available for
+                  translation.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -329,7 +330,7 @@
         <h4>Uhlenbrock</h4>
             <ul>
                 <li>Added a new definition for Lissy Receiver #68600, 68610 and #68620. Use LNCV programming.</li>
-                <li>Added definitions for the UB 73310 and UB 73416 decoders</li>
+                <li>Added definitions for the UB 73310 and UB 73416 decoders.</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -384,7 +385,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>See NCE tools above.</li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -583,6 +584,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The French JMRI Help pages were updated for responsive display.<br>
+              They will appear when using the French locale, or from their own
+              <a href="https://www.jmri.org/index_fr.shtml">starting page</a>.</li>
         </ul>
 
