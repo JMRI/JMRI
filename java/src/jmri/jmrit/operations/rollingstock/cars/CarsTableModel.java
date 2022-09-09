@@ -714,7 +714,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 SwingUtilities.invokeLater(() -> {
                     csf = new CarSetFrame();
                     csf.initComponents();
-                    csf.loadCar(car);
+                    csf.load(car);
                 });
                 break;
             case EDIT_COLUMN:
