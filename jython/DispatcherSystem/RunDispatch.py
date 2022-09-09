@@ -67,6 +67,8 @@ g = None              # graph shared over classes
 
 time_to_stop_in_station = 10000   # time to stop in station in stopping mode(msec)
 
+stopping_sensor_choice = "not_set" # has value
+
 #############################################################################################
 # the file was split up to avoid errors
 # so now include the split files
@@ -234,11 +236,14 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         options,
         options[1])
         if s == JOptionPane.CLOSED_OPTION:
+            print "set closewd option true"
             self.CLOSED_OPTION = True
             return
         if s == JOptionPane.YES_OPTION:
+            print "SET OPT1"
             s1 = opt1
         else:
+            print "SET OPT2"
             s1 = opt2
         return s1
 
@@ -261,6 +266,10 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     def input(self,msg, title, default_value):
         options = None
         x = JOptionPane.showInputDialog( None, msg,title, JOptionPane.QUESTION_MESSAGE, None, options, default_value);
+        print "x = ", x
+        if x == None:
+            self.CLOSED_OPTION = True
+            return
         #x = JOptionPane.showInputDialog(None,msg)
         return x
 
@@ -592,6 +601,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def handle(self):
+        global setAllStoppingSensors
         #wait for a sensor to go active
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
         self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
@@ -603,7 +613,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         #reset button_sensors_to_watch
         self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setup_route_or_run_dispatch_sensors
 
-        # 1) modify button_sensors_to_watch so we don't keep triggering same senosr active
+        # 1) modify button_sensors_to_watch so we don't keep triggering same sensor active
         # 2) perform the correct action if a new button has been triggered
         #    note we have to see whether a new sensor has been triggered by looking at old values
 
@@ -624,7 +634,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.sensor_active_route_dispatch = sensor
                 if self.sensor_active_route_dispatch != None and self.sensor_active_route_dispatch != self.sensor_active_route_dispatch_old:
                     self.process_setup_route_or_run_dispatch_sensors(self.sensor_active_route_dispatch)
-                    self.sensor_active_route_dispatch_old = self.sensor_active_route_dispatch
+                    if stopping_sensor_choice == "setAllStoppingSensors":
+                        self.sensor_active_route_dispatch_old = None  # allow the button to be pressed again
+                    elif stopping_sensor_choice == "setNoStoppingSensors" :
+                        self.sensor_active_route_dispatch_old = None  # allow the button to be pressed again
+                    else:
+                        #stop the same button being activated if pressed
+                        self.sensor_active_route_dispatch_old = self.sensor_active_route_dispatch
                     if self.logLevel > 0: print "removing ", self.sensor_active_route_dispatch_old
 
         if len(sensor_active_all_array) > 0:
@@ -655,6 +671,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         [sensor.setKnownState(INACTIVE) for sensor in self.button_sensors if sensor != sensor_changed]
 
     def  process_setup_route_or_run_dispatch_sensors(self, sensor_changed):
+        global stopping_sensor_choice
         if self.logLevel > 0: print "sensor_changed", sensor_changed
         if sensor_changed == sensors.getSensor("setDispatchSensor"):
             sensors.getSensor("setRouteSensor").setKnownState(INACTIVE)
@@ -673,12 +690,24 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg = "modify all stopping distances?"
             opt1 = "All"
             opt2 = "From one station to another"
-            s = OptionDialog().customQuestionMessage2str(msg,title,opt1,opt2)
-            if s == opt1:
+            s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+            print "s = ", s, "self.od.CLOSED_OPTION",  self.od.CLOSED_OPTION
+            if self.od.CLOSED_OPTION == True:
+                stopping_sensor_choice = "setNoStoppingSensors"
+                #make so can select stoppingdistancesensor again
+                sensors.getSensor("setStoppingDistanceSensor").setKnownState(INACTIVE)
+                self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + \
+                                               self.setup_route_or_run_dispatch_sensors
+            elif s == opt1:
+                stopping_sensor_choice = "setAllStoppingSensors"
                 self.modify_all_stopping_distances()
+                #make so can select stoppingdistancesensor again
+                sensors.getSensor("setStoppingDistanceSensor").setKnownState(INACTIVE)
+
             else:
+                stopping_sensor_choice = "setIndividualStoppingSensors"
                 msg = "Press station buttons to select a section in order to\nset stopping length for that section"
-                OptionDialog().displayMessage(msg)
+                self.od.displayMessage(msg)
         else:
             msg = "error"
             OptionDialog().displayMessage(msg)
@@ -687,13 +716,17 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.button_sensors_to_watch = self.route_run_sensor + self.button_sensors + self.setup_route_or_run_dispatch_sensors
 
     def modify_all_stopping_distances(self):
-        title = "modify all stopping distances"
-        msg = "add subtract to existing stopping distabces?"
-        opt1 = "add to existing distances"
-        opt2 = "reset all distances"
-        s = OptionDialog().customQuestionMessage2str(msg,title,opt1,opt2)
+        title = "Modify all stopping distances"
+        msg = "Change all stopping distances?"
+        opt1 = "Increase/decrease all existing stopping distances"
+        opt2 = "Set all stopping distances to the same value"
+        s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+        if self.od.CLOSED_OPTION == True:
+            return #if one has cancelled
         #s is used in a little bit
         new_stopping_position = self.get_new_stopping_position()
+        if new_stopping_position == None:
+            return  # if one has cancelled
         for e in g.g_express.edgeSet():
             from_station_name = g.g_stopping.getEdgeSource(e)
             to_station_name = g.g_stopping.getEdgeTarget(e)
@@ -751,6 +784,15 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         #write the newtraininfo back to file
         jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo, filename)
 
+    def is_integer(self, n):
+        try:
+            if n == None: return False
+            float(n)
+        except ValueError:
+            return False
+        else:
+            return float(n).is_integer()
+
     def get_new_stopping_position(self):
         s = "redo"
         while s == "redo":
@@ -759,15 +801,16 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg ="enter how many cm to reduce the stopping distance by (-ve increase)"
             default_value = 0
             new_stopping_position = self.od.input(msg, title, default_value)
+            if not self.is_integer(new_stopping_position): return
             # print "new_stopping_position",  new_stopping_position
             # print "new_stopping_fraction", new_stopping_fraction
             if float(new_stopping_position) > 0:
-                msg = "new stopping position: " + str(round(float(new_stopping_position),1)) + " cm    (" + \
-                      str(round(float(new_stopping_position)/2.54,1)) + " inches)" + "before calculated position"
+                msg = "new stopping position: " + str(round(float(new_stopping_position),1)) + " cm (" + \
+                      str(round(float(new_stopping_position)/2.54,1)) + " inches) before calculated position."
             else:
                 sp =  0 - float(new_stopping_position)
-                msg = "new stopping position: " + str(round(float(sp),1)) + " cm    (" + \
-                      str(round(float(new_stopping_position)/2.54,1)) + " inches)" + "after calculated position"
+                msg = "new stopping position: " + str(round(float(sp),1)) + " cm (" + \
+                      str(round(float(new_stopping_position)/2.54,1)) + " inches) after calculated position"
             opt1 = "OK"
             opt2 = "redo"
             s = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
@@ -1058,7 +1101,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             #self.button_sensors_to_watch = copy.copy(self.button_sensors)
             sensor_changed.setKnownState(INACTIVE)
         elif modify_stopping_length_sensor.getKnownState() == ACTIVE:
-            self.modify_stopping_length(sensor_changed, button_sensor_name, button_station_name)
+            self.modify_individual_stopping_length(sensor_changed, button_sensor_name, button_station_name)
             sensor_changed.setKnownState(INACTIVE)
         else:
             #if run_route_sensor is active - do nothing from here
@@ -1127,6 +1170,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             opt3 = "Cancel Route"
 
             s = self.od.customQuestionMessage3str(msg,title,opt1,opt2,opt3)
+            if s == self.od.CLOSED_OPTION:
+                s = opt3  #cancel
             if s == opt2:
                 complete = True
             if s == opt3:
@@ -1150,7 +1195,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt2 = "View Route"
         reply = self.od.customQuestionMessage2(msg, title, opt1, opt2)
         sensor_changed.setKnownState(INACTIVE)
-        if reply == JOptionPane.NO_OPTION:
+        if reply == opt2:
             self.show_routes()
         if self.logLevel > 0: print ("terminated dispatch")
         return True
@@ -1159,7 +1204,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         a = jmri.jmrit.operations.routes.RoutesTableAction()
         a.actionPerformed(None)
 
-    def modify_stopping_length(self, sensor_changed, button_sensor_name, button_station_name):
+    def modify_individual_stopping_length(self, sensor_changed, button_sensor_name, button_station_name):
         msg = "selected station " + button_station_name + ". \nSelect the next station to modify the stopping length?"
         title = "Select next Station"
 
@@ -1167,7 +1212,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt2 = "Cancel stopping length modification"
 
         s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
-
+        if s == self.od.CLOSED_OPTION:
+            return False
         if s == opt2:
             return False
         if self.logLevel > 0: print "button_station_name", button_station_name
@@ -1218,7 +1264,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             opt2 = "Modify length"
 
             s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
-            if s == opt1:
+            if s == self.od.CLOSED_OPTION :
+                return
+            elif s == opt1:
                 sensor_changed.setKnownState(INACTIVE)
                 return
             if s == opt2:
@@ -1255,11 +1303,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 "   (" + str(round(previous_stopping_position/2.54, 1)) + " inches )" +\
                 "\n\nEnter new stopping position in cm:"
         new_stopping_position = self.od.input(msg, title, default_value)
+        if new_stopping_position == None: return
         # print "new_stopping_position",  new_stopping_position
         new_stopping_fraction = 1.0-(float(new_stopping_position)/float(length_of_last_section))
         # print "new_stopping_fraction", new_stopping_fraction
         msg = "new stopping fraction: "+ str(round(float(new_stopping_fraction),1)) + "\n" + \
-              "new stopping position: " + str(round(float(new_stopping_position),1)) + " cm    (" + \
+              "new stopping position: " + str(round(float(new_stopping_position),1)) + " cm    ( " + \
               str(round(float(new_stopping_position)/2.54,1)) + " inches)"
         self.od.displayMessage(msg)
         trainInfo_fwd.setStopBySpeedProfileAdjust(float(new_stopping_fraction))
