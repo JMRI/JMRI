@@ -19,7 +19,7 @@ import jmri.util.JUnitUtil;
  */
 public class SimpleTimebaseTest {
 
-    InternalSystemConnectionMemo memo;
+    private InternalSystemConnectionMemo memo = null;
 
     // test creation
     @Test
@@ -190,15 +190,16 @@ public class SimpleTimebaseTest {
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
     }
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private static class TestTimebaseTimeListener implements PropertyChangeListener {
