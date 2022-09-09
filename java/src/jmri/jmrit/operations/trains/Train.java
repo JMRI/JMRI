@@ -2,16 +2,10 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 
 import org.jdom2.Element;
@@ -23,19 +17,12 @@ import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
@@ -2205,14 +2192,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return Road and number of caboose.
      */
-    @Nonnull
     public String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
         RouteLocation rl = getCurrentRouteLocation();
         List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTrainList(this);
         for (Car car : cars) {
-            if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose()) {
-                cabooseRoadNumber = car.toString();
+            if (car.getRouteLocation() == rl && car.isCaboose()) {
+                cabooseRoadNumber =
+                        car.getRoadName().split(TrainCommon.HYPHEN)[0] + " " + TrainCommon.splitString(car.getNumber());
             }
         }
         return cabooseRoadNumber;

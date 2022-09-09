@@ -78,19 +78,21 @@
           is called "origin". You can have many remotes defined.</p>
 
           <p>Via the git command line tool you do this with this command:</p>
-
-          <pre style="font-family: monospace;">
-            $ git remote set-url --push origin https://github.com/<em>username</em>/JMRI.git
-</pre>where <code>username</code> is your github user name. You can check the current status with
-of the push and pull repositories with:
-
-          <pre style="font-family: monospace;">
-            $ git remote -v
-            origin https://github.com/JMRI/JMRI.git (fetch)
-            origin https://github.com/<em>username</em>/JMRI.git (push)
-</pre>This says that, by default, fetches and pulls come from the main JMRI/JMRI repository. When
-you push, on the other hand, it goes to your own repository.
-          <p>Once you have a copy of your changes on GitHub, it is easy to <a href=
+          <div class="wide">
+          <pre>
+ $ git remote set-url --push origin https://github.com/<em>username</em>/JMRI.git
+</pre></div>
+          where <code>username</code> is your github user name. You can check the current status with
+          of the push and pull repositories with:
+          <div class="wide">
+          <pre>
+ $ git remote -v
+ origin https://github.com/JMRI/JMRI.git (fetch)
+ origin https://github.com/<em>username</em>/JMRI.git (push)
+</pre></div>
+          <p>This says that, by default, fetches and pulls come from the main JMRI/JMRI repository. When
+          you push, on the other hand, it goes to your own repository.<br>
+          Once you have a copy of your changes on GitHub, it is easy to <a href=
           "https://help.github.com/articles/creating-a-pull-request/">generate a Pull Request</a>
           (link to GitHub):</p>
 
@@ -149,72 +151,74 @@ you push, on the other hand, it goes to your own repository.
           from.</p>
 
           <h3>Getting Started</h3>
-          The first step is to log in to GitHub and clone your own copy of the main JMRI repo. This
-          will give you a safe place to push and pull from without impacting others.
+          <p>The first step is to log in to GitHub and clone your own copy of the main JMRI repo. This
+          will give you a safe place to push and pull from without impacting others.</p>
+
           <h4>Using Git from the command line</h4>
 
           <ul>
             <li>Clone the JMRI repo to your local system (or update it):
 
               <pre style="font-family: monospace;">
-                $ git clone https://github.com/JMRI/JMRI.git
+ $ git clone https://github.com/JMRI/JMRI.git
 </pre>
               <p>or</p>
 
               <pre style="font-family: monospace;">
-                $ git fetch
+ $ git fetch
 </pre>
               <p>then</p>
-
+              <div class="wide">
               <pre style="font-family: monospace;">
-                $ git diff ...origin
-                $ git merge origin/master
-                Auto-merging ... files ...
-                CONFLICT (content): Merge conflict in <em>some_file</em>
-                Automatic merge failed; fix conflicts and then commit the result.
-                $ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...
-                $ git add <em>some_file</em>
-                $ git commit -m "Merged master fixed conflict"
-                $ git merge origin/master
-</pre>
+ $ git diff ...origin
+ $ git merge origin/master
+ Auto-merging ... files ...
+ CONFLICT (content): Merge conflict in <em>some_file</em>
+ Automatic merge failed; fix conflicts and then commit the result.
+ $ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...
+ $ git add <em>some_file</em>
+ $ git commit -m "Merged master fixed conflict"
+ $ git merge origin/master
+              </pre></div>
               <p>or</p>
 
               <pre style="font-family: monospace;">
-                $ git pull https://github.com/JMRI/JMRI.git<br>
+ $ git pull https://github.com/JMRI/JMRI.git
 </pre>
             </li>
 
             <li>Make your changes locally, test them, etc.
 
               <pre style="font-family: monospace;">
-                    $ git add <em>newfile</em>
-                    $ git rm <em>oldfile</em>
-                    $ git add .
+ $ git add <em>newfile</em>
+ $ git rm <em>oldfile</em>
+ $ git add .
 
-                    $ git status
+ $ git status
 
-                    $ git fetch
-                    $ git merge
+ $ git fetch
+ $ git merge
 </pre>
             </li>
 
             <li>Make your changes available to the community
-
+              <div class="wide">
               <pre style="font-family: monospace;">
-                    $ git commit -m <em>"commit message"</em> <em>filename</em>, <em>filename</em>
-</pre>
+ $ git commit -m <em>"commit message"</em> <em>filename</em>, <em>filename</em>
+</pre></div>
+
               <p>or</p>
-
+              <div class="wide">
               <pre style="font-family: monospace;">
-                    $ git commit -a -m <em>"commit message"</em>
-</pre>
+ $ git commit -a -m <em>"commit message"</em>
+</pre></div>
             </li>
           </ul>
 
           <h4>Using GitHub Desktop application</h4>
-          GitHub Desktop is a free application that can do many of the same things that the git
+          <p>GitHub Desktop is a free application that can do many of the same things that the git
           command-line tool does, but provides an interface that many people find easier and more
-          friendly.
+          friendly.</p>
           <p>For more on GitHub Desktop, please see our <a href="githubdesktopintro.shtml">page on
           using GitHub Desktop</a>.</p>
 
@@ -314,8 +318,9 @@ you push, on the other hand, it goes to your own repository.
             <li>And then, through the PR process, that was merged back onto the master branch
             (rightmost black dot).</li>
           </ul>
-          That basic process is used to make all the changes to the master branch, although for
-          simplicity we haven't shown all the details for all of them.
+
+          <p>That basic process is used to make all the changes to the master branch, although for
+          simplicity we haven't shown all the details for all of them.</p>
           <p>Sometimes, your development work can take a while. Maybe you do it in several phases,
           making multiple commits. Before you're finally ready to merge it back into the common
           code with via a Pull Request (PR), somebody else can make a change on the master branch.
@@ -387,16 +392,17 @@ you push, on the other hand, it goes to your own repository.
                 <li>To create a branch called "<em>branchname</em>", you do<br>
 
                   <pre style="font-family: monospace;">
-                    git checkout -b <em>branchname</em>
-</pre>The "-b" says to create the branch. To switch to an existing branch, just leave out that
-option:<br>
+ git checkout -b <em>branchname</em>
+</pre>
+                  The "-b" says to create the branch. To switch to an existing branch, just leave out that
+                  option:<br>
 
                   <pre style="font-family: monospace;">
-                    git checkout <em>branchname</em>
+ git checkout <em>branchname</em>
 </pre>To see all the current branches, do<br>
 
                   <pre style="font-family: monospace;">
-                    git branch
+ git branch
 </pre>
                 </li>
 
@@ -404,13 +410,14 @@ option:<br>
                 keep your branch up to date by merging those changes in with your branch<br>
 
                   <pre style="font-family: monospace;">
-                    git checkout <em>branchname</em>
-                    git merge -m"merging in current contents of master" master
-</pre>(If you leave off the message option, you may be prompted to add one in an editor) If any
-changes were picked up and merged in, you can then commit them to your branch:
+ git checkout <em>branchname</em>
+ git merge -m"merging in current contents of master" master
+</pre>
+                  (If you leave off the message option, you may be prompted to add one in an editor) If any
+                  changes were picked up and merged in, you can then commit them to your branch:
 
                   <pre style="font-family: monospace;">
-                    git commit -a
+ git commit -a
 </pre>
                 </li>
 
@@ -419,17 +426,17 @@ changes were picked up and merged in, you can then commit them to your branch:
                   with<br></p>
 
                   <pre style="font-family: monospace;">
-                    git checkout master
-                    git merge -m"merging to master" <em>branchname</em>
-                    git commit -a
+ git checkout master
+ git merge -m"merging to master" <em>branchname</em>
+ git commit -a
 </pre>
                 </li>
 
                 <li>You can then delete your branch (if you're finally done with it) with<br>
 
                   <pre style="font-family: monospace;">
-                    git checkout master
-                    git branch -d branchname
+ git checkout master
+ git branch -d branchname
 </pre>
                 </li>
               </ul>
@@ -475,20 +482,20 @@ changes were picked up and merged in, you can then commit them to your branch:
             <li>Arnie commits it to local repository, and then pushes it to his GitHub repository.
 
               <pre style="font-family: monospace;">
-                git checkout arnie-great-tool
-                (work on changes)
-                git commit -m"Added support for the Frobnab 2000"
-                git push
+ git checkout arnie-great-tool
+ (work on changes)
+ git commit -m"Added support for the Frobnab 2000"
+ git push
 </pre>
             </li>
 
             <li>Bill can then get that by pulling it from Arnie's repository.
 
               <pre style="font-family: monospace;">
-                git remote add https://github.com/arnie/JMRI.git arnie
+ git remote add https://github.com/arnie/JMRI.git arnie
 
-                git fetch arnie arnie-great-tool
-                git checkout arnie-great-tool
+ git fetch arnie arnie-great-tool
+ git checkout arnie-great-tool
 </pre>where the 1st part of the "remote add" is the URL for Arnie's repository, and you just have
 to do that command once to define "arnie" as an alias you can use in "git fetch".
             </li>
@@ -497,14 +504,14 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
             that he wants Arnie to have, he does the same process in reverse:
 
               <pre style="font-family: monospace;">
-                git commit -m"Fixed a bug in sternerstat handling"
-                git push
+ git commit -m"Fixed a bug in sternerstat handling"
+ git push
 </pre>which commits the changes and pushes them up into Bill's repository on Github.
               <p>Then Arnie can merge those changes into his own copy with:</p>
 
               <pre style="font-family: monospace;">
-                git checkout arnie-great-tool
-                git pull https://github.com/bill/JMRI.git arnie-great-tool
+ git checkout arnie-great-tool
+ git pull https://github.com/bill/JMRI.git arnie-great-tool
 </pre>
             </li>
           </ol>
@@ -625,7 +632,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
           <p>Pull requests are just a special case of a branch. If you want to test them before
           merging them into master, you can bring them into your local repository and work with
           them. <a href="images/GitHubPullPRLinks.png"><img src="images/GitHubPullPRLinks.png"
-          class="floatRight"alt="GitHub Web PR screen"></a></p>
+          class="floatRight" alt="GitHub Web PR screen"></a></p>
 
           <p>In some cases, GitHub Web makes specific instructions available right on the
           pull-request itself. Look near the bottom of the discussion thread, in the last
@@ -650,10 +657,11 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
             </li>
 
             <li>Next, pull that branch onto your own machine with the command:
-
+              <div class="wide">
               <pre style="font-family: monospace;">
-        git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
-</pre>where you have to replace each underlined value:
+ git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
+</pre></div>
+              where you have to replace each underlined value:
               <ul>
                 <li>Change "user" to the correct GitHub user name</li>
 
@@ -662,7 +670,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
 
                 <li>Change "local-branch" to what you want to call the branch on your own machine.
                 <em>This must not exist already</em>. Something like "me-user-branch" will remind
-                you of who's repository you pulled it from, while marking as subsequent changes as
+                you of whose repository you pulled it from, while marking as subsequent changes as
                 yours if you later share it with somebody else. (It's recommended that people start
                 their branch names with their own name, which simplifies all sorts of
                 operations)</li>
@@ -672,8 +680,7 @@ to do that command once to define "arnie" as an alias you can use in "git fetch"
             <li>The branch now exists in your machine, and you can just move to it:
 
               <pre style="font-family: monospace;">
-        git checkout <u>local-branch</u>
-
+ git checkout <u>local-branch</u>
 </pre>then compile, test, etc. as you'd like. You can even commit and share changes if you'd like,
 because this is now your own development branch: It started at the other person's, but it's now
 your own.
@@ -693,38 +700,39 @@ your own.
           bad version:</p>
 
           <pre style="font-family: monospace;">
-        git checkout 23482341
+ git checkout 23482341
 </pre>You start the bisect process:
 
           <pre style="font-family: monospace;">
-        git bisect start
-        git bisect bad
-        git bisect good v4.9.1
-</pre>I.e. set up your branch <u>with</u> the problem, start 'git bisect', tell it the problem is
-visible here and now, then tell it where there's a good version to search through. Git will sort
-out the possible revision path(s) where the problem can lie and devise an optimal search. Then it
-will checkout some place in the middle and tell you "Bisecting: 6 revisions left to test after
-this" or something like this.
+ git bisect start
+ git bisect bad
+ git bisect good v4.9.1
+</pre>
+          <p>I.e. set up your branch <u>with</u> the problem, start 'git bisect', tell it the problem is
+          visible here and now, then tell it where there's a good version to search through. Git will sort
+          out the possible revision path(s) where the problem can lie and devise an optimal search. Then it
+          will checkout some place in the middle and tell you "Bisecting: 6 revisions left to test after
+          this" or something like this.</p>
           <p>Test that code:</p>
 
           <pre style="font-family: monospace;">
-        ant clean tests
-</pre>(and whatever you need to recreate). One you know if it's good or bad, you say
+ ant clean tests
+</pre>(and whatever you need to recreate). Once you know if it's good or bad, you say
 
           <pre style="font-family: monospace;">
-        git bisect good
+ git bisect good
 </pre>
           <p>or</p>
 
           <pre style="font-family: monospace;">
-        git bisect bad
+ git bisect bad
 </pre>and repeat. Git will do a good job of giving you the minimal number of tests to do, and in
 the end will show you the commit that turned "good" into "bad" - not the PR, the single commit. You
 can then look at the exact changes in that commit to see what went wrong.
           <p>After "git bisect" is finished, end the process with</p>
 
           <pre style="font-family: monospace;">
-        git bisect reset
+ git bisect reset
 </pre>to get back to where you started.
         </dd>
 
@@ -751,7 +759,7 @@ can then look at the exact changes in that commit to see what went wrong.
               </blockquote>
             </li>
 
-            <li>It's now in your repository on a branch of it's own, where you can sanity test
+            <li>It's now in your repository on a branch of its own, where you can sanity test
             things as usual.</li>
 
             <li>When you are happy, push your local repo's committed content to your GitHub

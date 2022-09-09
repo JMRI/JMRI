@@ -1459,6 +1459,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *
      * @return the rosterGroups
      */
+    @Nonnull
     public HashMap<String, RosterGroup> getRosterGroups() {
         return new HashMap<>(rosterGroups);
     }

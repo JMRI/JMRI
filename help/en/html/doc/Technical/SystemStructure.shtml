@@ -27,8 +27,8 @@
       <!-- =================================================== -->
 
       <h2>Code Structure</h2>
-      <a href="images/JmrixPackageStructure.png"><img src="images/JmrixPackageStructure.png" class=
-      "floatRight" height="50%" width="50%" alt="jmrix package structure"></a> The code for a
+      <p><a href="images/JmrixPackageStructure.png"><img src="images/JmrixPackageStructure.png" class=
+      "floatRight" height="50%" width="50%" alt="jmrix package structure"></a>The code for a
       general type, like "LocoNet connections" or "NCE connections", should be gathered in a
       specific package right under <code><a href=
       "https://jmri.org/JavaDoc/doc/jmri/jmrix/package-summary.html">jmri.jmrix</a></code> e.g.
@@ -39,7 +39,7 @@
       In the preferences dialog and <code>JmrixConfigPane</code> main configuration code, this
       level is called the "manufacturer selection". It provides a level of grouping, which we may
       someday want to use for e.g. providing separate updates for specific hardware, while still
-      separating the system-specific code from the system-independent parts of JMRI.
+      separating the system-specific code from the system-independent parts of JMRI.</p>
       <p>Within that, the code should be separated further by putting specific hardware options
       into their own subpackages, for example</p>
 
@@ -57,7 +57,7 @@
       "Swing.shtml">swing subpackage</a> or at a further level within the swing subpackage.</p>
 
       <h2>Normal Operation</h2>
-      The key to normal operation (after start up and before shut down) is a <code><a href=
+      <p>The key to normal operation (after start up and before shut down) is a <code><a href=
       "https://jmri.org/JavaDoc/doc/jmri/jmrix/SystemConnectionMemo.html">SystemConnectionMemo</a></code>
       object that provides all necessary access to the system connection's objects. For example,
       the <code><a href=
@@ -68,12 +68,13 @@
       find the consistent set associated with one specific connection of a multiple-connection
       setup, even when there are multiple connections of a specific type. There are also a few
       tools that work with the <code>SystemConnectionManager</code> objects themselves after
-      obtaining them from the <code>InstanceManager</code>.
+      obtaining them from the <code>InstanceManager</code>.</p>
+
       <h2>Initialization</h2>
-      We don't directly persist the SystemConnectionMemo. This is partly for historical reasons,
+      <p>We don't directly persist the SystemConnectionMemo. This is partly for historical reasons,
       but it also reflects the level of abstraction: A SystemConnectionMemo is at the level of a
       "LocoNet connection" or a "NCE connection", and there's a lot of specific information below
-      it to configure one of many possible such connections.
+      it to configure one of many possible such connections.</p>
       <p>Instead, configuration of the connection is from the bottom up: From the most specific
       code up to the general. The "Adapter" object connects directly to the system, e.g. managing a
       serial link, and then builds up the objects that work with that link, including all the
@@ -81,11 +82,11 @@
       specified via the type of that link and what's on the other end of it.</p>
 
       <h3>"Simple" Initialization Sequence</h3>
-      This section describes the LocoNet implementation of the new (post-multiple) configuration
+      <p>This section describes the LocoNet implementation of the new (post-multiple) configuration
       system. This is similar for LocoBuffer, LocoBuffer-USB, PR3, etc connections, but we use the
       specific LocoBuffer-USB case for concreteness. This sequence picks up after the basic startup
       of the application itself, see the <a href="AppStructure.shtml">App Structure page</a> for
-      that.
+      that.</p>
       <p>There are several objects involved in startup:</p>
 
       <ul>
@@ -103,26 +104,27 @@
       </ul>
 
       <p>The profile XML file contains a connection element that drives the configuration:</p>
-
+      <div class="wide">
       <pre>
-        &lt;connection xmlns="" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml"
-                                disabled="no" manufacturer="Digitrax" port="/dev/tty.usbserial-LWPMMU13"
-                                speed="57,600 baud" systemPrefix="L" userName="LocoNet"&gt;
-            &lt;options&gt;
-                &lt;option&gt;
-                    &lt;name&gt;CommandStation&lt;/name&gt;
-                    &lt;value&gt;DCS50 (Zephyr)&lt;/value&gt;
-                &lt;/option&gt;
-                &lt;option&gt;
-                    &lt;name&gt;TurnoutHandle&lt;/name&gt;
-                    &lt;value&gt;Normal&lt;/value&gt;
-                &lt;/option&gt;
-            &lt;/options&gt;
-        &lt;/connection&gt;
-      </pre><a href="images/LocoNetConnectionStartSequence.png"><img src=
-"images/LocoNetConnectionStartSequence.png" class="floatRight" height="40%" width="40%" alt=
-"start sequence"></a> Initialization proceeds through multiple steps (click on the diagram to
-expand it):
+&lt;connection xmlns="" class="jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml"
+        disabled="no" manufacturer="Digitrax" port="/dev/tty.usbserial-LWPMMU13"
+        speed="57,600 baud" systemPrefix="L" userName="LocoNet"&gt;
+  &lt;options&gt;
+    &lt;option&gt;
+      &lt;name&gt;CommandStation&lt;/name&gt;
+      &lt;value&gt;DCS50 (Zephyr)&lt;/value&gt;
+    &lt;/option&gt;
+    &lt;option&gt;
+      &lt;name&gt;TurnoutHandle&lt;/name&gt;
+      &lt;value&gt;Normal&lt;/value&gt;
+    &lt;/option&gt;
+  &lt;/options&gt;
+&lt;/connection&gt;
+      </pre></div>
+      <p><a href="images/LocoNetConnectionStartSequence.png"><img src=
+      "images/LocoNetConnectionStartSequence.png" class="floatRight" height="40%" width="40%" alt=
+      "start sequence"></a> Initialization proceeds through multiple steps (click on the diagram to
+      expand it):</p>
       <ul>
         <li>An object of type
         <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code> is
@@ -182,26 +184,27 @@ expand it):
               <code>jmri.jmrix.loconet.locobufferusb.configurexml.ConnectionConfigXml</code> by
               invoking <code>this.register(new ConnectionConfig(adapter))</code>, which in turn is
               implemented in <code>jmri.jmrix.configurexml.AbstractConnectionConfigXml</code> as
-
               <pre>
-        protected void register(ConnectionConfig c) {
-            c.register();
-        }
-                </pre>The <code>ConnectionConfig c</code> here is of type
-<code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> which extends
-<code>jmri.jmrix.AbstractSerialConnectionConfig</code> which extends
-<code>jmri.jmrix.AbstractConnectionConfig</code>. In <code>AbstractConnectionConfig</code>,
-finally, <code>register()</code> does:
+protected void register(ConnectionConfig c) {
+    c.register();
+}
+</pre>
+              The <code>ConnectionConfig c</code> here is of type
+              <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> which extends
+              <code>jmri.jmrix.AbstractSerialConnectionConfig</code> which extends
+              <code>jmri.jmrix.AbstractConnectionConfig</code>.<br>
+              In <code>AbstractConnectionConfig</code>, finally, <code>register()</code> does:
+              <div class="wide">
+<pre>
+ this.setInstance();
+ InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(this);
+ ConnectionConfigManager ccm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
+ if (ccm != null) {
+   ccm.add(this);
+ }
+</pre></div>
 
-              <pre>
-        this.setInstance();
-        InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(this);
-        ConnectionConfigManager ccm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
-        if (ccm != null) {
-            ccm.add(this);
-        }
-                </pre>
-              <p>That <code>this.setInstance()</code> call is implemented in
+              That <code>this.setInstance()</code> call is implemented in
               <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> to set the "adapter"
               member there to a new <code>LocoBufferUsbAdapter</code> object. Note that this
               "adapter" is from the ConnectionConfig (specifically AbstractConnectionConfig)
@@ -209,11 +212,12 @@ finally, <code>register()</code> does:
               showing here, the <code>LocoBufferUsbAdapter</code> object had already been created
               by getInstance in <code>ConnectionConfigXml</code>, and passed to the
               <code>ConnectionConfig</code> object when it's created inside the
-              <code>register()</code> sequence.</p>
+              <code>register()</code> sequence.
 
-              <p>At this point, we have a
-              <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code> object registered for
-              persistence, so it can be written out later.</p>
+              At this point, we have a
+              <span class="wide">
+              <code>jmri.jmrix.loconet.locobufferusb.ConnectionConfig</code></span> object registered for
+              persistence, so it can be written out later.
             </li>
 
             <li>Initialize the actual port using <code>adapter.openPort(portName, "JMRI")</code>.
@@ -222,25 +226,26 @@ finally, <code>register()</code> does:
 
             <li>Finally, with the port open and available from the <code>adapter</code> object,
             initialize the operation of the system by calling <code>adapter.configure()</code>
-            method. That Adapter configure() method does (through the general LocoBufferAdapter
+            method. That Adapter <code>configure()</code> method does (through the general LocoBufferAdapter
             superclass) (this is given as a sample, ignore the details):
+            <div class="wide">
+            <pre>
+setCommandStationType(getOptionState(option2Name));
+setTurnoutHandling(getOptionState(option3Name));
+// connect to a packetizing traffic controller
+LnPacketizer packets = new LnPacketizer();
+packets.connectPort(this);
 
-              <pre>
-        setCommandStationType(getOptionState(option2Name));
-        setTurnoutHandling(getOptionState(option3Name));
-        // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
-        packets.connectPort(this);
+// create memo and load
+this.getSystemConnectionMemo().setLnTrafficController(packets);
+this.getSystemConnectionMemo().configureCommandStation(commandStationType,
+        mTurnoutNoRetry, mTurnoutExtraSpace);
+this.getSystemConnectionMemo().configureManagers();
 
-        // create memo and load
-        this.getSystemConnectionMemo().setLnTrafficController(packets);
-        this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
-        this.getSystemConnectionMemo().configureManagers();
+// start operation
+packets.startThreads();
+              </pre></div>
 
-        // start operation
-        packets.startThreads();
-        </pre>
               <ol>
                 <li>The first group does some internal housekeeping and creates the object(s) that
                 run the connection</li>
@@ -256,22 +261,23 @@ finally, <code>register()</code> does:
                   <p>At this point, the system is basically up and ready for operation.</p>
                 </li>
 
-                <li>Finally, a jmri.jmrix.loconet.LocoNetSystemConnectionMemo object is created and
-                registered with the InstanceManager.</li>
+                <li>Finally, a
+                <span class="wide"><code>jmri.jmrix.loconet.LocoNetSystemConnectionMemo</code></span>
+                object is created and registered with the InstanceManager.</li>
               </ol>
             </li>
           </ul>
         </li>
 
-        <li>Later, jmri.jmrix.ActiveSystemsMenu and/or jmri.jmrix.SystemsMenu will create the main
-        menu bar menus for the individual systems:
+        <li>Later, <code>jmri.jmrix.ActiveSystemsMenu</code> and/or <code>jmri.jmrix.SystemsMenu</code>
+        will create the main menu bar menus for the individual systems:
           <ul>
             <li>Ask the InstanceManager for all the ComponentFactory instances. These were created,
             in most cases, in the constructor of the SystemConnectionMemo, and live in the .swing
-            subproject (e.g. loconet.swing.LnComponentFactory )</li>
+            subproject (e.g. <code>loconet.swing.LnComponentFactory</code>)</li>
 
-            <li>For each of those, ask it for the menu object (e.g. LocoNetMenu) and post that to
-            the GUI.</li>
+            <li>For each of those, ask it for the menu object (e.g. <code>LocoNetMenu</code>) and
+            post that to the GUI.</li>
 
             <li>In the process of creating the menu, the ComponentFactory connects each Action to
             itself so that the individual tools will be able to connect to the proper e.g.
@@ -325,13 +331,13 @@ finally, <code>register()</code> does:
           <ul>
             <li>The terminology switch from "PortAdapter" to "PortController" is confusing. In many
             cases, it's
-
-              <pre>
-            Abstract*PortAdapter &lt;- Sys*PortController &lt;- Sys*PortAdapter
-        </pre>as you work down the abstraction. This should eventually be fixed.
+            <div class="wide"><pre>
+Abstract*PortAdapter &lt;- Sys*PortController &lt;- Sys*PortAdapter
+            </pre></div>
+            as you work down the abstraction. This should eventually be fixed.
             </li>
 
-            <li>How does jmrix.AbstractStreamPortController fit into the <code>PortAdapter</code>
+            <li>How does <code>jmrix.AbstractStreamPortController</code> fit into the <code>PortAdapter</code>
             class hierarchy? (there is no *StreamPortController as defined in its header; it
             extends AbstractPortController)</li>
           </ul>
@@ -339,62 +345,64 @@ finally, <code>register()</code> does:
       </ul>
 
       <h3>More Complex Initialization: C/MRI</h3>
-      For a more complex example, consider C/MRI, which has more content in it's
-      <code>&lt;connection&gt;</code>element:
-
+      <p>For a more complex example, consider C/MRI, which has more content in its
+      <code>&lt;connection&gt;</code> element:
+      <div class="wide">
       <pre>
-  &lt;connection userName="C/MRI" systemPrefix="C" manufacturer="C/MRI"
-                    disabled="no" port="(none selected)" speed="9,600 baud"
-                    class="jmri.jmrix.cmri.serial.sim.configurexml.ConnectionConfigXml"&gt;
-    &lt;options /&gt;
-    &lt;node name="0"&gt;
-      &lt;parameter name="nodetype"&gt;2&lt;/parameter&gt;
-      &lt;parameter name="bitspercard"&gt;32&lt;/parameter&gt;
-      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
-      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-      &lt;parameter name="cardtypelocation"&gt;1122221112000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-    &lt;/node&gt;
-    &lt;node name="1"&gt;
-      &lt;parameter name="nodetype"&gt;1&lt;/parameter&gt;
-      &lt;parameter name="bitspercard"&gt;24&lt;/parameter&gt;
-      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
-      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-      &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-    &lt;/node&gt;
-    &lt;node name="2"&gt;
-      &lt;parameter name="nodetype"&gt;2&lt;/parameter&gt;
-      &lt;parameter name="bitspercard"&gt;32&lt;/parameter&gt;
-      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
-      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-      &lt;parameter name="cardtypelocation"&gt;2212120000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-    &lt;/node&gt;
-    &lt;node name="4"&gt;
-      &lt;parameter name="nodetype"&gt;1&lt;/parameter&gt;
-      &lt;parameter name="bitspercard"&gt;24&lt;/parameter&gt;
-      &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
-      &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
-      &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-      &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
-    &lt;/node&gt;
-  &lt;/connection&gt;
-</pre>How this gets read in.
+&lt;connection userName="C/MRI" systemPrefix="C" manufacturer="C/MRI"
+         disabled="no" port="(none selected)" speed="9,600 baud"
+          class="jmri.jmrix.cmri.serial.sim.configurexml.ConnectionConfigXml"&gt;
+  &lt;options /&gt;
+  &lt;node name="0"&gt;
+    &lt;parameter name="nodetype"&gt;2&lt;/parameter&gt;
+    &lt;parameter name="bitspercard"&gt;32&lt;/parameter&gt;
+    &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+    &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;parameter name="cardtypelocation"&gt;1122221112000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+  &lt;/node&gt;
+  &lt;node name="1"&gt;
+    &lt;parameter name="nodetype"&gt;1&lt;/parameter&gt;
+    &lt;parameter name="bitspercard"&gt;24&lt;/parameter&gt;
+    &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+    &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+  &lt;/node&gt;
+  &lt;node name="2"&gt;
+    &lt;parameter name="nodetype"&gt;2&lt;/parameter&gt;
+    &lt;parameter name="bitspercard"&gt;32&lt;/parameter&gt;
+    &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+    &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;parameter name="cardtypelocation"&gt;2212120000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+  &lt;/node&gt;
+  &lt;node name="4"&gt;
+    &lt;parameter name="nodetype"&gt;1&lt;/parameter&gt;
+    &lt;parameter name="bitspercard"&gt;24&lt;/parameter&gt;
+    &lt;parameter name="transmissiondelay"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="num2lsearchlights"&gt;0&lt;/parameter&gt;
+    &lt;parameter name="pulsewidth"&gt;500&lt;/parameter&gt;
+    &lt;parameter name="locsearchlightbits"&gt;000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+    &lt;parameter name="cardtypelocation"&gt;2210000000000000000000000000000000000000000000000000000000000000&lt;/parameter&gt;
+  &lt;/node&gt;
+&lt;/connection&gt;
+      </pre></div>
+      <p>How this gets read in.</p>
+
       <p>Implications for internal structure.</p>
 
       <p>Proper internal structure</p>
 
       <h2>Configuration Process</h2>
-      See <a href=
+      <p>See <a href=
       "https://jmri.org/JavaDoc/doc/jmri/jmrix/JmrixConfigPane.html">jmrix.JmrixConfigPane
       Javadoc</a> for links to configuration elements. (Is there another place that the
       configuration process and preferences support is described? If so, it should be linked from
-      here.)
+      here.)</p>
       <p>Any particular system connection is included in the preferences by being listed in the
       <code>java/src/META-INF/services/jmri.jmrix.ConnectionTypeList</code> list. This file is
       normally generated from the <code>@ServiceProvider(service = ConnectionTypeList)</code>

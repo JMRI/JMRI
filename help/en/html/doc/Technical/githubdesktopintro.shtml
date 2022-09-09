@@ -81,7 +81,7 @@
       many commits that are to be merged, from which branch and to which branch. Ensure you have
       chosen the correct branches!</p>
 
-      <p>Click on the button "Merge upstream/master into master" to do the merge. When it's finish,
+      <p>Click on the button "Merge upstream/master into master" to do the merge. When it's finished,
       you will see this:<br>
       <a href="images/GHD_Image_6_MergeIntoDone.png"><img src=
       "images/GHD_Image_6_MergeIntoDone.png" height="50%" width="50%" alt="screenshot"></a><br>
