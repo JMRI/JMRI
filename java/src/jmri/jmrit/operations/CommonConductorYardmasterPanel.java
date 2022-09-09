@@ -293,7 +293,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         csf = new CarSetFrame();
         csf.initComponents();
-        csf.loadCar(car);
+        csf.load(car);
     }
 
     EngineSetFrame esf = null;
@@ -308,7 +308,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         esf = new EngineSetFrame();
         esf.initComponents();
-        esf.loadEngine(eng);
+        esf.load(eng);
     }
 
     // confirm that all work is done

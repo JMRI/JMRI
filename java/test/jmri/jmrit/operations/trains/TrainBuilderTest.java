@@ -1,12 +1,7 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.io.*;
+import java.util.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,19 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.*;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -9236,6 +9225,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 2", "", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 2", "", e2.getDestinationTrackName());
+        
+        Assert.assertEquals("caboose road & number", "NH 3", train1.getCabooseRoadAndNumber());
 
         // there's a caboose c1 that matches lead engine
         train1.setNumberEngines("2"); // engine road name "UP"
@@ -9260,6 +9251,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 3", "Boston Engine Yard", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 3", "Boston Engine Yard", e2.getDestinationTrackName());
+        
+        Assert.assertEquals("caboose road & number", "UP 1", train1.getCabooseRoadAndNumber());
 
         // now prevent c1 from getting placed at Boston Yard
         c1.setLength("1000"); // car exceeds train's maximum allowable length
@@ -9336,6 +9329,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("e1 destination 3", "Boston Engine Yard", e1.getDestinationTrackName());
         Assert.assertEquals("e2 destination 3", "Boston Engine Yard", e2.getDestinationTrackName());
+        
+        Assert.assertEquals("caboose road & number", "UP 1", train1.getCabooseRoadAndNumber());
 
         // caboose c1 road matches lead engine road
         train1.reset();
