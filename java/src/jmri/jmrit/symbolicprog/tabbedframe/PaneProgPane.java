@@ -2296,8 +2296,8 @@ public class PaneProgPane extends javax.swing.JPanel
             format = attr.getValue();
         }
 
-        boolean viewOnly = var.getAttribute("viewOnly") != null
-                ? var.getAttribute("viewOnly").getValue().equals("yes") : false;
+        boolean viewOnly = (var.getAttribute("viewOnly") != null &&
+                var.getAttribute("viewOnly").getValue().equals("yes"));
 
         if (i >= 0) {
             rep = getRep(i, format);
@@ -2427,7 +2427,12 @@ public class PaneProgPane extends javax.swing.JPanel
         _varModel = null;
     }
 
-    public boolean hasEmptyLists() {
+    /**
+     * Check if varList and cvList, and thus the tab, is empty.
+     *
+     * @return true if empty
+     */
+    public boolean isEmpty() {
         return (varList.isEmpty() && cvList.isEmpty());
     }
 
@@ -2442,7 +2447,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
-        if (hasEmptyLists()) {
+        if (isEmpty()) {
             return;
         }
 
@@ -2453,7 +2458,6 @@ public class PaneProgPane extends javax.swing.JPanel
         int col2Width = w.getCharactersPerLine() / 2 - 3 + 5;
 
         try {
-
             //Create a string of spaces the width of the first column
             StringBuilder spaces = new StringBuilder();
             spaces.append(" ".repeat(Math.max(0, col1Width)));

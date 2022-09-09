@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -54,17 +55,12 @@ public class PaneProgAction extends AbstractAction {
                 || !jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             setEnabled(false);
             // This needs to return, so we don't start the xmlThread
-            return;
         }
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (log.isDebugEnabled()) {
-            log.debug("Pane programmer requested");
-        }
+        log.debug("Pane programmer requested");
 
         // create the initial frame that steers
         final JmriJFrame f = new JmriJFrame(SymbolicProgBundle.getMessage("FrameServiceProgrammerSetup"));
@@ -93,14 +89,9 @@ public class PaneProgAction extends AbstractAction {
         JPanel pane1 = new CombinedLocoSelTreePane(statusLabel, modePane) {
 
             @Override
-            protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                    String filename) {
-                String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
-                        new Object[]{"new decoder"});
-                if (re != null) {
-                    title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
-                            new Object[]{re.getId()});
-                }
+            protected void startProgrammer(DecoderFile decoderFile, @Nonnull RosterEntry re,
+                    @Nonnull String filename) {
+                String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), re.getId());
                 JFrame p = new PaneServiceProgFrame(decoderFile, re,
                         title, "programmers" + File.separator + filename + ".xml",
                         modePane.getProgrammer());
@@ -126,9 +117,7 @@ public class PaneProgAction extends AbstractAction {
         f.getContentPane().add(statusLabel);
 
         f.pack();
-        if (log.isDebugEnabled()) {
-            log.debug("Tab-Programmer setup created");
-        }
+        log.debug("Tab-Programmer setup created");
         f.setVisible(true);
     }
 

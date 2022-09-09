@@ -863,7 +863,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer + ".xml");
         // uses programmer set in prefs when printing a selected entry from (this) top Roster frame
         // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
-        // one would expect to see more tabs on printout using Comprehensive or just 1 tab for Basic
+        // as user expects to see more tabs on printout using Comprehensive or just 1 tab for Basic programmer
         pre.printPanes(preview);
     }
 
@@ -1370,7 +1370,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     @Override
                     protected JPanel getModePane() {
                         return null;
-                    }
+                    } // hide prog mode buttons pane
                 };
             } else if (service.isSelected()) {
                 progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer());

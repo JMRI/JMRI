@@ -1596,7 +1596,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         if (!(w instanceof HardcopyWriter)) {
             throw new IllegalArgumentException("No HardcopyWriter instance passed");
         }
-        int linesadded = -1;
+        int linesAdded = -1;
         String title;
         String leftMargin = "   "; // 3 spaces in front of legend labels
         int labelColumn = 19; // pad remaining spaces for legend using fixed width font, forms "%-19s" in line
@@ -1605,68 +1605,68 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             int textSpace = ww.getCharactersPerLine() - indentWidth - 1;
             title = String.format("%-" + labelColumn + "s",
                     (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldID")))); // I18N ID:
-            if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                linesadded = writeWrappedComment(w, _id, leftMargin + title, textSpaceWithIcon) + linesadded;
+            if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                linesAdded = writeWrappedComment(w, _id, leftMargin + title, textSpaceWithIcon) + linesAdded;
             } else {
-                linesadded = writeWrappedComment(w, _id, leftMargin + title, textSpace) + linesadded;
+                linesAdded = writeWrappedComment(w, _id, leftMargin + title, textSpace) + linesAdded;
             }
             title = String.format("%-" + labelColumn + "s",
                     (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldFilename")))); // I18N Filename:
-            if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title,
-                        textSpaceWithIcon) + linesadded;
+            if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                linesAdded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title,
+                        textSpaceWithIcon) + linesAdded;
             } else {
-                linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title,
-                        textSpace) + linesadded;
+                linesAdded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", leftMargin + title,
+                        textSpace) + linesAdded;
             }
 
             if (!(_roadName.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadName")))); // I18N Road name:
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _roadName, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded = writeWrappedComment(w, _roadName, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _roadName, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _roadName, leftMargin + title, textSpace) + linesAdded;
                 }
             }
             if (!(_roadNumber.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldRoadNumber")))); // I18N Road number:
 
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded
-                            = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded
+                            = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _roadNumber, leftMargin + title, textSpace) + linesAdded;
                 }
             }
             if (!(_mfg.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldManufacturer")))); // I18N Manufacturer:
 
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _mfg, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded = writeWrappedComment(w, _mfg, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _mfg, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _mfg, leftMargin + title, textSpace) + linesAdded;
                 }
             }
             if (!(_owner.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldOwner")))); // I18N Owner:
 
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _owner, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded = writeWrappedComment(w, _owner, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _owner, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _owner, leftMargin + title, textSpace) + linesAdded;
                 }
             }
             if (!(_model.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldModel")))); // I18N Model:
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded = writeWrappedComment(w, _model, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded = writeWrappedComment(w, _model, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _model, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _model, leftMargin + title, textSpace) + linesAdded;
                 }
             }
             if (!(_dccAddress.isEmpty())) {
@@ -1675,7 +1675,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDCCAddress")))); // I18N DCC Address:
                 String s = leftMargin + title + _dccAddress;
                 w.write(s, 0, s.length());
-                linesadded++;
+                linesAdded++;
             }
 
             // If there is a comment field, then wrap it using the new wrapCommment()
@@ -1684,7 +1684,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 //Because the text will fill the width if the roster entry has an icon
                 //then we need to add some blank lines to prevent the comment text going
                 //through the picture.
-                for (int i = 0; i < (blanks - linesadded); i++) {
+                for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
                 //As we have added the blank lines to pad out the comment we will
@@ -1694,26 +1694,26 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldComment")))); // I18N Comment:
-                linesadded = writeWrappedComment(w, _comment, leftMargin + title, textSpace) + linesadded;
+                linesAdded = writeWrappedComment(w, _comment, leftMargin + title, textSpace) + linesAdded;
             }
             if (!(_decoderModel.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderModel")))); // I18N Decoder Model:
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded
-                            = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded
+                            = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _decoderModel, leftMargin + title, textSpace) + linesAdded;
                 }
             }
             if (!(_decoderFamily.isEmpty())) {
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderFamily")))); // I18N Decoder Family:
-                if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
-                    linesadded
-                            = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpaceWithIcon) + linesadded;
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded
+                            = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpaceWithIcon) + linesAdded;
                 } else {
-                    linesadded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesadded;
+                    linesAdded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesAdded;
                 }
             }
 
@@ -1722,7 +1722,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 //Because the text will fill the width if the roster entry has an icon
                 //then we need to add some blank lines to prevent the comment text going
                 //through the picture.
-                for (int i = 0; i < (blanks - linesadded); i++) {
+                for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
                 //As we have added the blank lines to pad out the comment we will
@@ -1732,10 +1732,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
                 title = String.format("%-" + labelColumn + "s",
                         (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderComment")))); // I18N Decoder Comment:
-                linesadded = writeWrappedComment(w, _decoderComment, leftMargin + title, textSpace) + linesadded;
+                linesAdded = writeWrappedComment(w, _decoderComment, leftMargin + title, textSpace) + linesAdded;
             }
             w.write(newLine, 0, 1);
-            for (int i = -1; i < (blanks - linesadded); i++) {
+            for (int i = -1; i < (blanks - linesAdded); i++) {
                 w.write(newLine, 0, 1);
             }
         } catch (IOException e) {

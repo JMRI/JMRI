@@ -169,7 +169,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         printPreviewSubMenu.add(new PrintCvAction(Bundle.getMessage("MenuPrintPreviewCVs"), cvModel, this, true, _rosterEntry));
         fileMenu.add(printPreviewSubMenu);
 
-        // add "Import" submenu; this is heirarchical because
+        // add "Import" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
         JMenu importSubMenu = new JMenu(Bundle.getMessage("MenuImport"));
         fileMenu.add(importSubMenu);
@@ -178,7 +178,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         importSubMenu.add(new LokProgImportAction(Bundle.getMessage("MenuImportLokProg"), cvModel, this, progStatus));
         importSubMenu.add(new QuantumCvMgrImportAction(Bundle.getMessage("MenuImportQuantumCvMgr"), cvModel, this, progStatus));
 
-        // add "Export" submenu; this is heirarchical because
+        // add "Export" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
         JMenu exportSubMenu = new JMenu(Bundle.getMessage("MenuExport"));
         fileMenu.add(exportSubMenu);
@@ -187,7 +187,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         exportSubMenu.add(new Pr1WinExportAction(Bundle.getMessage("MenuExportPr1WIN"), cvModel, this));
         exportSubMenu.add(new CsvExportModifiedAction(Bundle.getMessage("MenuExportCSVModified"), cvModel, this));
 
-        // add "Import" submenu; this is heirarchical because
+        // add "Import" submenu; this is hierarchical because
         // some of the names are so long, and we expect more formats
         JMenu speedTableSubMenu = new JMenu(Bundle.getMessage("MenuSpeedTable"));
         fileMenu.add(speedTableSubMenu);
@@ -392,7 +392,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    // Check a single case to see if it's search match
+    // Check a single case to see if its search match
     // @return true for matched
     private boolean checkSearchTarget(int index, String target) {
         boolean result = false;
@@ -476,7 +476,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
 
             // start reached, wrap
-            nextSearchTarget = searchTargetList.size()-1;
+            nextSearchTarget = searchTargetList.size() - 1;
             while (nextSearchTarget > startingSearchTarget) {
                 if ( checkSearchTarget(nextSearchTarget, target)) {
                     // hit!
@@ -692,6 +692,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     // handle include/exclude
                     if (isIncludedFE(element, modelElem, _rosterEntry, "", "")) {
                         newPane(pname, element, modelElem, true, false);  // show even if empty not a programmer pane
+                        log.debug("PaneProgFrame init - pane {} added", pname); // these are MISSING in RosterPrint
                     }
                 }
             }
@@ -784,7 +785,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             } else if (a.getValue().equals("byteOnly")) {
                 directbit = false;
                 //directbyte = true;
-            //} else { // already have these values
+            //} else { // items already have these values
                 //directbit = true;
                 //directbyte = true;
             }
@@ -983,16 +984,13 @@ abstract public class PaneProgFrame extends JmriJFrame
 
             // get the showEmptyPanes attribute, if yes/no update our state
             if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes") != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Found in programmer {}", programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue());
-                }
                 programmerShowEmptyPanes = programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue();
+                log.debug("Found in programmer {}", programmerShowEmptyPanes);
             } else {
                 programmerShowEmptyPanes = "";
             }
-            log.debug("programmerShowEmptyPanes={}", programmerShowEmptyPanes);
 
-            // get extra any panes from the decoder file
+            // get extra any panes from the programmer file
             Attribute a;
             if ((a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
                     && a.getValue().equals("yes")) {
@@ -1136,7 +1134,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")) {
             tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), makeMediaPane(r));
         } else {
-            // make it, just don't make it visible
+            // create it, just don't make it visible
             makeMediaPane(r);
         }
 
@@ -1153,7 +1151,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 String namePrimary = (pnames.get(0)).getValue(); // get non-localised name
 
                 // check if there is a same-name pane in decoder file
-                // start at end to prevent concurrentmodification error on remove
+                // start at end to prevent concurrentmodification exception on remove
                 for (int j = decoderPaneList.size() - 1; j >= 0; j--) {
                     List<Element> dnames = decoderPaneList.get(j).getChildren("name");
                     if (dnames.size() > 0) {
@@ -1172,6 +1170,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             // handle include/exclude
             if (isIncludedFE(temp, modelElem, _rosterEntry, "", "")) {
                 newPane(name, temp, modelElem, false, isProgPane);  // don't force showing if empty
+                log.debug("readConfig - pane {} added", name); // these are also in RosterPrint
             }
         }
     }
@@ -1214,7 +1213,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     protected JPanel makeInfoPane(RosterEntry r) {
-        // create the identification pane (not configured by programmer file now; maybe later?
+        // create the identification pane (not configured by programmer file now; maybe later?)
 
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
@@ -1426,7 +1425,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // remember it for programming
         paneList.add(p);
 
-        // if visible, set qualications
+        // if visible, set qualifications
         if (index >= 0) {
             processModifierElements(pane, p, variableModel, tabPane, index);
         }
@@ -1561,11 +1560,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         for (JPanel jPanel : paneList) {
             Assume.assumeTrue(jPanel instanceof PaneProgPane);
-            if (stat) {
-                ((PaneProgPane) jPanel).enableButtons(false);
-            } else {
-                ((PaneProgPane) jPanel).enableButtons(true);
-            }
+            ((PaneProgPane) jPanel).enableButtons(!stat);
         }
         if (!stat) {
             paneFinished();
@@ -1748,7 +1743,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * Prepare a roster entry to be printed, and display a selection list.
      *
      * @see jmri.jmrit.roster.PrintRosterEntry#doPrintPanes(boolean)
-     * @param preview true if output should got to a Preview pane on screen,
+     * @param preview true if output should go to a Preview pane on screen,
      *                false to output to a printer (dialog)
      */
     public void printPanes(final boolean preview) {
@@ -1871,9 +1866,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // dispose the list of panes
-        for (JPanel jPanel : paneList) {
-            Assume.assumeTrue(jPanel instanceof PaneProgPane);
-            PaneProgPane p = (PaneProgPane) jPanel;
+        //noinspection ForLoopReplaceableByForEach
+        for (int i = 0; i < paneList.size(); i++) {
+            PaneProgPane p = (PaneProgPane) paneList.get(i);
             p.dispose();
         }
         paneList.clear();
@@ -1910,7 +1905,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         log.debug("dispose superclass");
         removeAll();
         super.dispose();
-
     }
 
     /**

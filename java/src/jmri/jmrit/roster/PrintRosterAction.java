@@ -125,11 +125,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         parameter = parameter.toLowerCase();
         value = value.toLowerCase();
         if (parameter.equals("ispreview")) {
-            if (value.equals("true")) {
-                isPreview = true;
-            } else {
-                isPreview = false;
-            }
+            isPreview = value.equals("true");
         }
     }
 

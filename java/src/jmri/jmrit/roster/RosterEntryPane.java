@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,8 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 
 /**
- * Display and edit a RosterEntry.
+ * Display and enable editing a RosterEntry panel to display on first tab "Roster Entry".
+ * Called from {@link jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame}#makeInfoPane(RosterEntry)
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Dennis Miller Copyright 2004, 2005
@@ -42,11 +44,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
 
     JTextArea comment = new JTextArea(3, 50);
-    //JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
-    //Without this the field will shrink to minimum size any time the scroll bars become needed and
-    //the scroll bars are inside, not outside the field area, obscuring their contents.
-    //This way the shrinking does not happen and the scroll bars are outside the field area,
-    //leaving the contents visible
+    // JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
+    // Without this the field will shrink to minimum size any time the scroll bars become needed and
+    // the scroll bars are inside, not outside the field area, obscuring their contents.
+    // This way the shrinking does not happen and the scroll bars are outside the field area,
+    // leaving the contents visible
     JScrollPane commentScroller = new JScrollPane(comment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     JLabel dateUpdated = new JLabel();
     JLabel decoderModel = new JLabel();
@@ -90,9 +92,9 @@ public class RosterEntryPane extends javax.swing.JPanel {
             // This goes through to find common protocols between the command station and the decoder
             // and will set the selection box list to match those that are common.
             jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
-            List<LocoAddress.Protocol> protocoltypes = new ArrayList<>(Arrays.asList(tm.getAddressProtocolTypes()));
+            List<LocoAddress.Protocol> protocolTypes = new ArrayList<>(Arrays.asList(tm.getAddressProtocolTypes()));
 
-            if (!protocoltypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocoltypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
+            if (!protocolTypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocolTypes.contains(LocoAddress.Protocol.DCC_SHORT)) {
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
                 List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, r.getDecoderFamily(), null, null, null, r.getDecoderModel());
                 if (log.isDebugEnabled()) {
@@ -113,11 +115,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
                         ArrayList<String> protocols = new ArrayList<>(d.getSupportedProtocols().length);
 
                         for (LocoAddress.Protocol i : d.getSupportedProtocols()) {
-                            if (protocoltypes.contains(i)) {
+                            if (protocolTypes.contains(i)) {
                                 protocols.add(tm.getAddressTypeString(i));
                             }
                         }
-                        addrSel = new DccLocoAddressSelector(protocols.toArray(new String[protocols.size()]));
+                        addrSel = new DccLocoAddressSelector(protocols.toArray(new String[0]));
                         DccLocoAddress tempAddr = new DccLocoAddress(
                                 Integer.parseInt(r.getDccAddress()), r.getProtocol());
                         addrSel.setAddress(tempAddr);
@@ -148,7 +150,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         });
 
         // New GUI to allow multiline Comment and Decoder Comment fields
-        //Set up constraints objects for convenience in GridBagLayout alignment
+        // Set up constraints objects for convenience in GridBagLayout alignment
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
         GridBagConstraints cR = new GridBagConstraints();

@@ -1,6 +1,6 @@
 package jmri.jmrit.roster;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -14,6 +14,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -22,6 +24,7 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneContainer;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
@@ -46,7 +49,9 @@ public class PrintRosterEntry implements PaneContainer {
     JmriJFrame _parent;
 
     /**
-     * Constructor for a Print roster item (programmer tabs) selection pane.
+     * Constructor for a Print roster item (programmer tabs) selection pane from an XML definition file.
+     * Includes &lt;pane&gt; elements (tabs) from Programmer (generic) as well as rosterEntry decoder.xml
+     * Called from RosterFrame &gt; PreviewAll context menu.
      *
      * @param rosterEntry Roster item, either as a selection or object
      * @param parent window over which this dialog will be centered
@@ -63,14 +68,16 @@ public class PrintRosterEntry implements PaneContainer {
         log.debug("Try PrintRosterEntry {} from file {}", _rosterEntry.getDisplayName(), programmerFilename);
         XmlFile pf = new XmlFile() {
         };
-        Element base;  // base of programmer file
+        Element programmerRoot;
+        Element programmerBase; // base of programmer file pane elements
+
         try {
-            Element root = pf.rootFromName(programmerFilename);
-            if (root == null) {
+            programmerRoot = pf.rootFromName(programmerFilename);
+            if (programmerRoot == null) {
                 log.error("Programmer file name incorrect {}", programmerFilename);
                 return;
             }
-            if ((base = root.getChild("programmer")) == null) {
+            if ((programmerBase = programmerRoot.getChild("programmer")) == null) {
                 log.error("xml file top element is not 'programmer'");
                 return;
             }
@@ -82,13 +89,13 @@ public class PrintRosterEntry implements PaneContainer {
 
         CvTableModel cvModel = new CvTableModel(progStatus, null); // no programmer
 
-        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"}, cvModel); // NOI18N
+        VariableTableModel variableModel = new VariableTableModel(progStatus, new String[] {"Name", "Value"}, cvModel); // NOI18N
         
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
 
         log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
-        // locate a decoder like that.
+        // locate a decoder like that
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
         log.debug("found {} matches", l.size());
         if (l.isEmpty()) {
@@ -112,11 +119,18 @@ public class PrintRosterEntry implements PaneContainer {
             log.warn("no decoder file found for this loco");
             return;
         }
+        // save the pointer to the model element to check for include/exclude before adding to paneList
+        Element modelElem = decoderFile.getModelElement();
+
         Element decoderRoot;
         log.debug("Try to read decoder root from {} {}", DecoderFile.fileLocation, decoderFile.getFileName());
+
         try {
             decoderRoot = decoderFile.rootFromName(DecoderFile.fileLocation + decoderFile.getFileName());
-
+            if ((decoderRoot.getChild("decoder")) == null) {
+                log.error("xml file top element is not 'decoder'");
+                return;
+            }
         } catch (org.jdom2.JDOMException exj) {
             log.error("could not parse {}: {}", decoderFile.getFileName(), exj.getMessage());
             return;
@@ -129,35 +143,55 @@ public class PrintRosterEntry implements PaneContainer {
         decoderFile.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         decoderFile.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
         
-        // load the specific contents for this entry
+        // load the specific contents for this entry from rosterEntry file
         rosterEntry.readFile();
         rosterEntry.loadCvModel(variableModel, cvModel);
 
-        List<Element> rawPaneList = base.getChildren("pane");
-        log.debug("rawPaneList size = {}", rawPaneList.size());
+        // add pane names from programmer
+        List<Element> rawPaneList = programmerBase.getChildren("pane");
+        log.debug("rawPaneList P size = {}", rawPaneList.size());
         for (Element elPane : rawPaneList) {
-            // load each non-empty pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
+            // load each pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
             Element _name = elPane.getChild("name"); // multiple languages
             // There is no name attribute of pane in Basic.xml nor (for the Comprehensive programmer) in include.parts.Basic.xml
             // Instead, it's a separate element inside programmer.pane, fixed 4.7.2
-            String name = "Tab name"; // temporary fake name NOI18N
+            String name = "Tab name"; // temporary name
             if (_name != null) {
-                name = _name.getText(); // because it's used in line 150, no need to translate it now
-                log.debug("Tab '{}' found", name);
+                name = _name.getText(); // NOI18N
+                log.debug("Tab '{}' added from Programmer", name);
             } else {
                 log.debug("Did not find name element in pane");
             }
-            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, decoderFile.getModelElement(), _rosterEntry);
-            // Tab names _paneList.get(i).getName() show up when PrintRosterEntry is called from RosterFrame (entered here, applied in line 265)
-            if (p.hasEmptyLists()) {
-                rawPaneList.remove(elPane);
-                log.debug("tab {} is empty, skipping", name);
-            } else {
-                // skip tab if empty (won't show up on printout anyway)
+            PaneProgPane p;
+            if (PaneProgFrame.isIncludedFE(elPane, modelElem, _rosterEntry, "", "")) {
+                p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
                 _paneList.add(p);
-                log.debug("_paneList size = {}", _paneList.size());
             }
         }
+
+        // compare to PaneProgFrame#loadProgrammerFile(pRosterEntry)
+        // add pane names from programmer
+        rawPaneList = decoderRoot.getChildren("pane");
+        log.debug("rawPaneList D size = {}", rawPaneList.size());
+        for (Element elPane : rawPaneList) {
+            // load each pane to store in _paneList and fetch its name element (i18n) to show in Select items pane
+            Element _name = elPane.getChild("name"); // multiple languages
+            // There is no name attribute of pane in Basic.xml nor (for the Comprehensive programmer) in include.parts.Basic.xml
+            // Instead, it's a separate element inside programmer.pane, fixed 4.7.2
+            String name = "Tab name"; // temporary name NOI18N
+            if (_name != null) {
+                name = _name.getText(); // NOI18N
+                log.debug("Tab '{}' added from Decoder", name);
+            } else {
+                log.debug("Did not find name element in pane");
+            }
+            PaneProgPane p;
+            if (PaneProgFrame.isIncludedFE(elPane, modelElem, _rosterEntry, "", "")) {
+                 p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
+                _paneList.add(p);
+            }
+        }
+        // check for empty and I18N happens in #printPanes(boolean)
     }
 
     @Override
@@ -184,6 +218,7 @@ public class PrintRosterEntry implements PaneContainer {
 
     /**
      * Configure variable fields and create a PrintRosterEntry instance while doing so.
+     * Includes all (visible) Roster Entry programmer &lt;pane&gt; elements (tabs).
      *
      * @param rosterEntry an item in the Roster
      * @param paneList list of programmer tabs, including all properties
@@ -197,6 +232,7 @@ public class PrintRosterEntry implements PaneContainer {
         _flPane = flPane;
         _rMPane = rMPane;
         _parent = parent;
+        log.debug("New PrintRosterEntry including a paneList of size {}", paneList.size());
     }
 
     /**
@@ -232,14 +268,16 @@ public class PrintRosterEntry implements PaneContainer {
     /**
      * Create and display a pane to the user to select which Programmer tabs to include in printout.
      *
-     * @param preview true if output should got to a Preview pane on screen, false to output to a printer (dialog)
+     * @param preview true if output should go to a Preview pane on screen, false to output to a printer (dialog)
      */
     public void printPanes(final boolean preview) {
         final JFrame frame = new JFrame(Bundle.getMessage("TitleSelectItemsToPrint"));
         JPanel p1 = new JPanel();
+        p1.setBorder(new EmptyBorder(5, 5, 5, 5));
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
 
         JPanel instruct = new JPanel();
+        instruct.setLayout(new BoxLayout(instruct, BoxLayout.PAGE_AXIS));
         JLabel l1 = new JLabel(Bundle.getMessage("LabelSelectLine1"));
         instruct.add(l1);
         l1 = new JLabel(Bundle.getMessage("LabelSelectLine2"));
@@ -258,11 +296,16 @@ public class PrintRosterEntry implements PaneContainer {
 
         log.debug("_paneList size length: {}", _paneList.size());
         for (JPanel jPanel : _paneList) {
-            if (jPanel instanceof PaneProgPane) {
+            log.debug("printPanes === checking tab {}...", jPanel.getName());
+            if (jPanel instanceof PaneProgPane && !((PaneProgPane) jPanel).isEmpty()) {
+                // add a checkbox to the Preview All pane for each tab (unless empty)
+                // skip tab if empty (won't show up on printout anyway)
+                log.debug("tab {} not empty, adding", jPanel.getName());
                 final PaneProgPane pane = (PaneProgPane) jPanel;
                 pane.includeInPrint(false);
                 final JCheckBox item = new JCheckBox(jPanel.getName());
-                // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 145)
+                // Tab names _paneList.get(i).getName() show up when called from RosterFrame
+                // (are entered in line 147)
                 printList.put(item, pane);
                 item.addActionListener(evt -> pane.includeInPrint(item.isSelected()));
                 select.add(item);
