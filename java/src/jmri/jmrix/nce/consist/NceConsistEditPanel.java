@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -246,7 +247,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     @Nonnull
     public List<JMenu> getMenus() {
         // build menu
-        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.Bundle");
+        JMenu toolMenu = new JMenu(rbx.getString("MenuTools"));
         toolMenu.add(new NceConsistRosterMenu(Bundle.getMessage("RosterTitle"),
                 jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
         List<JMenu> l = new ArrayList<>();
