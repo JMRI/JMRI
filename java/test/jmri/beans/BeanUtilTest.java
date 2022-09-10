@@ -307,12 +307,12 @@ public class BeanUtilTest {
      * properties, while InterfaceTarget and Target use standard JavaBeans APIs
      * and conventions.
      */
-    public class InterfaceTarget extends UnboundBean {
+    private static class InterfaceTarget extends UnboundBean {
 
         private String stringProperty = OLD_VALUE;
         private final ArrayList<String> indexedProperty = new ArrayList<>();
 
-        public InterfaceTarget() {
+        private InterfaceTarget() {
             this.indexedProperty.add(0, OLD_VALUE);
         }
 
@@ -345,20 +345,20 @@ public class BeanUtilTest {
      * the "*Introspected*" tests, but are exposed using jmri.beans.BeanUtil
      * methods in other tests.
      */
-    public class ArbitraryTarget extends UnboundArbitraryBean {
+    private static class ArbitraryTarget extends UnboundArbitraryBean {
 
-        public ArbitraryTarget() {
+        private ArbitraryTarget() {
             this.setProperty(STRING_PROPERTY, OLD_VALUE);
             this.setIndexedProperty(INDEXED_PROPERTY, 0, OLD_VALUE);
         }
     }
 
-    public class Target {
+    private static class Target {
 
         private String stringProperty = OLD_VALUE;
         private final ArrayList<String> indexedProperty = new ArrayList<>();
 
-        public Target() {
+        private Target() {
             this.indexedProperty.add(0, OLD_VALUE);
         }
 
@@ -389,7 +389,7 @@ public class BeanUtilTest {
     /*
      * A simple listener class to avoid too many anonymous identical objects.
      */
-    private class Listener implements PropertyChangeListener {
+    private static class Listener implements PropertyChangeListener {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
