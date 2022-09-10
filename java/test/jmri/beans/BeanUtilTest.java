@@ -12,6 +12,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
 
 /**
@@ -299,6 +301,30 @@ public class BeanUtilTest {
         assertThat(BeanUtil.contains(listeners, l1)).isTrue();
         assertThat(BeanUtil.contains(listeners, l2)).isTrue();
         assertThat(BeanUtil.contains(listeners, l3)).isFalse();
+    }
+
+    @Test
+    public void testInterfaceTargetImpl () {
+        InterfaceTarget t = new InterfaceTarget();
+        assertEquals(OLD_VALUE, t.getStringProperty());
+        t.setStringProperty(STRING_PROPERTY);
+        assertEquals(STRING_PROPERTY, t.getStringProperty());
+
+        t.setIndexedProperty(1, CLASS);
+        assertEquals(OLD_VALUE,t.getIndexedProperty(0));
+        assertEquals(CLASS,t.getIndexedProperty(1));
+    }
+
+    @Test
+    public void testTargetImpl () {
+        Target t = new Target();
+        assertEquals(OLD_VALUE, t.getStringProperty());
+        t.setStringProperty(STRING_PROPERTY);
+        assertEquals(STRING_PROPERTY, t.getStringProperty());
+
+        t.setIndexedProperty(1, CLASS);
+        assertEquals(OLD_VALUE,t.getIndexedProperty(0));
+        assertEquals(CLASS,t.getIndexedProperty(1));
     }
 
     /*

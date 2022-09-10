@@ -137,6 +137,18 @@ public class ArbitraryPropertySupportTest {
         assertEquals(NEW_VALUE, instance.getProperty(NEW_PROPERTY));
     }
 
+    @Test
+    public void testUnboundBeanImpl () {
+        UnboundBeanImpl t = new UnboundBeanImpl();
+        assertEquals(OLD_VALUE, t.getStringProperty());
+        t.setStringProperty(STRING_PROPERTY);
+        assertEquals(STRING_PROPERTY, t.getStringProperty());
+
+        t.setIndexedProperty(1, NEW_PROPERTY);
+        assertEquals(OLD_VALUE,t.getIndexedProperty(0));
+        assertEquals(NEW_PROPERTY,t.getIndexedProperty(1));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
