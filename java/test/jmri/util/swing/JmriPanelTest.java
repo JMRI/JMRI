@@ -44,6 +44,11 @@ public class JmriPanelTest {
         Assert.assertEquals("title", title, panel.getTitle());
     }
 
+    @Test
+    public void testGetMenus() {
+        Assertions.assertNotNull(panel.getMenus());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
