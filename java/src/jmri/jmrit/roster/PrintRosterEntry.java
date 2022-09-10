@@ -162,11 +162,9 @@ public class PrintRosterEntry implements PaneContainer {
             } else {
                 log.debug("Did not find name element in pane");
             }
-            PaneProgPane p;
-            if (PaneProgFrame.isIncludedFE(elPane, modelElem, _rosterEntry, "", "")) {
-                p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
-                _paneList.add(p);
-            }
+            // include/exclude check N/A for prag panes
+            PaneProgPane p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
+            _paneList.add(p);
         }
 
         // compare to PaneProgFrame#loadProgrammerFile(pRosterEntry)
@@ -188,10 +186,10 @@ public class PrintRosterEntry implements PaneContainer {
             PaneProgPane p;
             if (PaneProgFrame.isIncludedFE(elPane, modelElem, _rosterEntry, "", "")) {
                  p = new PaneProgPane(this, name, elPane, cvModel, variableModel, modelElem, _rosterEntry);
-                _paneList.add(p);
+                _paneList.add(p); // possible duplicates with prog pane titles handled by list
             }
         }
-        // check for empty and I18N happens in #printPanes(boolean)
+        // check for empty panes and I18N happens in #printPanes(boolean)
     }
 
     @Override
