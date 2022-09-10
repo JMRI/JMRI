@@ -7,11 +7,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,15 +23,10 @@ import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.rules.RetryRule;
 
 public class JsonTimeSocketServiceTest {
 
     private Locale locale = Locale.ENGLISH;
-
-    @Rule
-    // this test is sensitive to load on test system, so allow a single retry before failing
-    public RetryRule retryRule = new RetryRule(1);
 
     @Test
     public void testOnMessage() throws IOException, JmriException, JsonException {
@@ -42,6 +34,7 @@ public class JsonTimeSocketServiceTest {
         JsonTimeSocketService service = new JsonTimeSocketService(connection);
         Timebase manager = InstanceManager.getDefault(Timebase.class);
         TimebaseTimeListener listener = new TimebaseTimeListener();
+        Assertions.assertEquals(0, listener.getTime().getTime());
         StdDateFormat formatter = new StdDateFormat();
         int rate = 60; // rate is one minute every six seconds
         Assert.assertEquals("No change listeners", 0, manager.getPropertyChangeListeners().length);
@@ -76,8 +69,8 @@ public class JsonTimeSocketServiceTest {
         Date waitFor = current;
         JUnitUtil.waitFor(() -> {
             return !manager.getTime().equals(waitFor);
-        });
-        current = listener.getTime(); // get time from listener
+        },"current time not different to manager getTime");
+        // current = listener.getTime(); // get time from listener
         message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertEquals("Rate is fast", rate, message.path(JSON.DATA).path(JSON.RATE).asDouble(), 0.0);
@@ -102,7 +95,7 @@ public class JsonTimeSocketServiceTest {
             Assert.assertEquals("HTTP Invalid Request", 400, ex.getCode());
             Assert.assertEquals("Error message", "Error setting rate.", ex.getMessage());
         }
-        JUnitAppender.assertErrorMessage("rate of 123456.789 is out of reasonable range");
+        JUnitAppender.assertErrorMessage("rate of 123456.789 is out of reasonable range 0.1 - 100.0");
         // POST bad time
         data.put(JSON.RATE, 100); // set rate to max valid rate
         data.put(JSON.TIME, "this is not a time");
@@ -168,20 +161,24 @@ public class JsonTimeSocketServiceTest {
         Assert.assertEquals("message not sent sfter throwing exception", size, connection.getMessages().size());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
     
     private static class TimebaseTimeListener implements PropertyChangeListener {
 
-        private Date time = null;
-        
+        private Date time = new Date();
+
+        private TimebaseTimeListener() {
+            time.setTime(0);
+        }
+
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals("time")) {
@@ -190,7 +187,7 @@ public class JsonTimeSocketServiceTest {
         }
         
         public Date getTime() {
-            return this.time;
+            return new Date(this.time.getTime());
         }
     }
 

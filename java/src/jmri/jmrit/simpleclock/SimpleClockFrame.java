@@ -468,9 +468,9 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         try {
             clock.userSetRate(parsedRate);
         } catch (TimebaseRateException e) {
-            JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e),
+            JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e.getLocalizedMessage()),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when setting timebase rate", e);
+            // log.error is already called by clock.userSetRate
         }
         changed = true;
     }
