@@ -42,10 +42,6 @@ public class ControlPanelPropertyEditor extends JDialog {
      * @param panel control panel.
      */
     public ControlPanelPropertyEditor(ControlPanel panel) {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         control = panel;
         initGUI();
         resetProperties();        

@@ -28,19 +28,11 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     /**
      * Creates new form ThrottlesPreferencesPane
      */
-    @SuppressWarnings("LeakingThisInConstructor")
     public ThrottlesPreferencesPane() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         initComponents();
     }
 
     private void initComponents() {
-        if (InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         ThrottlesPreferences tp = InstanceManager.getDefault(ThrottlesPreferences.class);
         tp.addPropertyChangeListener(this);
                        
