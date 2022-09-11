@@ -141,16 +141,22 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private JScrollPane trainScrollPanel;
     private JCheckBoxMenuItem frameHasScrollBars = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameUseScrollBars"));
     private JCheckBoxMenuItem trainsCanBeFloated = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAllowFloat"));
+    private JCheckBoxMenuItem frameAlwaysOnTop = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameAlwaysOnTop"));
+    private JCheckBoxMenuItem frameOnTopOnSpeedChange = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsFrameOnTopOnSpeedChange"));
+
     private JCheckBoxMenuItem useClassicControl = new JCheckBoxMenuItem(Bundle.getMessage("AutoTrainsUseClassicControl"));
-    
+
     jmri.UserPreferencesManager prefMan;
 
     private void initializeAutoTrainsWindow() {
 
         prefMan = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        frameHasScrollBars.setSelected(prefMan.getCheckboxPreferenceState(hasScrollBars,false));
-        trainsCanBeFloated.setSelected(prefMan.getCheckboxPreferenceState(canFloat,false));
+        frameHasScrollBars.setSelected(prefMan.getSimplePreferenceState(hasScrollBars));
+        trainsCanBeFloated.setSelected(prefMan.getSimplePreferenceState(canFloat));
+        frameAlwaysOnTop.setSelected(prefMan.getSimplePreferenceState(alWaysOnTop));
+        frameOnTopOnSpeedChange.setSelected(prefMan.getSimplePreferenceState(onTopOnSpeedChange));
         useClassicControl.setSelected(prefMan.getCheckboxPreferenceState(classicControl,true));
+
         autoTrainsFrame = this;
         autoTrainsFrame.setTitle(Bundle.getMessage("TitleAutoTrains"));
         trainsPanel = new JPanel();
@@ -178,7 +184,24 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 }
             }
         });
+
+        optMenu.add(frameAlwaysOnTop);
+        frameAlwaysOnTop.addActionListener(e -> {
+            setAlwaysOnTop(frameAlwaysOnTop.isSelected());
+        });
+
+        optMenu.add(frameOnTopOnSpeedChange);
+        frameOnTopOnSpeedChange.addActionListener(e -> {
+            for (Object ob : trainsPanel.getComponents()) {
+                if (ob instanceof AutoTrainControl) {
+                    AutoTrainControl atnn = (AutoTrainControl) ob;
+                    atnn.setOnTopOnSpeedChange(frameOnTopOnSpeedChange.isSelected());
+                }
+            }
+        });
+
         optMenu.add(useClassicControl);
+
         menuBar.add(optMenu);
 
         setJMenuBar(menuBar);
@@ -231,15 +254,19 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         if (prefMan!=null) {
             prefMan.setSimplePreferenceState(hasScrollBars, frameHasScrollBars.isSelected());
             prefMan.setSimplePreferenceState(canFloat, trainsCanBeFloated.isSelected());
+            prefMan.setSimplePreferenceState(hasScrollBars, frameHasScrollBars.isSelected());
+            prefMan.setSimplePreferenceState(canFloat, trainsCanBeFloated.isSelected());
             prefMan.setSimplePreferenceState(classicControl, useClassicControl.isSelected());
         }
         super.dispose();
     }
     String hasScrollBars = this.getClass().getName() + ".HasScrollBars"; // NOI18N
     String canFloat = this.getClass().getName() + ".CanFloat"; // NOI18N
+    String alWaysOnTop = this.getClass().getName() + ".AlWaysOnTop"; // NOI18N
+    String onTopOnSpeedChange = this.getClass().getName() + ".OnTopOnSpeedChange"; // NOI18N
     String classicControl = this.getClass().getName() + ".UseClassicControl"; // NOI18N
-
-
+ 
+ 
     private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
