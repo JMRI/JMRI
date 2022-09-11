@@ -16,9 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A very specific dialog for editing the properties of a ControlPanel object.
  *
@@ -205,5 +202,5 @@ public class ControlPanelPropertyEditor extends JDialog {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelPropertyEditor.class);    
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanelPropertyEditor.class);    
 }

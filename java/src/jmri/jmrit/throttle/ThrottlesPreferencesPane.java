@@ -10,8 +10,6 @@ import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A preferences panel to display and edit JMRI throttle keyboard shortcuts
@@ -134,5 +132,5 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         return true; // no validity checking performed
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesPane.class);        
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThrottlesPreferencesPane.class);        
 }
