@@ -8,7 +8,6 @@ import javax.annotation.*;
 
 import jmri.JmriException;
 import jmri.NamedBean;
-import jmri.NamedBean.DisplayOptions;
 import jmri.beans.PropertyChangeProvider;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -163,7 +162,7 @@ public interface Base extends PropertyChangeProvider {
      * @return a long description
      */
     default public String getLongDescription() {
-        return getLongDescription(Locale.getDefault());
+        return getLongDescription(Locale.getDefault(), new PrintTreeSettings());
     }
 
     /**
@@ -175,10 +174,11 @@ public interface Base extends PropertyChangeProvider {
 
     /**
      * Get a long description of this item.
-     * @param locale The locale to be used
+     * @param locale    The locale to be used
+     * @param settings  settings for what to print
      * @return a long description
      */
-    public String getLongDescription(Locale locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings);
 
     /**
      * Get the ConditionalNG of this item.
@@ -572,6 +572,14 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
+    public static String getListen(boolean listen) {
+        if (listen) {
+            return Bundle.getMessage("Base_Listen");
+        } else {
+            return Bundle.getMessage("Base_NoListen");
+        }
+    }
+
 
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
@@ -594,6 +602,7 @@ public interface Base extends PropertyChangeProvider {
         public boolean _printErrorHandling = true;
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;
+        public boolean _printListen = true;
     }
 
 }

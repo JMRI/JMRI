@@ -24,13 +24,13 @@ public final class DefaultFemaleAnalogActionSocket
     public DefaultFemaleAnalogActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleAnalogActionSocket;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
@@ -53,7 +53,7 @@ public final class DefaultFemaleAnalogActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "DefaultFemaleAnalogActionSocket_Long", getName());
     }
 
@@ -62,5 +62,5 @@ public final class DefaultFemaleAnalogActionSocket
     public void disposeMe() {
         // Do nothing
     }
-    
+
 }

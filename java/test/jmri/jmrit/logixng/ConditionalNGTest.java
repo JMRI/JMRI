@@ -4,8 +4,9 @@ import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.actions.DigitalMany;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -135,7 +136,7 @@ public class ConditionalNGTest {
                 .createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
         Assert.assertEquals("getLongDescription() returns correct value",
-                "ConditionalNG: A conditionalNG", conditionalNG_1.getLongDescription(Locale.US));
+                "ConditionalNG: A conditionalNG", conditionalNG_1.getLongDescription(Locale.US, new PrintTreeSettings()));
     }
 
     @Test
@@ -144,7 +145,7 @@ public class ConditionalNGTest {
                 .createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG, "A conditionalNG");  // NOI18N
         Assert.assertEquals("getLongDescription() returns correct value",
-                "ConditionalNG: A conditionalNG", conditionalNG_1.getLongDescription(Locale.US));
+                "ConditionalNG: A conditionalNG", conditionalNG_1.getLongDescription(Locale.US, new PrintTreeSettings()));
     }
 
     @Test

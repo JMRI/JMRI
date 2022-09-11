@@ -81,7 +81,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return "LogixNG: "+getDisplayName();
     }
 
@@ -343,7 +343,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
         }
         writer.append(currentIndent);
-        writer.append(getLongDescription(locale));
+        writer.append(getLongDescription(locale, settings));
         writer.println();
     }
 

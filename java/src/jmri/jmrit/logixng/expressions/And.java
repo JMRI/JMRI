@@ -116,7 +116,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "And_Long", _type.toString());
     }
 

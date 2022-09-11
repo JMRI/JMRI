@@ -115,7 +115,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "Or_Long", _type.toString());
     }
 

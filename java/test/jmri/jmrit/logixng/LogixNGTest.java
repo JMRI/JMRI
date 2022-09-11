@@ -12,10 +12,11 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.implementation.DefaultLogixNG;
-import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.expressions.And;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.implementation.DefaultLogixNG;
+import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -72,7 +73,7 @@ public class LogixNGTest {
     public void testLongDescription() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         Assert.assertEquals("getLongDescription() returns correct value",
-                "LogixNG: A new logix for test", logixNG.getLongDescription(Locale.US));
+                "LogixNG: A new logix for test", logixNG.getLongDescription(Locale.US, new PrintTreeSettings()));
     }
 
     @Test

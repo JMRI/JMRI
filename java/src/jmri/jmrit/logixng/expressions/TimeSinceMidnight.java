@@ -100,7 +100,7 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         switch (_type) {
             case SystemClock:
                 return Bundle.getMessage(locale, "TimeSinceMidnight_Long_SystemClock");

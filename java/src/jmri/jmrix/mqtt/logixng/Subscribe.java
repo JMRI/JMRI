@@ -124,7 +124,7 @@ public class Subscribe extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "Subscribe_Long", _subscribeToTopic);
     }
 

@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
@@ -54,6 +55,7 @@ public class LogixNG_SelectString implements VetoableChangeListener {
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setMemory(_memoryHandle);
+        copy.setListenToMemory(_listenToMemory);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
@@ -208,7 +210,7 @@ public class LogixNG_SelectString implements VetoableChangeListener {
         }
     }
 
-    public String getDescription(Locale locale) {
+    public String getDescription(Locale locale, PrintTreeSettings settings) {
         String enumName;
 
         String memoryName;
@@ -228,7 +230,11 @@ public class LogixNG_SelectString implements VetoableChangeListener {
                 break;
 
             case Memory:
-                enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                if (settings._printListen) {
+                    enumName = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListen(_listenToMemory));
+                } else {
+                    enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                }
                 break;
 
             case LocalVariable:

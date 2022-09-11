@@ -23,13 +23,13 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
     public DefaultFemaleDigitalExpressionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleDigitalExpressionSocket;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
@@ -49,7 +49,7 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "DefaultFemaleDigitalExpressionSocket_Long", getName());
     }
 

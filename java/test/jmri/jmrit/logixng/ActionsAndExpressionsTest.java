@@ -153,7 +153,7 @@ public class ActionsAndExpressionsTest {
             Assert.assertNotNull(lastMaleSocket);
             Base base = socket;
             Assert.assertNotNull(base);
-            
+
             while ((base instanceof MaleSocket)) {
                 lastMaleSocket = (MaleSocket) base;
                 base = ((MaleSocket)base).getObject();

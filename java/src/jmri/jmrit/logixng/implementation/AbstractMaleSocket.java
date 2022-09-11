@@ -111,8 +111,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
 
     @Override
-    public final String getLongDescription(Locale locale) {
-        return _object.getLongDescription(locale);
+    public final String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        return _object.getLongDescription(locale, settings);
     }
 
     @Override
@@ -410,7 +410,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
             }
             writer.append(currentIndent);
-            writer.append(getLongDescription(locale));
+            writer.append(getLongDescription(locale, settings));
             if (settings._printDisplayName) {
                 writer.append(" ::: ");
                 writer.append(Bundle.getMessage("LabelDisplayName"));

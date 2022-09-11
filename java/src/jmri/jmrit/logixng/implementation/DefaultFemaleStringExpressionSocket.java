@@ -23,13 +23,13 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
     public DefaultFemaleStringExpressionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleStringExpressionSocket;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String evaluate() throws JmriException {
@@ -39,19 +39,19 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
             return "";
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean getTriggerOnChange() {
         throw new UnsupportedOperationException("Not supported");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setTriggerOnChange(boolean triggerOnChange) {
         throw new UnsupportedOperationException("Not supported");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
@@ -60,7 +60,7 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "DefaultFemaleStringExpressionSocket_Long", getName());
     }
 

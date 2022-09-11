@@ -45,7 +45,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "SimulateTurnoutFeedback_Long", _delay);
     }
 

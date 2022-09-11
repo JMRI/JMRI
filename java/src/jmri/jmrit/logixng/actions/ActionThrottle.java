@@ -29,7 +29,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
  * This action reads an analog expression with the loco address and sets its
  * speed according to an alaog expression and the direction according to a
  * digital expression.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public class ActionThrottle extends AbstractDigitalAction
@@ -41,11 +41,11 @@ public class ActionThrottle extends AbstractDigitalAction
     public static final int LOCO_FUNCTION_SOCKET = LOCO_DIRECTION_SOCKET + 1;
     public static final int LOCO_FUNCTION_ONOFF_SOCKET = LOCO_FUNCTION_SOCKET + 1;
     public static final int NUM_LOCO_SOCKETS = LOCO_FUNCTION_ONOFF_SOCKET + 1;
-    
+
     // The throttle if we have one or if a request is sent, null otherwise
     private DccThrottle _throttle;
     private ThrottleListener _throttleListener;
-    
+
     private String _locoAddressSocketSystemName;
     private String _locoSpeedSocketSystemName;
     private String _locoDirectionSocketSystemName;
@@ -57,8 +57,8 @@ public class ActionThrottle extends AbstractDigitalAction
     private final FemaleAnalogExpressionSocket _locoFunctionSocket;
     private final FemaleDigitalExpressionSocket _locoFunctionOnOffSocket;
     boolean _isActive = false;
-    
-    
+
+
     public ActionThrottle(String sys, String user) {
         super(sys, user);
         _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
@@ -72,7 +72,7 @@ public class ActionThrottle extends AbstractDigitalAction
         _locoFunctionOnOffSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("ActionThrottle_SocketName_FunctionOnOff"));
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -83,7 +83,7 @@ public class ActionThrottle extends AbstractDigitalAction
         copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -93,22 +93,22 @@ public class ActionThrottle extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        
+
         int currentLocoAddress = -1;
         int newLocoAddress = -1;
-        
+
         if (_throttle != null) {
             currentLocoAddress = _throttle.getLocoAddress().getNumber();
         }
-        
+
         if (_locoAddressSocket.isConnected()) {
             newLocoAddress =
                     (int) ((MaleAnalogExpressionSocket)_locoAddressSocket.getConnectedSocket())
                             .evaluate();
         }
-        
+
         if (newLocoAddress != currentLocoAddress) {
-            
+
             if (_throttle != null) {
                 // Stop the loco
                 _throttle.setSpeedSetting(0);
@@ -116,9 +116,9 @@ public class ActionThrottle extends AbstractDigitalAction
                 InstanceManager.getDefault(ThrottleManager.class).releaseThrottle(_throttle, _throttleListener);
                 _throttle = null;
             }
-            
+
             if (newLocoAddress != -1) {
-                
+
                 _throttleListener =  new ThrottleListener() {
                     @Override
                     public void notifyThrottleFound(DccThrottle t) {
@@ -136,49 +136,49 @@ public class ActionThrottle extends AbstractDigitalAction
                         log.warn("Loco {} cannot be aquired. Decision required.", address.getNumber());
                     }
                 };
-                
+
                 boolean result = InstanceManager.getDefault(ThrottleManager.class)
                         .requestThrottle(newLocoAddress, _throttleListener);
-                
+
                 if (!result) {
                     log.warn("loco {} cannot be aquired", newLocoAddress);
                 }
             }
-            
+
         }
-        
+
         // We have a throttle if _throttle is not null
         if (_throttle != null) {
-            
+
             double speed = 0;
             boolean isForward = true;
             int function = 0;
             boolean isFunctionOn = true;
-            
+
             if (_locoSpeedSocket.isConnected()) {
                 speed =
                         ((MaleAnalogExpressionSocket)_locoSpeedSocket.getConnectedSocket())
                                 .evaluate();
             }
-            
+
             if (_locoDirectionSocket.isConnected()) {
                 isForward =
                         ((MaleDigitalExpressionSocket)_locoDirectionSocket.getConnectedSocket())
                                 .evaluate();
             }
-            
+
             if (_locoFunctionSocket.isConnected()) {
                 function = (int) Math.round(
                         ((MaleAnalogExpressionSocket)_locoFunctionSocket.getConnectedSocket())
                                 .evaluate());
             }
-            
+
             if (_locoFunctionOnOffSocket.isConnected()) {
                 isFunctionOn =
                         ((MaleDigitalExpressionSocket)_locoFunctionOnOffSocket.getConnectedSocket())
                                 .evaluate();
             }
-            
+
             DccThrottle throttle = _throttle;
             float spd = (float) speed;
             boolean fwd = isForward;
@@ -199,19 +199,19 @@ public class ActionThrottle extends AbstractDigitalAction
         switch (index) {
             case LOCO_ADDRESS_SOCKET:
                 return _locoAddressSocket;
-                
+
             case LOCO_SPEED_SOCKET:
                 return _locoSpeedSocket;
-                
+
             case LOCO_DIRECTION_SOCKET:
                 return _locoDirectionSocket;
-                
+
             case LOCO_FUNCTION_SOCKET:
                 return _locoFunctionSocket;
-                
+
             case LOCO_FUNCTION_ONOFF_SOCKET:
                 return _locoFunctionOnOffSocket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -272,7 +272,7 @@ public class ActionThrottle extends AbstractDigitalAction
             throw new IllegalArgumentException("unkown socket");
         }
     }
-    
+
     private void executeConditionalNG() {
         if (_listenersAreRegistered) {
             ConditionalNG c = getConditionalNG();
@@ -288,7 +288,7 @@ public class ActionThrottle extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "ActionThrottle_Long", _locoAddressSocket.getName());
     }
 
@@ -359,7 +359,7 @@ public class ActionThrottle extends AbstractDigitalAction
             if ( !_locoAddressSocket.isConnected()
                     || !_locoAddressSocket.getConnectedSocket().getSystemName()
                             .equals(_locoAddressSocketSystemName)) {
-                
+
                 String socketSystemName = _locoAddressSocketSystemName;
                 _locoAddressSocket.disconnect();
                 if (socketSystemName != null) {
@@ -377,11 +377,11 @@ public class ActionThrottle extends AbstractDigitalAction
             } else {
                 _locoAddressSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_locoSpeedSocket.isConnected()
                     || !_locoSpeedSocket.getConnectedSocket().getSystemName()
                             .equals(_locoSpeedSocketSystemName)) {
-                
+
                 String socketSystemName = _locoSpeedSocketSystemName;
                 _locoSpeedSocket.disconnect();
                 if (socketSystemName != null) {
@@ -399,11 +399,11 @@ public class ActionThrottle extends AbstractDigitalAction
             } else {
                 _locoSpeedSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_locoDirectionSocket.isConnected()
                     || !_locoDirectionSocket.getConnectedSocket().getSystemName()
                             .equals(_locoDirectionSocketSystemName)) {
-                
+
                 String socketSystemName = _locoDirectionSocketSystemName;
                 _locoDirectionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -421,11 +421,11 @@ public class ActionThrottle extends AbstractDigitalAction
             } else {
                 _locoDirectionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_locoFunctionSocket.isConnected()
                     || !_locoFunctionSocket.getConnectedSocket().getSystemName()
                             .equals(_locoFunctionSocketSystemName)) {
-                
+
                 String socketSystemName = _locoFunctionSocketSystemName;
                 _locoFunctionSocket.disconnect();
                 if (socketSystemName != null) {
@@ -443,11 +443,11 @@ public class ActionThrottle extends AbstractDigitalAction
             } else {
                 _locoFunctionSocket.getConnectedSocket().setup();
             }
-            
+
             if ( !_locoFunctionOnOffSocket.isConnected()
                     || !_locoFunctionOnOffSocket.getConnectedSocket().getSystemName()
                             .equals(_locoFunctionOnOffSocketSystemName)) {
-                
+
                 String socketSystemName = _locoFunctionOnOffSocketSystemName;
                 _locoFunctionOnOffSocket.disconnect();
                 if (socketSystemName != null) {
@@ -470,19 +470,19 @@ public class ActionThrottle extends AbstractDigitalAction
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
         _listenersAreRegistered = true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         _listenersAreRegistered = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {

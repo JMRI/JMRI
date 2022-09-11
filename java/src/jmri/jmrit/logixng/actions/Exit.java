@@ -48,7 +48,7 @@ public class Exit
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return getShortDescription(locale);
     }
 

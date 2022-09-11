@@ -19,12 +19,12 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     public DefaultFemaleDigitalBooleanActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleDigitalBooleanActionSocket;
     }
-    
+
     @Override
     public void execute(boolean hasChangedToTrue, boolean hasChangedToFalse) throws JmriException {
         if (isConnected()) {
@@ -39,7 +39,7 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "DefaultFemaleDigitalBooleanActionSocket_Long", getName());
     }
 

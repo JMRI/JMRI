@@ -11,7 +11,7 @@ import jmri.jmrit.logixng.util.ReferenceUtil;
 
 /**
  * Evaluates what a reference points to.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ExpressionReference extends AbstractDigitalExpression
@@ -26,7 +26,7 @@ public class ExpressionReference extends AbstractDigitalExpression
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -40,28 +40,28 @@ public class ExpressionReference extends AbstractDigitalExpression
         copy.setPointsTo(_pointsTo);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     public void setReference(String reference) {
         assertListenersAreNotRegistered(log, "setReference");
         _reference = reference;
     }
-    
+
     public String getReference() {
         return _reference;
     }
-    
+
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
     }
-    
+
     public Is_IsNot_Enum get_Is_IsNot() {
         return _is_IsNot;
     }
-    
+
     public void setPointsTo(PointsTo pointsTo) {
         _pointsTo = pointsTo;
     }
-    
+
     public PointsTo getPointsTo() {
         return _pointsTo;
     }
@@ -82,7 +82,7 @@ public class ExpressionReference extends AbstractDigitalExpression
             }
         }
     }
-*/    
+*/
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -93,7 +93,7 @@ public class ExpressionReference extends AbstractDigitalExpression
     @Override
     public boolean evaluate() {
         if (_reference == null) return false;
-        
+
         boolean result;
         String ref = ReferenceUtil.getReference(
                 getConditionalNG().getSymbolTable(), _reference);
@@ -103,51 +103,51 @@ public class ExpressionReference extends AbstractDigitalExpression
             case Nothing:
                 result = "".equals(ref);
                 break;
-            
+
             case LogixNGTable:
                 t = InstanceManager.getDefault(NamedTableManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case Audio:
                 t = InstanceManager.getDefault(AudioManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case Light:
                 t = InstanceManager.getDefault(LightManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case Memory:
                 t = InstanceManager.getDefault(MemoryManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case Sensor:
                 t = InstanceManager.getDefault(SensorManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case SignalHead:
                 t = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case SignalMast:
                 t = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             case Turnout:
                 t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
-            
+
             default:
                 throw new UnsupportedOperationException("_pointsTo has unknown value: "+_pointsTo.name());
         }
-        
+
         if (_is_IsNot == Is_IsNot_Enum.Is) {
             return result;
         } else {
@@ -171,14 +171,14 @@ public class ExpressionReference extends AbstractDigitalExpression
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         String reference;
         if (_reference != null) {
             reference = _reference;
         } else {
             reference = Bundle.getMessage(locale, "ReferenceNotSelected");
         }
-        
+
         return Bundle.getMessage(
                 locale,
                 "Reference_Long",
@@ -186,13 +186,13 @@ public class ExpressionReference extends AbstractDigitalExpression
                 _is_IsNot.toString(),
                 _pointsTo._text);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -201,7 +201,7 @@ public class ExpressionReference extends AbstractDigitalExpression
             _listenersAreRegistered = true;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -210,20 +210,20 @@ public class ExpressionReference extends AbstractDigitalExpression
             _listenersAreRegistered = false;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         getConditionalNG().execute();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
-    
+
+
+
     public enum PointsTo {
         Nothing(Bundle.getMessage("ReferencePointsTo_Nothing")),
         Audio(Bundle.getMessage("ReferencePointsTo_Audio")),
@@ -234,21 +234,21 @@ public class ExpressionReference extends AbstractDigitalExpression
         SignalMast(Bundle.getMessage("ReferencePointsTo_SignalMast")),
         Turnout(Bundle.getMessage("ReferencePointsTo_Turnout")),
         LogixNGTable(Bundle.getMessage("ReferencePointsTo_LogixNGTable"));
-        
+
         private final String _text;
-        
+
         private PointsTo(String text) {
             this._text = text;
         }
-        
+
         @Override
         public String toString() {
             return _text;
         }
-        
+
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionReference.class);
-    
+
 }

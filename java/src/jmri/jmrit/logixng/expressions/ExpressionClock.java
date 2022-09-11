@@ -158,7 +158,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         switch (_type) {
             case SystemClock:
                 return Bundle.getMessage(locale, "Clock_Long_SystemClock", _is_IsNot.toString(),

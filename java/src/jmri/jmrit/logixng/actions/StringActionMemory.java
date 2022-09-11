@@ -79,8 +79,8 @@ public class StringActionMemory extends AbstractStringAction
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "StringActionMemory_Long", _selectNamedBean.getDescription(locale));
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        return Bundle.getMessage(locale, "StringActionMemory_Long", _selectNamedBean.getDescription(locale, settings));
     }
 
     /** {@inheritDoc} */

@@ -126,20 +126,20 @@ public class ActionClock extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         String value;
         if (_selectValue.getAddressing() == NamedBeanAddressing.Direct) {
             value = formatTime(_selectValue.getValue());
         } else {
-            value = _selectValue.getDescription(locale);
+            value = _selectValue.getDescription(locale, settings);
         }
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
             if (_selectEnum.getEnum() == ClockState.SetClock) {
-                return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale), value);
+                return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale, settings), value);
             }
-            return Bundle.getMessage(locale, "ActionClock_Long", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClock_Long", _selectEnum.getDescription(locale, settings), value);
         } else {
-            return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale, settings), value);
         }
     }
 

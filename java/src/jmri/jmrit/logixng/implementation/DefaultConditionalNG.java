@@ -246,7 +246,7 @@ public class DefaultConditionalNG extends AbstractBase
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         if (_thread.getThreadId() != LogixNG_Thread.DEFAULT_LOGIXNG_THREAD) {
             return "ConditionalNG: "+getDisplayName() + " on thread " + _thread.getThreadName();
         }

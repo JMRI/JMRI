@@ -152,7 +152,7 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return "GlobalVariable: "+getDisplayName();
     }
 

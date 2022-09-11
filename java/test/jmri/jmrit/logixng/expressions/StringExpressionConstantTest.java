@@ -8,10 +8,10 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -87,24 +87,24 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         expression2 = new StringExpressionConstant("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get string constant \"\"", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"\"", expression2.getLongDescription(Locale.ENGLISH, new PrintTreeSettings()));
 
         expression2 = new StringExpressionConstant("IQSE11", "My constant value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant value", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get string constant \"\"", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"\"", expression2.getLongDescription(Locale.ENGLISH, new PrintTreeSettings()));
 
         expression2 = new StringExpressionConstant("IQSE11", null);
         expression2.setValue("A value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get string constant \"A value\"", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"A value\"", expression2.getLongDescription(Locale.ENGLISH, new PrintTreeSettings()));
 
         expression2 = new StringExpressionConstant("IQSE11", "My constant");
         expression2.setValue("Some other value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get string constant \"Some other value\"", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"Some other value\"", expression2.getLongDescription(Locale.ENGLISH, new PrintTreeSettings()));
 
         // Call setup(). It doesn't do anything, but we call it for coverage
         expression2.setup();
@@ -204,7 +204,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
 
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Get string constant \"Something\"", _base.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"Something\"", _base.getLongDescription(Locale.ENGLISH, new PrintTreeSettings()));
     }
 
     @Test

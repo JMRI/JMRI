@@ -25,12 +25,12 @@ public class DefaultFemaleDigitalActionSocket
     public DefaultFemaleDigitalActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleDigitalActionSocket;
     }
-    
+
     @Override
     public void execute() throws JmriException {
         if (isConnected()) {
@@ -44,7 +44,7 @@ public class DefaultFemaleDigitalActionSocket
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "DefaultFemaleDigitalActionSocket_Long", getName());
     }
 

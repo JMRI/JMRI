@@ -8,7 +8,7 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Always evaluates to True.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class True extends AbstractDigitalExpression {
@@ -17,7 +17,7 @@ public class True extends AbstractDigitalExpression {
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -28,36 +28,36 @@ public class True extends AbstractDigitalExpression {
         copy.setComment(getComment());
         return manager.registerExpression(copy);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.OTHER;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
         return true;
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");
     }
-    
+
     @Override
     public int getChildCount() {
         return 0;
     }
-    
+
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "True_Short");
     }
-    
+
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "True_Long");
     }
 
@@ -66,17 +66,17 @@ public class True extends AbstractDigitalExpression {
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {

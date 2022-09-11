@@ -253,7 +253,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         String variableName;
         if ((_localVariable == null) || _localVariable.isEmpty()) {
             variableName = Bundle.getMessage(locale, "BeanNotSelected");
@@ -261,7 +261,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             variableName = _localVariable;
         }
 
-        String memoryName = _selectMemoryNamedBean.getDescription(locale);
+        String memoryName = _selectMemoryNamedBean.getDescription(locale, settings);
 
         String message;
         String other1;

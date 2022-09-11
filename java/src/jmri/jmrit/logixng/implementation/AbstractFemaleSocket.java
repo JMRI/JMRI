@@ -325,7 +325,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             writer.append(String.format(PRINT_LINE_NUMBERS_FORMAT, lineNumber.addAndGet(1)));
         }
         writer.append(currentIndent);
-        writer.append(getLongDescription(locale));
+        writer.append(getLongDescription(locale, settings));
         writer.println();
     }
 

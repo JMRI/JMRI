@@ -80,8 +80,8 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
 
     /** {@inheritDoc} */
     @Override
-    public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "AnalogExpressionMemory_Long", _selectNamedBean.getDescription(locale));
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        return Bundle.getMessage(locale, "AnalogExpressionMemory_Long", _selectNamedBean.getDescription(locale, settings));
     }
 
     /** {@inheritDoc} */

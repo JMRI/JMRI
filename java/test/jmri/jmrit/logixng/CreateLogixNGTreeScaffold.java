@@ -352,16 +352,54 @@ public class CreateLogixNGTreeScaffold {
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / Direct / Direct :: SetValue");
         maleSocket.setLocked(false);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectNamedBean().setNamedBean(block1);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Memory);
+        actionBlock.getSelectNamedBean().setMemory(memory1);
+        actionBlock.getSelectNamedBean().setListenToMemory(true);
+        actionBlock.getSelectNamedBean().setNamedBean(block1);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Memory);
+        actionBlock.getSelectNamedBean().setMemory(memory1);
+        actionBlock.getSelectNamedBean().setListenToMemory(false);
+        actionBlock.getSelectNamedBean().setNamedBean(block1);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectEnum().setEnum(ActionBlock.DirectOperation.SetValue);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Memory);
+        actionBlock.getSelectEnum().setMemory(memory3);
+        actionBlock.getSelectEnum().setListenToMemory(true);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
+        actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Memory);
+        actionBlock.getSelectEnum().setMemory(memory3);
+        actionBlock.getSelectEnum().setListenToMemory(false);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setDataAddressing(NamedBeanAddressing.Direct);
         actionBlock.setBlockValue("ABC");
-
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -369,13 +407,18 @@ public class CreateLogixNGTreeScaffold {
 // Direct / Direct :: SetOccupied
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / Direct :: SetOccupied");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectNamedBean().setNamedBean(block1);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectEnum().setEnum(ActionBlock.DirectOperation.SetOccupied);
-
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -383,13 +426,18 @@ public class CreateLogixNGTreeScaffold {
 // Direct / LocalVariable
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Direct / LocalVariable");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectNamedBean().setNamedBean(block1);
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.LocalVariable);
         actionBlock.getSelectEnum().setLocalVariable("index2");
-
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -397,13 +445,18 @@ public class CreateLogixNGTreeScaffold {
 // LocalVariable / Formula
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("LocalVariable / Formula");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
         actionBlock.getSelectNamedBean().setLocalVariable("index");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
         actionBlock.getSelectEnum().setFormula("\"IT\"+index2");
-
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -411,13 +464,18 @@ public class CreateLogixNGTreeScaffold {
 // Formula / Reference
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Formula / Reference");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
         actionBlock.getSelectNamedBean().setFormula("\"IT\"+index");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
         actionBlock.getSelectEnum().setReference("{IM2}");
-
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -425,13 +483,18 @@ public class CreateLogixNGTreeScaffold {
 // Reference / Direct :: SetNullValue
         actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.setComment("Reference / Direct :: SetAltColorOn");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
         actionBlock.getSelectNamedBean().setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionBlock);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionBlock = new ActionBlock(digitalActionManager.getAutoSystemName(), null);
         actionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         actionBlock.getSelectEnum().setEnum(ActionBlock.DirectOperation.SetNullValue);
-
         maleSocket = digitalActionManager.registerAction(actionBlock);
         maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -465,6 +528,20 @@ public class CreateLogixNGTreeScaffold {
         actionClock.setComment("SetClock");
         actionClock.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
         actionClock.getSelectTime().setValue(720);
+
+        actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
+        actionClock.setComment("SetClock");
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
+        actionClock.getSelectTime().setAddressing(NamedBeanAddressing.Memory);
+        actionClock.getSelectTime().setMemory(memory3);
+        actionClock.getSelectTime().setListenToMemory(true);
+
+        actionClock = new ActionClock(digitalActionManager.getAutoSystemName(), null);
+        actionClock.setComment("SetClock");
+        actionClock.getSelectEnum().setEnum(ActionClock.ClockState.SetClock);
+        actionClock.getSelectTime().setAddressing(NamedBeanAddressing.Memory);
+        actionClock.getSelectTime().setMemory(memory3);
+        actionClock.getSelectTime().setListenToMemory(false);
 
         maleSocket = digitalActionManager.registerAction(actionClock);
         maleSocket.setEnabled(false);
@@ -506,7 +583,17 @@ public class CreateLogixNGTreeScaffold {
         actionClockRate.getSelectSpeed().setAddressing(NamedBeanAddressing.Memory);
         actionClockRate.getSelectSpeed().setMemory(memory1);
         actionClockRate.getSelectSpeed().setListenToMemory(true);
+        maleSocket = digitalActionManager.registerAction(actionClockRate);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionClockRate = new ActionClockRate(digitalActionManager.getAutoSystemName(), null);
+        actionClockRate.setComment("StartClock");
+        actionClockRate.getSelectEnum().setAddressing(NamedBeanAddressing.Memory);
+        actionClockRate.getSelectEnum().setMemory(memory2);
+        actionClockRate.getSelectSpeed().setAddressing(NamedBeanAddressing.Memory);
+        actionClockRate.getSelectSpeed().setMemory(memory1);
+        actionClockRate.getSelectSpeed().setListenToMemory(false);
         maleSocket = digitalActionManager.registerAction(actionClockRate);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -2042,6 +2129,30 @@ public class CreateLogixNGTreeScaffold {
         publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
         publish.getSelectTopic().setValue("topic");
         publish.getSelectMessage().setValue("message");
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setAddressing(NamedBeanAddressing.Memory);
+        publish.getSelectTopic().setMemory(memory3);
+        publish.getSelectTopic().setListenToMemory(true);
+        publish.getSelectMessage().setAddressing(NamedBeanAddressing.Memory);
+        publish.getSelectMessage().setMemory(memory3);
+        publish.getSelectMessage().setListenToMemory(true);
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setAddressing(NamedBeanAddressing.Memory);
+        publish.getSelectTopic().setMemory(memory3);
+        publish.getSelectTopic().setListenToMemory(true);
+        publish.getSelectMessage().setAddressing(NamedBeanAddressing.Memory);
+        publish.getSelectMessage().setMemory(memory3);
+        publish.getSelectMessage().setListenToMemory(true);
         maleSocket = digitalActionManager.registerAction(publish);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

@@ -21,7 +21,7 @@ import jmri.jmrit.logixng.MaleSocket;
  * The first time the child expression returns True, this expression returns
  * True. After that, this expression returns False until the child expression
  * returns False and again returns True.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class TriggerOnce extends AbstractDigitalExpression implements FemaleSocketListener {
@@ -29,16 +29,16 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     private String _childExpressionSystemName;
     private final FemaleDigitalExpressionSocket _childExpression;
     private boolean _childLastState = false;
-    
-    
+
+
     public TriggerOnce(String sys, String user) {
-        
+
         super(sys, user);
-        
+
         _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E");
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -49,13 +49,13 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         copy.setComment(getComment());
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.OTHER;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
@@ -81,7 +81,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     public int getChildCount() {
         return 1;
     }
-    
+
     @Override
     public void connected(FemaleSocket socket) {
         if (socket == _childExpression) {
@@ -90,7 +90,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
             throw new IllegalArgumentException("unkown socket");
         }
     }
-    
+
     @Override
     public void disconnected(FemaleSocket socket) {
         if (socket == _childExpression) {
@@ -104,9 +104,9 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "TriggerOnce_Short");
     }
-    
+
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "TriggerOnce_Long");
     }
 
@@ -125,7 +125,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
             if ( !_childExpression.isConnected()
                     || !_childExpression.getConnectedSocket().getSystemName()
                             .equals(_childExpressionSystemName)) {
-                
+
                 String socketSystemName = _childExpressionSystemName;
                 _childExpression.disconnect();
                 if (socketSystemName != null) {
@@ -147,17 +147,17 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
             throw new RuntimeException("socket is already connected");
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {

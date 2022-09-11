@@ -200,7 +200,7 @@ public class LogData extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         String bundleKey;
         switch (_formatType) {
             case OnlyText:

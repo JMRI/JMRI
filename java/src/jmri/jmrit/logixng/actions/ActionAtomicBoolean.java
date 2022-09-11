@@ -10,7 +10,7 @@ import jmri.jmrit.logixng.*;
 
 /**
  * This action sets the value of an AtomicBoolean. It is mostly used for tests.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ActionAtomicBoolean extends AbstractDigitalAction {
@@ -18,14 +18,14 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
     private AtomicBoolean _atomicBoolean;
     private boolean _newValue;
     private AtomicLong _counter;
-    
+
     public ActionAtomicBoolean(AtomicBoolean atomicBoolean, boolean newValue)
             throws BadUserNameException {
         super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _atomicBoolean = atomicBoolean;
         _newValue = newValue;
     }
-    
+
     public ActionAtomicBoolean(AtomicBoolean atomicBoolean, boolean newValue, AtomicLong counter)
             throws BadUserNameException {
         super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
@@ -39,14 +39,14 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         super(sys, user);
         _atomicBoolean = new AtomicBoolean();
     }
-    
+
     public ActionAtomicBoolean(String sys, String user, AtomicBoolean atomicBoolean, boolean newValue)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _atomicBoolean = atomicBoolean;
         _newValue = newValue;
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -57,23 +57,23 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         copy.setComment(getComment());
         return manager.registerAction(copy);
     }
-    
+
     public void setAtomicBoolean(AtomicBoolean atomicBoolean) {
         _atomicBoolean = atomicBoolean;
     }
-    
+
     public AtomicBoolean getAtomicBoolean() {
         return _atomicBoolean;
     }
-    
+
     public void setNewValue(boolean newValue) {
         _newValue = newValue;
     }
-    
+
     public boolean getNewValue() {
         return _newValue;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -103,25 +103,25 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "ActionAtomicBoolean_Long", _newValue);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {

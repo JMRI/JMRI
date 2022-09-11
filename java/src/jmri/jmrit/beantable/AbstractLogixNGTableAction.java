@@ -53,6 +53,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     static final String PRINT_ERROR_HANDLING_OPTION = "jmri.jmrit.logixng.ErrorHandling";
     static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
     static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
+    static final String PRINT_LISTEN_OPTION = "jmri.jmrit.logixng.PrintListen";
 
     JTextArea _textContent;
 
@@ -987,6 +988,19 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
         });
         checkBoxPanel.add(printLocalVariables);
+
+        JCheckBox printListen = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintListen"));
+        printListen.setSelected(_printTreeSettings._printListen);
+        printListen.addChangeListener((event) -> {
+            if (_printTreeSettings._printListen != printListen.isSelected()) {
+                _printTreeSettings._printListen = printListen.isSelected();
+                updateBrowserText();
+                InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_LISTEN_OPTION, printListen.isSelected());
+                });
+            }
+        });
+        checkBoxPanel.add(printListen);
 
         return checkBoxPanel;
     }

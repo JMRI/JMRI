@@ -225,10 +225,10 @@ public class ActionMemory extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String namedBean = _selectNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String namedBean = _selectNamedBean.getDescription(locale, settings);
 
-        String copyToMemoryName = _selectOtherMemoryNamedBean.getDescription(locale);
+        String copyToMemoryName = _selectOtherMemoryNamedBean.getDescription(locale, settings);
 
         switch (_memoryOperation) {
             case SetToNull:

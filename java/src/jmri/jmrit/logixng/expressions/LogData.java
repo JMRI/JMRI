@@ -204,7 +204,7 @@ public class LogData extends AbstractDigitalExpression
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "LogData_Long");
     }
 

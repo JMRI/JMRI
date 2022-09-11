@@ -367,10 +367,10 @@ public class ExpressionReporter extends AbstractDigitalExpression
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String reporterName = _selectNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String reporterName = _selectNamedBean.getDescription(locale, settings);
 
-        String memoryName = _selectMemoryNamedBean.getDescription(locale);
+        String memoryName = _selectMemoryNamedBean.getDescription(locale, settings);
 
         String message;
         String other;

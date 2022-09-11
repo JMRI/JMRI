@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.ThreadingUtil;
@@ -250,7 +251,7 @@ public class ForEach extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         if (_useCommonSource) {
             return Bundle.getMessage(locale, "ForEach_Long_Common",
                     _commonManager.toString(), _variableName, _socket.getName());
@@ -258,11 +259,12 @@ public class ForEach extends AbstractDigitalAction
             switch (_userSpecifiedSource) {
                 case Variable:
                     return Bundle.getMessage(locale, "ForEach_Long_LocalVariable",
-                            _selectVariable.getDescription(locale), _variableName, _socket.getName());
+                            _selectVariable.getDescription(locale, settings),
+                            _variableName, _socket.getName());
 
                 case Memory:
                     return Bundle.getMessage(locale, "ForEach_Long_Memory",
-                            _selectMemoryNamedBean.getDescription(locale), _variableName, _socket.getName());
+                            _selectMemoryNamedBean.getDescription(locale, settings), _variableName, _socket.getName());
 
                 case Formula:
                     return Bundle.getMessage(locale, "ForEach_Long_Formula",

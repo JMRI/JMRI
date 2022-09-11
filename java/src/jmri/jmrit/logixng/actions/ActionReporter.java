@@ -240,13 +240,13 @@ public class ActionReporter extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String bean = _selectNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String bean = _selectNamedBean.getDescription(locale, settings);
         String dest = "";
 
         switch (_dataAddressing) {
             case Direct:
-                String memoryName = _selectMemoryNamedBean.getDescription(locale);
+                String memoryName = _selectMemoryNamedBean.getDescription(locale, settings);
                 dest = Bundle.getMessage(locale, "AddressByDirect", memoryName);
                 break;
 

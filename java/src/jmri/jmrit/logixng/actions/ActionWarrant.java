@@ -332,10 +332,10 @@ public class ActionWarrant extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String namedBean = _selectNamedBean.getDescription(locale);
-        String state = _selectEnum.getDescription(locale);
-        String getLocationMemory = _selectMemoryNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String namedBean = _selectNamedBean.getDescription(locale, settings);
+        String state = _selectEnum.getDescription(locale, settings);
+        String getLocationMemory = _selectMemoryNamedBean.getDescription(locale, settings);
 
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
             if (_selectEnum.getEnum() != null) {

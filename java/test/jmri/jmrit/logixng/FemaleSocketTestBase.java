@@ -522,7 +522,7 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public String getLongDescription(Locale locale) {
+        public String getLongDescription(Locale locale, PrintTreeSettings settings) {
             throw new UnsupportedOperationException("Not supported.");
         }
 

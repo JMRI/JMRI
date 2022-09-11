@@ -10,19 +10,19 @@ import jmri.jmrit.logixng.*;
 /**
  * Constant value.
  * This can be useful for example by the ActionThrottle.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2019
  */
 public class StringExpressionConstant extends AbstractStringExpression {
 
     private String _value = "";
-    
+
     public StringExpressionConstant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        
+
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         StringExpressionManager manager = InstanceManager.getDefault(StringExpressionManager.class);
@@ -34,28 +34,28 @@ public class StringExpressionConstant extends AbstractStringExpression {
         copy.setValue(_value);
         return manager.registerExpression(copy);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
     }
-    
+
     public void setValue(String value) {
         assertListenersAreNotRegistered(log, "setValue");
         _value = value;
     }
-    
+
     public String getValue() {
         return _value;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String evaluate() {
         return _value;
     }
-    
+
     @Override
     public FemaleSocket getChild(int index)
             throws IllegalArgumentException, UnsupportedOperationException {
@@ -73,7 +73,7 @@ public class StringExpressionConstant extends AbstractStringExpression {
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         if (_value == null) {
             return Bundle.getMessage(locale, "StringExpressionConstant_LongNull");
         } else {
@@ -86,7 +86,7 @@ public class StringExpressionConstant extends AbstractStringExpression {
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -96,19 +96,19 @@ public class StringExpressionConstant extends AbstractStringExpression {
         // the class in the wrong way.
         _listenersAreRegistered = true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         _listenersAreRegistered = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionConstant.class);
-    
+
 }

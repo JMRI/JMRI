@@ -153,8 +153,8 @@ public class DigitalCallModule extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String moduleName = _selectNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String moduleName = _selectNamedBean.getDescription(locale, settings);
 
         return Bundle.getMessage(locale, "DigitalCallModule_Long", moduleName);
     }

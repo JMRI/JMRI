@@ -23,12 +23,12 @@ public final class DefaultFemaleStringActionSocket
     public DefaultFemaleStringActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleStringActionSocket;
     }
-    
+
     @Override
     public void setValue(String value) throws JmriException {
         if (isConnected()) {
@@ -42,7 +42,7 @@ public final class DefaultFemaleStringActionSocket
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "DefaultFemaleStringActionSocket_Long", getName());
     }
 

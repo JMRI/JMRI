@@ -83,8 +83,8 @@ public class AnalogActionLightIntensity extends AbstractAnalogAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String namedBean = _selectNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String namedBean = _selectNamedBean.getDescription(locale, settings);
 
         return Bundle.getMessage(locale, "AnalogActionLightIntensity_Long", namedBean);
     }

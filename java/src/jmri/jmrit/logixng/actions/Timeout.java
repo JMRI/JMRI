@@ -176,8 +176,8 @@ public class Timeout extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String delay = _selectDelay.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String delay = _selectDelay.getDescription(locale, settings);
 
         if ((_selectDelay.getAddressing() == NamedBeanAddressing.Direct)
                 && (_selectTimerUnit.getAddressing() == NamedBeanAddressing.Direct)) {
@@ -189,7 +189,7 @@ public class Timeout extends AbstractDigitalAction
                     _selectTimerUnit.getEnum().getTimeWithUnit(_selectDelay.getValue()));
         }
 
-        String timeUnit = _selectTimerUnit.getDescription(locale);
+        String timeUnit = _selectTimerUnit.getDescription(locale, settings);
 
         return Bundle.getMessage(locale,
                 "Timeout_Long_Indirect",

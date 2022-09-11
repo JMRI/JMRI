@@ -79,7 +79,7 @@ public class ActionClearSlots extends AbstractDigitalAction {
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "ActionClearSlots_Long",
                 _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet"));
     }

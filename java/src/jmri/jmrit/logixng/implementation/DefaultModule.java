@@ -102,7 +102,7 @@ public class DefaultModule extends AbstractBase
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         StringBuilder sb = new StringBuilder(Bundle.getMessage("DefaultModule_Long", getDisplayName()));
         if (! _parameters.isEmpty()) {
             List<String> inParams = new ArrayList<>();

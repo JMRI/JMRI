@@ -127,20 +127,20 @@ public class ActionClockRate extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         String value;
         if (_selectSpeed.getAddressing() == NamedBeanAddressing.Direct) {
             value = formatSpeed(_selectSpeed.getValue());
         } else {
-            value = _selectSpeed.getDescription(locale);
+            value = _selectSpeed.getDescription(locale, settings);
         }
         if (_selectEnum.getAddressing() == NamedBeanAddressing.Direct) {
             if (_selectEnum.getEnum() == ClockState.SetClockRate) {
-                return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale), value);
+                return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale, settings), value);
             }
-            return Bundle.getMessage(locale, "ActionClockRate_LongWith", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClockRate_LongWith", _selectEnum.getDescription(locale, settings), value);
         } else {
-            return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClockRate_LongTo", _selectEnum.getDescription(locale, settings), value);
         }
     }
 

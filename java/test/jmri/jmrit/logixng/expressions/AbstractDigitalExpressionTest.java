@@ -53,8 +53,8 @@ public class AbstractDigitalExpressionTest {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();
     }
-    
-    
+
+
     // The purpose of this class is to test the method
     // AbstractDigitalAction.getNewSocketName(). We want
     // to test that the method throws an exception if no
@@ -67,11 +67,11 @@ public class AbstractDigitalExpressionTest {
     private static class MyExpression extends AbstractDigitalExpression implements FemaleSocketListener {
 
         private final MyFemaleSocket child = new MyFemaleSocket(this, this, "E1");
-        
+
         public MyExpression() {
             super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
         }
-        
+
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported.");
@@ -93,7 +93,7 @@ public class AbstractDigitalExpressionTest {
         }
 
         @Override
-        public String getLongDescription(Locale locale) {
+        public String getLongDescription(Locale locale, PrintTreeSettings settings) {
             throw new UnsupportedOperationException("Not supported.");
         }
 
@@ -153,16 +153,16 @@ public class AbstractDigitalExpressionTest {
         public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
-        
+
     }
-    
-    
+
+
     private static class MyFemaleSocket extends AbstractFemaleSocket {
-    
+
         public MyFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
             super(parent, listener, name);
         }
-        
+
         @Override
         public void disposeMe() {
             throw new UnsupportedOperationException("Not supported.");
@@ -184,10 +184,10 @@ public class AbstractDigitalExpressionTest {
         }
 
         @Override
-        public String getLongDescription(Locale locale) {
+        public String getLongDescription(Locale locale, PrintTreeSettings settings) {
             throw new UnsupportedOperationException("Not supported.");
         }
-    
+
     }
-    
+
 }

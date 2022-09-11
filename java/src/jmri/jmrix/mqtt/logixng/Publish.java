@@ -8,6 +8,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
@@ -99,10 +100,10 @@ public class Publish extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "Publish_Long",
-                _selectTopic.getDescription(locale),
-                _selectMessage.getDescription(locale));
+                _selectTopic.getDescription(locale, settings),
+                _selectMessage.getDescription(locale, settings));
     }
 
     /** {@inheritDoc} */

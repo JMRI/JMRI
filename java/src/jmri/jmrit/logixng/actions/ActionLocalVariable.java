@@ -297,10 +297,10 @@ public class ActionLocalVariable extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String copyToMemoryName = _selectMemoryNamedBean.getDescription(locale);
-        String copyToBlockName = _selectBlockNamedBean.getDescription(locale);
-        String copyToReporterName = _selectReporterNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String copyToMemoryName = _selectMemoryNamedBean.getDescription(locale, settings);
+        String copyToBlockName = _selectBlockNamedBean.getDescription(locale, settings);
+        String copyToReporterName = _selectReporterNamedBean.getDescription(locale, settings);
 
         switch (_variableOperation) {
             case SetToNull:

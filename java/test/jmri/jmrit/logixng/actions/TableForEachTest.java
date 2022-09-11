@@ -346,7 +346,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         }
 
         @Override
-        public String getLongDescription(Locale locale) {
+        public String getLongDescription(Locale locale, PrintTreeSettings settings) {
             return "MyAction";
         }
 

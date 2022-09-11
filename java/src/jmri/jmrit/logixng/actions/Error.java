@@ -58,7 +58,7 @@ public class Error extends AbstractDigitalAction {
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
         return Bundle.getMessage(locale, "Error_Long", _message);
     }
 

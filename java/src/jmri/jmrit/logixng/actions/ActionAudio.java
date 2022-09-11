@@ -138,9 +138,9 @@ public class ActionAudio extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String namedBean = _selectNamedBean.getDescription(locale);
-        String operation = _selectEnum.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String namedBean = _selectNamedBean.getDescription(locale, settings);
+        String operation = _selectEnum.getDescription(locale, settings);
 
         return Bundle.getMessage(locale, "ActionAudio_Long", operation, namedBean);
     }

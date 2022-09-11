@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Base.PrintTreeSettings;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
@@ -71,6 +72,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setMemory(_memoryHandle);
+        copy.setListenToMemory(_listenToMemory);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
@@ -285,7 +287,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         }
     }
 
-    public String getDescription(Locale locale) {
+    public String getDescription(Locale locale, PrintTreeSettings settings) {
         String namedBean;
 
         String memoryName;
@@ -311,7 +313,11 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 break;
 
             case Memory:
-                namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                if (settings._printListen) {
+                    namedBean = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListen(_listenToMemory));
+                } else {
+                    namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                }
                 break;
 
             case LocalVariable:

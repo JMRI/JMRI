@@ -332,8 +332,8 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
-        String namedBean = _selectNamedBean.getDescription(locale);
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
+        String namedBean = _selectNamedBean.getDescription(locale, settings);
         String query;
         String aspect;
 

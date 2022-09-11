@@ -369,7 +369,7 @@ public class ActionDispatcher extends AbstractDigitalAction
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(Locale locale, PrintTreeSettings settings) {
 
 // Start train using train info file {abc.xml}
 // Terminate train {transit/name}
@@ -378,7 +378,7 @@ public class ActionDispatcher extends AbstractDigitalAction
 // {[Enable|Disable]} "terminate when done" for train using {}}
 
         String fileName;
-        String state = _selectEnum.getDescription(locale);
+        String state = _selectEnum.getDescription(locale, settings);
 
         switch (_addressing) {
             case Direct:
