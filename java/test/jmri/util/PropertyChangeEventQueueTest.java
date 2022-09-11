@@ -20,13 +20,14 @@ public class PropertyChangeEventQueueTest {
     public void testArraySingleListen() throws jmri.JmriException, InterruptedException {
         PropertyChangeEventQueue pq = new PropertyChangeEventQueue(new NamedBean[]{is1, is2});
 
+        Assertions.assertNotNull(is1);
         is1.setState(Sensor.ACTIVE);
 
         // may have to wait, but done automatically
         PropertyChangeEvent e = pq.take();
         Assert.assertEquals(is1, e.getSource());
         Assert.assertEquals("KnownState", e.getPropertyName());
-        Assert.assertEquals(Sensor.ACTIVE, e.getNewValue());
+        Assert.assertEquals(Sensor.ACTIVE, (int)e.getNewValue());
 
         // test no more
         PropertyChangeEvent another = pq.poll(100, TimeUnit.MILLISECONDS);
@@ -41,9 +42,10 @@ public class PropertyChangeEventQueueTest {
 
         // may have to wait, but done automatically
         PropertyChangeEvent e = pq.take();
+        Assertions.assertNotNull(is1);
         Assert.assertEquals(is1, e.getSource());
         Assert.assertEquals("KnownState", e.getPropertyName());
-        Assert.assertEquals(Sensor.ACTIVE, e.getNewValue());
+        Assert.assertEquals(Sensor.ACTIVE, (int)e.getNewValue());
 
         // test no more
         PropertyChangeEvent another = pq.poll(100, TimeUnit.MILLISECONDS);
@@ -61,6 +63,7 @@ public class PropertyChangeEventQueueTest {
     public void testDispose() throws jmri.JmriException, InterruptedException {
         PropertyChangeEventQueue pq = new PropertyChangeEventQueue(Arrays.asList(new NamedBean[]{is1, is2}));
 
+        Assertions.assertNotNull(is1);
         int start = is1.getNumPropertyChangeListeners(); // there can be internal listeners
         Assert.assertTrue(start >= 1);
 
@@ -73,9 +76,8 @@ public class PropertyChangeEventQueueTest {
         Assert.assertEquals(start - 1, is1.getNumPropertyChangeListeners());
     }
 
-    Sensor is1;
+    Sensor is1 = null;
     Sensor is2;
-    volatile boolean flag1;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -83,12 +85,11 @@ public class PropertyChangeEventQueueTest {
         JUnitUtil.initInternalSensorManager();
         is1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
         is2 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2");
-        flag1 = false;
     }
 
     @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueueTest.class);

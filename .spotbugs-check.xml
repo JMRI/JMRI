@@ -11,6 +11,8 @@
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
            <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 327 cases -->
+           <Bug pattern="FL_FLOATS_AS_LOOP_COUNTERS" />
+           <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA" />
         </Or>
      </Match>
 
@@ -21,7 +23,6 @@
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
-           <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="WA_NOT_IN_LOOP" />
         </Or>

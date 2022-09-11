@@ -587,5 +587,6 @@
             <li>The French JMRI Help pages were updated for responsive display.<br>
               They will appear when using the French locale, or from their own
               <a href="https://www.jmri.org/index_fr.shtml">starting page</a>.</li>
+            <li>SpotBugs has been updated to 4.7.2</li>
         </ul>
 

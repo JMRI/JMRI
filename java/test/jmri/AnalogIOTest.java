@@ -43,11 +43,11 @@ public class AnalogIOTest {
     }
 
     
-    private class MyAnalogIO extends AbstractNamedBean implements AnalogIO {
+    private static class MyAnalogIO extends AbstractNamedBean implements AnalogIO {
 
         double _value = 0.0;
         
-        public MyAnalogIO(String sys) {
+        private MyAnalogIO(String sys) {
             super(sys);
         }
         

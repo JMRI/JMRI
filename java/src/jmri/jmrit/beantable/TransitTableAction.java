@@ -1575,7 +1575,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             signalMastComboBox.setAllowNull(true);
             signalMastComboBox.addActionListener((ActionEvent e) -> {
                 if (signalMastComboBox.getSelectedIndex() > 0) {
-                    signalHeadComboBox.setSelectedIndex(0); // choose either a head or a mast
+                    signalHeadComboBox.setSelectedIndex(-1); // choose either a head or a mast
                 }
             });
             signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
@@ -1584,7 +1584,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             signalHeadComboBox.setAllowNull(true);
             signalHeadComboBox.addActionListener((ActionEvent e) -> {
                 if (signalHeadComboBox.getSelectedIndex() > 0) {
-                    signalMastComboBox.setSelectedIndex(0); // choose either a head or a mast
+                    signalMastComboBox.setSelectedIndex(-1); // choose either a head or a mast
                 }
             });
             signalMastComboBox.setToolTipText(rbx.getString("HintSignalEntry"));

@@ -1,9 +1,13 @@
 package jmri.web.servlet.roster;
 
+import java.io.IOException;
+import javax.servlet.ServletException;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  *
@@ -11,10 +15,15 @@ import org.junit.jupiter.api.*;
  */
 public class MultipartRequestHandlerTest {
 
+    // no testCtor as tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        MultipartRequestHandler t = new MultipartRequestHandler();
-        Assert.assertNotNull("exists",t);
+    public void testHandlerUpload() throws IOException, ServletException {
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("fileReplace", "false");
+        Assertions.assertNotNull(MultipartRequestHandler.uploadByJavaServletAPI(request));
+
     }
 
     @BeforeEach
