@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -125,7 +126,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             // create the initial frame that steers
             f = new JmriJFrame(apps.gui3.dp3.Bundle.getMessage("FrameProgrammerSetup")); // NOI18N
             f.getContentPane().setLayout(new BorderLayout());
-            // ensure status line is cleared on close so it is normal if re-opened
+            // ensure status line is cleared on close, so it is normal if re-opened
             f.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent we) {
@@ -147,15 +148,11 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             combinedLocoSelTree = new CombinedLocoSelTreePane(statusLabel, modePane) {
 
                 @Override
-                protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                        String progName) { // progName is ignored here
+                protected void startProgrammer(DecoderFile decoderFile, @Nonnull RosterEntry re,
+                        @Nonnull String progName) { // progName is ignored here
                     log.debug("startProgrammer");
                     String title = MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
-                            new Object[]{Bundle.getMessage("NewDecoder")}); // NOI18N
-                    if (re != null) {
-                        title = MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"), // NOI18N
-                                new Object[]{re.getId()});
-                    }
+                            re.getId());
                     JFrame p;
                     if (!modePane.isSelected() || modePane.getProgrammer() == null) {
                         p = new PaneProgFrame(decoderFile, re,
@@ -471,25 +468,23 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         XmlFile pf = new XmlFile() {
         };  // XmlFile is abstract
 
-        PropertyChangeListener dccNews = (PropertyChangeEvent e) -> {
-            updateDccAddress();
-        };
+        PropertyChangeListener dccNews = (PropertyChangeEvent e) -> updateDccAddress();
         primaryAddr = variableModel.findVar("Short Address"); // NOI18N
 
         if (primaryAddr == null) {
-            log.debug("DCC Address monitor didnt find a Short Address variable"); // NOI18N
+            log.debug("DCC Address monitor didn't find a Short Address variable"); // NOI18N
         } else {
             primaryAddr.addPropertyChangeListener(dccNews);
         }
         extendAddr = variableModel.findVar("Long Address"); // NOI18N
         if (extendAddr == null) {
-            log.debug("DCC Address monitor didnt find an Long Address variable"); // NOI18N
+            log.debug("DCC Address monitor didn't find a Long Address variable"); // NOI18N
         } else {
             extendAddr.addPropertyChangeListener(dccNews);
         }
         addMode = (EnumVariableValue) variableModel.findVar("Address Format"); // NOI18N
         if (addMode == null) {
-            log.debug("DCC Address monitor didnt find an Address Format variable"); // NOI18N
+            log.debug("DCC Address monitor didn't find an Address Format variable"); // NOI18N
         } else {
             addMode.addPropertyChangeListener(dccNews);
         }
@@ -573,9 +568,10 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         // check its not a duplicate
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, rosterIdField.getText());
         boolean oops = false;
-        for (int i = 0; i < l.size(); i++) {
-            if (re != l.get(i)) {
+        for (RosterEntry rosterEntry : l) {
+            if (re != rosterEntry) {
                 oops = true;
+                break;
             }
         }
         return oops;
@@ -631,7 +627,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         // show OK status
         statusLabel.setText(MessageFormat.format(
                 SymbolicProgBundle.getMessage("StateSaveOK"), // NOI18N
-                new Object[]{filename}));
+                filename));
     }
 
     // hold refs to variables to check dccAddress
@@ -686,7 +682,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             readAllButton.addItemListener(l2 = (ItemEvent e) -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadSheet")); // NOI18N
-                    if (container.isBusy() == false) {
+                    if (!container.isBusy()) {
                         prepReadPane(false);
                         prepGlassPane(readAllButton);
                         container.getBusyGlassPane().setVisible(true);
@@ -704,7 +700,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             writeAllButton.addItemListener(l4 = (ItemEvent e) -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteSheet")); // NOI18N
-                    if (container.isBusy() == false) {
+                    if (!container.isBusy()) {
                         prepWritePane(false);
                         prepGlassPane(writeAllButton);
                         container.getBusyGlassPane().setVisible(true);

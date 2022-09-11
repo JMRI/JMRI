@@ -48,6 +48,7 @@ public class RosterFrameTest {
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        assert prog != null;
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
 

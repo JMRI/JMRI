@@ -1,7 +1,6 @@
 package jmri.jmrit.progsupport;
 
 import javax.swing.*;
-import java.awt.*;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
