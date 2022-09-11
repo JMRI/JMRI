@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus.node;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -58,10 +58,10 @@ public class CbusNodeEventTableDataModelTest {
     
     
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testNodeWithNewEv() {
         
         // not headless as setValueAt triggers window open
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane mainpane = new 
             jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane();
@@ -119,11 +119,11 @@ public class CbusNodeEventTableDataModelTest {
 
         
     }    
-    
-    private CbusNodeTableDataModel nodeModel;
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
-    
+
+    private CbusNodeTableDataModel nodeModel = null;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -132,17 +132,22 @@ public class CbusNodeEventTableDataModelTest {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         
-        nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.node.CbusNodeTableDataModel.class,nodeModel );
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
+
+        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
+        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
     }
 
     @AfterEach
     public void tearDown() {
-        
+        Assertions.assertNotNull(nodeModel);
         nodeModel.dispose();
         nodeModel = null;
         
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         tcis = null;
