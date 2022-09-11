@@ -171,9 +171,6 @@ public class ControlPanelTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-                jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-            }
             InstanceManager.getDefault(ThrottlesPreferences.class).setUseExThrottle(true);
         }
     }
