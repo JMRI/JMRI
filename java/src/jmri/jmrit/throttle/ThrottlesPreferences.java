@@ -15,12 +15,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A class to store JMRI throttles preferences
- *
+ * A class to store JMRI throttles preferences.
+ * <p>
+ * A singleton instance is provided by a call to
+ * <code>jmri.InstanceManager.getDefault(ThrottlesPreferences.class);</code> or
+ * <code>jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class)</code>;
+ * <p>
  * @author Lionel Jeanson - 2009-2021
  *
  */
-public class ThrottlesPreferences {
+public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
 
     private boolean _useExThrottle = true;
     private boolean _useToolBar = true;
