@@ -408,7 +408,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>LogixNG <i>Browse</i> now has the option <i>Print listen</i>
+          that prints <i>(Listen)</i> or <i>(No Listen) when memories
+          are used as addressing. It also prints <i>::: No Listen</i>
+          for expressions where the option <i>Listen</i> is unchecked.
+          </i> </li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
