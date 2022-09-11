@@ -1,26 +1,25 @@
 package jmri.jmrix.can.cbus.node;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.GraphicsEnvironment;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.Assume;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JSpinnerOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -32,22 +31,20 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testCTor() {
         
-        assertThat(tcis.numListeners()).isEqualTo(1);
+        assertEquals(1, tcis.numListeners(),"1 listener " + tcis.getListeners());
         
         t = new CbusAllocateNodeNumber(memo,nodeModel);
-        
-        assertThat(t).isNotNull();
-        assertThat(tcis.numListeners()).isEqualTo(2);
+        assertNotNull(t);
+        assertEquals(2, tcis.numListeners(),"2 listeners " + tcis.getListeners());
+
         t.dispose();
-        
-        assertThat(tcis.numListeners()).isEqualTo(1);
+        assertEquals(1, tcis.numListeners(),"1 listener after dispose " + tcis.getListeners());
         
     }
-    
+
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testDisplayDialogue() {
-        
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         assertThat(t).isNotNull();
         
@@ -59,20 +56,26 @@ public class CbusAllocateNodeNumberTest {
             JLabelOperator labelOper = new JLabelOperator(jdo, Bundle.getMessage("NdRqNdDetails"));
             assertThat(labelOper).isNotNull();
             
+            JUnitUtil.waitFor(()->{ return( tcis.outbound.size() == 1); }, "1 outbound " + tcis.outbound);
+            assertEquals("[5f8] 10", tcis.outbound.elementAt(0).toString(),"Request node parameters(RQNP)");
+
             CanReply rs = new CanReply();
             rs.setNumDataElements(7);
             rs.setElement(0, CbusConstants.CBUS_PARAMS); // Node sends Parameters
-            rs.setElement(1, 0x01);
-            rs.setElement(2, 0x02);
-            rs.setElement(3, 0x03);
-            rs.setElement(4, 0x04);
-            rs.setElement(5, 0x05);
-            rs.setElement(6, 0x06);
-            rs.setElement(7, 0x07);
+            rs.setElement(1, 0x01); // param 1 - The manufacturer ID as a HEX numeric
+            rs.setElement(2, 0x02); // param 2 - Minor code version
+            rs.setElement(3, 0x03); // param 3 - 
+            rs.setElement(4, 0x04); // param 4 - 
+            rs.setElement(5, 0x05); // param 5 - 
+            rs.setElement(6, 0x06); // param 6 -
+            rs.setElement(7, 0x07); // param 7 - 
             t.reply(rs);
             
             JLabelOperator labelOper2 = new JLabelOperator(jdo, CbusNodeConstants.getManu(1));
             assertThat(labelOper2).isNotNull();
+            
+            JUnitUtil.waitFor(()->{ return( tcis.outbound.size() == 2); }, "2 outbound " + tcis.outbound);
+            assertEquals("[5f8] 11", tcis.outbound.elementAt(1).toString(),"Request module name (RQMN)");
             
             CanReply rsn = new CanReply();
             rsn.setNumDataElements(7);
@@ -136,13 +139,10 @@ public class CbusAllocateNodeNumberTest {
         
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
         
-        assertThat(tcis.outbound.elementAt(0).toString()).isEqualTo("[5f8] 10");
-        assertThat(tcis.outbound.elementAt(1).toString()).isEqualTo("[5f8] 11");
-        assertThat(tcis.outbound.elementAt(2).toString()).isEqualTo("[5f8] 42 FF 98");
         
-        jmri.jmrix.can.cbus.CbusPreferences pref = new jmri.jmrix.can.cbus.CbusPreferences();
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,pref );
-        pref.setAddNodes(true);
+        assertEquals("[5f8] 42 FF 98", tcis.outbound.elementAt(2).toString());
+        
+        ((CbusPreferences)memo.get(CbusPreferences.class)).setAddNodes(true);
         
         CanReply rsna = new CanReply();
         rsna.setNumDataElements(3);
@@ -155,16 +155,15 @@ public class CbusAllocateNodeNumberTest {
         JUnitUtil.waitFor(()->{ return( tcis.outbound.size() >3); }, "TCIS count did not increase");
         assertThat(tcis.outbound.elementAt(3).toString()).isEqualTo("[5f8] 0C");
         
-        assertThat(nodeModel.getNodeByNodeNum(65432)).isNotNull();
+        assertNotNull(nodeModel.getNodeByNodeNum(65432));
         
         t.dispose();
         
     }
-    
+
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testCanMessage() {
-        
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         
         CanMessage r = new CanMessage(tcis.getCanid());
@@ -186,11 +185,10 @@ public class CbusAllocateNodeNumberTest {
         t.dispose();
         
     }
-    
+
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testAllocateTimeout() {
-        
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         
         t.setTimeout(5); // default is reduced to speed up test
@@ -220,7 +218,7 @@ public class CbusAllocateNodeNumberTest {
             
         });
         
-        popup_thread.setName("CbusAllocateNodeNumber Allocate Timeout Dialog Close Thread");
+        popup_thread.setName("CbusAllocateNodeNumber Allocate Timeout Popup Close Thread");
         popup_thread.start();
         
         
@@ -232,6 +230,8 @@ public class CbusAllocateNodeNumberTest {
         r.setElement(2, 0x00); // node 0
         
         t.reply(r);
+        
+        JUnitUtil.waitFor(()->{return tcis.outbound.size()>1;}, "2 outbound sent" + tcis.outbound);
         
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "checkCbus Allocate Node Num Dialog finished");
         
@@ -249,14 +249,18 @@ public class CbusAllocateNodeNumberTest {
     private CbusNodeTableDataModel nodeModel;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir Path tempDir) throws IOException  {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
-        nodeModel = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
+        ((CbusPreferences)memo.get(CbusPreferences.class)).setAllocateNNListener(false);
+        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         
     }
 
