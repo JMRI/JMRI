@@ -247,7 +247,7 @@ public class LogixNG_SelectEnum<E extends Enum<?>> implements VetoableChangeList
 
             case Memory:
                 if (settings._printListen) {
-                    enumName = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListen(_listenToMemory));
+                    enumName = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
                 } else {
                     enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 }

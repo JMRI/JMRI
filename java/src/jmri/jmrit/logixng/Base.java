@@ -572,12 +572,16 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
-    public static String getListen(boolean listen) {
+    public static String getListenString(boolean listen) {
         if (listen) {
             return Bundle.getMessage("Base_Listen");
         } else {
             return Bundle.getMessage("Base_NoListen");
         }
+    }
+
+    public static String getNoListenString() {
+        return Bundle.getMessage("Base_NoListen");
     }
 
 

@@ -314,7 +314,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
             case Memory:
                 if (settings._printListen) {
-                    namedBean = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListen(_listenToMemory));
+                    namedBean = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
                 } else {
                     namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
                 }
