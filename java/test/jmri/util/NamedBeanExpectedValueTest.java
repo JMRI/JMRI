@@ -1,5 +1,7 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -14,21 +16,6 @@ import org.junit.jupiter.api.*;
  * @author Randall Wood Copyright 2018
  */
 public class NamedBeanExpectedValueTest {
-
-    public NamedBeanExpectedValueTest() {
-    }
-
-    @BeforeEach
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.initMemoryManager();
-        JUnitUtil.initInternalSensorManager();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
 
     /**
      * Test of getExpectedState method, of class NamedBeanExpectedValue.
@@ -76,7 +63,7 @@ public class NamedBeanExpectedValueTest {
         MemoryManager mm = InstanceManager.getDefault(MemoryManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         NamedBeanExpectedValue<Memory, Sensor> instance = new NamedBeanExpectedValue<>(mm.provideMemory("IMTEST"), sm.provideSensor("IS12"));
-        Assert.assertEquals(mm.getMemory("IMTEST").getDisplayName(), instance.getName());
+        Assert.assertEquals(mm.provideMemory("IMTEST").getDisplayName(), instance.getName());
     }
 
     /**
@@ -87,19 +74,33 @@ public class NamedBeanExpectedValueTest {
         // JUnit 5 Assert.throwsException() would be nice...
         MemoryManager mm = InstanceManager.getDefault(MemoryManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        boolean thrown = false;
-        try {
-            new NamedBeanExpectedValue<>(null, sm.provideSensor("IS12"));
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("NPE thrown for null bean", thrown);
-        thrown = false;
-        try {
-            new NamedBeanExpectedValue<>(mm.provideMemory("IMTEST"), null);
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertFalse("NPE thrown for null value", thrown);
+        
+        Exception exc = Assertions.assertThrows(NullPointerException.class, () -> {
+            cTorNpeNullBean(sm);
+        });
+        Assertions.assertNotNull(exc, "NPE thrown for null bean");
+        
+        Assertions.assertDoesNotThrow(() -> {
+            Assertions.assertNotNull(new NamedBeanExpectedValue<>(mm.provideMemory("IMTEST"), null));
+        },"NPE should not be thrown here for a null value");
     }
+
+    @SuppressFBWarnings( value = "NP_NONNULL_PARAM_VIOLATION",
+        justification = "testing passing null to create exception ")
+    private void cTorNpeNullBean(SensorManager sm) {
+        Assertions.assertNotNull(new NamedBeanExpectedValue<>(null, sm.provideSensor("IS12")));
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initInternalSensorManager();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

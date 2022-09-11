@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -9,10 +8,12 @@ import org.junit.jupiter.api.*;
  */
 public class PortNameMapperTest {
 
+    // no testCtor as tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        PortNameMapper t = new PortNameMapper();
-        Assert.assertNotNull("exists",t);
+    public void testDefaultIsNotFound() {
+        Assertions.assertEquals("",PortNameMapper.getPortFromName("Not A Name"));
+        Assertions.assertEquals("",PortNameMapper.getPortFromName("Not A Name Either"));
     }
 
     @BeforeEach
