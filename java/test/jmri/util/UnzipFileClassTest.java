@@ -4,6 +4,7 @@ import java.io.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for the UnzipFileClassTest class
@@ -12,32 +13,32 @@ import org.junit.jupiter.api.*;
  */
 public class UnzipFileClassTest  {
 
-    @Test public void testCtor() {
-        new UnzipFileClass();
+    // no testCtor as tested class only supplies static methods
+
+    @Test
+    public void testFileNotFoundError() throws Exception {
+        Assertions.assertNotNull(tempDir);
+        
+        Exception ex = Assertions.assertThrows(FileNotFoundException.class, () -> {
+            UnzipFileClass.unzipFunction(tempDir+"/UnzipFileClass", "noFile.zip"); // noFile.zip should not exist
+        });
+        Assertions.assertNotNull(ex);
     }
 
+    @Test
+    public void testFNoZipFile() throws FileNotFoundException {
+        Assertions.assertNotNull(tempDir);
 
-    @Test public void testFileNotFoundError() {
-        new File("temp").mkdirs();
-        
-        try {
-            UnzipFileClass.unzipFunction("temp/UnzipFileClass", "noFile.zip"); // noFile.zip should not exist
-        } catch (FileNotFoundException e) { return; }
-        Assert.fail("Should have thrown");
+        UnzipFileClass.unzipFunction(new File(tempDir + "/UnzipFileClass"), new FileInputStream("java/test/jmri/util/UnzipFileClassTest.zip")); // build.xml is not a .zip file
+        Assert.assertTrue(new File(tempDir + "/UnzipFileClass/UnzipFileClass.txt").exists());
     }
-        
-    @Test public void testFNoZipFile() throws FileNotFoundException {
-        new File("temp").mkdirs();
-        new File("temp/UnzipFileClass//UnzipFileClass.txt").delete();
-        
-        UnzipFileClass.unzipFunction(new File("temp/UnzipFileClass"), new FileInputStream("java/test/jmri/util/UnzipFileClassTest.zip")); // build.xml is not a .zip file
-        
-        Assert.assertTrue(new File("temp/UnzipFileClass/UnzipFileClass.txt").exists());
-    }
+
+    private File tempDir;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File tempD) throws IOException  {
         JUnitUtil.setUp();
+        tempDir = tempD;
     }
 
     @AfterEach
