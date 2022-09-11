@@ -2,7 +2,9 @@ package jmri.jmrit.dispatcher;
 
 
 import javax.swing.JPanel;
+import java.awt.Window;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +45,17 @@ abstract  class AbstractAutoTrainControl extends JPanel {
     protected jmri.Throttle throttle = null;
     protected ActiveTrain activeTrain = null;
     protected RosterEntry rosterEntry = null;
+    protected boolean useOnTopOnSpeedChange;
 
     protected void handleThrottleListen(java.beans.PropertyChangeEvent e) {
         if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
             return; // ignore if not speed or direction
+        }
+        if (useOnTopOnSpeedChange) {
+            Window x  =  SwingUtilities.getWindowAncestor(this);
+            log.info("OnTop");
+            x.setAlwaysOnTop(true);
+            x.setAlwaysOnTop(false);
         }
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
                 updateSpeedChange(e);
@@ -55,6 +64,9 @@ abstract  class AbstractAutoTrainControl extends JPanel {
         }
     }
     
+    protected void setOnTopOnSpeedChange(boolean value) {
+        useOnTopOnSpeedChange = value;
+    }
     protected abstract void updateSpeedChange(java.beans.PropertyChangeEvent e);
     protected abstract void directionChange(java.beans.PropertyChangeEvent e);
 
