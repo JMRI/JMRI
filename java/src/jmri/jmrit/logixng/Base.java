@@ -435,6 +435,18 @@ public interface Base extends PropertyChangeProvider {
             String currentIndent,
             MutableInt lineNumber);
 
+    public static String getListenString(boolean listen) {
+        if (listen) {
+            return Bundle.getMessage("Base_Listen");
+        } else {
+            return Bundle.getMessage("Base_NoListen");
+        }
+    }
+
+    public static String getNoListenString() {
+        return Bundle.getMessage("Base_NoListen");
+    }
+
     /**
      * Navigate the LogixNG tree.
      *
