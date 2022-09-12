@@ -573,7 +573,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Added Camera webThrottle to Web Server.<br>
+                Camera webThrottle provides integrated support for controlling trains with integrated POV or overhead IP based cameras.<br>
+                Throttle Learn More page has been added for the camera throttle that covers setup and connecting the cameras to the engine throttle.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
