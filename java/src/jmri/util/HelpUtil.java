@@ -164,7 +164,7 @@ public class HelpUtil {
     }
 
     public static String createStubFile(String helpKey, String locale) throws IOException {
-        String stubLocation = FileUtil.getPreferencesPath() + "jmrihelp/";
+        String stubLocation = FileUtil.getHomePath() + "jmrihelp/";
         FileUtil.createDirectory(stubLocation);
         log.debug("---- stub location: {}", stubLocation);
 
