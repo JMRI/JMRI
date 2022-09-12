@@ -591,5 +591,9 @@
               They will appear when using the French locale, or from their own
               <a href="https://www.jmri.org/index_fr.shtml">starting page</a>.</li>
             <li>SpotBugs has been updated to 4.7.2</li>
+
+            <li>The local help stub file has been moved from the settings location to the home
+            location.  This fixes a problem introduced by recent versions of Ubuntu and its
+            derivatives.</li>
         </ul>
 
