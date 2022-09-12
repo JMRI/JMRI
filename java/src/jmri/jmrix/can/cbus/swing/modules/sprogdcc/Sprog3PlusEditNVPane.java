@@ -492,45 +492,26 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
             mainSpinner.init(getSelectValue(Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
-            c.gridy++;
-            
-            gridPane.add(flagPane[USER_FLAGS], c);
             c.gridx++;
-
-            // x = 1
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
             
             progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
             progSpinner.init(getSelectValue(Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(progSpinner, c);
-            c.gridy++;
             
+            c.gridy++;
+            c.gridx = 0;
+            
+            gridPane.add(flagPane[USER_FLAGS], c);
+            c.gridx++;
+
             gridPane.add(flagPane[OPS_FLAGS], c);
             c.gridx++;
 
-            // x = 2
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            
             gridPane.add(flagPane[DEBUG_FLAGS], c);
             c.gridx++;
-
-            // x = 3
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
             
             gridPane.add(flagPane[USER_FLAGS_2], c);
-            c.gridx++;
 
             add(gridPane);
         }
