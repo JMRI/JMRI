@@ -55,19 +55,22 @@
       <p>To do this, when you want to store a reference to a NamedBean, e.g. to remember a
       particular Sensor, Turnout, SignalMast, etc ask (through the InstanceManager) the
       NamedBeanHandlerManager to give you a NamedBeanHandle:</p>
-
+      <span class="wide">
       <pre><code>
-      NamedBeanHandle&lt;Sensor&gt; handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
-      </code></pre>where <code>name</code> is the String name that the user provided, either a
-system name or user name, and <code>sensor</code> is the particular <code>Sensor</code> object
-being stored. When you need to reference the sensor itself, just do
-
+ NamedBeanHandle&lt;Sensor&gt; handle =
+        InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
+      </code></pre></span>
+      <p>where <code>name</code> is the String name that the user provided, either a system name or
+      user name, and <code>sensor</code> is the particular <code>Sensor</code> object being stored.
+      When you need to reference the sensor itself, just do</p>
       <pre><code>
-      sensor = handle.getBean();
-      </code></pre>Please use <code>getBean()</code> every time you need to access the bean. Don't
-cache the reference from <code>getBean()</code>. That way, if somebody does a "move" or "rename"
-operation, the <code>NamedBeanHandle</code> will get updated and your next <code>getBean()</code>
-call will get the right reference.
+sensor = handle.getBean();
+</code></pre>
+      <p>Please use <code>getBean()</code> every time you need to access the bean. Don't
+      cache the reference from <code>getBean()</code>. That way, if somebody does a "move" or "rename"
+      operation, the <code>NamedBeanHandle</code> will get updated and your next <code>getBean()</code>
+      call will get the right reference.</p>
+
       <h3>Bean properties</h3>
 
       <p>NamedBeans usually have state, for example a <code>Sensor</code> may be Active or Inactive
@@ -236,12 +239,12 @@ and distribute JMRI.
       eventually be found and acted on.</p>
 
       <p>To access them:</p>
-
-      <pre style="font-family: monospace;">
-            java.util.ServiceLoader.load(OurServiceClass.class).forEach((ourServiceObject) -&gt; {
-                 // access the service object via ourServiceObject
-            });
-      </pre>
+      <div class="wide"><code>
+      <pre>
+ java.util.ServiceLoader.load(OurServiceClass.class).forEach((ourServiceObject) -&gt; {
+     // access the service object via ourServiceObject
+});
+</pre></code></div>
 
     <a id="javascript"></a>
     <a id="typescript"></a>
@@ -263,10 +266,9 @@ and distribute JMRI.
 
     <p>JavaScript code can also be used for scripting.  By default, these should be put
     into the <code>jython/</code> directory, though of course people can run scripts from
-    any location they choose.
+    any location they choose.</p>
 
-
-</pre><!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

@@ -1,6 +1,7 @@
 package jmri.util;
 
-import org.junit.Assert;
+import java.io.*;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -9,10 +10,30 @@ import org.junit.jupiter.api.*;
  */
 public class GetJavaPropertyTest {
 
+    // no testCtor as test class only supplies static methods
+
     @Test
-    public void testCTor() {
-        GetJavaProperty t = new GetJavaProperty();
-        Assert.assertNotNull("exists",t);
+    public void testNotAProperty() {
+        
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(bos, true);
+        PrintStream oldStream = System.out;
+        
+        try {
+            System.setOut(printStream);
+            Assertions.assertDoesNotThrow(() -> {
+                GetJavaProperty.main(new String[]{"jmri.shutdownmanager"});
+            });
+            bos.flush();
+        } catch(IOException ex) {
+            Assertions.fail("Could not flush temporary stream", ex);
+        } finally {
+            System.setOut(oldStream);
+        }
+
+        Assertions.assertEquals(System.getProperty("jmri.shutdownmanager")
+            + System.lineSeparator(), bos.toString());
+        
     }
 
     @BeforeEach

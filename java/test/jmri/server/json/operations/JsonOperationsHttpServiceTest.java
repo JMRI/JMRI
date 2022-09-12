@@ -744,6 +744,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         validateData(JsonOperations.TRACK, data, false);
         result = service.doPost(JsonOperations.TRACK, id, data, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         track = location.getTrackById(id);
+        assertThat(track).isNotNull();
         assertThat(location).isNotNull();
         validate(result);
         assertEquals(JsonOperations.TRACK, result.path(JSON.TYPE).asText());

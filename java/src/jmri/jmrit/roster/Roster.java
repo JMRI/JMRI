@@ -87,7 +87,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     static final public String schemaVersion = ""; // NOI18N
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
@@ -1459,6 +1459,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *
      * @return the rosterGroups
      */
+    @Nonnull
     public HashMap<String, RosterGroup> getRosterGroups() {
         return new HashMap<>(rosterGroups);
     }

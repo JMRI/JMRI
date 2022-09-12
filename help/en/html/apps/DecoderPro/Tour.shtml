@@ -255,7 +255,7 @@
           which can be quite long. The roster can also store locomotive information for you.
           </p>
           <p>From the DecoderPro main screen, you can select a specific locomotive to work on by
-          selecting it from the Roster list and then clicking the "Program" button.
+          selecting it from the Roster list and then clicking the "Program..." button.
           The programmer opens with the current values already present on the "Roster Entry" sheet.
           After you made changes and wrote them to the decoder, click "Save to Roster" to store the
           roster information to a file on your computer's local disk; you'll be reminded to do this
@@ -270,10 +270,10 @@
           <img src="./images/DP5FileMenu.png" alt="The File Menu">
         </div>
         <div class="flex-item-30">
-          <img src="./images/DP5SettingsMenu.png" alt="The File Menu">
+          <img src="./images/DP5SettingsMenu.png" alt="The Settings Menu">
         </div>
         <div class="flex-item-30">
-          <img src="./images/DP5RosterMenu.png" alt="The File Menu">
+          <img src="./images/DP5RosterMenu.png" alt="The Roster Menu">
         </div>
       </div>
 
