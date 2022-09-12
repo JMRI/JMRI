@@ -50,17 +50,15 @@ public class UsbUtilTest {
         }));
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
         // test that unexpected exception is not caught
-        try {
-            Assert.assertEquals(null, UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            Assertions.assertNotNull( UsbUtil.getFullProductName(new UsbDeviceScaffold("foo","bar"){
                 @Override
                 public String getManufacturerString() throws UsbException, UnsupportedEncodingException, UsbDisconnectedException {
                     throw new NullPointerException("foo");
                 }
             }));
-            Assert.fail("NPE not thrown");
-        } catch (NullPointerException ex) {
-            // catch exception to not break test
-        }
+        });
+        Assertions.assertNotNull(ex);
         JUnitAppender.assertErrorMessageStartsWith("Unable to read data from ");
     }
 

@@ -14,14 +14,14 @@ import org.junit.jupiter.api.*;
 public class InitializationExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("InitializationException constructor",new InitializationException("test exception",null));
    }
 
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
    }
 
    @AfterEach

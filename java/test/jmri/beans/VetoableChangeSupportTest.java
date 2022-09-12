@@ -21,8 +21,8 @@ public class VetoableChangeSupportTest {
 
     private VetoableChangeSupport instance;
     private TestVetoableChangeListener listener;
-    private static String PROPERTY = "property";
-    private static String VETO = "veto";
+    private final static String PROPERTY = "property";
+    private final static String VETO = "veto";
 
     @Test
     public void testFireVetoableChange_String_int_boolean_boolean() {
@@ -152,7 +152,7 @@ public class VetoableChangeSupportTest {
     }
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         JUnitUtil.setUp();
         instance = new VetoableChangeSupport();
         listener = new TestVetoableChangeListener();

@@ -13,17 +13,17 @@ public class JCBHandleTest {
 
     @Test
     public void testToStringReal() {
-        JCBHandle<DummyObject> a = new JCBHandle<DummyObject>(new DummyObject());
+        JCBHandle<DummyObject> a = new JCBHandle<>(new DummyObject());
         Assert.assertEquals("dummy output", a.toString());
     }
 
     @Test
     public void testToStringEmpty() {
-        JCBHandle<DummyObject> a = new JCBHandle<DummyObject>("no object");
+        JCBHandle<DummyObject> a = new JCBHandle<>("no object");
         Assert.assertEquals("no object", a.toString());
     }
 
-    class DummyObject {
+    private static class DummyObject {
 
         @Override
         public String toString() {
