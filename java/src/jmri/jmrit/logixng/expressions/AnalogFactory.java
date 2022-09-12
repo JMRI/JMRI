@@ -22,11 +22,12 @@ public class AnalogFactory implements AnalogExpressionFactory {
                 Set.of(
                         new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionAnalogIO.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionConstant.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionLocalVariable.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionMemory.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, AnalogFormula.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, TimeSinceMidnight.class)
                 );
-        
+
         return analogExpressionClasses;
     }
 
