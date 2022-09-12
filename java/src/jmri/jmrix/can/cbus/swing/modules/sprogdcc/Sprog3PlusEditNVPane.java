@@ -440,7 +440,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.fill = GridBagConstraints.HORIZONTAL;
 
             int flagPanels = 3;
-            if (_node.getNodeParamManager().isFwEqualOrNewer(2, (int)'e', 2)) {
+            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
                 flagPanels = 4;
             }
             for (int i = 0; i < flagPanels; i++) {
