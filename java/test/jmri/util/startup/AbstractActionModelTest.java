@@ -62,7 +62,7 @@ public class AbstractActionModelTest {
         Assert.assertTrue("Has class found in classpath", instance.isValid());
     }
 
-    public class AbstractActionModelImpl extends AbstractActionModel {
+    private static class AbstractActionModelImpl extends AbstractActionModel {
 
         @Override
         protected void performAction(Action action) throws JmriException {

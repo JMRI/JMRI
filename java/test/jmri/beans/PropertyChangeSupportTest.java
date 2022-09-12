@@ -201,7 +201,7 @@ public class PropertyChangeSupportTest {
     }
 
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         JUnitUtil.setUp();
         instance = new PropertyChangeSupport();
         listener = new TestPropertyChangeListener();

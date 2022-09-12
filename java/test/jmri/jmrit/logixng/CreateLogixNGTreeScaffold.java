@@ -4130,6 +4130,11 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         doAnalogAction.getChild(0).connect(maleSocket);
 
+        AnalogExpressionLocalVariable analogExpressionLocalVariable = new AnalogExpressionLocalVariable(analogExpressionManager.getAutoSystemName(), null);
+        maleSocket = analogExpressionManager.registerExpression(analogExpressionLocalVariable);
+        maleSocket.setEnabled(false);
+        analogFormula.getChild(0).connect(maleSocket);
+
         AnalogActionLightIntensity analogActionLightIntensity = new AnalogActionLightIntensity(analogActionManager.getAutoSystemName(), null);
         maleSocket = analogActionManager.registerAction(analogActionLightIntensity);
         maleSocket.setEnabled(false);

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class SelectionPropertyDescriptorTest {
     
     @Test
-    public void testCTor() {
+    public void testCtor() {
         SelectionPropertyDescriptorImpl t = new SelectionPropertyDescriptorImpl();
         Assert.assertNotNull("exists",t);
     }
@@ -49,9 +49,9 @@ public class SelectionPropertyDescriptorTest {
         Assert.assertEquals("column header set","Column Header Text",t.getColumnHeaderText());
     }
 
-    private class SelectionPropertyDescriptorImpl extends SelectionPropertyDescriptor {
+    private static class SelectionPropertyDescriptorImpl extends SelectionPropertyDescriptor {
 
-        public SelectionPropertyDescriptorImpl() {
+        private SelectionPropertyDescriptorImpl() {
             super("TEST_PROPERTY_KEY", new String[]{"A","B","C"}, new String[]{"A Tip","B Tip","C Tip"}, "B");
         }
         
