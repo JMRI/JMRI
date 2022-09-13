@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!--                                                                        -->
 <!-- version 1 - initial file (Marc N Fournier)                             -->
-		   
+
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -657,7 +657,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Backup Light F0(r) Grade Crossing Logic</label>
     </variable>
-    <variable item="FX5 Phase Selection" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+    <variable item="FX3 Phase Selection" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX3 Phase Selection</label>
     </variable>
@@ -669,7 +669,7 @@
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
     <variable CV="113" item="Sound Group 3 Option 1" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
-        <label>Quiet Mode Timeout Period</label>
+        <label>Quiet Mode Timeout Period (Seconds)</label>
     </variable>
     <variable CV="114" mask="XXXXVVVV" item="Sound Option 1" default="7" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
@@ -809,9 +809,9 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-15)</label>
     </variable>
-    <variable CV="215" mask="VVVVVVVV" item="EMF Option 4" default="150" tooltip="Sets the back-EMF reference voltage by 0.1 volt increments, A value of 0 indicates that track voltage is used">
+    <variable CV="215" mask="VVVVVVVV" item="EMF Option 4" default="150" tooltip="Sets the back-EMF reference voltage by 0.1 volt increments, A value less than 60 will be ignored">
         <decVal/>
-        <label>BEMF Reference Voltage (0-255)</label>
+        <label>BEMF Reference Voltage (60-255)</label>
     </variable>
     <variable CV="216" mask="VVVVVVVV" item="Motor Option 1" default="2" tooltip="&lt;html&gt;Determines the speed step at which voltage is first applied to the motor output to put the locomotive into motion.&lt;br&gt; Not included in Econami software releases prior to version 1.3&lt;/html&gt;">
         <decVal max="127"/>
