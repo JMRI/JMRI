@@ -35,6 +35,9 @@
   <enumChoice>
     <choice>Long Echo</choice>
   </enumChoice>
+  <enumChoice>
+    <choice>Extra Long Echo</choice>
+  </enumChoice>
   <enumChoice value="7">
     <choice>User Adjustable</choice>
     <choice xml:lang="it">Riverbero regolabile</choice>

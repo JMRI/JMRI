@@ -12,9 +12,39 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!--                                                                        -->
-<!-- version 1 - created from ECOCV.xml v2.0 (Alain Le Marchand)            -->
-
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2016</year>
+      <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+          <personname>
+              <firstname>Alain</firstname>
+              <surname>Le Marchand</surname>
+          </personname>
+      </author>
+      <author>
+          <personname>
+              <firstname>James</firstname>
+              <surname>Exler</surname>
+          </personname>
+      </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+          <revnumber>1</revnumber>
+          <date>2016-05-26</date>
+          <authorinitials>ALM</authorinitials>
+          <revremark>New file from ECOCV v2.0</revremark>
+      </revision>
+      <revision>
+          <revnumber>2</revnumber>
+          <date>2022-08-16</date>
+          <authorinitials>JE</authorinitials>
+          <revremark>rev FX3-6 item names</revremark>
+      </revision>
+  </revhistory>
     <!-- Lighting Configuration follows -->
     <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXVVVVV" default="1" tooltip="Determines the effect generated from the headlight">
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
@@ -24,19 +54,19 @@
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
       <label>Backup Light F0(r) Effect Selection</label>
     </variable>
-    <variable item="FX5 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
+    <variable item="FX3 Effect Selection" CV="51" mask="XXXVVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX3 light output">
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
       <label>FX3 Effect Selection</label>
     </variable>
-    <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
+    <variable item="FX4 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
       <label>FX4 Effect Selection</label>
     </variable>
-    <variable item="FX5B Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the second effect associated with the FX5 light output">
+    <variable item="FX5 Effect Selection" CV="53" mask="XXXVVVVV" default="0" minOut="5" tooltip="Determines the effect associated with the FX5 light output">
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
       <label>FX5 Effect Selection</label>
     </variable>
-    <variable item="FX6B Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6"  tooltip="Determines the second effect associated with the FX6 light output">
+    <variable item="FX6 Effect Selection" CV="54" mask="XXXVVVVV" default="0" minOut="6"  tooltip="Determines the effect associated with the FX6 light output">
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEffect.xml"/>
       <label>FX6 Effect Selection</label>
     </variable>
