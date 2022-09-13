@@ -62,9 +62,6 @@ public class TreeEditor extends TreeViewer {
     private final Comparator<SwingConfiguratorInterface> _swingConfiguratorComboBoxComparator
             = (SwingConfiguratorInterface o1, SwingConfiguratorInterface o2) -> o1.toString().compareTo(o2.toString());
 
-    private final SortedComboBoxModel<SwingConfiguratorInterface> _swingConfiguratorComboBoxModel
-            = new SortedComboBoxModel<>(_swingConfiguratorComboBoxComparator);
-
     private final JLabel _renameSocketLabel = new JLabel(Bundle.getMessage("SocketName") + ":");  // NOI18N
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
