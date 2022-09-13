@@ -2,29 +2,23 @@ package jmri.jmrit.beantable;
 
 import jmri.*;
 import jmri.util.*;
-import jmri.util.junit.rules.RetryRule;
 
-import java.awt.GraphicsEnvironment;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
-import org.junit.*;
-import org.junit.rules.Timeout;
-
+import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@Timeout(10)
 public class MaintenanceTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10);
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
-
     @Test
-    public void testCTor() {
+    public void testCtor() {
         Maintenance t = new Maintenance();
         Assert.assertNotNull("exists", t);
     }
@@ -88,70 +82,77 @@ public class MaintenanceTest {
         Assert.assertEquals("Listeners", listeners, result[3]);
     }
 
-    // @Test - testing for dialog fails when run separately
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testDeviceReportPressed() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("CrossReferenceTitle"));
-            jdo.close();
+            JButtonOperator jbo = new JButtonOperator(jdo,"OK");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Cross Reference Dialog Close Thread");
         t.start();
-        JmriJFrame parent = new jmri.util.JmriJFrame("DeviceReportParent");
+        JmriJFrame parent = new JmriJFrame("DeviceReportParent");
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.deviceReportPressed("IS1", parent);
         });
-        t.join(); // only proceed when all done
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Thread did not complete "+t.getName());
         JUnitUtil.dispose(parent);
     }
 
-    // @Test - testing for dialog fails when run separately
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testFindOrphansPressed() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("OrphanTitle"));
-            jdo.close();
+            JButtonOperator jbo = new JButtonOperator(jdo,"OK");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Find Orphan Dialog Close Thread");
         t.start();
-        JmriJFrame parent = new jmri.util.JmriJFrame("FindOrphansParent");
+        JmriJFrame parent = new JmriJFrame("FindOrphansParent");
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.findOrphansPressed(parent);
         });
-        t.join(); // only proceed when all done
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Thread did not complete "+t.getName());
         JUnitUtil.dispose(parent);
     }
 
-    //@Test
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testFindEmptyPressed() throws InterruptedException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("EmptyConditionalTitle"));
-            jdo.close();
+            JButtonOperator jbo = new JButtonOperator(jdo,"OK");
+            ThreadingUtil.runOnGUI(() -> jbo.push() );
+            jdo.waitClosed();
         });
         t.setName("Find Empty Dialog Close Thread");
         t.start();
-        JmriJFrame parent = new jmri.util.JmriJFrame("FindEmptyParent");
+        JmriJFrame parent = new JmriJFrame("FindEmptyParent");
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.findEmptyPressed(parent);
         });
-        t.join(); // only proceed when all done
+
+        JUnitUtil.waitFor(() -> !t.isAlive(), "Thread did not complete "+t.getName());
         JUnitUtil.dispose(parent);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();

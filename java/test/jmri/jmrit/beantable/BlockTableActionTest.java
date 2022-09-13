@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import jmri.util.gui.GuiLafPreferencesManager;
 
-import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
@@ -315,7 +314,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
 
         //and press create
         JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
-        JUnitUtil.waitFor(() -> { return InstanceManager.getDefault(BlockManager.class).getObjectCount()>0;  });
+        JUnitUtil.waitFor(() -> InstanceManager.getDefault(BlockManager.class).getObjectCount()>0 ,"Block created");
 
         JemmyUtil.pressButton( jf, Bundle.getMessage("ButtonCancel"));
         jf.waitClosed();
