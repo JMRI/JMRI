@@ -1303,23 +1303,33 @@ public class TreeEditor extends TreeViewer {
                 List<Category> list = new ArrayList<>(connectableClasses.keySet());
                 Collections.sort(list);
                 for (Category category : list) {
+                    List<SwingConfiguratorInterface> sciList = new ArrayList<>();
                     List<Class<? extends Base>> classes = connectableClasses.get(category);
                     if (classes != null && !classes.isEmpty()) {
                         JMenu categoryMenu = new JMenu(category.toString());
                         for (Class<? extends Base> clazz : classes) {
                             SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
                             if (sci != null) {
-                                JMenuItem item = new JMenuItem(sci.toString());
-                                item.addActionListener((e) -> {
-                                    createAddFrame(_currentFemaleSocket, _currentPath, sci);
-                                });
-                                categoryMenu.add(item);
+                                System.out.format("%s: Add to sci list: %s%n", category.toString(), sci);
+                                sciList.add(sci);
                             } else {
                                 log.error("Class {} has no swing configurator interface", clazz.getName());
                             }
                         }
-                        addMenu.add(categoryMenu);
                     }
+
+                    Collections.sort(sciList);
+
+                    JMenu categoryMenu = new JMenu(category.toString());
+                    for (SwingConfiguratorInterface sci : sciList) {
+                        System.out.format("%s: Add menu item: %s%n", category.toString(), sci);
+                        JMenuItem item = new JMenuItem(sci.toString());
+                        item.addActionListener((e) -> {
+                            createAddFrame(_currentFemaleSocket, _currentPath, sci);
+                        });
+                        categoryMenu.add(item);
+                    }
+                    addMenu.add(categoryMenu);
                 }
                 add(addMenu);
             }
