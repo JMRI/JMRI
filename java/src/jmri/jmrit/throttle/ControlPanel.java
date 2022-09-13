@@ -142,10 +142,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public ControlPanel(ThrottleManager tm) {
         throttleManager = tm;
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         initGUI();
         applyPreferences();
     }
