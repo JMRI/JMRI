@@ -23,7 +23,6 @@ import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.jmrit.logixng.util.parser.swing.FunctionsHelpDialog;
 import jmri.util.ThreadingUtil;
-import jmri.util.swing.JComboBoxUtil;
 
 import org.apache.commons.lang3.mutable.MutableObject;
 
@@ -132,9 +131,44 @@ public class TreeEditor extends TreeViewer {
         }
         menuBar.add(toolsMenu);
 
+        _treePane._tree.addMouseListener(
+                new MouseAdapter() {
 
-        PopupMenu popup = new PopupMenu();
-        popup.init();
+                    // On Windows, the popup is opened on mousePressed,
+                    // on some other OS, the popup is opened on mouseReleased
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        openPopupMenu(e);
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        openPopupMenu(e);
+                    }
+
+                    private void openPopupMenu(MouseEvent e) {
+                        if (isPopupMenuLocked()) return;
+
+                        if (e.isPopupTrigger()) {
+                            // Get the row the user has clicked on
+                            TreePath path = _treePane._tree.getClosestPathForLocation(e.getX(), e.getY());
+                            if (path != null) {
+                                // Check that the user has clicked on a row.
+                                Rectangle rect = _treePane._tree.getPathBounds(path);
+                                if ((e.getY() >= rect.y) && (e.getY() <= rect.y + rect.height)) {
+                                    // Select the row the user clicked on
+                                    _treePane._tree.setSelectionPath(path);
+
+                                    FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
+                                    new PopupMenu(e.getX(), e.getY(), femaleSocket, path);
+                                }
+                            }
+                        }
+                    }
+                }
+        );
+
 /*
         // The JTree can get big, so allow it to scroll
         JScrollPane scrollpane = new JScrollPane(tree);
@@ -306,140 +340,6 @@ public class TreeEditor extends TreeViewer {
         _renameSocketDialog.setLocationRelativeTo(null);
         _renameSocketDialog.pack();
         _renameSocketDialog.setVisible(true);
-    }
-
-    /**
-     * Respond to the Add menu choice in the popup menu.
-     *
-     * @param femaleSocket the female socket
-     * @param path the path to the item the user has clicked on
-     */
-    final protected void addPressed(FemaleSocket femaleSocket, TreePath path) {
-        setPopupMenuLock(true);
-
-        Map<Category, List<Class<? extends Base>>> connectableClasses =
-                femaleSocket.getConnectableClasses();
-
-        _categoryComboBox.removeAllItems();
-        List<Category> list = new ArrayList<>(connectableClasses.keySet());
-        Collections.sort(list);
-        for (Category item : list) {
-            _categoryComboBox.addItem(item);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_categoryComboBox);
-
-        for (ItemListener l : _categoryComboBox.getItemListeners()) {
-            _categoryComboBox.removeItemListener(l);
-        }
-
-        _categoryComboBox.addItemListener((ItemEvent e) -> {
-            Category category = _categoryComboBox.getItemAt(_categoryComboBox.getSelectedIndex());
-            _swingConfiguratorComboBox.removeAllItems();
-            List<Class<? extends Base>> classes = connectableClasses.get(category);
-            if (classes != null) {
-                for (Class<? extends Base> clazz : classes) {
-                    SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
-                    if (sci != null) {
-                        _swingConfiguratorComboBox.addItem(sci);
-                    } else {
-                        log.error("Class {} has no swing configurator interface", clazz.getName());
-                    }
-                }
-                JComboBoxUtil.setupComboBoxMaxRows(_swingConfiguratorComboBox);
-            }
-        });
-
-        // Ensure the type combo box gets updated
-        _categoryComboBox.setSelectedIndex(-1);
-        if (_categoryComboBox.getItemCount() > 0) {
-            _categoryComboBox.setSelectedIndex(0);
-        }
-
-
-        _selectItemTypeDialog  = new JDialog(
-                this,
-                Bundle.getMessage(
-                        "AddMaleSocketDialogTitle",
-                        femaleSocket.getLongDescription()),
-                false);
-//        selectItemTypeFrame.addHelpMenu(
-//                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
-        _selectItemTypeDialog.setLocation(50, 30);
-        Container contentPanel = _selectItemTypeDialog.getContentPane();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-
-        JPanel p;
-        p = new JPanel();
-//        p.setLayout(new FlowLayout());
-        p.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(_categoryLabel, c);
-        c.gridy = 1;
-        p.add(_typeLabel, c);
-        c.gridx = 1;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        p.add(_categoryComboBox, c);
-        c.gridy = 1;
-        p.add(_swingConfiguratorComboBox, c);
-
-        _categoryComboBox.setToolTipText(Bundle.getMessage("CategoryNamesHint"));    // NOI18N
-        _swingConfiguratorComboBox.setToolTipText(Bundle.getMessage("TypeNamesHint"));   // NOI18N
-        contentPanel.add(p);
-        // set up message
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-
-        contentPanel.add(panel3);
-
-        // set up create and cancel buttons
-        JPanel panel5 = new JPanel();
-        panel5.setLayout(new FlowLayout());
-        // Cancel
-        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
-        panel5.add(cancel);
-        cancel.addActionListener((ActionEvent e) -> {
-            cancelAddPressed(null);
-            setPopupMenuLock(false);
-        });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
-
-        _selectItemTypeDialog.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                cancelAddPressed(null);
-                setPopupMenuLock(false);
-            }
-        });
-
-        _create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
-        panel5.add(_create);
-        _create.addActionListener((ActionEvent e) -> {
-            cancelAddPressed(null);
-
-            SwingConfiguratorInterface swingConfiguratorInterface =
-                    _swingConfiguratorComboBox.getItemAt(_swingConfiguratorComboBox.getSelectedIndex());
-//            System.err.format("swingConfiguratorInterface: %s%n", swingConfiguratorInterface.getClass().getName());
-            createAddFrame(femaleSocket, path, swingConfiguratorInterface);
-        });
-
-        contentPanel.add(panel5);
-
-        _autoSystemName.addItemListener((ItemEvent e) -> {
-            autoSystemName();
-        });
-//        addLogixNGFrame.setLocationRelativeTo(component);
-        _selectItemTypeDialog.setLocationRelativeTo(null);
-        _selectItemTypeDialog.pack();
-        _selectItemTypeDialog.setVisible(true);
     }
 
     /**
@@ -1223,21 +1123,6 @@ public class TreeEditor extends TreeViewer {
      *
      * @param e The event heard
      */
-    final protected void cancelAddPressed(ActionEvent e) {
-        _selectItemTypeDialog.setVisible(false);
-        _selectItemTypeDialog.dispose();
-        _selectItemTypeDialog = null;
-//        _inCopyMode = false;
-        this.setVisible(true);
-    }
-
-    /**
-     * Respond to the Cancel button in Add ConditionalNG window.
-     * <p>
-     * Note: Also get there if the user closes the Add ConditionalNG window.
-     *
-     * @param e The event heard
-     */
     final protected void cancelCreateItem(ActionEvent e) {
         _addItemDialog.setVisible(false);
         _addSwingConfiguratorInterface.dispose();
@@ -1321,10 +1206,9 @@ public class TreeEditor extends TreeViewer {
     }
 
 
-    protected class PopupMenu extends JPopupMenu implements ActionListener {
+    protected final class PopupMenu extends JPopupMenu implements ActionListener {
 
         private static final String ACTION_COMMAND_RENAME_SOCKET = "rename_socket";
-        private static final String ACTION_COMMAND_ADD = "add";
         private static final String ACTION_COMMAND_REMOVE = "remove";
         private static final String ACTION_COMMAND_EDIT = "edit";
         private static final String ACTION_COMMAND_CUT = "cut";
@@ -1345,9 +1229,7 @@ public class TreeEditor extends TreeViewer {
         private TreePath _currentPath;
 
         private JMenuItem menuItemRenameSocket;
-        private JMenuItem menuItemAdd;
         private JMenuItem menuItemRemove;
-        private JMenuItem menuItemEdit;
         private JMenuItem menuItemCut;
         private JMenuItem menuItemCopy;
         private JMenuItem menuItemPaste;
@@ -1362,26 +1244,93 @@ public class TreeEditor extends TreeViewer {
         private JMenuItem menuItemExecuteEvaluate;
 //        private JMenuItem menuItemExpandTree;
 
-        PopupMenu() {
+        private final boolean _isConnected;
+        private final boolean _canConnectFromClipboard;
+        private final boolean _disableForRoot;
+        private final boolean _isLocked;
+        private final boolean _parentIsLocked;
+
+
+        PopupMenu(int x, int y, FemaleSocket femaleSocket, TreePath path) {
             if (_treePane._tree == null) throw new IllegalArgumentException("_tree is null");
             _tree = _treePane._tree;
-        }
 
-        private void init() {
+            _currentFemaleSocket = femaleSocket;
+            _currentPath = path;
+
+            Clipboard clipboard = InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+
+            MaleSocket topItem = clipboard.getTopItem();
+
+            _isConnected = femaleSocket.isConnected();
+
+            _canConnectFromClipboard =
+                    topItem != null
+                    && femaleSocket.isCompatible(topItem)
+                    && !femaleSocket.isAncestor(topItem);
+
+            _disableForRoot = _disableRootRemoveCutCopy
+                    && (_currentFemaleSocket == _treePane._femaleRootSocket);
+
+            _isLocked = _isConnected && femaleSocket.getConnectedSocket().isLocked();
+
+            Base parent = femaleSocket.getParent();
+            while ((parent != null) && !(parent instanceof MaleSocket)) {
+                parent = parent.getParent();
+            }
+            _parentIsLocked = (parent != null) && ((MaleSocket)parent).isLocked();
+
+            if (_disableRootPopup
+                    && (_currentFemaleSocket == _treePane._femaleRootSocket)) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("TreeEditor_RootHasNoPopupMenu"),
+                        Bundle.getMessage("TreeEditor_Info"),
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             menuItemRenameSocket = new JMenuItem(Bundle.getMessage("PopupMenuRenameSocket"));
             menuItemRenameSocket.addActionListener(this);
             menuItemRenameSocket.setActionCommand(ACTION_COMMAND_RENAME_SOCKET);
             add(menuItemRenameSocket);
             addSeparator();
-            menuItemAdd = new JMenuItem(Bundle.getMessage("PopupMenuAdd"));
-            menuItemAdd.addActionListener(this);
-            menuItemAdd.setActionCommand(ACTION_COMMAND_ADD);
-            add(menuItemAdd);
+
+            if (!_isConnected && !_parentIsLocked) {
+                JMenu addMenu = new JMenu(Bundle.getMessage("PopupMenuAdd"));
+//                addMenu.setMnemonic(KeyEvent.VK_F);
+                Map<Category, List<Class<? extends Base>>> connectableClasses =
+                        _currentFemaleSocket.getConnectableClasses();
+                List<Category> list = new ArrayList<>(connectableClasses.keySet());
+                Collections.sort(list);
+                for (Category category : list) {
+                    List<Class<? extends Base>> classes = connectableClasses.get(category);
+                    if (classes != null && !classes.isEmpty()) {
+                        JMenu categoryMenu = new JMenu(category.toString());
+                        for (Class<? extends Base> clazz : classes) {
+                            SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
+                            if (sci != null) {
+                                JMenuItem item = new JMenuItem(sci.toString());
+                                item.addActionListener((e) -> {
+                                    createAddFrame(_currentFemaleSocket, _currentPath, sci);
+                                });
+                                categoryMenu.add(item);
+                            } else {
+                                log.error("Class {} has no swing configurator interface", clazz.getName());
+                            }
+                        }
+                        addMenu.add(categoryMenu);
+                    }
+                }
+                add(addMenu);
+            }
+
+            if (_isConnected && !_isLocked) {
+                JMenuItem menuItemEdit = new JMenuItem(Bundle.getMessage("PopupMenuEdit"));
+                menuItemEdit.addActionListener(this);
+                menuItemEdit.setActionCommand(ACTION_COMMAND_EDIT);
+                add(menuItemEdit);
+            }
             addSeparator();
-            menuItemEdit = new JMenuItem(Bundle.getMessage("PopupMenuEdit"));
-            menuItemEdit.addActionListener(this);
-            menuItemEdit.setActionCommand(ACTION_COMMAND_EDIT);
-            add(menuItemEdit);
             menuItemRemove = new JMenuItem(Bundle.getMessage("PopupMenuRemove"));
             menuItemRemove.addActionListener(this);
             menuItemRemove.setActionCommand(ACTION_COMMAND_REMOVE);
@@ -1458,88 +1407,14 @@ public class TreeEditor extends TreeViewer {
 
             final PopupMenu popupMenu = this;
 
-            _tree.addMouseListener(
-                    new MouseAdapter() {
+            menuItemRemove.setEnabled(_isConnected && !_isLocked && !_parentIsLocked && !_disableForRoot);
+            menuItemCut.setEnabled(_isConnected && !_isLocked && !_parentIsLocked && !_disableForRoot);
+            menuItemCopy.setEnabled(_isConnected && !_disableForRoot);
+            menuItemPaste.setEnabled(!_isConnected && !_parentIsLocked && _canConnectFromClipboard);
 
-                        // On Windows, the popup is opened on mousePressed,
-                        // on some other OS, the popup is opened on mouseReleased
-
-                        @Override
-                        public void mousePressed(MouseEvent e) {
-                            openPopupMenu(e);
-                        }
-
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            openPopupMenu(e);
-                        }
-
-                        private void openPopupMenu(MouseEvent e) {
-                            if (isPopupMenuLocked()) return;
-
-                            if (e.isPopupTrigger() && !popupMenu.isVisible()) {
-                                // Get the row the user has clicked on
-                                TreePath path = _tree.getClosestPathForLocation(e.getX(), e.getY());
-                                if (path != null) {
-                                    // Check that the user has clicked on a row.
-                                    Rectangle rect = _tree.getPathBounds(path);
-                                    if ((e.getY() >= rect.y) && (e.getY() <= rect.y + rect.height)) {
-                                        // Select the row the user clicked on
-                                        _tree.setSelectionPath(path);
-
-                                        FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
-                                        showPopup(e.getX(), e.getY(), femaleSocket, path);
-                                    }
-                                }
-                            }
-                        }
-                    }
-            );
-        }
-
-        private void showPopup(int x, int y, FemaleSocket femaleSocket, TreePath path) {
-            _currentFemaleSocket = femaleSocket;
-            _currentPath = path;
-
-            Clipboard clipboard = InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
-
-            MaleSocket topItem = clipboard.getTopItem();
-
-            boolean isConnected = femaleSocket.isConnected();
-            boolean canConnectFromClipboard =
-                    topItem != null
-                    && femaleSocket.isCompatible(topItem)
-                    && !femaleSocket.isAncestor(topItem);
-
-            if (_disableRootPopup
-                    && (_currentFemaleSocket == _treePane._femaleRootSocket)) {
-                JOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("TreeEditor_RootHasNoPopupMenu"),
-                        Bundle.getMessage("TreeEditor_Info"),
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            boolean disableForRoot = _disableRootRemoveCutCopy
-                    && (_currentFemaleSocket == _treePane._femaleRootSocket);
-
-            boolean isLocked = isConnected && femaleSocket.getConnectedSocket().isLocked();
-
-            Base parent = femaleSocket.getParent();
-            while ((parent != null) && !(parent instanceof MaleSocket)) {
-                parent = parent.getParent();
-            }
-            boolean parentIsLocked = (parent != null) && ((MaleSocket)parent).isLocked();
-
-            menuItemAdd.setEnabled(!isConnected && !parentIsLocked);
-            menuItemRemove.setEnabled(isConnected && !isLocked && !parentIsLocked && !disableForRoot);
-            menuItemEdit.setEnabled(isConnected && !isLocked);
-            menuItemCut.setEnabled(isConnected && !isLocked && !parentIsLocked && !disableForRoot);
-            menuItemCopy.setEnabled(isConnected && !disableForRoot);
-            menuItemPaste.setEnabled(!isConnected && !parentIsLocked && canConnectFromClipboard);
-
-            if (isConnected && !disableForRoot) {
-                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled() && !isLocked);
-                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled() && !isLocked);
+            if (_isConnected && !_disableForRoot) {
+                menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled() && !_isLocked);
+                menuItemDisable.setEnabled(femaleSocket.getConnectedSocket().isEnabled() && !_isLocked);
             } else {
                 menuItemEnable.setEnabled(false);
                 menuItemDisable.setEnabled(false);
@@ -1547,7 +1422,7 @@ public class TreeEditor extends TreeViewer {
 
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 JMenuItem menuItem = menuItemFemaleSocketOperation.get(oper);
-                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper) && !parentIsLocked);
+                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper) && !_parentIsLocked);
             }
 
             AtomicBoolean isAnyLocked = new AtomicBoolean(false);
@@ -1562,9 +1437,9 @@ public class TreeEditor extends TreeViewer {
             menuItemLock.setEnabled(isAnyUnlocked.get());
             menuItemUnlock.setEnabled(isAnyLocked.get());
 
-            menuItemLocalVariables.setEnabled(femaleSocket.isConnected() && !isLocked);
+            menuItemLocalVariables.setEnabled(femaleSocket.isConnected() && !_isLocked);
 
-            menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !isLocked);
+            menuItemChangeUsername.setEnabled(femaleSocket.isConnected() && !_isLocked);
 
             if (_enableExecuteEvaluate) {
                 menuItemExecuteEvaluate.setEnabled(femaleSocket.isConnected());
@@ -1612,11 +1487,6 @@ public class TreeEditor extends TreeViewer {
                 case ACTION_COMMAND_RENAME_SOCKET:
                     if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
                     renameSocketPressed(_currentFemaleSocket, _currentPath);
-                    break;
-
-                case ACTION_COMMAND_ADD:
-                    if (parentIsSystem && abortEditAboutSystem(_currentFemaleSocket.getParent())) break;
-                    addPressed(_currentFemaleSocket, _currentPath);
                     break;
 
                 case ACTION_COMMAND_EDIT:
