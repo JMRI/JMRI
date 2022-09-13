@@ -59,9 +59,6 @@ public class TreeEditor extends TreeViewer {
     protected boolean _showReminder = false;
     private boolean _lockPopupMenu = false;
 
-    private final Comparator<SwingConfiguratorInterface> _swingConfiguratorComboBoxComparator
-            = (SwingConfiguratorInterface o1, SwingConfiguratorInterface o2) -> o1.toString().compareTo(o2.toString());
-
     private final JLabel _renameSocketLabel = new JLabel(Bundle.getMessage("SocketName") + ":");  // NOI18N
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
@@ -1155,47 +1152,6 @@ public class TreeEditor extends TreeViewer {
         swi.executeEvaluate(maleSocket);
     }
 
-
-
-    private static final class SortedComboBoxModel<E> extends DefaultComboBoxModel<E> {
-
-        private final Comparator<E> comparator;
-
-        /*
-         *  Create an empty model that will use the specified Comparator
-         */
-        public SortedComboBoxModel(@Nonnull Comparator<E> comparator) {
-            super();
-            this.comparator = comparator;
-        }
-
-        @Override
-        public void addElement(E element) {
-            insertElementAt(element, 0);
-        }
-
-        @Override
-        public void insertElementAt(E element, int index) {
-            int size = getSize();
-
-            //  Determine where to insert element to keep model in sorted order
-            int i = 0;
-            for (; i < size; i++) {
-                E o = getElementAt(i);
-
-                if (comparator.compare(o, element) > 0) {
-                    break;
-                }
-            }
-
-            super.insertElementAt(element, i);
-
-            //  Select an element when it is added to the beginning of the model
-            if (i == 0 && element != null) {
-                setSelectedItem(element);
-            }
-        }
-    }
 
 
     protected final class PopupMenu extends JPopupMenu implements ActionListener {
