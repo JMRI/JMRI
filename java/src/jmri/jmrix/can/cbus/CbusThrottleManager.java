@@ -558,7 +558,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     }
 
     /**
-     * Any address is potentially a long address
+     * Any address is potentially a long address.
+     * {@inheritDoc}
      */
     @Override
     public boolean canBeLongAddress(int address) {
@@ -566,8 +567,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     }
 
     /**
-     * Address 127 and below is a short address
-     *
+     * Address 127 and below is a short address.
+     * {@inheritDoc}
      */
     @Override
     public boolean canBeShortAddress(int address) {
@@ -576,6 +577,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
 
     /**
      * Short and long address spaces overlap and are not unique.
+     * @return always false.
+     * {@inheritDoc}
      */
     @Override
     public boolean addressTypeUnique() {
@@ -584,6 +587,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
 
     /**
      * Local method for deciding short/long address.
+     * @param num the address number
+     * @return true if address equal to or greater than 128.
      */
     static boolean isLongAddress(int num) {
         return (num >= 128);
