@@ -47,7 +47,6 @@ public class TreeEditor extends TreeViewer {
     private final LogixNGPreferences _prefs = InstanceManager.getDefault(LogixNGPreferences.class);
 
     private JDialog _renameSocketDialog = null;
-    private JDialog _selectItemTypeDialog = null;
     private JDialog _addItemDialog = null;
     private JDialog _editActionExpressionDialog = null;
     private JDialog _editLocalVariablesDialog = null;
@@ -66,15 +65,11 @@ public class TreeEditor extends TreeViewer {
     private final SortedComboBoxModel<SwingConfiguratorInterface> _swingConfiguratorComboBoxModel
             = new SortedComboBoxModel<>(_swingConfiguratorComboBoxComparator);
 
-    private final JComboBox<Category> _categoryComboBox = new JComboBox<>();
-    private final JComboBox<SwingConfiguratorInterface> _swingConfiguratorComboBox = new JComboBox<>(_swingConfiguratorComboBoxModel);
     private final JLabel _renameSocketLabel = new JLabel(Bundle.getMessage("SocketName") + ":");  // NOI18N
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
     private final String _systemNameAuto = getClassName() + ".AutoSystemName";             // NOI18N
-    private final JLabel _categoryLabel = new JLabel(Bundle.getMessage("Category") + ":");  // NOI18N
-    private final JLabel _typeLabel = new JLabel(Bundle.getMessage("Type") + ":");   // NOI18N
     private JButton _create;
     private JButton _edit;
 
@@ -1306,7 +1301,6 @@ public class TreeEditor extends TreeViewer {
                     List<SwingConfiguratorInterface> sciList = new ArrayList<>();
                     List<Class<? extends Base>> classes = connectableClasses.get(category);
                     if (classes != null && !classes.isEmpty()) {
-                        JMenu categoryMenu = new JMenu(category.toString());
                         for (Class<? extends Base> clazz : classes) {
                             SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
                             if (sci != null) {
@@ -1414,8 +1408,6 @@ public class TreeEditor extends TreeViewer {
 */
             setOpaque(true);
             setLightWeightPopupEnabled(true);
-
-            final PopupMenu popupMenu = this;
 
             menuItemRemove.setEnabled(_isConnected && !_isLocked && !_parentIsLocked && !_disableForRoot);
             menuItemCut.setEnabled(_isConnected && !_isLocked && !_parentIsLocked && !_disableForRoot);
