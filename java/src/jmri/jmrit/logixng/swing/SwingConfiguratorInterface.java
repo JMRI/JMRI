@@ -21,7 +21,7 @@ import jmri.jmrit.logixng.MaleSocket;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public interface SwingConfiguratorInterface {
+public interface SwingConfiguratorInterface extends Comparable<SwingConfiguratorInterface> {
 
     /**
      * Set the dialog of this SWI.
@@ -196,6 +196,12 @@ public interface SwingConfiguratorInterface {
         if (sb.length() > 0) componentsToReturn.add(new JLabel(sb.toString()));
 
         return componentsToReturn;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public default int compareTo(SwingConfiguratorInterface swi) {
+        return toString().compareTo(swi.toString());
     }
 
 }

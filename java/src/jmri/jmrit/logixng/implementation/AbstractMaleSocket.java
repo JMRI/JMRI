@@ -112,7 +112,11 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     @Override
     public final String getLongDescription(Locale locale) {
-        return _object.getLongDescription(locale);
+        String s = _object.getLongDescription(locale);
+        if (!_listen) {
+            s += " ::: " + Base.getNoListenString();
+        }
+        return s;
     }
 
     @Override

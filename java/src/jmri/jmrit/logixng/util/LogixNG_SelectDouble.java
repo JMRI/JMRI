@@ -69,6 +69,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
         copy.setValue(_value);
         copy.setLocalVariable(_localVariable);
         copy.setMemory(_memoryHandle);
+        copy.setListenToMemory(_listenToMemory);
         copy.setReference(_reference);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
@@ -264,7 +265,7 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                 break;
 
             case Memory:
-                enumName = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                enumName = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
                 break;
 
             case LocalVariable:

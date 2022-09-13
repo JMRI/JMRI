@@ -71,6 +71,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
         copy.setMemory(_memoryHandle);
+        copy.setListenToMemory(_listenToMemory);
         copy.setFormula(_formula);
         _selectTable.copy(copy._selectTable);
     }
@@ -311,7 +312,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
                 break;
 
             case Memory:
-                namedBean = Bundle.getMessage(locale, "AddressByMemory", memoryName);
+                namedBean = Bundle.getMessage(locale, "AddressByMemory_Listen", memoryName, Base.getListenString(_listenToMemory));
                 break;
 
             case LocalVariable:
