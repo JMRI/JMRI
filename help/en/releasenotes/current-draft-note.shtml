@@ -408,8 +408,16 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The popup menu in the ConditionalNG editor is changed.
+          All the categories are sub menus to the <i>Add</i> menu item.
+          When a new action or expression is to be created, it is
+          selected directly in the popup menu.</li>
           <li>The expression <i>Local variable as analog value</i>
           has been added.</li>
+          <li>LogixNG now prints <i>(Listen)</i> or <i>(No Listen)</i> when
+          memories are used as addressing. It also prints <i>::: No Listen</i>
+          for expressions where the option <i>Listen</i> is unchecked.
+          </li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
