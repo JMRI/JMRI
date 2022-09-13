@@ -16,6 +16,8 @@ import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.NamedBean.BadSystemNameException;
+import jmri.NamedBean.BadUserNameException;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -44,6 +46,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
 
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
+    private static final ResourceBundle rbx2 = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
 
     // Browser Options
     static final String PRINT_LINE_NUMBERS_OPTION = "jmri.jmrit.logixng.PrintLineNumbers";
@@ -65,6 +68,10 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableFrame<E> f, BeanTableDataModel<E> m, String sName);
+
+    protected boolean isEditSupported() {
+        return true;
+    }
 
     @Nonnull
     @Override
@@ -102,194 +109,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel<E>() {
-            // overlay the state column with the edit column
-            static public final int ENABLECOL = VALUECOL;
-            static public final int EDITCOL = DELETECOL;
-            protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");  // NOI18N
-
-            @Override
-            public String getColumnName(int col) {
-                if (col == EDITCOL) {
-                    return Bundle.getMessage("ColumnHeadMenu");     // This makes it easier to test the table
-                }
-                if (col == ENABLECOL) {
-                    return enabledString;
-                }
-                return super.getColumnName(col);
-            }
-
-            @Override
-            public Class<?> getColumnClass(int col) {
-                if (col == EDITCOL) {
-                    return String.class;
-                }
-                if (col == ENABLECOL) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(col);
-            }
-
-            @Override
-            public int getPreferredWidth(int col) {
-                // override default value for SystemName and UserName columns
-                if (col == SYSNAMECOL) {
-                    return new JTextField(12).getPreferredSize().width;
-                }
-                if (col == USERNAMECOL) {
-                    return new JTextField(17).getPreferredSize().width;
-                }
-                if (col == EDITCOL) {
-                    return new JTextField(12).getPreferredSize().width;
-                }
-                if (col == ENABLECOL) {
-                    return new JTextField(5).getPreferredSize().width;
-                }
-                return super.getPreferredWidth(col);
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                if (col == EDITCOL) {
-                    return true;
-                }
-                if (col == ENABLECOL) {
-                    return true;
-                }
-                return super.isCellEditable(row, col);
-            }
-
-            @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
-            @Override
-            public Object getValueAt(int row, int col) {
-                if (col == EDITCOL) {
-                    return Bundle.getMessage("ButtonSelect");  // NOI18N
-                } else if (col == ENABLECOL) {
-                    E x = (E) getValueAt(row, SYSNAMECOL);
-                    if (x == null) {
-                        return null;
-                    }
-                    return isEnabled(x);
-                } else {
-                    return super.getValueAt(row, col);
-                }
-            }
-
-            @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
-            @Override
-            public void setValueAt(Object value, int row, int col) {
-                if (col == EDITCOL) {
-                    // set up to edit
-                    String sName = ((NamedBean) getValueAt(row, SYSNAMECOL)).getSystemName();
-                    if (Bundle.getMessage("ButtonEdit").equals(value)) {  // NOI18N
-                        editPressed(sName);
-
-                    } else if (Bundle.getMessage("BrowserButton").equals(value)) {  // NOI18N
-                        conditionalRowNumber = row;
-                        browserPressed(sName);
-
-                    } else if (Bundle.getMessage("ButtonCopy").equals(value)) {  // NOI18N
-                        copyPressed(sName);
-
-                    } else if (Bundle.getMessage("ButtonDelete").equals(value)) {  // NOI18N
-                        deletePressed(sName);
-                    }
-                } else if (col == ENABLECOL) {
-                    // alternate
-                    E x = (E) getValueAt(row, SYSNAMECOL);
-                    boolean v = isEnabled(x);
-                    setEnabled(x, !v);
-                } else {
-                    super.setValueAt(value, row, col);
-                }
-            }
-
-            /**
-             * Delete the bean after all the checking has been done.
-             * <p>
-             * Deletes the NamedBean.
-             *
-             * @param bean of the NamedBean to delete
-             */
-            @Override
-            protected void doDelete(E bean) {
-                // delete the LogixNG
-                AbstractLogixNGTableAction.this.deleteBean(bean);
-            }
-
-            @Override
-            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals(enabledString)) {
-                    return true;
-                }
-                return super.matchPropertyName(e);
-            }
-
-            @Override
-            public Manager<E> getManager() {
-                return AbstractLogixNGTableAction.this.getManager();
-            }
-
-            @Override
-            public E getBySystemName(String name) {
-                return AbstractLogixNGTableAction.this.getManager().getBySystemName(name);
-            }
-
-            @Override
-            public E getByUserName(String name) {
-                return AbstractLogixNGTableAction.this.getManager().getByUserName(name);
-            }
-
-            @Override
-            protected String getMasterClassName() {
-                return getClassName();
-            }
-
-            @Override
-            public void configureTable(JTable table) {
-                table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-                if (!(getManager() instanceof jmri.jmrit.logixng.LogixNG_Manager)) {
-                    table.getColumnModel().getColumn(2).setMinWidth(0);
-                    table.getColumnModel().getColumn(2).setMaxWidth(0);
-                }
-                super.configureTable(table);
-            }
-
-            /**
-             * Replace delete button with comboBox to edit/delete/copy/select NamedBean.
-             *
-             * @param table name of the NamedBean JTable holding the column
-             */
-            @Override
-            protected void configDeleteColumn(JTable table) {
-                JComboBox<String> editCombo = new JComboBox<>();
-                editCombo.addItem(Bundle.getMessage("ButtonSelect"));  // NOI18N
-                editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
-                editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
-                editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
-                TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
-                col.setCellEditor(new DefaultCellEditor(editCombo));
-            }
-
-            // Not needed - here for interface compatibility
-            @Override
-            public void clickOn(NamedBean t) {
-            }
-
-            @Override
-            public String getValue(String s) {
-                return "";
-            }
-
-            @Override
-            protected String getBeanType() {
-//                 return Bundle.getMessage("BeanNameLogix");  // NOI18N
-                return rbx.getString("BeanNameLogixNG");  // NOI18N
-            }
-        };
+        m = new TableModel();
     }
 
     /**
@@ -311,13 +131,13 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<E> f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_O);
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);  // NOI18N
+        log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {  // NOI18N
@@ -347,7 +167,13 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         menu = new JMenu(Bundle.getMessage("MenuTools"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_T);
 
-        JMenuItem item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
+        JMenuItem item = new JMenuItem(rbx2.getString("MenuOpenClipboard"));  // NOI18N
+        item.addActionListener((ActionEvent e) -> {
+            jmri.jmrit.logixng.tools.swing.TreeEditor.openClipboard();
+        });
+        menu.add(item);
+
+        item = new JMenuItem(Bundle.getMessage("OpenPickListTables"));  // NOI18N
         item.addActionListener((ActionEvent e) -> {
             openPickListTable();
         });
@@ -378,6 +204,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected AbstractLogixNGEditor<E> _editor = null;
 
     boolean _showReminder = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
@@ -453,7 +280,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     /**
      * Respond to the Cancel button in Add bean window.
      * <p>
- Note: Also get there if the user closes the Add bean window.
+     * Note: Also get there if the user closes the Add bean window.
      *
      * @param e The event heard
      */
@@ -482,26 +309,22 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         Runnable t = new Runnable() {
             @Override
             public void run() {
-                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+//                JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
 
-                // This may or may not work. It's not tested yet.
-                // Disable for now.
-                if (1==0) {
-                    JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
-                    // Create bean
-                    JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                    panel5.add(create);
-                    create.addActionListener((ActionEvent e) -> {
-                        JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
-    //                    copyLogixNGPressed(e);
-                    });
-                    addLogixNGFrame.pack();
-                    addLogixNGFrame.setVisible(true);
-                    _autoSystemName.setSelected(false);
-                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
-                    });
-                }
+                JPanel panel5 = makeAddFrame("TitleCopyLogixNG", "Copy");    // NOI18N
+                // Create bean
+                JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+                panel5.add(create);
+                create.addActionListener((ActionEvent e) -> {
+                    copyBeanPressed(e);
+                });
+                addLogixNGFrame.pack();
+                addLogixNGFrame.setVisible(true);
+                _autoSystemName.setSelected(false);
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
+                });
+
                 _inCopyMode = false;
             }
         };
@@ -513,32 +336,40 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     String _logixNGSysName;
 
+    protected void copyBean(@Nonnull E sourceBean, @Nonnull E targetBean) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    protected boolean isCopyBeanSupported() {
+        return false;
+    }
+
     /**
      * Copy the bean as configured in the Copy set up pane.
      *
      * @param e the event heard
      */
-    void copyLogixNGPressed(ActionEvent e) {
-/*
+    private void copyBeanPressed(ActionEvent e) {
+
         String uName = _addUserName.getText().trim();
         if (uName.length() == 0) {
             uName = null;
         }
-        LogixNG targetLogixNG;
+        E targetBean;
         if (_autoSystemName.isSelected()) {
             if (!checkLogixNGUserName(uName)) {
                 return;
             }
-            targetLogixNG = _logixNG_Manager.createLogixNG(uName);
+            targetBean = createBean(uName);
         } else {
             if (!checkLogixNGSysName()) {
                 return;
             }
             String sName = _systemName.getText().trim();
-            // check if a LogixNG with this name already exists
+            // check if a bean with this name already exists
             boolean createLogix = true;
-            targetLogixNG = _logixNG_Manager.getBySystemName(sName);
-            if (targetLogixNG != null) {
+            targetBean = getManager().getBySystemName(sName);
+            if (targetBean != null) {
                 int result = JOptionPane.showConfirmDialog(f,
                         Bundle.getMessage("ConfirmLogixDuplicate", sName, _logixNGSysName), // NOI18N
                         Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,    // NOI18N
@@ -547,7 +378,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     return;
                 }
                 createLogix = false;
-                String userName = targetLogixNG.getUserName();
+                String userName = targetBean.getUserName();
                 if (userName != null && userName.length() > 0) {
                     _addUserName.setText(userName);
                     uName = userName;
@@ -557,26 +388,23 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
             if (createLogix) {
                 // Create the new LogixNG
-                targetLogixNG = _logixNG_Manager.createLogixNG(sName, uName);
-                if (targetLogixNG == null) {
+                targetBean = createBean(sName, uName);
+                if (targetBean == null) {
                     // should never get here unless there is an assignment conflict
                     log.error("Failure to create LogixNG with System Name: {}", sName);  // NOI18N
                     return;
                 }
-            } else if (targetLogixNG == null) {
+            } else if (targetBean == null) {
                 log.error("Error targetLogix is null!");  // NOI18N
                 return;
             } else {
-                targetLogixNG.setUserName(uName);
+                targetBean.setUserName(uName);
             }
         }
-        LogixNG srcLogic = _logixNG_Manager.getBySystemName(_logixNGSysName);
-        for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
-            String cSysName = srcLogic.getConditionalByNumberOrder(i);
-            copyConditionalToLogix(cSysName, srcLogic, targetLogixNG);
-        }
+        E sourceBean = getManager().getBySystemName(_logixNGSysName);
+        if (sourceBean != null) copyBean(sourceBean, targetBean);
+        else log.error("Error targetLogix is null!");  // NOI18N
         cancelAddPressed(null);
-*/
     }
 
     /**
@@ -660,7 +488,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             E x = getManager().getBySystemName(sName);
             if (x == null) {
                 // bean does not exist, so cannot be edited
-                log.error("No bean with system name: " + sName);
+                log.error("No bean with system name: {}", sName);
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LogixNGError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -688,7 +516,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             if (!checkLogixNGUserName(uName)) {
                 return;
             }
-            _curNamedBean = createBean(uName);
+            try {
+                _curNamedBean = createBean(uName);
+            } catch (BadSystemNameException | BadUserNameException ex) {
+                JOptionPane.showMessageDialog(addLogixNGFrame, ex.getLocalizedMessage(),
+                        Bundle.getMessage("ErrorTitle"), // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             if (_curNamedBean == null) {
                 log.error("Failure to create bean with System Name: {}", "none");  // NOI18N
                 return;
@@ -701,7 +536,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             // Get validated system name
             sName = _systemName.getText();
             // check if a bean with this name already exists
-            E x = null;
+            E x;
             try {
                 x = getManager().getBySystemName(sName);
             } catch (Exception ex) {
@@ -789,7 +624,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixNGTable")), // NOI18N
@@ -823,7 +658,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         final E x = getManager().getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-        
+
         if (x == null) return;  // This should never happen
 
         StringBuilder message = new StringBuilder();
@@ -831,7 +666,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             getManager().deleteBean(x, "CanDelete");  // NOI18N
         } catch (PropertyVetoException e) {
             if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                log.warn(e.getMessage());
+                log.warn("{} : Do Not Delete", e.getMessage());
                 message.append(Bundle.getMessage("VetoDeleteBean", x.getBeanType(), x.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                 JOptionPane.showMessageDialog(null, message.toString(),
                         Bundle.getMessage("QuestionTitle"),
@@ -929,7 +764,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
             dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                     dialog.setVisible(false);
-                    dialog.dispose(); }, 
+                    dialog.dispose(); },
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
             dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
@@ -937,7 +772,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             dialog.setVisible(true);
         }
     }
-    
+
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLogixNGTable");        // NOI18N
@@ -1052,7 +887,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logixNG system name.txt
-        userFileChooser.setSelectedFile(new File(_curNamedBean.getSystemName() + ".txt"));  // NOI18N
+        String suggestedFileName = _curNamedBean.getSystemName().replace(':', '_') + ".txt";
+        userFileChooser.setSelectedFile(new File(suggestedFileName));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1086,14 +922,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 + (isEnabled(_curNamedBean)
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-//        JTextArea textContent = buildConditionalListing();
-        JTextArea textContent = new JTextArea();
         try {
             // Add bean Header inforation first
             FileUtil.appendTextToFile(file, tStr);
-            FileUtil.appendTextToFile(file, textContent.getText());
+            FileUtil.appendTextToFile(file, "-".repeat(tStr.length()));
+            FileUtil.appendTextToFile(file, "");
+            FileUtil.appendTextToFile(file, _textContent.getText());
         } catch (IOException e) {
-            log.error("Unable to write browser content to '{}', exception: '{}'", file, e);  // NOI18N
+            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
         }
     }
 
@@ -1154,6 +990,199 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         return checkBoxPanel;
     }
+
+
+
+    protected class TableModel extends BeanTableDataModel<E> {
+
+        // overlay the state column with the edit column
+        static public final int ENABLECOL = VALUECOL;
+        static public final int EDITCOL = DELETECOL;
+        protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");  // NOI18N
+
+        @Override
+        public String getColumnName(int col) {
+            if (col == EDITCOL) {
+                return Bundle.getMessage("ColumnHeadMenu");     // This makes it easier to test the table
+            }
+            if (col == ENABLECOL) {
+                return enabledString;
+            }
+            return super.getColumnName(col);
+        }
+
+        @Override
+        public Class<?> getColumnClass(int col) {
+            if (col == EDITCOL) {
+                return String.class;
+            }
+            if (col == ENABLECOL) {
+                return Boolean.class;
+            }
+            return super.getColumnClass(col);
+        }
+
+        @Override
+        public int getPreferredWidth(int col) {
+            // override default value for SystemName and UserName columns
+            if (col == SYSNAMECOL) {
+                return new JTextField(12).getPreferredSize().width;
+            }
+            if (col == USERNAMECOL) {
+                return new JTextField(17).getPreferredSize().width;
+            }
+            if (col == EDITCOL) {
+                return new JTextField(12).getPreferredSize().width;
+            }
+            if (col == ENABLECOL) {
+                return new JTextField(5).getPreferredSize().width;
+            }
+            return super.getPreferredWidth(col);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            if (col == EDITCOL) {
+                return true;
+            }
+            if (col == ENABLECOL) {
+                return true;
+            }
+            return super.isCellEditable(row, col);
+        }
+
+        @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
+        @Override
+        public Object getValueAt(int row, int col) {
+            if (col == EDITCOL) {
+                return Bundle.getMessage("ButtonSelect");  // NOI18N
+            } else if (col == ENABLECOL) {
+                E x = (E) getValueAt(row, SYSNAMECOL);
+                if (x == null) {
+                    return null;
+                }
+                return isEnabled(x);
+            } else {
+                return super.getValueAt(row, col);
+            }
+        }
+
+        @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            if (col == EDITCOL) {
+                // set up to edit
+                String sName = ((NamedBean) getValueAt(row, SYSNAMECOL)).getSystemName();
+                if (Bundle.getMessage("ButtonEdit").equals(value)) {  // NOI18N
+                    editPressed(sName);
+
+                } else if (Bundle.getMessage("BrowserButton").equals(value)) {  // NOI18N
+                    conditionalRowNumber = row;
+                    browserPressed(sName);
+
+                } else if (Bundle.getMessage("ButtonCopy").equals(value)) {  // NOI18N
+                    copyPressed(sName);
+
+                } else if (Bundle.getMessage("ButtonDelete").equals(value)) {  // NOI18N
+                    deletePressed(sName);
+                }
+            } else if (col == ENABLECOL) {
+                // alternate
+                E x = (E) getValueAt(row, SYSNAMECOL);
+                boolean v = isEnabled(x);
+                setEnabled(x, !v);
+            } else {
+                super.setValueAt(value, row, col);
+            }
+        }
+
+        /**
+         * Delete the bean after all the checking has been done.
+         * <p>
+         * Deletes the NamedBean.
+         *
+         * @param bean of the NamedBean to delete
+         */
+        @Override
+        protected void doDelete(E bean) {
+            // delete the LogixNG
+            AbstractLogixNGTableAction.this.deleteBean(bean);
+        }
+
+        @Override
+        protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+            if (e.getPropertyName().equals(enabledString)) {
+                return true;
+            }
+            return super.matchPropertyName(e);
+        }
+
+        @Override
+        public Manager<E> getManager() {
+            return AbstractLogixNGTableAction.this.getManager();
+        }
+
+        @Override
+        public E getBySystemName(String name) {
+            return AbstractLogixNGTableAction.this.getManager().getBySystemName(name);
+        }
+
+        @Override
+        public E getByUserName(String name) {
+            return AbstractLogixNGTableAction.this.getManager().getByUserName(name);
+        }
+
+        @Override
+        protected String getMasterClassName() {
+            return getClassName();
+        }
+
+        @Override
+        public void configureTable(JTable table) {
+            table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+            table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+            table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+            if (!(getManager() instanceof jmri.jmrit.logixng.LogixNG_Manager)) {
+                table.getColumnModel().getColumn(2).setMinWidth(0);
+                table.getColumnModel().getColumn(2).setMaxWidth(0);
+            }
+            super.configureTable(table);
+        }
+
+        /**
+         * Replace delete button with comboBox to edit/delete/copy/select NamedBean.
+         *
+         * @param table name of the NamedBean JTable holding the column
+         */
+        @Override
+        protected void configDeleteColumn(JTable table) {
+            JComboBox<String> editCombo = new JComboBox<>();
+            editCombo.addItem(Bundle.getMessage("ButtonSelect"));  // NOI18N
+            if (isEditSupported()) editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
+            editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
+            if (isCopyBeanSupported()) editCombo.addItem(Bundle.getMessage("ButtonCopy"));  // NOI18N
+            editCombo.addItem(Bundle.getMessage("ButtonDelete"));  // NOI18N
+            TableColumn col = table.getColumnModel().getColumn(BeanTableDataModel.DELETECOL);
+            col.setCellEditor(new DefaultCellEditor(editCombo));
+        }
+
+        // Not needed - here for interface compatibility
+        @Override
+        public void clickOn(NamedBean t) {
+        }
+
+        @Override
+        public String getValue(String s) {
+            return "";
+        }
+
+        @Override
+        protected String getBeanType() {
+//                 return Bundle.getMessage("BeanNameLogix");  // NOI18N
+            return rbx.getString("BeanNameLogixNG");  // NOI18N
+        }
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLogixNGTableAction.class);
 

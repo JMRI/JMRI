@@ -14,16 +14,16 @@ import org.slf4j.LoggerFactory;
 /**
  * Renderer for Bean Icons, formatting them to similar height for use in tables.
  * Not a permanent location for this class, location likely to change in near future.
- */ 
+ */
 public class CbusBeanRenderer  {
-    
+
     private ImageIcon tOff;
     private ImageIcon tOn;
     private ImageIcon sOff;
     private ImageIcon sOn;
     private ImageIcon lOff;
     private ImageIcon lOn;
-    
+
     /**
      * Create a new Renderer Instance.
      * @param iconHeight Target height of Icons
@@ -31,10 +31,10 @@ public class CbusBeanRenderer  {
     public CbusBeanRenderer(int iconHeight) {
         initImages(iconHeight);
     }
-    
+
     /**
      * Get the Bean Icon, scaled to standard height.
-     * 
+     *
      * @param beanTypeChar Standard Bean Type, currently TSL supported.
      * @param beanState Bean State
      * @return Image of the Bean, else null ( with error log ) if unavailable.
@@ -73,7 +73,7 @@ public class CbusBeanRenderer  {
 
         Graphics g = copyOfImage.createGraphics();
         g.drawImage(img, 0, 0, null);
-        
+
         return new ImageIcon(img.getScaledInstance(iconHeight+2, iconHeight+2, Image.SCALE_DEFAULT));
     }
 
@@ -97,10 +97,10 @@ public class CbusBeanRenderer  {
             lOn = getLightIcon("L-on-s.png",iconHeight);
             lOff = getLightIcon("L-off-s.png",iconHeight);
         } catch (IOException ex) {
-            log.error("Error creating Bean Icon Images: {}",ex);
+            log.error("Error creating Bean Icon Images",ex);
         }
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(CbusBeanRenderer.class);
 
 }

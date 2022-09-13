@@ -154,7 +154,7 @@ public class TreeEditor extends TreeViewer {
 */
     }
 
-    final public void openClipboard() {
+    public static void openClipboard() {
         if (_clipboardEditor == null) {
             _clipboardEditor = new ClipboardEditor();
             _clipboardEditor.initComponents();
@@ -591,7 +591,15 @@ public class TreeEditor extends TreeViewer {
 
                     isValid &= _editSwingConfiguratorInterface.validate(errorMessages);
 
-                    if (isValid) {
+                    boolean canClose = true;
+                    for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+                        if (!entry.getKey().canClose()) {
+                            canClose = false;
+                            break;
+                        }
+                    }
+
+                    if (isValid && canClose) {
                         ThreadingUtil.runOnGUIEventually(() -> {
                             femaleSocket.unregisterListeners();
 
@@ -623,7 +631,7 @@ public class TreeEditor extends TreeViewer {
                             }
                         });
                         setPopupMenuLock(false);
-                    } else {
+                    } else if (!isValid) {
                         StringBuilder errorMsg = new StringBuilder();
                         for (String s : errorMessages) {
                             if (errorMsg.length() > 0) errorMsg.append("<br>");
@@ -658,7 +666,7 @@ public class TreeEditor extends TreeViewer {
             JButton button,
             MutableObject<String> commentStr) {
 
-        JDialog frame  = new JDialog(
+        JDialog dialog  = new JDialog(
                 this,
                 Bundle.getMessage(
                         addOrEdit ? "AddMaleSocketDialogTitle" : "EditMaleSocketDialogTitle",
@@ -666,7 +674,7 @@ public class TreeEditor extends TreeViewer {
                 false);
 //        frame.addHelpMenu(
 //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
-        Container contentPanel = frame.getContentPane();
+        Container contentPanel = dialog.getContentPane();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         JPanel p;
@@ -748,8 +756,15 @@ public class TreeEditor extends TreeViewer {
             if (object != null) {
                 _editSwingConfiguratorInterface =
                         SwingTools.getSwingConfiguratorForClass(object.getClass());
+                _editSwingConfiguratorInterface.setJDialog(dialog);
                 panels.add(_editSwingConfiguratorInterface.getConfigPanel(object, panel5));
                 _swingConfiguratorInterfaceList.add(new HashMap.SimpleEntry<>(_editSwingConfiguratorInterface, object));
+
+                dialog.setTitle(Bundle.getMessage(
+                        addOrEdit ? "AddMaleSocketDialogTitleWithType" : "EditMaleSocketDialogTitleWithType",
+                        femaleSocket.getLongDescription(),
+                        _editSwingConfiguratorInterface.toString())
+                );
             } else {
                 // 'object' should be an action or expression but is null
                 JPanel panel = new JPanel();
@@ -762,9 +777,18 @@ public class TreeEditor extends TreeViewer {
                     _addSwingConfiguratorInterface.getManager().getMaleSocketClass();
             _addSwingConfiguratorInterfaceMaleSocket =
                     SwingTools.getSwingConfiguratorForClass(maleSocketClass);
+
+            _addSwingConfiguratorInterfaceMaleSocket.setJDialog(dialog);
             panels.add(_addSwingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5));
 
+            _addSwingConfiguratorInterface.setJDialog(dialog);
             panels.add(_addSwingConfiguratorInterface.getConfigPanel(panel5));
+
+            dialog.setTitle(Bundle.getMessage(
+                    addOrEdit ? "AddMaleSocketDialogTitleWithType" : "EditMaleSocketDialogTitleWithType",
+                    femaleSocket.getLongDescription(),
+                    _addSwingConfiguratorInterface.toString())
+            );
         }
         JPanel panel34 = new JPanel();
         panel34.setLayout(new BoxLayout(panel34, BoxLayout.Y_AXIS));
@@ -809,7 +833,7 @@ public class TreeEditor extends TreeViewer {
 
         panel5.add(button);
 
-        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 if (addOrEdit) {
@@ -826,13 +850,13 @@ public class TreeEditor extends TreeViewer {
             autoSystemName();
         });
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
 
         if (addOrEdit) {
-            _addItemDialog = frame;
+            _addItemDialog = dialog;
         } else {
-            _editActionExpressionDialog = frame;
+            _editActionExpressionDialog = dialog;
         }
 
         _autoSystemName.setSelected(true);
@@ -840,7 +864,7 @@ public class TreeEditor extends TreeViewer {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(_systemNameAuto, true));
         });
 
-        frame.setVisible(true);
+        dialog.setVisible(true);
     }
 
     /**
@@ -930,7 +954,6 @@ public class TreeEditor extends TreeViewer {
             Container contentPanel = _editLocalVariablesDialog.getContentPane();
             contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-            JPanel tablePanel = new JPanel();
             JTable table = new JTable();
             _localVariableTableModel = new LocalVariableTableModel(maleSocket);
             table.setModel(_localVariableTableModel);
@@ -945,8 +968,7 @@ public class TreeEditor extends TreeViewer {
             _localVariableTableModel.setColumnForMenu(table);
             JScrollPane scrollpane = new JScrollPane(table);
             scrollpane.setPreferredSize(new Dimension(400, 200));
-            tablePanel.add(scrollpane, BorderLayout.CENTER);
-            contentPanel.add(tablePanel);
+            contentPanel.add(scrollpane);
 
             // set up create and cancel buttons
             JPanel buttonPanel = new JPanel();
@@ -1235,18 +1257,19 @@ public class TreeEditor extends TreeViewer {
      * @param e The event heard
      */
     final protected void cancelEditPressed(ActionEvent e) {
+        for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
+            // Abort if we cannot close the dialog
+            if (!entry.getKey().canClose()) return;
+        }
+
         _editActionExpressionDialog.setVisible(false);
-//        _editSwingConfiguratorInterface.dispose();
+
         for (Map.Entry<SwingConfiguratorInterface, Base> entry : _swingConfiguratorInterfaceList) {
             entry.getKey().dispose();
-//            entry.getKey().updateObject(entry.getValue());
-//        for (SwingConfiguratorInterface swi : _swingConfiguratorInterfaceList) {
-//            swi.dispose();
         }
         _editActionExpressionDialog.dispose();
         _editActionExpressionDialog = null;
         setPopupMenuLock(false);
-//        _inCopyMode = false;
         this.setVisible(true);
     }
 
@@ -1274,7 +1297,6 @@ public class TreeEditor extends TreeViewer {
             insertElementAt(element, 0);
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public void insertElementAt(E element, int index) {
             int size = getSize();
@@ -1629,9 +1651,11 @@ public class TreeEditor extends TreeViewer {
                                         JOptionPane.ERROR_MESSAGE);
                             }
                             ThreadingUtil.runOnGUIEventually(() -> {
-                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                                maleSocket.forEntireTree((Base b) -> {
                                     b.removePropertyChangeListener(_treePane);
-                                    b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                    if (_clipboardEditor != null) {
+                                        b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                    }
                                 });
                                 _treePane._femaleRootSocket.registerListeners();
                                 _treePane.updateTree(_currentFemaleSocket, _currentPath.getPath());
@@ -1655,10 +1679,14 @@ public class TreeEditor extends TreeViewer {
                                     InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                             Map<String, String> systemNames = new HashMap<>();
                             Map<String, String> userNames = new HashMap<>();
+                            MaleSocket maleSocket = null;
                             try {
+                                maleSocket = (MaleSocket) _currentFemaleSocket
+                                        .getConnectedSocket()
+                                        .getDeepCopy(systemNames, userNames);
                                 List<String> errors = new ArrayList<>();
                                 if (!clipboard.add(
-                                        (MaleSocket) _currentFemaleSocket.getConnectedSocket().getDeepCopy(systemNames, userNames),
+                                        maleSocket,
                                         errors)) {
                                     JOptionPane.showMessageDialog(this,
                                             String.join("<br>", errors),
@@ -1674,12 +1702,16 @@ public class TreeEditor extends TreeViewer {
                                             JOptionPane.ERROR_MESSAGE);
                                 });
                             }
-                            ThreadingUtil.runOnGUIEventually(() -> {
-                                _treePane._femaleRootSocket.forEntireTree((Base b) -> {
-                                    b.removePropertyChangeListener(_treePane);
-                                    b.addPropertyChangeListener(_clipboardEditor._treePane);
+                            if (maleSocket != null) {
+                                MaleSocket socket = maleSocket;
+                                ThreadingUtil.runOnGUIEventually(() -> {
+                                    socket.forEntireTree((Base b) -> {
+                                        if (_clipboardEditor != null) {
+                                            b.addPropertyChangeListener(_clipboardEditor._treePane);
+                                        }
+                                    });
                                 });
-                            });
+                            }
                         });
 
                         _treePane._femaleRootSocket.registerListeners();
@@ -1869,7 +1901,7 @@ public class TreeEditor extends TreeViewer {
                 _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-                log.error(e.getMessage());
+                log.error("Unexpected doDelete failure for {}, {}", _maleSocket, e.getMessage() );
             }
         }
 
@@ -1885,7 +1917,7 @@ public class TreeEditor extends TreeViewer {
                 _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                    log.warn(e.getMessage());
+                    log.warn("Do not Delete {}, {}", _maleSocket, e.getMessage());
                     message.append(Bundle.getMessage(
                             "VetoDeleteBean",
                             ((NamedBean)_maleSocket.getObject()).getBeanType(),

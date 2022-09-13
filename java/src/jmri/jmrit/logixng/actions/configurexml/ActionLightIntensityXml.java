@@ -3,9 +3,8 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.actions.ActionLightIntensity;
-import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -34,19 +33,12 @@ public class ActionLightIntensityXml extends jmri.managers.configurexml.Abstract
         Element element = new Element("ActionLightIntensity");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle light = p.getLight();
-        if (light != null) {
-            element.addContent(new Element("variableLight").addContent(light.getName()));
-        }
-        
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<VariableLight>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         Element e2 = new Element("IntensitySocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getIntensitySocket().getConnectedSocket();
@@ -63,42 +55,19 @@ public class ActionLightIntensityXml extends jmri.managers.configurexml.Abstract
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        
+
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionLightIntensity h = new ActionLightIntensity(sys, uname);
 
         loadCommon(h, shared);
-        
-        Element lightName = shared.getChild("variableLight");
-        if (lightName != null) {
-            VariableLight t = InstanceManager.getDefault(VariableLightManager.class)
-                    .getNamedBean(lightName.getTextTrim());
-            if (t != null) h.setLight(t);
-            else h.removeLight();
-        }
 
-        try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-            
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-            
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-            
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-            
-        } catch (ParserException e) {
-            throw new JmriConfigureXmlException(e);
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<VariableLight>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "variableLight");
 
         Element socketName = shared.getChild("IntensitySocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
@@ -106,10 +75,10 @@ public class ActionLightIntensityXml extends jmri.managers.configurexml.Abstract
         if (socketSystemName != null) {
             h.setIntensitySystemName(socketSystemName.getTextTrim());
         }
-        
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightIntensityXml.class);
 }

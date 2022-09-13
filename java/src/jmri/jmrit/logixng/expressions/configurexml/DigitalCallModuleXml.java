@@ -3,11 +3,12 @@ package jmri.jmrit.logixng.expressions.configurexml;
 import java.util.List;
 
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.expressions.DigitalCallModule;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -21,7 +22,7 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
 
     public DigitalCallModuleXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -35,14 +36,12 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         Element element = new Element("CallDigitalExpressionModule");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle<Module> module = p.getModule();
-        if (module != null) {
-            element.addContent(new Element("module").addContent(module.getName()));
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Module>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         Element parameters = new Element("Parameters");
         for (ParameterData pd : p.getParameterData()) {
             Element elementParameter = new Element("Parameter");
@@ -57,50 +56,47 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
 
         return element;
     }
-    
+
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         DigitalCallModule h = new DigitalCallModule(sys, uname);
 
         loadCommon(h, shared);
 
-        Element moduleName = shared.getChild("module");
-        if (moduleName != null) {
-            Module t = InstanceManager.getDefault(ModuleManager.class).getModule(moduleName.getTextTrim());
-            if (t != null) h.setModule(t);
-            else h.removeModule();
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Module>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "module", null, null, null, null);
+
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
-        log.debug("Found " + parameterList.size() + " parameters");  // NOI18N
+        log.debug("Found {} parameters", parameterList.size() );  // NOI18N
 
         for (Element e : parameterList) {
             Element elementName = e.getChild("name");
-            
+
             SymbolTable.InitialValueType initialValueType = null;
             Element elementType = e.getChild("initalValueType");
             if (elementType != null) {
                 initialValueType = SymbolTable.InitialValueType.valueOf(elementType.getTextTrim());
             }
-            
+
             Element elementInitialValueData = e.getChild("initialValueData");
-            
+
             Module.ReturnValueType returnValueType = null;
             elementType = e.getChild("returnValueType");
             if (elementType != null) {
                 returnValueType = Module.ReturnValueType.valueOf(elementType.getTextTrim());
             }
-            
+
             Element elementReturnValueData = e.getChild("returnValueData");
-            
+
             if (elementName == null) throw new IllegalArgumentException("Element 'name' does not exists");
             if (initialValueType == null) throw new IllegalArgumentException("Element 'initalValueType' does not exists");
             if (elementInitialValueData == null) throw new IllegalArgumentException("Element 'initialValueData' does not exists");
             if (returnValueType == null) throw new IllegalArgumentException("Element 'returnValueType' does not exists");
             if (elementReturnValueData == null) throw new IllegalArgumentException("Element 'returnValueData' does not exists");
-            
+
             h.addParameter(elementName.getTextTrim(),
                     initialValueType, elementInitialValueData.getTextTrim(),
                     returnValueType, elementReturnValueData.getTextTrim());
@@ -109,6 +105,6 @@ public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNam
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModuleXml.class);
 }

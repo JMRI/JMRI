@@ -18,7 +18,7 @@ public class LocoNetSystemConnectionMemoTest extends LnSystemConnectionMemoTestB
         scm = new LocoNetSystemConnectionMemo();
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
         scm.setLnTrafficController(lnis);
-        scm.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        scm.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         scm.configureManagers();
     }
 

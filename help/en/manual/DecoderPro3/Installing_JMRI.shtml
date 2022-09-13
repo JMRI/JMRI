@@ -24,7 +24,7 @@
 
     <div id="mainContent">
       <img src="images/Logo.gif" alt="JMRI DecoderPro Logo" height="135" width="160">
-      <h1 id="Top">Installing JMRI®</h1>
+      <h1 id="Top">Installing JMRI&reg;</h1>
 
       <div class="dp-right">
         <p><a href="index.shtml#Installing">Back to Index</a>
@@ -36,7 +36,7 @@
       <p class="important">Please consult <a href="../../html/setup/index.shtml">JMRI Setup
       Help</a>.</p>
 
-      <p>JMRI® requires that Java be installed, whether your computer is <a href=
+      <p>JMRI&reg; requires that Java be installed, whether your computer is <a href=
       "https://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
       "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href=
       "https://jmri.org/install/Linux.shtml">Linux</a> based.</p>
@@ -54,7 +54,7 @@
         </li>
 
         <li>
-          <a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+          <a href="https://jmri.org/install/MacOSX.shtml">macOS</a>
         </li>
 
         <li>

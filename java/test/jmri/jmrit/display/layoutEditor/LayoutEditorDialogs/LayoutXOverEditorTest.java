@@ -1,17 +1,17 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 
 import javax.swing.*;
 
-import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -19,18 +19,18 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        new LayoutXOverEditor(null);
+        LayoutXOverEditor t = new LayoutXOverEditor(layoutEditor);
+        Assertions.assertNotNull(t);
     }
 
     @Test
     public void testEditXOverDone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         createTurnouts();
@@ -123,10 +123,8 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
-
-   @Test
+    @Test
     public void testEditTurnoutCancel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutDoubleXOverEditor editor = new LayoutDoubleXOverEditor(layoutEditor);
 
@@ -173,7 +171,6 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
 
     @Test
     public void testEditDoubleXoverClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         LayoutDoubleXOverEditor editor = new LayoutDoubleXOverEditor(layoutEditor);
 
@@ -185,55 +182,43 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
-
-    private LayoutEditor layoutEditor = null;
     private LayoutDoubleXOver doubleXoverLayoutTurnout = null;
     private LayoutDoubleXOverView doubleXoverLayoutTurnoutView = null;
 
     @BeforeEach
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        if (!GraphicsEnvironment.isHeadless()) {
 
-            layoutEditor = new LayoutEditor();
-            layoutEditor.setVisible(true);
+        Point2D point = new Point2D.Double(150.0, 100.0);
+        Point2D delta = new Point2D.Double(50.0, 10.0);
 
-            Point2D point = new Point2D.Double(150.0, 100.0);
-            Point2D delta = new Point2D.Double(50.0, 10.0);
+        point = MathUtil.add(point, delta);
 
-            point = MathUtil.add(point, delta);
+        // Double crossover
+        doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", layoutEditor); // point, 33.0, 1.1, 1.2,
+        doubleXoverLayoutTurnoutView = new LayoutDoubleXOverView(doubleXoverLayoutTurnout,
+                                                point, 33.0, 1.1, 1.2,
+                                                layoutEditor);
+        layoutEditor.addLayoutTrack(doubleXoverLayoutTurnout, doubleXoverLayoutTurnoutView);
 
-            // Double crossover
-            doubleXoverLayoutTurnout = new LayoutDoubleXOver("Double Xover", layoutEditor); // point, 33.0, 1.1, 1.2,
-            doubleXoverLayoutTurnoutView = new LayoutDoubleXOverView(doubleXoverLayoutTurnout,
-                                                    point, 33.0, 1.1, 1.2,
-                                                    layoutEditor);
-            layoutEditor.addLayoutTrack(doubleXoverLayoutTurnout, doubleXoverLayoutTurnoutView);
-
-        }
     }
 
     @AfterEach
+    @Override
     public void tearDown() {
         if (doubleXoverLayoutTurnout != null) {
             doubleXoverLayoutTurnout.remove();
         }
 
-        if (layoutEditor != null) {
-            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
-            efo.closeFrameWithConfirmations();
-        }
-
         doubleXoverLayoutTurnout = null;
-        layoutEditor = null;
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

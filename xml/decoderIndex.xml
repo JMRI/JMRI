@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.25.10ish+jake+20220110T1530Z+R4646adf2d6 on Mon Jan 10 10:30:55 EST 2022-->
-  <decoderIndex version="1076">
+  <!--Written by JMRI version 5.1.3plus+jake+20220828T1936Z+Rbf714fd278 on Sun Aug 28 15:37:22 EDT 2022-->
+  <decoderIndex version="27">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -180,18 +180,40 @@
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug">
             <label xml:lang="cs">Bílý</label>
+            <label xml:lang="es">Blanco</label>
           </output>
           <output name="2" label="Yellow" connection="plug">
             <label xml:lang="cs">Žlutý</label>
+            <label xml:lang="es">Amarillo</label>
           </output>
           <output name="3" label="Green" connection="wire">
             <label xml:lang="cs">Zelený</label>
+            <label xml:lang="es">Verde</label>
           </output>
           <output name="4" label="Violet" connection="wire">
             <label xml:lang="cs">Fialový</label>
+            <label xml:lang="es">Violeta</label>
           </output>
         </outputs>
         <model model="NMRA standard CV definitions" />
+      </family>
+      <family name="SUSI Output Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Output_Mapping_Range1.xml">
+        <model model="SUSI Output Mapping definition Range 1" />
+      </family>
+      <family name="SUSI Output Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Output_Mapping_Range2.xml">
+        <model model="SUSI Output Mapping definition Range 2" />
+      </family>
+      <family name="SUSI Output Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Output_Mapping_Range3.xml">
+        <model model="SUSI Output Mapping definition Range 3" />
+      </family>
+      <family name="SUSI Sound Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Sound_Mapping_Range1.xml">
+        <model model="SUSI Sound Mapping definitions Range 1" />
+      </family>
+      <family name="SUSI Sound Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Sound_Mapping_Range2.xml">
+        <model model="SUSI Sound Mapping definitions Range 2" />
+      </family>
+      <family name="SUSI Sound Mapping definitions" mfg="NMRA" file="0NMRA_SUSI_Sound_Mapping_Range3.xml">
+        <model model="SUSI Sound Mapping definitions Range 3" />
       </family>
       <family name="NMRA accessory decoders" mfg="NMRA" file="0NMRA_accessory.xml">
         <model model="NMRA accessory decoders" />
@@ -1512,6 +1534,82 @@
           <size length="15" width="7" height="2.7" units="mm" />
         </model>
       </family>
+      <family name="Imperium Decoders" mfg="Dapol Limited" comment="Dapol Imperium decoder range" lowVersionID="04" highVersionID="06" file="Dapol.xml">
+        <model model="860015" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO/N" connector="Next18" comment="HO/N-scale, with Next18 plug">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 17</label>
+          </output>
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 3</label>
+          </output>
+          <output name="4" label="Purple|Pin 12" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 12</label>
+          </output>
+          <output name="5" label="Pink|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 4</label>
+          </output>
+          <output name="6" label="Brown|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 13</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
+          <size length="15" width="9.5" height="2.9" units="mm" />
+        </model>
+        <model model="860019" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Bílá|Pin 8</label>
+          </output>
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Žlutá|Pin 7</label>
+          </output>
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Zelená|Pin 15</label>
+          </output>
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Purpurová|Pin 14</label>
+          </output>
+          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Fialová|Pin 13</label>
+          </output>
+          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA">
+            <label xml:lang="cs">Hnědá|Pin 4</label>
+          </output>
+          <output name="7" label="Rule 17|Dimming">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Pravidlo 17|Stmívání</label>
+          </output>
+          <output name="8" label="Ditch|Blink">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Přeblikávat|Blikat</label>
+          </output>
+          <output name="9" label="Motor|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">Motor|Řízení</label>
+          </output>
+          <output name="10" label="BEMF|Control">
+            <!-- virtual "output" -->
+            <label xml:lang="cs">BEMF|Řízení</label>
+          </output>
+          <size length="17" width="16" height="3.5" units="mm" />
+        </model>
+      </family>
       <family name="Booster" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5033.xml">
         <model model="DR5033" productID="5033" maxTotalCurrent="3.0A" formFactor="Stationary" comment="3A LocoNet Booster">
           <versionCV />
@@ -1520,6 +1618,12 @@
       </family>
       <family name="LN-CDE Adapter" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5039.xml">
         <model model="DR5039" productID="5039" formFactor="Stationary" comment="LocoNet B to CDE (Booster) Adapter">
+          <versionCV />
+          <size length="102" width="86" height="20" units="mm" />
+        </model>
+      </family>
+      <family name="Feedback (Inputs)" mfg="Digikeijs" type="stationary" file="Digikeijs_DR5088.xml">
+        <model model="DR5088RC" productID="5088" formFactor="Stationary" comment="16 port LocoNet Feedback module with RailCom">
           <versionCV />
           <size length="102" width="86" height="20" units="mm" />
         </model>
@@ -1567,7 +1671,7 @@
           <size length="10" width="6" height="3" units="mm" />
         </model>
       </family>
-      <family name="Stationary" mfg="Digikeijs" comment="also sold under the Digirails label" file="Digikeijs_Stationary.xml">
+      <family name="Switch (Outputs)" mfg="Digikeijs" comment="also sold under the Digirails label" file="Digikeijs_Stationary.xml">
         <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
           <versionCV lowVersionID="134" highVersionID="255" />
           <output name="1" label="Out1" connection="other" maxcurrent="500 mA" />
@@ -2749,15 +2853,19 @@
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug">
             <label xml:lang="cs">Bílý</label>
+            <label xml:lang="es">Blanco</label>
           </output>
           <output name="2" label="Yellow" connection="plug">
             <label xml:lang="cs">Žlutý</label>
+            <label xml:lang="es">Amarillo</label>
           </output>
           <output name="3" label="Green" connection="wire">
             <label xml:lang="cs">Zelený</label>
+            <label xml:lang="es">Verde</label>
           </output>
           <output name="4" label="Violet" connection="wire">
             <label xml:lang="cs">Fialový</label>
+            <label xml:lang="es">Violeta</label>
           </output>
         </outputs>
         <functionlabels>
@@ -2877,6 +2985,15 @@
           <output name="2" label="Yellow" connection="plug" />
           <size length="1.074" width="0.672" height="0.259" units="inches" />
         </model>
+      </family>
+      <family name="Kato" mfg="Digitrax" lowVersionID="51" highVersionID="51" file="Digitrax_Kato_EM13.xml">
+        <model model="EM13" numOuts="0" numFns="10" formFactor="N" connector="DropIn" productID="EM13" comment="Kato Motor Decoder EM13 made by Digitrax">
+          <size length="27" width="14" height="4" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="6" lockable="true">Switching Speed</functionlabel>
+        </functionlabels>
       </family>
       <family name="PM4x" mfg="Digitrax" file="Digitrax_PM4.xml">
         <model model="PM4" />
@@ -7797,6 +7914,24 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
+        <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+          <output name="1" label="Front|Light" maxcurrent="20mA" />
+          <output name="2" label="Rear|Light" maxcurrent="20mA" />
+          <output name="3" label="Onboard|LED" maxcurrent="20mA" />
+          <output name="4" label="|" />
+          <!-- not available for this decoder -->
+          <output name="5" label="|" />
+          <!-- not available for this decoder -->
+          <output name="6" label="|" />
+          <!-- not available for this decoder -->
+          <output name="7" label="Dimmed|Lights" />
+          <output name="8" label="Shunting|Speed" />
+          <size length="16" width="9.3" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+          </protocols>
+        </model>
         <model model="DH10C (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
@@ -7896,7 +8031,7 @@
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
-            <label xml:lang="ca">AUX 12</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
@@ -7936,7 +8071,7 @@
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
-            <label xml:lang="ca">AUX 12</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
             <label xml:lang="de">AUX 3</label>
@@ -8159,6 +8294,36 @@
             <protocol>dcc</protocol>
           </protocols>
         </model>
+        <model model="PD10MU (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+          <output name="1" label="Front|Light" maxcurrent="150mA">
+            <label xml:lang="de">LV</label>
+            <label xml:lang="ca">Llum Frontal</label>
+          </output>
+          <output name="2" label="Rear|Light" maxcurrent="150mA">
+            <label xml:lang="de">LR</label>
+            <label xml:lang="ca">Llum Poserior</label>
+          </output>
+          <output name="3" label="AUX|1" maxcurrent="300mA">
+            <label xml:lang="de">AUX 1</label>
+            <label xml:lang="ca">AUX 1</label>
+          </output>
+          <output name="4" label="AUX|2" maxcurrent="300mA">
+            <label xml:lang="de">AUX 2</label>
+            <label xml:lang="ca">AUX 2</label>
+          </output>
+          <output name="7" label="Dimmed|Lights">
+            <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="ca">Intensitat Llums</label>
+          </output>
+          <output name="8" label="Shunting|Speed">
+            <label xml:lang="de">Rangier-|gang</label>
+            <label xml:lang="ca">Marxa de maniobres</label>
+          </output>
+          <size length="11.7" width="8.5" height="1.8" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+          </protocols>
+        </model>
         <model model="PD12A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
           <output name="1" label="Front|Light" maxcurrent="150mA">
             <label xml:lang="de">LV</label>
@@ -8174,7 +8339,7 @@
           </output>
           <output name="4" label="AUX|2" maxcurrent="300mA">
             <label xml:lang="de">AUX 2</label>
-            <label xml:lang="ca">AUX 1</label>
+            <label xml:lang="ca">AUX 2</label>
           </output>
           <output name="7" label="Dimmed|Lights">
             <label xml:lang="de">Abblend-|licht</label>
@@ -8187,24 +8352,6 @@
           <size length="24.2" width="11.0" height="2.4" units="mm" />
           <protocols>
             <protocol>dcc</protocol>
-          </protocols>
-        </model>
-        <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
-          <output name="1" label="Front|Light" maxcurrent="20mA" />
-          <output name="2" label="Rear|Light" maxcurrent="20mA" />
-          <output name="3" label="Onboard|LED" maxcurrent="20mA" />
-          <output name="4" label="|" />
-          <!-- not available for this decoder -->
-          <output name="5" label="|" />
-          <!-- not available for this decoder -->
-          <output name="6" label="|" />
-          <!-- not available for this decoder -->
-          <output name="7" label="Dimmed|Lights" />
-          <output name="8" label="Shunting|Speed" />
-          <size length="16" width="9.3" units="mm" />
-          <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
           </protocols>
         </model>
       </family>
@@ -13496,15 +13643,19 @@
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug">
             <label xml:lang="cs">Bílý</label>
+            <label xml:lang="es">Blanco</label>
           </output>
           <output name="2" label="Yellow" connection="plug">
             <label xml:lang="cs">Žlutý</label>
+            <label xml:lang="es">Amarillo</label>
           </output>
           <output name="3" label="Green" connection="wire">
             <label xml:lang="cs">Zelený</label>
+            <label xml:lang="es">Verde</label>
           </output>
           <output name="4" label="Violet" connection="wire">
             <label xml:lang="cs">Fialový</label>
+            <label xml:lang="es">Violeta</label>
           </output>
         </outputs>
       </family>
@@ -13512,6 +13663,9 @@
         <model model="LGB MFX 27-pin sound decoder." lowVersionID="3" highVersionID="3" maxInputVolts="24V" maxMotorCurrent="2.0A, peak=2.5A" maxTotalCurrent="0.8A" formFactor="LGB" numOuts="0" numFns="32" productID="199">
           <size length="25" width="11" height="2" units="mm" />
         </model>
+      </family>
+      <family name="LS Models Function Mapping definitions" mfg="LS Models Sprl" file="LSM_SUSI_Function_Mapping.xml">
+        <model model="LS Models SUSI Outputs Function Mapping" />
       </family>
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06" file="LaisDcc.xml">
         <!--           old models not showing anymore  -->
@@ -14377,6 +14531,9 @@
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
+      </family>
+      <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
+        <model model="HDD" lowVersionID="10" highVersionID="10" />
       </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3">
@@ -16815,6 +16972,11 @@
       </family>
       <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_pulsed_smoke.xml">
         <model model="Pulsed Smoke Unit" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1600 mA" numOuts="0" numFns="18" formFactor="G" connector="other" />
+      </family>
+      <family name="Massoth eMOTION" mfg="Massoth Elektronik, GmbH" file="Massoth_pulsed_smoke_8415001.xml">
+        <model model="Pulsed Smoker for round boilers" maxInputVolts="24 V" maxMotorCurrent="N/A" maxTotalCurrent="1000 mA" numOuts="0" numFns="3" formFactor="G" connector="other" productID="8415001">
+          <size length="54.0" width="426" height="30" units="mm" />
+        </model>
       </family>
       <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="5" highVersionID="255" file="Mistral_GOLD_V6.xml">
         <model model="GOLD V6" />
@@ -22071,11 +22233,13 @@
         <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="907" comment="Model 8T0303.005" />
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="792" comment="Model T0303.002B" />
         <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="873" comment="Model 8T0303.002" />
+        <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="1014" comment="Model 8T030?.00?" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="778" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="779" comment="Model T0301.002B" />
         <model model="TSU-GN2208 SD75M" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="898" comment="Model 8T0301.005" />
         <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="935" comment="Model 8T0304.002" />
         <model model="TSU-GN2208 SD90MAC-H" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="908" comment="Model 8T0305.001" />
+        <model model="TSU-GN2208 Dash 9-44CW" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="965" comment="Model 8T100?.00?" />
         <model model="TSU-GN2200 ES40DC w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="816" comment="Model T1004.002B" />
         <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="921" comment="Model 8T1004.002" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="855" comment="Model 8T1004.001" />
@@ -29197,6 +29361,120 @@
       <family name="TCS A1X decoder" mfg="Train Control Systems" file="TCS_A1X.xml">
         <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000" />
       </family>
+      <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_BachmannFT.xml">
+        <model model="Sound Value FT" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="181">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="6" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="7" lockable="true">None</functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">None</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="15" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="16" lockable="true">Momentum </functionlabel>
+          <functionlabel num="17" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="18" lockable="true">Mute </functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_BachmannGP35.xml">
+        <model model="GP35" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="182">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="6" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="7" lockable="true">None</functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">None</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="15" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="16" lockable="true">Momentum </functionlabel>
+          <functionlabel num="17" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="18" lockable="true">Mute </functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Bachmann" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_BachmannRS3.xml">
+        <model model="Sound Value RS3" numOuts="8" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="181">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="6" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="7" lockable="true">None</functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">None</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="15" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="16" lockable="true">Momentum </functionlabel>
+          <functionlabel num="17" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="18" lockable="true">Mute </functionlabel>
+        </functionlabels>
+      </family>
       <family name="TCS DP2X decoder" mfg="Train Control Systems" file="TCS_DP2X.xml">
         <model show="no" model="DP2X" numOuts="2" numFns="2" replacementFamily="query:Jan 2000|June 2007|Jan 2012">
           <output name="4" label="Purple" />
@@ -32427,6 +32705,48 @@
           <output name="Brake" />
         </model>
       </family>
+      <family name="TCS WOWDiesel V5" mfg="Train Control Systems" lowVersionID="5" highVersionID="5" file="TCS_WOWDieselV5-121.xml">
+        <model model="WOWDiesel V5 121" numOuts="12" numFns="28" maxMotorCurrent="1.1A (peak=2.0A)" connector="21pin" productID="200">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Violet" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="plug" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="plug" maxcurrent="100 mA" />
+          <output name="9" label="F7" connection="plug" maxcurrent="100 mA" />
+          <output name="10" label="F8" connection="plug" maxcurrent="100 mA" />
+          <output name="11" label="F9" connection="plug" maxcurrent="100 mA" />
+          <output name="12" label="F10" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.2" width="0.6" height="0.125" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">None</functionlabel>
+          <functionlabel num="1" lockable="true">Bell </functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long </functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short </functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic Brake </functionlabel>
+          <functionlabel num="6" lockable="true">Brake Release </functionlabel>
+          <functionlabel num="7" lockable="true">Brake Squeal </functionlabel>
+          <functionlabel num="8" lockable="true">Mute </functionlabel>
+          <functionlabel num="9" lockable="true">Rotate Whistle </functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up </functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down </functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Ignition </functionlabel>
+          <functionlabel num="13" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="14" lockable="true">Coupler Clank </functionlabel>
+          <functionlabel num="15" lockable="true">Momentum </functionlabel>
+          <functionlabel num="16" lockable="true">Crew Alert </functionlabel>
+          <functionlabel num="17" lockable="true">Windshield Wipers </functionlabel>
+          <functionlabel num="18" lockable="true">Air Spitter </functionlabel>
+        </functionlabels>
+      </family>
       <family name="WOW Diesel Sound Set 2" mfg="Train Control Systems" file="TCS_WOW_Diesel02.xml">
         <model model="WOW Diesel 101 SS2" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin" lowVersionID="2" highVersionID="2" productID="170">
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
@@ -33759,6 +34079,118 @@
       <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address." file="TamValleyDepot_QuadLn_S_11.xml">
         <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6" />
         <model model="Quad-LN_S_v3" comment="4, 8, 12 or 16 Servo Driver with Signaling and Detection options" lowVersionID="7" />
+      </family>
+      <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2.xml">
+        <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <size length="12.9" width="9.2" height="3.3" units="mm" />
+        </model>
+        <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="3" highVersionID="3" connector="Next18" productID="2010216">
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <size length="14.2" width="9.2" height="3.3" units="mm" />
+        </model>
+        <model model="Lokommander 2 Mini" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM651/NEM652" productID="2010210,2010211,2010207,2010212">
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <size length="19.5" width="11" height="3.3" units="mm" />
+        </model>
+        <model model="Lokommander 2 Mini M21" numOuts="8" numFns="15" lowVersionID="3" highVersionID="3" connector="21MTC" productID="2010208,2010209,2010228">
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <size length="19.5" width="11" height="3.3" units="mm" />
+        </model>
+      </family>
+      <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2_p22.xml">
+        <model model="Lokommander 2 Mini P22" numOuts="12" numFns="15" lowVersionID="3" highVersionID="3" connector="PluX22" productID="2010217">
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <output name="9" label="Aux7" />
+          <output name="10" label="Aux8" />
+          <output name="11" label="Aux9" />
+          <output name="12" label="Aux10" />
+          <size length="20.5" width="15" height="3.2" units="mm" />
+        </model>
+        <model model="Lokommander 2 Mini W22" numOuts="12" numFns="15" lowVersionID="3" highVersionID="3" connector="Wires/NEM652" productID="2010218,2010229">
+          <output name="1">
+            <label>FL</label>
+            <label xml:lang="cs">Světla|vpřed</label>
+          </output>
+          <output name="2">
+            <label>RL</label>
+            <label xml:lang="cs">Světla|vzad</label>
+          </output>
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+          <output name="9" label="Aux7" />
+          <output name="10" label="Aux8" />
+          <output name="11" label="Aux9" />
+          <output name="12" label="Aux10" />
+          <size length="20.5" width="15" height="3.2" units="mm" />
+        </model>
       </family>
       <family name="Lokommander" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
         <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
@@ -38319,13 +38751,79 @@
           <size length="30" width="16" height="4.6" units="mm" />
         </model>
       </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63320.xml">
+        <model model="Feedback Module 2-rail 63320" productID="6332" formFactor="Stationary" comment="LocoNet 8 block feedback module 2-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63330.xml">
+        <model model="Feedback Module 3-rail 63330" productID="6333" formFactor="Stationary" comment="LocoNet 8 block feedback module 3-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63340.xml">
+        <model model="Feedback Module 2-rail 63340" productID="6334" formFactor="Stationary" comment="LocoNet 8 block feedback module 2-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Feedback Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63350.xml">
+        <model model="Feedback Module 3-rail 63350" productID="6335" formFactor="Stationary" comment="LocoNet 8 block feedback module 3-rail">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63400.xml">
+        <model model="Switch Control 63400" productID="6340" formFactor="Stationary" comment="LocoNet Switch Control">
+          <versionCV />
+        </model>
+      </family>
       <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63410.xml">
         <model model="63410" productID="6341" formFactor="Stationary" comment="LocoNet General Purpose 20 Outputs Switch">
           <versionCV />
         </model>
       </family>
+      <family name="Display Module" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63450.xml">
+        <model model="63450" productID="6345" formFactor="Stationary" comment="LocoNet Display">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63500.xml">
+        <model model="Ln Servo Module 63500" productID="6350" formFactor="Stationary" comment="LocoNet 4 servo Decoder">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter" file="Uhlenbrock_63810.xml">
+        <model model="mobile station Adapter 63810" productID="6381" formFactor="Stationary" comment="to connect a Märklin mobile station to LocoNet">
+          <versionCV />
+          <size length="50" width="50" height="25" units="mm" />
+        </model>
+      </family>
+      <family name="Adapter" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_63830.xml">
+        <model model="LocoNet IR Receiver 63830" productID="6383" formFactor="Stationary" comment="IR Receiver for IRIS Remote and Piko Digi-Fern">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Adapter" mfg="Uhlenbrock Elektronik" type="Adapter" file="Uhlenbrock_63880.xml">
+        <model model="s88-Ln Interface 63880" productID="6388" formFactor="Stationary" comment="to connect s88 feedback bus to LocoNet">
+          <versionCV />
+        </model>
+      </family>
       <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_67800.xml">
-        <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable Servo Decoder" />
+        <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable 4 Servo Decoder" />
+      </family>
+      <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68600_Lissy.xml">
+        <model model="Lissy Receiver 68600" productID="6860" formFactor="Stationary" comment="2 Sensor Lissy Receiver">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68610_Lissy.xml">
+        <model model="Lissy Receiver 68610" productID="6861" formFactor="Stationary" comment="2 Sensor Lissy Receiver">
+          <versionCV />
+        </model>
+      </family>
+      <family name="Lissy Receiver" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_68620_Lissy.xml">
+        <model model="Lissy Receiver 68620" productID="6862" formFactor="Stationary" comment="Single Sensor Lissy Receiver">
+          <versionCV />
+        </model>
       </family>
       <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73100.xml">
         <model model="73100" numOuts="4" numFns="14" maxMotorCurrent="1.5A" formFactor="N" productID="73100" comment="N-Scale, wired">
@@ -38412,6 +38910,13 @@
           <output name="Start/brake" label="inertia" />
           <size length="30.2" width="16" height="3.8" units="mm" />
         </model>
+        <model model="73310" numOuts="2" numFns="14" maxMotorCurrent="0.8A" formFactor="HO" connector="NEM651" productID="73310" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="15" width="8.6" height="3.9" units="mm" />
+        </model>
         <model model="73405" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="Wires" productID="73405" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
           <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
           <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
@@ -38429,6 +38934,15 @@
           <output name="Shunting" label="mode" />
           <output name="Start/brake" label="inertia" />
           <size length="9.5" width="7.8" height="2.4" units="mm" />
+        </model>
+        <model model="73416" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="NEM651" productID="73416" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+          <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
+          <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA" />
+          <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA" />
+          <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA" />
+          <output name="Shunting" label="mode" />
+          <output name="Start/brake" label="inertia" />
+          <size length="9.5" width="7.8" height="2.8" units="mm" />
         </model>
         <model model="74120" numOuts="4" numFns="12" maxMotorCurrent="1.2A" formFactor="HO" connector="NEM652" productID="74120" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
           <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA" />
@@ -38669,8 +39183,15 @@
           <size length="200" width="60" height="40" units="mm" />
         </model>
       </family>
-      <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster.xml">
-        <model model="FunkMaster" productID="6640" maxTotalCurrent="250mA" formFactor="Stationary" comment="Wireless Daisy Hub">
+      <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66400.xml">
+        <model model="Funk-Master LN 66400" productID="6640" maxTotalCurrent="250mA" formFactor="Stationary" comment="Funk-Master LN Wireless Daisy Hub">
+          <versionCV />
+          <size length="95" width="98" height="32" units="mm" />
+        </model>
+        <model model="FunkMaster" show="no" replacementModel="Funk-Master LN 66400" replacementFamily="Wireless" productID="6640" comment="file and model renamed without changes" />
+      </family>
+      <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66410.xml">
+        <model model="Funk-Master LN+DCC 66410" productID="6641" maxTotalCurrent="250mA" formFactor="Stationary" comment="Funk-Master LN+DCC Wireless Hub">
           <versionCV />
           <size length="95" width="98" height="32" units="mm" />
         </model>
@@ -38687,8 +39208,32 @@
           <size length="105" width="58" height="35" units="mm" />
         </model>
       </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power22.xml">
+        <model model="Power22" productID="6321" maxTotalCurrent="2.2A" formFactor="Stationary" comment="Intelligenter 2.2A Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
       <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power4.xml">
         <model model="Power4" productID="6324" maxTotalCurrent="3.5A" formFactor="Stationary" comment="3.5A Multiprotocol Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power40.xml">
+        <model model="Power40" productID="6322" maxTotalCurrent="3.5A" formFactor="Stationary" comment="Intelligenter 3.5A Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power7.xml">
+        <model model="Power7" productID="6327" maxTotalCurrent="7A" formFactor="Stationary" comment="7A Multiprotocol Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Booster" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_Power70.xml">
+        <model model="Power70" productID="6323" maxTotalCurrent="6.8A" formFactor="Stationary" comment="Intelligenter 6.8A Booster">
           <versionCV />
           <size length="104" width="58" height="33" units="mm" />
         </model>
@@ -39279,6 +39824,229 @@
           <output name="2" label="Yellow" />
           <output name="1" label="Green" />
           <output name="2" label="Violet" />
+        </model>
+      </family>
+      <family name="MS Sound (version 4+)" mfg="Zimo" file="Zimo_MS_small_v4.xml">
+        <model model="MS440 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MS450 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="6">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5">
+            <label xml:lang="de">FA5</label>
+            <label xml:lang="cs">FV 5</label>
+          </output>
+          <output name="8" label="FO 6">
+            <label xml:lang="de">FA6</label>
+            <label xml:lang="cs">FV 6</label>
+          </output>
+          <output name="9" label="FO 7">
+            <label xml:lang="de">FA7</label>
+            <label xml:lang="cs">FV 7</label>
+          </output>
+          <output name="10" label="FO 8">
+            <label xml:lang="de">FA8</label>
+            <label xml:lang="cs">FV 8</label>
+          </output>
+          <output name="11" label="FO 9 (+5V)">
+            <label xml:lang="de">FA9 (+5V)</label>
+            <label xml:lang="cs">FV 9 (+5V)</label>
+          </output>
+          <output name="12" label="FO 10 (+5V)">
+            <label xml:lang="de">FA10 (+5V)</label>
+            <label xml:lang="cs">FV 10 (+5V)</label>
+          </output>
+          <size length="30" width="15" height="4" units="mm" />
+        </model>
+        <model model="MS480 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="8" numFns="14" productID="2">
+          <output name="1" label="Front Light">
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <output name="7" label="FO 5 (+5v)">
+            <label xml:lang="cs">FV 5 (+5V)</label>
+          </output>
+          <output name="8" label="FO 6 (+5v)">
+            <label xml:lang="cs">FV 6 (+5V)</label>
+          </output>
+          <size length="19" width="11" height="3.1" units="mm" />
+        </model>
+        <model model="MS490 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="3">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3">
+            <label xml:lang="de">FA3</label>
+            <label xml:lang="cs">FV 3</label>
+          </output>
+          <output name="6" label="FO 4">
+            <label xml:lang="de">FA4</label>
+            <label xml:lang="cs">FV 4</label>
+          </output>
+          <size length="19" width="8.6" height="2.9" units="mm" />
+        </model>
+        <model model="MS500 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="1">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="14" width="10" height="2.6" units="mm" />
+        </model>
+        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="8">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="25" width="10.5" height="4" units="mm" />
+        </model>
+        <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="8">
+          <output name="1" label="Front Light">
+            <label xml:lang="de">Lvor</label>
+            <label xml:lang="cs">Přední světla</label>
+          </output>
+          <output name="2" label="Rear Light">
+            <label xml:lang="de">Lrück</label>
+            <label xml:lang="cs">Zadní světla</label>
+          </output>
+          <output name="3" label="FO 1">
+            <label xml:lang="de">FA1</label>
+            <label xml:lang="cs">FV 1</label>
+          </output>
+          <output name="4" label="FO 2">
+            <label xml:lang="de">FA2</label>
+            <label xml:lang="cs">FV 2</label>
+          </output>
+          <output name="5" label="FO 3 (+5v)">
+            <label xml:lang="de">FA3 (+5v)</label>
+            <label xml:lang="cs">FV 3 (+5V)</label>
+          </output>
+          <output name="6" label="FO 4 (+5v)">
+            <label xml:lang="de">FA4 (+5v)</label>
+            <label xml:lang="cs">FV 4 (+5V)</label>
+          </output>
+          <size length="15" width="9.5" height="3.3" units="mm" />
         </model>
       </family>
       <family name="Zimo Early model (1996-97)" mfg="Zimo" file="Zimo_MX40.xml">
@@ -42953,11 +43721,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -42988,11 +43756,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -43027,7 +43795,7 @@
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -44229,6 +44997,20 @@
           </output>
         </model>
       </family>
+      <family name="Zimo Unified software (version 37+)" mfg="Zimo" file="Zimo_Unified_software_v37_MX605N.xml">
+        <model model="MX605N version 37+" replacementModel="MX605N version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186" comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+          <output name="1" label="Front Light|(MX605SL)">
+            <label xml:lang="de">Lvor|(MX605SL)</label>
+          </output>
+          <output name="2" label="Rear Light|(MX605SL)">
+            <label xml:lang="de">Lrück|(MX605SL)</label>
+          </output>
+          <output name="3" label="Interior Light|(MX605FL)">
+            <label xml:lang="de">FA1|(MX605FL)</label>
+          </output>
+          <size length="27" width="14" height="4" units="mm" />
+        </model>
+      </family>
       <family name="Zimo Unified software (version 37+)" mfg="Zimo" file="Zimo_Unified_software_v37_MX616.xml">
         <model model="MX616 version 37+" replacementModel="MX616 version 39+" replacementFamily="query:Zimo Unified software (version 39+)" lowVersionID="37" highVersionID="37" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
           <output name="1" label="Front Light">
@@ -44996,11 +45778,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45023,19 +45805,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45066,11 +45848,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45101,11 +45883,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45136,11 +45918,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45509,19 +46291,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -45552,11 +46334,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -46144,6 +46926,18 @@
             <label xml:lang="cs">FV 2</label>
           </output>
           <size length="25" width="11" height="2" units="mm" />
+        </model>
+        <model model="MX605N version 39+" replacementModel="MX605N version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186" comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+          <output name="1" label="Front Light|(MX605SL)">
+            <label xml:lang="de">Lvor|(MX605SL)</label>
+          </output>
+          <output name="2" label="Rear Light|(MX605SL)">
+            <label xml:lang="de">Lrück|(MX605SL)</label>
+          </output>
+          <output name="3" label="Interior Light|(MX605FL)">
+            <label xml:lang="de">FA1|(MX605FL)</label>
+          </output>
+          <size length="27" width="14" height="4" units="mm" />
         </model>
         <model model="MX615 version 39+" replacementModel="MX615 version 40+" replacementFamily="query:Zimo Unified software (version 40+)" lowVersionID="39" highVersionID="40" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
           <output name="1" label="Front Light">
@@ -47172,11 +47966,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47199,19 +47993,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47242,11 +48036,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47277,11 +48071,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47312,11 +48106,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6|(+5v)</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5 V)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47689,19 +48483,19 @@
           </output>
           <output name="5" label="FO 3 (+5v)">
             <label xml:lang="de">FA3 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 3 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 3 (+5V)</label>
           </output>
           <output name="6" label="FO 4 (+5v)">
             <label xml:lang="de">FA4 (+5v)</label>
-            <label xml:lang="cs">Funkční výstup 4 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 4 (+5V)</label>
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6 (+5v)</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -47732,11 +48526,11 @@
           </output>
           <output name="7" label="FO 5 (+5v)">
             <label xml:lang="de">FA5</label>
-            <label xml:lang="cs">Funkční výstup 5</label>
+            <label xml:lang="cs">Funkční výstup 5 (+5V)</label>
           </output>
           <output name="8" label="FO 6 (+5v)">
             <label xml:lang="de">FA6</label>
-            <label xml:lang="cs">Funkční výstup 6</label>
+            <label xml:lang="cs">Funkční výstup 6 (+5V)</label>
           </output>
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
@@ -48399,6 +49193,18 @@
             <label xml:lang="cs">FV 2</label>
           </output>
           <size length="25" width="11" height="2" units="mm" />
+        </model>
+        <model model="MX605N version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186" comment="&lt;html&gt;Non Sound for ICE4 and other Kato train sets.&lt;br&gt;Same form factor as Kato EM13.&lt;br&gt;This definition also contains CVs for&lt;br&gt;- Headlights decoder MX605SL (Kato FL12)&lt;br&gt;- Interior decoder MX605FL (Kato FL11).&lt;/html&gt;">
+          <output name="1" label="Front Light|(MX605SL)">
+            <label xml:lang="de">Lvor|(MX605SL)</label>
+          </output>
+          <output name="2" label="Rear Light|(MX605SL)">
+            <label xml:lang="de">Lrück|(MX605SL)</label>
+          </output>
+          <output name="3" label="Interior Light|(MX605FL)">
+            <label xml:lang="de">FA1|(MX605FL)</label>
+          </output>
+          <size length="27" width="14" height="4" units="mm" />
         </model>
         <model model="MX615 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
           <output name="1" label="Front Light">

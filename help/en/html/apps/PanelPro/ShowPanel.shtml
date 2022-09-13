@@ -37,7 +37,7 @@
       which knows how to find all the needed formating files automatically. The steps are:</p>
 
       <ol>
-        <li>Start the JMRI web server using <strong>Tools ⇒ Servers ⇒ Start JMRI Web
+        <li>Start the JMRI web server using <strong>Tools &rArr; Servers &rArr; Start JMRI Web
         Server</strong></li>
 
         <li>In your favorite browser, go to <a href=

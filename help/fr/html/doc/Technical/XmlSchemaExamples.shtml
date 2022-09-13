@@ -1,35 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updatedated by Blorec Herv&#233;  2013-09-09-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233;  2013-09-09-->
 <head>
-    <title>
- 	JMRI: Xml Schema Examples
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code xml schema usage">
-<!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-    <!-- /Style -->
+  <title>JMRI: Xml Schema Examples</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code xml schema usage">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
-<h1>JMRI: XML Exemples de Sch&eacute;ma</h1>Cette page
+    <h1>JMRI: XML Exemples de Sch&eacute;ma</h1>
+
+      <p>Cette page
       contient des exemples de divers fragments Examples de Schema
       XML que vous pourriez trouver utiles. Pour une analyse de
       l'utilisation JMRI de Schema, XML, y compris des infos sur
       les modes de pr&eacute;f&eacute;rence et de l'organisation,
-      voir <a href="XmlSchema.shtml">une autre page</a> .
+      voir <a href="XmlSchema.shtml">une autre page</a>.</p>
 
       <h2>El&eacute;ment avec juste le contenu du texte, pas
       d'attributs</h2>
@@ -152,8 +145,9 @@ peu probable qu'il soit utilis&eacute; ailleur:
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </pre>
 
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -35,6 +35,12 @@ public class SpurEditFrame extends TrackEditFrame {
     public SpurEditFrame() {
         super(Bundle.getMessage("AddSpur"));
     }
+    
+    @Override
+    public void initComponents(Track track) {
+        setTitle(Bundle.getMessage("EditSpur"));
+        initComponents(track.getLocation(), track);
+    }
 
     @Override
     public void initComponents(Location location, Track track) {

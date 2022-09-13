@@ -2,10 +2,7 @@ package jmri.jmrix.powerline;
 
 import java.util.Locale;
 import javax.annotation.Nonnull;
-import jmri.JmriException;
-import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.*;
 
 /**
  * Manage the system-specific Sensor implementation.
@@ -89,45 +86,11 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         return false;
     }
 
-    /**
-     * TODO : Get this method working then enable multiple additions
-     * {@inheritDoc}
-     */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        log.warn("getNextValidAddress called but system does not yet support multiple additions");
-        //If the hardware address passed does not already exist then this can
-        //be considered the next valid address.
-        Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
-        if (s == null && !ignoreInitialExisting) {
-            return curAddress;
-        }
-
-        // This bit deals with handling the curAddress, and how to get the next address.
-        int iName = 0;
-        //Address starts with a single letter called a house code.
-        String houseCode = curAddress.substring(0, 1);
-        try {
-            iName = Integer.parseInt(curAddress.substring(1));
-        } catch (NumberFormatException ex) {
-            throw new JmriException("Unable to convert "+curAddress+" to a number after the house code");
-        }
-
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        s = getBySystemName(prefix + typeLetter() + curAddress);
-        if (s != null) {
-            for (int x = 1; x < 10; x++) {
-                iName++;
-                s = getBySystemName(prefix + typeLetter() + houseCode + (iName));
-                if (s == null) {
-                    return houseCode + iName;
-                }
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,houseCode + iName));
-        } else {
-            return houseCode + iName;
-        }
+    @javax.annotation.Nonnull
+    @javax.annotation.CheckReturnValue
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        throw new jmri.JmriException("getNextValidSystemName should not have been called");
     }
 
     /**
@@ -155,6 +118,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

@@ -133,12 +133,12 @@ abstract public class Trigger implements PropertyChangeListener {
         trigger_name = e.getAttributeValue("name");
         event_name = e.getChild("event-name").getValue();
         target_name = e.getChild("target-name").getValue();
-        try {
-            this.setTargetAction(Trigger.TargetAction.valueOf(e.getChild("action").getValue()));
-        } catch (IllegalArgumentException iea) {
-            this.setTargetAction(Trigger.TargetAction.NOTHING);
-        } catch (NullPointerException npe) {
-            this.setTargetAction(Trigger.TargetAction.NOTHING);
+        if (e.getChild("action") != null) {
+            try {
+                this.setTargetAction(Trigger.TargetAction.valueOf(e.getChild("action").getValue()));
+            } catch (IllegalArgumentException iea) {
+                this.setTargetAction(Trigger.TargetAction.NOTHING);
+            }
         }
     }
 

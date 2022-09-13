@@ -49,10 +49,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     protected final Map<String, Boolean> silencedProperties = new HashMap<>();
     protected final Set<String> silenceableProperties = new HashSet<>();
 
-    // caches
-    private ArrayList<String> cachedSystemNameList = null;
-    private ArrayList<E> cachedNamedBeanList = null;
-
     // Auto names. The atomic integer is always created even if not used, to
     // simplify concurrency.
     AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
@@ -64,7 +60,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         silenceableProperties.add("beans");
         setRegisterSelf();
     }
-    
+
     final void setRegisterSelf(){
         registerSelf();
     }
@@ -73,7 +69,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         // create and use a reference to an internal connection
         this(InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
     }
-    
+
     /**
      * By default, register this manager to store as configuration information.
      * Override to change that.
@@ -116,34 +112,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         _beans.clear();
         _tsys.clear();
         _tuser.clear();
-    }
-
-    /**
-     * Get a NamedBean by its system name.
-     *
-     * @param systemName the system name
-     * @return the result of {@link #getBySystemName(java.lang.String)}
-     *         with systemName
-     * @deprecated since 4.15.6; use
-     * {@link #getBySystemName(java.lang.String)} instead
-     */
-    @Deprecated
-    protected E getInstanceBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /**
-     * Get a NamedBean by its user name.
-     *
-     * @param userName the user name
-     * @return the result of {@link #getByUserName(java.lang.String)} call,
-     *         with userName
-     * @deprecated since 4.15.6; use
-     * {@link #getByUserName(java.lang.String)} instead
-     */
-    @Deprecated
-    protected E getInstanceByUserName(String userName) {
-        return getByUserName(userName);
     }
 
     /** {@inheritDoc} */
@@ -206,6 +174,8 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /** {@inheritDoc} */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="String already built for use in exception text")
     @Override
     @OverridingMethodsMustInvokeSuper
     public void register(@Nonnull E s) {
@@ -240,10 +210,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             }
         }
 
-        // clear caches
-        cachedSystemNameList = null;
-        cachedNamedBeanList = null;
-        
         // save this bean
         _beans.add(s);
         _tsys.put(systemName, s);
@@ -309,13 +275,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public void deregister(@Nonnull E s) {
         int position = getPosition(s);
 
-        // clear caches
-        cachedSystemNameList = null;
-        cachedNamedBeanList = null;
-
         // stop listening for user name changes
         s.removePropertyChangeListener(this);
-        
+
         // remove bean from local storage
         String systemName = s.getSystemName();
         _beans.remove(s);
@@ -324,7 +286,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         if (userName != null) {
             _tuser.remove(userName);
         }
-        
+
         // notifications
         fireDataListenersRemoved(position, position, s);
         if (!silencedProperties.getOrDefault("beans", false)) {
@@ -384,32 +346,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     /** {@inheritDoc} */
     @Override
     @CheckReturnValue
-    public int getObjectCount() { return _beans.size();}    
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        if (cachedSystemNameList == null) {
-            cachedSystemNameList = new ArrayList<>();
-            _beans.forEach(b -> cachedSystemNameList.add(b.getSystemName()));
-        }
-        return Collections.unmodifiableList(cachedSystemNameList);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<E> getNamedBeanList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
-        if (cachedNamedBeanList == null) {
-            cachedNamedBeanList = new ArrayList<>(_beans);
-        }
-        return Collections.unmodifiableList(cachedNamedBeanList);
-    }
+    public int getObjectCount() { return _beans.size();}
 
     /** {@inheritDoc} */
     @Override
@@ -446,7 +383,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
                     vc.vetoableChange(evt);
                 } catch (PropertyVetoException e) {
                     if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                        log.info(e.getMessage());
+                        log.info("Do Not Delete : {}", e.getMessage());
                         throw e;
                     }
                     message.append(e.getMessage()).append("<hr>"); // NOI18N
@@ -518,7 +455,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The implementation in {@link AbstractManager} should be final, but is not
      * for four managers that have arbitrary prefixes.
      */
@@ -545,46 +482,37 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
 
-    @SuppressWarnings("deprecation")
     private final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     private boolean muted = false;
-    
+
     /** {@inheritDoc} */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
             ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
-            listeners.forEach(listener -> listener.contentsChanged(e));          
+            listeners.forEach(listener -> listener.contentsChanged(e));
         }
         this.muted = m;
     }
 
-    @Deprecated
-    @SuppressWarnings("deprecation")
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
         listeners.forEach(m -> m.intervalAdded(e));
     }
 
-    @Deprecated
-    @SuppressWarnings("deprecation")
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
         if (muted) return;
         ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
@@ -613,7 +541,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         b.append(nextNumber);
         return b.toString();
     }
-    
+
     /**
      * Create a System Name from hardware address and system letter prefix.
      * AbstractManager performs no validation.
@@ -625,7 +553,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return prefix + typeLetter() + curAddress;
     }
-    
+
     /**
      * checks for numeric-only system names.
      * @param curAddress the System name ( excluding both prefix and type letter) to check.
@@ -639,104 +567,6 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             throw new JmriException("Hardware Address passed "+curAddress+" should be a number");
         }
         return curAddress;
-    }
-    
-    /**
-     * Get the Next valid hardware address.
-     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
-     * <p>
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @return the next valid system name, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
-     *                          or more than 10 next addresses in use.
-     * @deprecated since 4.21.3; use #getNextValidAddress(String, String, boolean) instead.
-     */
-    @Nonnull
-    @Deprecated
-    public final String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNextValidAddress");
-        return getNextValidAddress(curAddress, prefix, false);
-    }
-    
-    /**
-     * Get the Next valid hardware address.
-     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
-     * <p>
-     * System-specific methods may want to override getIncrement() rather than this one.
-     * @param curAddress the starting hardware address to get the next valid from.
-     * @param prefix system prefix, just system name, not type letter.
-     * @param ignoreInitialExisting false to return the starting address if it 
-     *                          does not exist, else true to force an increment.
-     * @return the next valid system name not already in use, excluding both system name prefix and type letter.
-     * @throws JmriException    if unable to get the current / next address, 
-     *                          or more than 10 next addresses in use.
-     */
-    @Nonnull
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        log.debug("getNextValid for address {} ignoring {}", curAddress, ignoreInitialExisting);
-        String testAddr;
-        NamedBean bean;
-        int increment;
-        // If hardware address passed does not already exist then this is the next valid address.
-        try {
-            // System.out.format("curaddress: "+curAddress);
-            testAddr = validateSystemNameFormat(createSystemName(curAddress,prefix));
-            // System.out.format("testaddr: "+testAddr);
-            bean = getBySystemName(testAddr);
-            increment = ( bean instanceof Turnout ? ((Turnout)bean).getNumberOutputBits() : 1);
-            testAddr = testAddr.substring(getSystemNamePrefix().length());
-            
-            // do not check for incrementability here as could be String only
-            // getIncrement(testAddr, increment);
-        }
-        catch ( NamedBean.BadSystemNameException | JmriException ex ){
-            throw new JmriException(ex.getMessage());
-        }
-        if (bean == null && !ignoreInitialExisting) {
-            log.debug("address {} not in use", curAddress);
-            return curAddress;
-        }
-        for (int i = 0; i <10; i++) {
-            testAddr = getIncrement(testAddr, increment);
-            bean = getBySystemName(validateSystemNameFormat(createSystemName(testAddr,prefix)));
-            if ( bean == null) {
-                return testAddr;
-            }
-        }
-        throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,testAddr));
-    }
-    
-    /**
-     * Increment a hardware address.
-     * <p>
-     * Default is to increment only an existing number.
-     * Sub-classes may wish to override this.
-     * @param curAddress the address to increment, excluding both system name prefix and type letter.
-     * @param increment the amount to increment by.
-     * @return incremented address, no system prefix or type letter.
-     * @throws JmriException if unable to increment the address.
-     */
-    @Nonnull
-    protected String getIncrement(String curAddress, int increment) throws JmriException {
-        return getIncrementFromExistingNumber(curAddress,increment);
-    }
-    
-    /**
-     * Increment a hardware address with an existing number.
-     * <p>
-     * @param curAddress the address to increment, excluding both system name prefix and type letter
-     * @param increment the amount to increment by.
-     * @return incremented number.
-     * @throws JmriException if unable to increment the address.
-     */
-    @Nonnull
-    protected String getIncrementFromExistingNumber(String curAddress, int increment) throws JmriException {
-        String newIncrement = jmri.util.StringUtil.incrementLastNumberInString(curAddress, increment);
-        if (newIncrement==null) {
-            throw new JmriException("No existing number found when incrementing " + curAddress);
-        }
-        return newIncrement;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManager.class);

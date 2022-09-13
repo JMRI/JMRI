@@ -71,7 +71,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
         fc.addChoosableFileFilter(new TextFilter());
 
-        File fs = new File("NCE consist backup.txt");
+        File fs = new File("NCE consist backup.txt"); // NOI18N
         fc.setSelectedFile(fs);
 
         int retVal = fc.showSaveDialog(null);
@@ -92,8 +92,10 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             }
         }
         if (f.exists()) {
-            if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("FileExists"), new Object[] {f.getName()}),
-                    Bundle.getMessage("OverwriteFile"), JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
+            if (JOptionPane.showConfirmDialog(null,
+                    MessageFormat.format(Bundle.getMessage("FileExists"), f.getName()),
+                    Bundle.getMessage("OverwriteFile"),
+                    JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION) {
                 return;
             }
         }
@@ -102,7 +104,8 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                 true)) {
 
             if (JOptionPane.showConfirmDialog(null,
-                    Bundle.getMessage("BackupTakesAwhile"), Bundle.getMessage("NceConsistBackup"),
+                    Bundle.getMessage("BackupTakesAwhile"),
+                    Bundle.getMessage("NceConsistBackup"),
                     JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 fileOut.close();
                 return;
@@ -147,10 +150,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                         buf.append(StringUtil.twoHexFromInt(nceConsistData[i]));
                     }
 
-                    if (log.isDebugEnabled()) {
-                        log.debug("consist {}", buf.toString());
-                    }
-
+                    log.debug("consist {}", buf);
                     fileOut.println(buf.toString());
                 }
             }
@@ -169,16 +169,19 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             fstatus.dispose();
 
             if (fileValid) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("SuccessfulBackup"),
-                        Bundle.getMessage("NceConsistBackup"), JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("SuccessfulBackup"),
+                        Bundle.getMessage("NceConsistBackup"),
+                        JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("BackupFailed"),
-                        Bundle.getMessage("NceConsistBackup"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("BackupFailed"),
+                        Bundle.getMessage("NceConsistBackup"),
+                        JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (IOException e) {
             // this is the end of the try-with-resources that opens fileOut.
-            return;
         }
 
     }
@@ -204,7 +207,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                 }
             }
             if (waitcount-- < 0) {
-                log.error("read timeout");
+                log.error("read timeout"); // NOI18N
                 fileValid = false; // need to quit
                 return false;
             }
@@ -233,11 +236,11 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
     public void reply(NceReply r) {
 
         if (waiting <= 0) {
-            log.error("unexpected response");
+            log.error("unexpected response"); // NOI18N
             return;
         }
         if (r.getNumDataElements() != replyLen) {
-            log.error("reply length incorrect");
+            log.error("reply length incorrect"); // NOI18N
             return;
         }
 
@@ -254,4 +257,5 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceConsistBackup.class);
+
 }

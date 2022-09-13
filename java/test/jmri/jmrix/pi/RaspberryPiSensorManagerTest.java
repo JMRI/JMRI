@@ -23,7 +23,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     }
 
     @Test
-    public void ConstructorTest(){
+    public void testCtor(){
         Assert.assertNotNull(l);
     }
 
@@ -38,7 +38,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
         Assert.assertTrue("Pull Resistance Configurable", l.isPullResistanceConfigurable());
     }
 
-    private GpioProvider myProvider;
+    private GpioProvider myProvider = null;
 
     @Override
     @BeforeEach
@@ -70,6 +70,7 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
             t1.dispose();
         }
         // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        Assertions.assertNotNull(myProvider);
         myProvider.shutdown();
         // GpioFactory.setDefaultProvider(null);
         l.dispose();

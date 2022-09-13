@@ -30,7 +30,7 @@ public class PathTest {
     public void testLoad() {
         Path p = new Path();
 
-        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
+        TurnoutManager sm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -42,7 +42,7 @@ public class PathTest {
 
     @Test
     public void testEquals() {
-        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
+        TurnoutManager sm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout s1 = sm.provideTurnout("IT12");
         Turnout s2 = sm.provideTurnout("IT14");
         
@@ -92,7 +92,7 @@ public class PathTest {
     public void testCheck() throws JmriException {
         Path p = new Path();
 
-        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
+        TurnoutManager sm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -104,12 +104,12 @@ public class PathTest {
     }
 
     @Test
-    public void testToString() throws JmriException {
+    public void testPathToString() throws JmriException {
         Path p = new Path();
 
         Assert.assertEquals("Path: <no block>: ", p.toString());
 
-        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
+        TurnoutManager sm = InstanceManager.getDefault(TurnoutManager.class);
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -165,7 +165,7 @@ public class PathTest {
         jmri.util.JUnitUtil.setUp();
         
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
     }
 
     @AfterEach

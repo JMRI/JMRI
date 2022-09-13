@@ -1,8 +1,8 @@
 package jmri;
 
 /**
- * This is an extension of a reporter device that is capable of collecting 
- * multiple reports in a collection.  The type of collection is not specified 
+ * This is an extension of a reporter device that is capable of collecting
+ * multiple reports in a collection.  The type of collection is not specified
  * by the interface, since that may be determined by the application.
  * <br>
  * <hr>
@@ -24,6 +24,6 @@ public interface CollectingReporter extends Reporter {
      /**
       * @return the collection of elements associated with this reporter.
       */
-     public java.util.Collection getCollection();
+     public java.util.Collection<Object> getCollection();
 
 }

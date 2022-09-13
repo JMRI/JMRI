@@ -14,7 +14,11 @@ import jmri.jmrit.logixng.actions.ActionWarrant;
 import jmri.jmrit.logixng.actions.ActionWarrant.DirectOperation;
 import jmri.jmrit.logixng.actions.ActionWarrant.ControlAutoTrain;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -23,28 +27,13 @@ import jmri.util.swing.JComboBoxUtil;
  *
  * @author Daniel Bergqvist  Copyright 2021
  * @author Dave Sand         Copyright 2021
+ * @author Pete Cressman     Copyright (C) 2022
  */
 public class ActionWarrantSwing extends AbstractDigitalActionSwing {
 
-    private JTabbedPane _tabbedPaneWarrant;
-    private BeanSelectPanel<Warrant> _warrantBeanPanel;
-    private JPanel _panelWarrantDirect;
-    private JPanel _panelWarrantReference;
-    private JPanel _panelWarrantLocalVariable;
-    private JPanel _panelWarrantFormula;
-    private JTextField _warrantReferenceTextField;
-    private JTextField _warrantLocalVariableTextField;
-    private JTextField _warrantFormulaTextField;
+    private LogixNG_SelectNamedBeanSwing<Warrant> _selectNamedBeanSwing;
 
-    private JTabbedPane _tabbedPaneOperation;
-    private JComboBox<DirectOperation> _stateComboBox;
-    private JPanel _panelOperationDirect;
-    private JPanel _panelOperationReference;
-    private JPanel _panelOperationLocalVariable;
-    private JPanel _panelOperationFormula;
-    private JTextField _warrantOperReferenceTextField;
-    private JTextField _warrantOperLocalVariableTextField;
-    private JTextField _warrantOperFormulaTextField;
+    private LogixNG_SelectEnumSwing<DirectOperation> _selectOperationSwing;
 
     private JTabbedPane _tabbedPaneData;
     private JPanel _panelDataDirect;
@@ -56,77 +45,43 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
     private JTextField _warrantDataFormulaTextField;
 
     private JPanel _panelControlTrainCombo;
+    private JPanel _panelTrainData;
     private JTextField _trainIdNameTextField;
     private JComboBox<ControlAutoTrain> _controlTrainComboBox;
+    private BeanSelectPanel<Memory> _panelMemoryBean;
+    private JPanel _memoryPanel;
+
+
+    public ActionWarrantSwing() {
+    }
+
+    public ActionWarrantSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionWarrant action = (ActionWarrant)object;
 
+        _selectNamedBeanSwing = new LogixNG_SelectNamedBeanSwing<>(
+                InstanceManager.getDefault(WarrantManager.class), getJDialog(), this);
+
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
         panel = new JPanel();
+        _memoryPanel = new JPanel();
 
-        // Left section
-        _tabbedPaneWarrant = new JTabbedPane();
-        _panelWarrantDirect = new javax.swing.JPanel();
-        _panelWarrantReference = new javax.swing.JPanel();
-        _panelWarrantLocalVariable = new javax.swing.JPanel();
-        _panelWarrantFormula = new javax.swing.JPanel();
+        // Left and center section
+        JPanel _tabbedPaneNamedBean;
+        JPanel _tabbedPaneOperation;
 
-        _tabbedPaneWarrant.addTab(NamedBeanAddressing.Direct.toString(), _panelWarrantDirect);
-        _tabbedPaneWarrant.addTab(NamedBeanAddressing.Reference.toString(), _panelWarrantReference);
-        _tabbedPaneWarrant.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelWarrantLocalVariable);
-        _tabbedPaneWarrant.addTab(NamedBeanAddressing.Formula.toString(), _panelWarrantFormula);
-
-        _warrantBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(WarrantManager.class), null);
-        _panelWarrantDirect.add(_warrantBeanPanel);
-
-        _warrantReferenceTextField = new JTextField();
-        _warrantReferenceTextField.setColumns(30);
-        _panelWarrantReference.add(_warrantReferenceTextField);
-
-        _warrantLocalVariableTextField = new JTextField();
-        _warrantLocalVariableTextField.setColumns(30);
-        _panelWarrantLocalVariable.add(_warrantLocalVariableTextField);
-
-        _warrantFormulaTextField = new JTextField();
-        _warrantFormulaTextField.setColumns(30);
-        _panelWarrantFormula.add(_warrantFormulaTextField);
-
-
-        // Center section
-        _tabbedPaneOperation = new JTabbedPane();
-        _panelOperationDirect = new javax.swing.JPanel();
-
-        _panelOperationReference = new javax.swing.JPanel();
-        _panelOperationLocalVariable = new javax.swing.JPanel();
-        _panelOperationFormula = new javax.swing.JPanel();
-
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (DirectOperation e : DirectOperation.values()) {
-            _stateComboBox.addItem(e);
+        if (action != null) {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(action.getSelectNamedBean());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), DirectOperation.values());
+        } else {
+            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, DirectOperation.values());
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-        _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
-            setDataPanelState();
-        });
-        _panelOperationDirect.add(_stateComboBox);
-
-        _warrantOperReferenceTextField = new JTextField();
-        _warrantOperReferenceTextField.setColumns(30);
-        _panelOperationReference.add(_warrantOperReferenceTextField);
-
-        _warrantOperLocalVariableTextField = new JTextField();
-        _warrantOperLocalVariableTextField.setColumns(30);
-        _panelOperationLocalVariable.add(_warrantOperLocalVariableTextField);
-
-        _warrantOperFormulaTextField = new JTextField();
-        _warrantOperFormulaTextField.setColumns(30);
-        _panelOperationFormula.add(_warrantOperFormulaTextField);
 
 
         // Right section
@@ -142,9 +97,9 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _tabbedPaneData.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDataLocalVariable);
         _tabbedPaneData.addTab(NamedBeanAddressing.Formula.toString(), _panelDataFormula);
 
-        _trainIdNameTextField = new JTextField();
-        _trainIdNameTextField.setColumns(30);
-        _panelDataDirect.add(_trainIdNameTextField);
+        _panelMemoryBean = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
+        _memoryPanel.add(_panelMemoryBean);
+        _panelDataDirect.add(_panelMemoryBean);
 
         _controlTrainComboBox = new JComboBox<>();
         for (ControlAutoTrain e : ControlAutoTrain.values()) {
@@ -155,6 +110,12 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _panelControlTrainCombo.add(_controlTrainComboBox);
         _panelDataDirect.add(_panelControlTrainCombo);
 
+        _trainIdNameTextField = new JTextField();
+        _trainIdNameTextField.setColumns(30);
+        _panelTrainData = new JPanel();
+        _panelTrainData.add(_trainIdNameTextField);
+        _panelDataDirect.add(_panelTrainData);
+       
         _warrantDataReferenceTextField = new JTextField();
         _warrantDataReferenceTextField.setColumns(30);
         _panelDataReference.add(_warrantDataReferenceTextField);
@@ -167,37 +128,12 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         _warrantDataFormulaTextField.setColumns(30);
         _panelDataFormula.add(_warrantDataFormulaTextField);
 
-        setDataPanelState();
-
+//        setDataPanelState();
+        _panelTrainData.setVisible(false);
+        _panelControlTrainCombo.setVisible(false);
+        _panelMemoryBean.setVisible(false);
 
         if (action != null) {
-            switch (action.getAddressing()) {
-                case Direct: _tabbedPaneWarrant.setSelectedComponent(_panelWarrantDirect); break;
-                case Reference: _tabbedPaneWarrant.setSelectedComponent(_panelWarrantReference); break;
-                case LocalVariable: _tabbedPaneWarrant.setSelectedComponent(_panelWarrantLocalVariable); break;
-                case Formula: _tabbedPaneWarrant.setSelectedComponent(_panelWarrantFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            if (action.getWarrant() != null) {
-                _warrantBeanPanel.setDefaultNamedBean(action.getWarrant().getBean());
-            }
-            _warrantReferenceTextField.setText(action.getReference());
-            _warrantLocalVariableTextField.setText(action.getLocalVariable());
-            _warrantFormulaTextField.setText(action.getFormula());
-
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
-                case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
-                case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
-                case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getOperationDirect());
-            setDataPanelState();
-            _warrantOperReferenceTextField.setText(action.getOperationReference());
-            _warrantOperLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _warrantOperFormulaTextField.setText(action.getOperFormula());
-
             switch (action.getDataAddressing()) {
                 case Direct: _tabbedPaneData.setSelectedComponent(_panelDataDirect); break;
                 case Reference: _tabbedPaneData.setSelectedComponent(_panelDataReference); break;
@@ -209,12 +145,37 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
             _warrantDataLocalVariableTextField.setText(action.getDataLocalVariable());
             _warrantDataFormulaTextField.setText(action.getDataFormula());
 
-            _trainIdNameTextField.setText(action.getTrainIdName());
+            _trainIdNameTextField.setText(action.getTrainData());
             _controlTrainComboBox.setSelectedItem(action.getControlAutoTrain());
+            if (action.getSelectMemoryNamedBean().getNamedBean() != null) {
+                _panelMemoryBean.setDefaultNamedBean(action.getSelectMemoryNamedBean().getNamedBean().getBean());
+            }
+
+            LogixNG_SelectEnum<DirectOperation> selectEnum = action.getSelectEnum();
+            if (selectEnum.getEnum() != null) {
+                switch (selectEnum.getEnum()) {
+                    case GetTrainLocation:
+                        _panelMemoryBean.setVisible(true);
+                        break;
+                    case SetTrainId:
+                    case SetTrainName:
+                        _panelTrainData.setVisible(true);
+                        break;
+                    case ControlAutoTrain:
+                        _panelControlTrainCombo.setVisible(true);
+                        break;
+                    default:
+                }
+            }
         }
 
+        setDataPanelState();
+
+        _selectOperationSwing.addAddressingListener((evt) -> { setDataPanelState(); });
+        _selectOperationSwing.addEnumListener((evt) -> { setDataPanelState(); });
+
         JComponent[] components = new JComponent[]{
-            _tabbedPaneWarrant,
+            _tabbedPaneNamedBean,
             _tabbedPaneOperation,
             _tabbedPaneData};
 
@@ -225,103 +186,38 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
     }
 
     private void setDataPanelState() {
-        DirectOperation oper = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
-        boolean newState =
-                oper == DirectOperation.SetTrainId ||
-                oper == DirectOperation.SetTrainName ||
-                oper == DirectOperation.ControlAutoTrain;
+        _panelControlTrainCombo.setVisible(false);
+        _panelTrainData.setVisible(false);
+        _panelMemoryBean.setVisible(false);
+
+        boolean newState = false;
+
+        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.ControlAutoTrain)) {
+            _panelControlTrainCombo.setVisible(true);
+            newState = true;
+        } else if ( _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetTrainLocation)) {
+            _panelMemoryBean.setVisible(true);
+            newState = true;
+        } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainId) ||
+                _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainName)) {
+            _panelTrainData.setVisible(true);
+            newState = true;
+        }
+
         _tabbedPaneData.setEnabled(newState);
         _warrantDataReferenceTextField.setEnabled(newState);
         _warrantDataLocalVariableTextField.setEnabled(newState);
         _warrantDataFormulaTextField.setEnabled(newState);
-
-        _controlTrainComboBox.setEnabled(newState);
-        _trainIdNameTextField.setEnabled(newState);
-
-        if (oper == DirectOperation.ControlAutoTrain) {
-            _controlTrainComboBox.setVisible(true);
-            _trainIdNameTextField.setVisible(false);
-        } else {
-            _controlTrainComboBox.setVisible(false);
-            _trainIdNameTextField.setVisible(true);
-        }
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        validateWarrantSection(errorMessages);
-        validateOperationSection(errorMessages);
+        ActionWarrant action = new ActionWarrant("IQDA1", null);
+        _selectNamedBeanSwing.validate(action.getSelectNamedBean(), errorMessages);
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
         validateDataSection(errorMessages);
         return errorMessages.isEmpty();
-    }
-
-    private void validateWarrantSection(List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionWarrant action = new ActionWarrant("IQDA1", null);
-
-        try {
-            if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantReference) {
-                action.setReference(_warrantReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
-        try {
-            action.setFormula(_warrantFormulaTextField.getText());
-            if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
-
-        if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
-            if (_warrantBeanPanel == null || _warrantBeanPanel.getNamedBean() == null) {
-                errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorWarrant"));
-            }
-        }
-    }
-
-    private void validateOperationSection(List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionWarrant action = new ActionWarrant("IQDA2", null);
-
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationReference(_warrantOperReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
-        try {
-            action.setOperationFormula(_warrantOperFormulaTextField.getText());
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
     }
 
     private void validateDataSection(List<String> errorMessages) {
@@ -355,10 +251,14 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
         }
 
         if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
-            DirectOperation oper = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
-            if (oper == DirectOperation.SetTrainId || oper == DirectOperation.SetTrainName) {
+            if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainId)
+                    || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainName)) {
                 if (_trainIdNameTextField.getText().isEmpty()) {
                     errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorValue"));
+                }
+            } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetTrainLocation)) {
+                if (_panelMemoryBean.isEmpty() || _panelMemoryBean.getNamedBean() == null) {
+                    errorMessages.add(Bundle.getMessage("ActionWarrant_ErrorMemory"));
                 }
             }
         }
@@ -379,64 +279,29 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ActionWarrant but is a: "+object.getClass().getName());
         }
         ActionWarrant action = (ActionWarrant) object;
-
-        if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
-            Warrant warrant = _warrantBeanPanel.getNamedBean();
-            if (warrant != null) {
-                NamedBeanHandle<Warrant> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(warrant.getDisplayName(), warrant);
-                action.setWarrant(handle);
-            } else {
-                action.removeWarrant();
-            }
-        } else {
-            action.removeWarrant();
-        }
+        _selectNamedBeanSwing.updateObject(action.getSelectNamedBean());
+        _selectOperationSwing.updateObject(action.getSelectEnum());
 
         try {
-            // Left section
-            if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantDirect) {
-                action.setAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantReference) {
-                action.setAddressing(NamedBeanAddressing.Reference);
-                action.setReference(_warrantReferenceTextField.getText());
-            } else if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantLocalVariable) {
-                action.setAddressing(NamedBeanAddressing.LocalVariable);
-                action.setLocalVariable(_warrantLocalVariableTextField.getText());
-            } else if (_tabbedPaneWarrant.getSelectedComponent() == _panelWarrantFormula) {
-                action.setAddressing(NamedBeanAddressing.Formula);
-                action.setFormula(_warrantFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneWarrant has unknown selection");
-            }
-
-            // Center section
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_warrantOperReferenceTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_warrantOperLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_warrantOperFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneOperation has unknown selection");
-            }
-
             // Right section
             if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
                 action.setDataAddressing(NamedBeanAddressing.Direct);
                 // Handle optional data field
-                if (action.getOperationDirect() == DirectOperation.SetTrainId
-                        || action.getOperationDirect() == DirectOperation.SetTrainName) {
-                    action.setTrainIdName(_trainIdNameTextField.getText());
-                } else if (action.getOperationDirect() == DirectOperation.ControlAutoTrain) {
+                if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainId)
+                        || _selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.SetTrainName)) {
+                    action.setTrainData(_trainIdNameTextField.getText());
+                } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.ControlAutoTrain)) {
                     action.setControlAutoTrain((ControlAutoTrain) _controlTrainComboBox.getSelectedItem());
+                } else if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(DirectOperation.GetTrainLocation)) {
+                    Memory memory = _panelMemoryBean.getNamedBean();
+                    if (memory != null) {
+                        NamedBeanHandle<Memory> handle
+                                = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                        .getNamedBeanHandle(memory.getDisplayName(), memory);
+                        action.getSelectMemoryNamedBean().setNamedBean(handle);
+                    } else {
+                        action.getSelectMemoryNamedBean().removeNamedBean();
+                    }
                 }
             } else if (_tabbedPaneData.getSelectedComponent() == _panelDataReference) {
                 action.setDataAddressing(NamedBeanAddressing.Reference);
@@ -463,9 +328,8 @@ public class ActionWarrantSwing extends AbstractDigitalActionSwing {
 
     @Override
     public void dispose() {
-        if (_warrantBeanPanel != null) {
-            _warrantBeanPanel.dispose();
-        }
+        _selectNamedBeanSwing.dispose();
+        _selectOperationSwing.dispose();
     }
 
 

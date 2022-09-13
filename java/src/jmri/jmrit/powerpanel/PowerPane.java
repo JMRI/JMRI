@@ -37,7 +37,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     NamedIcon onIcon = new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png") ;
     NamedIcon offIcon = new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png") ;
     NamedIcon unknownIcon = new NamedIcon("resources/icons/throttles/power_yellow.png", "resources/icons/throttles/power_yellow.png") ;
-    
+
     jmri.swing.PowerManagerMenu selectMenu;
 
     /**
@@ -59,7 +59,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     public PowerPane() {
         init();
     }
-    
+
     private void init() {
         selectMenu = new jmri.swing.PowerManagerMenu() {
             @Override
@@ -72,7 +72,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         onButton.addActionListener(e -> onButtonPushed());
         offButton.addActionListener(e -> offButtonPushed());
         idleButton.addActionListener(e -> idleButtonPushed());
-        
+
         if ((selectMenu != null) && (selectMenu.getManager() != null)) {
             idleButton.setVisible(selectMenu.getManager().implementsIdle());
         } else {
@@ -165,7 +165,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.ON);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power on {}", e);
+                log.error("Exception trying to turn power on", e);
             }
         }
     }
@@ -178,7 +178,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.OFF);
             } catch (JmriException e) {
-                log.error("Exception trying to turn power off {}", e);
+                log.error("Exception trying to turn power off", e);
             }
         }
     }
@@ -194,7 +194,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             try {
                 selectMenu.getManager().setPower(PowerManager.IDLE);
             } catch (JmriException e) {
-                log.error("Exception trying to set power to idle {}", e);
+                log.error("Exception trying to set power to idle", e);
             }
         }
     }

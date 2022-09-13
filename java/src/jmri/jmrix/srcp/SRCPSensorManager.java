@@ -18,17 +18,6 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     *
-     * @param memo the associated SystemConnectionMemo
-     * @param bus the bus ID configured for this connection
-     * @deprecated since 4.18 use {@link SRCPBusConnectionMemo#getBus()}
-     */
-    @Deprecated
-    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
-        this(memo);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -60,7 +49,7 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
         return t;
     }
-    
+
     /**
      * Validates to only numeric.
      * {@inheritDoc}

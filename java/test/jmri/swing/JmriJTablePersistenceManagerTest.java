@@ -22,11 +22,8 @@ import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.prefs.InitializationException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -38,56 +35,33 @@ import org.junit.jupiter.api.io.TempDir;
  */
 public class JmriJTablePersistenceManagerTest {
 
-    @BeforeAll
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterAll
-    public static void tearDownClass() throws Exception {
-    }
-
-    @BeforeEach
-    public void setUp(@TempDir File folder) throws IOException {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager(new NullProfile(folder));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
     /**
      * Test of persist method, of class JmriJTablePersistenceManager. This tests
      * persistence by verifying that tables get the expected listeners attached.
+     * @throws Exception on test error.
      */
     @Test
-    public void testPersist() {
+    public void testPersist() throws Exception {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        // null table
-        JTable table = null;
-        try {
-            instance.persist(table);
-            Assert.fail("did not throw NPE on null table");
-        } catch (NullPointerException ex) {
-            // passes
-        }
+
+        Exception exc = Assertions.assertThrows(NullPointerException.class,() -> {
+            persistNullTable(instance);
+        });
+        Assertions.assertNotNull(exc);
+
         // null table name
-        table = testTable(null);
-        try {
+        JTable table = testTable(null);
+        exc = Assertions.assertThrows(NullPointerException.class,() -> {
             instance.persist(table);
-            Assert.fail("did not throw NPE on table with null name");
-        } catch (NullPointerException ex) {
-            // passes
-        }
+        });
+        Assertions.assertNotNull(exc, "did not throw NPE on table with null name");
+
         // correct table
         table.setName("test name");
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             instance.persist(table);
-            // passes
-        } catch (NullPointerException ex) {
-            Assert.fail("threw unexpected NPE");
-        }
+        });
+
         int managers = 0;
         int tableListeners = 0;
         int columnListeners = 0;
@@ -108,12 +82,10 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertEquals(1, tableListeners);
         Assert.assertEquals(1, columnListeners);
         // allow table twice
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             instance.persist(table);
-            // passes
-        } catch (IllegalArgumentException ex) {
-            Assert.fail("threw unexpected IllegalArgumentException");
-        }
+        });
+
         managers = 0;
         tableListeners = 0;
         columnListeners = 0;
@@ -136,20 +108,17 @@ public class JmriJTablePersistenceManagerTest {
         // duplicate table name
         JTable table2 = testTable("test name");
         table2.setRowSorter(new TableRowSorter<>(table2.getModel()));
-        try {
+        
+        exc = Assertions.assertThrows(IllegalArgumentException.class,() -> {
             instance.persist(table2);
-            Assert.fail("Accepted duplicate name");
-        } catch (IllegalArgumentException ex) {
-            // passes
-        }
+        },"Accepted duplicate name");
+        Assertions.assertNotNull(exc, "did not throw NPE on table with null name");
+
         // a second table
         table2.setName("test name 2");
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             instance.persist(table2);
-            // passes
-        } catch (IllegalArgumentException ex) {
-            Assert.fail("threw unexpected IllegalArgumentException");
-        }
+        });
         managers = 0;
         tableListeners = 0;
         columnListeners = 0;
@@ -171,6 +140,14 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertEquals(1, columnListeners);
     }
 
+    @SuppressWarnings("null")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NP_NONNULL_PARAM_VIOLATION","NP_LOAD_OF_KNOWN_NULL_VALUE"},
+        justification = "testing exception when null passed")
+    private void persistNullTable(JmriJTablePersistenceManagerSpy instance) throws Exception {
+        JTable nullTable = null;
+        instance.persist(nullTable);
+    }
+    
     /**
      * Test of stopPersisting method, of class JmriJTablePersistenceManager.
      */
@@ -178,12 +155,9 @@ public class JmriJTablePersistenceManagerTest {
     public void testStopPersisting() {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
         JTable table = testTable("test name");
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             instance.persist(table);
-            // passes
-        } catch (NullPointerException ex) {
-            Assert.fail("threw unexpected NPE");
-        }
+        });
         int managers = 0;
         int tableListeners = 0;
         int columnListeners = 0;
@@ -203,12 +177,10 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertEquals(1, managers);
         Assert.assertEquals(1, tableListeners);
         Assert.assertEquals(1, columnListeners);
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             instance.stopPersisting(table);
-            // passes
-        } catch (NullPointerException ex) {
-            Assert.fail("threw unexpected NPE");
-        }
+        });
+
         for (PropertyChangeListener listener : table.getColumn("c0").getPropertyChangeListeners()) {
             if (listener.equals(instance.getListener(table))) {
                 columnListeners++;
@@ -267,9 +239,11 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertTrue("Dirty manager", instance.isDirty());
         Assert.assertEquals("Column c1 is default width", table.getColumnModel().getColumn(1).getWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        var columnc1 = instance.getColumnsMap(table.getName()).get("c1");
+        Assertions.assertNotNull(columnc1);
         Assert.assertNotEquals("Column c1 width not persisted width",
                 table.getColumnModel().getColumn(1).getPreferredWidth(),
-                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
+                columnc1.getPreferredWidth());
         instance.cacheState(table);
         Assert.assertEquals("Column c1 is 100 width", table.getColumnModel().getColumn(1).getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
     }
@@ -295,12 +269,18 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertFalse("Clean manager", instance.isDirty());
         Assert.assertEquals("State for column c0 is narrow", 50, instance.getColumnsMap(table.getName()).get("c0").getPreferredWidth());
         Assert.assertEquals("State for column c1 is wide", 100, instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
+        
+        var columnc0 = instance.getColumnsMap(table.getName()).get("c0");
+        var columnc1 = instance.getColumnsMap(table.getName()).get("c1");
+        Assertions.assertNotNull(columnc0);
+        Assertions.assertNotNull(columnc1);
+        
         Assert.assertNotEquals("Column c0 width not persisted width",
                 table.getColumnModel().getColumn(0).getPreferredWidth(),
-                instance.getColumnsMap(table.getName()).get("c0").getPreferredWidth());
+                columnc0.getPreferredWidth());
         Assert.assertNotEquals("Column c1 width not persisted width",
                 table.getColumnModel().getColumn(1).getPreferredWidth(),
-                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
+                columnc1.getPreferredWidth());
         instance.resetState(table);
         Assert.assertEquals("Column c0 is 50 width", 50, c0.getPreferredWidth());
         Assert.assertEquals("Column c1 is 100 width", 100, c1.getPreferredWidth());
@@ -338,7 +318,7 @@ public class JmriJTablePersistenceManagerTest {
     @Test
     public void testInitialize_EmptyProfile() {
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        Assume.assumeNotNull("Profile is not null", profile);
+        Assert.assertNotNull("Profile is not null", profile);
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
         try {
             instance.initialize(profile);
@@ -365,9 +345,14 @@ public class JmriJTablePersistenceManagerTest {
         Profile profile = ProfileManager.getDefault().getActiveProfile();
         Assert.assertNotNull(profile); // test requires non-null profile
         // copy preferences into profile
-        File source = new File(ClassLoader.getSystemResource("jmri/swing/JmriJTablePersistenceManagerTest-user-interface.xml").toURI());
+        var classLoaderUIxml = ClassLoader.getSystemResource("jmri/swing/JmriJTablePersistenceManagerTest-user-interface.xml");
+        Assertions.assertNotNull(classLoaderUIxml);
+        File source = new File(classLoaderUIxml.toURI());
         File target = new File(new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.storageIdentity()), Profile.UI_CONFIG);
-        FileUtil.createDirectory(target.getParentFile());
+        Assertions.assertNotNull(target);
+        var parentFile = target.getParentFile();
+        Assertions.assertNotNull(parentFile);
+        FileUtil.createDirectory(parentFile);
         FileUtil.copy(source, target);
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
         try {
@@ -411,10 +396,10 @@ public class JmriJTablePersistenceManagerTest {
     @Test
     @Disabled("test code is incomplete prototype")
     public void testSavePreferences() {
-        System.out.println("savePreferences");
-        Profile profile = null;
-        JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
-        instance.savePreferences(profile);
+        // System.out.println("savePreferences");
+        // Profile profile = null;
+        // JmriJTablePersistenceManager instance = new JmriJTablePersistenceManager();
+        // instance.savePreferences(profile);
         // TODO review the generated test code and remove the default call to fail.
         Assert.fail("The test case is a prototype.");
     }
@@ -477,12 +462,10 @@ public class JmriJTablePersistenceManagerTest {
         String name1 = "test name";
         String name2 = "name test";
         JTable table = testTable(name1);
-        try {
+        Assertions.assertDoesNotThrow(() -> {
             instance.persist(table);
-            // passes
-        } catch (NullPointerException ex) {
-            Assert.fail("threw unexpected NPE");
-        }
+        });
+
         Assert.assertNotNull(instance.getListener(name1));
         Assert.assertNull(instance.getListener(name2));
         table.setName(name2);
@@ -517,31 +500,6 @@ public class JmriJTablePersistenceManagerTest {
         Assert.assertFalse("set to clean for test", instance.isDirty());
         instance.setPersistedState(test.getName(), "c1", 0, 0, SortOrder.ASCENDING, false);
         Assert.assertTrue("column changed", instance.isDirty());
-    }
-
-    /**
-     * Test of setTableColumnPreferences method, of class
-     * JmriJTablePersistenceManager.
-     */
-    @Test
-    public void testSetTableColumnPreferences() {
-        JTable table = testTable("test");
-        JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
-        Assert.assertFalse("Not persisting table", instance.isPersisting(table));
-        Assert.assertFalse("Clean manager", instance.isDirty());
-        TableColumn c0 = table.getColumnModel().getColumn(0);
-        TableColumn c1 = table.getColumnModel().getColumn(1);
-        instance.setTableColumnPreferences(table.getName(), c0.getHeaderValue().toString(), 0, c0.getPreferredWidth(), SortOrder.UNSORTED, false);
-        instance.setTableColumnPreferences(table.getName(), c1.getHeaderValue().toString(), 0, c1.getPreferredWidth(), SortOrder.UNSORTED, false);
-        Assert.assertFalse("Persisting table", instance.isPersisting(table));
-        Assert.assertTrue("Dirty manager", instance.isDirty());
-        Assert.assertEquals("Column c1 is default width", c1.getWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
-        c1.setPreferredWidth(100);
-        Assert.assertNotEquals("Column c1 width not persisted width",
-                c1.getPreferredWidth(),
-                instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
-        instance.setTableColumnPreferences(table.getName(), c1.getHeaderValue().toString(), 0, c1.getPreferredWidth(), SortOrder.UNSORTED, false);
-        Assert.assertEquals("Column c1 is 100 width", c1.getPreferredWidth(), instance.getColumnsMap(table.getName()).get("c1").getPreferredWidth());
     }
 
     /**
@@ -619,6 +577,17 @@ public class JmriJTablePersistenceManagerTest {
         table.getColumnModel().getColumn(1).setHeaderValue("c1");
         table.setName(name);
         return table;
+    }
+
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new NullProfile(folder));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {

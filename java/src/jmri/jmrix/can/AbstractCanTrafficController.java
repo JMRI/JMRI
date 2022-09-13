@@ -95,13 +95,13 @@ abstract public class AbstractCanTrafficController
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
                     //String f = "formatted message: ";
-                    StringBuilder buf = new StringBuilder("formatted message: ");
+                    StringBuilder buf = new StringBuilder();
                     //for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     for (int i = 0; i < msg.length; i++) {
                         buf.append(Integer.toHexString(0xFF & msg[i]));
                         buf.append(" ");
                     }
-                    log.debug(buf.toString());
+                    log.debug("formatted message: {}",buf.toString());
                 }
                 while (hm.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
@@ -297,6 +297,7 @@ abstract public class AbstractCanTrafficController
     public void distributeOneReply(CanReply msg, AbstractMRListener mLastSender) {
         // forward the message to the registered recipients,
         // which includes the communications monitor
+        if (msg == null) log.error("found unexpected null message", new Exception("traceback"));
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         distributeReply(r);
     }

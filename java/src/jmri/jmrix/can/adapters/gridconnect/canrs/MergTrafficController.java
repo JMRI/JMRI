@@ -24,19 +24,19 @@ public class MergTrafficController extends GcTrafficController {
 
     public MergTrafficController() {
         super();
-        setCanId(CbusConstants.DEFAULT_STANDARD_ID);
+        super.setCanId(CbusConstants.DEFAULT_STANDARD_ID);
     }
 
     // New message for hardware protocol
     @Override
     protected AbstractMRMessage newMessage() {
         log.debug("New MergMessage created");
-        MergMessage msg = new MergMessage();
-        return msg;
+        return new MergMessage();
     }
 
     /**
-     * Make a CanReply from a MergReply reply
+     * Make a CanReply from a MergReply reply.
+     * {@inheritDoc}
      */
     @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
@@ -53,22 +53,22 @@ public class MergTrafficController extends GcTrafficController {
     }
 
     /**
-     * Encode a CanMessage for the hardware
+     * Encode a CanMessage for the hardware.
+     * {@inheritDoc}
      */
     @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
-        MergMessage ret = new MergMessage(m);
-
-        return ret;
+        return new MergMessage(m);
     }
 
-    // New reply from hardware
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected AbstractMRReply newReply() {
         log.debug("New MergReply created");
-        MergReply reply = new MergReply();
-        return reply;
+        return new MergReply();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class);

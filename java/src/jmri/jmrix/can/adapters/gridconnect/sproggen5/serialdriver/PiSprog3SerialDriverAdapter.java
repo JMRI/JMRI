@@ -36,7 +36,7 @@ public class PiSprog3SerialDriverAdapter extends GcSerialDriverAdapter {
         try {
             tc.setCanId(127);
         } catch (Exception e) {
-            log.error("Cannot parse CAN ID - check your preference settings {}", e);
+            log.error("Cannot parse CAN ID - check your preference settings", e);
             log.error("Now using default CAN ID");
         }
 
@@ -50,7 +50,7 @@ public class PiSprog3SerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
         this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.EITHER);
 
-        // do central protocol-specific configuration    
+        // do central protocol-specific configuration
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
     }

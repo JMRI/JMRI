@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 public class CanisbSerialDriverAdapterTest {
 
     @Test
-    public void ConstructorTest(){
+    public void testCtor(){
         CanisbSerialDriverAdapter c = new CanisbSerialDriverAdapter();
         Assert.assertNotNull("SerialDriverAdapter constructor", c);
     }

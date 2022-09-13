@@ -1,19 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Conditional State Variables and Actions List</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>Liste des Conditions Variables d'État et Actions</h1>
 
       <dl>
@@ -462,7 +461,7 @@
                 horloge de 24 heures. Cette action règle l'horloge rapide à l'heure spécifiée, que
                 l'horloge rapide soit en marche ou arrêtée.</li>
 
-                <li><strong>Démarrer l'Horloge Rapide</strong> : démarre l'horloge rapide de JiMRI.
+                <li><strong>Démarrer l'Horloge Rapide</strong> : démarre l'horloge rapide de JMRI.
                 en cours d'exécution. Si l'horloge rapide est déjà en cours d'exécution, cette
                 action n'a aucun effet.</li>
 
@@ -543,10 +542,12 @@
       </dl>
 
       <h2>Les pages de la documentation Logix sont classées logiquement</h2>
-      .
-      <p>Traduction 2021-03-29</p>
       <!--#include virtual="LogixDocList.shtml" -->
+      <p>Traduction 2021-03-29</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

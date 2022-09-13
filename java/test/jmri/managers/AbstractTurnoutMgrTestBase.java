@@ -30,7 +30,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     @BeforeEach
     abstract public void setUp();
 
-    static protected boolean listenerResult = false;
+    protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
 
@@ -55,7 +55,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
 
     @Test
     public void testProvideFailure() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
         JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -74,10 +74,10 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         // create
         Turnout t = l.provide("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
-    
+
     @Test
     public void testProvideWithoutWithPrefix() throws IllegalArgumentException {
         Turnout psa = l.provide(""+getASystemNameWithNoPrefix());
@@ -91,34 +91,37 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         Turnout psb = l.provide(""+getASystemNameWithNoPrefix());
         Assert.assertTrue("Provide With then Without Prefix", psa == psb);
     }
-    
+
     @Test
     public void testProvideFailWithPrefix() throws IllegalArgumentException {
-        
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provide(l.getSystemPrefix()+"T"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provide(l.getSystemPrefix()+"T"));
         JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: ");
-        
+
     }
 
     @Test
     public void testDefaultSystemName() {
+        listenerResult = false;
+        l.addPropertyChangeListener(new Listen());
         // create
         Turnout t = l.provideTurnout("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertTrue(listenerResult);
     }
 
     @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assert.assertNotNull("t1 real object returned ", t1 );
         Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
         Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
 
         Turnout t2 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2 );
         // check
         Assert.assertTrue("same new ", t1 == t2);
     }
@@ -174,46 +177,11 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     @Override
     public void testAutoSystemNames() {
     }
-    
+
     @Test
     public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
-    }
-    
-    @Test
-    public void testGetNextValidAddress() throws JmriException {
-        
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        
-        Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-    
-        Assert.assertNotEquals("requesting ignore existing does not return same", 
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-        
-        Turnout t =  l.provideTurnout(getASystemNameWithNoPrefix());
-        Assert.assertNotNull("exists", t);
-        
-        String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
-        Turnout nextValid =  l.provideTurnout(nextValidAddr);
-        Assert.assertNotNull("exists", nextValid);
-        Assert.assertNotEquals(nextValid, t);
-        
-    }
-    
-    @Test
-    public void testIncorrectGetNextValidAddress() {
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        boolean contains = Assert.assertThrows(JmriException.class,
-            ()->{
-                l.getNextValidAddress("NOTANINCREMENTABLEADDRESS", l.getSystemPrefix(),false);
-            }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
-        Assert.assertTrue("Exception contained incorrect address", contains);
     }
 
     /**

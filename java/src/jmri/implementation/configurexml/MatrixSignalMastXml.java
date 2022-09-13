@@ -117,7 +117,7 @@ public class MatrixSignalMastXml
             m = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideCustomSignalMast(sys, MatrixSignalMast.class);
         } catch (JmriException e) {
-            log.error("Failed to load MatrixSignalMast {}: {}", sys, e);
+            log.error("Failed to load MatrixSignalMast {}", sys, e);
             return false;
         }
 

@@ -154,7 +154,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         this.getSystemConnectionMemo().configureManagers();
     }
-    
+
     /**
      * {@inheritDoc}
      * Reconnects to Traffic Controller.
@@ -164,19 +164,19 @@ public class GcSerialDriverAdapter extends GcPortController {
     protected void resetupConnection() {
         if (!getSystemConnectionMemo().getTrafficController().status()) {
             getSystemConnectionMemo().getTrafficController().connectPort(this);
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), 
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(),
                 ((getSystemConnectionMemo().getTrafficController().status() && status()) ? ConnectionStatus.CONNECTION_UP : ConnectionStatus.CONNECTION_DOWN));
         }
     }
-    
+
     /**
      * {@inheritDoc}
-     * 
+     *
      * Closes serial streams.
      */
     @Override
     protected void closeConnection(){
-        log.info("Closing connection {}.",getCurrentPortName());        
+        log.info("Closing connection {}.",getCurrentPortName());
         try {
             if (serialStream!=null) {
                 serialStream.close();
@@ -207,7 +207,7 @@ public class GcSerialDriverAdapter extends GcPortController {
     /**
      * Helper class wrapping the input serial port's InputStream.
      * <p>
-     * It starts a helper thread at high priority that reads the input serial 
+     * It starts a helper thread at high priority that reads the input serial
      * port as fast as it can, buffering all incoming data in memory in a queue.
      * <p>
      * The queue is unbounded and readers will get the data from the queue.
@@ -217,7 +217,7 @@ public class GcSerialDriverAdapter extends GcPortController {
     private static class AsyncBufferInputStream extends FilterInputStream {
 
         private boolean active;
-        
+
         /**
          * Create new AsyncBufferInputStream.
          * @param inputStream Input Stream.
@@ -258,7 +258,7 @@ public class GcSerialDriverAdapter extends GcPortController {
                 } else {
                     log.warn("Error reading serial port {}", portName, e);
                 }
-            } 
+            }
             catch (purejavacomm.PureJavaIllegalStateException e) {
                 log.error("PureJavaIllegalStateException Illegal State, closing read thread.");
                 return null;
@@ -375,7 +375,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         int headOfs = 0;
         // How many of the last consecutive read attempts have resulted in an exception.
         int errorCount = 0;
-        
+
         @Override
         public void close() throws IOException {
             active = false;
@@ -446,16 +446,6 @@ public class GcSerialDriverAdapter extends GcPortController {
     @Override
     public int defaultBaudIndex() {
         return 0;
-    }
-
-    /**
-     * Migration method.
-     * @return array of valid baud numbers.
-     * @deprecated since 4.16
-     */
-    @Deprecated
-    public int[] validBaudValues() {
-        return validBaudNumbers();
     }
 
     // private control members

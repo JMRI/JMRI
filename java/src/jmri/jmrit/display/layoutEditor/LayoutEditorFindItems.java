@@ -507,63 +507,6 @@ final public class LayoutEditorFindItems {
         return result;
     }
 
-    // data encapsulation means that no one external to an object should
-    // care about its type... we treat all objects as equal and it's up
-    // to each object to implement methods specific to that type.
-    //
-    // JMRI is full of pages of "if (type == XXX) {...} else if (type == XXX)", etc.
-    // all that should be refactored to "object.doVerbWith(params);"...
-    // and again how each object (class) implements "doVerbWith" is up
-    // that class.
-    //
-    // This would get rid of all the object specific code that's not
-    // implemented in those specific classes and vastly simplify
-    // the rest of JMRI.
-    // [/rant] (brought to you by geowar)
-    //
-    // Long story short (too late); we can start this transition to
-    // a "type-less" system by replacing this routine with a type-less one:
-    // (BTW: AFAICT this routine is only called by the setObjects routine in TrackSegment.java)
-    //
-    /*
-    * @deprecated since 4.7.1 use @link{findObjectByName()} instead.
-     */
-    @Deprecated
-    public LayoutTrack findObjectByTypeAndName(HitPointType type, String name) {
-        if (name.isEmpty()) {
-            return null;
-        }
-        switch (type) {
-            case NONE:
-                return null;
-            case POS_POINT:
-                return findPositionablePointByName(name);
-            case TURNOUT_A:
-            case TURNOUT_B:
-            case TURNOUT_C:
-            case TURNOUT_D:
-                return findLayoutTurnoutByName(name);
-            case LEVEL_XING_A:
-            case LEVEL_XING_B:
-            case LEVEL_XING_C:
-            case LEVEL_XING_D:
-                return findLevelXingByName(name);
-            case SLIP_A:
-            case SLIP_B:
-            case SLIP_C:
-            case SLIP_D:
-                return findLayoutSlipByName(name);
-            case TRACK:
-                return findTrackSegmentByName(name);
-            default:
-                if (HitPointType.isTurntableRayHitType(type)) {
-                    return findLayoutTurntableByName(name);
-                }
-        }
-        log.error("did not find Object '{}' of type {}", name, type);
-        return null;
-    }
-
     /**
      * find object by name
      *

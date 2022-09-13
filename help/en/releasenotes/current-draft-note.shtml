@@ -31,7 +31,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>handle new locoState reply to sync speed, dir and Fkeys</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -69,9 +69,16 @@
                 <li></li>
             </ul>
 
-        <h4>LocoNet</h4>
+        <h4>KPF-Zeller</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li>The DCS240+ doesn't accept service-mode read
+                    requests for about 350-400msec after the completion of the prior one.
+                    A short delay has been added to handle this.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -91,8 +98,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Native MQTT SignalMasts are available.</li>
-                <li>Splash screen shows connection address</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -102,7 +108,8 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Internationalization of the NCE tools was completed. New items are available for
+                  translation.</li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -110,9 +117,9 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
+        <h4>OpenLCB / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated openlcb.jar to pick up "send AMD in response to AME" fix.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -142,7 +149,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Enabled functions 23-27 in the throttle.</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -225,7 +232,7 @@
                 <li></li>
             </ul>
 
-        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
+        <h4>LDH</h4>
             <ul>
                 <li></li>
             </ul>
@@ -234,6 +241,11 @@
             <ul>
                 <li></li>
             </ul>
+
+        <h4>MD Electronics</h4>
+             <ul>
+                <li></li>
+             </ul>
 
         <h4>MGP</h4>
              <ul>
@@ -287,8 +299,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Genesis Diesel - add SD70ACU and Dash 9-44CW</li>
-		<li>TSU Genesis Steam - N Challenger add CV and change some default value per user request</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -318,7 +329,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Added a new definition for Lissy Receiver #68600, 68610 and #68620. Use LNCV programming.</li>
+                <li>Added definitions for the UB 73310 and UB 73416 decoders.</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -338,7 +350,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>added new decoder definitions for Firmware v40.x</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -349,7 +361,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Menu items were harmonized with the button alternatives.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -373,7 +385,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>See NCE tools above.</li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -390,16 +402,14 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>A single Logix can now be exported to LogixNG.
-		  Open Tools -> Tables -> Logix and select <i>Export
-		  to LogixNG</i> for the Logix you want to export.</li>
+          <li></li>
         </ul>
 
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A single Logix can be imported to LogixNG. Se
-		  the section <i>Logix</i> for more information.</li>
+          <li>The expression <i>Local variable as analog value</i>
+          has been added.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -469,7 +479,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Example scripts related to MQTT moved from jython directory to jython\MQTT directory.</li>
+            <li>Updated the PocketTesterExample script to run with current code</li>
         </ul>
 
     <h3>Signals</h3>
@@ -479,8 +489,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Allow user-modified signal systems to provide
-                    their own copy of an existing aspects.xml file.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -490,7 +499,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Native MQTT masts are available</li>
+                <li></li>
             </ul>
 
     	<h4>Signal Groups</h4>
@@ -564,7 +573,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Added Camera webThrottle to Web Server.<br>
+                Camera webThrottle provides integrated support for controlling trains with integrated POV or overhead IP based cameras.<br>
+                Throttle Learn More page has been added for the camera throttle that covers setup and connecting the cameras to the engine throttle.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -576,6 +587,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The French JMRI Help pages were updated for responsive display.<br>
+              They will appear when using the French locale, or from their own
+              <a href="https://www.jmri.org/index_fr.shtml">starting page</a>.</li>
+            <li>SpotBugs has been updated to 4.7.2</li>
         </ul>
 

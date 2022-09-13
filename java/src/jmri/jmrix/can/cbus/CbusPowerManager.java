@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Disposable;
 import jmri.JmriException;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -14,7 +15,7 @@ import jmri.managers.AbstractPowerManager;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2009, 2021
  */
-public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener {
+public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> implements CanListener, Disposable {
 
     private TrafficController tc;
 
@@ -60,7 +61,7 @@ public class CbusPowerManager extends AbstractPowerManager<CanSystemConnectionMe
      * {@inheritDoc}
      */
     @Override
-    public void dispose() throws JmriException {
+    public void dispose() {
         removeTc(tc);
         tc = null;
     }

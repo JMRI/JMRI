@@ -1,7 +1,5 @@
 package jmri.managers;
 
-import java.beans.PropertyChangeListener;
-
 import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
@@ -16,22 +14,10 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen 2003, 2006, 2008, 2014, 2018
  */
-public class ProxyTurnoutManagerTest {
+public class ProxyTurnoutManagerTest extends AbstractProxyManagerTestBase<ProxyTurnoutManager,Turnout> {
 
     public String getSystemName(int i) {
         return "JT" + i;
-    }
-
-    protected TurnoutManager l = null; // holds objects under test
-
-    static protected boolean listenerResult = false;
-
-    protected class Listen implements PropertyChangeListener {
-
-        @Override
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            listenerResult = true;
-        }
     }
 
     @Test
@@ -59,8 +45,9 @@ public class ProxyTurnoutManagerTest {
     }
 
     @Test
-    public void testProvideFailure() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+    public void testProvideFailure() throws Exception {
+        IllegalArgumentException assertThrows = Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
+        Assertions.assertTrue(assertThrows.getMessage().contains("System name must start with \"JT\""),"msg was: "+assertThrows.getMessage());
         JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -101,6 +88,19 @@ public class ProxyTurnoutManagerTest {
         Turnout t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertNull("no old object", l.getByUserName("before"));
+    }
+
+
+    @Test
+    public void testNextSystemName() throws JmriException {
+        // create
+        Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");
+
+        String next = l.getNextValidSystemName(t);
+
+        Assert.assertNotNull("real object returned ", t);
+        Assert.assertEquals("based on ", "JT9", t.getSystemName());
+        Assert.assertEquals("correct next name ", "JT10", next);
     }
 
     @Test
@@ -148,10 +148,10 @@ public class ProxyTurnoutManagerTest {
 
     @Test
     public void testInstanceManagerIntegration() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));
 
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalTurnoutManager();
 
         Assert.assertTrue(InstanceManager.getDefault(TurnoutManager.class) instanceof ProxyTurnoutManager);
 
@@ -166,8 +166,10 @@ public class ProxyTurnoutManagerTest {
     }
 
     /**
-     * Number of unit to test. Made a separate method so it can be overridden in
-     * subclasses that do or don't support various numbers
+     * Number of unit to test.
+     * Made a separate method so it can be overridden in subclasses that 
+     * do or don't support various numbers.
+     * @return a number appropriate for jmrix system.
      */
     protected int getNumToTest1() {
         return 9;
@@ -181,8 +183,14 @@ public class ProxyTurnoutManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
-        InstanceManager.setTurnoutManager(l);
+        TurnoutManager itm = new InternalTurnoutManager(new InternalSystemConnectionMemo("J", "Juliet"));
+        InstanceManager.setTurnoutManager(itm);
+        TurnoutManager pl = InstanceManager.getDefault(TurnoutManager.class);
+        if ( pl instanceof ProxyTurnoutManager ) {
+            l = (ProxyTurnoutManager) pl;
+        } else {
+            Assertions.fail("TurnoutManager is not a ProxyTurnoutManager");
+        }
     }
 
     @AfterEach

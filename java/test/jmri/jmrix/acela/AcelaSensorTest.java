@@ -25,7 +25,7 @@ public class AcelaSensorTest extends jmri.implementation.AbstractSensorTestBase 
 
 
     @Test
-    public void test2StringCTor() {
+    public void testSensor2StringCTor() {
         AcelaSensor t2 = new AcelaSensor("AS1","test");
         Assert.assertNotNull("exists",t2);
     }

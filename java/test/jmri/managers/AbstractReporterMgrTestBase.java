@@ -30,7 +30,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
 
     abstract public String getSystemName(String i);
 
-    static protected boolean listenerResult = false;
+    protected boolean listenerResult = false;
 
     protected class Listen implements PropertyChangeListener {
 
@@ -56,7 +56,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
     public void testProvideName() {
         // Create
         Reporter t = l.provide("" + getNameToTest1());
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
     }
 
@@ -66,7 +66,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Reporter t = l.provideReporter("" + getNameToTest1());
         t.setUserName("Fred");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t);
         Assert.assertTrue("user name correct ", t == l.getByUserName("Fred"));
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
 
@@ -77,7 +77,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
 
     @Test
     public void testProvideFailure() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideReporter(""));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> l.provideReporter(""));
         jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -92,7 +92,9 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Assert.assertTrue("get retrieved existing object ", t != null);
 
         // Try a nonexistant one. Should return null
-        if (maxN()<2) return;
+        if (maxN()<2) {
+            return; // only 1 Reporter supported by hardware type
+        }
         t = l.getBySystemName(getSystemName(getNameToTest2()));
         Assert.assertTrue("get nonexistant object ", t == null);
     }
@@ -128,30 +130,36 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
 
     @Test
     public void testReporterProvideByNumber() {
+        listenerResult = false;
+        l.addPropertyChangeListener(new Listen());
         // Create
         Reporter t = l.provideReporter("1");
         Assert.assertNotNull("provide by number", t);
+        Assert.assertTrue(listenerResult);
     }
 
     @Test
     public void testDefaultSystemName() {
+        listenerResult = false;
+        l.addPropertyChangeListener(new Listen());
         // create
         Reporter t = l.provideReporter("" + getNameToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
+        Assert.assertTrue(listenerResult);
     }
 
     @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Reporter t1 = l.newReporter(getSystemName(getNameToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assert.assertNotNull("t1 real object returned ", t1 );
         Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
         Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNameToTest1())));
 
         Reporter t2 = l.newReporter(getSystemName(getNameToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assert.assertNotNull("t2 real object returned ", t2 );
         // check
         Assert.assertTrue("same new ", t1 == t2);
     }
@@ -186,47 +194,11 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
     @Override
     public void testAutoSystemNames() {
     }
-    
+
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip() {
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
-    }
-    
-    @Test
-    public void testGetNextValidAddress() throws JmriException {
-        
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        
-        Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-    
-        Assert.assertNotEquals("requesting ignore existing does not return same", 
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-        
-        
-        Reporter t =  l.provide(getASystemNameWithNoPrefix());
-        Assert.assertNotNull("exists", t);
-        
-        String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
-        Reporter nextValid =  l.provide(nextValidAddr);
-        Assert.assertNotNull("exists", nextValid);
-        Assert.assertNotEquals(nextValid, t);
-        
-    }
-    
-    @Test
-    public void testIncorrectGetNextValidAddress() {
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        boolean contains = Assert.assertThrows(JmriException.class,
-                ()->{
-                    l.getNextValidAddress("NOTANINCREMENTABLEADDRESS", l.getSystemPrefix(),false);
-                }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
-        Assert.assertTrue("Exception contained incorrect address", contains);
     }
 
     /**

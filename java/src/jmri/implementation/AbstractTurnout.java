@@ -328,21 +328,21 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     private int _commandedState = UNKNOWN;
 
-    private int _numberOutputBits = 1;
+    private int _numberControlBits = 1;
 
     /** Number of bits to control a turnout - defaults to one */
     private int _controlType = 0;
 
     /** Type of turnout control - defaults to 0 for /'steady state/' */
     @Override
-    public int getNumberOutputBits() {
-        return _numberOutputBits;
+    public int getNumberControlBits() {
+        return _numberControlBits;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void setNumberOutputBits(int num) {
-        _numberOutputBits = num;
+    public void setNumberControlBits(int num) {
+        _numberControlBits = num;
     }
 
     /** {@inheritDoc} */

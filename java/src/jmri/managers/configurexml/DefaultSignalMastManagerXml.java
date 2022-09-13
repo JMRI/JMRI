@@ -148,7 +148,7 @@ public class DefaultSignalMastManagerXml
                 try {
                     smr = m.provideRepeater(masterMast, slaveMast);
                 } catch (JmriException e1) {
-                    log.error("Unable to add mast repeater {}: {}. {}", masterName, slaveName, e1);
+                    log.error("Unable to add mast repeater {}: {}", masterName, slaveName, e1);
                     result = false;
                     continue;
                 }

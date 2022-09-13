@@ -366,7 +366,10 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // prepare an interface
         DirectSystemConnectionMemo m = new DirectSystemConnectionMemo();
 
-        m.getTrafficController().connectPort(new jmri.jmrix.AbstractSerialPortControllerScaffold(m));
+        jmri.jmrix.AbstractSerialPortControllerScaffold aspcs = new jmri.jmrix.AbstractSerialPortControllerScaffold(m);
+        Assertions.assertNotNull(aspcs.tostream);
+        Assertions.assertNotNull(aspcs.tistream);
+        m.getTrafficController().connectPort(aspcs);
         jmri.CommandStation cs = jmri.InstanceManager.getDefault(jmri.CommandStation.class);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new ThrottleManager(m));
         instance = new Throttle(new jmri.DccLocoAddress(5, false), cs);

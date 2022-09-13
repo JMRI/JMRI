@@ -3,13 +3,10 @@ package jmri.jmrix.maple;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * JUnit tests for the jmri.jmrix.maple.SerialTurnoutManager class
+ * JUnit tests for the jmri.jmrix.maple.SerialTurnoutManager class.
  *
  * @author Bob Jacobsen
  */
@@ -26,7 +23,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public void testConstructor() {
         // create and register the manager object
         SerialTurnoutManager atm = new SerialTurnoutManager(new MapleSystemConnectionMemo());
-        Assert.assertNotNull("Maple Turnout Manager creation with memo", atm);
+        Assertions.assertNotNull( atm, "Maple Turnout Manager creation with memo" );
     }
 
     @Test
@@ -34,21 +31,13 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("KT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value {}", o);
-        }
-        Assert.assertTrue(null != (SerialTurnout) o);
+        Assertions.assertNotNull(o);
+        Assertions.assertTrue( o instanceof SerialTurnout );
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", l.getBySystemName("KT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", l.getByUserName("my name"));
-        }
 
-        Assert.assertTrue(null != l.getBySystemName("KT21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assertions.assertNotNull( l.getBySystemName("KT21"));
+        Assertions.assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -65,11 +54,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         t.registerNode(new SerialNode(t));
         memo = new MapleSystemConnectionMemo("K", "Maple");
         // create and register the turnout manager object
-        l = new SerialTurnoutManager(memo) {
-            @Override
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
+        l = new SerialTurnoutManager(memo);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
@@ -81,6 +66,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

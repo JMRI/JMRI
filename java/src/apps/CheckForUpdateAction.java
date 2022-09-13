@@ -80,9 +80,9 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
             log.error("Unexpected failure in URL parsing", e);
             return;
         } catch (FileNotFoundException e) {
-            log.debug("Unable to get version info from web{}", e);
+            log.debug("Unable to get version info from web", e);
         } catch (IOException e) {
-            log.debug("Unexpected failure during reading{}", e);
+            log.debug("Unexpected failure during reading", e);
         } finally {
             try {
                 if (in != null) {
@@ -131,7 +131,6 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
         // show
         frame.setVisible(true);
-
     }
 
     @Nonnull String getNumber(@Nonnull BufferedReader reader) throws java.io.IOException {

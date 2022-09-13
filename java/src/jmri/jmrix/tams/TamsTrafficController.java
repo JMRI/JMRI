@@ -1,6 +1,5 @@
 package jmri.jmrix.tams;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Based on work by Bob Jacobsen and Kevin Dickerson
  * With support from Bob Jacobsen for which my thanks
- * 
+ *
  * @author Jan Boen
  */
 
@@ -38,10 +37,10 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     public TamsTrafficController() {
         super();
         log.debug("creating a new TamsTrafficController object");
-        log.debug("Just a silly change to force an staged change");        
+        log.debug("Just a silly change to force an staged change");
         // set as command station too
-        jmri.InstanceManager.store(this, jmri.CommandStation.class);
-        super.setAllowUnexpectedReply(false);        
+        jmri.InstanceManager.store(TamsTrafficController.this, jmri.CommandStation.class);
+        super.setAllowUnexpectedReply(false);
     }
 
     public void setAdapterMemo(TamsSystemConnectionMemo memo) {
@@ -66,7 +65,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    
+
     // The methods to implement the TamsInterface
     @Override
     public synchronized void addTamsListener(TamsListener l) {
@@ -128,7 +127,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * Poll Message Handler.
      */
-    static class PollMessage {
+    private static class PollMessage {
 
         TamsListener tl;
         TamsMessage tm;
@@ -277,12 +276,11 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         super.forwardToPort(tm, reply);
     }
 
-    protected static char replyType;
-    protected static boolean replyBinary;
-    protected static boolean replyOneByte;
-    protected static int replyLastByte;
-    protected static boolean unsolicitedSensorMessageSeen = false;
-    
+    protected char replyType;
+    protected boolean replyBinary;
+    protected boolean replyOneByte;
+    protected int replyLastByte;
+
     @Override
     protected TamsMessage enterProgMode() {
         return null;
@@ -292,11 +290,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     protected TamsMessage enterNormalMode() {
         return null;
     }
-
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    final static protected TamsTrafficController self = null;
 
     /**
      * Add trailer to the outgoing byte stream.

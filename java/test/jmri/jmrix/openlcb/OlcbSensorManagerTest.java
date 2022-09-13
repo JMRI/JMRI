@@ -58,7 +58,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     @Test
     public void testUpperLower() {
     }
-    
+
     @Override
     @Test
     public void testMoveUserName() {
@@ -81,6 +81,15 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertEquals(t, l.getSensor(name));
     }
 
+    @Test
+    @Override
+    public void testRegisterDuplicateSystemName() throws java.beans.PropertyVetoException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
+        String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
+        testRegisterDuplicateSystemName(l, s1, s2);
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
@@ -93,6 +102,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @BeforeAll
+    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -116,8 +126,8 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         });
         memo.setTrafficController(new TestTrafficController());
         memo.configureManagers();
-    
-        jmri.util.JUnitUtil.waitFor(()-> (messages.size()>0),"Initialization Complete message");
+
+        jmri.util.JUnitUtil.waitFor(()-> (!messages.isEmpty()),"Initialization Complete message");
     }
 
     @AfterAll

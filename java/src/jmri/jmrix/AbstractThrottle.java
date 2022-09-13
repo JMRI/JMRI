@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
 import jmri.LocoAddress;
@@ -38,7 +38,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
     protected boolean isForward;
-    
+
     /**
      * Array of Function values.
      * <p>
@@ -56,7 +56,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Needs to be same length as FUNCTION_BOOLEAN_ARRAY.
      */
     private final boolean[] FUNCTION_MOMENTARY_BOOLEAN_ARRAY;
-    
+
     /**
      * Is this object still usable? Set false after dispose, this variable is
      * used to check for incorrect usage.
@@ -75,7 +75,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY = new boolean[29];
         FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[29];
     }
-    
+
     /**
      * Create a new AbstractThrottle with custom number of functions.
      * <p>
@@ -194,14 +194,27 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         return Arrays.copyOf(FUNCTION_MOMENTARY_BOOLEAN_ARRAY,
             FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length);
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean getFunction(int fN) {
         if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
-            log.warn("Unhandled get function: {}",fN);
+            log.warn("Unhandled get function: {} {}", fN, this.getClass().getName());
+            return false;
+        }
+        return FUNCTION_BOOLEAN_ARRAY[fN];
+    }
+
+    /**
+     * Get Function Number without warning if Throttle does not support.
+     * When sending a whole Function Group, a function number may not be present.
+     * @param fN Function Number
+     * @return Function value, or false if not present.
+     */
+    protected boolean getFunctionNoWarn(int fN) {
+        if (fN<0 || fN > FUNCTION_BOOLEAN_ARRAY.length-1){
             return false;
         }
         return FUNCTION_BOOLEAN_ARRAY[fN];
@@ -213,13 +226,26 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public boolean getFunctionMomentary(int fN) {
         if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
-            log.warn("Unhandled get momentary function: {}",fN);
+            log.warn("Unhandled get momentary function: {} {}", fN, this.getClass().getName());
             return false;
         }
         return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
-    
+
     }
-    
+
+    /**
+     * Get Momentary Function Number without warning if Throttle does not support.
+     * When sending a whole Function Group, a function number may not be present.
+     * @param fN Function Number
+     * @return Function value, or false if not present.
+     */
+    protected boolean getFunctionMomentaryNoWarn(int fN) {
+        if (fN<0 || fN > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1){
+            return false;
+        }
+        return FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fN];
+    }
+
     /**
      * Notify listeners that a Throttle has disconnected and is no longer
      * available for use.
@@ -268,7 +294,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
     /**
      * Temporary behaviour only allowing unique PCLs.
-     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the 
+     * To support Throttle PCL's ( eg. WiThrottle Server ) that rely on the
      * previous behaviour of only allowing 1 unique PCL instance.
      * To be removed when WiThrottle Server has been updated.
      * {@inheritDoc}
@@ -276,12 +302,12 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         if ( Arrays.asList(getPropertyChangeListeners()).contains(l) ){
-            log.warn("Preventing {} adding duplicate PCL", l);
+            log.warn("Preventing {} adding duplicate PCL to {}", l, this.getClass().getName());
             return;
         }
         super.addPropertyChangeListener(l);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -309,31 +335,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * Trigger the notification of all PropertyChangeListeners. Will only notify
-     * if oldValue and newValue are not equal and non-null.
-     *
-     * @param property the name of the property to send notifications for
-     * @param oldValue the old value of the property
-     * @param newValue the new value of the property
-     * @deprecated since 4.19.5; use
-     * {@link #firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
-     * instead
-     */
-    @Deprecated
-    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        firePropertyChange(property, oldValue, newValue);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Deprecated
-    public List<PropertyChangeListener> getListeners() {
-        return Arrays.asList(getPropertyChangeListeners());
-    }
-
-    /**
      * Call from a ThrottleListener to dispose of the throttle instance
      *
      * @param l the listener requesting the dispose
@@ -342,7 +343,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
-            log.error("Dispose called when not active");
+            log.error("Dispose called when not active {}", this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
@@ -353,7 +354,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
-            log.warn("dispatch called when not active");
+            log.warn("dispatch called when not active {}", this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
     }
@@ -364,7 +365,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     @Override
     public void release(ThrottleListener l) {
         if (!active) {
-            log.warn("release called when not active");
+            log.warn("release called when not active {}",this.getClass().getName());
         }
         InstanceManager.throttleManagerInstance().releaseThrottle(this, l);
     }
@@ -390,7 +391,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * functions - note that we use the naming for DCC, though that's not the
      * implication; see also DccThrottle interface
      */
-    
+
     /**
      * Send whole (DCC) Function Group for a particular function number.
      * @param functionNum Function Number
@@ -413,11 +414,26 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             case 5:
                 if (momentary) sendMomentaryFunctionGroup5(); else sendFunctionGroup5();
                 break;
+            case 6:
+                if (momentary) sendMomentaryFunctionGroup6(); else sendFunctionGroup6();
+                break;
+            case 7:
+                if (momentary) sendMomentaryFunctionGroup7(); else sendFunctionGroup7();
+                break;
+            case 8:
+                if (momentary) sendMomentaryFunctionGroup8(); else sendFunctionGroup8();
+                break;
+            case 9:
+                if (momentary) sendMomentaryFunctionGroup9(); else sendFunctionGroup9();
+                break;
+            case 10:
+                if (momentary) sendMomentaryFunctionGroup10(); else sendFunctionGroup10();
+                break;
             default:
                 break;
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -449,10 +465,10 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         FUNCTION_BOOLEAN_ARRAY[fn] = state;
         firePropertyChange(Throttle.getFunctionString(fn), old, state);
     }
-    
+
     /**
-     * Update the Momentary state of a single function. 
-     * Updates function value and ChangeListener. 
+     * Update the Momentary state of a single function.
+     * Updates function value and ChangeListener.
      * Does not send outward message TO hardware.
      *
      * @param fn    Momentary Function Number 0-28
@@ -460,7 +476,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     public void updateFunctionMomentary(int fn, boolean state) {
         if (fn < 0 || fn > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
-            log.warn("Unhandled update momentary function number: {}", fn);
+            log.warn("Unhandled update momentary function number: {} {}", fn, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[fn];
@@ -509,8 +525,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         DccLocoAddress a = (DccLocoAddress) getLocoAddress();
         byte[] result = jmri.NmraPacket.function13Through20Packet(
                 a.getNumber(), a.isLongAddress(),
-                getF13(), getF14(), getF15(), getF16(),
-                getF17(), getF18(), getF19(), getF20());
+                getFunction(13), getFunction(14), getFunction(15), getFunction(16),
+                getFunction(17), getFunction(18), getFunction(19), getFunction(20));
 
         //if the result returns as null, we should quit.
         if (result == null) {
@@ -542,8 +558,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         DccLocoAddress a = (DccLocoAddress) getLocoAddress();
         byte[] result = jmri.NmraPacket.function21Through28Packet(
                 a.getNumber(), a.isLongAddress(),
-                getF21(), getF22(), getF23(), getF24(),
-                getF25(), getF26(), getF27(), getF28());
+                getFunction(21), getFunction(22), getFunction(23), getFunction(24),
+                getFunction(25), getFunction(26), getFunction(27), getFunction(28));
         //if the result returns as null, we should quit.
         if (result == null) {
             return;
@@ -564,13 +580,63 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
+     * Send the message to set the state of functions F29 - F36.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup6() {
+        log.error("sendFunctionGroup6 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F37 - F44.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup7() {
+        log.error("sendFunctionGroup7 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F45 - F52.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup8() {
+        log.error("sendFunctionGroup8 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F53 - F60.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup9() {
+        log.error("sendFunctionGroup9 needs to be implemented if invoked");
+    }
+
+    /**
+     * Send the message to set the state of functions F61 - F68.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroup10() {
+        log.error("sendFunctionGroup10 needs to be implemented if invoked");
+    }
+
+    /**
      * Sets Momentary Function and sends to layout.
      * {@inheritDoc}
      */
     @Override
     public void setFunctionMomentary(int momFuncNum, boolean state){
         if (momFuncNum < 0 || momFuncNum > FUNCTION_MOMENTARY_BOOLEAN_ARRAY.length-1) {
-            log.warn("Unhandled set momentary function number: {}", momFuncNum);
+            log.warn("Unhandled set momentary function number: {} {}", momFuncNum, this.getClass().getName());
             return;
         }
         boolean old = FUNCTION_MOMENTARY_BOOLEAN_ARRAY[momFuncNum];
@@ -631,6 +697,56 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup5() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F29 - F36
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup6() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F37 - F44
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup7() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F45 - 52
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup8() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F53 - F60
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup9() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F61 - F68
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroup10() {
     }
 
     /**
@@ -766,7 +882,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
         // Only return stop if value is actually 0, jump to first speed
         // step for small positive inputs.
-        // speeds (at this point) larger than 0.5f are already handled 
+        // speeds (at this point) larger than 0.5f are already handled
         // by the rounding above.
         if (speed > 0.0f && speed <= 0.5f) {
             value = 1;
@@ -774,8 +890,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
 
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
-            Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
-            log.error(ex.getMessage(), ex);
+            Exception ex = new Exception("Please send logs to the JMRI developers.");
+            log.error("Error calculating speed.", ex);
             return 1;  // return estop anyway
         } else if (value >= steps) {
             return steps; // maximum possible speed

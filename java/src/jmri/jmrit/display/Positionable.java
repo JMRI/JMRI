@@ -6,11 +6,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
+
 import jmri.JmriException;
+import jmri.util.swing.JmriMouseEvent;
 
 /**
  * Defines display objects.
@@ -224,19 +226,19 @@ public interface Positionable extends Cloneable {
 
     // Mouse-handling events.  See
     // Editor class for more information on how these are used.
-    void doMousePressed(MouseEvent event);
+    void doMousePressed(JmriMouseEvent event);
 
-    void doMouseReleased(MouseEvent event);
+    void doMouseReleased(JmriMouseEvent event);
 
-    void doMouseClicked(MouseEvent event);
+    void doMouseClicked(JmriMouseEvent event);
 
-    void doMouseDragged(MouseEvent event);
+    void doMouseDragged(JmriMouseEvent event);
 
-    void doMouseMoved(MouseEvent event);
+    void doMouseMoved(JmriMouseEvent event);
 
-    void doMouseEntered(MouseEvent event);
+    void doMouseEntered(JmriMouseEvent event);
 
-    void doMouseExited(MouseEvent event);
+    void doMouseExited(JmriMouseEvent event);
 
     // The following are common for all JComponents
     Rectangle getBounds(Rectangle r);

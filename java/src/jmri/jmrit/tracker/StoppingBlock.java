@@ -162,10 +162,10 @@ public class StoppingBlock {
         try {
             Throttle t = (Throttle) block.getValue();
             t.setSpeedSetting(speed);
-            t.setF1(f1);
-            t.setF2(f2);
+            t.setFunction(1, f1);
+            t.setFunction(2, f2);
         } catch (ClassCastException e) {
-            log.error("Block {} did not contain object of Throttle type: {}", block.getSystemName(), e);
+            log.error("Block {} did not contain object of Throttle type", block.getSystemName(), e);
         }
     }
 

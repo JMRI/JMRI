@@ -44,6 +44,7 @@ import jmri.util.JmriJFrame;
     private boolean _inEditMode = false;
 
     private boolean _showReminder = false;
+    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     private final SymbolTable symbolTable = new DefaultSymbolTable();
 
@@ -115,7 +116,7 @@ import jmri.util.JmriJFrame;
                 try {
                     editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
                 } catch (java.io.IOException ex) {
-                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    log.error("exception setting file location", ex);  // NOI18N
                     editCsvTableName.setText("");
                 }
             }
@@ -339,7 +340,7 @@ import jmri.util.JmriJFrame;
      * Display reminder to save.
      */
     void showSaveReminder() {
-        if (_showReminder) {
+        if (_showReminder && !_checkEnabled) {
             if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), // NOI18N
@@ -372,8 +373,7 @@ import jmri.util.JmriJFrame;
                 NamedTable p = _tableManager.getByUserName(uName);
                 if (p != null) {
                     // NamedTable with this user name already exists
-                    log.error("Failure to update NamedTable with Duplicate User Name: " // NOI18N
-                            + uName);
+                    log.error("Failure to update NamedTable with Duplicate User Name: {}", uName); // NOI18N
                     JOptionPane.showMessageDialog(_editLogixNGFrame,
                             Bundle.getMessage("Error6"),
                             Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -514,7 +514,7 @@ import jmri.util.JmriJFrame;
         }
 
         @Override
-        public Component getListCellRendererComponent(JList list, Object value,
+        public Component getListCellRendererComponent(JList<?> list, Object value,
                 int index, boolean isSelected, boolean cellHasFocus) {
             setText((value == null) ? "" : value.toString());
             return this;

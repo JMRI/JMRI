@@ -1,31 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-23-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-23-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Edit Level Crossing Help</title>
     <meta name="author" content="Bob Jacobsen">
-  <meta name=
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>&#233;diter Croisement</h1>Un croisement est une
+      <h1>&#233;diter Croisement</h1>
+      <p>Un croisement est une
       pi&#232;ce particuli&#232;re de la voie qui repr&#233;sente
       deux voies se croisant &#224; niveau. Un croisement est
       commun&#233;ment appel&#233; un diamant. Un croisement a
@@ -39,7 +27,7 @@
       &#234;tre positionn&#233; en faisant glisser le centre du
       cercle avec la touche Meta enfonc&#233; (voir la barre d'aide
       pour ce qui touche la m&#233;ta pour votre syst&#232;me
-      d'exploitation)(Clic droit pour Linux).
+      d'exploitation)(Clic droit pour Linux).</p>
 
       <p>En Option chaque voie sera soit <i>voie principale</i>
       soit <i>voie d'&#233;vitement</i> en fonction de la
@@ -58,8 +46,11 @@
       cantons puissent &#234;tre entr&#233;s ou modifi&#233;s. Les
       cantons sont discut&#233;s plus en d&#233;tail sur la page
       d'aide de la bo&#238;te de dialogue Cr&#233;er/Modifier
-      Cantons.</p><!--#include virtual="/Footer.shtml" -->
+      Cantons.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

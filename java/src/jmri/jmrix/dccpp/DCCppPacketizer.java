@@ -150,8 +150,11 @@ public class DCCppPacketizer extends DCCppTrafficController {
         while (char1 != '<') {
             // Spin waiting for '<'
             char1 = readByteProtected(istream);
+            if (char1 != '<') {
+                log.trace("skipping char: ({})", (char) char1);
+            }
         }
-        log.trace("Serial: Message started...");
+        log.trace("Message started");
         // Pick up the rest of the command
         for (i = 0; i < msg.maxSize(); i++) {
             char1 = readByteProtected(istream);
@@ -159,14 +162,14 @@ public class DCCppPacketizer extends DCCppTrafficController {
                 log.debug("Received: '{}'", m);
                 // NOTE: Cast is OK because we checked runtime type of msg above.
                 ((DCCppReply) msg).parseReply(m.toString());
-                break;
+                return;
             } else {
                 m.append((char) char1);
-                //char1 = readByteProtected(istream);
                 log.trace("msg char[{}]: {} ({})", i, char1, (char) char1);
-                //msg.setElement(i, char1 & 0xFF);
             }
         }
+        log.warn("msg size {} exceeded before end of msg char '>' encountered.", msg.maxSize());
+        log.warn("msg truncated to: '{}'", m);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class);

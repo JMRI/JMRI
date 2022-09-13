@@ -51,7 +51,7 @@
             <th>Meaning</th>
             <th style="width: 10%">Deutsch</th>
             <th style="width: 10%">Italiano</th>
-            <th style="width: 10%">Français</th>
+            <th style="width: 10%">Fran&ccedil;ais</th>
             <th style="width: 10%">UK English</th>
             <th style="width: 10%">Dansk</th>
           </tr>
@@ -63,7 +63,7 @@
               A section of track whose occupancy may be individually monitored <a href=
               "../html/tools/Blocks.shtml">...</a>
             </td>
-            <td class="de">(Strecken)Block/ Blöcke</td>
+            <td class="de">(Strecken)Block/ Bl&ouml;cke</td>
             <td class="it">Blocco/Blocchi</td>
             <td class="fr">Canton</td>
             <td class="en_UK"></td>
@@ -93,7 +93,7 @@
             </td>
             <td class="de">Licht</td>
             <td class="it">Luce</td>
-            <td class="fr">Lumière</td>
+            <td class="fr">Lumi&egrave;re</td>
             <td class="en_UK">
             </td>
             <td class="da">Lys</td>
@@ -124,7 +124,7 @@
             </td>
             <td class="de">Speicher</td>
             <td class="it">Variabili in Memoria</td>
-            <td class="fr">Mémoire</td>
+            <td class="fr">M&eacute;moire</td>
             <td class="en_UK">
             </td>
             <td class="da">Hukommelse/ Memory</td>
@@ -205,7 +205,7 @@
             </td>
             <td class="de">Systemname</td>
             <td class="it">Nome Sistema</td>
-            <td class="fr">Nom Système</td>
+            <td class="fr">Nom Syst&egrave;me</td>
             <td class="en_UK">
             </td>
             <td class="da">System Navn</td>
@@ -296,7 +296,7 @@
             </td>
             <td class="de">Eigner</td>
             <td class="it">Proprietario</td>
-            <td class="fr">Propriétiare</td>
+            <td class="fr">Propri&eacute;tiare</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -357,7 +357,7 @@
             </td>
             <td class="en_UK">
             </td>
-            <td class="da">Programmering på Anlægget</td>
+            <td class="da">Programmering p&aring; Anl&aelig;gget</td>
           </tr>
 
           <tr>
@@ -365,9 +365,9 @@
             <td class="en">Reset</td>
             <td class="descr">
             </td>
-            <td class="de">Zurückstellen (nach Fabrikswerte)</td>
+            <td class="de">Zur&uuml;ckstellen (nach Fabrikswerte)</td>
             <td class="it">Reset</td>
-            <td class="fr">Réinitialiser</td>
+            <td class="fr">R&eacute;initialiser</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -560,7 +560,7 @@
             </td>
             <td class="de">Sortier/ Auswechselbahnhof</td>
             <td class="it">Classificazione/ Interscambio</td>
-            <td class="fr">Classification/ échanges</td>
+            <td class="fr">Classification/ &eacute;changes</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -591,7 +591,7 @@
             <td class="de">Abfahrtgleis</td>
             <td class="it">
             </td>
-            <td class="fr">Voie de départ</td>
+            <td class="fr">Voie de d&eacute;part</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -605,7 +605,7 @@
             </td>
             <td class="de">Detaillierungsstufe</td>
             <td class="it">Livello Dettagli</td>
-            <td class="fr">Niveau de Détail</td>
+            <td class="fr">Niveau de D&eacute;tail</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -632,7 +632,7 @@
             <td class="de">Fahrdienstleiter</td>
             <td class="it">
             </td>
-            <td class="fr">Répartiteur</td>
+            <td class="fr">R&eacute;partiteur</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -661,7 +661,7 @@
             </td>
             <td class="de">Endziel</td>
             <td class="it">Destinazione</td>
-            <td class="fr">Dernièr</td>
+            <td class="fr">Derni&egrave;r</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -673,7 +673,7 @@
             <td class="en">Hazardous</td>
             <td class="descr">
             </td>
-            <td class="de">Gefahrgüter</td>
+            <td class="de">Gefahrg&uuml;ter</td>
             <td class="it">Carichi Pericolosi</td>
             <td class="fr">Dangereux</td>
             <td class="en_UK">
@@ -703,7 +703,7 @@
             <td class="descr">
             </td>
             <td class="de">Ort</td>
-            <td class="it">Località</td>
+            <td class="it">Localit&agrave;</td>
             <td class="fr">Emplacement</td>
             <td class="en_UK">
             </td>
@@ -745,7 +745,7 @@
             (Button)</td>
             <td class="de">Schritt</td>
             <td class="it">Muovi</td>
-            <td class="fr">Déplacer</td>
+            <td class="fr">D&eacute;placer</td>
             <td class="en_UK">
             </td>
             <td class="da">Flyt</td>
@@ -787,7 +787,7 @@
             <td class="en">Restore</td>
             <td class="descr">
             </td>
-            <td class="de">Zurückstellen (nach Fabrikswerte)</td>
+            <td class="de">Zur&uuml;ckstellen (nach Fabrikswerte)</td>
             <td class="it">
             </td>
             <td class="fr">Restaurer</td>
@@ -808,7 +808,7 @@
             </td>
             <td class="de">Fahrstrecke</td>
             <td class="it">Itinerario</td>
-            <td class="fr">Itinéraire/Chemin (Trains)</td>
+            <td class="fr">Itin&eacute;raire/Chemin (Trains)</td>
             <td class="en_UK">
             </td>
             <td class="da">Rute</td>
@@ -853,7 +853,7 @@
             <td class="de">Abstell(en)</td>
             <td class="it">
             </td>
-            <td class="fr">Dépose</td>
+            <td class="fr">D&eacute;pose</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -912,7 +912,7 @@
             <td class="de">Rangierliste</td>
             <td class="it">
             </td>
-            <td class="fr">Liste des Manœvres</td>
+            <td class="fr">Liste des Man&oelig;vres</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -1058,7 +1058,7 @@
             </td>
             <td class="de">Anlageeditor</td>
             <td class="it">Editor Tracciato</td>
-            <td class="fr">Éditeur de Réseau</td>
+            <td class="fr">&Eacute;diteur de R&eacute;seau</td>
             <td class="en_UK">
             </td>
             <td class="da">Layout Editor</td>
@@ -1086,7 +1086,7 @@
             </td>
             <td class="de">Kontrolltafeleditor</td>
             <td class="it">Editor Controlli</td>
-            <td class="fr">Éditeur Panneau de Commande</td>
+            <td class="fr">&Eacute;diteur Panneau de Commande</td>
             <td class="en_UK">
             </td>
             <td class="da">Kontrol Panel Editor</td>
@@ -1102,7 +1102,7 @@
             </td>
             <td class="de">Gleisstellbildeditor</td>
             <td class="it">Editor Panello</td>
-            <td class="fr">Éditeur de Panneaux</td>
+            <td class="fr">&Eacute;diteur de Panneaux</td>
             <td class="en_UK">
             </td>
             <td class="da">Panel Editor</td>
@@ -1131,9 +1131,9 @@
               triggered, you can set it up to play a sound or run a script. <a href=
               "../html/tools/Routes.shtml">...</a> (see <a href="#opsroute">Ops</a>)
             </td>
-            <td class="de">Weichenstraße</td>
+            <td class="de">Weichenstra&szlig;e</td>
             <td class="it">Itinerario</td>
-            <td class="fr">Itinéraire</td>
+            <td class="fr">Itin&eacute;raire</td>
             <td class="en_UK">
             </td>
             <td class="da">Rute</td>
@@ -1146,7 +1146,7 @@
             </td>
             <td class="de">Zugsymbol</td>
             <td class="it">Icona Treno</td>
-            <td class="fr">Icône Train</td>
+            <td class="fr">Ic&ocirc;ne Train</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -1175,7 +1175,7 @@
             <td class="de">Vorzug</td>
             <td class="it">
             </td>
-            <td class="fr">Défauts</td>
+            <td class="fr">D&eacute;fauts</td>
             <td class="en_UK">
             </td>
             <td class="da">Standard</td>
@@ -1188,10 +1188,10 @@
             </td>
             <td class="de">Unbeleuchtet</td>
             <td class="it">Spento</td>
-            <td class="fr">Éteint</td>
+            <td class="fr">&Eacute;teint</td>
             <td class="en_UK">
             </td>
-            <td class="da">Mørk</td>
+            <td class="da">M&oslash;rk</td>
           </tr>
 
           <tr>
@@ -1201,7 +1201,7 @@
             </td>
             <td class="de">Signalart</td>
             <td class="it">Stato</td>
-            <td class="fr">État</td>
+            <td class="fr">&Eacute;tat</td>
             <td class="en_UK">
             </td>
             <td class="da">Tilstand</td>
@@ -1236,7 +1236,7 @@
             </td>
             <td class="de">Signalschirm</td>
             <td class="it">Vela Segnale</td>
-            <td class="fr">Tête Signal</td>
+            <td class="fr">T&ecirc;te Signal</td>
             <td class="en_UK">
             </td>
             <td class="da">Signal Hoved</td>
@@ -1251,7 +1251,7 @@
             </td>
             <td class="de">Signalmast</td>
             <td class="it">Stante Segnale</td>
-            <td class="fr">Mât Signal</td>
+            <td class="fr">M&acirc;t Signal</td>
             <td class="en_UK">
             </td>
             <td class="da">Signal Mast</td>
@@ -1283,7 +1283,7 @@
             <td class="fr">Couplage</td>
             <td class="en_UK">
             </td>
-            <td class="da">Forspand(s Værktøj)</td>
+            <td class="da">Forspand(s V&aelig;rkt&oslash;j)</td>
           </tr>
 
           <tr>
@@ -1338,10 +1338,10 @@
             </td>
             <td class="de">Fahrregler</td>
             <td class="it">Palmare</td>
-            <td class="fr">Régulateur</td>
+            <td class="fr">R&eacute;gulateur</td>
             <td class="en_UK">
             </td>
-            <td class="da">Kørekontrol</td>
+            <td class="da">K&oslash;rekontrol</td>
           </tr>
 
           <tr>
@@ -1366,7 +1366,7 @@
             <td class="de">Fehlersuch(-werkzeuge)</td>
             <td class="it">
             </td>
-            <td class="fr">Débogage</td>
+            <td class="fr">D&eacute;bogage</td>
             <td class="en_UK">
             </td>
             <td class="da">Fejlfinding</td>
@@ -1407,12 +1407,12 @@
             <td class="en">Add</td>
             <td class="descr">
             </td>
-            <td class="de">Füge (hin)zu</td>
+            <td class="de">F&uuml;ge (hin)zu</td>
             <td class="it">Aggiungi</td>
             <td class="fr">Ajouter</td>
             <td class="en_UK">
             </td>
-            <td class="da">Tilføj</td>
+            <td class="da">Tilf&oslash;j</td>
           </tr>
 
           <tr>
@@ -1465,7 +1465,7 @@
             <td class="de">Standardwert</td>
             <td class="it">
             </td>
-            <td class="fr">Défaut</td>
+            <td class="fr">D&eacute;faut</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -1477,7 +1477,7 @@
             <td class="en">Delete</td>
             <td class="descr">
             </td>
-            <td class="de">Lösche</td>
+            <td class="de">L&ouml;sche</td>
             <td class="it">Cancella</td>
             <td class="fr">Supprimer/Eff(-acer)</td>
             <td class="en_UK">
@@ -1489,7 +1489,7 @@
             <td class="app">I18N</td>
             <td class="en">Deselect (All)</td>
             <td class="descr">Uncheck (Check Box)</td>
-            <td class="de">(Alle) Abwählen (Kontrollkästchen)</td>
+            <td class="de">(Alle) Abw&auml;hlen (Kontrollk&auml;stchen)</td>
             <td class="it">Azzera (Tutti)</td>
             <td class="fr">(Tout) Effacer</td>
             <td class="en_UK">
@@ -1506,7 +1506,7 @@
             <td class="de">Verzeichnis</td>
             <td class="it">
             </td>
-            <td class="fr">Répertoire</td>
+            <td class="fr">R&eacute;pertoire</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -1551,7 +1551,7 @@
             <td class="fr">Aide</td>
             <td class="en_UK">
             </td>
-            <td class="da">Hjælp</td>
+            <td class="da">Hj&aelig;lp</td>
           </tr>
 
           <tr>
@@ -1575,7 +1575,7 @@
             <td class="de">Grafik/ Sinnbild</td>
             <td class="it">
             </td>
-            <td class="fr">Icône (m)</td>
+            <td class="fr">Ic&ocirc;ne (m)</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -1602,10 +1602,10 @@
             </td>
             <td class="de">Anlage</td>
             <td class="it">Tracciato</td>
-            <td class="fr">Réseau</td>
+            <td class="fr">R&eacute;seau</td>
             <td class="en_UK">
             </td>
-            <td class="da">Anlægget</td>
+            <td class="da">Anl&aelig;gget</td>
           </tr>
 
           <tr>
@@ -1628,7 +1628,7 @@
             </td>
             <td class="de">Voreinstellungen</td>
             <td class="it">Preferenze</td>
-            <td class="fr">Préférences</td>
+            <td class="fr">Pr&eacute;f&eacute;rences</td>
             <td class="en_UK">
             </td>
             <td class="da">Indstillinger</td>
@@ -1641,7 +1641,7 @@
             </td>
             <td class="de">Vorschau</td>
             <td class="it">Anteprima</td>
-            <td class="fr">Prévisualisation</td>
+            <td class="fr">Pr&eacute;visualisation</td>
             <td class="en_UK">
             </td>
             <td class="da">Vis</td>
@@ -1655,7 +1655,7 @@
             <td class="de">Bahngesellschaft</td>
             <td class="it">
             </td>
-            <td class="fr">Réseau</td>
+            <td class="fr">R&eacute;seau</td>
             <td class="en_UK">
             </td>
             <td class="da">
@@ -1680,12 +1680,12 @@
             <td class="en">Select (All)</td>
             <td class="descr">
             </td>
-            <td class="de">(Alle) Markieren/Anwählen</td>
+            <td class="de">(Alle) Markieren/Anw&auml;hlen</td>
             <td class="it">Seleziona (Tutti)</td>
-            <td class="fr">(Tout) Sélectionner</td>
+            <td class="fr">(Tout) S&eacute;lectionner</td>
             <td class="en_UK">
             </td>
-            <td class="da">Vælg alt</td>
+            <td class="da">V&aelig;lg alt</td>
           </tr>
 
           <tr>
@@ -1709,7 +1709,7 @@
             </td>
             <td class="de">Starte</td>
             <td class="it">Start</td>
-            <td class="fr">Démarrer</td>
+            <td class="fr">D&eacute;marrer</td>
             <td class="en_UK">
             </td>
             <td class="da">Start</td>
@@ -1722,7 +1722,7 @@
             </td>
             <td class="de">Beenden</td>
             <td class="it">Esci</td>
-            <td class="fr">Arrêter</td>
+            <td class="fr">Arr&ecirc;ter</td>
             <td class="en_UK">
             </td>
             <td class="da">Stop</td>
@@ -1781,7 +1781,7 @@
             <td class="fr">Outils</td>
             <td class="en_UK">
             </td>
-            <td class="da">Værktøjer</td>
+            <td class="da">V&aelig;rkt&oslash;jer</td>
           </tr>
 
           <tr>
@@ -1805,7 +1805,7 @@
             <td class="en">Verify</td>
             <td class="descr">
             </td>
-            <td class="de">Überprüfe</td>
+            <td class="de">&Uuml;berpr&uuml;fe</td>
             <td class="it">
             </td>
             <td class="fr">
@@ -1823,7 +1823,7 @@
             </td>
             <td class="de">Fenster</td>
             <td class="it">Finestra</td>
-            <td class="fr">Fenêtre</td>
+            <td class="fr">Fen&ecirc;tre</td>
             <td class="en_UK">
             </td>
             <td class="da">

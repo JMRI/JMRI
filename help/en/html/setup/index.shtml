@@ -11,7 +11,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">JMRI®: Setup</h1>
+      <h1 id="Top">JMRI&reg;: Setup</h1>
 
       <h2>General Installation</h2>
 
@@ -45,7 +45,7 @@
         </li>
 
         <li>
-          <a href="https://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+          <a href="https://jmri.org/install/MacOSX.shtml">macOS</a>
         </li>
 
         <li>
@@ -58,7 +58,7 @@
         </li>
       </ul>
 
-      <p>JMRI® requires that <a href="../../../../java/index.shtml"><em>Java</em></a> be installed:</p>
+      <p>JMRI&reg; requires that <a href="../../../../java/index.shtml"><em>Java</em></a> be installed:</p>
 
       <ul>
         <li>Version 2.12 can run on any computer system that will run Java 1.5 through Java 8 (also
@@ -70,22 +70,22 @@
         <li>Version 3.10.1 requires Java 1.7 through Java 8.</li>
 
         <li>Version 4.2 thru 4.25.5 requires Java 8 (except release 311) or Java 11 (recommended).</li>
-        
+
         <li>Version 4.25.6 thru 4.26 requires Java 8 or Java 11 (recommended).</li>
 
-        <li>Version 4.99.x and beyond: REQUIRES <strong>JAVA 11 ONLY</strong>.  See <a href="../../../../java/index.shtml">our Java instructions</a>  
+        <li>Version 4.99.x and beyond: REQUIRES <strong>JAVA 11 ONLY</strong>.  See <a href="../../../../java/index.shtml">our Java instructions</a>
          page on getting Java 11.</li>
       </ul>
-      
-      <p>As of JMRI 4.20, JMRI is only fully supported when running on Java release 8 or 11.  As of JMRI 4.99.1, 
-      JMRI is only fully supported when running on Java release 11 as noted above.        
-      Some problems have been encountered while using a Java version beyond Java 11 and support is offered 
+
+      <p>As of JMRI 4.20, JMRI is only fully supported when running on Java release 8 or 11.  As of JMRI 4.99.1,
+      JMRI is only fully supported when running on Java release 11 as noted above.
+      Some problems have been encountered while using a Java version beyond Java 11 and support is offered
       only on a "best effort" basis.  Some issues may only be
       addressable by using a supported version.</p>
 
       <h2 id="startprog">Starting the program</h2>
 
-      <p>Once you have downloaded the JMRI® software and installed it, simply open the program in
+      <p>Once you have downloaded the JMRI&reg; software and installed it, simply open the program in
       the usual manner for your operating system. Windows will show an icon on desktop (with
       default install options selected).</p>
 
@@ -93,7 +93,7 @@
       "231">
       </p>
 
-      <p>Double click the icon for the program to open. In this case we will open DecoderPro®</p>
+      <p>Double click the icon for the program to open. In this case we will open DecoderPro&reg;</p>
 
       <p>This dialog will appear briefly as the program is loading:</p>
 

@@ -12,11 +12,12 @@ import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.util.HashMap;
 
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import jmri.jmrix.ipocs.protocol.Message;
+import jmri.util.JUnitUtil;
 import jmri.util.zeroconf.ZeroConfService;
 
 public class IpocsPortControllerTest {
@@ -171,4 +172,14 @@ public class IpocsPortControllerTest {
     pc.onMessage(client, msg);
     assertNotNull(pc.getLastStatus("Vx91"));
   }
+
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

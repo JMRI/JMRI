@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * 
+ *
  */
 public class MarklinTurnout extends AbstractTurnout
         implements MarklinListener {
@@ -142,7 +142,7 @@ public class MarklinTurnout extends AbstractTurnout
                 try {
                     sendOffMessage((state ? 1 : 0));
                 } catch (Exception e) {
-                    log.error("Exception occurred while sending delayed off to turnout: {}", e);
+                    log.error("Exception occurred while sending delayed off to turnout", e);
                 }
             }
         }, METERINTERVAL);

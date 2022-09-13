@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2018, 2019 All rights reserved -->
+<!-- Copyright (C) JMRI 2006, 2018, 2019, 2022 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,6 +12,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version version="1.6" author="Alain Le Marchand, AlanUS.forum@gmail.com" lastUpdated="20220416"/>
+  <!--  Added PD10MU definition -->
   <version version="1.5" author="Marc Fournier, forfoum@videotron.ca" lastUpdated="20211103"/>
   <!--  Added DH14B definitions for this latest Fw version -->
   <version version="1.4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20211008"/>
@@ -114,6 +116,21 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
+      <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
+        <output name="1" label="Front|Light" maxcurrent="20mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="20mA"/>
+        <output name="3" label="Onboard|LED" maxcurrent="20mA"/>
+        <output name="4" label="|"/>    <!-- not available for this decoder -->
+        <output name="5" label="|"/>    <!-- not available for this decoder -->
+        <output name="6" label="|"/>    <!-- not available for this decoder -->
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="16" width="9.3" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
       <model model="DH10C (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="102" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
@@ -213,7 +230,7 @@
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-          <label xml:lang="ca">AUX 12</label>
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 3</label>
@@ -237,7 +254,7 @@
           <protocol>selectrix</protocol>
           <protocol>motorola</protocol>
         </protocols>
-      </model>      
+      </model>
       <model model="DH14B (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="141" comment="DH14B with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="other">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
@@ -253,7 +270,7 @@
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-          <label xml:lang="ca">AUX 12</label>
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="5" label="AUX|3" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 3</label>
@@ -277,7 +294,7 @@
           <protocol>selectrix</protocol>
           <protocol>motorola</protocol>
         </protocols>
-      </model>      
+      </model>
       <model model="DH16A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="6" numFns="16" productID="160" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
@@ -476,6 +493,36 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
+      <model model="PD10MU (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="130" comment="PD10MU-3 / PD10MU-4 commissioned by DM-Toys" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA">
+          <label xml:lang="de">LV</label>
+          <label xml:lang="ca">Llum Frontal</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="150mA">
+          <label xml:lang="de">LR</label>
+          <label xml:lang="ca">Llum Poserior</label>
+        </output>
+        <output name="3" label="AUX|1" maxcurrent="300mA">
+          <label xml:lang="de">AUX 1</label>
+          <label xml:lang="ca">AUX 1</label>
+        </output>
+        <output name="4" label="AUX|2" maxcurrent="300mA">
+          <label xml:lang="de">AUX 2</label>
+          <label xml:lang="ca">AUX 2</label>
+        </output>
+        <output name="7" label="Dimmed|Lights">
+          <label xml:lang="de">Abblend-|licht</label>
+          <label xml:lang="ca">Intensitat Llums</label>
+        </output>
+        <output name="8" label="Shunting|Speed">
+          <label xml:lang="de">Rangier-|gang</label>
+          <label xml:lang="ca">Marxa de maniobres</label>
+        </output>
+        <size length="11.7" width="8.5" height="1.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
       <model model="PD12A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="4" numFns="16" productID="130" comment="PD12A-0 / PD12A-2 / PD12A-3 / PD12A-4 with update from May 2020" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="PluX12">
         <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
@@ -491,7 +538,7 @@
         </output>
         <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-          <label xml:lang="ca">AUX 1</label>
+          <label xml:lang="ca">AUX 2</label>
         </output>
         <output name="7" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
@@ -506,21 +553,7 @@
           <protocol>dcc</protocol>
         </protocols>
       </model>
-      <model model="DH06A (firmware 3.12.050+)" lowVersionID="50" highVersionID="50" numOuts="3" numFns="16" productID="60" comment="DH06A for Köf with no analog support, with update from May 2020" maxInputVolts="30V" maxMotorCurrent="0.3A" maxTotalCurrent="0.3A">
-        <output name="1" label="Front|Light" maxcurrent="20mA"/>
-        <output name="2" label="Rear|Light" maxcurrent="20mA"/>
-        <output name="3" label="Onboard|LED" maxcurrent="20mA"/>
-        <output name="4" label="|"/>    <!-- not available for this decoder -->
-        <output name="5" label="|"/>    <!-- not available for this decoder -->
-        <output name="6" label="|"/>    <!-- not available for this decoder -->
-        <output name="7" label="Dimmed|Lights"/>
-        <output name="8" label="Shunting|Speed"/>
-        <size length="16" width="9.3" units="mm"/>
-        <protocols>
-          <protocol>dcc</protocol>
-          <protocol>selectrix</protocol>
-        </protocols>
-      </model>
+
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

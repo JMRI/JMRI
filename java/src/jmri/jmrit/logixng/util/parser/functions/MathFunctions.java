@@ -13,7 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Implementation of mathematical functions.
- * 
+ *
  * @author Daniel Bergqvist 2019
  */
 @ServiceProvider(service = FunctionFactory.class)
@@ -23,10 +23,11 @@ public class MathFunctions implements FunctionFactory {
     public String getModule() {
         return "Math";
     }
-    
+
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
+        functionClasses.add(new AbsFunction());
         functionClasses.add(new RandomFunction());
         functionClasses.add(new SinFunction());
         return functionClasses;
@@ -44,30 +45,30 @@ public class MathFunctions implements FunctionFactory {
     public String getConstantDescription() {
         return Bundle.getMessage("Math.ConstantDescriptions");
     }
-    
-    
-    
+
+
+
     public static class RandomFunction implements Function {
-        
+
         @Override
         public String getModule() {
             return new MathFunctions().getModule();
         }
-        
+
         @Override
         public String getConstantDescriptions() {
             return new MathFunctions().getConstantDescription();
         }
-        
+
         @Override
         public String getName() {
             return "random";
         }
-        
+
         @Override
         public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
                 throws CalculateException, JmriException {
-            
+
             double min;
             double max;
             switch (parameterList.size()) {
@@ -87,35 +88,90 @@ public class MathFunctions implements FunctionFactory {
                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
             }
         }
-        
+
         @Override
         public String getDescription() {
             return Bundle.getMessage("Math.random_Descr");
         }
-        
+
     }
-    
-    public static class SinFunction implements Function {
-        
+
+    public static class AbsFunction implements Function {
+
         @Override
         public String getModule() {
             return new MathFunctions().getModule();
         }
-        
+
         @Override
         public String getConstantDescriptions() {
             return new MathFunctions().getConstantDescription();
         }
-        
+
+        @Override
+        public String getName() {
+            return "abs";
+        }
+
+        @Override
+        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                throws CalculateException, JmriException {
+
+            switch (parameterList.size()) {
+                case 1:
+                    Object value = parameterList.get(0).calculate(symbolTable);
+                    if ((value instanceof java.util.concurrent.atomic.AtomicInteger)
+                            || (value instanceof java.util.concurrent.atomic.AtomicLong)
+                            || (value instanceof java.math.BigInteger)
+                            || (value instanceof Byte)
+                            || (value instanceof Short)
+                            || (value instanceof Integer)
+                            || (value instanceof Long)
+                            || (value instanceof java.util.concurrent.atomic.LongAccumulator)
+                            || (value instanceof java.util.concurrent.atomic.LongAdder)) {
+                        return Math.abs(((Number)value).longValue());
+                    }
+                    if ((value instanceof java.math.BigDecimal)
+                            || (value instanceof Float)
+                            || (value instanceof Double)
+                            || (value instanceof java.util.concurrent.atomic.DoubleAccumulator)
+                            || (value instanceof java.util.concurrent.atomic.DoubleAdder)) {
+                        return Math.abs(((Number)value).doubleValue());
+                    }
+                    return Math.abs(TypeConversionUtil.convertToDouble(value, false));
+                default:
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+            }
+        }
+
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Math.abs_Descr");
+        }
+
+    }
+
+    public static class SinFunction implements Function {
+
+        @Override
+        public String getModule() {
+            return new MathFunctions().getModule();
+        }
+
+        @Override
+        public String getConstantDescriptions() {
+            return new MathFunctions().getConstantDescription();
+        }
+
         @Override
         public String getName() {
             return "sin";
         }
-        
+
         @Override
         public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
                 throws JmriException {
-            
+
             if (parameterList.size() == 1) {
                 double param = TypeConversionUtil.convertToDouble(
                         parameterList.get(0).calculate(symbolTable), false);
@@ -143,7 +199,7 @@ public class MathFunctions implements FunctionFactory {
                 } else {
                     throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
                 }
-                
+
                 switch (parameterList.size()) {
                     case 2:
                         return result;
@@ -159,12 +215,12 @@ public class MathFunctions implements FunctionFactory {
             }
             throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
         }
-        
+
         @Override
         public String getDescription() {
             return Bundle.getMessage("Math.sin_Descr");
         }
-        
+
     }
-    
+
 }

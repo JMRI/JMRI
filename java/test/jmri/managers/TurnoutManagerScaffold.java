@@ -3,12 +3,9 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.util.TreeSet;
 
-import jmri.JmriException;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.SystemConnectionMemo;
+import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import javax.annotation.*;
@@ -32,8 +29,9 @@ import javax.annotation.*;
 public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
-    public Turnout provideTurnout(@Nonnull String name) {
-        return null;
+    @Nonnull
+    public Turnout provideTurnout(@Nonnull String name) throws NamedBean.BadSystemNameException {
+        throw new NamedBean.BadSystemNameException("TurnoutManagerScaffold provideTurnout", "TurnoutManagerScaffold provideTurnout");
     }
 
     @Override
@@ -51,50 +49,37 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return null;
     }
 
+    @Nonnull
     @Override
-    public Turnout newTurnout(@Nonnull String systemName, String userName) {
-        return null;
+    public Turnout newTurnout(@Nonnull String systemName, String userName) throws NamedBean.BadSystemNameException {
+        throw new NamedBean.BadSystemNameException("TurnoutManagerScaffold newTurnout", "TurnoutManagerScaffold newTurnout");
     }
 
     @Override
-    public int getObjectCount() { return -1;}    
+    public int getObjectCount() { return -1;}
 
     @Override
     @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public java.util.List<String> getSystemNameList() {
-        return null;
-    }
-
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public java.util.List<Turnout> getNamedBeanList() {
-        return null;
-    }
-
-    @Override
-    @CheckForNull
     public java.util.SortedSet<Turnout> getNamedBeanSet() {
-        return null;
+        return new TreeSet<>();
     }
 
     @Override
-    @CheckForNull
+    @Nonnull
     public String getClosedText() {
-        return null;
+        return "";
     }
 
     @Override
-    @CheckForNull
+    @Nonnull
     public String getThrownText() {
-        return null;
+        return "";
     }
 
     @Override
-    @CheckForNull
+    @Nonnull
     public String[] getValidOperationTypes() {
-        return null;
+        return new String[0];
     }
 
     @Override
@@ -126,8 +111,8 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     @Nonnull
-    public String makeSystemName(@Nonnull String s) {
-        return null;
+    public String makeSystemName(@Nonnull String s) throws NamedBean.BadSystemNameException {
+        return "";
     }
 
     @Override
@@ -210,17 +195,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Override
     public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return NameValidity.VALID;
-    }
-
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        return curAddress;
-    }
-    
-    @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-        return curAddress;
     }
 
     @Override

@@ -19,14 +19,7 @@ import jmri.util.JUnitUtil;
  */
 public class SimpleTimebaseTest {
 
-    InternalSystemConnectionMemo memo;
-
-    void wait(int msec) {
-        try {
-            super.wait(msec);
-        } catch (Exception e) {
-        }
-    }
+    private InternalSystemConnectionMemo memo = null;
 
     // test creation
     @Test
@@ -53,8 +46,10 @@ public class SimpleTimebaseTest {
     public void testGetBeanType() {
         SimpleTimebase p = new SimpleTimebase(memo);
         Assert.assertEquals("Time", p.getBeanType());
+
+        p.dispose();
     }
-    
+
     @Test
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase(memo);
@@ -90,8 +85,8 @@ public class SimpleTimebaseTest {
         p.setTime(now);
         Assert.assertFalse(p.getRun());  // still
         Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
-        
-        p.setRun(true);       
+
+        p.setRun(true);
         Assert.assertTrue(p.getRun());
 
         p.dispose();
@@ -104,7 +99,7 @@ public class SimpleTimebaseTest {
         p.setRun(false); // prevent clock ticking during test
 
         Instant now = Instant.now();
-        
+
         p.setTime(now);
         Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
         p.dispose();
@@ -116,16 +111,17 @@ public class SimpleTimebaseTest {
         p.setRun(false); // prevent clock ticking during test
 
         Assert.assertEquals(1.0, p.getRate(), 0.01);
-        
+
         p.setRate(2.0);
-        Assert.assertEquals(2.0, p.getRate(), 0.01);        
+        Assert.assertEquals(2.0, p.getRate(), 0.01);
         Assert.assertFalse(p.getRun());  // still
-        
+
+        p.dispose();
     }
-    
+
     double seenNewMinutes;
     double seenOldMinutes;
-    
+
     @Test
     public void testSetSendsUpdate() {
         SimpleTimebase p = new SimpleTimebase(memo);
@@ -145,10 +141,13 @@ public class SimpleTimebaseTest {
 
         // minutes wrap at 60
         if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
-        
+
         Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
+
+        p.dispose();
     }
-    
+
+    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     @Test
     public void testTimeListener() throws TimebaseRateException {
         SimpleTimebase instance = new SimpleTimebase(memo);
@@ -164,11 +163,13 @@ public class SimpleTimebaseTest {
         instance.setRun(true);
         JUnitUtil.waitFor(() -> {
             return instance.getTime().getMinutes() != start.getMinutes();
-        });
+        },"getMinutes increased");
         instance.setRun(false);
         Assert.assertNotNull(l1.getTime());
         Assert.assertNotNull(l2.getTime());
         Assert.assertEquals(l1.getTime(), l2.getTime());
+
+        instance.dispose();
     }
 
     @Test
@@ -178,23 +179,27 @@ public class SimpleTimebaseTest {
         Date now = new Date();
         p.setTime(now);
         p.setRate(100.);
-        wait(100);
+        JUnitUtil.waitFor(100);
         Date then = p.getTime();
         long delta = then.getTime() - now.getTime();
         Assert.assertTrue("delta ge 50 (nominal value)", delta >= 50);
         Assert.assertTrue("delta lt 150 (nominal value)", delta < 150);
+
+        p.dispose();
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
     }
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
+        memo.dispose();
         memo = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     private static class TestTimebaseTimeListener implements PropertyChangeListener {
@@ -209,6 +214,6 @@ public class SimpleTimebaseTest {
         public Date getTime() {
             return time;
         }
-        
+
     }
 }

@@ -61,7 +61,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
     }
 
     @Override
-    public void load(Element child) {
+    public void load(@javax.annotation.Nonnull Element child) {
         Attribute a;
         if ((a = child.getAttribute("isUseEStop")) != null) {
             setUseEStop(a.getValue().equalsIgnoreCase("true"));
@@ -72,7 +72,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 setEStopDelay(Integer.parseInt(a.getValue()));
                 this.asLoadedEStopDelay = this.getEStopDelay();
             } catch (NumberFormatException e) {
-                log.debug(e.getLocalizedMessage(), e);
+                log.debug("EStop Delay \"{}\" is invalid.", a.getValue(), e);
             }
         }
         if ((a = child.getAttribute("isUseMomF2")) != null) {

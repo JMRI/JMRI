@@ -29,7 +29,6 @@ public class VSDManagerFrameTest extends jmri.util.JmriJFrameTestBase {
         jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         super.tearDown();
     }
 

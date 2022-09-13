@@ -130,7 +130,6 @@ public class JsonIdTagSocketServiceTest {
         JUnitUtil.resetProfileManager();
     }
 
-    @SuppressWarnings("deprecation")
     @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.clearShutDownManager();

@@ -1,32 +1,30 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updatedated by Blorec Herv&#233;  2016-08-20--> 
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updatedated by Blorec Herv&#233;  2016-08-20--> 
 <head>
-    <title>
- 	JMRI: Xml Schema Examples
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code xml schema usage">
-    <!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Xml Schema Examples</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code xml schema usage">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
 
-<h1> JMRI: Utilisation de Schema XML</h1>
+    <h1> JMRI: Utilisation de Schema XML</h1>
 
-JMRI utilise XML pour un certains nombres ce but:
+<p>JMRI utilise XML pour un certains nombres ce but:
 organiser les d&#233;finitions de d&#233;codeur, pour ses
 <a href="XmlPersistance.shtml">syst&#232;me de r&#233;manence</a>
 pour la configuration et panneau d'information,
 et pour cr&#233;er des parties du site web depuis d'autres fichiers.
 Cette page d&#233;crit comment nous sp&#233;cifions le 
 contenu de ces fichiers par l'utilisation de
-<a href="http://www.w3schools.com/schema/schema_intro.asp">schema XML</a>.
+<a href="http://www.w3schools.com/schema/schema_intro.asp">schema XML</a>.</p>
 
 <p>
 Par exemples sur la structure de 
@@ -499,8 +497,9 @@ Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr
 </code>
     </p>
 
-<!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

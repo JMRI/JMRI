@@ -16,10 +16,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testFindDefault() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl" });
 
         Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")
@@ -36,10 +33,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testFindFullCode() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl"});
 
         Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")
@@ -66,10 +60,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testFindPartialCode() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl"});
 
         Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")
@@ -96,10 +87,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testDefaultAttribute() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl"});
 
         Element el = new Element("foo")
                 .setAttribute("temp", "a");
@@ -110,10 +98,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testDefaultElement() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl"});
 
         Element el = new Element("foo")
                 .addContent(
@@ -127,10 +112,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testFindFullCodeNoAttribute() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl"});
 
         Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")
@@ -156,10 +138,7 @@ public class LocaleSelectorTest {
 
     @Test
     public void testFindPartialCodeNoAttribute() {
-        LocaleSelector.suffixes
-                = new String[]{
-                    "kl_KL", "kl"
-                };
+        LocaleSelector.setSuffixes( new String[]{"kl_KL", "kl"});
 
         Namespace xml = Namespace.XML_NAMESPACE;
         Element el = new Element("foo")

@@ -32,9 +32,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
                     ((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController().dispose();
             }
         }
-
-        JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
+        JUnitUtil.tearDown();
     }
 }

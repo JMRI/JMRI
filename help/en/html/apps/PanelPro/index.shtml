@@ -18,7 +18,7 @@
 
       <div class="noted">
         <span class="since">since 4.23.3</span>
-        <p>Note: The PanelPro main menu is being changed. See <a href=
+        <p>Note: The PanelPro main menu has changed. See <a href=
         "../LoadStoreWork.shtml">Loading and Storing Your Work</a> for details. The menu references
         below are for the new menu structure with the old menu paths in braces.</p>
       </div>
@@ -35,10 +35,11 @@
         <dt>File</dt>
 
         <dd>
-          The PanelPro tables and panels are stored in a XML data file. There are menu entries for
+          The PanelPro tables and panels are stored in an XML data file. There are menu entries for
           loading and storing this content. See <a href="../LoadStoreWork.shtml">Loading and
-          Storing Your Work</a> for details. There are also options for printing decoder
-          information.
+          Storing Your Work</a> for important details.<br>
+          There are also options for <a href="../DecoderPro/Roster.shtml#summary">printing decoder
+          information</a>.
         </dd>
 
         <dt>Edit</dt>
@@ -243,7 +244,7 @@
       <h3>(Re)opening a panel file</h3>
 
       <p>When starting your next PanelPro session, either load the latest xml file via the
-      <strong>File ⇒ Load table content and panels...</strong> {<em>Old: <strong>Panels ⇒ Open
+      <strong>File &rArr; Load table content and panels...</strong> {<em>Old: <strong>Panels &rArr; Open
       Panel...</strong></em>} menu item or add an "Open file..." entry to <a href=
       "../../../package/apps/TabbedPreferences.shtml#Startup">"Preferences &gt; Start Up"</a> to do
       it for you.</p>

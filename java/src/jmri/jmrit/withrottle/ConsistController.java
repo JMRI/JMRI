@@ -54,7 +54,7 @@ public class ConsistController extends AbstractController implements ProgListene
                 try {
                     file.readFile();
                 } catch (IOException | JDOMException e) {
-                    log.warn("error reading consist file: {}", (Object) e);
+                    log.warn("error reading consist file", (Object) e);
                 }
             }
             isValid = true;
@@ -361,7 +361,7 @@ public class ConsistController extends AbstractController implements ProgListene
                         log.debug("Unable to communicate with programmer manager.");
                     }
                 } catch (NumberFormatException nfe) {
-                    log.warn("Error in setting CVs: {}", (Object) nfe);
+                    log.warn("Error in setting CVs", nfe);
                 }
             }
             InstanceManager.getDefault(AddressedProgrammerManager.class).releaseAddressedProgrammer(pom);

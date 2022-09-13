@@ -18,7 +18,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
-import jmri.script.ScriptOutput;
+import jmri.script.swing.ScriptOutput;
 
 /**
  * Helper class for DefaultConditional that executes the  actions of a
@@ -50,7 +50,7 @@ public class DefaultConditionalExecute {
             increaseCounter(actionCount);
         }
     }
-    
+
     void delayedTurnout(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull TimeTurnout timeTurnout, boolean reset, String devName) {
         if (reset) action.stopTimer();
         if (!action.isTimerActive()) {
@@ -74,7 +74,7 @@ public class DefaultConditionalExecute {
             log.warn("timer already active on request to start delayed turnout action - {}", devName);
         }
     }
-    
+
     void cancelTurnoutTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
         ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
         java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
@@ -92,7 +92,7 @@ public class DefaultConditionalExecute {
             increaseCounter(actionCount);
         }
     }
-    
+
     void lockTurnout(@Nonnull ConditionalAction action, Turnout tl, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (tl == null) {
             errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
@@ -113,7 +113,7 @@ public class DefaultConditionalExecute {
             increaseCounter(actionCount);
         }
     }
-    
+
     void setSignalAppearance(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -432,7 +432,7 @@ public class DefaultConditionalExecute {
             ScriptOutput.writeScript(actionStr);
             // and execute
 
-            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
+            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
             if (se!=null) {
                 try {
                     JmriScriptEngineManager.getDefault().eval(actionStr, se);
@@ -483,7 +483,9 @@ public class DefaultConditionalExecute {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
-            if(!w.getSpeedUtil().setAddress(actionStr)) {
+            if (w.getRunMode() != Warrant.MODE_NONE) {
+                errorList.add("Cannot set when Warrant is running - " + action.getActionString());  // NOI18N
+            } else if(!w.getSpeedUtil().setAddress(actionStr)) {
                 errorList.add("invalid train ID in action - " + action.getDeviceName());  // NOI18N
             }
             increaseCounter(actionCount);
@@ -496,6 +498,19 @@ public class DefaultConditionalExecute {
         } else {
             w.setTrainName(actionStr);
             increaseCounter(actionCount);
+        }
+    }
+
+    void getTrainLocation(@Nonnull ConditionalAction action, Warrant w, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (w == null) {
+            errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+            if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+                mTo.setValue(w.getCurrentBlockName());
+                increaseCounter(actionCount);
+            }
         }
     }
 
@@ -517,12 +532,16 @@ public class DefaultConditionalExecute {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
-            String err = w.setRoute(false, null);
-            if (err == null) {
-                err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
-            }
-            if (err != null) {
-                errorList.add("runManualTrain error - " + err);  // NOI18N
+            if (w.getRunMode() != Warrant.MODE_NONE) {
+                errorList.add("Cannot set when Warrant is running - " + action.getActionString());  // NOI18N
+            } else {
+                String err = w.setRoute(false, null);
+                if (err == null) {
+                    err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
+                }
+                if (err != null) {
+                    errorList.add("runManualTrain error - " + err);  // NOI18N
+                }
             }
             increaseCounter(actionCount);
         }
@@ -634,6 +653,43 @@ public class DefaultConditionalExecute {
         } else {
             b.setOutOfService(false);
             increaseCounter(actionCount);
+        }
+    }
+
+    void getBlockTrainName(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (b == null) {
+            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+            if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+                String name = (String)b.getValue();
+                if (name == null) {
+                    name = " ";
+                }
+                mTo.setValue(name);
+                increaseCounter(actionCount);
+            }
+        }
+    }
+
+    void getBlockWarrant(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+        if (b == null) {
+            errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
+        } else {
+            if (mTo == null) {
+                errorList.add("invalid memory name in action - " + action.getActionString());  // NOI18N
+            } else {
+                Warrant w = b.getWarrant();
+                String name;
+                if (w != null) {
+                    name = w.getDisplayName();
+                } else {
+                    name = " ";
+                }
+                mTo.setValue(name);
+                increaseCounter(actionCount);
+            }
         }
     }
 

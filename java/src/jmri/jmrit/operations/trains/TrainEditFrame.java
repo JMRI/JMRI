@@ -277,7 +277,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         pC.setLayout(new GridBagLayout());
         addItem(pC, commentScroller, 1, 0);
         if (_train != null) {
-            addItem(pC, OperationsPanel.getColorChooserPanel(_train.getComment(), commentColorChooser), 2, 0);
+            addItem(pC, OperationsPanel.getColorChooserPanel(_train.getCommentWithColor(), commentColorChooser), 2, 0);
         } else {
             addItem(pC, OperationsPanel.getColorChooserPanel("", commentColorChooser), 2, 0);
         }
@@ -332,7 +332,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             trainDescriptionTextField.setText(_train.getRawDescription());
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
-            commentTextArea.setText(TrainCommon.getTextColorString(_train.getComment()));
+            commentTextArea.setText(TrainCommon.getTextColorString(_train.getCommentWithColor()));
             cabooseRadioButton.setSelected(_train.isCabooseNeeded());
             fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
@@ -402,6 +402,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         toolMenu.add(new PrintTrainBuildReportAction(true, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(false, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(true, _train));
+        toolMenu.add(new PrintSavedBuildReportAction(false, _train));
+        toolMenu.add(new PrintSavedBuildReportAction(true, _train));
     }
 
     // Save, Delete, Add, Edit, Reset, Set, Clear
@@ -517,7 +519,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (!_train.getName().equals(trainNameTextField.getText().trim()) ||
                 !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
-                !_train.getComment().equals(
+                !_train.getCommentWithColor().equals(
                         TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor()))) {
             _train.setModified(true);
         }
@@ -601,9 +603,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private boolean checkEngineRoad() {
         String road = (String) roadEngineBox.getSelectedItem();
-        String model = (String) modelEngineBox.getSelectedItem();
-        if (numEnginesBox.getSelectedItem().equals("0") || road.equals(NONE) || !model.equals(NONE)) {
+        if (numEnginesBox.getSelectedItem().equals("0") || road.equals(NONE)) {
             return true;
+        }
+        if (!road.equals(NONE) && !_train.isLocoRoadNameAccepted(road)) {
+            JOptionPane.showMessageDialog(this,
+                    MessageFormat.format(Bundle.getMessage("TrainNotThisRoad"), new Object[] { _train.getName(), road }),
+                    MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"), new Object[] { _train.getName() }),
+                    JOptionPane.WARNING_MESSAGE);
+            return false;
         }
         for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
             if (!_train.isTypeNameAccepted(rs.getTypeName())) {
@@ -1000,14 +1008,20 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     private void updateRoadAndLoadStatus() {
         if (_train != null) {
             // road options
-            if (_train.getRoadOption().equals(Train.ALL_ROADS)) {
-                roadOptionButton.setText(Bundle.getMessage("AcceptAll"));
-            } else if (_train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
+            if (_train.getCarRoadOption().equals(Train.INCLUDE_ROADS)) {
                 roadOptionButton.setText(Bundle.getMessage(
-                        "AcceptOnly") + " " + _train.getRoadNames().length + " " + Bundle.getMessage("Roads"));
+                        "AcceptOnly") + " " + _train.getCarRoadNames().length + " " + Bundle.getMessage("Roads"));
+            } else if (_train.getCarRoadOption().equals(Train.EXCLUDE_ROADS)) {
+                roadOptionButton.setText(Bundle.getMessage(
+                        "Exclude") + " " + _train.getCarRoadNames().length + " " + Bundle.getMessage("Roads"));
+            } else if (_train.getLocoRoadOption().equals(Train.INCLUDE_ROADS)) {
+                roadOptionButton.setText(Bundle.getMessage(
+                        "AcceptOnly") + " " + _train.getLocoRoadNames().length + " " + Bundle.getMessage("Roads"));
+            } else if (_train.getLocoRoadOption().equals(Train.EXCLUDE_ROADS)) {
+                roadOptionButton.setText(Bundle.getMessage(
+                        "Exclude") + " " + _train.getLocoRoadNames().length + " " + Bundle.getMessage("Roads"));
             } else {
-                roadOptionButton.setText(Bundle.getMessage(
-                        "Exclude") + " " + _train.getRoadNames().length + " " + Bundle.getMessage("Roads"));
+                roadOptionButton.setText(Bundle.getMessage("AcceptAll"));
             }
             // load options
             if (_train.getLoadOption().equals(Train.ALL_LOADS)) {
@@ -1019,7 +1033,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                 loadOptionButton.setText(Bundle.getMessage(
                         "Exclude") + " " + _train.getLoadNames().length + " " + Bundle.getMessage("Loads"));
             }
-            if (!_train.getRoadOption().equals(Train.ALL_ROADS) || !_train.getLoadOption().equals(Train.ALL_LOADS)) {
+            if (!_train.getCarRoadOption().equals(Train.ALL_ROADS) ||
+                    !_train.getLocoRoadOption().equals(Train.ALL_ROADS) ||
+                    !_train.getLoadOption().equals(Train.ALL_LOADS)) {
                 roadAndLoadStatusPanel.setVisible(true);
             }
         }

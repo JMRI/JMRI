@@ -35,8 +35,7 @@ public class InterchangeTableModel extends TrackTableModel {
         SwingUtilities.invokeLater(() -> {
             tef = new InterchangeEditFrame();
             Track interchange = _tracksList.get(row);
-            tef.initComponents(_location, interchange);
-            tef.setTitle(Bundle.getMessage("EditInterchange"));
+            tef.initComponents(interchange);
         });
     }
     

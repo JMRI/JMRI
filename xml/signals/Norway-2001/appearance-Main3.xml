@@ -26,26 +26,19 @@
     </revision>
   </revhistory>
   
-  <aspecttable>Norway2001</aspecttable>
+  <aspecttable>Norway-2001</aspecttable>
 
   <name>Main 3-lamp Signal</name>
   
   <description>This uses a single head with green, red and green</description>
-  <description>Used in stations, outside staitions and on blocks</description>
-  <description>Red is flashing if used as a block signal</description>
+  <description>Used in stations</description>
   
   <appearances>
 
     <appearance>
-      <aspectname>BlockStop</aspectname>
-      <show>flashred</show>  
-      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3-20A.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20A.gif</imagelink>
-    </appearance>
-    <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>  
-      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3-20B.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/3-20b.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20B.gif</imagelink>
     </appearance>
     <appearance>
@@ -86,9 +79,6 @@
     </dark>
   </specificappearances>
 
-
-
-   <!-- this mast has none or every other mast ahead !!???  -->
   
   <aspectMappings>
    <aspectMapping>
@@ -96,11 +86,6 @@
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>
-   <aspectMapping>
-     <advancedAspect>BlockStop</advancedAspect>
-     <ourAspect>Diverging</ourAspect>
-     <ourAspect>Clear</ourAspect>
-   </aspectMapping> 
    <aspectMapping>
      <advancedAspect>Diverging</advancedAspect>
      <ourAspect>Diverging</ourAspect>
@@ -112,24 +97,18 @@
      <ourAspect>Clear</ourAspect>
    </aspectMapping>
    
-
-
-   <!-- we need to have all possible advanced aspects even though they have nothing to do with our aspect !!!???  -->
    <aspectMapping>
      <advancedAspect>Expect Stop</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Expect Diverging</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>   
    <aspectMapping>
      <advancedAspect>Expect Clear</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>   
@@ -137,38 +116,32 @@
 
    <aspectMapping>
      <advancedAspect>Clear Expect Stop</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Clear Expect Diverging</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>   
    <aspectMapping>
      <advancedAspect>Clear Expect Clear</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>   
 
    <aspectMapping>
      <advancedAspect>Diverging Expect Stop</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Diverging Expect Diverging</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>   
    <aspectMapping>
      <advancedAspect>Diverging Expect Clear</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
      <ourAspect>Clear</ourAspect>
    </aspectMapping>   
@@ -180,7 +153,6 @@
    <aspectMapping>
      <advancedAspect>Off</advancedAspect>
      <ourAspect>Stop</ourAspect>
-     <ourAspect>BlockStop</ourAspect>
    </aspectMapping>
   </aspectMappings>
 </appearancetable>  

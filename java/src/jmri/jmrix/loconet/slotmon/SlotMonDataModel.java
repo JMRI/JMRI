@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.slotmon;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -106,23 +107,23 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case DISPCOLUMN:
                 return "";     // no heading, as button is clear
             case F0COLUMN:
-                return Throttle.F0;
+                return Throttle.getFunctionString(0);
             case F1COLUMN:
-                return Throttle.F1;
+                return Throttle.getFunctionString(1);
             case F2COLUMN:
-                return Throttle.F2;
+                return Throttle.getFunctionString(2);
             case F3COLUMN:
-                return Throttle.F3;
+                return Throttle.getFunctionString(3);
             case F4COLUMN:
-                return Throttle.F4;
+                return Throttle.getFunctionString(4);
             case F5COLUMN:
-                return Throttle.F5;
+                return Throttle.getFunctionString(5);
             case F6COLUMN:
-                return Throttle.F6;
+                return Throttle.getFunctionString(6);
             case F7COLUMN:
-                return Throttle.F7;
+                return Throttle.getFunctionString(7);
             case F8COLUMN:
-                return Throttle.F8;
+                return Throttle.getFunctionString(8);
             case THROTCOLUMN:
                 return Bundle.getMessage("ThrottleIDCol");
             default:
@@ -308,7 +309,10 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case CONSCOLUMN:
                 return new JTextField(4).getPreferredSize().width;
             case DIRCOLUMN:
-                return new JLabel(Bundle.getMessage("DirectionCol")).getPreferredSize().width;
+                // the length of an empty JTextField works on more GUIs
+                int m = Math.max(Bundle.getMessage("DirColForward").length(), Bundle.getMessage("DirColReverse").length());
+                m = Math.max(m, Bundle.getMessage("DirectionCol").length());
+                return new JTextField(m).getPreferredSize().width;
             case DISPCOLUMN:
                 return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             case THROTCOLUMN:
@@ -322,7 +326,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F6COLUMN:
             case F7COLUMN:
             case F8COLUMN:
-                return new JLabel("       ").getPreferredSize().width; // to show checkboxes
+                // to show checkboxes and Text
+                return Math.max(new JCheckBox().getPreferredSize().width, new JTextField("F99").getPreferredSize().width);
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
@@ -402,7 +407,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
-                    log.error(null, ex);
+                    log.error("InterruptedException", ex);
                 }
                 // reset status to original value if not previously 'in use'
                 if (status != LnConstants.LOCO_IN_USE) {
@@ -444,7 +449,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
-                    log.error(null, ex);
+                    log.error("InterruptedException", ex);
                 }
 
                 // reset status to original value if not previously 'in use'

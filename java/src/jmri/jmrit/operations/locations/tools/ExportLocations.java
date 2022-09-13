@@ -54,7 +54,7 @@ public class ExportLocations extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete", e);
         }
     }
 
@@ -271,9 +271,9 @@ public class ExportLocations extends XmlFile {
                             (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : ""),
                             track.getComment(),
-                            track.getCommentBoth(),
-                            track.getCommentPickup(),
-                            track.getCommentSetout());
+                            track.getCommentBothWithColor(),
+                            track.getCommentPickupWithColor(),
+                            track.getCommentSetoutWithColor());
                 }
             }
             fileOut.flush();

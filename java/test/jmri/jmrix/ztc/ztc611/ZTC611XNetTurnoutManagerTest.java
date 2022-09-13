@@ -8,8 +8,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.ztc.ztc611.ZTC611XNetTurnoutManager class.
@@ -27,31 +25,19 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
 
     @Test
     public void testAsAbstractFactory() {
-        lnis = new XNetInterfaceScaffold(new LenzCommandStation());
-        // create and register the manager object
-        ZTC611XNetTurnoutManager l = new ZTC611XNetTurnoutManager(lnis.getSystemConnectionMemo());
-        jmri.InstanceManager.setTurnoutManager(l);
 
         // ask for a Turnout, and check type
-        TurnoutManager t = jmri.InstanceManager.turnoutManagerInstance();
+        TurnoutManager t = jmri.InstanceManager.getDefault(TurnoutManager.class);
+        Assertions.assertTrue(t instanceof ZTC611XNetTurnoutManager );
 
         Turnout o = t.newTurnout("XT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value {}", o);
-        }
-        Assert.assertTrue(null != (ZTC611XNetTurnout) o);
+        Assertions.assertNotNull( o );
+        Assertions.assertTrue( o instanceof ZTC611XNetTurnout );
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: {}", t.getBySystemName("XT21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   {}", t.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != t.getBySystemName("XT21"));
-        Assert.assertTrue(null != t.getByUserName("my name"));
+        Assertions.assertNotNull( t.getBySystemName("XT21"));
+        Assertions.assertNotNull( t.getByUserName("my name"));
 
     }
 
@@ -67,25 +53,26 @@ public class ZTC611XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutM
          Assert.assertEquals("closed text","Closed (-)",l.getClosedText());
     }
 
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        JUnitUtil.tearDown();
-
-    }
+    
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
         l = new ZTC611XNetTurnoutManager(lnis.getSystemConnectionMemo());
-        jmri.InstanceManager.setTurnoutManager(l);
+        jmri.InstanceManager.setDefault(TurnoutManager.class,l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ZTC611XNetTurnoutManagerTest.class);
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+    }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZTC611XNetTurnoutManagerTest.class);
 
 }

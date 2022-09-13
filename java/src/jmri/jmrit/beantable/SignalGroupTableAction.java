@@ -26,11 +26,12 @@ import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.NamedBean.DisplayOptions;
+import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.AlphanumComparator;
 import jmri.util.StringUtil;
-import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -369,6 +370,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
     SignalGroup curSignalGroup = null;
     boolean signalGroupDirty = false;  // true to fire reminder to save work
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     boolean inEditMode = false; // to warn and prevent opening more than 1 editing session
 
     /**
@@ -420,6 +422,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (addFrame == null) { // if it's not yet present, create addFrame
 
             mainSignalComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+            JComboBoxUtil.setupComboBoxMaxRows(mainSignalComboBox);
             mainSignalComboBox.setAllowNull(true); // causes NPE when user selects that 1st line, so do not respond to result null
             addFrame = new JmriJFrame(Bundle.getMessage("AddSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
@@ -682,7 +685,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 // remind to save, if Signal Group was created or edited
-                if (signalGroupDirty) {
+                if (signalGroupDirty && !checkEnabled) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showInfoMessage(Bundle.getMessage("ReminderTitle"),
                                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")),
@@ -1297,7 +1300,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         SignalGroupSignalHeadModel() {
             addPcl();
         }
-        
+
         final void addPcl(){
             InstanceManager.getDefault(SignalHeadManager.class).addPropertyChangeListener(this);
         }

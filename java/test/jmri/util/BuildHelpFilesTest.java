@@ -35,8 +35,7 @@ public class BuildHelpFilesTest {
         }
     }
 
-
-    private class XmlFile extends jmri.jmrit.XmlFile {
+    private static class XmlFile extends jmri.jmrit.XmlFile {
     }
 
     private void parseElement(Element e) throws IOException {

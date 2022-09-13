@@ -35,18 +35,6 @@ public class TrafficController implements jmri.CommandStation {
     }
 
     /**
-     * Static function returning the instance to use.
-     *
-     * @return The registered instance for general use, if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI
-     * multi-system support structure
-     */
-    @Deprecated
-    static public TrafficController instance() {
-        return null;
-    }
-
-    /**
      * Send a specific packet to the rails.
      *
      * @param packet  Byte array representing the packet, including the
@@ -81,11 +69,11 @@ public class TrafficController implements jmri.CommandStation {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("write message: ");
+                    StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
                         f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }
-                    log.debug(f.toString());
+                    log.debug("write message: {}", f);
                 }
                 ostream.write(msg);
             } else {

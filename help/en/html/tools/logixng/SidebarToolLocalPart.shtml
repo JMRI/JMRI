@@ -29,6 +29,11 @@
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGTableTableEditor.shtml">Tables Editor</a>
               </ul>
             </li>
+            <li><em style="padding-left: 1em;">LogixNG Global Variables:<span class="since">since 4.99.7</span></em>
+              <ul>
+                <li><a href="/help/en/package/jmri/jmrit/beantable/LogixNGGlobalVariables.shtml">Global Variables Table</a>
+              </ul>
+            </li>
             <li><em style="padding-left: 1em;">Tools:</em>
               <ul>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGInitializationTable.shtml">Initialization Table</a>

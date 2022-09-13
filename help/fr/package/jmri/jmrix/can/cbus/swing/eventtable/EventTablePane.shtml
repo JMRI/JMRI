@@ -1,16 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: CBUS® Event Table</title>
   <meta name="keywords" content="JMRI CBUS help support event table tool">
-  <title>JMRI: CBUS® Event Table</title><!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1>JMRI : Tableau des événements CBUS</h1>
 
       <ul class="snav">
@@ -36,19 +36,13 @@
       des événements longs on / off, des événements OPC étendus on / off, des événements on / off
       de réponse d'accessoires.</p>
 
-      <p>.</p>
-
       <p>Chaque combinaison d'événement et de nœud est unique, le nombre maximum d'événements est
       de 65 535.</p>
-
-      <p>.</p>
 
       <p>Le nombre maximum de nœuds est également de 65 535.</p>
 
       <p>Le tableau commencera toujours sans aucune entrée, les données ne sont pas maintenues
       entre les sessions.</p>
-
-      <p>.</p>
 
       <p>Vous pouvez ouvrir la table automatiquement en l'ajoutant à votre liste d'actions de
       démarrage JMRI.<br>
@@ -73,8 +67,8 @@
       <img src=
       "../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-filter-611x271.png"
       width="611" height="271" alt="CBUS Event Table Filter" align="right">
-      <h2><a name="stats" id="stats">Colonnes</a>
-      </h2>
+
+      <h2><a name="stats" id="stats">Colonnes</a> </h2>
 
       <p>Les colonnes peuvent être sélectionnées pour être affichées via la barre de menu
       supérieure, elles sont réparties en 4 catégories.</p>
@@ -155,8 +149,6 @@
       Lumières. pour toute adresse matérielle CBUS ( pas les éléments internes ).<br>
       Tous les nouveaux événements trouvés qui ne sont pas déjà sur le tableau seront ajoutés.</p>
 
-      <p>.</p>
-
       <p>Cliquer sur les colonnes JMRI, puis Rafraîchir les colonnes pour alimenter les colonnes
       Événement JMRI activé et Événement JMRI désactivé.</p>
 
@@ -171,6 +163,7 @@
       <img src=
       "../../../../../../../html/hardware/can/cbus/images/swing/event-table/event-table-jmri-links-1096x279.png"
       width="1096" height="279" alt="CBUS Event Table JMRI Links">
+
       <h3><a name="importexport" id="importexport">Imprimer et exporter / importer à partir du MERG
       FCU</a>
       </h3>
@@ -187,8 +180,6 @@
 
       <p>Les événements ne sont pas actuellement maintenus entre les sessions.</p>
 
-      <p>.</p>
-
       <p>Il n'est actuellement pas possible de charger les données des sessions précédentes dans le
       tableau à partir d'un fichier.</p>
 
@@ -199,7 +190,7 @@
 
       <h3><a name="opc" id="opc">Codes d'Opération Pris en cCharge</a>
       </h3>
-      .
+
       <ul>
         <li>ASON - Envoyé lorsque l'utilisateur clique sur le bouton envoyer sur / basculer, numéro
         de nœud 0</li>
@@ -240,7 +231,7 @@
       <p>.</p>
 
       <ul>
-        <li>ASRQ / AREQ - Démarre automatiquement le minuteur de rétrosignalisationr pour
+        <li>ASRQ / AREQ - Démarre automatiquement le minuteur de rétrosignalisation pour
         l'événement associé.</li>
 
         <li>ACON / ACOF</li>
@@ -301,13 +292,12 @@
       <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Page principale d'aide JMRI
       CBUS</a>.</p>
 
-      <p>CBUS® est une marque déposée du Dr Michael Bolton</p>
-      .
+      <p>CBUS® est une marque déposée du Dr Michael Bolton.</p>
       <p>Traduction 2021-03-19</p>
-      <!--#include virtual="/Footer.shtml" -->
-    </div>
-    <!-- closes #mainContent-->
-  </div>
-  <!-- closes #mBody-->
+
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div> <!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

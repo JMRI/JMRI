@@ -26,7 +26,7 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      * @param station Station to which this Section belongs
      * @param bell  Bell driver (can be null)
      */
-    public TrackCircuitSection(String inputSensor, String panelOutput, Station station, Bell bell) {
+    public TrackCircuitSection(String inputSensor, String panelOutput, Station<CodeGroupNoBits, CodeGroupOneBit> station, Bell bell) {
         NamedBeanHandleManager hm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -52,7 +52,7 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
      * @param panelOutput  Turnout name for maintainer call on layout
      * @param station      Station to which this Section belongs
      */
-    public TrackCircuitSection(String inputSensor, String panelOutput, Station station) {
+    public TrackCircuitSection(String inputSensor, String panelOutput, Station<CodeGroupNoBits, CodeGroupOneBit> station) {
         this(inputSensor, panelOutput, station, null);
     }
 
@@ -61,9 +61,9 @@ public class TrackCircuitSection implements Section<CodeGroupNoBits, CodeGroupOn
 
     Bell bell;
 
-    Station station;
+    Station<CodeGroupNoBits, CodeGroupOneBit> station;
     @Override
-    public Station getStation() { return station; }
+    public Station<CodeGroupNoBits, CodeGroupOneBit> getStation() { return station; }
     @Override
     public String getName() { return "TC for "+hInputSensor.getBean().getDisplayName(); }
 

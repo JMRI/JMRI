@@ -1,35 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Setup Fast Clock</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Configuration Horloge Rapide</h1>
 
-      <h2>Introduction aux Horloges Rapides JMRI</h2>JMRI fournit
+      <h2>Introduction aux Horloges Rapides JMRI</h2>
+      <p>JMRI fournit
       une horloge rapide qui peut obtenir son temps d'une horloge
       interne rapide ou d'une horloge rapide mat&eacute;rielle
       s&eacute;lectionn&eacute;e s'il en existe une sur votre
@@ -44,7 +31,7 @@
       prennent effet lorsque vous chargez vos panneaux et la
       configuration. JMRI a aussi une horloge affich&eacute;e qui
       peut fonctionner en dialogues autonome ou sur un panneau
-      PanelPro.
+      PanelPro.</p>
 
       <h3>Configuration de votre Source de Temps</h3>
 
@@ -279,10 +266,11 @@
       </ul>
 
       <h2>Horloge li&eacute;es aux Capteur et &agrave; la
-      M&eacute;moire</h2>Lorsque l'horloge est en marche, JMRI
+      M&eacute;moire</h2>
+      <p>Lorsque l'horloge est en marche, JMRI
       cr&eacute;e un capteur interne et une variable en
       m&eacute;moire que vous pouvez utiliser pour contr&ocirc;ler
-      et acc&eacute;der &agrave; l'horloge.
+      et acc&eacute;der &agrave; l'horloge.</p>
 
       <p>Le capteur ISCLOCKRUNNING contr&ocirc;le si l'horloge est
       en marche (Actif) ou arr&ecirc;t&eacute;e (Inactif).</p>
@@ -300,8 +288,9 @@
       "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">ici</a>.
       </p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

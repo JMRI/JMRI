@@ -37,10 +37,13 @@ public class MqttSignalMast extends AbstractSignalMast {
     }
 
     @Nonnull
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
+            justification = "Public accessibility for scripts that update the prefixes")
     public static String sendTopicPrefix = "track/signalmast/"; // default for constructing topic; public for script access, set by config
+
     public static void setSendTopicPrefix(@Nonnull String prefix) {
         sendTopicPrefix = prefix;
-        log.info("sendTopicPrefix set to {}", prefix);
+        log.debug("sendTopicPrefix set to {}", prefix);
     }
 
     protected String makeSendTopic(String systemName) {
@@ -78,6 +81,7 @@ public class MqttSignalMast extends AbstractSignalMast {
         setMastType(mast);
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
+            log.debug("Parse {} as integer from {}?", tmp, parts[2]);
             int autoNumber = Integer.parseInt(tmp);
             synchronized (MqttSignalMast.class) {
                 if (autoNumber > getLastRef()) {
@@ -85,7 +89,7 @@ public class MqttSignalMast extends AbstractSignalMast {
                 }
             }
         } catch (NumberFormatException e) {
-            log.warn("Auto generated SystemName {} is not in the correct format", systemName);
+            log.debug("Auto generated SystemName {} does not have numeric form, skipping autoincrement", systemName);
         }
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
@@ -102,21 +106,21 @@ public class MqttSignalMast extends AbstractSignalMast {
             log.warn("attempting to set an aspect that has been disabled: {} on mast: {}", aspect, getDisplayName());
             throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
         }
-        log.info("Setting aspect {}", aspect);
+        log.debug("Setting aspect {}", aspect);
         super.setAspect(aspect);
         report();
     }
 
     @Override
     public void setHeld(boolean held) {
-        log.info("Setting held {}", held);
+        log.debug("Setting held {}", held);
         super.setHeld(held);
         report();
     }
 
     @Override
     public void setLit(boolean lit) {
-        log.info("Setting lit {}", lit);
+        log.debug("Setting lit {}", lit);
         super.setLit(lit);
         report();
     }
@@ -128,7 +132,7 @@ public class MqttSignalMast extends AbstractSignalMast {
         sendMessage(msg);
     }
     private void sendMessage(String c) {
-        log.info("publishing \"{}\" on \"{}\"", c, sendTopic);
+        log.debug("publishing \"{}\" on \"{}\"", c, sendTopic);
         mqttAdapter.publish(sendTopic, c);
     }
 

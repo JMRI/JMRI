@@ -1,29 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Blorec Herv&#233; 2013-09-25-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Blorec Herv&#233; 2013-09-25-->
 <head>
-    <title>
- 	JMRI: CVS FAQ
-    </title>
-    <meta name="author" content="Bob Jacobsen">
-    <meta name="keywords" content="JMRI technical code CVS FAQ">
-  <!-- Style -->
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <title>JMRI: CVS FAQ</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI technical code CVS FAQ">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
 <h1>JMRI:Foire Aux Questions CVS (FAQ)</h1>
+
 Ceci est une liste de questions fr&#233;quemment pos&#233;es sur CVS, en particulier sur la fa&#231;on dont nous l'utilisons avec JMRI.
 
 <em> Note: Le code JMRI n'est plus maintenu dans CVS</em>
@@ -97,20 +90,21 @@ contenu le plus r&eacute;cent.
       commande comme ceci:
       <pre>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q co -rRelease-2-1-5
-</pre>Dans cet exemple, "Release-2-1-5 " est le mot-cl&eacute; pour
+</pre><p>Dans cet exemple, "Release-2-1-5 " est le mot-cl&eacute; pour
 la version 2.1.5. Vous pouvez ajuster le mot cl&eacute; au besoin.
 Si vous avez d&eacute;j&agrave; une version v&eacute;rifi&eacute;e
 et que vous souhaitiez mettre &agrave; jour une version
-sp&eacute;cifique, changer le commandement "co" par "update-d"
+sp&eacute;cifique, changer le commandement "co" par "update-d"</p>
 
       <h3><a name="refid" id="refid">Quelles sont ces lignes comme
-      <i>$Revision$</i> and <i>$Id$</i>?</a></h3>Elles sont
+      <i>$Revision$</i> and <i>$Id$</i>?</a></h3>
+      <p>Elles sont
       automatiquement mises &agrave; jour par CVS &agrave; chaque
       fois qu'une nouvelle version du fichier est
       v&eacute;rifi&eacute;, dans le r&eacute;f&eacute;rentiel.
       S'il vous pla&icirc;t ne pas les modifier! Si vous contribuez
       avec vos modifications au projet, ces lignes doivent
-      &ecirc;tre intactes dans le fichier de contribution.
+      &ecirc;tre intactes dans le fichier de contribution.</p>
 
       <h3>Comment puis-je mettre &agrave; jour une copie existante de
       la source de la version actuelle?</h3>
@@ -128,13 +122,11 @@ L'option "-q" supprime un grand nombre de messages d'information pour CVS entre 
 <a name="ds_store"></a>
 <h3>Quels sont ces messages sur .DS_Store files?</h3>
 
-
 Si vous utilisez Mac OS X, CVS peut vous donner des messages &#224; propos de ". DS_Store ".Ils sont utilis&#233;s pour garder une trace de la disposition des fen&#234;tres, etc. Pour supprimer ces messages, il suffit de cr&#233;er un fichier dans votre r&#233;pertoire appel&#233; ". cvsignore" et ajouter une ligne
 de ". DS_Store"  (sans les guillemets). CVS va ignorer tous les . DS_Store dans tous les arbres extrait de votre r&#233;pertoire extrait.
 
 <a name="tags"></a>
 <h3>Quelle est la convention pour les noms d'&#233;tiquettes</h3>
-
 
 En r&#232;gle g&#233;n&#233;rale, trois types de noms d'&#233;tiquettessont utilis&#233;s:
 <ol>
@@ -179,12 +171,14 @@ des versions ult&#233;rieures. Dans ce cas, ils ne se montrent pas du tout lorsq
 Mais parfois, le fichier doit rester, mais nous voulons  qu'il ne soit plus modifiable. Par exemple, un sch&#233;ma plus &#226;g&#233;s ou fichier DTD doit rester de telle sorte que les r&#233;f&#233;rences plus anciennes  continuer &#224; travailler, mais nous ne voulons pas que quelqu'un puissent modifier accidentellement l'ancienne version au lieu de la version actuelle du fichier.
 <p>
 Dans de tels cas, nous utilisons le "cvs watch on " option pour
-verrouiller efficacement le fichier. La version archiv&#233;e du fichier est prot&#233;g&#233;e en &#233;criture ainsi vous ne pouvez pas le modifier sans
-remarquer le probl&#232;me, et les changements ne peuvent pas &#234;tre v&#233;rifi&#233;es de nouveau dans CVS &#224; moins que la montre de fichier soit d&#233;sactiv&#233;e.
+verrouiller efficacement le fichier. La version archiv&#233;e du fichier est prot&#233;g&#233;e en &#233;criture ainsi
+vous ne pouvez pas le modifier sans
+remarquer le probl&#232;me, et les changements ne peuvent pas &#234;tre v&#233;rifi&#233;es de nouveau dans CVS
+&#224; moins que la montre de fichier soit d&#233;sactiv&#233;e.</p>
 
-<!--#include virtual="/Footer.shtml" -->
-
+    <!--#include virtual="/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

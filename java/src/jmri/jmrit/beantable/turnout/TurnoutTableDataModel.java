@@ -20,6 +20,7 @@ import javax.swing.table.TableModel;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.*;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.XTableColumnModel;
 
 import org.slf4j.Logger;
@@ -28,13 +29,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Data model for a Turnout Table.
  * Code originally within TurnoutTableAction.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
  * @author Steve Young Copyright (C) 2021
  */
 public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
-    
+
     static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
     static public final int LOCKCOL = INVERTCOL + 1;
     static public final int EDITCOL = LOCKCOL + 1;
@@ -50,11 +51,11 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     static public final int DIVERGCOL = STRAIGHTCOL + 1;
     static public final int FORGETCOL = DIVERGCOL + 1;
     static public final int QUERYCOL = FORGETCOL + 1;
-    
+
     private boolean _graphicState;
     private TurnoutManager turnoutManager;
-    
-    
+
+
     String closedText;
     String thrownText;
     public String defaultThrownSpeedText;
@@ -65,34 +66,34 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
     String noneText = "None";
-    
+
     public final java.util.Vector<String> speedListClosed = new java.util.Vector<>();
     public final java.util.Vector<String> speedListThrown = new java.util.Vector<>();
-    
-    
+
+
     public TurnoutTableDataModel(){
         super();
         initTable();
     }
-    
+
     public TurnoutTableDataModel(Manager<Turnout> mgr){
         super();
         setManager(mgr);
         initTable();
     }
-    
+
     private void initTable() {
-        
+
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isGraphicTableState();
-        
+
         closedText = turnoutManager.getClosedText();
         thrownText = turnoutManager.getThrownText();
 
         //This following must contain the word Global for a correct match in the abstract turnout
         defaultThrownSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultThrownSpeed());
         defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultClosedSpeed());
-        
+
         //This following must contain the word Block for a correct match in the abstract turnout
         useBlockSpeed = Bundle.getMessage("UseGlobal", "Block Speed");
 
@@ -109,9 +110,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 speedListThrown.add(s);
             }
         }
-        
+
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -312,7 +313,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             c.setSelectedItem(t.getDecoderName());
             return c;
         } else if (col == LOCKOPRCOL) {
-            
+
             java.util.Vector<String> lockOperations = new java.util.Vector<>();  // Vector is a JComboBox ctor; List is not
             int modes = t.getPossibleLockModes();
             if ((modes & Turnout.CABLOCKOUT) != 0 && (modes & Turnout.PUSHBUTTONLOCKOUT) != 0) {
@@ -346,6 +347,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             JComboBox<String> c = new JComboBox<>(speedListClosed);
             c.setEditable(true);
             c.setSelectedItem(speed);
+            JComboBoxUtil.setupComboBoxMaxRows(c);
             return c;
         } else if (col == DIVERGCOL) {
 
@@ -356,6 +358,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             JComboBox<String> c = new JComboBox<>(speedListThrown);
             c.setEditable(true);
             c.setSelectedItem(speed);
+            JComboBoxUtil.setupComboBoxMaxRows(c);
             return c;
             // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
             //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as
@@ -377,7 +380,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         Turnout t = turnoutManager.getBySystemName(name);
         if (t == null) {
             NullPointerException ex = new NullPointerException("Unexpected null turnout in turnout table");
-            log.error(ex.getMessage(), ex); // log with stack trace
+            log.error("No Turnout with system name \"{}\" exists ", name , ex); // log with stack trace
             throw ex;
         }
         if (col == INVERTCOL) {
@@ -508,7 +511,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         }
         return turnoutManager;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -546,7 +549,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     protected String getMasterClassName() {
         return getClassName();
     }
-    
+
     protected String getClassName() {
         return jmri.jmrit.beantable.TurnoutTableAction.class.getName();
     }
@@ -558,10 +561,10 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
     @Override
     public void configureTable(JTable tbl) {
-        
+
         setColumnToHoldButton(tbl, EDITCOL, editButton());
         setColumnToHoldButton(tbl, OPSEDITCOL, editButton());
-        
+
         //Hide the following columns by default
         XTableColumnModel columnModel = (XTableColumnModel) tbl.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(STRAIGHTCOL);
@@ -588,14 +591,14 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         columnModel.setColumnVisible(column, false);
         column = columnModel.getColumnByModelIndex(QUERYCOL);
         columnModel.setColumnVisible(column, false);
-        
-        
+
+
         // and then set user prefs
         super.configureTable(tbl);
-        
+
         columnModel.getColumnByModelIndex(FORGETCOL).setHeaderValue(null);
         columnModel.getColumnByModelIndex(QUERYCOL).setHeaderValue(null);
-        
+
     }
 
     // update table if turnout lock or feedback changes
@@ -662,7 +665,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         }
         return configureJTable(name, new TurnoutTableJTable((TurnoutTableDataModel)model), sorter);
     }
-    
+
     @Override
     protected void setColumnIdentities(JTable table) {
         super.setColumnIdentities(table);
@@ -717,7 +720,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             }
         }
     }
-    
+
     /**
      * Create a {@literal JComboBox<String>} containing all the options for
      * turnout automation parameters for this turnout.
@@ -741,7 +744,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         });
         return cb;
     }
-    
+
     /**
      * Set the turnout's operation info based on the contents of the combo box.
      *
@@ -765,7 +768,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 break;
         }
     }
-    
+
     /**
      * Create action to edit a turnout in Edit pane. (also used in windowTest)
      *
@@ -785,7 +788,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     protected JButton editButton() {
         return new JButton(Bundle.getMessage("EditTurnoutOperation"));
     }
-    
+
     private void updateClosedList() {
         speedListClosed.remove(defaultClosedSpeedText);
         defaultClosedSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + turnoutManager.getDefaultClosedSpeed());
@@ -799,7 +802,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         speedListThrown.add(0, defaultThrownSpeedText);
         fireTableDataChanged();
     }
-    
+
     public void showFeedbackChanged(boolean visible, JTable table ) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         TableColumn column = columnModel.getColumnByModelIndex(KNOWNCOL);
@@ -840,10 +843,10 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         columnModel.setColumnVisible(column, visible);
     }
 
-    
+
     /**
      * Visualize state in table as a graphic, customized for Turnouts (4
-     * states). 
+     * states).
      * Renderer and Editor are identical, as the cell contents
      * are not actually edited, only used to toggle state using
      * {@link #clickOn(Turnout)}.
@@ -958,5 +961,5 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     protected static java.util.concurrent.atomic.AtomicBoolean editingOps = new java.util.concurrent.atomic.AtomicBoolean(false);
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutTableDataModel.class);
-    
+
 }

@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.actions.StringActionStringIO;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -14,7 +15,7 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
 
     public StringActionStringIOXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a StringActionStringIO
      *
@@ -28,14 +29,12 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
         Element element = new Element("StringActionStringIO");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle memory = p.getStringIO();
-        if (memory != null) {
-            element.addContent(new Element("stringIO").addContent(memory.getName()));
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<StringIO>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         return element;
     }
 
@@ -47,16 +46,13 @@ public class StringActionStringIOXml extends jmri.managers.configurexml.Abstract
 
         loadCommon(h, shared);
 
-        Element stringIOName = shared.getChild("stringIO");
-        if (stringIOName != null) {
-            StringIO m = InstanceManager.getDefault(StringIOManager.class).getNamedBean(stringIOName.getTextTrim());
-            if (m != null) h.setStringIO(m);
-            else h.removeStringIO();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<StringIO>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "stringIO");
 
         InstanceManager.getDefault(StringActionManager.class).registerAction(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionStringIOXml.class);
 }

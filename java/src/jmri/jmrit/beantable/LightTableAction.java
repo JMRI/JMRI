@@ -119,6 +119,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
     private LightIntensityPane lightIntensityPanel;
     private LightControlPane lightControlPanel;
 
+    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+
     /**
      * {@inheritDoc}
      */
@@ -154,13 +156,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
             hardwareAddressTextField.setText(""); // reset from possible previous use
             hardwareAddressTextField.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-            
+
             if (hardwareAddressValidator==null){
                 hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, Objects.requireNonNull(prefixBox.getSelectedItem()), true);
             } else {
                 hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
             }
-            
+
             hardwareAddressTextField.setInputVerifier(hardwareAddressValidator);
             prefixBox.addActionListener((evt) -> hardwareAddressValidator.setManager(prefixBox.getSelectedItem()));
             hardwareAddressValidator.addPropertyChangeListener("validation", (evt) -> { // NOI18N
@@ -253,7 +255,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // reset statusBar text
         status1.setText(Bundle.getMessage("LightCreateInst"));
         status1.setForeground(Color.gray);
-        
+
         addFrame.setEscapeKeyClosesWindow(true);
         addFrame.getRootPane().setDefaultButton(create);
 
@@ -314,7 +316,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
     /**
      * Check if LightManager supports variable Lights.
      * TODO: Will only verify against formats which accept "11" as a Hardware address.
-     * 
+     *
      * @return true if system can support variable lights.
      */
     boolean supportsVariableLights() {
@@ -446,52 +448,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             status1.setForeground(Color.red);
             status2.setVisible(true);
         }
-        // Check multiple Light creation request, if supported
-        int numberOfLights = 1;
-        int startingAddress = 0;
-        if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(suName))
-                && addRangeBox.isSelected()) {
-            // get number requested
-            numberOfLights = (Integer) numberToAdd.getValue();
-
-            // convert numerical hardware address
-            try {
-                startingAddress = Integer.parseInt(hardwareAddressTextField.getText());
-
-            } catch (NumberFormatException ex) {
-                status1.setText(Bundle.getMessage("LightError18"));
-                status2.setVisible(false);
-                addFrame.pack();
-                addFrame.setVisible(true);
-                log.error("Unable to convert '{}' to a number.", hardwareAddressTextField.getText());
-                return;
-            }
-            // check that requested address range is available
-            int add = startingAddress;
-            String testAdd;
-            for (int i = 0; i < numberOfLights; i++) {
-                testAdd = lightPrefix + add;
-                if (InstanceManager.getDefault(LightManager.class).getBySystemName(testAdd) != null) {
-                    status1.setText(Bundle.getMessage("LightError19"));
-                    status2.setVisible(true);
-                    addFrame.pack();
-                    addFrame.setVisible(true);
-                    log.error("Range not available - {} already exists.", testAdd);
-                    return;
-                }
-                testAdd = turnoutPrefix + add;
-                if (InstanceManager.turnoutManagerInstance().getBySystemName(testAdd) != null) {
-                    status1.setText(Bundle.getMessage("LightError19"));
-                    status1.setForeground(Color.red);
-                    status2.setVisible(true);
-                    addFrame.pack();
-                    addFrame.setVisible(true);
-                    log.error("Range not available - {} already exists.", testAdd);
-                    return;
-                }
-                add++;
-            }
-        }
 
         // Create a single new Light, or the first Light of a range
         try {
@@ -510,34 +466,39 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
         status2.setText("");
         status2.setVisible(false);
-        
+
         // provide feedback to user
         String feedback = Bundle.getMessage("LightCreateFeedback") + " " + g.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+
         // create additional lights if requested
+        int numberOfLights = 1;
+        if ((InstanceManager.getDefault(LightManager.class).allowMultipleAdditions(suName))
+               && addRangeBox.isSelected()) {
+           // get number requested
+          numberOfLights = (Integer) numberToAdd.getValue();
+        }
         if (numberOfLights > 1) {
-            String sxName = "";
-            String uxName;
-            uxName = uName;
             for (int i = 1; i < numberOfLights; i++) {
-                sxName = lightPrefix + (startingAddress + i); // normalize once more to allow specific connection formatting
-                if (uxName != null) {
-                    uxName = nextName(uxName);
-                }
+
                 try {
-                    g = lightManager.newLight(sxName, uxName);
+                    // bump system name
+                    suName = InstanceManager.getDefault(LightManager.class).getNextValidSystemName(g);
+
+                    // create it
+                    g = lightManager.newLight(suName, uName);
                     log.debug("Light {} created",g);
                     // set up this light the same as the first light
                     lightControlPanel.setLightFromControlTable(g);
                     if (g instanceof VariableLight) {
                         lightIntensityPanel.setLightFromPane((VariableLight)g);
                     }
-                } catch (IllegalArgumentException ex) {
+                } catch (IllegalArgumentException | JmriException ex) {
                     // user input no good
                     handleCreateException(ex, suName);
                     return; // without creating any more Lights
                 }
             }
-            feedback = feedback + " - " + sxName + ", " + uxName;
+            feedback = feedback + " - " + suName + ", " + uName;
         }
         create.setEnabled(false);
         status1.setText(feedback);
@@ -565,9 +526,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (addFrame != null) {
             addFrame.setVisible(false); // hide first for cleaner display
         }
-        
+
         // remind to save, if Light was created or edited
-        if (lightCreatedOrUpdated) {
+        if (lightCreatedOrUpdated && !checkEnabled) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString",
                             Bundle.getMessage("MenuItemLightTable")),
@@ -577,24 +538,24 @@ public class LightTableAction extends AbstractTableAction<Light> {
         lightCreatedOrUpdated = false;
         // finally, get rid of the add/edit Frame
         if (addFrame != null) {
-            
+
             lightControlPanel.dispose(); // closes any popup windows
-            
+
             removePrefixBoxListener(prefixBox);
             InstanceManager.getDefault(UserPreferencesManager.class).setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
             addFrame.dispose();
             addFrame = null;
             create.removePropertyChangeListener(colorChangeListener);
-            
+
         }
     }
 
 
     // TODO: Move the next few static String methods to more appropriate place.
     // LightControl.java ?  Multiple Bundle property files will need changing.
-    
+
     public static String lightControlTitle = Bundle.getMessage("LightControlBorder");
-    
+
     /**
      * Get the description of the type of Light Control.
      *

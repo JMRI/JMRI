@@ -16,6 +16,7 @@ import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.TriStateJCheckBox;
 
 import org.slf4j.Logger;
@@ -62,7 +63,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             turnoutManager = (TurnoutManager) man;
             if (m!=null){ // also update Table Model
                 m.setManager(man);
-            }            
+            }
         }
     }
 
@@ -131,13 +132,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(this::createPressed);
             // create panel
-            
+
             if (hardwareAddressValidator==null){
                 hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, Objects.requireNonNull(prefixBox.getSelectedItem()), true);
             } else {
                 hardwareAddressValidator.setManager(prefixBox.getSelectedItem());
             }
-            
+
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
                     numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
@@ -148,7 +149,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         addFrame.setEscapeKeyClosesWindow(true);
         addFrame.getRootPane().setDefaultButton(addButton);
-        
+
         // reset statusBarLabel text
         statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
         statusBarLabel.setForeground(Color.gray);
@@ -225,6 +226,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         thrownCombo.setEditable(true);
         closedCombo.setEditable(true);
 
+        JComboBoxUtil.setupComboBoxMaxRows(thrownCombo);
+        JComboBoxUtil.setupComboBoxMaxRows(closedCombo);
+
         JPanel thrown = new JPanel();
         thrown.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ThrownSpeed"))));
         thrown.add(thrownCombo);
@@ -290,13 +294,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(e -> InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected()));
-        
+
         showFeedbackBox.setToolTipText(Bundle.getMessage("TurnoutFeedbackToolTip"));
         showLockBox.setToolTipText(Bundle.getMessage("TurnoutLockToolTip"));
         showTurnoutSpeedBox.setToolTipText(Bundle.getMessage("TurnoutSpeedToolTip"));
         showStateForgetAndQueryBox.setToolTipText(Bundle.getMessage("StateForgetAndQueryBoxToolTip"));
     }
-    
+
     @Override
     protected void configureTable(JTable table){
         super.configureTable(table);
@@ -309,7 +313,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         showLockBox.addActionListener(e ->
             ((TurnoutTableDataModel) m).showLockChanged(showLockBox.isSelected(),table));
     }
-    
+
     /**
      * Add the check boxes to show/hide extra columns to the Turnout table
      * frame.
@@ -350,7 +354,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         f.addToBottomBox(showTurnoutSpeedBox, connectionName);
         f.addToBottomBox(showStateForgetAndQueryBox, connectionName);
     }
-    
+
     /**
      * Override to update column select checkboxes.
      * {@inheritDoc}
@@ -365,19 +369,19 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             colsVisible[TurnoutTableDataModel.SENSOR2COL],
             colsVisible[TurnoutTableDataModel.OPSONOFFCOL],
             colsVisible[TurnoutTableDataModel.OPSEDITCOL]});
-        
+
         showLockBox.setState(new boolean[]{
             colsVisible[TurnoutTableDataModel.LOCKDECCOL],
             colsVisible[TurnoutTableDataModel.LOCKOPRCOL]});
-        
+
         showTurnoutSpeedBox.setState(new boolean[]{
             colsVisible[TurnoutTableDataModel.STRAIGHTCOL],
             colsVisible[TurnoutTableDataModel.DIVERGCOL]});
-        
+
         showStateForgetAndQueryBox.setState(new boolean[]{
             colsVisible[TurnoutTableDataModel.FORGETCOL],
             colsVisible[TurnoutTableDataModel.QUERYCOL]});
-        
+
     }
 
     /**
@@ -476,7 +480,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the TurnoutManager
         StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout")));
-        String lastSuccessfulAddress;
+
+        // Compose the proposed system name from parts:
+        sName = prefix + InstanceManager.getDefault(TurnoutManager.class).typeLetter() + curAddress;
 
         int iType = 0;
         int iNum = 1;
@@ -484,22 +490,17 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         boolean useLastType = false;
 
         for (int x = 0; x < numberOfTurnouts; x++) {
-            try {
-                curAddress = InstanceManager.getDefault(TurnoutManager.class).getNextValidAddress(curAddress, prefix, false);
-            } catch (jmri.JmriException ex) {
-                displayHwError(curAddress, ex);
-                // directly add to statusBarLabel (but never called?)
-                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
-                statusBarLabel.setForeground(Color.red);
-                return;
-            }
 
-            lastSuccessfulAddress = curAddress;
-            // Compose the proposed system name from parts:
-            sName = prefix + InstanceManager.getDefault(TurnoutManager.class).typeLetter() + curAddress;
+            Turnout t;
 
             // test for a Light by the same hardware address (number):
-            String testSN = prefix + "L" + curAddress;
+            // String testSN = prefix + "L" + curAddress;  <========= from sName instead
+            StringBuilder sb = new StringBuilder(sName);
+            int prefixLength = Manager.getSystemPrefixLength(sName);
+            sb.replace(prefixLength, prefixLength+1, "L");
+            String testSN = new String(sb);
+            log.trace("{} maps to {}", sName, testSN);
+
             jmri.Light testLight = InstanceManager.lightManagerInstance().
                     getBySystemName(testSN);
             if (testLight != null) {
@@ -543,13 +544,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             if (iNum == 0) {
                 // User specified more bits, but bits are not available - return without creating
                 // Display message in statusBarLabel
-                statusBarLabel.setText(Bundle.getMessage("WarningBitsNotSupported", lastSuccessfulAddress));
+                statusBarLabel.setText(Bundle.getMessage("WarningBitsNotSupported", sName));
                 statusBarLabel.setForeground(Color.red);
                 return;
             } else {
 
                 // Create the new turnout
-                Turnout t;
                 try {
                     t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
@@ -568,7 +568,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     }
                 }
 
-                t.setNumberOutputBits(iNum);
+                t.setNumberControlBits(iNum);
                 // Ask about the type of turnout control if appropriate
                 if (!useLastType) {
                     iType = InstanceManager.getDefault(TurnoutManager.class).askControlType(sName);
@@ -592,10 +592,25 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 }
                 // only mention first and last of rangeBox added
             }
-            if ((uName != null) && !uName.isEmpty()) {
-                uName = nextName(uName);
-            }
 
+            // except on last pass
+            if (x < numberOfTurnouts-1) {
+                // bump system name
+                try {
+                    sName = InstanceManager.getDefault(TurnoutManager.class).getNextValidSystemName(t);
+                } catch (jmri.JmriException ex) {
+                    displayHwError(curAddress, ex);
+                    // directly add to statusBarLabel (but never called?)
+                    statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                    statusBarLabel.setForeground(Color.red);
+                    return;
+                }
+
+                // bump user name
+                if ((uName != null) && !uName.isEmpty()) {
+                    uName = nextName(uName);
+                }
+            }
             // end of for loop creating rangeBox of Turnouts
         }
 

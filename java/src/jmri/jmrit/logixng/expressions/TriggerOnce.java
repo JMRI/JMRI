@@ -136,7 +136,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
                         _childExpression.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load digital expression " + socketSystemName);
+                        log.error("cannot load digital expression {}", socketSystemName);
                     }
                 }
             } else {

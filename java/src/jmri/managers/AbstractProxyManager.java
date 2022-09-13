@@ -36,7 +36,6 @@ import jmri.util.NamedBeanComparator;
  * @param <E> the supported type of NamedBean
  * @author Bob Jacobsen Copyright (C) 2003, 2010, 2018
  */
-@SuppressWarnings("deprecation")
 abstract public class AbstractProxyManager<E extends NamedBean> extends VetoableChangeSupport implements ProxyManager<E>, PropertyChangeListener, Manager.ManagerDataListener<E> {
 
     /**
@@ -101,7 +100,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void addManager(@Nonnull Manager<E> m) {
         Objects.requireNonNull(m, "Can only add non-null manager");
         // check for already present
@@ -228,8 +226,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 
     /**
      * Get the manager for the given system name.
-     * 
-     * @param systemName the given name 
+     *
+     * @param systemName the given name
      * @return the requested manager or null if there is no matching manager
      */
     @CheckForNull
@@ -295,59 +293,26 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
     }
-    
+
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return createSystemName(curAddress, prefix, getNamedBeanClass());
     }
 
-    @SuppressWarnings("deprecation") // user warned by actual manager class
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
+    @Nonnull
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        int prefixLength = Manager.getSystemPrefixLength(currentBean.getSystemName());
+
+        String prefix = currentBean.getSystemName().substring(0, prefixLength);
+        char typeLetter = currentBean.getSystemName().charAt(prefixLength);
+
         for (Manager<E> m : mgrs) {
-            log.debug("NextValidAddress requested for {}", curAddress);
+            log.debug("getNextValidSystemName requested for {}", currentBean.getSystemName());
             if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
-                try {
-                    switch (typeLetter) { // use #getDefaultManager() instead?
-                        case 'T':
-                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
-                        case 'S':
-                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
-                        case 'R':
-                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
-                        default:
-                            return null;
-                    }
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
+                return ((NameIncrementingManager) m).getNextValidSystemName(currentBean); // can thrown JmriException upward
             }
         }
-        return null;
-    }
-    
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting, char typeLetter) throws jmri.JmriException {
-        for (Manager<E> m : mgrs) {
-            log.debug("NextValidAddress requested for {}", curAddress);
-            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
-                try {
-                    switch (typeLetter) { // use #getDefaultManager() instead?
-                        case 'T':
-                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        case 'S':
-                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        case 'L':
-                            return ((LightManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        case 'R':
-                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
-                        default:
-                            return null;
-                    }
-                } catch (jmri.JmriException ex) {
-                    throw ex;
-                }
-            }
-        }
-        return null;
+        throw new jmri.JmriException("\""+currentBean.getSystemName()+"\" did not match a manager");
     }
 
     /** {@inheritDoc} */
@@ -369,7 +334,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     protected Manager<E> createSystemManager(@Nonnull SystemConnectionMemo memo) {
         return null;
     }
-    
+
     /**
      * Get the Default Manager ToolTip.
      * {@inheritDoc}
@@ -378,7 +343,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     public String getEntryToolTip() {
         return getDefaultManager().getEntryToolTip();
     }
-    
+
     /**
      * Try to create a system manager.
      *
@@ -387,12 +352,12 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     private Manager<E> createSystemManager(@Nonnull String systemPrefix) {
         Manager<E> m = null;
-        
+
         ConnectionConfigManager manager = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
         if (manager == null) return null;
-        
+
         ConnectionConfig connections[] = manager.getConnections();
-        
+
         for (ConnectionConfig connection : connections) {
             if (systemPrefix.equals(connection.getAdapter().getSystemPrefix())) {
                 m = createSystemManager(connection.getAdapter().getSystemConnectionMemo());
@@ -402,7 +367,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 //        if (m == null) throw new RuntimeException("Manager not created");
         return m;
     }
-    
+
     /**
      * {@inheritDoc}
      * <p>
@@ -530,7 +495,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             firePropertyChange(event);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      *
@@ -585,30 +550,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         return mgrs.stream().map(m -> m.getObjectCount()).reduce(0, Integer::sum);
     }
 
-    /** {@inheritDoc} */
-    @Nonnull
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        List<E> list = getNamedBeanList();
-        ArrayList<String> retval = new ArrayList<>(list.size());
-        list.forEach(e -> retval.add(e.getSystemName()));
-        return Collections.unmodifiableList(retval);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    @Nonnull
-    public List<E> getNamedBeanList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
-        // by doing this in order by manager and from each managers ordered sets, its finally in order
-        ArrayList<E> tl = new ArrayList<>();
-        mgrs.forEach(m -> tl.addAll(m.getNamedBeanSet()));
-        return Collections.unmodifiableList(tl);
-    }
-
     private TreeSet<E> namedBeanSet = null;
     protected void recomputeNamedBeanSet() {
         if (namedBeanSet != null) { // only maintain if requested
@@ -647,19 +588,16 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
 
-    @SuppressWarnings("deprecation")
     final List<ManagerDataListener<E>> listeners = new ArrayList<>();
 
     /**
@@ -668,7 +606,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * managers.
      */
     @Override
-    @Deprecated
     public void contentsChanged(Manager.ManagerDataEvent<E> e) {
     }
 
@@ -678,8 +615,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * managers.
      */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
         if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
             // just one element added, and we have the object reference
@@ -707,8 +642,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * managers.
      */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
         recomputeNamedBeanSet();
 
@@ -728,8 +661,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     private boolean muted = false;
     /** {@inheritDoc} */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics

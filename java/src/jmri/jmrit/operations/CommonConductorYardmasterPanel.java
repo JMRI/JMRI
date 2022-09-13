@@ -293,7 +293,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         csf = new CarSetFrame();
         csf.initComponents();
-        csf.loadCar(car);
+        csf.load(car);
     }
 
     EngineSetFrame esf = null;
@@ -308,7 +308,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         }
         esf = new EngineSetFrame();
         esf.initComponents();
-        esf.loadEngine(eng);
+        esf.load(eng);
     }
 
     // confirm that all work is done
@@ -359,8 +359,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             textTrainCommentPane.setVisible(false);
         } else {
             textTrainCommentPane.setVisible(true);
-            textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
-            textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
+            textTrainCommentPane.setText(_train.getComment());
+            textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getCommentWithColor()));
         }
     }
 
@@ -376,18 +376,18 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
 
     protected void loadLocationComment(Location location) {
         textLocationCommentPane
-                .setVisible(!location.getComment().equals(Location.NONE) && Setup.isPrintLocationCommentsEnabled());
+                .setVisible(!location.getComment().isEmpty() && Setup.isPrintLocationCommentsEnabled());
         if (textLocationCommentPane.isVisible()) {
-            textLocationCommentPane.setText(TrainCommon.getTextColorString(location.getComment()));
-            textLocationCommentPane.setForeground(TrainCommon.getTextColor(location.getComment()));
+            textLocationCommentPane.setText(location.getComment());
+            textLocationCommentPane.setForeground(TrainCommon.getTextColor(location.getCommentWithColor()));
         }
     }
 
     protected void loadLocationSwitchListComment(Location location) {
-        textSwitchListCommentPane.setVisible(!location.getSwitchListComment().equals(Location.NONE));
+        textSwitchListCommentPane.setVisible(!location.getSwitchListComment().isEmpty());
         if (textSwitchListCommentPane.isVisible()) {
-            textSwitchListCommentPane.setText(TrainCommon.getTextColorString(location.getSwitchListComment()));
-            textSwitchListCommentPane.setForeground(TrainCommon.getTextColor(location.getSwitchListComment()));
+            textSwitchListCommentPane.setText(location.getSwitchListComment());
+            textSwitchListCommentPane.setForeground(TrainCommon.getTextColor(location.getSwitchListCommentWithColor()));
         }
     }
 
@@ -440,14 +440,14 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 if (pickup || setout) {
                     JTextPane commentTextPane = new JTextPane();
                     if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
-                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentBoth()));
-                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentBoth()));
+                        commentTextPane.setText(track.getCommentBoth());
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentBothWithColor()));
                     } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
-                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentPickup()));
-                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentPickup()));
+                        commentTextPane.setText(track.getCommentPickup());
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentPickupWithColor()));
                     } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
-                        commentTextPane.setText(TrainCommon.getTextColorString(track.getCommentSetout()));
-                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentSetout()));
+                        commentTextPane.setText(track.getCommentSetout());
+                        commentTextPane.setForeground(TrainCommon.getTextColor(track.getCommentSetoutWithColor()));
                     }
                     if (!commentTextPane.getText().isEmpty()) {
                         commentTextPane.setBorder(
@@ -561,20 +561,17 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         for (Track track : tracks) {
             for (RouteLocation rld : routeList) {
                 for (Car car : carList) {
+                    // note that a car in train doesn't have a track assignment
+                    if (car.getTrack() == null) {
+                        continue;
+                    }
                     // determine if car is a pick up from the right track
                     // caboose or FRED is placed at end of the train
-                    // passenger trains are already blocked in the car list and
-                    // are added to the end of the train.
-                    if (car.getTrack() != null &&
-                            car.getRouteLocation() == rl &&
-                            car.getRouteDestination() != rl &&
-                            (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName())) &&
-                            ((car.getRouteDestination() == rld &&
-                                    !car.isCaboose() &&
-                                    !car.hasFred() &&
-                                    !car.isPassenger()) ||
-                                    (rld == routeList.get(routeList.size() - 1) &&
-                                            (car.isCaboose() || car.hasFred() || car.isPassenger())))) {
+                    // passenger cars are already blocked in the car list
+                    // passenger cars with negative block numbers are placed at
+                    // the front of the train, positive numbers at the end of
+                    // the train.
+                    if (TrainCommon.isNextCar(car, rl, rld)) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);
@@ -585,19 +582,22 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         // did we already process this car?
                         if (checkBoxes.containsKey("p" + car.getId())) {
                             if (isSetMode && !checkBoxes.get("p" + car.getId()).isSelected()) {
-                                // change to set button so user can remove car from train
+                                // change to set button so user can remove car
+                                // from train
                                 pPickups.add(addSet(car));
                             } else {
                                 pPickups.add(checkBoxes.get("p" + car.getId()));
                             }
-                            // figure out the checkbox text, either single car or utility
+                            // figure out the checkbox text, either single car
+                            // or utility
                         } else {
                             String text;
                             if (car.isUtility()) {
                                 text = trainCommon.pickupUtilityCars(carList, car, isManifest,
                                         !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
-                                    continue; // this car type has already been processed
+                                    continue; // this car type has already been
+                                              // processed
                                 }
                             } else {
                                 text = trainCommon.pickupCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);

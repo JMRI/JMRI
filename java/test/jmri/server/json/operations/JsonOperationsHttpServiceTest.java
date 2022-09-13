@@ -117,7 +117,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(Double.parseDouble(car.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(car.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
         assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
-        assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(car.getOwnerName(), data.path(JSON.OWNER).asText());
         assertEquals(car.getComment(), data.path(JSON.COMMENT).asText());
         assertEquals(car.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
         assertEquals(car.getTrackId(),
@@ -172,7 +172,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(Double.parseDouble(car.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(car.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
         assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
-        assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(car.getOwnerName(), data.path(JSON.OWNER).asText());
         assertEquals(car.getBuilt(), data.path(JsonOperations.BUILT).asText());
         assertEquals(car.getComment(), data.path(JSON.COMMENT).asText());
         assertEquals(car.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
@@ -272,7 +272,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(Double.parseDouble(car.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(car.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
         assertEquals(car.getColor(), data.path(JSON.COLOR).asText());
-        assertEquals(car.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(car.getOwnerName(), data.path(JSON.OWNER).asText());
         assertEquals(car.getComment(), data.path(JSON.COMMENT).asText());
         assertEquals(car.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
         assertEquals(car.getTrackId(),
@@ -344,7 +344,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(Double.parseDouble(engine.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(engine.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
         assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
-        assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(engine.getOwnerName(), data.path(JSON.OWNER).asText());
         assertEquals(engine.getComment(), data.path(JSON.COMMENT).asText());
         assertEquals(engine.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
         assertEquals(engine.getTrackId(),
@@ -385,7 +385,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
             assertEquals(0.0, data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
         }
         assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
-        assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(engine.getOwnerName(), data.path(JSON.OWNER).asText());
         assertEquals(engine.getComment(), data.path(JSON.COMMENT).asText());
         assertEquals(engine.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
         assertEquals(engine.getTrackId(),
@@ -463,7 +463,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(Double.parseDouble(engine.getWeight()), data.path(JsonOperations.WEIGHT).asDouble(), 0.0);
         assertEquals(Double.parseDouble(engine.getWeightTons()), data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
         assertEquals(engine.getColor(), data.path(JSON.COLOR).asText());
-        assertEquals(engine.getOwner(), data.path(JSON.OWNER).asText());
+        assertEquals(engine.getOwnerName(), data.path(JSON.OWNER).asText());
         assertEquals(engine.getComment(), data.path(JSON.COMMENT).asText());
         assertEquals(engine.getLocationId(), data.path(JsonOperations.LOCATION).path(JSON.NAME).asText());
         assertEquals(engine.getTrackId(),
@@ -509,7 +509,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(location.getId(), data.path(JSON.NAME).asText());
         assertEquals(location.getName(), data.path(JSON.USERNAME).asText());
         assertThat(data.path(JSON.COMMENT).isValueNode()).isTrue();
-        assertEquals(location.getComment(), data.path(JSON.COMMENT).asText());
+        assertEquals(location.getCommentWithColor(), data.path(JSON.COMMENT).asText());
         assertThat(data.path(JsonReporter.REPORTER).isValueNode()).isTrue();
         assertThat(data.path(JsonReporter.REPORTER).isNull()).isTrue();
         assertThat(data.path(JsonOperations.CAR_TYPE).isArray()).isTrue();
@@ -744,6 +744,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         validateData(JsonOperations.TRACK, data, false);
         result = service.doPost(JsonOperations.TRACK, id, data, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         track = location.getTrackById(id);
+        assertThat(track).isNotNull();
         assertThat(location).isNotNull();
         validate(result);
         assertEquals(JsonOperations.TRACK, result.path(JSON.TYPE).asText());

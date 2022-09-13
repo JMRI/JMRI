@@ -1,16 +1,14 @@
 package jmri.jmrit.timetable.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
 
 import jmri.jmrit.timetable.swing.*;
 import jmri.util.JUnitUtil;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
@@ -19,14 +17,9 @@ import org.junit.jupiter.api.io.TempDir;
  */
 public class TimeTableXmlTest {
 
-    @Test
-    public void testCreate() {
-        new TimeTableXml();
-    }
-
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testLoadAndStore() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame("");
         Assert.assertNotNull(f);
         boolean loadResult = TimeTableXml.doLoad();
@@ -37,7 +30,7 @@ public class TimeTableXmlTest {
 
     @BeforeEach
     public void setUp(@TempDir File folder) throws IOException {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
@@ -45,15 +38,8 @@ public class TimeTableXmlTest {
 
     @AfterEach
     public void tearDown() {
-       // use reflection to reset the static file location.
-       try {
-            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
-        }
+         // reset the static file location.
+        jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.resetFileLocation();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }

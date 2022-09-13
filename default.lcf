@@ -63,7 +63,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Justification, padding and truncation can be controlled e.g. %-5.10p
 # is left justified, at least 5 and no more than 10 characters wide
 
-log4j.appender.A1.layout.ConversionPattern=%d{ABSOLUTE} %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.A1.layout.ConversionPattern=%d{ABSOLUTE} %-37.37c{8} %-5p - %m [%t]%n
 
 # R is set to output to a single log file. This is defined
 # for systems that can't (or don't want to) have rolling files.
@@ -94,6 +94,10 @@ log4j.category.org.jdom2.transform=SEVERE
 
 # Turn off logging for Java JMDNS; if logs SEVERE and WARNING excessively
 # log4j.category.javax.jmdns=OFF
+log4j.category.javax.jmdns.impl.DNSIncoming=ERROR
+log4j.category.javax.jmdns.impl.constants.DNSRecordClass=ERROR
+log4j.category.javax.jmdns.impl.constants.DNSRecordType=ERROR
+log4j.category.javax.jmdns.impl.DNSIncoming$MessageInputStream=ERROR
 
 # Examples of changing priority of specific categories (classes, packages):
 #
@@ -110,3 +114,4 @@ log4j.category.org.jdom2.transform=SEVERE
 
 #log4j.category.jmri.jmrit.display.layoutEditor=DEBUG
 #log4j.category.jmri.jmrit.display.layoutEditor.LayoutBlock=DEBUG
+#log4j.category.jmri.jmrit.operations=DEBUG

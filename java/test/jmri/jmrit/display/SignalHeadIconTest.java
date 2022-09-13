@@ -1,32 +1,33 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of SignalHeadIcon.
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class SignalHeadIconTest extends PositionableIconTest {
 
-    protected SignalHeadIcon shi = null;
+    private SignalHeadIcon sHIcon = null;
 
     @Test
     @Override
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertNotNull("SignalHeadIcon Constructor", p);
     }
 
     @Test
     public void testGetAppearance() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Assert.assertEquals("SignalHeadIcon Name", "IH1", p.getNameString());
-        Assert.assertEquals("SignalHeadIcon Initial Appearance", 0, shi.headState());
+        Assert.assertEquals("SignalHeadIcon Initial Appearance", 0, sHIcon.headState());
     }
 
     @Override
@@ -36,14 +37,13 @@ public class SignalHeadIconTest extends PositionableIconTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSignalHeadManager();
 
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            shi = new SignalHeadIcon(editor);
-            jmri.implementation.VirtualSignalHead h = new jmri.implementation.VirtualSignalHead("IH1");
-            jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
-            shi.setSignalHead(new jmri.NamedBeanHandle<>("IH1", h));
-            p = shi;
-        }
+        editor = new EditorScaffold();
+        sHIcon = new SignalHeadIcon(editor);
+        jmri.implementation.VirtualSignalHead h = new jmri.implementation.VirtualSignalHead("IH1");
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        sHIcon.setSignalHead(new jmri.NamedBeanHandle<>("IH1", h));
+        p = sHIcon;
+
     }
 
 }

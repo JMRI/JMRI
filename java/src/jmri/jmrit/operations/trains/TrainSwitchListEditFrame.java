@@ -365,29 +365,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
         int y = 1; // vertical position in panel
 
-        Location mainLocation = null; // user can have multiple locations with the "same" name.
-
-        for (Location location : locations) {
+        // note that getUniqueLocationsByNameList() method updates the status of
+        // locations with "similar" names.
+        for (Location location : locationManager.getUniqueLocationsByNameList()) {
             String name = TrainCommon.splitString(location.getName());
-            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
-                location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
-                if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
-                    mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
-                    location.setStatus(Location.UPDATED); // and clear the secondaries
-                }
-                continue;
-            }
-            mainLocation = location;
-        }
-
-        mainLocation = null;
-
-        for (Location location : locations) {
-            String name = TrainCommon.splitString(location.getName());
-            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
-                continue;
-            }
-            mainLocation = location;
             JCheckBox checkBox = new JCheckBox();
             locationCheckBoxes.add(checkBox);
             checkBox.setSelected(location.isSwitchListEnabled());
@@ -400,7 +381,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             addItem(locationPanelCheckBoxes, status, 2, y);
 
             JButton button = new JButton(Bundle.getMessage("Add"));
-            if (!location.getSwitchListComment().equals(Location.NONE)) {
+            if (!location.getSwitchListCommentWithColor().isEmpty()) {
                 button.setText(Bundle.getMessage("ButtonEdit"));
             }
             button.setName(location.getName());
@@ -652,10 +633,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             pC.setLayout(new GridBagLayout());
             commentScroller.setMinimumSize(minScrollerDim);
             addItem(pC, commentScroller, 1, 0);
-            addItem(pC, OperationsPanel.getColorChooserPanel(location.getSwitchListComment(), commentColorChooser), 2, 0);
+            addItem(pC, OperationsPanel.getColorChooserPanel(location.getSwitchListCommentWithColor(), commentColorChooser), 2, 0);
             JScrollPane panelPane = new JScrollPane(pC);
 
-            commentTextArea.setText(TrainCommon.getTextColorString(location.getSwitchListComment()));
+            commentTextArea.setText(TrainCommon.getTextColorString(location.getSwitchListCommentWithColor()));
 
             JPanel pB = new JPanel();
             pB.setLayout(new GridBagLayout());

@@ -26,11 +26,12 @@
     </revision>
   </revhistory>
   
-  <aspecttable>Norway2001</aspecttable>
+  <aspecttable>Norway-2001</aspecttable>
 
   <name>Main 2-lamp Signal</name>
   
   <description>This uses a single head with red over green</description>
+  <description>Used before diverging or difficult routes in station</description>
   
   <appearances>
 
@@ -38,7 +39,7 @@
       <aspectname>Stop</aspectname>
       <show>red</show>      
       <imagelink type="large">../../../resources/icons/NorwegianSignals/Large/2-20b.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20b.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/NorwegianSignals/Aspects/20B.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Diverging</aspectname>
@@ -86,52 +87,42 @@
    </aspectMapping>   
 
 
-   <!-- we need to have all possible advanced aspects even though they have nothing to do with our aspect !!!???  -->
    <aspectMapping>
      <advancedAspect>Expect Stop</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Expect Diverging</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Expect Clear</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>   
 
    <aspectMapping>
      <advancedAspect>Clear Expect Stop</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Clear Expect Diverging</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Clear Expect Clear</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>   
 
    <aspectMapping>
      <advancedAspect>Diverging Expect Stop</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Diverging Expect Diverging</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>
    <aspectMapping>
      <advancedAspect>Diverging Expect Clear</advancedAspect>
-     <ourAspect>Stop</ourAspect>
      <ourAspect>Diverging</ourAspect>
    </aspectMapping>   
 

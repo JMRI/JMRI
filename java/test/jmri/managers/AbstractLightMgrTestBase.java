@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
 
@@ -28,9 +27,9 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
 
     abstract public String getSystemName(int i);
 
-    static protected boolean listenerResult = false;
+    private boolean listenerResult = false;
 
-    protected class Listen implements PropertyChangeListener {
+    private class Listen implements PropertyChangeListener {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -42,6 +41,10 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
+        l.addPropertyChangeListener(new Listen());
+        Light t = l.provide("" + getSystemName(getNumToTest1()));
+        Assertions.assertNotNull( t, "real object returned ");
+        Assertions.assertTrue( listenerResult, "listener triggered");
     }
 
     @Test
@@ -54,7 +57,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         // create
         Light t = l.newLight(getSystemName(getNumToTest1()), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assertions.assertNotNull( t, "real object returned ");
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
@@ -64,7 +67,7 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         // create
         Light t = l.provide("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assertions.assertNotNull( t, "real object returned ");
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
@@ -73,13 +76,14 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         // create
         Light t = l.provideLight("" + getNumToTest1());
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assertions.assertNotNull( t, "real object returned ");
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test
     public void testProvideFailure() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        Throwable throwable = Assert.assertThrows(IllegalArgumentException.class, () -> l.provideLight(""));
+        Assertions.assertNotNull(throwable.getMessage(), "message exists in exception");
         jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
@@ -87,12 +91,12 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
     public void testSingleObject() {
         // test that you always get the same representation
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t1 real object returned ", t1 != null);
+        Assertions.assertNotNull( t1, "t1 real object returned ");
         Assert.assertTrue("same by user ", t1 == l.getByUserName("mine"));
         Assert.assertTrue("same by system ", t1 == l.getBySystemName(getSystemName(getNumToTest1())));
 
         Light t2 = l.newLight(getSystemName(getNumToTest1()), "mine");
-        Assert.assertTrue("t2 real object returned ", t2 != null);
+        Assertions.assertNotNull( t2, "t2 real object returned ");
         // check
         Assert.assertTrue("same new ", t1 == t2);
     }
@@ -121,51 +125,17 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
-    
+
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
-    }
-    
-    @Test
-    public void testGetNextValidAddress() throws JmriException {
-        
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        
-        Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-    
-        Assert.assertNotEquals("requesting ignore existing does not return same", 
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
-                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
-        
-        Light t =  l.provide(getASystemNameWithNoPrefix());
-        Assert.assertNotNull("exists", t);
-        
-        String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
-        Light nextValid =  l.provide(nextValidAddr);
-        Assert.assertNotNull("exists", nextValid);
-        Assert.assertNotEquals(nextValid, t);
-        
-    }
-    
-    @Test
-    public void testIncorrectGetNextValidAddress() {
-        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
-            return;
-        }
-        boolean contains = Assert.assertThrows(JmriException.class,
-                ()->{
-                    l.getNextValidAddress("NOTANINCREMENTABLEADDRESS", l.getSystemPrefix(),false);
-                }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
-        Assert.assertTrue("Exception contained incorrect address", contains);
     }
 
     /**
      * Number of light to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
+     * @return 9 by default.
      */
     protected int getNumToTest1() {
         return 9;

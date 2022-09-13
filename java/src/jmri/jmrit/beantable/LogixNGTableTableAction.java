@@ -132,7 +132,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             InstanceManager.getDefault(NamedTableManager.class).deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("{} : Could not Delete.", e.getMessage());
         }
     }
 
@@ -155,11 +155,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 maxColumnWidth = Math.max(maxColumnWidth, columnWidth[col]);
             }
         }
-        StringBuilder columnLine = new StringBuilder();
-        while (columnLine.length()+2 < maxColumnWidth) {
-            columnLine.append("----------------------");
-        }
-        String columnPadding = String.format("%"+Integer.toString(maxColumnWidth)+"s", "");
+        String columnLine = "-".repeat(maxColumnWidth+2);
+        String columnPadding = " ".repeat(maxColumnWidth);
         StringBuilder sb = new StringBuilder();
         sb.append("+");
         for (int col=0; col <= bean.numColumns(); col++) {
@@ -215,7 +212,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 try {
                     _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
                 } catch (java.io.IOException ex) {
-                    log.error("exception setting file location: {}", ex);  // NOI18N
+                    log.error("exception setting file location", ex);  // NOI18N
                     _csvFileName.setText("");
                 }
             }

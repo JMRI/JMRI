@@ -21,11 +21,12 @@ public class AbstractFrameActionTest {
     }
 
     @Test
+    @SuppressWarnings("deprecated") // WindowOperations.close()
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractFrameAction t = new AbstractFrameAction("TestAction","jmri.util.JmriJFrame"){
         };
-        t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event")); 
+        t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event"));
         // this test creates a JmriJFrame with no title.  find that
         javax.swing.JFrame f = JFrameOperator.waitJFrame("", true, true);
         Assert.assertNotNull("found output frame", f);
@@ -41,7 +42,7 @@ public class AbstractFrameActionTest {
     }
 
     @AfterEach
-    public void tearDown() {        
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

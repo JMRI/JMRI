@@ -224,10 +224,10 @@
         ("UTF-8")</strong> method.</p>
 
         <p>Example: Distant signal of the Entry signal of the Czechoslovak State Railways <a href=
-        "../../../../../xml/signals/CSD-1962-zakladni/appearance-entry_distant.xml">JMRI "ČSD 1962
-        základní návěstidla: Předvěsti" Appearance Table</a> according to the rules is called
-        <strong>PřL</strong>. The signal mast will display two aspects: Clear –
-        <strong>Volno</strong> and Caution – <strong>Výstraha</strong>.</p>
+        "../../../../../xml/signals/CSD-1962-zakladni/appearance-entry_distant.xml">JMRI "&Ccaron;SD 1962
+        z&aacute;kladn&iacute; n&aacute;v&ecaron;stidla: P&rcaron;edv&ecaron;sti" Appearance Table</a> according to the rules is called
+        <strong>P&rcaron;L</strong>. The signal mast will display two aspects: Clear &ndash;
+        <strong>Volno</strong> and Caution &ndash; <strong>V&yacute;straha</strong>.</p>
 
         <p>In the table of Signal masts is distant signal mast with LocoNet DCC address 100 with
         system name <strong>LF$dsm:CSD-1962-zakladni:entry_distant(100)</strong>.</p>
@@ -237,9 +237,9 @@
         <p>Window Script Entry:</p>
 
         <pre>
-    mastDistantUserName = "PřL".decode("UTF-8")
+    mastDistantUserName = "P&rcaron;L".decode("UTF-8")
     aspectClear = "Volno"
-    aspectCaution = "Výstraha".decode("UTF-8")
+    aspectCaution = "V&yacute;straha".decode("UTF-8")
 
     mastDistant = masts.getSignalMast(mastDistantUserName)
     print "System Name:    ", mastDistant.getSystemName()
@@ -257,10 +257,10 @@
 
         <pre>
     System Name:     LF$dsm:CSD-1962-zakladni:entry_distant(100)
-    User Name:       PřL
+    User Name:       P&rcaron;L
     aspect default:  None
     aspect Clear:    Volno
-    aspect Caution:  Výstraha
+    aspect Caution:  V&yacute;straha
                 </pre>
         <p><a href="#HowToTopOfPage">[Go to top of page]</a>
         </p>

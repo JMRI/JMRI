@@ -6,6 +6,7 @@
 package jmri.jmrix.easydcc;
 
 import jmri.JmriException;
+import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 
@@ -83,6 +84,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         t.sendTestReply(r);
         Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
         Assert.assertEquals(" value read", 20, rcvdValue);
+        Assert.assertEquals(" Status read", ProgListener.OK, rcvdStatus);
     }
 
     @Test
@@ -107,6 +109,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
         Assert.assertEquals(" programmer listener invoked", 1, rcvdInvoked);
         Assert.assertEquals(" value read", 20, rcvdValue);
+        Assert.assertEquals(" Status read", ProgListener.OK, rcvdStatus);
     }
 
     /**
@@ -139,10 +142,10 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals(" programmer listener not invoked again", 1, rcvdInvoked);
     }
 
-    // internal class to simulate an EasyDccListener
-    class EasyDccListenerScaffold implements jmri.ProgListener {
+    // internal class to simulate a Programming Listener
+    private class EasyDccListenerScaffold implements ProgListener {
 
-        public EasyDccListenerScaffold() {
+        EasyDccListenerScaffold() {
             rcvdInvoked = 0;
             rcvdValue = 0;
             rcvdStatus = 0;
@@ -175,6 +178,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void tearDown() {
         t.terminateThreads();
         programmer = p = null;
+        memo.dispose();
         memo = null;
         JUnitUtil.tearDown();
     }

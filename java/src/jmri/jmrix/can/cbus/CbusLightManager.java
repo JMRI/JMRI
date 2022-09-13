@@ -1,8 +1,8 @@
 package jmri.jmrix.can.cbus;
 
 import java.util.Locale;
-import javax.annotation.Nonnull;
-import jmri.Light;
+import javax.annotation.*;
+import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -50,12 +50,12 @@ public class CbusLightManager extends AbstractLightManager {
     protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr;
         // first, check validity
-        try {            
+        try {
             validateSystemNameFormat(systemName);
             addr = systemName.substring(getSystemNamePrefix().length());
         } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
-            throw new IllegalArgumentException (e.getMessage());
+            log.error("Unable to create CbusLight, {}", e.getMessage());
+            throw e;
         }
         // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
@@ -102,7 +102,7 @@ public class CbusLightManager extends AbstractLightManager {
         }
         return NameValidity.VALID;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -122,15 +122,25 @@ public class CbusLightManager extends AbstractLightManager {
     public boolean validSystemNameConfig(@Nonnull String systemName) {
         return validSystemNameFormat(systemName) == NameValidity.VALID;
     }
-    
-    /**
-     * Only increments by 1, which is fine for CBUS Lights.
-     * {@inheritDoc}
-     */
-    @Nonnull
+
     @Override
-    protected String getIncrement(String curAddress, int increment) throws jmri.JmriException {
-        return CbusAddress.getIncrement(curAddress);
+    @Nonnull
+    @CheckReturnValue
+    public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
+        if (!allowMultipleAdditions(currentBean.getSystemName())) throw new UnsupportedOperationException("Not supported");
+
+        String currentName = currentBean.getSystemName();
+        String suffix = Manager.getSystemSuffix(currentName);
+        String type = Manager.getTypeLetter(currentName);
+        String prefix = Manager.getSystemPrefix(currentName);
+
+        String nextName = CbusAddress.getIncrement(suffix);
+
+        if (nextName==null) {
+            throw new JmriException("No existing number found when incrementing " + currentName);
+        }
+        return prefix+type+nextName;
+
     }
 
     /**

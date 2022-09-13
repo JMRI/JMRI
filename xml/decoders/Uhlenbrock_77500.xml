@@ -835,14 +835,16 @@
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
+
   <pane>
+    <name>Uhlenbrock Function Remap</name>
     <column>
       <row>
         <display item="Select Function remapping"/>
         <separator/>
         <column>
           <label>
-            <text>                                                 FL(f)</text>
+            <text>                                          FL(f)</text>
           </label>
           <display item="FL(f) controls front light output" format="checkbox" label="Front light output">
             <label>Front light output</label>
@@ -1016,7 +1018,6 @@
         </column>
       </row>
     </column>
-    <name>Uhlenbrock Function Remap</name>
   </pane>
   <pane>
     <column>

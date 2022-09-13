@@ -106,7 +106,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         p3.add(pRadioButtons);
         
-        // row 4 only for interchange / classification tracks
+        // row 4 only for C/I and Staging
         JPanel pFD = new JPanel();
         pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pFD.add(onlyCarsWithFD);
@@ -150,7 +150,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             onlyCarsWithFD.setSelected(_track.isOnlyCarsWithFinalDestinationEnabled());
-            pFD.setVisible(_track.isInterchange());
+            pFD.setVisible(_track.isInterchange() || _track.isStaging());
             enableButtons(true);
         } else {
             enableButtons(false);
@@ -424,11 +424,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);
                                     String itemId = track.getScheduleItemId();
-                                    testDest = car.testDestination(destination, track);
+                                    testDest = car.checkDestination(destination, track);
                                     track.setScheduleMode(Track.SEQUENTIAL);
                                     track.setScheduleItemId(itemId);
                                 } else {
-                                    testDest = car.testDestination(destination, track);
+                                    testDest = car.checkDestination(destination, track);
                                 }
                                 if (testDest.equals(Track.OKAY)) {
                                     break; // done

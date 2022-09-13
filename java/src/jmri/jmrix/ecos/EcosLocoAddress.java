@@ -211,7 +211,7 @@ public class EcosLocoAddress extends Bean implements jmri.LocoAddress {
 
     /*
      The Temporary Entry Field is used to determine if JMRI has had to create the entry on an ad-hoc basis
-     for the throttle.  If this is set to True, the throttle can evaluate this field to determine if the 
+     for the throttle.  If this is set to True, the throttle can evaluate this field to determine if the
      loco should be removed from the Ecos Database when closing the application.
      */
     boolean _tempEntry = false;
@@ -252,17 +252,6 @@ public class EcosLocoAddress extends Bean implements jmri.LocoAddress {
             newDirection = true;
         }
         return newDirection;
-    }
-
-    /**
-     *
-     * @return the number of property change listeners for this object
-     * @deprecated since 4.19.5; use {@link #getPropertyChangeListeners()} and
-     * get the result's length property
-     */
-    @Deprecated
-    public synchronized int getNumPropertyChangeListeners() {
-        return getPropertyChangeListeners().length;
     }
 
     public void dispose() {

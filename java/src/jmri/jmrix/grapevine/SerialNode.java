@@ -293,6 +293,8 @@ public class SerialNode extends AbstractNode {
 
     boolean warned = false;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "only logging 1st warning string passed")
     void warn(String s) {
         if (warned) {
             return;
@@ -404,7 +406,7 @@ public class SerialNode extends AbstractNode {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in markChanges: {}", e);
+            log.error("exception in markChanges", e);
         }
     }
 

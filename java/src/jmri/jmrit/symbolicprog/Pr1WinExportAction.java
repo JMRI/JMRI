@@ -59,9 +59,7 @@ public class Pr1WinExportAction extends AbstractAction {
                 log.debug("start to export to PR1 file {}", file);
             }
 
-            try {
-
-                PrintStream str = new PrintStream(new FileOutputStream(file));
+            try ( PrintStream str = new PrintStream(new FileOutputStream(file)); ) {
 
                 str.println("[DecoderData]");
                 for (int i = 1; i <= 256; i++) {
@@ -88,7 +86,7 @@ public class Pr1WinExportAction extends AbstractAction {
                 str.flush();
                 str.close();
             } catch (IOException ex) {
-                log.error("Error writing file: {}", ex);
+                log.error("Error writing file", ex);
             }
         }
     }

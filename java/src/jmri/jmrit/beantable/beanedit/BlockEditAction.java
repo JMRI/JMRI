@@ -53,12 +53,12 @@ public class BlockEditAction extends BeanEditAction<Block> {
 
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
     JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
-    
+
     private String defaultBlockSpeedText;
-    
+
     protected boolean metricUi = InstanceManager.getDefault(UserPreferencesManager.class)
         .getSimplePreferenceState(BlockTableAction.BLOCK_METRIC_PREF);
-    
+
     BeanItemPanel reporterDetails() {
         BeanItemPanel reporter = new BeanItemPanel();
         reporter.setName(Bundle.getMessage("BeanNameReporter"));
@@ -129,11 +129,12 @@ public class BlockEditAction extends BeanEditAction<Block> {
         cm.setSelected(metricUi);
         inch.addActionListener(this::updateLength);
         cm.addActionListener(this::updateLength);
-        
+
         basic.addItem(new BeanEditItem(lengthSpinner, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText") ));
         basic.addItem(new BeanEditItem(p, Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
         basic.addItem(new BeanEditItem(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
         speedField = new JComboBox<>(speedList);
+        JComboBoxUtil.setupComboBoxMaxRows(speedField);
         basic.addItem(new BeanEditItem(speedField, Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
         basic.addItem(new BeanEditItem(permissiveField, Bundle.getMessage("BlockPermColName"), Bundle.getMessage("BlockPermissiveText")));
 

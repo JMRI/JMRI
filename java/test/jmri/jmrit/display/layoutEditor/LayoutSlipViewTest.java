@@ -1,27 +1,23 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 
-import jmri.JmriException;
 import jmri.util.*;
-import jmri.util.junit.annotations.*;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
-
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of LayoutSlipView
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testSetCoordsCenter() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
@@ -94,7 +90,6 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testScaleCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
@@ -169,7 +164,6 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testTranslateCoords() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
@@ -247,7 +241,6 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
 
     @Test
     public void testFindHitPointType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
@@ -283,11 +276,10 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
         hitType = lvs.findHitPointType(lvs.getCoordsD(), false, true);
         Assert.assertTrue("lvs.findHitPointType equals SLIP_D", hitType == HitPointType.SLIP_D);
     }
-    
 
     @Test
+    @Override
     public void testGetCoordsForConnectionType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
@@ -353,8 +345,8 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     }
 
     @Test
+    @Override
     public void testGetBounds() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
@@ -379,22 +371,24 @@ public class LayoutSlipViewTest extends LayoutTurnoutViewTest {
     private LayoutDoubleSlip      ltd = null;
     private LayoutDoubleSlipView  lvd = null;
 
+    @Override
     @BeforeEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() {
         super.setUp();
-        
-        if (!GraphicsEnvironment.isHeadless()) {            
-            lts = new LayoutSingleSlip("single", layoutEditor);
-            lvs = new LayoutSingleSlipView(lts, new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
-            layoutEditor.addLayoutTrack(lts, lvs);
 
-            ltd = new LayoutDoubleSlip("double", layoutEditor);
-            lvd = new LayoutDoubleSlipView(ltd, new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
-            layoutEditor.addLayoutTrack(ltd, lvd);
-        }
+        Assertions.assertNotNull(layoutEditor);
+        lts = new LayoutSingleSlip("single", layoutEditor);
+        lvs = new LayoutSingleSlipView(lts, new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
+        layoutEditor.addLayoutTrack(lts, lvs);
+
+        ltd = new LayoutDoubleSlip("double", layoutEditor);
+        lvd = new LayoutDoubleSlipView(ltd, new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
+        layoutEditor.addLayoutTrack(ltd, lvd);
+
     }
 
+    @Override
     @AfterEach
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() {

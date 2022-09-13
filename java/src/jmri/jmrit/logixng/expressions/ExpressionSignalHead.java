@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -24,12 +25,9 @@ import jmri.util.TypeConversionUtil;
 public class ExpressionSignalHead extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<SignalHead> _signalHeadHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<SignalHead> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
 
     private NamedBeanAddressing _queryAddressing = NamedBeanAddressing.Direct;
     private QueryType _queryType = QueryType.Appearance;
@@ -45,7 +43,9 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     private String _appearanceFormula = "";
     private ExpressionNode _appearanceExpressionNode;
 
-    private NamedBeanHandle<SignalHead> _exampleSignalHeadHandle;
+    private final LogixNG_SelectNamedBean<SignalHead> _selectExampleNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, SignalHead.class, InstanceManager.getDefault(SignalHeadManager.class), this);
 
 
     public ExpressionSignalHead(String sys, String user)
@@ -61,12 +61,8 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionSignalHead copy = new ExpressionSignalHead(sysName, userName);
         copy.setComment(getComment());
-        if (_signalHeadHandle != null) copy.setSignalHead(_signalHeadHandle);
+        _selectNamedBean.copy(copy._selectNamedBean);
         copy.setAppearance(_signalHeadAppearance);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
         copy.setQueryAddressing(_queryAddressing);
         copy.setQueryType(_queryType);
         copy.setQueryFormula(_queryFormula);
@@ -76,126 +72,16 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         copy.setAppearanceFormula(_appearanceFormula);
         copy.setAppearanceLocalVariable(_appearanceLocalVariable);
         copy.setAppearanceReference(_appearanceReference);
-        copy.setExampleSignalHead(_exampleSignalHeadHandle);
+        _selectExampleNamedBean.copy(copy._selectExampleNamedBean);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    public void setSignalHead(@Nonnull String signalHeadName) {
-        assertListenersAreNotRegistered(log, "setSignalHead");
-        SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
-        if (signalHead != null) {
-            setSignalHead(signalHead);
-        } else {
-            removeSignalHead();
-            log.error("signalHead \"{}\" is not found", signalHeadName);
-        }
+    public LogixNG_SelectNamedBean<SignalHead> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
-        assertListenersAreNotRegistered(log, "setSignalHead");
-        _signalHeadHandle = handle;
-        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setSignalHead(@Nonnull SignalHead signalHead) {
-        assertListenersAreNotRegistered(log, "setSignalHead");
-        setSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
-    }
-
-    public void removeSignalHead() {
-        assertListenersAreNotRegistered(log, "setSignalHead");
-        if (_signalHeadHandle != null) {
-            InstanceManager.getDefault(SignalHeadManager.class).removeVetoableChangeListener(this);
-            _signalHeadHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalHead> getSignalHead() {
-        return _signalHeadHandle;
-    }
-
-    public void setExampleSignalHead(@Nonnull String signalHeadName) {
-        assertListenersAreNotRegistered(log, "setExampleSignalHead");
-        SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
-        if (signalHead != null) {
-            setExampleSignalHead(signalHead);
-        } else {
-            removeExampleSignalHead();
-            log.error("signalHead \"{}\" is not found", signalHeadName);
-        }
-    }
-
-    public void setExampleSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
-        assertListenersAreNotRegistered(log, "setExampleSignalHead");
-        _exampleSignalHeadHandle = handle;
-        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
-    }
-
-    public void setExampleSignalHead(@Nonnull SignalHead signalHead) {
-        assertListenersAreNotRegistered(log, "setExampleSignalHead");
-        setExampleSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
-    }
-
-    public void removeExampleSignalHead() {
-        assertListenersAreNotRegistered(log, "removeExampleSignalHead");
-        if (_exampleSignalHeadHandle != null) {
-            InstanceManager.getDefault(SignalHeadManager.class).removeVetoableChangeListener(this);
-            _exampleSignalHeadHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<SignalHead> getExampleSignalHead() {
-        return _exampleSignalHeadHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
+    public LogixNG_SelectNamedBean<SignalHead> getSelectExampleNamedBean() {
+        return _selectExampleNamedBean;
     }
 
     public void setQueryAddressing(NamedBeanAddressing addressing) throws ParserException {
@@ -310,54 +196,25 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         }
     }
 
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof SignalHead) {
-                if ((_signalHeadHandle != null)
-                        && (evt.getOldValue().equals(_signalHeadHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalHead_SignalHeadInUseSignalHeadExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-                if ((_exampleSignalHeadHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalHeadHandle.getBean()))) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("SignalHead_SignalHeadInUseSignalHeadExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof SignalHead) {
-                if ((_signalHeadHandle != null)
-                        && (evt.getOldValue().equals(_signalHeadHandle.getBean()))) {
-                    removeSignalHead();
-                }
-                if ((_exampleSignalHeadHandle != null)
-                        && (evt.getOldValue().equals(_exampleSignalHeadHandle.getBean()))) {
-                    removeExampleSignalHead();
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.ITEM;
     }
 
-    private int getAppearanceFromName(String name) {
-        if (_signalHeadHandle == null) throw new UnsupportedOperationException("_signalHeadHandle is null");
+    private int getAppearanceFromName(String name, SignalHead signalHead) {
+        if (signalHead == null) throw new UnsupportedOperationException("_signalHeadHandle is null");
 
-        SignalHead sh = _signalHeadHandle.getBean();
-        String[] keys = sh.getValidStateKeys();
+        String[] keys = signalHead.getValidStateKeys();
         for (int i=0; i < keys.length; i++) {
-            if (name.equals(keys[i])) return sh.getValidStates()[i];
+            if (name.equals(keys[i])) return signalHead.getValidStates()[i];
         }
 
-        throw new IllegalArgumentException("Appearance "+name+" is not valid for signal head "+sh.getSystemName());
+        throw new IllegalArgumentException("Appearance "+name+" is not valid for signal head "+signalHead.getSystemName());
     }
 
-    private int getNewAppearance() throws JmriException {
+    private int getNewAppearance(ConditionalNG conditionalNG, SignalHead signalHead)
+            throws JmriException {
 
         switch (_appearanceAddressing) {
             case Direct:
@@ -365,18 +222,18 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
 
             case Reference:
                 return getAppearanceFromName(ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _appearanceReference));
+                        conditionalNG.getSymbolTable(), _appearanceReference), signalHead);
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 return getAppearanceFromName(TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_appearanceLocalVariable), false));
+                        .convertToString(symbolTable.getValue(_appearanceLocalVariable), false), signalHead);
 
             case Formula:
                 return _appearanceExpressionNode != null
                         ? getAppearanceFromName(TypeConversionUtil.convertToString(
                                 _appearanceExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false))
+                                        conditionalNG.getSymbolTable()), false), signalHead)
                         : -1;
 
             default:
@@ -384,7 +241,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         }
     }
 
-    private QueryType getQuery() throws JmriException {
+    private QueryType getQuery(ConditionalNG conditionalNG) throws JmriException {
 
         String oper = "";
         try {
@@ -394,12 +251,12 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
 
                 case Reference:
                     oper = ReferenceUtil.getReference(
-                            getConditionalNG().getSymbolTable(), _queryReference);
+                            conditionalNG.getSymbolTable(), _queryReference);
                     return QueryType.valueOf(oper);
 
                 case LocalVariable:
                     SymbolTable symbolTable =
-                            getConditionalNG().getSymbolTable();
+                            conditionalNG.getSymbolTable();
                     oper = TypeConversionUtil
                             .convertToString(symbolTable.getValue(_queryLocalVariable), false);
                     return QueryType.valueOf(oper);
@@ -408,7 +265,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                     if (_appearanceExpressionNode != null) {
                         oper = TypeConversionUtil.convertToString(
                                 _queryExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false);
+                                        conditionalNG.getSymbolTable()), false);
                         return QueryType.valueOf(oper);
                     } else {
                         return null;
@@ -424,59 +281,26 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        SignalHead signalHead;
+        final ConditionalNG conditionalNG = getConditionalNG();
 
-        switch (_addressing) {
-            case Direct:
-                signalHead = _signalHeadHandle != null ? _signalHeadHandle.getBean() : null;
-                break;
+        SignalHead signalHead = _selectNamedBean.evaluateNamedBean(conditionalNG);
 
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                signalHead = InstanceManager.getDefault(SignalHeadManager.class)
-                        .getNamedBean(ref);
-                break;
+        if (signalHead == null) return false;
 
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                signalHead = InstanceManager.getDefault(SignalHeadManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                signalHead = _expressionNode != null ?
-                        InstanceManager.getDefault(SignalHeadManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        if (signalHead == null) {
-//            log.error("signalHead is null");
-            return false;
-        }
-
-        QueryType query = getQuery();
+        QueryType query = getQuery(conditionalNG);
 
         boolean result = false;
         int queryAppearance;
 
         switch (query) {
             case Appearance:
-                queryAppearance = getNewAppearance();
+                queryAppearance = getNewAppearance(conditionalNG, signalHead);
                 if (queryAppearance != -1) {
                     result = signalHead.getAppearance() == queryAppearance;
                 }
                 break;
             case NotAppearance:
-                queryAppearance = getNewAppearance();
+                queryAppearance = getNewAppearance(conditionalNG, signalHead);
                 if (queryAppearance != -1) {
                     result = ! (signalHead.getAppearance() == queryAppearance);
                 }
@@ -517,36 +341,9 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String query;
         String appearance;
-
-        switch (_addressing) {
-            case Direct:
-                String sensorName;
-                if (_signalHeadHandle != null) {
-                    sensorName = _signalHeadHandle.getBean().getDisplayName();
-                } else {
-                    sensorName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", sensorName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_queryAddressing) {
             case Direct:
@@ -571,9 +368,19 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
 
         switch (_appearanceAddressing) {
             case Direct:
+                SignalHead signalHead = null;
+                if (_selectNamedBean.getAddressing() == NamedBeanAddressing.Direct) {
+                    if (_selectNamedBean.getNamedBean() != null) {
+                        signalHead = _selectNamedBean.getNamedBeanIfDirectAddressing();
+                    }
+                } else {
+                    if (_selectExampleNamedBean.getNamedBean() != null) {
+                        signalHead = _selectExampleNamedBean.getNamedBeanIfDirectAddressing();
+                    }
+                }
                 String a = "";
-                if ((_signalHeadHandle != null) && (_signalHeadHandle.getBean() != null)) {
-                    a = _signalHeadHandle.getBean().getAppearanceName(_signalHeadAppearance);
+                if (signalHead != null) {
+                    a = signalHead.getAppearanceName(_signalHeadAppearance);
                 }
                 appearance = Bundle.getMessage(locale, "AddressByDirect", a);
                 break;
@@ -616,27 +423,29 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_signalHeadHandle != null)) {
+        SignalHead signalHead = _selectNamedBean.getNamedBeanIfDirectAddressing();
 
+       if (!_listenersAreRegistered && (signalHead != null)) {
             switch (_queryType) {
                 case Appearance:
                 case NotAppearance:
-                    _signalHeadHandle.getBean().addPropertyChangeListener("Appearance", this);
+                    signalHead.addPropertyChangeListener("Appearance", this);
                     break;
 
                 case Lit:
                 case NotLit:
-                    _signalHeadHandle.getBean().addPropertyChangeListener("Lit", this);
+                    signalHead.addPropertyChangeListener("Lit", this);
                     break;
 
                 case Held:
                 case NotHeld:
-                    _signalHeadHandle.getBean().addPropertyChangeListener("Held", this);
+                    signalHead.addPropertyChangeListener("Held", this);
                     break;
 
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -644,27 +453,29 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_listenersAreRegistered) {
+        SignalHead signalHead = _selectNamedBean.getNamedBeanIfDirectAddressing();
 
+       if (_listenersAreRegistered && (signalHead != null)) {
             switch (_queryType) {
                 case Appearance:
                 case NotAppearance:
-                    _signalHeadHandle.getBean().removePropertyChangeListener("Appearance", this);
+                    signalHead.removePropertyChangeListener("Appearance", this);
                     break;
 
                 case Lit:
                 case NotLit:
-                    _signalHeadHandle.getBean().removePropertyChangeListener("Lit", this);
+                    signalHead.removePropertyChangeListener("Lit", this);
                     break;
 
                 case Held:
                 case NotHeld:
-                    _signalHeadHandle.getBean().removePropertyChangeListener("Held", this);
+                    signalHead.removePropertyChangeListener("Held", this);
                     break;
 
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -707,12 +518,8 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionSignalHead: bean = {}, report = {}", cdl, report);
-        if (getSignalHead() != null && bean.equals(getSignalHead().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
-        if (getExampleSignalHead() != null && bean.equals(getExampleSignalHead().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
+        _selectExampleNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalHead.class);

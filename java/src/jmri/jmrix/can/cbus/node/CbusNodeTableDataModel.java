@@ -130,7 +130,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
             case CbusConstants.CBUS_NNREL:
                 // from node advising releasing node number
                 if ( getNodeRowFromNodeNum(nodenum) >-1 ) {
-                    log.info( Bundle.getMessage("NdRelease", getNodeName(nodenum), nodenum ) );
+                    log.info("{} : NNREL",Bundle.getMessage("NdRelease", getNodeName(nodenum), nodenum ) );
                     removeRow( getNodeRowFromNodeNum(nodenum),false );
                 }
                 break;
@@ -154,6 +154,7 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch implements C
             switch (ev.getPropertyName()) {
                 case "SINGLENVUPDATE":
                 case "ALLNVUPDATE":
+                    log.debug("Table data model recieves property change row: {}", evRow);
                     fireTableCellUpdated(evRow, BYTES_REMAINING_COLUMN);
                     fireTableCellUpdated(evRow, NODE_TOTAL_BYTES_COLUMN);
                     break;

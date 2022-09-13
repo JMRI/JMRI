@@ -63,7 +63,7 @@
 
         <ol>
           <li>
-            <p>Click <strong>Tables</strong> ⇒ <strong>Turnouts</strong> in the
+            <p>Click <strong>Tables</strong> &rArr; <strong>Turnouts</strong> in the
             <strong>Tools</strong> menu to bring up the <a href=
             "../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>, and click
             the <strong>Add...</strong> button at the bottom of the pane to bring up the <a href=

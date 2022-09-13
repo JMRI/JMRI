@@ -29,7 +29,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPacka
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
 @SuiteDisplayName("Headless Tests")
@@ -42,6 +42,7 @@ public class HeadLessTest {
 
         // start tests
         run();
+        System.exit(0);
     }
 
     /**

@@ -94,14 +94,14 @@
       <h2>LogixNG Components</h2>
 
       <p>The LogixNG tool has three main components. They are accessed via the main PanelPro
-      <strong>Tools ⇒ Tables ⇒ LogixNG</strong> menu path like other JMRI table items. The three
+      <strong>Tools &rArr; Tables &rArr; LogixNG</strong> menu path like other JMRI table items. The three
       LogixNG tables and related content will be <strong><em>loaded</em></strong> and
       <strong><em>stored</em></strong> along with all of the other tables and panels.
       <em><strong>Note:</strong> The only content not stored are the CSV files used for
       tables.</em></p>
 
       <p>The links in the following section, along with the links in the sidebar, are the task
-      specific help pages that are also referenced using JMRI <strong>Help ⇒ Window
+      specific help pages that are also referenced using JMRI <strong>Help &rArr; Window
       Help</strong>.</p>
 
       <h3>LogixNGs and ConditionalNGs</h3>
@@ -162,7 +162,7 @@
       <a id="preferences"></a>
       <h2>LogixNG Preferences</h2>
 
-      <p>LogixNG has settings the can be set in JMRI <strong>Preferences ⇒ LogixNG</strong>.</p>
+      <p>LogixNG has settings the can be set in JMRI <strong>Preferences &rArr; LogixNG</strong>.</p>
 
       <div style="margin-left: 2em">
         <a href="images/Preferences.png"><img src="images/Preferences.png" alt=
@@ -174,7 +174,7 @@
 
         <dd>If checked, the <strong>enabled</strong> LogixNG definitions will be active after the
         completion of the PanelPro xml data file loading. If not checked, the LogixNGs will be
-        inactive until <strong>Tools ⇒ LogixNG ⇒ Start LogixNG</strong> is selected. The default
+        inactive until <strong>Tools &rArr; LogixNG &rArr; Start LogixNG</strong> is selected. The default
         setting is checked.</dd>
 
         <dt>Install Debugger</dt>
@@ -203,13 +203,13 @@
         </dd>
       </dl>
 
-      <p><em><strong>Note</strong>: LogixNG execution can be stopped using <strong>Tools ⇒ LogixNG
-      ⇒ Stop LogixNG</strong>.</em>
+      <p><em><strong>Note</strong>: LogixNG execution can be stopped using <strong>Tools &rArr; LogixNG
+      &rArr; Stop LogixNG</strong>.</em>
       </p>
 
       <h2 id="tools">LogixNG Tools</h2>
 
-      <p>LogixNG has four system level tools at Tools ⇒ LogixNG.</p>
+      <p>LogixNG has four system level tools at Tools &rArr; LogixNG.</p>
 
       <p><strong>Start LogixNG</strong> and <strong>Stop LogixNG</strong> are used to control the
       processing of LogixNG ConditionalNG defintions. When LogixNG is <strong>active</strong> ,

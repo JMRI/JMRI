@@ -11,6 +11,8 @@ import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTableOperator;
 import org.junit.Assume;
 
 /**
@@ -49,6 +51,27 @@ public class LocationTrackBlockingOrderFrameTest extends OperationsTestCase {
         for (Track t : westford.getTracksByBlockingOrderList(null)) {
             Assert.assertEquals("Track blocking order", i++ , t.getBlockingOrder());
         }
+        
+        // test move up button
+        Track t1 = westford.getTracksByBlockingOrderList(null).get(1);
+        Assert.assertEquals("Track blocking order", 2 , t1.getBlockingOrder());
+        JFrameOperator jfo = new JFrameOperator(ltbo);
+        JTableOperator jto = new JTableOperator(jfo);
+        jto.clickOnCell(1, jto.findColumn(Bundle.getMessage("Up")));
+        Assert.assertEquals("Track blocking order", 1 , t1.getBlockingOrder());
+        
+        // test move down button
+        jto.clickOnCell(0, jto.findColumn(Bundle.getMessage("Down")));
+        Assert.assertEquals("Track blocking order", 2 , t1.getBlockingOrder());
+        
+        // test move down last row (there are 6 rows)
+        t1 = westford.getTracksByBlockingOrderList(null).get(5);
+        jto.clickOnCell(5, jto.findColumn(Bundle.getMessage("Down")));
+        Assert.assertEquals("Track blocking order", 1 , t1.getBlockingOrder());
+        
+        // test move up 1st row
+        jto.clickOnCell(0, jto.findColumn(Bundle.getMessage("Up")));
+        Assert.assertEquals("Track blocking order", 6 , t1.getBlockingOrder());
         
         // test reset button
         JemmyUtil.enterClickAndLeave(ltbo.resetButton);

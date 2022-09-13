@@ -21,6 +21,7 @@ public class ZeroConfServiceEventTest {
     public void testCTor() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         JmDNS jmdns[] = InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values().toArray(new JmDNS[0]);
+        Assertions.assertNotNull(jmdns);
         ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance, jmdns[0]);
         Assert.assertNotNull("exists", t);
     }

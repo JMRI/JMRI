@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.Iterator;
-import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -53,8 +51,6 @@ public class RosterMediaPane extends JPanel {
     JTextField _URL = new JTextField(30);
     RosterAttributesTableModel rosterAttributesModel;
 
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-
     /**
      * This constructor allows the panel to be used in visual bean editors, but
      * should not be used in code.
@@ -67,19 +63,19 @@ public class RosterMediaPane extends JPanel {
         super();
         _imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
         _imageFilePath.setDropFolder(Roster.getDefault().getRosterFilesLocation());
-        _imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
+        _imageFilePath.setToolTipText(Bundle.getMessage("MediaRosterImageToolTip"));
         _imageFilePath.setBorder(BorderFactory.createLineBorder(Color.blue));
-        _imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
+        _imageFPlabel.setText(Bundle.getMessage("MediaRosterImageLabel"));
 
         _iconFilePath = new EditableResizableImagePanel(r.getIconPath(), 160, 120);
         _iconFilePath.setDropFolder(Roster.getDefault().getRosterFilesLocation());
-        _iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
+        _iconFilePath.setToolTipText(Bundle.getMessage("MediaRosterIconToolTip"));
         _iconFilePath.setBorder(BorderFactory.createLineBorder(Color.blue));
-        _iconFPlabel.setText(rb.getString("MediaRosterIconLabel"));
+        _iconFPlabel.setText(Bundle.getMessage("MediaRosterIconLabel"));
 
         _URL.setText(r.getURL());
-        _URL.setToolTipText(rb.getString("MediaRosterURLToolTip"));
-        _URLlabel.setText(rb.getString("MediaRosterURLLabel"));
+        _URL.setToolTipText(Bundle.getMessage("MediaRosterURLToolTip"));
+        _URLlabel.setText(Bundle.getMessage("MediaRosterURLLabel"));
 
         rosterAttributesModel = new RosterAttributesTableModel(r); //t, columnNames);
         JTable jtAttributes = new JTable();
@@ -137,7 +133,7 @@ public class RosterMediaPane extends JPanel {
 
         this.setLayout(new BorderLayout());
         add(mediap, BorderLayout.NORTH);
-        add(new JLabel(rb.getString("MediaRosterAttributeTableDescription")), BorderLayout.CENTER); // some nothing in the middle
+        add(new JLabel(Bundle.getMessage("MediaRosterAttributeTableDescription")), BorderLayout.CENTER); // some nothing in the middle
         jsp.setMinimumSize(tableDim);
         jsp.setMaximumSize(tableDim);
         jsp.setPreferredSize(tableDim);
@@ -172,13 +168,13 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    private class RosterAttributesTableModel extends AbstractTableModel {
+    private static class RosterAttributesTableModel extends AbstractTableModel {
 
         Vector<KeyValueModel> attributes;
-        String titles[];
+        String[] titles;
         boolean wasModified;
 
-        private class KeyValueModel {
+        private static class KeyValueModel {
 
             public KeyValueModel(String k, String v) {
                 key = k;
@@ -191,12 +187,12 @@ public class RosterMediaPane extends JPanel {
             setModel(r);
 
             titles = new String[2];
-            titles[0] = rb.getString("MediaRosterAttributeName");
-            titles[1] = rb.getString("MediaRosterAttributeValue");
+            titles[0] = Bundle.getMessage("MediaRosterAttributeName");
+            titles[1] = Bundle.getMessage("MediaRosterAttributeValue");
         }
 
         public void setModel(RosterEntry r) {
-            attributes = new Vector<KeyValueModel>(r.getAttributes().size());
+            attributes = new Vector<>(r.getAttributes().size());
             for (String key : r.getAttributes()) {
                 attributes.add(new KeyValueModel(key, r.getAttribute(key)));
             }
@@ -211,13 +207,8 @@ public class RosterMediaPane extends JPanel {
                 }
             }
             //remove undefined keys
-            Iterator<String> ite = r.getAttributes().iterator();
-            while (ite.hasNext()) {
-                if (!keyExist(ite.next())) // not very efficient algorithm!
-                {
-                    ite.remove();
-                }
-            }
+            // not very efficient algorithm!
+            r.getAttributes().removeIf(s -> !keyExist(s));
             wasModified = false;
         }
 

@@ -145,7 +145,6 @@ public class SensorIconWindowTest {
     public void tearDown() throws Exception {
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

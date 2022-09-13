@@ -347,6 +347,7 @@ public class ThrottleFrameTest {
             InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
             JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
         }
+        JUnitUtil.clearShutDownManager();
         panel = null;
         frame = null;
         to = null;

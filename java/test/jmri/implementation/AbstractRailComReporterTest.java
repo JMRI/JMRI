@@ -2,6 +2,8 @@ package jmri.implementation;
 
 import jmri.util.JUnitUtil;
 import jmri.IdTag;
+import jmri.InstanceManager;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -33,7 +35,7 @@ public class AbstractRailComReporterTest extends AbstractReporterTestBase {
 
         // send a null report.
 
-        ((AbstractRailComReporter)r).notify((IdTag)null);
+        ((AbstractRailComReporter)r).notify(null);
         // Check that both CurrentReport and LastReport are not null
         Assert.assertNull("CurrentReport Object Null", r.getCurrentReport());
         Assert.assertNotNull("LastReport Object exists", r.getLastReport());
@@ -51,9 +53,11 @@ public class AbstractRailComReporterTest extends AbstractReporterTestBase {
     @Override
     public void tearDown() {
         r = null;
-        JUnitUtil.clearShutDownManager(); // would be better to check and clean up specifics in tests
+        if ( InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null ) {
+            InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
+        }
+        // JUnitUtil.clearShutDownManager(); // would be better to check and clean up specifics in tests
         JUnitUtil.tearDown();
     }
-
 
 }

@@ -184,7 +184,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         }
         return ret;  
     }
-
+ 
     /**
      * Can this command station handle the Servo and Vpin Turnout creation message formats?
      * @return true if yes or false if no
@@ -194,6 +194,45 @@ public class DCCppCommandStation implements jmri.CommandStation {
         try {
             // SERVO and VPIN turnout commands added at 3.2.0
             ret = (jmri.Version.compareCanonicalVersions(version, "3.2.0") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
+     * Does this command station need the throttle register to be sent?
+     * @return true if yes or false if no
+     */
+    public boolean isThrottleRegisterRequired() {
+        boolean ret = true;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.0") < 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
+     * Can this command station handle the newer (V4) function message format?
+     * @return true if yes or false if no
+     */
+    public boolean isFunctionV4Supported() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.0") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
+     * Can this command station handle the newer (V4) program message formats?
+     * @return true if yes or false if no
+     */
+    public boolean isProgramV4Supported() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.0.1") >= 0);
         } catch (IllegalArgumentException ignore) {
         }
         return ret;  

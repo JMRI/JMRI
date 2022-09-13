@@ -93,7 +93,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
                 writer.write(s, 0, s.length());
             }
         } catch (IOException ex) {
-            log.warn("error during printing: {}", ex);
+            log.warn("error during printing", ex);
         }
 
         // Loop through the Roster, printing as needed
@@ -125,11 +125,7 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         parameter = parameter.toLowerCase();
         value = value.toLowerCase();
         if (parameter.equals("ispreview")) {
-            if (value.equals("true")) {
-                isPreview = true;
-            } else {
-                isPreview = false;
-            }
+            isPreview = value.equals("true");
         }
     }
 

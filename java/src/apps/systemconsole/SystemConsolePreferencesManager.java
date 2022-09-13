@@ -30,14 +30,12 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     public static final String SCHEME = "scheme";
     public static final String FONT_SIZE = "fontSize";
     public static final String FONT_STYLE = "fontStyle";
-    public static final String FONT_FAMILY = "fontFamily";
     public static final String WRAP_STYLE = "wrapStyle";
 
     // default settings
     private int scheme = 0; // Green on Black
     private int fontSize = 12;
     private int fontStyle = Font.PLAIN;
-    private final String fontFamily = "Monospaced";  // NOI18N
     private int wrapStyle = SystemConsole.WRAP_STYLE_WORD;
 
     /*
@@ -154,24 +152,6 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
                 SystemConsole.getInstance().setFontStyle(this.fontStyle);
             }
         }
-    }
-
-    /**
-     * @return the fontFamily
-     * @deprecated since 4.19.6 without replacement
-     */
-    @Deprecated
-    public String getFontFamily() {
-        return fontFamily;
-    }
-
-    /**
-     * @param fontFamily the fontFamily to set
-     * @deprecated since 4.19.6 without replacement
-     */
-    @Deprecated
-    public void setFontFamily(String fontFamily) {
-        // does nothing
     }
 
     /**

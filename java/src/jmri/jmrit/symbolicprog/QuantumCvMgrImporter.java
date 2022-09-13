@@ -70,7 +70,7 @@ public class QuantumCvMgrImporter {
             }
             fileReader.close();
         } catch (IOException e) {
-            log.error("Error reading file: {}", e);
+            log.error("Error reading file", e);
         }
     }
 

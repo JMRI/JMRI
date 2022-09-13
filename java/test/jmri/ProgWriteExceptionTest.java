@@ -14,12 +14,12 @@ import org.junit.Assert;
 public class ProgWriteExceptionTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCconstructor(){
       Assert.assertNotNull("ProgWriteException constructor",new ProgWriteException());
    }
 
    @Test
-   public void StringConstructorTest(){
+   public void testStringConstructor(){
       Assert.assertNotNull("ProgWriteException string constructor",new ProgWriteException("test exception"));
    }
 

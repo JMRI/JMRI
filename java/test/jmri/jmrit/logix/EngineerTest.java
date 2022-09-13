@@ -17,13 +17,14 @@ public class EngineerTest {
     @Test
     public void testCTor() {
         Warrant warrant = new Warrant("IW0", "AllTestWarrant");
+        warrant.addThrottleCommand(new ThrottleSetting());
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
         jmri.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
         jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
         Engineer t = new Engineer(warrant, throttle);
         assertThat(t).withFailMessage("exists").isNotNull();
         t.stopRun(true, true);
-        JUnitAppender.assertErrorMessageStartsWith("Throttle Manager unavailable or cannot provide throttle. 5(S)");
+        JUnitAppender.assertErrorMessageStartsWith("AllTestWarrant releaseThrottle. Throttle Manager unavailable or cannot provide throttle. 5(S)");
         warrant.stopWarrant(true, true);
     }
 

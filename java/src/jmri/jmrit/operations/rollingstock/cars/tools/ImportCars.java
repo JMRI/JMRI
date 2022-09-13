@@ -527,7 +527,7 @@ public class ImportCars extends ImportRollingStock {
                     car.setLength(carLength);
                     car.setWeight(carWeight);
                     car.setColor(carColor);
-                    car.setOwner(carOwner);
+                    car.setOwnerName(carOwner);
                     car.setBuilt(carBuilt);
                     car.setLoadName(carLoadName);
                     car.setKernel(InstanceManager.getDefault(KernelManager.class).newKernel(carKernelName));
@@ -563,7 +563,7 @@ public class ImportCars extends ImportRollingStock {
                                 car.setUtility(true);
                             }
                             if (ext[i].equals(Car.HAZARDOUS_EXTENSION)) {
-                                car.setHazardous(true);
+                                car.setCarHazardous(true);
                             }
                         }
                     }

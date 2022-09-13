@@ -219,13 +219,13 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             al.alGetError();
             log.info("Initialised JOAL using OpenAL: vendor - {} version - {}", al.alGetString(AL.AL_VENDOR), al.alGetString(AL.AL_VERSION));
         } catch (ALException e) {
-            log.warn("Error initialising JOAL: {}", e);
+            log.warn("Error initialising JOAL", jmri.util.LoggingUtil.shortenStacktrace(e));
             return false;
-        } catch (UnsatisfiedLinkError e) {
-            log.warn("Error loading OpenAL libraries: {}", e);
+        } catch (UnsatisfiedLinkError | NoClassDefFoundError e) {
+            log.warn("Error loading OpenAL libraries: {}", e.getMessage());
             return false;
         } catch (RuntimeException e) {
-            log.warn("Error initialising OpenAL: {}", e);
+            log.warn("Error initialising OpenAL", jmri.util.LoggingUtil.shortenStacktrace(e));
             return false;
         }
 
@@ -325,12 +325,13 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
     @Override
     public String toString() {
+        if (al == null) return "JoalAudioFactory, using null";
         try {
             return "JoalAudioFactory, using OpenAL:"
                     + " vendor - " + al.alGetString(AL.AL_VENDOR)
                     + " version - " + al.alGetString(AL.AL_VERSION);
         } catch (NullPointerException e) {
-            log.error("NPE from JoalAudioFactory: {}",e);
+            log.error("NPE from JoalAudioFactory",e);
             return "JoalAudioFactory, using Null";
         }
     }

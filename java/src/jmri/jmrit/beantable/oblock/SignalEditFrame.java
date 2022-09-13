@@ -6,6 +6,8 @@ import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JComboBoxUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,6 +117,7 @@ public class SignalEditFrame extends JmriJFrame {
         p1.add(signalMastLabel);
         p1.add(sigMastComboBox);
         sigMastComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(sigMastComboBox);
         p1.add(mastName);
         configGrid.add(p1);
 
@@ -122,6 +125,7 @@ public class SignalEditFrame extends JmriJFrame {
         p1.add(signalHeadLabel);
         p1.add(sigHeadComboBox);
         sigHeadComboBox.setAllowNull(true);
+        JComboBoxUtil.setupComboBoxMaxRows(sigHeadComboBox);
         p1.add(headName);
         configGrid.add(p1);
         sigMastComboBox.addActionListener(e -> {
@@ -141,6 +145,7 @@ public class SignalEditFrame extends JmriJFrame {
         p1 = new JPanel();
         p1.add(portalLabel);
         p1.add(portalComboBox); // combo has a blank first item
+        JComboBoxUtil.setupComboBoxMaxRows(portalComboBox);
         portalComboBox.addActionListener(e -> {
             if (portalComboBox.getSelectedIndex() > 0) {
                 fromBlock.setText(pm.getPortal((String) portalComboBox.getSelectedItem()).getFromBlockName());
@@ -234,10 +239,10 @@ public class SignalEditFrame extends JmriJFrame {
 
         //main.add(p);
         frame.getContentPane().add(p);
-        
+
         frame.setEscapeKeyClosesWindow(true);
         frame.getRootPane().setDefaultButton(ok);
-        
+
         //frame.add(scroll);
         frame.pack();
     }

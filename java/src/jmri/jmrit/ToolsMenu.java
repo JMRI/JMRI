@@ -4,6 +4,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 
 /**
@@ -65,6 +66,7 @@ public class ToolsMenu extends JMenu {
         logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGTable"), "jmri.jmrit.beantable.LogixNGTableAction"));
         logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGModuleTable"), "jmri.jmrit.beantable.LogixNGModuleTableAction"));
         logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGTableTable"), "jmri.jmrit.beantable.LogixNGTableTableAction"));
+        logixNG_Menu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixNGGlobalVariableTableAction"), "jmri.jmrit.beantable.LogixNGGlobalVariableTableAction"));
         tableMenu.add(logixNG_Menu);
 
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemBlockTable"), "jmri.jmrit.beantable.BlockTableAction"));
@@ -81,7 +83,8 @@ public class ToolsMenu extends JMenu {
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle")));
+        ThrottleCreationAction.addNewThrottleItemsToThrottleMenu(throttleMenu);
+
         throttleMenu.add(new jmri.jmrit.throttle.ThrottlesListAction(Bundle.getMessage("MenuItemThrottlesList")));
         throttleMenu.addSeparator();
         throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveThrottleLayout")));
@@ -105,8 +108,14 @@ public class ToolsMenu extends JMenu {
         add(consistAction);
 
         // disable the consist tool if there is no consist Manager
-        if (jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class) == null) {
+        jmri.ConsistManager consistManager = jmri.InstanceManager.getNullableDefault(jmri.ConsistManager.class);
+        if (consistManager == null) {
             consistAction.setEnabled(false);
+        } else if (consistManager.canBeDisabled()) {
+            consistManager.registerEnableListener((value) -> {
+                consistAction.setEnabled(value);
+            });
+            consistAction.setEnabled(consistManager.isEnabled());
         }
 
         JMenu clockMenu = new JMenu(Bundle.getMessage("MenuClocks"));

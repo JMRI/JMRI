@@ -16,6 +16,7 @@ import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
+import jmri.util.swing.JComboBoxUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -108,6 +109,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
         p.add(schemes);
         add(p);
+        JComboBoxUtil.setupComboBoxMaxRows(schemes);
 
         p = new JPanel(new FlowLayout());
 
@@ -120,6 +122,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
         p.add(fontSize);
         p.add(fontSizeUoM);
+        JComboBoxUtil.setupComboBoxMaxRows(fontSize);
 
         fontStyleBold.setFont(fontStyleBold.getFont().deriveFont(Font.BOLD));
         fontStyleBold.addActionListener((ActionEvent e) -> {
