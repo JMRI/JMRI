@@ -33,9 +33,6 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
      */
     public ThrottleFrameManager() {
         throttleWindows = new ArrayList<>(0);
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         buildThrottleListFrame();
     }
 
