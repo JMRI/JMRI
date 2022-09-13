@@ -435,7 +435,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             super();
 
             JPanel gridPane = new JPanel(new GridBagLayout());
-            JPanel [] flagPane = new JPanel[4];
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.HORIZONTAL;
 
@@ -443,6 +442,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
                 flagPanels = 4;
             }
+            JPanel [] flagPane = new JPanel[flagPanels];
+            
             for (int i = 0; i < flagPanels; i++) {
                 csFlags[i] = new CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
                 flagPane[i] = csFlags[i].getContents();
@@ -450,7 +451,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             csFlags[0].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS));
             csFlags[1].setFlags(getSelectValue(Sprog3PlusPaneProvider.OPERATIONS_FLAGS));
             csFlags[2].setFlags(getSelectValue(Sprog3PlusPaneProvider.DEBUG_FLAGS));
-            csFlags[3].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS_2));
+            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
+                csFlags[3].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS_2));
+            }
             
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
                 Bundle.getMessage("ProgOnMode"),
@@ -511,8 +514,10 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             gridPane.add(flagPane[DEBUG_FLAGS], c);
             c.gridx++;
             
-            gridPane.add(flagPane[USER_FLAGS_2], c);
-
+            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
+                gridPane.add(flagPane[USER_FLAGS_2], c);
+            }
+            
             add(gridPane);
         }
         
