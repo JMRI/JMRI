@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -12,6 +13,11 @@ import org.junit.jupiter.api.*;
  */
 public class CbusNodeParameterManagerTest {
 
+    private CanSystemConnectionMemo memo;
+    private CbusBasicNodeWithManagers node;
+    private int [] parameters = {23, 0, 'e', 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0};
+    private CbusNodeParameterManager manager;
+        
     @Test
     public void testCTor() {
         CbusNodeParameterManager t = new CbusNodeParameterManager(null);
@@ -21,10 +27,34 @@ public class CbusNodeParameterManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new CanSystemConnectionMemo();
+        node = new CbusBasicNodeWithManagers(memo, 23);
+        manager = new CbusNodeParameterManager(node);
+    }
+    
+    @Test
+    public void newFirmware() {
+        manager.setParameters(parameters);
+        Assert.assertTrue("New firmware", manager.isFwEqualOrNewer(1, 'a', 0));
+    }
+
+    @Test
+    public void sameFirmware() {
+        manager.setParameters(parameters);
+        Assert.assertTrue("Same firmware", manager.isFwEqualOrNewer(2, 'e', 2));
+    }
+
+    @Test
+    public void oldFirmware() {
+        manager.setParameters(parameters);
+        Assert.assertFalse("Old firmware", manager.isFwEqualOrNewer(3, 'c', 7));
     }
 
     @AfterEach
     public void tearDown() {
+        manager = null;
+        node = null;
+        memo = null;
         JUnitUtil.tearDown();
     }
 

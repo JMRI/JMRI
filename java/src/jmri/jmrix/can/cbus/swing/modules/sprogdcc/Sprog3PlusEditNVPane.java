@@ -9,6 +9,7 @@ import javax.swing.event.TableModelEvent;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.*;
+import static jmri.jmrix.can.cbus.node.CbusNodeConstants.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     private static final int USER_FLAGS = 0;
     private static final int OPS_FLAGS = 1;
     private static final int DEBUG_FLAGS = 2;
-    private CmdStaFlags [] csFlags = new CmdStaFlags[3];
+    private static final int USER_FLAGS_2 = 3;
+    private CmdStaFlags [] csFlags = new CmdStaFlags[4];
     
     private final UpdateNV cmdStaNoUpdateFn = new UpdateCmdStaNo();
     private final UpdateNV canIdUpdateFn = new UpdateCanId();
@@ -52,7 +54,8 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     protected String flagTitleStrings[] = new String[] {
         Bundle.getMessage("UserFlags"),
         Bundle.getMessage("OperationsFlags"),
-        Bundle.getMessage("DebugFlags")
+        Bundle.getMessage("DebugFlags"),
+        Bundle.getMessage("UserFlags2")
     };
 
     protected String flagStrings[][] = new String[][] {
@@ -76,6 +79,15 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             Bundle.getMessage("Reserved")},
         // Debug
         {Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved"),
+            Bundle.getMessage("Reserved")},
+        // User 2
+        {Bundle.getMessage("MapEventsOffset"),
             Bundle.getMessage("Reserved"),
             Bundle.getMessage("Reserved"),
             Bundle.getMessage("Reserved"),
@@ -112,11 +124,28 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             Bundle.getMessage("ReservedTt"),
             Bundle.getMessage("ReservedTt"),
             Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt")},
+        // User 2
+        {Bundle.getMessage("MapEventsOffsetTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
+            Bundle.getMessage("ReservedTt"),
             Bundle.getMessage("ReservedTt")
         }};
 
+    protected int _fwMaj = -1;
+    protected int _fwMin = -1;
+    protected int _fwBuild = -1;
+
     protected Sprog3PlusEditNVPane(CbusNodeNVTableDataModel dataModel, CbusNode node) {
         super(dataModel, node);
+        _fwMaj = node.getNodeParamManager().getParameter(MAJOR_VER_IDX);
+        _fwMin = node.getNodeParamManager().getParameter(MINOR_VER_IDX);
+        _fwBuild = node.getNodeParamManager().getParameter(BETA_REV_IDX);
+        
     }
     
     /** {@inheritDoc} */
@@ -162,6 +191,10 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     
                 case Sprog3PlusPaneProvider.DEBUG_FLAGS:
                     csFlags[2].setFlags(value);
+                    break;
+                            
+                case Sprog3PlusPaneProvider.USER_FLAGS_2:
+                    csFlags[3].setFlags(value);
                     break;
                             
                 case Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE:
@@ -402,17 +435,25 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             super();
 
             JPanel gridPane = new JPanel(new GridBagLayout());
-            JPanel [] flagPane = new JPanel[3];
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.HORIZONTAL;
 
-            for (int i = 0; i < 3; i++) {
+            int flagPanels = 3;
+            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
+                flagPanels = 4;
+            }
+            JPanel [] flagPane = new JPanel[flagPanels];
+            
+            for (int i = 0; i < flagPanels; i++) {
                 csFlags[i] = new CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
                 flagPane[i] = csFlags[i].getContents();
             }
             csFlags[0].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS));
             csFlags[1].setFlags(getSelectValue(Sprog3PlusPaneProvider.OPERATIONS_FLAGS));
             csFlags[2].setFlags(getSelectValue(Sprog3PlusPaneProvider.DEBUG_FLAGS));
+            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
+                csFlags[3].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS_2));
+            }
             
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
                 Bundle.getMessage("ProgOnMode"),
@@ -431,7 +472,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             gridPane.add(cmdStaNoSpinner, c);
             c.gridy++;
             
-            c.gridwidth = 3;
+            c.gridwidth = flagPanels;
             powerModeList = new JComboBox<>(powerModeStrings);
             powerModeList.setSelectedIndex(getSelectValue(Sprog3PlusPaneProvider.PROG_TRACK_POWER_MODE));
             powerModeList.addActionListener((ActionEvent e) -> {
@@ -454,36 +495,29 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             mainSpinner.setToolTip(Bundle.getMessage("MainLimitTt"));
             mainSpinner.init(getSelectValue(Sprog3PlusPaneProvider.MAIN_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
-            c.gridy++;
-            
-            gridPane.add(flagPane[USER_FLAGS], c);
             c.gridx++;
-
-            // x = 2
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
             
             progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
             progSpinner.init(getSelectValue(Sprog3PlusPaneProvider.PROG_TRACK_CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(progSpinner, c);
-            c.gridy++;
             
+            c.gridy++;
+            c.gridx = 0;
+            
+            gridPane.add(flagPane[USER_FLAGS], c);
+            c.gridx++;
+
             gridPane.add(flagPane[OPS_FLAGS], c);
             c.gridx++;
 
-            // x = 3
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            
             gridPane.add(flagPane[DEBUG_FLAGS], c);
             c.gridx++;
-
+            
+            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
+                gridPane.add(flagPane[USER_FLAGS_2], c);
+            }
+            
             add(gridPane);
         }
         

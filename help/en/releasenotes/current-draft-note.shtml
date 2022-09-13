@@ -139,7 +139,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Added option for offset between CBUS events and DCC accessory addresses for [Pi-]SPROG 3 Plus firmware 3.e Beta 2.</li>
             </ul>
 
         <h4>TAMS</h4>
