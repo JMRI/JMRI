@@ -35,6 +35,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -115,8 +121,14 @@
             <authorinitials>DH</authorinitials>
             <revremark>Correct Handling of PI (CV31) and SI (CV32)</revremark>
         </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2022-08-16</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>chg includes TSU2PaneLighting, TSU2PaneASCdiesel. comment out version table</revremark>
+        </revision>
     </revhistory>
-    <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
+    <!-- <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
     <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
     <version author="Dave Heap" version="1.2" lastUpdated="20150813"/>
     <version author="Michael Mosher" version="1.3" lastUpdated="20160104"/>
@@ -127,7 +139,7 @@
     <version author="Dave Heap" version="3.1" lastUpdated="20161221"/>
     <version author="Michael Mosher" version="4" lastUpdated="20170713"/>
     <version author="Alain Le Marchand" version="5" lastUpdated="20180105"/>
-    <version author="Michael Mosher" version="6" lastUpdated="20180815"/>
+    <version author="Michael Mosher" version="6" lastUpdated="20180815"/> -->
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Econami Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders">
@@ -331,7 +343,7 @@
                 <functionlabel num="11" lockable="true">Brake Function</functionlabel>
                 <functionlabel num="13" lockable="true">Coupler</functionlabel>
                 <functionlabel num="14" lockable="true">Half Speed</functionlabel>
-                <functionlabel num="23" lockable="true">All Aboard/Coach Doors</functionlabel>                
+                <functionlabel num="23" lockable="true">All Aboard/Coach Doors</functionlabel>
                 <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
                 <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
                 <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
@@ -696,6 +708,9 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Coupler</label>
             </variable>
+            <!-- Lighting Configuration follows
+            see includes: ECOCV, ECOCVLightEffect -->
+            <!-- Sound Selection follows -->
             <variable CV="114" mask="XXXXVVVV" item="Sound Option 1" default="7" tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumNotch.xml"/>
                 <label>Engine Notch Rate</label>
@@ -1177,9 +1192,9 @@
         </resets>
     </decoder>
     <!-- References to external Pane format definitions below -->
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCdiesel.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>

@@ -35,6 +35,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -126,6 +132,12 @@
             <date>2021-06-28</date>
             <authorinitials>DH</authorinitials>
             <revremark>Correct Handling of PI (CV31) and SI (CV32)</revremark>
+        </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2022-08-16</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>chg includes to TSU2PaneLighting, TSU2PaneASCsteam</revremark>
         </revision>
     </revhistory>
     <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
@@ -815,6 +827,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Coupler</label>
             </variable>
+            <!-- Lighting Configuration follows
+            see includes: ECOCV, ECOCVLightEffect -->
             <!-- Sound Selection follows -->
             <variable CV="112" mask="XXXVXXXX" item="Sound Option 4" default="0" tooltip="Enabling 3-cylinder exhaust will allow the decoder to produce six chuffs every wheel rotation">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -1491,10 +1505,10 @@
         </resets>
     </decoder>
     <!-- References to external Pane format definitions below -->
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCsteam.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include  href="http://jmri.org/xml/decoders/soundtraxx/ECOSoundPane.xml"/>

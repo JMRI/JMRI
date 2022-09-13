@@ -35,7 +35,7 @@
     <version author="Marc Fournier" version="1" lastUpdated="20211107"/>
     <!-- Decoder Model information follows -->
     <decoder>
-        <family name="Econami Steam OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
+        <family name="Econami Steam OEM Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="These are the OEM version Econami Steam decoders">
             <model model="ECO 2-8-0" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="280" comment="Model 51351">
                 <versionCV lowVersionID="70"/>
                 <output name="3" label="  FX3  "/>
@@ -707,6 +707,8 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Coupler</label>
             </variable>
+            <!-- Lighting Configuration follows
+            see includes: ECOCV, ECOCVLightEffect -->
             <!-- Sound Selection follows -->
             <variable CV="112" mask="XXXVXXXX" item="Sound Option 4" default="0" tooltip="Enabling 3-cylinder exhaust will allow the decoder to produce six chuffs every wheel rotation">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -1051,7 +1053,7 @@
                 </enumVal>
                 <label>Auxiliary Whistle Select</label>
             </variable>
-			
+
 			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="484" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
                 <enumVal>
 					<enumChoice>
@@ -1212,7 +1214,7 @@
                 <label>Whistle Select</label>
             </variable>
 			<variable CV="121" mask="XXXVVVVV" item="Sound Option 7" default="0" include="460" tooltip="Choose an alternate Whistle or a short blast of the primary Whistle">
-                <enumVal>	
+                <enumVal>
 					<enumChoice>
                         <choice>ATSF Step Top 6-Chime</choice>
                     </enumChoice>
@@ -1814,10 +1816,10 @@
         </resets>
     </decoder>
     <!-- References to external Pane format definitions below -->
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCsteam.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include  href="http://jmri.org/xml/decoders/soundtraxx/ECOSoundPane.xml"/>

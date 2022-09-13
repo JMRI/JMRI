@@ -35,6 +35,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -91,7 +97,7 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added 21PNEM8 decoder</revremark>
          </revision>
-		<revision>
+         <revision>
             <revnumber>8</revnumber>
             <date>2021-06-28</date>
             <authorinitials>DH</authorinitials>
@@ -103,8 +109,13 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added N18 decoder</revremark>
         </revision>
+        <revision>
+            <revnumber>8</revnumber>
+            <date>2022-07-25</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>Chg pane ref to new file TSU2PaneLighting, Chg pane ref to TSU2PaneASCdiesel</revremark>
+        </revision>
     </revhistory>
-    <version author="Alain Le Marchand" version="1" lastUpdated="20160604"/>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the -retail- version Tsunami2 Electric decoders">
@@ -975,15 +986,15 @@
                 <label>Poppet Valve Release Rate</label>
             </variable>
             <!-- Motorman Omura Probability CVs -->
-            <variable CV="201" item="Probability Fireman Shovels Coal" default="128" >
+            <variable CV="201" item="Cab Doors Event Probability" default="128" >
                 <decVal/>
                 <label>Cab Doors Event Probability</label>
             </variable>
-            <variable CV="205" item="Probability Fireman Uses His Oil Can" default="64" >
+            <variable CV="205" item="Cab Chatter Event Probability" default="64" >
                 <decVal/>
                 <label>Cab Chatter Event Probability</label>
             </variable>
-            <variable CV="207" item="Probability Fireman Uses the Blower" default="128" >
+            <variable CV="207" item="Air Conditioner Event Probability" default="128" >
                 <decVal/>
                 <label>Air Conditioner Event Probability</label>
             </variable>
@@ -1472,7 +1483,7 @@
                 <decVal/>
                 <label>Motor High Volume Limit</label>
             </variable>
-            <variable item="Motor Load Gain" CV="16.2.512" mask="VVVVVVVV" default="32" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+            <variable item="Motor Load Gain" CV="16.2.512" mask="VVVVVVVV" default="32" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensing&lt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
                 <decVal/>
                 <label>Load Sensitivity</label>
             </variable>
@@ -1496,11 +1507,11 @@
     </decoder>
     <!-- References to external Pane format definitions below -->
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUaltSoundLevelsPane.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCdiesel.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>
