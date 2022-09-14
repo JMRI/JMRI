@@ -76,9 +76,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>The DCS240+ doesn't accept service-mode read
-                    requests for about 350-400msec after the completion of the prior one.
-                    A short delay has been added to handle this.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -108,8 +106,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li>Internationalization of the NCE tools was completed. New items are available for
-                  translation.</li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -117,9 +114,9 @@
                 <li></li>
             </ul>
 
-        <h4>OpenLCB / LCC</h4>
+        <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated openlcb.jar to pick up "send AMD in response to AME" fix.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -232,7 +229,7 @@
                 <li></li>
             </ul>
 
-        <h4>LDH</h4>
+        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
             <ul>
                 <li></li>
             </ul>
@@ -329,8 +326,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Added a new definition for Lissy Receiver #68600, 68610 and #68620. Use LNCV programming.</li>
-                <li>Added definitions for the UB 73310 and UB 73416 decoders.</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -361,7 +357,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Menu items were harmonized with the button alternatives.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -385,7 +381,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li>See NCE tools above.</li>
+            <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -408,8 +404,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <i>Local variable as analog value</i>
-          has been added.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -479,7 +474,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Updated the PocketTesterExample script to run with current code</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -573,9 +568,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Added Camera webThrottle to Web Server.<br>
-                Camera webThrottle provides integrated support for controlling trains with integrated POV or overhead IP based cameras.<br>
-                Throttle Learn More page has been added for the camera throttle that covers setup and connecting the cameras to the engine throttle.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -587,9 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The French JMRI Help pages were updated for responsive display.<br>
-              They will appear when using the French locale, or from their own
-              <a href="https://www.jmri.org/index_fr.shtml">starting page</a>.</li>
-            <li>SpotBugs has been updated to 4.7.2</li>
+            <li></li>
         </ul>
 

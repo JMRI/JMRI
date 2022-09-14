@@ -16,6 +16,8 @@
   <!-- Version 1 New file from 1.15 manual -->
   <version author="Michael Mosher" version="2" lastUpdated="20210807"/>
   <!-- Version 2 bug fix -->
+  <version author="Michael Mosher" version="3" lastUpdated="20220207"/>
+  <!-- Version 3 add cv 128 -->
   <decoder>
     <family name="Paragon 4" mfg="Broadway Limited Imports, LLC">
       <model model="Diesel" numOuts="3" numFns="30" connector="9pin">
@@ -149,6 +151,58 @@
       </variable>
       <variable CV="61" default="18" minFn="28" item="F28 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P4FunctionChoiceDiesel.xml"/>
+      </variable>
+      <variable item="Macro Play Select" CV="128" default="0">
+        <enumVal>
+            <enumChoice value="1">
+              <choice>Turn on Promode template</choice>
+            </enumChoice>
+            <enumChoice value="0">
+              <choice>Turn off Promode template</choice>
+            </enumChoice>
+            <enumChoice value="3">
+              <choice>Turn on Switcher mode</choice>
+            </enumChoice>
+            <enumChoice value="4">
+              <choice>Turn off Switcher mode</choice>
+            </enumChoice>
+            <enumChoice value="10">
+              <choice>Loads and Saves Factory Stored Macro</choice>
+            </enumChoice>
+            <enumChoice value="16">
+              <choice>Saves Recorded Macro</choice>
+            </enumChoice>
+            <enumChoice value="18">
+              <choice>Initializes rolling thunder to last saved values</choice>
+            </enumChoice>
+            <enumChoice value="20">
+              <choice>Disable Promode consist</choice>
+            </enumChoice>
+            <enumChoice value="21">
+              <choice>Set Locomotive as Front Engine Promode consist</choice>
+            </enumChoice>
+            <enumChoice value="22">
+              <choice>Set Locomotive as Middle Engine Promode consist</choice>
+            </enumChoice>
+            <enumChoice value="23">
+              <choice>Set Locomotive as Rear Engine (Forward Facing) Promode consist</choice>
+            </enumChoice>
+            <enumChoice value="38">
+              <choice>Sets F0 thru F12 to match the Blue Line engine function keys</choice>
+            </enumChoice>
+            <enumChoice value="100">
+              <choice>Lock CV’s while moving</choice>
+            </enumChoice>
+            <enumChoice value="100">
+              <choice>Unlocks CV’s while moving</choice>
+            </enumChoice>
+            <enumChoice value="113">
+              <choice>Sets F0 thru F12 to match QSI engine function keys</choice>
+            </enumChoice>
+            <enumChoice value="141">
+              <choice>Sets F0 thru F12 to match SoundTraxx engine function keys</choice>
+            </enumChoice>
+        </enumVal>
       </variable>
       <variable CV="154" default="100" item="Sound Setting 25">
         <decVal/>
