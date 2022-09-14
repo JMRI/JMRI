@@ -41,6 +41,12 @@
                 <surname>Heap</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>James</firstname>
+                <surname>Exler</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -152,7 +158,7 @@
             <date>2021-03-05</date>
             <authorinitials>MJM</authorinitials>
             <revremark>Fix sound select for PNP8 and 21PNEM8 decoders</revremark>
-        </revision> 
+        </revision>
         <revision>
             <revnumber>14</revnumber>
             <date>2021-03-19</date>
@@ -170,6 +176,12 @@
             <date>2021-07-01</date>
             <authorinitials>MJM</authorinitials>
             <revremark>Added TSU-BN1 and N18  decoders</revremark>
+        </revision>
+        <revision>
+            <revnumber>17</revnumber>
+            <date>2022-07-22</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>Rev per TSU2 Manual, chg pane to TSU2</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
@@ -892,7 +904,7 @@
             </variable>
             <variable CV="114" mask="VVXXXXXX" item="Sound Option 4" default="0" tooltip="Controls how the dynamic brakes interact with the engine RPMs">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumDynamic.xml"/>
-                <label>Dynamic Brake Override</label>
+                <label>Dynamic Brake Mode</label>
             </variable>
             <variable CV="116" mask="XVVVVVVV" item="Advanced Group 1 Option 8">
                 <decVal max="127"/>
@@ -1152,7 +1164,7 @@
                         will be much slower than the poppet valve effect.
                         &lt;/html&gt;</tooltip>
             </variable>
-	    		
+
             <!-- End Sound Selection -->
             <!-- Volume Controls follow -->
             <variable CV="129" mask="VVVVVVVV" item="Sound Setting 2" default="225" tooltip="Sets the volume of the airhorn">
@@ -1175,7 +1187,7 @@
                 <decVal/>
                 <label>Radiator Fans Volume</label>
             </variable>
-            <variable CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="60" tooltip="Sets the volume of the radiator fans">
+            <variable CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="60" tooltip="Sets the volume of the Alarm Bell">
                 <decVal/>
                 <label>Alarm Bell Volume</label>
             </variable>
@@ -1352,35 +1364,35 @@
                 <decVal/>
                 <label>Poppet Valve Release Rate</label>
             </variable>
-            <variable CV="201" item="Probability Fireman Shovels Coal" default="128" >
+            <variable CV="201" item="Cab Doors Event Probability" default="128" >
                 <decVal/>
                 <label>Cab Doors Event Probability</label>
             </variable>
-            <variable CV="202" item="Probability Fireman Fills the Tender" default="0" >
+            <variable CV="202" item="Fuel Loading Event Probability" default="0" >
                 <decVal/>
                 <label>Fuel Loading Event Probability</label>
             </variable>
-            <variable CV="203" item="Probability Fireman Turns His Wrench" default="128" >
+            <variable CV="203" item="Wrenches Event Probability" default="128" >
                 <decVal/>
                 <label>Wrenches Event Probability</label>
             </variable>
-            <variable CV="204" item="Probability Fireman Uses His Grease Gun" default="128" >
+            <variable CV="204" item="Pneumatic Oilers Event Probability" default="128" >
                 <decVal/>
                 <label>Pneumatic Oilers Event Probability</label>
             </variable>
-            <variable CV="205" item="Probability Fireman Uses His Oil Can" default="64" >
+            <variable CV="205" item="Cab Chatter Event Probability" default="64" >
                 <decVal/>
                 <label>Cab Chatter Event Probability</label>
             </variable>
-            <variable CV="206" item="Probability Fireman Uses the Injector" default="32" >
+            <variable CV="206" item="Toilet Flush Event Probability" default="32" >
                 <decVal/>
                 <label>Toilet Flush Event Probability</label>
             </variable>
-            <variable CV="207" item="Probability Fireman Uses the Blower" default="128" >
+            <variable CV="207" item="Air Conditioner Event Probability" default="128" >
                 <decVal/>
                 <label>Air Conditioner Event Probability</label>
             </variable>
-            <variable CV="208" item="Probability Pop Valve Blows Off" default="128" >
+            <variable CV="208" item="Relay Clicks Event Probability" default="128" >
                 <decVal/>
                 <label>Relay Clicks Event Probability</label>
             </variable>
@@ -1992,7 +2004,7 @@
                 <decVal/>
                 <label>Prime Mover High Volume Limit</label>
             </variable>
-            <variable CV="16.2.512" item="Motor Load Gain" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensinglt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
+            <variable CV="16.2.512" item="Motor Load Gain" mask="VVVVVVVV" default="0" tooltip="&lt;html&gt;to adjust the correlation between the throttle setting and motor load sensing&lt;br&gt;      sets how much the load signal is affected by the model accelerating/decelerating&lt;/html&gt;">
                 <decVal/>
                 <label>Load Sensitivity</label>
             </variable>
@@ -2112,11 +2124,11 @@
     </decoder>
     <!-- References to external Pane format definitions below -->
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUaltSoundLevelsPane.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneLighting.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2PaneASCdiesel.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneID.xml"/>

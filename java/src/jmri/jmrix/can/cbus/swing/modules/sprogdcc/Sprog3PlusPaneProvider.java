@@ -43,6 +43,7 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
     public static final int NN_LO = 20;
     public static final int DCC_PREAMBLE = 21;
     public static final int CAN_DISABLE = 22;
+    public static final int USER_FLAGS_2 = 23;
     
     public Sprog3PlusPaneProvider() {
         super();
@@ -89,6 +90,7 @@ public class Sprog3PlusPaneProvider extends CbusConfigPaneProvider {
         result.put(NN_LO, Bundle.getMessage("NodeNumberLo"));
         result.put(DCC_PREAMBLE, Bundle.getMessage("DccPreambleBits"));
         result.put(CAN_DISABLE, Bundle.getMessage("CanDisable"));
+        result.put(USER_FLAGS_2, Bundle.getMessage("UserFlags2"));
         return Collections.unmodifiableMap(result);
     }
     

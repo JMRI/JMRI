@@ -315,7 +315,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyMemoryToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyMemoryToVariable",
-                        _localVariable, copyToMemoryName);
+                        _localVariable, copyToMemoryName, Base.getListenString(_listenToMemory));
 
             case CopyReferenceToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReferenceToVariable",
@@ -323,7 +323,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyBlockToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyBlockToVariable",
-                        _localVariable, copyToBlockName);
+                        _localVariable, copyToBlockName, Base.getListenString(_listenToBlock));
 
             case CopyTableCellToVariable:
                 String tableName = _selectTable.getTableNameDescription(locale);
@@ -333,7 +333,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
             case CopyReporterToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyReporterToVariable",
-                        _localVariable, copyToReporterName);
+                        _localVariable, copyToReporterName, Base.getListenString(_listenToReporter));
 
             case CalculateFormula:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Formula", _localVariable, _formula);
