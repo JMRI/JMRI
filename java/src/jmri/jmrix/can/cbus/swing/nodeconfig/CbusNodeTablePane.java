@@ -10,14 +10,15 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Pane providing a CBUS node table.
@@ -37,11 +38,8 @@ public class CbusNodeTablePane extends JPanel {
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm EEE d MMM");
     
     public void initComponents(CanSystemConnectionMemo memo) {
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
-        }
+        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         
         init();
         
@@ -161,6 +159,6 @@ public class CbusNodeTablePane extends JPanel {
         nodeTable = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeTablePane.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusNodeTablePane.class);
 
 }
