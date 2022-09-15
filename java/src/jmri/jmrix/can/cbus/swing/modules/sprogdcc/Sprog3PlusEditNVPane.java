@@ -291,7 +291,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         public void setNewVal(int index) {
             int flags = csFlags[index].getFlags();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
-            _dataModel.setValueAt(flags, Sprog3PlusPaneProvider.USER_FLAGS + index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _dataModel.setValueAt(flags, csFlags[index].getNv() - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
         
@@ -444,15 +444,15 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             }
             JPanel [] flagPane = new JPanel[flagPanels];
             
+            int [] flagNvs = {Sprog3PlusPaneProvider.USER_FLAGS,
+                Sprog3PlusPaneProvider.OPERATIONS_FLAGS,
+                Sprog3PlusPaneProvider.DEBUG_FLAGS,
+                Sprog3PlusPaneProvider.USER_FLAGS_2};
+            
             for (int i = 0; i < flagPanels; i++) {
-                csFlags[i] = new CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i] = new CmdStaFlags(i, flagNvs[i], flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i].setFlags(getSelectValue(flagNvs[i]));
                 flagPane[i] = csFlags[i].getContents();
-            }
-            csFlags[0].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS));
-            csFlags[1].setFlags(getSelectValue(Sprog3PlusPaneProvider.OPERATIONS_FLAGS));
-            csFlags[2].setFlags(getSelectValue(Sprog3PlusPaneProvider.DEBUG_FLAGS));
-            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
-                csFlags[3].setFlags(getSelectValue(Sprog3PlusPaneProvider.USER_FLAGS_2));
             }
             
             String powerModeStrings [] = new String[] {Bundle.getMessage("ProgOffMode"),
@@ -505,17 +505,9 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
             c.gridy++;
             c.gridx = 0;
             
-            gridPane.add(flagPane[USER_FLAGS], c);
-            c.gridx++;
-
-            gridPane.add(flagPane[OPS_FLAGS], c);
-            c.gridx++;
-
-            gridPane.add(flagPane[DEBUG_FLAGS], c);
-            c.gridx++;
-            
-            if (_node.getNodeParamManager().isFwEqualOrNewer(2, 'e', 2)) {
-                gridPane.add(flagPane[USER_FLAGS_2], c);
+            for (int i = 0; i < flagPanels; i++) {
+                gridPane.add(flagPane[i], c);
+                c.gridx++;
             }
             
             add(gridPane);
