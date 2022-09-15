@@ -27,6 +27,7 @@ public class JmriPanelTest {
         panel.initComponents();
     }
 
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAccessibility() throws Exception{
         panel.initComponents();
