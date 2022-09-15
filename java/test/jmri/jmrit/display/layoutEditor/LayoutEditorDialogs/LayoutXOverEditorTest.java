@@ -189,10 +189,6 @@ public class LayoutXOverEditorTest extends LayoutTrackEditorTest {
     @Override
     public void setUp() {
         super.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initLayoutBlockManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalSensorManager();
 
         Point2D point = new Point2D.Double(150.0, 100.0);
         Point2D delta = new Point2D.Double(50.0, 10.0);
