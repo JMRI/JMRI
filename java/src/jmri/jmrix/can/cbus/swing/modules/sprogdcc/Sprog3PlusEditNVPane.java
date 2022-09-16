@@ -21,10 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
     
-    private static final int USER_FLAGS = 0;
-    private static final int OPS_FLAGS = 1;
-    private static final int DEBUG_FLAGS = 2;
-    private static final int USER_FLAGS_2 = 3;
     private CmdStaFlags [] csFlags = new CmdStaFlags[4];
     
     private final UpdateNV cmdStaNoUpdateFn = new UpdateCmdStaNo();
