@@ -44,6 +44,12 @@ public class JmriPanelTest {
         Assert.assertEquals("title", title, panel.getTitle());
     }
 
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testGetMenus() {
+        Assertions.assertNotNull(panel.getMenus());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
