@@ -1493,7 +1493,7 @@ public class TreeEditor extends TreeViewer {
                 if (!_isConnected && !_parentIsLocked) {
                     JMenu addMenu = new JMenu(Bundle.getMessage("PopupMenuAdd"));
 //                    addMenu.setMnemonic(KeyEvent.VK_F);
-//                    addMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+//                    addMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                     addNewItemTypes(addMenu);
                     add(addMenu);
                 }
@@ -1502,30 +1502,30 @@ public class TreeEditor extends TreeViewer {
                     JMenuItem menuItemEdit = new JMenuItem(Bundle.getMessage("PopupMenuEdit"));
                     menuItemEdit.addActionListener(this);
                     menuItemEdit.setActionCommand(ACTION_COMMAND_EDIT);
-                    menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));
+                    menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                     add(menuItemEdit);
                 }
                 addSeparator();
                 menuItemRemove = new JMenuItem(Bundle.getMessage("PopupMenuRemove"));
                 menuItemRemove.addActionListener(this);
                 menuItemRemove.setActionCommand(ACTION_COMMAND_REMOVE);
-                menuItemRemove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK));
+                menuItemRemove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 add(menuItemRemove);
                 addSeparator();
                 menuItemCut = new JMenuItem(Bundle.getMessage("PopupMenuCut"));
                 menuItemCut.addActionListener(this);
                 menuItemCut.setActionCommand(ACTION_COMMAND_CUT);
-                menuItemCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
+                menuItemCut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 add(menuItemCut);
                 menuItemCopy = new JMenuItem(Bundle.getMessage("PopupMenuCopy"));
                 menuItemCopy.addActionListener(this);
                 menuItemCopy.setActionCommand(ACTION_COMMAND_COPY);
-                menuItemCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
+                menuItemCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 add(menuItemCopy);
                 menuItemPaste = new JMenuItem(Bundle.getMessage("PopupMenuPaste"));
                 menuItemPaste.addActionListener(this);
                 menuItemPaste.setActionCommand(ACTION_COMMAND_PASTE);
-                menuItemPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
+                menuItemPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 add(menuItemPaste);
                 addSeparator();
 
