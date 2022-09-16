@@ -133,13 +133,19 @@ public class TreeEditor extends TreeViewer {
                     if (e.getKeyCode() == 'R') {    // Remove
                         TreePath path = tree.getSelectionPath();
                         if (path != null) {
-                            removeItem((FemaleSocket) path.getLastPathComponent(), path);
+                            FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
+                            if (femaleSocket.isConnected()) {
+                                removeItem((FemaleSocket) path.getLastPathComponent(), path);
+                            }
                         }
                     }
                     if (e.getKeyCode() == 'E') {    // Edit
                         TreePath path = tree.getSelectionPath();
                         if (path != null) {
-                            editItem((FemaleSocket) path.getLastPathComponent(), path);
+                            FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
+                            if (femaleSocket.isConnected()) {
+                                editItem(femaleSocket, path);
+                            }
                         }
                     }
                     if (e.getKeyCode() == 'N') {    // New
@@ -830,7 +836,6 @@ public class TreeEditor extends TreeViewer {
 
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
-            _editLocalVariablesDialog.getRootPane().setDefaultButton(_edit);
             _edit.addActionListener((ActionEvent e) -> {
                 List<String> errorMessages = new ArrayList<>();
                 boolean hasErrors = false;
@@ -950,6 +955,7 @@ public class TreeEditor extends TreeViewer {
             cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
             buttonPanel.add(_edit);
+            _editLocalVariablesDialog.getRootPane().setDefaultButton(_edit);
 
             _editLocalVariablesDialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -990,7 +996,6 @@ public class TreeEditor extends TreeViewer {
 
             // Edit ConditionalNG
             _edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
-            _changeUsernameDialog.getRootPane().setDefaultButton(_edit);
             _edit.addActionListener((ActionEvent e) -> {
 
                 boolean hasErrors = false;
@@ -1112,6 +1117,7 @@ public class TreeEditor extends TreeViewer {
             cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
             buttonPanel.add(_edit);
+            _changeUsernameDialog.getRootPane().setDefaultButton(_edit);
 
             _changeUsernameDialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
