@@ -6,7 +6,8 @@ import jmri.*;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitUtil;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ScriptEngineSelector
@@ -46,6 +47,7 @@ public class ScriptEngineSelectorTest {
         Bindings bindings = new SimpleBindings();
         ScriptEngineSelector.Engine engine =
                 _scriptEngineSelector.getSelectedEngine();
+        Assertions.assertNotNull(engine);
         engine.getScriptEngine().eval(JYTHON_SCRIPT, bindings);
     }
 
@@ -55,6 +57,7 @@ public class ScriptEngineSelectorTest {
         _scriptEngineSelector.setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         ScriptEngineSelector.Engine engine =
                 _scriptEngineSelector.getSelectedEngine();
+        Assertions.assertNotNull(engine);
         engine.getScriptEngine().eval(ECMA_SCRIPT, bindings);
     }
 
@@ -114,7 +117,7 @@ public class ScriptEngineSelectorTest {
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -125,7 +128,7 @@ public class ScriptEngineSelectorTest {
         _scriptEngineSelector = new ScriptEngineSelector();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         _turnout = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
