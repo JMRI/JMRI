@@ -404,6 +404,19 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The ConditionalNG editor now have better support for the keyboard.
+          Enable the <i>Preferences -> LogixNG</i> option <i>Highlight row in
+          ConditionalNG editor</i>.
+          You can then use the arrow keys.
+          <ul>
+            <li>Ctrl + N: Create new</li>
+            <li>Ctrl + E: Edit</li>
+            <li>Ctrl + R: Remove</li>
+            <li>Ctrl + X: Cut</li>
+            <li>Ctrl + C: Copy</li>
+            <li>Ctrl + V: Paste</li>
+          </ul>
+          </li>
           <li></li>
         </ul>
 
