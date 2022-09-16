@@ -18,19 +18,19 @@ import org.junit.Assert;
 public class TransitManagerXmlTest {
 
    @Test
-   public void BaseTest(){
+   public void testCtor(){
       Assert.assertNotNull("Constructor", new DefaultTransitManagerXml());
    }
 
    @Test
-   public void NoElementIfEmptyTest(){
+   public void testNoElementIfEmpty(){
       var tmx = new DefaultTransitManagerXml();
       TransitManager tm = new DefaultTransitManager();
       Assert.assertNull("No elements", tmx.store(tm));
    }
 
    @Test
-   public void StoreOneTransitTest() throws Exception {
+   public void testStoreOneTransit() throws Exception {
       var tmx = new DefaultTransitManagerXml();
       TransitManager tm = new DefaultTransitManager();
       Transit t = tm.createNewTransit("TS1", "user");
@@ -43,8 +43,8 @@ public class TransitManagerXmlTest {
 
       t.addTransitSection(ts);
 
-      org.jdom2.Element e;
-      Assert.assertNotNull("Element(s) returned", e = tmx.store(tm));
+      org.jdom2.Element e = tmx.store(tm);
+      Assert.assertNotNull("Element(s) returned", e );
 
       Assert.assertNotNull("Element(s) processed", tmx.load(e, null));
    }
