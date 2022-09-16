@@ -3,6 +3,8 @@ package jmri.jmrix.can.cbus.node;
 import java.io.File;
 import java.util.ArrayList;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -136,7 +138,7 @@ public class CbusNodeBackupManagerTest {
         Assert.assertEquals("backup node NVs","01", t.getBackups().get(4).getNodeNvManager().getNvHexString());
         
         
-        ArrayList tempList = t.getBackups().get(4).getNodeEventManager().getEventArray();
+        ArrayList<CbusNodeEvent> tempList = t.getBackups().get(4).getNodeEventManager().getEventArray();
         Assert.assertNotNull("Ev Array Not Null", tempList);
         
         
@@ -155,7 +157,7 @@ public class CbusNodeBackupManagerTest {
     }
     
     @Test
-    public void TestSaveFile() throws java.text.ParseException, java.io.IOException {
+    public void testSaveFile() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41375);
         CbusNodeBackupManager t = new CbusNodeBackupManager(node);
@@ -215,7 +217,7 @@ public class CbusNodeBackupManagerTest {
             "A5591D800D01010D0D0100080000000000000101", t.getBackups().get(5).getNodeParamManager().getParameterHexString());
         Assert.assertEquals("backup node NVs","01", t.getBackups().get(5).getNodeNvManager().getNvHexString());
         
-        ArrayList tempList = t.getBackups().get(5).getNodeEventManager().getEventArray();
+        ArrayList<CbusNodeEvent> tempList = t.getBackups().get(5).getNodeEventManager().getEventArray();
         Assert.assertNotNull("Ev Array Not Null", tempList);
         
         Assert.assertEquals("backup node events",
@@ -234,12 +236,12 @@ public class CbusNodeBackupManagerTest {
     }
     
     @Test
-    public void TestTrimBackups() throws java.text.ParseException, java.io.IOException {
+    public void testTrimBackups() throws java.text.ParseException, java.io.IOException {
         
-        jmri.jmrix.can.cbus.CbusPreferences pref = new jmri.jmrix.can.cbus.CbusPreferences();
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,pref );
+        Assertions.assertNotNull(memo);
+        jmri.jmrix.can.cbus.CbusPreferences pref = memo.get( jmri.jmrix.can.cbus.CbusPreferences.class);
         
-        CbusNode node = new CbusNode(null,41376);
+        CbusNode node = new CbusNode(memo,41376);
         CbusNodeBackupManager t = new CbusNodeBackupManager(node);
         
         java.io.File dir = new java.io.File("java/test/jmri/jmrix/can/cbus/node/");
@@ -326,7 +328,7 @@ public class CbusNodeBackupManagerTest {
     }
     
     @Test
-    public void TestFailedBackups() throws java.text.ParseException, java.io.IOException {
+    public void testFailedBackups() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41377);
         CbusNodeBackupManager t = new CbusNodeBackupManager(node);
@@ -373,7 +375,7 @@ public class CbusNodeBackupManagerTest {
     }
     
     @Test
-    public void TestMalfordmedFile() throws java.text.ParseException, java.io.IOException {
+    public void testMalfordmedFile() throws java.text.ParseException, java.io.IOException {
         
         CbusNode node = new CbusNode(null,41378);
         CbusNodeBackupManager t = new CbusNodeBackupManager(node);
@@ -388,15 +390,23 @@ public class CbusNodeBackupManagerTest {
         JUnitAppender.assertErrorMessageStartsWith("File invalid: org.jdom2.input.JDOMParseException: Error on line 6:");
         
     }
-    
+
+    private CanSystemConnectionMemo memo = null;
+
     @BeforeEach
     public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        memo = new CanSystemConnectionMemo();
+        memo.setProtocol(ConfigurationManager.MERGCBUS);
+        memo.configureManagers();
     }
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 

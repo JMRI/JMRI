@@ -51,7 +51,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
         _memo = memo;
         _pms = memo.getProgModeSwitch();
         
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
 
         pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         

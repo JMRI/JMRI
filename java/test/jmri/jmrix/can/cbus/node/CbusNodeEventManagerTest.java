@@ -6,7 +6,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -168,7 +168,11 @@ public class CbusNodeEventManagerTest {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         
-        nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+
+        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
+        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         
         nodeToEdit = nodeModel.provideNodeByNodeNum(7961);
         t = nodeToEdit.getNodeEventManager();

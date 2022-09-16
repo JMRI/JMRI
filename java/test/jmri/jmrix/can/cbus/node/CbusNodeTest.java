@@ -6,7 +6,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.*;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
@@ -471,8 +471,8 @@ public class CbusNodeTest {
     public void testFetchEventsFromCanWithNodeTable() {
         
         // needs table model adding to check for any other nodes in learn mode
-        CbusNodeTableDataModel tModel = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        CbusNodeTableDataModel tModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         
         CbusNode t = tModel.provideNodeByNodeNum(12345);
         // set node to 3 ev vars per event( param 5) , 0 NV's ( param 6)
@@ -714,6 +714,7 @@ public class CbusNodeTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         
     }
 
