@@ -9,6 +9,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -25,8 +26,8 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testCTor() {
         
-        t = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         Assert.assertNotNull("exists",t);
         t.dispose();
 
@@ -35,8 +36,8 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testDefaults() {
         
-        t = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         Assert.assertTrue("default getAnyNodeInLearnMode -1",t.getAnyNodeInLearnMode()== -1 );
         Assert.assertTrue("default getCsByNum0 null",t.getCsByNum(0)== null );
         Assert.assertTrue("default getListOfNodeNumberNames 0 length list",t.getListOfNodeNumberNames().isEmpty() );
@@ -54,8 +55,11 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testCanListener() {
         Assert.assertTrue("no listener to start with",0 == tcis.numListeners());
-        t = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
+        t.setBackgroundAllocateListener(false);
+        Assert.assertNotNull("exists",t);
+        
         Assert.assertTrue("listener attached",1 == tcis.numListeners());
         t.dispose();
         Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
@@ -65,20 +69,19 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testCanMsgReplyCmndstation() {
         
-        CbusConfigurationManager cbcfgm = new CbusConfigurationManager( memo );
-        Assert.assertTrue("preferences available",cbcfgm.getCbusPreferences() != null );
+        CbusPreferences pref = memo.get(CbusPreferences.class); 
+        Assertions.assertNotNull(pref, "preferences available via memo");
         
-        t = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        t.startup(); // so preferences available in table model
+        t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
 
         Assert.assertTrue("default getCsByNum0 null",t.getCsByNum(0)== null );
         
-        Assert.assertTrue("default search cs pref",cbcfgm.getCbusPreferences().getStartupSearchForCs()== false );
-        Assert.assertTrue("default search node pref",cbcfgm.getCbusPreferences().getStartupSearchForNodes()== false );
+        Assert.assertTrue("default search cs pref", pref.getStartupSearchForCs()== false );
+        Assert.assertTrue("default search node pref", pref.getStartupSearchForNodes()== false );
         
-        cbcfgm.getCbusPreferences().setAddCommandStations(true);
-        
+        pref.setAddCommandStations(true);
+
         CanMessage m = new CanMessage( tcis.getCanid() );
         m.setNumDataElements(8);
         m.setElement(0, CbusConstants.CBUS_STAT); // report from command station
@@ -133,7 +136,7 @@ public class CbusNodeTableDataModelTest {
         Assert.assertTrue("no node 7 CanReply",t.getNodeByNodeNum(7) == null );
         
         
-        cbcfgm.getCbusPreferences().setAddNodes(true);
+        pref.setAddNodes(true);
         t.startASearchForNodes(null,1000);
         
         r = new CanReply();
@@ -157,8 +160,8 @@ public class CbusNodeTableDataModelTest {
     @Test
     public void testsendSystemResetAndColumns() {
         
-        t = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         
         
         Assert.assertEquals("tcis empty to start", 0 ,tcis.outbound.size() );
@@ -196,8 +199,8 @@ public class CbusNodeTableDataModelTest {
         TrafficControllerScaffold tcisl = new TrafficControllerScaffoldLoopback();
         memo.setTrafficController(tcisl);
         
-        t = new CbusNodeTableDataModel(
-            memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
+        t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
             
         CbusNode n1 = t.provideNodeByNodeNum(1);
         
@@ -217,7 +220,7 @@ public class CbusNodeTableDataModelTest {
         Assert.assertNotNull("exists",n2);
         Assert.assertNotNull("exists",n3);
         
-        JUnitUtil.waitFor(()->{ return( tcisl.outbound.size() >0); }, "TCIS count did not increase");
+        JUnitUtil.waitFor(()->{ return( !tcisl.outbound.isEmpty()); }, "TCIS count did not increase");
         
         Assert.assertEquals("1 Messages sent to get node parameters", 1, tcisl.outbound.size() );
         
@@ -372,11 +375,13 @@ public class CbusNodeTableDataModelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        ((CbusPreferences)memo.get( CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
     }
 
     @AfterEach
     public void tearDown() {
-        
+        t.dispose();
         tcis.terminateThreads();
         memo.dispose();
         memo = null;

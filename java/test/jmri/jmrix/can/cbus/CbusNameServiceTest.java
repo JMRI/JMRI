@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
+
 import jmri.Light;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventBeanData;
@@ -11,9 +12,8 @@ import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 // import org.slf4j.Logger;
@@ -53,18 +53,19 @@ public class CbusNameServiceTest {
 
     @Test
     public void testgetEventNodeString() {
-        
+        Assertions.assertNotNull(memo);
         CbusNameService t = new CbusNameService(memo);
         
         assertEquals("NN:123 EN:456 ",t.getEventNodeString(123,456));
         assertEquals("EN:456 ",t.getEventNodeString(0,456));
         
-        CbusEventTableDataModel m = new CbusEventTableDataModel(
-            memo, 5, CbusEventTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
+        CbusEventTableDataModel m = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
+        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
+        
+        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
         
         nodeModel.provideNodeByNodeNum(123).setUserName("Node Name");
         nodeModel.provideNodeByNodeNum(69).setUserName("My Node");
@@ -90,15 +91,14 @@ public class CbusNameServiceTest {
     
     @Test
     public void testgetJmriBeans(){
-    
+        Assertions.assertNotNull(memo);
         CbusNameService t = new CbusNameService(memo);
         
         CbusEventBeanData bd = t.getJmriBeans(0, 4, CbusEventDataElements.EvState.ON);
         assertThat(bd.toString()).isEmpty();
         
-        CbusEventTableDataModel evModel = new CbusEventTableDataModel(
-            memo, 5, CbusEventTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,evModel );
+        CbusEventTableDataModel evModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         
         CbusLightManager lm = new CbusLightManager(memo);        
         Light lightA = lm.provideLight("+4");
@@ -119,25 +119,20 @@ public class CbusNameServiceTest {
         lm.dispose();
     }
 
-    private CanSystemConnectionMemo memo;
-    private CbusPreferences pref;
-    
-    @TempDir 
-    protected File tempDir;
+    private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
-    public void setUp() throws java.io.IOException {
+    public void setUp(@TempDir File tempDir) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         memo = new CanSystemConnectionMemo();
-        pref = new CbusPreferences();
-        jmri.InstanceManager.store(pref,CbusPreferences.class );
-        
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
     }
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         

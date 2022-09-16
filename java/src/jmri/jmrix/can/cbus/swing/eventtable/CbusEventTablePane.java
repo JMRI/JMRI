@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.eventtable.*;
 import jmri.jmrix.can.cbus.swing.*;
@@ -34,8 +37,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     protected CbusEventTableDataModel eventModel;
     protected JTable eventTable;
-    protected CbusPreferences preferences;
-    private UserPreferencesManager p;
+
+    private final UserPreferencesManager p;
     
     private CbusCreateBeanPane newBeanPanel;
     protected CbusNewEventPane neweventcontainer;
@@ -56,6 +59,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     private final StayOpenCheckBoxItem shownewevent;
     private final StayOpenCheckBoxItem showNewBeanPanel;
     private final StayOpenCheckBoxItem showSendEventPanel;
+    private final StayOpenCheckBoxItem saveRestoreEventTableItem;
 
     private final XTableColumnModel tcm;
     
@@ -66,7 +70,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         shownewevent = new StayOpenCheckBoxItem((Bundle.getMessage("NewEvent"))); // NOI18N
         showfilterpanel = new StayOpenCheckBoxItem(Bundle.getMessage("FilterSurround")); // NOI18N
         showSendEventPanel = new StayOpenCheckBoxItem(Bundle.getMessage("ButtonSendEvent")); // NOI18N
-        
+        saveRestoreEventTableItem = new StayOpenCheckBoxItem(Bundle.getMessage("SaveEvSession")); // NOI18N
         p = InstanceManager.getDefault(UserPreferencesManager.class);
     }
     
@@ -74,10 +78,13 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
 
-        preferences = InstanceManager.getDefault(CbusPreferences.class);
+        CbusPreferences preferences = memo.get(CbusPreferences.class);
+        
+        saveRestoreEventTableItem.setSelected( preferences.getSaveRestoreEventTable() );
+        saveRestoreEventTableItem.addActionListener((ActionEvent e) ->
+            preferences.setSaveRestoreEventTable(saveRestoreEventTableItem.isSelected()) );
 
-        CbusEventTableDataModel.checkCreateNewEventModel(memo);
-        eventModel = InstanceManager.getNullableDefault(CbusEventTableDataModel.class);
+        eventModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class)).provide(CbusEventTableDataModel.class);
         
         eventTable = new JTableWithColumnToolTips(eventModel, CbusEventTableDataModel.CBUS_EV_TABLE_COL_TOOLTIPS);
 
@@ -112,7 +119,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         add(cbEvTable, BorderLayout.CENTER);
         setVisible(true);
-        
+        setPanesVisibleFromSettings();
         cbEvTable.tableChanged(null);
         
     }
@@ -191,12 +198,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     private JMenu getFileMenu(){
     
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile")); // NOI18N
-    
-        StayOpenCheckBoxItem saveRestoreEventTableItem = new StayOpenCheckBoxItem(Bundle.getMessage("SaveEvSession")); // NOI18N
-        saveRestoreEventTableItem.setSelected( preferences.getSaveRestoreEventTable() );
-        saveRestoreEventTableItem.addActionListener((ActionEvent e) ->
-            preferences.setSaveRestoreEventTable(saveRestoreEventTableItem.isSelected()) );
-    
+
         fileMenu.add(saveRestoreEventTableItem);
         fileMenu.add( new JSeparator() );
         fileMenu.add(new JTableToCsvAction(Bundle.getMessage("ExportCsvAll"),
@@ -227,9 +229,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
         showSendEventPanel.addActionListener((ActionEvent e) ->
             sendPane.setVisible(showSendEventPanel.isSelected()) );
-        
-        setPanesVisibleFromSettings();
-        
+
         displayMenu.add(showfilterpanel);        
         displayMenu.add(shownewevent);
         displayMenu.add(showNewBeanPanel);
