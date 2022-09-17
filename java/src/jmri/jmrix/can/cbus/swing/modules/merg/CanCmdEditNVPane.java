@@ -230,7 +230,7 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
         public void setNewVal(int index) {
             int flags = csFlags[index].getFlags();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
-            _dataModel.setValueAt(flags, CanCmdPaneProvider.USER_FLAGS + index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _dataModel.setValueAt(flags, csFlags[index].getNv() - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
         
@@ -342,7 +342,8 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             c.fill = GridBagConstraints.HORIZONTAL;
 
             for (int i = 0; i < 3; i++) {
-                csFlags[i] = new CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i] = new CmdStaFlags(i, CanCmdPaneProvider.USER_FLAGS + i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i].setFlags(getSelectValue(CanCmdPaneProvider.USER_FLAGS + i));
                 flagPane[i] = csFlags[i].getContents();
             }
             
@@ -390,36 +391,19 @@ public class CanCmdEditNVPane extends AbstractEditNVPane {
             gridPane.add(mainSpinner, c);
             c.gridy++;
             
-            gridPane.add(flagPane[USER_FLAGS], c);
-            
-            c.gridx++;
-
-            // x = 2
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            
             progSpinner = new TitledSpinner(Bundle.getMessage("ProgLimit"), CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, currentLimitUpdateFn);
             progSpinner.setToolTip(Bundle.getMessage("ProgLimitTt"));
             progSpinner.init(getSelectValue(CanCmdPaneProvider.PROG_TRACK_CURRENT_LIMIT, 1), 1.0, 96.0, 255.0);
             gridPane.add(progSpinner, c);
             c.gridy++;
+            c.gridx = 0;
+
+            gridPane.add(flagPane[USER_FLAGS], c);
+            c.gridx++;
             
             gridPane.add(flagPane[OPS_FLAGS], c);
-            
             c.gridx++;
 
-            // x = 3
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            
             gridPane.add(flagPane[DEBUG_FLAGS], c);
             c.gridx++;
 
