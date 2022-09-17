@@ -170,7 +170,8 @@ public class TreeEditor extends TreeViewer {
             }
         });
 
-        tree.getActionMap().put(tree.getInputMap().get(KeyStroke.getKeyStroke("ctrl X")), new AbstractAction() {
+        var mask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+        tree.getActionMap().put(tree.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_X, mask)), new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TreePath path = tree.getSelectionPath();
@@ -180,7 +181,7 @@ public class TreeEditor extends TreeViewer {
             }
         });
 
-        tree.getActionMap().put(tree.getInputMap().get(KeyStroke.getKeyStroke("ctrl C")), new AbstractAction() {
+        tree.getActionMap().put(tree.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_C, mask)), new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TreePath path = tree.getSelectionPath();
@@ -190,7 +191,7 @@ public class TreeEditor extends TreeViewer {
             }
         });
 
-        tree.getActionMap().put(tree.getInputMap().get(KeyStroke.getKeyStroke("ctrl V")), new AbstractAction() {
+        tree.getActionMap().put(tree.getInputMap().get(KeyStroke.getKeyStroke(KeyEvent.VK_V, mask)), new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TreePath path = tree.getSelectionPath();
