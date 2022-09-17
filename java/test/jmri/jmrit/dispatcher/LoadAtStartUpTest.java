@@ -215,7 +215,7 @@ public class LoadAtStartUpTest {
 
        JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedRestricted ) < TOLERANCE );
-        }, "Continueing");
+        }, "Continuing speed was "+ aat.getThrottle().getSpeedSetting() + " not " + speedRestricted);
         sm.provideSensor("Occ South Block").setState(Sensor.ACTIVE);
 //        JUnitUtil.waitFor(200);
         JUnitUtil.waitFor(() -> {

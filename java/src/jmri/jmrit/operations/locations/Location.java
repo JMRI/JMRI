@@ -19,10 +19,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
@@ -971,15 +968,13 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public List<Track> getTracksByBlockingOrderList(String type) {
         List<Track> orderList = new ArrayList<>();
         for (Track track : getTracksByNameList(type)) {
-            boolean trackAdded = false;
             for (int j = 0; j < orderList.size(); j++) {
                 if (track.getBlockingOrder() < orderList.get(j).getBlockingOrder()) {
                     orderList.add(j, track);
-                    trackAdded = true;
                     break;
                 }
             }
-            if (!trackAdded) {
+            if (!orderList.contains(track)) {
                 orderList.add(track);
             }
         }
