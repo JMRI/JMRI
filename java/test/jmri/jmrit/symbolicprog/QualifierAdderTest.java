@@ -36,7 +36,7 @@ public class QualifierAdderTest {
         return var;
     }
 
-    class TestArithmeticQualifier extends ArithmeticQualifier {
+    private static class TestArithmeticQualifier extends ArithmeticQualifier {
 
         TestArithmeticQualifier(VariableValue watchedVal, int value, String relation) {
             super(watchedVal, value, relation);
@@ -53,8 +53,7 @@ public class QualifierAdderTest {
     }
 
     protected HashMap<String, CvValue> createCvMap() {
-        HashMap<String, CvValue> m = new HashMap<String, CvValue>();
-        return m;
+        return new HashMap<>();
     }
 
     /**
