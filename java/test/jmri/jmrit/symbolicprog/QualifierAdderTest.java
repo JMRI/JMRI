@@ -301,6 +301,20 @@ public class QualifierAdderTest {
         jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");
     }
 
+    @Test
+    public void testArithmeticQualifierImplementation() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
+
+        // test exists
+        ArithmeticQualifier aq1 = new TestArithmeticQualifier(variable, 1, "ne");
+        Assertions.assertNotNull(aq1);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
