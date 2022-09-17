@@ -178,7 +178,7 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
         public void setNewVal(int index) {
             int flags = csFlags[index].getFlags();
             // Note that changing the data model will result in tableChanged() being called, which can manipulate the buttons, etc
-            _dataModel.setValueAt(flags, PiSprog3PaneProvider.USER_FLAGS + index - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
+            _dataModel.setValueAt(flags, csFlags[index].getNv() - 1, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         }
     }
         
@@ -266,16 +266,15 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
             super();
 
             JPanel gridPane = new JPanel(new GridBagLayout());
-            JPanel [] flagPane = new JPanel[3];
+            JPanel [] flagPane = new JPanel[2];
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.HORIZONTAL;
 
             for (int i = 0; i < 2; i++) {
-                csFlags[i] = new CmdStaFlags(i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i] = new CmdStaFlags(i, PiSprog3PaneProvider.USER_FLAGS + i, flagTitleStrings[i], flagStrings[i], flagTtStrings[i], flagUpdateFn);
+                csFlags[i].setFlags(getSelectValue(PiSprog3PaneProvider.USER_FLAGS + i));
                 flagPane[i] = csFlags[i].getContents();
             }
-            csFlags[0].setFlags(getSelectValue(PiSprog3PaneProvider.USER_FLAGS));
-            csFlags[1].setFlags(getSelectValue(PiSprog3PaneProvider.OPERATIONS_FLAGS));
             
             String modeStrings [] = new String[] {Bundle.getMessage("ProgMode"),
                 Bundle.getMessage("CmdMode")
@@ -311,26 +310,14 @@ public class PiSprog3EditNVPane extends AbstractEditNVPane {
             mainSpinner.init(getSelectValue(PiSprog3PaneProvider.CURRENT_LIMIT, 100)/100.0, 1.0, 2.5, 0.01);
             gridPane.add(mainSpinner, c);
             c.gridy++;
+            c.gridx = 0;
             
             gridPane.add(flagPane[USER_FLAGS], c);
             c.gridx++;
 
-            // x = 2
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            
             gridPane.add(flagPane[OPS_FLAGS], c);
             c.gridx++;
 
-            // x = 3
-            c.gridy = 0;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            c.gridy++;
-            
             add(gridPane);
         }
         
