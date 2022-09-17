@@ -129,7 +129,7 @@ public class TreeEditor extends TreeViewer {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.isControlDown() && !e.isShiftDown() && !e.isAltDown() && !e.isMetaDown()) {
+                if (e.getModifiersEx() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()) {
                     if (e.getKeyCode() == 'R') {    // Remove
                         TreePath path = tree.getSelectionPath();
                         if (path != null) {
