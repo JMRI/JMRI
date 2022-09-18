@@ -407,7 +407,7 @@
           <li>The ConditionalNG editor now have better support for the keyboard.
           Enable the <i>Preferences -> LogixNG</i> option <i>Highlight row in
           ConditionalNG editor</i>.
-          You can then use the arrow keys.
+          You can then use the arrow keys. For macOS, use Cmd instead of Ctrl.
           <ul>
             <li>Ctrl + N: Create new</li>
             <li>Ctrl + E: Edit</li>
