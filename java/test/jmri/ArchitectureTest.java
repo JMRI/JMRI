@@ -78,7 +78,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.jython.JynstrumentPopupMenu$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logix.WarrantRoute$RouteLocation").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.ConditionalNGDebugger$PopupMenu$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$5").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$2").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$3").and()
