@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -14,9 +12,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.router.Router;
@@ -64,11 +60,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     public void initComponents(Track track) {
         _track = track;
 
-        // property changes
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        // Set up the panels
         // Layout the panel by rows
         // row 1
         JPanel p1 = new JPanel();
@@ -484,7 +478,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.DESTINATIONS_CHANGED_PROPERTY)) {
             updateDestinations();
         }
         if (e.getPropertyName().equals(Track.ROUTED_CHANGED_PROPERTY)) {

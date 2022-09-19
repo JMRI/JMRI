@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
  */
 public class Pr1ImporterTest {
 
-    class Pr1ImporterDummy extends Pr1Importer {
+    private static class Pr1ImporterDummy extends Pr1Importer {
 
         Pr1ImporterDummy(File f) throws java.io.IOException {
             super(f);
@@ -35,7 +35,7 @@ public class Pr1ImporterTest {
         File f = new java.io.File(FileUtil.getUserFilesPath() + "temp" + File.separator + "Pr1Importer.test.xml");
         // recreate it
         if (f.exists()) {
-            f.delete();
+            Assertions.assertTrue(f.delete());
         }
         try (PrintStream p = new PrintStream(new FileOutputStream(f))) {
             p.print(contents);
