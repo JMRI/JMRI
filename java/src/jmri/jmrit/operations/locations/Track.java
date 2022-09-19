@@ -872,9 +872,10 @@ public class Track extends PropertyChangeSupport {
     }
 
     public void deleteTypeName(String type) {
-        _typeList.remove(type);
-        log.debug("Track ({}) delete rolling stock type ({})", getName(), type);
-        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
+        if (_typeList.remove(type)) {
+            log.debug("Track ({}) delete rolling stock type ({})", getName(), type);
+            setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
+        }
     }
 
     public boolean isTypeNameAccepted(String type) {
@@ -957,9 +958,10 @@ public class Track extends PropertyChangeSupport {
     }
 
     public void deleteRoadName(String road) {
-        _roadList.remove(road);
-        log.debug("Track ({}) delete car road ({})", getName(), road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1, _roadList.size());
+        if (_roadList.remove(road)) {
+            log.debug("Track ({}) delete car road ({})", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1, _roadList.size());
+        }
     }
 
     public boolean isRoadNameAccepted(String road) {
@@ -1039,17 +1041,13 @@ public class Track extends PropertyChangeSupport {
      * setLoadOption
      * 
      * @param load The string load name.
-     *
-     * @return true if load name was added, false if load name wasn't in the list.
      */
-    public boolean addLoadName(String load) {
-        if (_loadList.contains(load)) {
-            return false;
+    public void addLoadName(String load) {
+        if (!_loadList.contains(load)) {
+            _loadList.add(load);
+            log.debug("track ({}) add car load ({})", getName(), load);
+            setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() - 1, _loadList.size());
         }
-        _loadList.add(load);
-        log.debug("track ({}) add car load ({})", getName(), load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() - 1, _loadList.size());
-        return true;
     }
 
     /**
@@ -1058,13 +1056,12 @@ public class Track extends PropertyChangeSupport {
      * 
      * @param load The string load name.
      *
-     * @return true if load name was removed, false if load name wasn't in the list.
      */
-    public boolean deleteLoadName(String load) {
-        _loadList.remove(load);
-        log.debug("track ({}) delete car load ({})", getName(), load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
-        return true;
+    public void deleteLoadName(String load) {
+        if (_loadList.remove(load)) {
+            log.debug("track ({}) delete car load ({})", getName(), load);
+            setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
+        }
     }
 
     /**
@@ -1168,16 +1165,13 @@ public class Track extends PropertyChangeSupport {
      * 
      * @param load The string load name.
      *
-     * @return true if load name was added, false if load name wasn't in the list.
      */
-    public boolean addShipLoadName(String load) {
-        if (_shipLoadList.contains(load)) {
-            return false;
+    public void addShipLoadName(String load) {
+        if (!_shipLoadList.contains(load)) {
+            _shipLoadList.add(load);
+            log.debug("track ({}) add car load ({})", getName(), load);
+            setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _shipLoadList.size() - 1, _shipLoadList.size());
         }
-        _shipLoadList.add(load);
-        log.debug("track ({}) add car load ({})", getName(), load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _shipLoadList.size() - 1, _shipLoadList.size());
-        return true;
     }
 
     /**
@@ -1186,13 +1180,12 @@ public class Track extends PropertyChangeSupport {
      * 
      * @param load The string load name.
      *
-     * @return true if load name was removed, false if load name wasn't in the list.
      */
-    public boolean deleteShipLoadName(String load) {
-        _shipLoadList.remove(load);
-        log.debug("track ({}) delete car load ({})", getName(), load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _shipLoadList.size() + 1, _shipLoadList.size());
-        return true;
+    public void deleteShipLoadName(String load) {
+        if (_shipLoadList.remove(load)) {
+            log.debug("track ({}) delete car load ({})", getName(), load);
+            setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _shipLoadList.size() + 1, _shipLoadList.size());
+        }
     }
 
     /**
@@ -1299,18 +1292,18 @@ public class Track extends PropertyChangeSupport {
     }
 
     public void addDropId(String id) {
-        if (_dropList.contains(id)) {
-            return;
+        if (!_dropList.contains(id)) {
+            _dropList.add(id);
+            log.debug("Track ({}) add drop id: {}", getName(), id);
+            setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, null, id);
         }
-        _dropList.add(id);
-        log.debug("Track ({}) add drop id: {}", getName(), id);
-        setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, null, id);
     }
 
     public void deleteDropId(String id) {
-        _dropList.remove(id);
-        log.debug("Track ({}) delete drop id: {}", getName(), id);
-        setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, id, null);
+        if (_dropList.remove(id)) {
+            log.debug("Track ({}) delete drop id: {}", getName(), id);
+            setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, id, null);
+        }
     }
 
     /**
@@ -1377,18 +1370,18 @@ public class Track extends PropertyChangeSupport {
      *
      */
     public void addPickupId(String id) {
-        if (_pickupList.contains(id)) {
-            return;
+        if (!_pickupList.contains(id)) {
+            _pickupList.add(id);
+            log.debug("track ({}) add pick up id {}", getName(), id);
+            setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, null, id);
         }
-        _pickupList.add(id);
-        log.debug("track ({}) add pick up id {}", getName(), id);
-        setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, null, id);
     }
 
     public void deletePickupId(String id) {
-        _pickupList.remove(id);
-        log.debug("track ({}) delete pick up id {}", getName(), id);
-        setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, id, null);
+        if (_pickupList.remove(id)) {
+            log.debug("track ({}) delete pick up id {}", getName(), id);
+            setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, id, null);
+        }
     }
 
     /**
@@ -2165,21 +2158,18 @@ public class Track extends PropertyChangeSupport {
      * adds a location to the list of acceptable destinations for this track.
      * 
      * @param destination location that is acceptable
-     * @return true if added to list, false if destination is already part of list.
      */
-    public boolean addDestination(Location destination) {
-        if (_destinationIdList.contains(destination.getId())) {
-            return false;
+    public void addDestination(Location destination) {
+        if (!_destinationIdList.contains(destination.getId())) {
+            _destinationIdList.add(destination.getId());
+            setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, null, destination.getName()); // NOI18N
         }
-        _destinationIdList.add(destination.getId());
-        setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, null, destination.getName()); // NOI18N
-        return true;
     }
 
     public void deleteDestination(Location destination) {
-        _destinationIdList.remove(destination.getId());
-        setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, destination.getName(), null); // NOI18N
-        return;
+        if (_destinationIdList.remove(destination.getId())) {
+            setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, destination.getName(), null); // NOI18N
+        }
     }
 
     /**

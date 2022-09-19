@@ -32,7 +32,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         # check html
         mvn exec:exec -P travis-scanhelp
         #run Architecture tests
-        mvn -Dtest=jmri.ArchitectureTest,jmri.util.FileLineEndingsCheck test
+        mvn -Dtest=jmri.ArchitectureTest,jmri.TestArchitectureTest,jmri.util.FileLineEndingsCheck test
     else
         # run headless tests
         mvn test integration-test failsafe:verify -U -P travis-headless --batch-mode \

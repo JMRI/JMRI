@@ -806,7 +806,7 @@
       </p>
 
       <p>OperationsPro&trade; will send messages to the system console when there are errors or
-        problems with the program. You can access the system console from the main menu bar under
+        problems with the program. You can access the system console from any menu bar under
         "Help".</p>
 
       <h2 id="Settings">Settings</h2>
@@ -1712,7 +1712,7 @@
       column. Location names and track names can be up to 25 characters, so you might want to
       consider shorter length names when using the "Tabular" feature. FYI, the program reports the
       longest attribute, track and location names to the system console when creating Manifests. You
-      can access the system console from the main menu bar under "Help".
+      can access the system console from any menu bar under "Help".
       <p>
         There are three options with regards to how your Manifests and switch lists are formated.
         "Standard" provides one line for each car pick up or set out. The "Two Column" format
