@@ -1,12 +1,11 @@
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleSignalHeadServer class
@@ -15,7 +14,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
  */
 public class SimpleSignalHeadServerTest {
 
-    @Test public void testCtor() {
+    @Test
+    public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -29,7 +29,8 @@ public class SimpleSignalHeadServerTest {
         assertThat(a).isNotNull();
     }
 
-    @Test public void testConnectionCtor() {
+    @Test
+    public void testConnectionCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -44,7 +45,8 @@ public class SimpleSignalHeadServerTest {
     }
 
     // test sending a message.
-    @Test public void testSendMessageWithConnection() {
+    @Test
+    public void testSendMessageWithConnection() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -56,19 +58,19 @@ public class SimpleSignalHeadServerTest {
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);        
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(jcs);
         // NOTE: this test uses reflection to test a private method.
-        Throwable thrown = catchThrowable(() -> {
+        assertDoesNotThrow(() -> {
             java.lang.reflect.Method sendMessageMethod;
             sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
             // override the default permissions.
             sendMessageMethod.setAccessible(true);
             sendMessageMethod.invoke(a,"Hello World");
-        });
-        assertThat(thrown).withFailMessage("failed to execute send message using refleciton: {} ",thrown ).isNull();
+        }, "failed to execute send message using refleciton");
         assertThat(jcs.getOutput()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     // test sending a message.
-    @Test public void testSendMessage() {
+    @Test
+    public void testSendMessage() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -80,19 +82,19 @@ public class SimpleSignalHeadServerTest {
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
         // NOTE: this test uses reflection to test a private method.
-        Throwable thrown = catchThrowable(() -> {
+        assertDoesNotThrow(() -> {
            java.lang.reflect.Method sendMessageMethod;
            sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
            // override the default permissions.
             sendMessageMethod.setAccessible(true);
            sendMessageMethod.invoke(a,"Hello World");
-         });
-        assertThat(thrown).withFailMessage("failed to execute send message using refleciton: {} ",thrown ).isNull();
+         },"failed to execute send message using refleciton");
         assertThat(sb.toString()).withFailMessage("SendMessage Check").isEqualTo("Hello World");
     }
 
     // test sending an error message.
-    @Test public void testSendErrorStatus() {
+    @Test
+    public void testSendErrorStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -104,13 +106,13 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () -> a.sendErrorStatus("IT1"));
-        assertThat(thrown).withFailMessage("failed to execute send error status: {}",thrown ).isNull();
+        assertDoesNotThrow( () -> a.sendErrorStatus("IT1"),"failed to execute send error status");
         assertThat(sb.toString()).withFailMessage("sendErrorStatus check").isEqualTo("SIGNALHEAD ERROR\n");
     }
 
     // test intializing a SignalHead status message.
-    @Test public void checkInitSignalHead() {
+    @Test
+    public void testCheckInitSignalHead() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -120,12 +122,13 @@ public class SimpleSignalHeadServerTest {
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        new SimpleSignalHeadServer(input, output);
+        Assertions.assertNotNull(new SimpleSignalHeadServer(input, output));
         assertThat(sb.toString()).withFailMessage("no status set for new signal head unless asked for").isEqualTo("");
     }
 
     // test sending DARK status message.
-    @Test public void CheckSendDarkStatus() {
+    @Test
+    public void testCheckSendDarkStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -136,13 +139,13 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () -> a.sendStatus("IH1",jmri.SignalHead.DARK));
-        assertThat(thrown).withFailMessage("Exception sending DARK Status").isNull();
+        assertDoesNotThrow( () -> a.sendStatus("IH1",jmri.SignalHead.DARK),"Exception sending DARK Status");
         assertThat(sb.toString()).withFailMessage("sendStatus check").isEqualTo("SIGNALHEAD IH1 DARK\n");
     }
 
     // test sending an RED status message.
-    @Test public void CheckSendRedStatus() {
+    @Test
+    public void testCheckSendRedStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -153,13 +156,13 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () -> a.sendStatus("IH1",jmri.SignalHead.RED));
-        assertThat(thrown).withFailMessage("Exception sending RED Status").isNull();
+        assertDoesNotThrow( () -> a.sendStatus("IH1",jmri.SignalHead.RED),"Exception sending RED Status");
         assertThat(sb.toString()).withFailMessage("sendStatus check").isEqualTo("SIGNALHEAD IH1 RED\n");
     }
 
     // test sending an UNKNOWN status message.
-    @Test public void CheckSendUnkownStatus() {
+    @Test
+    public void testCheckSendUnkownStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -170,13 +173,13 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () -> a.sendStatus("IH1",jmri.SignalHead.UNKNOWN));
-        assertThat(thrown).withFailMessage("Exception sending UNKNOWN Status").isNull();
+        assertDoesNotThrow( () -> a.sendStatus("IH1",jmri.SignalHead.UNKNOWN),"Exception sending UNKNOWN Status");
         assertThat(sb.toString()).withFailMessage("sendStatus check").isEqualTo("SIGNALHEAD IH1 RED\n");
     }
 
     // test Parsing an DARK status message.
-    @Test public void parseDarkStatus() {
+    @Test
+    public void testParseDarkStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -187,16 +190,17 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () -> a.parseStatus("SIGNALHEAD IH1 DARK\n"));
-        assertThat(thrown).withFailMessage("Exception parsing DARK Status").isNull();
+        assertDoesNotThrow( () -> a.parseStatus("SIGNALHEAD IH1 DARK\n"),"Exception parsing DARK Status");
         jmri.SignalHead signalHead = (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class)).getSignalHead("IH1");
+        Assertions.assertNotNull(signalHead);
         assertThat(signalHead.getAppearance()).withFailMessage("Parse Active Status Check").isEqualTo(jmri.SignalHead.DARK);
         // parsing the status also causes a message to return to the client.
         assertThat(sb.toString()).withFailMessage("parse Dark check").isEqualTo("SIGNALHEAD IH1 DARK\n");
     }
 
     // test Parsing an RED status message.
-    @Test public void parseRedStatus() {
+    @Test
+    public void testParseRedStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -207,16 +211,17 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( ()->  a.parseStatus("SIGNALHEAD IH1 RED\n"));
-        assertThat(thrown).withFailMessage("Exception parsing RED Status").isNull();
+        assertDoesNotThrow( ()->  a.parseStatus("SIGNALHEAD IH1 RED\n"),"Exception parsing RED Status");
         jmri.SignalHead signalHead = (jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class)).getSignalHead("IH1");
+        Assertions.assertNotNull(signalHead);
         assertThat(signalHead.getAppearance()).withFailMessage("Parse Inactive Status Check").isEqualTo(jmri.SignalHead.RED);
         // parsing the status also causes a message to return to the client.
         assertThat(sb.toString()).withFailMessage("parse Inactive check").isEqualTo("SIGNALHEAD IH1 RED\n");
     }
 
     // test Parsing an blank status message.
-    @Test public void parseBlankStatus() {
+    @Test
+    public void testParseBlankStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -227,14 +232,14 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () -> a.parseStatus("SIGNALHEAD IH1\n"));
-        assertThat(thrown).withFailMessage("Exception parsing RED Status").isNull();
+        assertDoesNotThrow( () -> a.parseStatus("SIGNALHEAD IH1\n"),"Exception parsing RED Status");
         // nothing has changed the Signal Head, so it should be DARK.
         assertThat(sb.toString()).withFailMessage("parse blank check").isEqualTo("SIGNALHEAD IH1 DARK\n");
     }
 
     // test Parsing an other status message.
-    @Test public void parseOtherStatus() {
+    @Test
+    public void testParseOtherStatus() throws Exception {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -245,14 +250,14 @@ public class SimpleSignalHeadServerTest {
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
         SimpleSignalHeadServer a = new SimpleSignalHeadServer(input, output);
-        Throwable thrown = catchThrowable( () ->  a.parseStatus("SIGNALHEAD IH1 UNKNOWN\n"));
-        assertThat(thrown).withFailMessage("Exception parsing UNKNOWN Status").isNull();
+        assertDoesNotThrow( () ->  a.parseStatus("SIGNALHEAD IH1 UNKNOWN\n"),"Exception parsing UNKNOWN Status");
         // this isn't a known state, so it should be just like blank.
         // nothing has changed the Signal Head, so it should be DARK.
         assertThat(sb.toString()).withFailMessage("parse blank check").isEqualTo("SIGNALHEAD IH1 DARK\n");
     }
 
-    @BeforeEach public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
         JUnitUtil.initInternalTurnoutManager();
@@ -263,7 +268,8 @@ public class SimpleSignalHeadServerTest {
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
     }
 
-    @AfterEach public void tearDown() {
+    @AfterEach
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
