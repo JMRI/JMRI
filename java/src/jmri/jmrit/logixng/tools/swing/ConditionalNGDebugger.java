@@ -38,6 +38,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
     private final TreePane _conditionalNG_TreePane;
     private TreePane _currentTreePane;
     private final List<TreePane> _treePanes = new ArrayList<>();
+    private final JMenuItem _execute;
     private final JMenuItem _runItem;
     private final JMenuItem _stepOverItem;
     private final JMenuItem _stepIntoItem;
@@ -141,6 +142,13 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         menuBar.add(fileMenu);
 
         JMenu debugMenu = new JMenu(Bundle.getMessage("Debug_MenuDebug"));
+
+        _execute = new JMenuItem(Bundle.getMessage("Debug_MenuItem_Execute"));
+        _execute.addActionListener((event) -> { _conditionalNG.execute(); });
+//        _execute.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));
+        debugMenu.add(_execute);
+
+        debugMenu.addSeparator();
 
         _runItem = new JMenuItem(Bundle.getMessage("Debug_MenuItem_Run"));
         _runItem.addActionListener((event) -> { doRun(); });
