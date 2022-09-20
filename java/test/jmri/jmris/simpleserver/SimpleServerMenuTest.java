@@ -1,32 +1,28 @@
 package jmri.jmris.simpleserver;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerMenu class
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class SimpleServerMenuTest {
 
-    @Test public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Test
+    public void testCtor() {
         SimpleServerMenu a = new SimpleServerMenu();
-        assertThat(a).isNotNull();
+        Assertions.assertNotNull(a);
     }
 
-    @Test public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    @Test
+    public void testSimpleServerMenuStringCtor() {
         SimpleServerMenu a = new SimpleServerMenu("Hello World");
-        assertThat(a).isNotNull();
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach public void setUp() {
