@@ -24,9 +24,6 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
 
     public static final int COLUMN_NAME = 0;
     public static final int COLUMN_VALUE = 1;
-//    public static final int COLUMN_TYPE = 1;
-//    public static final int COLUMN_DATA = 2;
-//    public static final int COLUMN_MENU = 3;
 
     private final ConditionalNG _conditionalNG;
     private final List<Symbol> _symbols = new ArrayList<>();
@@ -34,11 +31,6 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
 
     public DebuggerSymbolTableModel(ConditionalNG conditionalNG) {
         _conditionalNG = conditionalNG;
-//        if (maleSocket != null) {
-//            for (VariableData v : maleSocket.getLocalVariables()) {
-//                _variables.add(new VariableData(v));
-//            }
-//        }
     }
 
     public void update(Map<String, SymbolTable.Symbol> symbols) {
@@ -69,12 +61,6 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
                 return Bundle.getMessage("ColumnSymbolName");
             case COLUMN_VALUE:
                 return Bundle.getMessage("ColumnSymbolValue");
-//            case COLUMN_TYPE:
-//                return Bundle.getMessage("ColumnVariableType");
-//            case COLUMN_DATA:
-//                return Bundle.getMessage("ColumnVariableData");
-//            case COLUMN_MENU:
-//                return Bundle.getMessage("ColumnVariableMenu");
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
@@ -84,13 +70,8 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-//            case COLUMN_TYPE:
-//                return InitialValueType.class;
-//            case COLUMN_MENU:
-//                return Menu.class;
             case COLUMN_NAME:
             case COLUMN_VALUE:
-//            case COLUMN_DATA:
                 return String.class;
             default:
                 throw new IllegalArgumentException("Invalid column");
@@ -112,15 +93,6 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
             case COLUMN_VALUE:
                 _conditionalNG.getStack().setValueAtIndex(symbol.getIndex(), value);
                 break;
-//            case COLUMN_TYPE:
-//                variable._initalValueType = (InitialValueType) value;
-//                break;
-//            case COLUMN_DATA:
-//                variable._initialValueData = (String) value;
-//                break;
-//            case COLUMN_MENU:
-//                // Do nothing
-//                break;
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
@@ -136,214 +108,9 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
                 return _symbols.get(rowIndex).getName();
             case COLUMN_VALUE:
                 return _conditionalNG.getSymbolTable().getValue(_symbols.get(rowIndex).getName());
-//            case COLUMN_TYPE:
-//                return _variables.get(rowIndex).getInitalValueType();
-//            case COLUMN_DATA:
-//                return _variables.get(rowIndex).getInitialValueData();
-//            case COLUMN_MENU:
-//                return Menu.Select;
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
     }
-/*
-    public void setColumnForMenu(JTable table) {
-        JComboBox<Menu> comboBox = new JComboBox<>();
-        table.setRowHeight(comboBox.getPreferredSize().height);
-        table.getColumnModel().getColumn(COLUMN_MENU)
-                .setPreferredWidth((comboBox.getPreferredSize().width) + 4);
-    }
 
-    public void add() {
-        int row = _symbols.size();
-        _symbols.add(new VariableData("", InitialValueType.None, ""));
-        fireTableRowsInserted(row, row);
-    }
-
-    public List<VariableData> getVariables() {
-        return _symbols;
-    }
-
-
-    public static enum Menu {
-        Select(Bundle.getMessage("TableMenuSelect")),
-        Delete(Bundle.getMessage("TableMenuDelete")),
-        MoveUp(Bundle.getMessage("TableMenuMoveUp")),
-        MoveDown(Bundle.getMessage("TableMenuMoveDown"));
-
-        private final String _descr;
-
-        private Menu(String descr) {
-            _descr = descr;
-        }
-
-        @Override
-        public String toString() {
-            return _descr;
-        }
-    }
-
-
-    public static class TypeCellRenderer extends DefaultTableCellRenderer {
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-
-            if (value == null) value = InitialValueType.None;
-
-            if (! (value instanceof InitialValueType)) {
-                throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
-            }
-            setText(((InitialValueType) value).getDescr());
-            return this;
-        }
-    }
-
-
-    public static class MenuCellRenderer extends DefaultTableCellRenderer {
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-
-            if (value == null) value = Menu.Select;
-
-            if (! (value instanceof Menu)) {
-                throw new IllegalArgumentException("value is not an Menu: " + value.getClass().getName());
-            }
-            setText(((Menu) value).toString());
-            return this;
-        }
-    }
-
-
-    public static class TypeCellEditor extends AbstractCellEditor
-            implements TableCellEditor, ActionListener {
-
-        private InitialValueType _type;
-
-        @Override
-        public Object getCellEditorValue() {
-            return this._type;
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                boolean isSelected, int row, int column) {
-
-            if (value == null) value = InitialValueType.None;
-
-            if (! (value instanceof InitialValueType)) {
-                throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
-            }
-
-            JComboBox<InitialValueType> typeComboBox = new JComboBox<>();
-
-            for (InitialValueType type : InitialValueType.values()) {
-                typeComboBox.addItem(type);
-            }
-
-            typeComboBox.setSelectedItem(value);
-            typeComboBox.addActionListener(this);
-
-            return typeComboBox;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<InitialValueType>
-        public void actionPerformed(ActionEvent event) {
-            if (! (event.getSource() instanceof JComboBox)) {
-                throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
-            }
-            JComboBox<InitialValueType> typeComboBox =
-                    (JComboBox<InitialValueType>) event.getSource();
-            _type = typeComboBox.getItemAt(typeComboBox.getSelectedIndex());
-        }
-
-    }
-
-
-    public static class MenuCellEditor extends AbstractCellEditor
-            implements TableCellEditor, ActionListener {
-
-        JTable _table;
-        DebuggerLocalVariableTableModel _tableModel;
-
-        public MenuCellEditor(JTable table, DebuggerLocalVariableTableModel tableModel) {
-            _table = table;
-            _tableModel = tableModel;
-        }
-
-        @Override
-        public Object getCellEditorValue() {
-            return Menu.Select;
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value,
-                boolean isSelected, int row, int column) {
-
-            if (value == null) value = Menu.Select;
-
-            if (! (value instanceof Menu)) {
-                throw new IllegalArgumentException("value is not an Menu: " + value.getClass().getName());
-            }
-
-            JComboBox<Menu> menuComboBox = new JComboBox<>();
-
-            for (Menu menu : Menu.values()) {
-                if ((menu == Menu.MoveUp) && (row == 0)) continue;
-                if ((menu == Menu.MoveDown) && (row+1 == _tableModel._symbols.size())) continue;
-                menuComboBox.addItem(menu);
-            }
-
-            menuComboBox.setSelectedItem(value);
-            menuComboBox.addActionListener(this);
-
-            return menuComboBox;
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<Menu>
-        public void actionPerformed(ActionEvent event) {
-            if (! (event.getSource() instanceof JComboBox)) {
-                throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
-            }
-            JComboBox<Menu> menuComboBox =
-                    (JComboBox<Menu>) event.getSource();
-            int row = _table.getSelectedRow();
-            Menu menu = menuComboBox.getItemAt(menuComboBox.getSelectedIndex());
-
-            switch (menu) {
-                case Delete:
-                    delete(row);
-                    break;
-                case MoveUp:
-                    if ((row) > 0) moveUp(row);
-                    break;
-                case MoveDown:
-                    if ((row+1) < _tableModel._symbols.size()) moveUp(row+1);
-                    break;
-                default:
-                    // Do nothing
-            }
-            // Remove focus from combo box
-            if (_tableModel._symbols.size() > 0) _table.editCellAt(row, COLUMN_NAME);
-        }
-
-        private void delete(int row) {
-            _tableModel._symbols.remove(row);
-            _tableModel.fireTableRowsDeleted(row, row);
-        }
-
-        private void moveUp(int row) {
-            VariableData temp = _tableModel._symbols.get(row-1);
-            _tableModel._symbols.set(row-1, _tableModel._symbols.get(row));
-            _tableModel._symbols.set(row, temp);
-            _tableModel.fireTableRowsUpdated(row-1, row);
-        }
-
-    }
-*/
 }
