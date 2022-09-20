@@ -369,7 +369,11 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Always on top option for AutoTrainsFrame</li>
+             <li>Cancel timers on stop immediate</li>
+             <li>Add EStop to Transit Action</li>
+             <li>correct stop resume in ready state</li>
+             <li>On Restart, reset current block and section</li>
         </ul>
 
     <h3>Dispatcher System</h3>
