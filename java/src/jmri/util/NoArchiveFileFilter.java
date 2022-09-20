@@ -58,8 +58,8 @@ public class NoArchiveFileFilter extends FileFilter {
      */
     @Override
     public boolean accept(java.io.File f) {
-        if (f.getName().toLowerCase(Locale.getDefault()).matches(".*\\.zip")
-                || f.getName().toLowerCase(Locale.getDefault()).matches(".*\\.jar")) {
+        if (f.getName().toLowerCase(Locale.ROOT).matches(".*\\.zip") // NOI18N
+                || f.getName().toLowerCase(Locale.ROOT).matches(".*\\.jar")) { // NOI18N
             return false;
         }
         return f.isDirectory() || extensions.contains(FilenameUtils.getExtension(f.getName()));
