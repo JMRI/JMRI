@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Daniel Bergqvist 2018
  */
-public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeListener {
+public final class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeListener {
 
     private static final int panelWidth = 700;
     private static final int panelHeight = 500;
@@ -173,12 +173,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
         setJMenuBar(menuBar);
 //        addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
-        if (_conditionalNG.getUserName() == null) {
-            setTitle(Bundle.getMessage("TitleEditConditionalNG", _conditionalNG.getSystemName()));
-        } else {
-            setTitle(Bundle.getMessage("TitleEditConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
-        }
-
+        setTitle((Module)null);
 
         JPanel actionExpressionInfo = new JPanel();
         actionExpressionInfo.add(_actionExpressionInfoLabel);
@@ -237,6 +232,38 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
 
         PopupMenu popup = new PopupMenu();
         popup.init();
+    }
+
+    private void setTitle(Module module) {
+        if (module != null) {
+            if (_conditionalNG.getUserName() == null) {
+                if (module.getUserName() == null) {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG_Module",
+                            _conditionalNG.getSystemName(),
+                            module.getSystemName()));
+                } else {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG_Module",
+                            _conditionalNG.getSystemName(),
+                            module.getSystemName(), module.getUserName()));
+                }
+            } else {
+                if (module.getUserName() == null) {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG2_Module",
+                            _conditionalNG.getSystemName(), _conditionalNG.getUserName(),
+                            module.getSystemName()));
+                } else {
+                    setTitle(Bundle.getMessage("TitleDebugConditionalNG2_Module",
+                            _conditionalNG.getSystemName(), _conditionalNG.getUserName(),
+                            module.getSystemName(), module.getUserName()));
+                }
+            }
+        } else {
+            if (_conditionalNG.getUserName() == null) {
+                setTitle(Bundle.getMessage("TitleDebugConditionalNG", _conditionalNG.getSystemName()));
+            } else {
+                setTitle(Bundle.getMessage("TitleDebugConditionalNG2", _conditionalNG.getSystemName(), _conditionalNG.getUserName()));
+            }
+        }
     }
 
     private void doStepOver() {
@@ -346,6 +373,7 @@ public class ConditionalNGDebugger extends JmriJFrame implements PropertyChangeL
 
             // Have we either entered or exited a Module?
             if (module != _currentModule) {
+                setTitle(module);
                 if ( !_lastModuleStack.isEmpty() && module == _lastModuleStack.peek()) {
                     _currentTreePanePanel.remove(_currentTreePane);
                     _treePanes.remove(_treePanes.size()-1);
