@@ -1,11 +1,19 @@
 package jmri.jmrit;
 
+import java.beans.PropertyChangeEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
+
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -18,6 +26,9 @@ import jmri.util.gui.GuiLafPreferencesManager;
  */
 public class ToolsMenu extends JMenu {
 
+    AbstractAction serviceAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer"));
+    AbstractAction opsAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer"));
+        
     public ToolsMenu(String name) {
         this();
         setText(name);
@@ -28,11 +39,11 @@ public class ToolsMenu extends JMenu {
         super();
 
         setText(Bundle.getMessage("MenuTools"));
-
+        
         JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
-        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer")));
-        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer")));
+        programmerMenu.add(serviceAction);
+        programmerMenu.add(opsAction);
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
         add(programmerMenu);
 
@@ -172,6 +183,51 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // LogixNG menu
         add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
+
+
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(AddressedProgrammerManager.class),
+                evt -> {
+//                    log.debug("Addressed Programmer Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
+                    AddressedProgrammerManager m = (AddressedProgrammerManager) evt.getNewValue();
+                    if (m != null) {
+                        m.addPropertyChangeListener(this::enableAction);
+                    }
+                    enableAction(evt);
+                });
+        InstanceManager.getList(AddressedProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::enableAction));
+        InstanceManager.addPropertyChangeListener(InstanceManager.getListPropertyName(GlobalProgrammerManager.class),
+                evt -> {
+//                    log.debug("Global Programmer Received property {} with value {} ", evt.getPropertyName(), evt.getNewValue());
+                    GlobalProgrammerManager m = (GlobalProgrammerManager) evt.getNewValue();
+                    if (m != null) {
+                        m.addPropertyChangeListener(this::enableAction);
+                    }
+                    enableAction(evt);
+                });
+        InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::enableAction));
     }
 
+    /**
+     * Enable or disable the service mode programmer menu item
+     * 
+     * @param evt  Event carrying the status
+     */
+    protected void enableAction(PropertyChangeEvent evt) {
+        log.debug("Property change {} {}", evt.getPropertyName(), evt.getNewValue());
+        if (evt.getPropertyName().equals("globalProgrammerAvailable")) {
+            if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) != null) {
+                serviceAction.setEnabled((boolean)evt.getNewValue());
+                log.debug("...Service mode enabled now {}", (boolean)evt.getNewValue());
+            }
+        }
+        if (evt.getPropertyName().equals("addressedModePossible")) {
+            if (jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) != null) {
+                opsAction.setEnabled((boolean)evt.getNewValue());
+                log.debug("...OPs mode enabled now {}", (boolean)evt.getNewValue());
+            }
+        }
+    }
+    
+    private final static Logger log = LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
+    
 }

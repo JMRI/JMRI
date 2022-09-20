@@ -84,6 +84,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     // Switch to programmer mode
                     log.info("Setting Global Programmer Available");
                     pm.setGlobalProgrammerAvailable(true);
+                    log.info("Setting Addressed Programmer Unavailable");
                     pm.setAddressedModePossible(false);
                     _memo.setMultipleThrottles(false);
                     showServiceModeWarningDialogue();
@@ -96,6 +97,7 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
                     // Switch to command station mode
                     log.info("Setting Global Programmer Unavailable");
                     pm.setGlobalProgrammerAvailable(false);
+                    log.info("Setting Addressed Programmer Available");
                     pm.setAddressedModePossible(true);
                     _memo.setMultipleThrottles(true);
                     closeProgrammerWarningDialogue();
