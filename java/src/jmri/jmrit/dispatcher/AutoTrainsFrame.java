@@ -423,7 +423,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     stopButton.setToolTipText(Bundle.getMessage("ResumeButtonHint"));
                     stopButton.setVisible(true);
                 } else if ((int) e.getNewValue() == ActiveTrain.RUNNING ||
-                        (int) e.getNewValue() == ActiveTrain.WAITING) {
+                        (int) e.getNewValue() == ActiveTrain.WAITING ||
+                        (int) e.getNewValue() == ActiveTrain.READY ) {
                     log.trace("[{}]:Set auto STATUS RUNNING", autoActiveTrain.getActiveTrain().getActiveTrainName());
                     if (throttle == null && autoActiveTrain.getThrottle() != null) {
                         log.debug("[{}]:Set new throttle", autoActiveTrain.getActiveTrain().getActiveTrainName());
@@ -575,6 +576,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     if ((at.getStatus() == ActiveTrain.RUNNING) || (at.getStatus() == ActiveTrain.WAITING)) {
                         autoActiveTrain.setSpeedBySignal();
                     }
+                } else if (at.getStatus() == ActiveTrain.READY) {
+                    handleActiveTrainListen(new java.beans.PropertyChangeEvent (this,"status", Integer.valueOf(0), Integer.valueOf(ActiveTrain.READY)));
                 } else if (at.getStatus() == ActiveTrain.DONE) {
                     log.trace("Train Is Done - Restart");
                     // restart
