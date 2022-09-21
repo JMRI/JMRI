@@ -219,27 +219,6 @@ public class ToolsMenu extends JMenu {
         InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
     }
 
-//    /**
-//     * Enable or disable the service mode programmer menu item
-//     * 
-//     * @param evt  Event carrying the status
-//     */
-//    protected void updateProgrammerStatus(PropertyChangeEvent evt) {
-//        log.debug("Property change {} {}", evt.getPropertyName(), evt.getNewValue());
-//        if (evt.getPropertyName().equals("globalProgrammerAvailable")) {
-//            if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) != null) {
-//                serviceAction.setEnabled((boolean)evt.getNewValue());
-//                log.debug("...Service mode enabled now {}", (boolean)evt.getNewValue());
-//            }
-//        }
-//        if (evt.getPropertyName().equals("addressedModePossible")) {
-//            if (jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) != null) {
-//                opsAction.setEnabled((boolean)evt.getNewValue());
-//                log.debug("...OPs mode enabled now {}", (boolean)evt.getNewValue());
-//            }
-//        }
-//    }
-    
     /**
      * Enable or disable the service mode programmer menu items for the types of programmer
      * available.
@@ -268,12 +247,12 @@ public class ToolsMenu extends JMenu {
         }
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
-//            log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
+            log.debug("GlobalProgrammerManager found of class {} name {} ", gpm.getClass(), serviceModeProgrammerName);
             InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
                 for (ConnectionConfig connection : ccm) {
-//                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    log.debug("Checking connection name {}", connection.getConnectionName());
                     if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
-//                        log.debug("Connection found for GlobalProgrammermanager");
+                        log.debug("Connection found for GlobalProgrammermanager");
                         serModeProCon = connection;
                     }
                 }
@@ -291,12 +270,12 @@ public class ToolsMenu extends JMenu {
         }
         if (apm != null) {
             String opsModeProgrammerName = apm.getUserName();
-//            log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
+            log.debug("AddressedProgrammerManager found of class {} name {} ", apm.getClass(), opsModeProgrammerName);
             InstanceManager.getOptionalDefault(ConnectionConfigManager.class).ifPresent((ccm) -> {
                 for (ConnectionConfig connection : ccm) {
-//                    log.debug("Checking connection name {}", connection.getConnectionName());
+                    log.debug("Checking connection name {}", connection.getConnectionName());
                     if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
-//                        log.debug("Connection found for AddressedProgrammermanager");
+                        log.debug("Connection found for AddressedProgrammermanager");
                         opsModeProCon = connection;
                     }
                 }
