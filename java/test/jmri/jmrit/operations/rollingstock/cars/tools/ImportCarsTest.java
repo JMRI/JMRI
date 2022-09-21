@@ -256,6 +256,35 @@ public class ImportCarsTest extends OperationsTestCase {
     }
     
     @Test
+    public void testReadFileIncreaseTrackCapacityYes() {
+        JUnitOperationsUtil.initOperationsData();
+        // check number of cars in operations data
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+
+        // export cars to create file
+        exportCars();
+        
+        // remove "Boxcar" as a valid car type
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+        northEndStaging1.setLength(0);
+        Track northEndStaging2 = locationNorthEnd.getTrackById("1s2");
+        northEndStaging2.setLength(0);
+
+        // do import
+        importCars(false, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"),
+                Bundle.getMessage("TrackLength"), Bundle.getMessage("ButtonYes"),
+                Bundle.getMessage("OnlyAskedOnce"), Bundle.getMessage("ButtonYes"));
+
+        // confirm import successful
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+        Assert.assertEquals("track length increased 1000", 1000, northEndStaging1.getLength());
+        Assert.assertEquals("track length increased 1000", 1000, northEndStaging2.getLength());
+    }
+    
+    @Test
     public void testReadFileForceNo() {
         JUnitOperationsUtil.initOperationsData();
         // check number of cars in operations data
@@ -885,7 +914,7 @@ public class ImportCarsTest extends OperationsTestCase {
     }
 
     /*
-     * title of error dialog
+     * title of error dialog, button name.
      */
     private void importCars(boolean failure, String title1, String button1, String title2, String button2,
             String title3, String button3) {
@@ -925,7 +954,6 @@ public class ImportCarsTest extends OperationsTestCase {
         } else {
             // wait for import complete and acknowledge
             JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
-
         }
 
         try {

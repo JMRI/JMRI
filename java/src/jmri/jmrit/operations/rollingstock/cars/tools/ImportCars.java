@@ -477,14 +477,14 @@ public class ImportCars extends ImportRollingStock {
                                 }
                                 track.setLength(1000);
                             } else {
-                                JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                                        .getMessage("CarTrackDoesNotExist"),
-                                        new Object[]{
-                                                (carRoad + " " + carNumber), carTrackName, carLocationName}),
+                                JOptionPane.showMessageDialog(
+                                        null, MessageFormat.format(Bundle.getMessage("CarTrackDoesNotExist"),
+                                                new Object[]{(carRoad + " " + carNumber), carTrackName,
+                                                        carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.ERROR_MESSAGE);
-                                int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                        .getMessage("DoYouWantToCreateTrack"),
-                                        new Object[]{carTrackName, carLocationName}),
+                                int results = JOptionPane.showConfirmDialog(null,
+                                        MessageFormat.format(Bundle.getMessage("DoYouWantToCreateTrack"),
+                                                new Object[]{carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.YES_NO_OPTION);
                                 if (results == JOptionPane.YES_OPTION) {
                                     if (!location.isStaging()) {
@@ -496,8 +496,8 @@ public class ImportCars extends ImportRollingStock {
                                     }
                                     track.setLength(1000);
                                     if (askAutoCreateTracks) {
-                                        results = JOptionPane.showConfirmDialog(null, Bundle
-                                                .getMessage("DoYouWantToAutoCreateTrack"),
+                                        results = JOptionPane.showConfirmDialog(null,
+                                                Bundle.getMessage("DoYouWantToAutoCreateTrack"),
                                                 Bundle.getMessage("OnlyAskedOnce"),
                                                 JOptionPane.YES_NO_OPTION);
                                         if (results == JOptionPane.YES_OPTION) {
@@ -602,8 +602,9 @@ public class ImportCars extends ImportRollingStock {
                     if (car.getWeight().isEmpty()) {
                         log.debug("Car ({}) weight not specified", car.toString());
                         if (weightResults != JOptionPane.CANCEL_OPTION) {
-                            weightResults = JOptionPane.showOptionDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("CarWeightNotFound"), new Object[]{car.toString()}),
+                            weightResults = JOptionPane.showOptionDialog(null,
+                                    MessageFormat.format(Bundle.getMessage("CarWeightNotFound"),
+                                            new Object[]{car.toString()}),
                                     Bundle.getMessage("CarWeightMissing"), JOptionPane.YES_NO_CANCEL_OPTION,
                                     JOptionPane.INFORMATION_MESSAGE, null, new Object[]{
                                             Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
@@ -671,7 +672,7 @@ public class ImportCars extends ImportRollingStock {
                                     }
                                 }
                             }
-                            if (status.startsWith(Track.LENGTH)) {
+                            if (status.startsWith(Track.LENGTH) || status.startsWith(Track.CAPACITY)) {
                                 if (autoAdjustTrackLength) {
                                     track.setLength(track.getLength() + 1000);
                                     status = car.setLocation(location, track);
