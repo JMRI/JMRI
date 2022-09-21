@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus.eventtable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.nio.file.Path;
+import java.io.File;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
@@ -173,12 +173,14 @@ public class CbusEventTableXmlActionTest {
     private CanSystemConnectionMemo memo = null;
 
     @BeforeEach
-    public void setUp( @TempDir Path tempDir ) throws java.io.IOException {
+    public void setUp( @TempDir File tempDir ) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         
         memo = new CanSystemConnectionMemo();
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
+
         model = new CbusEventTableDataModel( memo, 2);
       
     }
