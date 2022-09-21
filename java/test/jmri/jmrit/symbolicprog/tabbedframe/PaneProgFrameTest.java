@@ -183,10 +183,10 @@ public class PaneProgFrameTest {
         p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
-    // static variables for internal classes to report their interpretations
-    static String result = null;
-    static int colCount = -1;
-    static int varCount = -1;
+    // variables for internal classes to report their interpretations
+    String result = "";
+    int colCount = -1;
+    int varCount = -1;
 
     // static variables for the test XML structures
     Element root = null;
@@ -194,6 +194,10 @@ public class PaneProgFrameTest {
 
     // provide a test document in the above static variables
     void setupDoc() {
+        Assertions.assertNull( result);
+        Assertions.assertEquals(-1, colCount);
+        Assertions.assertEquals(-1, varCount);
+
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
         doc = new Document(root);
@@ -258,6 +262,9 @@ public class PaneProgFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
+        result = null;
+        colCount = -1;
+        varCount = -1;
     }
 
     @AfterEach

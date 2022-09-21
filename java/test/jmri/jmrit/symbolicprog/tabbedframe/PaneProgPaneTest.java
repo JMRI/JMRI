@@ -2,7 +2,6 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import static org.junit.Assert.*;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.WindowEvent;
@@ -22,13 +21,14 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2004
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class PaneProgPaneTest {
 
     ProgDebugger p = new ProgDebugger();
@@ -36,7 +36,6 @@ public class PaneProgPaneTest {
     // test creating columns in a pane
     @Test
     public void testColumn() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
@@ -70,7 +69,6 @@ public class PaneProgPaneTest {
     // test specifying variables in columns
     @Test
     public void testVariables() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();  // make sure XML document is ready
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
@@ -102,7 +100,6 @@ public class PaneProgPaneTest {
     // test storage of programming info in list
     @Test
     public void testVarListFill() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();  // make sure XML document is ready
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
@@ -148,7 +145,6 @@ public class PaneProgPaneTest {
     // test storage of programming info in list
     @Test
     public void testPaneRead() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         log.debug("testPaneRead starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
@@ -205,7 +201,6 @@ public class PaneProgPaneTest {
 
     @Test
     public void testPaneWrite() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         log.debug("testPaneWrite starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
@@ -265,7 +260,6 @@ public class PaneProgPaneTest {
     // test counting of read operations needed
     @Test
     public void testPaneReadOpCount() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         log.debug("testPaneReadOpCount starts");
         // initialize the system
         setupDoc();  // make sure XML document is ready
@@ -329,7 +323,9 @@ public class PaneProgPaneTest {
         Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false, true));
 
         // mark some as needing to be written
-        (cvModel.allCvMap().get("1")).setValue(12);
+        var getKey1 = cvModel.allCvMap().get("1");
+        Assertions.assertNotNull(getKey1);
+        getKey1.setValue(12);
 
         Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true, false));
         Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false, false));
@@ -337,7 +333,9 @@ public class PaneProgPaneTest {
         Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true, true));
         Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false, true));
 
-        (cvModel.allCvMap().get("69")).setValue(12);
+        var getKey69 = cvModel.allCvMap().get("69");
+        Assertions.assertNotNull(getKey69);
+        getKey69.setValue(12);
         // careful - might change more than one CV!
 
         Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true, false));
@@ -351,9 +349,9 @@ public class PaneProgPaneTest {
     }
 
     // static variables for internal classes to report their interpretations
-    static String result = null;
-    static int colCount = -1;
-    static int varCount = -1;
+    private String result = null;
+    private int colCount = -1;
+    private int varCount = -1;
 
     // static variables for the test XML structures
     Element root = null;
@@ -364,6 +362,9 @@ public class PaneProgPaneTest {
 
     // provide a test document in the above static variables
     void setupDoc() {
+        Assertions.assertNull(result);
+        Assertions.assertEquals(-1,colCount);
+        Assertions.assertEquals(-1,varCount);
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
         doc = new Document(root);
@@ -428,6 +429,9 @@ public class PaneProgPaneTest {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
+        result = null;
+        colCount = -1;
+        varCount = -1;
     }
 
     @AfterEach
