@@ -198,29 +198,35 @@ public class ImportCars extends ImportRollingStock {
 
                 if (carNumber.isEmpty()) {
                     log.info("Import line {} missing car number", lineNum);
+                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                            Bundle.getMessage("RoadNumberNotSpecified"), new Object[]{lineNum}),
+                            Bundle.getMessage("RoadNumberMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carRoad.isEmpty()) {
                     log.info("Import line {} missing car road", lineNum);
+                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                            Bundle.getMessage("RoadNameNotSpecified"), new Object[]{lineNum}),
+                            Bundle.getMessage("RoadNameMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carType.isEmpty()) {
                     log.info("Import line {} missing car type", lineNum);
                     JOptionPane.showMessageDialog(null, MessageFormat.format(
-                            Bundle.getMessage("CarTypeNotSpecified"), new Object[]{(carRoad + " " + carNumber)}),
+                            Bundle.getMessage("CarTypeNotSpecified"), new Object[]{carRoad, carNumber, lineNum}),
                             Bundle.getMessage("CarTypeMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carLength.isEmpty()) {
                     log.info("Import line {} missing car length", lineNum);
                     JOptionPane.showMessageDialog(null, MessageFormat.format(
-                            Bundle.getMessage("CarLengthNotSpecified"), new Object[]{(carRoad + " " + carNumber)}),
+                            Bundle.getMessage("CarLengthNotSpecified"), new Object[]{carRoad, carNumber, lineNum}),
                             Bundle.getMessage("CarLengthMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carNumber.length() > Control.max_len_string_road_number) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNumberTooLong"),
-                            new Object[]{(carRoad + " " + carNumber), carNumber}),
+                            new Object[]{carRoad, carNumber, carNumber}),
                             MessageFormat.format(Bundle.getMessage("RoadNumMustBeLess"),
                                     new Object[]{Control.max_len_string_road_number + 1}),
                             JOptionPane.ERROR_MESSAGE);
@@ -228,7 +234,7 @@ public class ImportCars extends ImportRollingStock {
                 }
                 if (carRoad.length() > Control.max_len_string_attibute) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNameTooLong"),
-                            new Object[]{(carRoad + " " + carNumber), carRoad}),
+                            new Object[]{carRoad, carNumber, carRoad}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
                             JOptionPane.ERROR_MESSAGE);
@@ -236,7 +242,7 @@ public class ImportCars extends ImportRollingStock {
                 }
                 if (carType.length() > Control.max_len_string_attibute) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarTypeNameTooLong"),
-                            new Object[]{(carRoad + " " + carNumber), carType}),
+                            new Object[]{carRoad, carNumber, carType}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
                             JOptionPane.ERROR_MESSAGE);
@@ -275,7 +281,7 @@ public class ImportCars extends ImportRollingStock {
                 }
                 if (carLength.length() > Control.max_len_string_length_name) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarLengthNameTooLong"),
-                            new Object[]{(carRoad + " " + carNumber), carLength}),
+                            new Object[]{carRoad, carNumber, carLength}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_length_name}),
                             JOptionPane.ERROR_MESSAGE);
@@ -286,14 +292,13 @@ public class ImportCars extends ImportRollingStock {
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(
                             null, MessageFormat.format(Bundle.getMessage("CarLengthNameNotNumber"),
-                                    new Object[]{(carRoad + " " + carNumber),
-                                            carLength}),
+                                    new Object[]{carRoad, carNumber, carLength}),
                             Bundle.getMessage("CarLengthMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carWeight.length() > Control.max_len_string_weight_name) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarWeightNameTooLong"),
-                            new Object[]{(carRoad + " " + carNumber), carWeight}),
+                            new Object[]{carRoad, carNumber, carWeight}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_weight_name}),
                             JOptionPane.ERROR_MESSAGE);
@@ -301,7 +306,7 @@ public class ImportCars extends ImportRollingStock {
                 }
                 if (carColor.length() > Control.max_len_string_attibute) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarColorNameTooLong"),
-                            new Object[]{(carRoad + " " + carNumber), carColor}),
+                            new Object[]{carRoad, carNumber, carColor}),
                             MessageFormat.format(Bundle.getMessage("carAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
                             JOptionPane.ERROR_MESSAGE);
@@ -325,8 +330,7 @@ public class ImportCars extends ImportRollingStock {
                         if (carOwner.length() > Control.max_len_string_attibute) {
                             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                     .getMessage("CarOwnerNameTooLong"),
-                                    new Object[]{(carRoad + " " + carNumber),
-                                            carOwner}),
+                                    new Object[]{carRoad, carNumber, carOwner}),
                                     MessageFormat.format(Bundle.getMessage("carAttribute"),
                                             new Object[]{Control.max_len_string_attibute}),
                                     JOptionPane.ERROR_MESSAGE);
@@ -338,8 +342,7 @@ public class ImportCars extends ImportRollingStock {
                         if (carBuilt.length() > Control.max_len_string_built_name) {
                             JOptionPane.showMessageDialog(
                                     null, MessageFormat.format(Bundle.getMessage("CarBuiltNameTooLong"),
-                                            new Object[]{(carRoad + " " + carNumber),
-                                                    carBuilt}),
+                                            new Object[]{carRoad, carNumber, carBuilt}),
                                     MessageFormat.format(Bundle.getMessage("carAttribute"),
                                             new Object[]{Control.max_len_string_built_name}),
                                     JOptionPane.ERROR_MESSAGE);
@@ -412,8 +415,7 @@ public class ImportCars extends ImportRollingStock {
                     if (carLocationName.length() > Control.max_len_string_location_name) {
                         JOptionPane.showMessageDialog(
                                 null, MessageFormat.format(Bundle.getMessage("CarLocationNameTooLong"),
-                                        new Object[]{(carRoad + " " + carNumber),
-                                                carLocationName}),
+                                        new Object[]{carRoad, carNumber, carLocationName}),
                                 MessageFormat.format(Bundle.getMessage("carAttribute"),
                                         new Object[]{Control.max_len_string_location_name}),
                                 JOptionPane.ERROR_MESSAGE);
@@ -422,8 +424,7 @@ public class ImportCars extends ImportRollingStock {
                     if (carTrackName.length() > Control.max_len_string_track_name) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("CarTrackNameTooLong"),
-                                new Object[]{(carRoad + " " + carNumber),
-                                        carTrackName}),
+                                new Object[]{carRoad, carNumber, carTrackName}),
                                 MessageFormat.format(Bundle.getMessage("carAttribute"),
                                         new Object[]{Control.max_len_string_track_name}),
                                 JOptionPane.ERROR_MESSAGE);
@@ -439,8 +440,7 @@ public class ImportCars extends ImportRollingStock {
                         } else {
                             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                     .getMessage("CarLocationDoesNotExist"),
-                                    new Object[]{(carRoad + " " + carNumber),
-                                            carLocationName}),
+                                    new Object[]{carRoad, carNumber, carLocationName}),
                                     Bundle.getMessage("carLocation"), JOptionPane.ERROR_MESSAGE);
                             int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
                                     .getMessage("DoYouWantToCreateLoc"), new Object[]{carLocationName}), Bundle
@@ -479,8 +479,7 @@ public class ImportCars extends ImportRollingStock {
                             } else {
                                 JOptionPane.showMessageDialog(
                                         null, MessageFormat.format(Bundle.getMessage("CarTrackDoesNotExist"),
-                                                new Object[]{(carRoad + " " + carNumber), carTrackName,
-                                                        carLocationName}),
+                                                new Object[]{carRoad, carNumber, carTrackName, carLocationName}),
                                         Bundle.getMessage("carTrack"), JOptionPane.ERROR_MESSAGE);
                                 int results = JOptionPane.showConfirmDialog(null,
                                         MessageFormat.format(Bundle.getMessage("DoYouWantToCreateTrack"),
