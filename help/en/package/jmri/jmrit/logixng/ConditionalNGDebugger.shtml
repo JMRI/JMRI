@@ -36,15 +36,27 @@
 
       <p>You can then step by step thru the ConditionalNG by selecting the menu item <i>Debug -> Step into</i>.
       The debugger will then stop both before and after executing/evaluating the action/expression.
-      In each case, the action/expression will be marked by a border. When the debugger stops before
-      the item, the upper border will be thick. When the debugger stops after the item, the lower border
-      will be thick.</b>
+      When the debugger stops at an action/expression, the item will be marked by a border. When the debugger
+      stops before the item, the upper border will be thick. When the debugger stops after the item, the lower
+      border will be thick.</b>
 
-      <p>If the item has children, you can jump over the children by selecting the menu item
+      <p>If the item has children, you can jump over the children by instead selecting the menu item
       <i>Debug -> Step over</i>.</p>
 
       <p>If you want to run the ConditionalNG instead of stopping on each item, you select the menu item
       <i>Debug -> Run</i>.</p>
+
+
+      <h2>Status pane</h2>
+
+      <p>On the right side of the debugger window, there are three panes. The top pane shows status if it's
+      available. Example of status is the return value of expressions. If the debugger stops after an
+      expression, the status pane will show the result of the expression, for example <i>Return value True</i>.</p>
+
+
+      <h2>Local variables pane</h2>
+
+      <p>On the right side of the debugger window, the middle pane shows the current local variables.</p>
 
 
       <h2>LogixNG threads and the debugger</h2>
