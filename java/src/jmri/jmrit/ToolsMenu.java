@@ -192,6 +192,7 @@ public class ToolsMenu extends JMenu {
         // LogixNG menu
         add(new jmri.jmrit.logixng.tools.swing.LogixNGMenu());
 
+        // Enable or disable the service mode programmer menu items for the types of programmer available.
         updateProgrammerStatus(null);
         ConnectionStatus.instance().addPropertyChangeListener((PropertyChangeEvent e) -> {
             if ((e.getPropertyName().equals("change")) || (e.getPropertyName().equals("add"))) {
