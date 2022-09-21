@@ -503,6 +503,9 @@ public class AutoTrainAction {
                     sm.setHeld(false);
                 }
                 break;
+            case TransitSectionAction.ESTOP:
+                _autoActiveTrain.getAutoEngineer().setSpeedImmediate(-1);
+                break;
             default:
                 log.error("illegal What code - {} - in call to executeAction", tsa.getWhatCode());
                 break;

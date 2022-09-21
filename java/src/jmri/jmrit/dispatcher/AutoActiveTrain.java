@@ -616,6 +616,8 @@ public class AutoActiveTrain implements ThrottleListener {
         //Reset initialized flag
         _initialized = false;
         // set direction
+        _currentAllocatedSection=null;
+        _currentBlock=null;
         setForward(!getRunInReverse());
     }
 
@@ -1776,7 +1778,6 @@ public class AutoActiveTrain implements ThrottleListener {
      * after specified number of fast Minutes have elapsed.
      */
     class PauseTrain implements Runnable {
-
         /**
          * Create a PauseTrain
          *
@@ -1909,8 +1910,7 @@ public class AutoActiveTrain implements ThrottleListener {
          */
         public void setHalt(boolean halt) {
             if (halt) {
-                stopAllTimers();
-                throttle.setSpeedSetting(0.0f);
+                this.setSpeedImmediate(0.0f);
             }
         }
 
@@ -2037,6 +2037,7 @@ public class AutoActiveTrain implements ThrottleListener {
          */
         public synchronized void setSpeedImmediate(float speed) {
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
+            stopAllTimers();
             targetSpeed = speed;
             throttle.setSpeedSetting(targetSpeed);
         }

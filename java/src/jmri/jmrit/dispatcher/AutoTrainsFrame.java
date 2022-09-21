@@ -266,6 +266,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     String onTopOnSpeedChange = this.getClass().getName() + ".OnTopOnSpeedChange"; // NOI18N
     String classicControl = this.getClass().getName() + ".UseClassicControl"; // NOI18N
 
+        private boolean useOnTopOnSpeedChange;
+
 
     private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 

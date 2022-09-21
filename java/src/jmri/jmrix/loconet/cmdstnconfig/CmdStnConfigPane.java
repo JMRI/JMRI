@@ -203,6 +203,16 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                         // combos than the common tooltip, which is stored in
                         // LocoNetBundle
                         tooltip = rb.getString("DB150ConfigFxToolTip");
+                    } else if  (name.startsWith("DCS52")) {
+                        tooltip = rb.getString("DCS52ConfigFxToolTip");
+                    } else if  (name.startsWith("DCS240Plus")) {
+                        tooltip = rb.getString("DCS240PlusConfigFxToolTip");
+                    } else if  (name.startsWith("DCS240")) {
+                        tooltip = rb.getString("DCS240ConfigFxToolTip");
+                    } else if  (name.startsWith("DCS210Plus")) {
+                        tooltip = rb.getString("DCS210PlusConfigFxToolTip");
+                    } else if  (name.startsWith("DCS210")) {
+                        tooltip = rb.getString("DCS210ConfigFxToolTip");
                     }
                     t.setToolTipText(tooltip);
                     c.setToolTipText(tooltip);
