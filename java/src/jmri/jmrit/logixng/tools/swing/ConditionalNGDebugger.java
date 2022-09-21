@@ -43,7 +43,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
     private final JMenuItem _stepOverItem;
     private final JMenuItem _stepIntoItem;
     private final FemaleSocketDecorator _decorator;
-    protected final ConditionalNG _conditionalNG;
+    private final ConditionalNG _conditionalNG;
     private Deque<Module> _lastModuleStack = new LinkedList<>();
     private Module _currentModule;
     private AbstractDebuggerMaleSocket _currentMaleSocket;

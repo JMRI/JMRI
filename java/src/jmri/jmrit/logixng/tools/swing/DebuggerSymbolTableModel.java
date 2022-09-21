@@ -1,20 +1,12 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
 
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.SymbolTable;
-import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.Symbol;
-import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * Table model for the current symbol table while debugging
@@ -107,6 +99,7 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
             case COLUMN_NAME:
                 return _symbols.get(rowIndex).getName();
             case COLUMN_VALUE:
+                if (_conditionalNG.getSymbolTable() == null) return "";
                 return _conditionalNG.getSymbolTable().getValue(_symbols.get(rowIndex).getName());
             default:
                 throw new IllegalArgumentException("Invalid column");
