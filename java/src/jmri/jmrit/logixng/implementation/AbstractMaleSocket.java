@@ -415,6 +415,10 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             }
             writer.append(currentIndent);
             writer.append(getLongDescription(locale));
+            if (settings._printSystemNames) {
+                writer.append(" ::: ");
+                writer.append(this.getSystemName());
+            }
             if (settings._printDisplayName) {
                 writer.append(" ::: ");
                 writer.append(Bundle.getMessage("LabelDisplayName"));
