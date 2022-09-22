@@ -7,6 +7,9 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference sockets">
   <!--#include virtual="/Style.shtml" -->
+  <style>
+    .add_sub {border: solid thin black !important;}
+  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -28,7 +31,7 @@
       <p>The right click context menu, introduced in chapter 1, is used to manage sockets.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter3/editor_context_menu.png"><img src=
+        <a href="images/chapter3/editor_context_menu.png"><img class="add_sub" src=
         "images/chapter3/editor_context_menu.png" alt="Chapter 3 editor context menu"></a>
       </div>
 
