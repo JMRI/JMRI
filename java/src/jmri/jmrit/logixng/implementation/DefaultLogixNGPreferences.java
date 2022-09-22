@@ -15,20 +15,19 @@ import jmri.profile.ProfileUtils;
  */
 public final class DefaultLogixNGPreferences extends PreferencesBean implements LogixNGPreferences {
 
-    public static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
-    public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
-    public static final String INSTALL_DEBUGGER = "installDebugger";
-    public static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
-    public static final String ERROR_HANDLING_TYPE = "errorHandlingType";
-    public static final String TREE_EDITOR_HIGHLIGHT_ROW = "treeEditorHighlightRow";
-    public static final String SHOW_SYSTEM_NAMES = "showSystemNames";
+    private static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
+    private static final String INSTALL_DEBUGGER = "installDebugger";
+    private static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
+    private static final String ERROR_HANDLING_TYPE = "errorHandlingType";
+    private static final String TREE_EDITOR_HIGHLIGHT_ROW = "treeEditorHighlightRow";
+    private static final String SHOW_SYSTEM_NAME_IN_EXCEPTION = "showSystemNameInExceptions";
 
     private boolean _startLogixNGOnLoad = true;
     private boolean _showSystemUserNames = false;
     private boolean _installDebugger = true;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.ShowDialogBox;
     private boolean _treeEditorHighlightRow = false;
-    private boolean _showSystemNames = false;
+    private boolean _showSystemNameInException = false;
 
 
     public DefaultLogixNGPreferences() {
@@ -46,7 +45,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         _errorHandlingType = ErrorHandlingType.valueOf(
                 sharedPreferences.get(ERROR_HANDLING_TYPE, _errorHandlingType.name()));
         _treeEditorHighlightRow = sharedPreferences.getBoolean(TREE_EDITOR_HIGHLIGHT_ROW, _treeEditorHighlightRow);
-        _showSystemNames = sharedPreferences.getBoolean(SHOW_SYSTEM_NAMES, _showSystemNames);
+        _showSystemNameInException = sharedPreferences.getBoolean(SHOW_SYSTEM_NAME_IN_EXCEPTION, _showSystemNameInException);
 
         setIsDirty(false);
     }
@@ -65,7 +64,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getTreeEditorHighlightRow() != prefs.getTreeEditorHighlightRow()) {
             return true;
         }
-        if (getShowSystemNames() != prefs.getShowSystemNames()) {
+        if (getShowSystemNameInException() != prefs.getShowSystemNameInException()) {
             return true;
         }
         return (getErrorHandlingType() != prefs.getErrorHandlingType());
@@ -78,7 +77,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         setShowSystemUserNames(prefs.getShowSystemUserNames());
         this.setErrorHandlingType(prefs.getErrorHandlingType());
         setTreeEditorHighlightRow(prefs.getTreeEditorHighlightRow());
-        setShowSystemNames(prefs.getShowSystemNames());
+        setShowSystemNameInException(prefs.getShowSystemNameInException());
     }
 
     @Override
@@ -89,7 +88,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
         sharedPreferences.put(ERROR_HANDLING_TYPE, this.getErrorHandlingType().name());
         sharedPreferences.putBoolean(TREE_EDITOR_HIGHLIGHT_ROW, this.getTreeEditorHighlightRow());
-        sharedPreferences.putBoolean(SHOW_SYSTEM_NAMES, this.getShowSystemNames());
+        sharedPreferences.putBoolean(SHOW_SYSTEM_NAME_IN_EXCEPTION, this.getShowSystemNameInException());
         setIsDirty(false);
     }
 
@@ -149,14 +148,14 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     }
 
     @Override
-    public void setShowSystemNames(boolean value) {
-        _showSystemNames = value;
+    public void setShowSystemNameInException(boolean value) {
+        _showSystemNameInException = value;
         setIsDirty(true);
     }
 
     @Override
-    public boolean getShowSystemNames() {
-        return _showSystemNames;
+    public boolean getShowSystemNameInException() {
+        return _showSystemNameInException;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

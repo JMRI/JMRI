@@ -97,12 +97,12 @@ public interface LogixNGPreferences {
      * Set whether system names should be shown or not.
      * @param value true if the row should be highlighted, false not
      */
-    public void setShowSystemNames(boolean value);
+    public void setShowSystemNameInException(boolean value);
 
     /**
      * Get whether system names should be shown or not.
      * @return true if the row should be highlighted, false not
      */
-    public boolean getShowSystemNames();
+    public boolean getShowSystemNameInException();
 
 }

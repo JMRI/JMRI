@@ -30,7 +30,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     JCheckBox _installDebuggerCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
     JCheckBox _treeEditorHighlightRow;
-    JCheckBox _showSystemNames;
+    JCheckBox _showSystemNameInException;
     private JComboBox<ErrorHandlingType> _errorHandlingComboBox;
 
 
@@ -64,7 +64,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
         preferences.setTreeEditorHighlightRow(_treeEditorHighlightRow.isSelected());
         preferences.setErrorHandlingType(_errorHandlingComboBox.getItemAt(_errorHandlingComboBox.getSelectedIndex()));
-        preferences.setShowSystemNames(_showSystemNames.isSelected());
+        preferences.setShowSystemNameInException(_showSystemNameInException.isSelected());
         return didSet;
     }
 
@@ -83,8 +83,8 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _treeEditorHighlightRow = new JCheckBox(Bundle.getMessage("LabelTreeEditorHighlightRow"));
         _treeEditorHighlightRow.setToolTipText(Bundle.getMessage("ToolTipTreeEditorHighlightRow"));
 
-        _showSystemNames = new JCheckBox(Bundle.getMessage("LabelShowSystemNames"));
-        _showSystemNames.setToolTipText(Bundle.getMessage("ToolTipShowSystemNames"));
+        _showSystemNameInException = new JCheckBox(Bundle.getMessage("LabelShowSystemNameInException"));
+        _showSystemNameInException.setToolTipText(Bundle.getMessage("ToolTipShowSystemNameInException"));
 
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
 
@@ -92,13 +92,13 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         gridPanel.add(_installDebuggerCheckBox);
         gridPanel.add(_showSystemUserNamesCheckBox);
         gridPanel.add(_treeEditorHighlightRow);
-        gridPanel.add(_showSystemNames);
+        gridPanel.add(_showSystemNameInException);
 
         _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
         _installDebuggerCheckBox.setSelected(preferences.getInstallDebugger());
         _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
         _treeEditorHighlightRow.setSelected(preferences.getTreeEditorHighlightRow());
-        _showSystemNames.setSelected(preferences.getShowSystemNames());
+        _showSystemNameInException.setSelected(preferences.getShowSystemNameInException());
 
         _errorHandlingComboBox = new JComboBox<>();
         for (ErrorHandlingType type : ErrorHandlingType.values()) {
