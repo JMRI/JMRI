@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import static jmri.jmrix.can.cbus.CbusConstants.MTYP_CANSPROG3P;
 import static jmri.jmrix.can.cbus.CbusConstants.SPROG_DCC;
 
-import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.simulator.CbusSimulatedModuleProvider;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -29,7 +29,7 @@ public class SprogPiSprog3Plus extends CbusSimulatedModuleProvider {
     }
 
     @Override
-    public void configureDummyNode(@Nonnull CbusDummyNode node) {
+    public void configureDummyNode(@Nonnull CbusNode node) {
         int[] _params = new int[]{ 
             20, /* 0 num parameters   */
             SPROG_DCC, /* 1 manufacturer ID   */
