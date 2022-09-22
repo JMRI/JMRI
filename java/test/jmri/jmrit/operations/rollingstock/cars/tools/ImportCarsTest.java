@@ -531,7 +531,7 @@ public class ImportCarsTest extends OperationsTestCase {
         exportCars();
 
         // do import
-        importCars(true, null);
+        importCars(true, Bundle.getMessage("RoadNumberMissing"));
     }
 
     @Test
@@ -549,7 +549,7 @@ public class ImportCarsTest extends OperationsTestCase {
         exportCars();
 
         // do import
-        importCars(true, null);
+        importCars(true, Bundle.getMessage("RoadNameMissing"));
     }
 
     @Test

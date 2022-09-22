@@ -42,7 +42,7 @@ public class ImportEnginesTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("PC", "5559");
         e1.setNumber("");
         exportEngines();
-        importEngines(true, null, null);
+        importEngines(true, Bundle.getMessage("RoadNumberMissing"), Bundle.getMessage("ButtonOK"));
 
         // confirm failure
         Assert.assertEquals("Engines", 3, emanager.getNumEntries());
@@ -74,7 +74,7 @@ public class ImportEnginesTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("PC", "5559");
         e1.setRoadName("");
         exportEngines();
-        importEngines(true, null, null);
+        importEngines(true, Bundle.getMessage("RoadNameMissing"), Bundle.getMessage("ButtonOK"));
 
         // confirm failure
         Assert.assertEquals("Engines", 3, emanager.getNumEntries());
@@ -107,7 +107,7 @@ public class ImportEnginesTest extends OperationsTestCase {
         Engine e1 = emanager.getByRoadAndNumber("PC", "5559");
         e1.setModel("");
         exportEngines();
-        importEngines(true, null, null);
+        importEngines(true, Bundle.getMessage("EngineModelMissing"), Bundle.getMessage("ButtonOK"));
 
         // confirm failure
         Assert.assertEquals("Engines", 3, emanager.getNumEntries());
@@ -142,7 +142,7 @@ public class ImportEnginesTest extends OperationsTestCase {
         // changes the length of the 2 engines with this model name
         e1.setLength("");
         exportEngines();
-        importEngines(true, null, null);
+        importEngines(true, Bundle.getMessage("EngineLengthMissing"), Bundle.getMessage("ButtonOK"));
 
         // confirm failure
         Assert.assertEquals("Engines", 2, emanager.getNumEntries());
