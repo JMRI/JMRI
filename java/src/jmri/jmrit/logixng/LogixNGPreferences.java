@@ -4,7 +4,7 @@ import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 
 /**
  * Preferences for LogixNG
- * 
+ *
  * @author Daniel Bergqvist Copyright 2018
  */
 public interface LogixNGPreferences {
@@ -26,7 +26,7 @@ public interface LogixNGPreferences {
      * Save the preferences
      */
     public void save();
-    
+
     /**
      * Set whenether LogixNG should be started when the program starts or a
      * panel is loaded.
@@ -92,5 +92,17 @@ public interface LogixNGPreferences {
      * @return true if the row should be highlighted, false not
      */
     public boolean getTreeEditorHighlightRow();
+
+    /**
+     * Set whether system names should be shown or not.
+     * @param value true if the row should be highlighted, false not
+     */
+    public void setShowSystemNames(boolean value);
+
+    /**
+     * Get whether system names should be shown or not.
+     * @return true if the row should be highlighted, false not
+     */
+    public boolean getShowSystemNames();
 
 }
