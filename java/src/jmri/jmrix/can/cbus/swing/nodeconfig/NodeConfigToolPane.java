@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.*;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -626,10 +627,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             return false;
         }
 
-        if (getNodeModel()==null){
-            log.warn("No Node Model");
-            return false;
-        }
         CbusNode _node = getNodeModel().getNodeByNodeNum( _selectedNode );
         if (_node==null){
             log.warn("No Node");
@@ -844,7 +841,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
      * Get the System Connection Node Model
      * @return System Connection Node Model
      */
+    @Nonnull
     protected CbusNodeTableDataModel getNodeModel(){
+        if ( memo == null ) {
+            throw new IllegalStateException("No System Connection Set, call initComponents(memo)");
+        }
         return ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
             .provide(CbusNodeTableDataModel.class);
     }
