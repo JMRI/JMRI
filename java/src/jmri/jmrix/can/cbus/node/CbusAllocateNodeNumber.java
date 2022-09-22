@@ -18,6 +18,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.CbusSend;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
@@ -244,7 +245,7 @@ public class CbusAllocateNodeNumber implements CanListener {
                 clearSendSNNTimeout();
                 // if nodes are allowed to be added to node table, add.
                 // this is done here so any known parameters can be passed directly rather than re-requested
-                if ( jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class).getAddNodes() ) {
+                if ( ((CbusPreferences)_memo.get(CbusPreferences.class)).getAddNodes() ) {
                     int nodeNum = m.getElement(1) * 256 + m.getElement(2);
                     nodeModel.setRequestNodeDisplay(nodeNum);
                     // provide will add to table

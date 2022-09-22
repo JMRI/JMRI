@@ -136,7 +136,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Improved display of programmer availability in PanelPro Tools menu.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -610,6 +610,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Updated File Chooser to enable directories to be selectable.</li>
         </ul>
 
