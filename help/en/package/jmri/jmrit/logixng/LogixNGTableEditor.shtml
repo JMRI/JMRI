@@ -71,7 +71,8 @@
         <dt>Thread</dt>
 
         <dd>The thread field shows the currently assigned thread name. It is changed by using the
-        <strong>Edit threads</strong> button.</dd>
+        <strong>Edit threads</strong> button. This is particular useful when using the
+        <a href="ConditionalNGDebugger.shtml">LogixNG Debugger</a>.</dd>
 
         <dt>Edit</dt>
 
@@ -79,7 +80,8 @@
 
         <dt>Debug</dt>
 
-        <dd>Advanced feature.</dd>
+        <dd>The LogixNG Debugger allows you to walk thru a ConditionalNG step by step to see what it
+        is actually doing. See <a href="ConditionalNGDebugger.shtml">LogixNG Debugger</a></dd>
 
         <dt>Delete</dt>
 

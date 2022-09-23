@@ -8,7 +8,6 @@ import javax.annotation.*;
 
 import jmri.JmriException;
 import jmri.NamedBean;
-import jmri.NamedBean.DisplayOptions;
 import jmri.beans.PropertyChangeProvider;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -20,7 +19,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * @author Daniel Bergqvist Copyright 2018
  */
 public interface Base extends PropertyChangeProvider {
-
 
     /**
      * The name of the property child count.
@@ -179,6 +177,22 @@ public interface Base extends PropertyChangeProvider {
      * @return a long description
      */
     public String getLongDescription(Locale locale);
+
+    /**
+     * Get the Module of this item, if it's part of a module.
+     * @return the Module that owns this item or null if it's
+     *         owned by a ConditonalNG.
+     */
+    public default Module getModule() {
+        Base parent = this.getParent();
+        while (parent != null) {
+            if (parent instanceof Module) {
+                return (Module) parent;
+            }
+            parent = parent.getParent();
+        }
+        return null;
+    }
 
     /**
      * Get the ConditionalNG of this item.
