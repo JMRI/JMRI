@@ -116,7 +116,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated OpenLCB library to include PR #205. Now properly
+                    sends AMD in response to relevant AME.</li>
             </ul>
 
         <h4>RFID</h4>
