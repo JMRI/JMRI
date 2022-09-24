@@ -190,8 +190,24 @@
 
         <dt>Highlight row in ConditionalNG editor</dt>
 
-        <dd>When this option is enabled, the currently selected row will be highlighted.  This can
-        provide visual feedback, such as when the popup menu is open.</dd>
+        <dd>
+          <p>When this option is enabled, the currently selected row will be highlighted.  This can
+          provide visual feedback, such as when the popup menu is open.</p>
+
+          <p><span class="since">since 5.1.5</span>The arrow keys can be used to move between rows
+          and shortcut keys are available to perform menu items without opening the context menu.</p>
+
+          <ul>
+            <li>Ctrl + N: Create new</li>
+            <li>Ctrl + E: Edit</li>
+            <li>Ctrl + R: Remove</li>
+            <li>Ctrl + X: Cut</li>
+            <li>Ctrl + C: Copy</li>
+            <li>Ctrl + V: Paste</li>
+          </ul>
+
+          <p>For macOS, use Cmd instead of Ctrl.</p>
+        </dd>
 
         <dt>Error Handling Options</dt>
 

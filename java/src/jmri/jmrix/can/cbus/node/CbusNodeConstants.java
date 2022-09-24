@@ -637,7 +637,7 @@ public class CbusNodeConstants {
     
     
     /*
-     * Populate hashmap with rocrail module support links
+     * Populate hashmap with SPROG module support links
      */
     private static Map<Integer, String> createLink44Map() {
         Map<Integer, String> result = new HashMap<>();
@@ -646,6 +646,10 @@ public class CbusNodeConstants {
         result.put(3, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(4, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         result.put(5, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(6, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(7, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(8, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
+        result.put(9, "https://www.sprog-dcc.co.uk/download-page"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     
