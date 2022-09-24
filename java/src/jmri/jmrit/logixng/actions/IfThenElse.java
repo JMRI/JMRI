@@ -14,7 +14,8 @@ import jmri.jmrit.logixng.*;
 public class IfThenElse extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private Type _type = Type.ExecuteOnChange;
+    private ExecuteType _executeType = ExecuteType.ExecuteOnChange;
+    private EvaluateType _evaluateType = EvaluateType.EvaluateAll;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
     private boolean disableCheckForUnconnectedSocket = false;
@@ -84,7 +85,8 @@ public class IfThenElse extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         IfThenElse copy = new IfThenElse(sysName, userName);
         copy.setComment(getComment());
-        copy.setType(_type);
+        copy.setExecuteType(_executeType);
+        copy.setEvaluateType(_evaluateType);
 
         // Ensure the copy has as many childs as myself
         while (copy.getChildCount() < this.getChildCount()) {
@@ -133,13 +135,15 @@ public class IfThenElse extends AbstractDigitalAction
     public void execute() throws JmriException {
         boolean changed = false;
 
+        FemaleDigitalActionSocket socketToExecute = null;
+
         for (int i=0; i < _expressionEntries.size(); i++) {
             ExpressionEntry entry = _expressionEntries.get(i);
             boolean result = entry._socket.evaluate();
             TriState _expressionResult = TriState.getValue(result);
 
             // _lastExpressionResult may be Unknown
-            if ((_type == Type.AlwaysExecute) || (_expressionResult != entry._lastExpressionResult)) {
+            if ((_executeType == ExecuteType.AlwaysExecute) || (_expressionResult != entry._lastExpressionResult)) {
                 changed = true;
 
                 // Last expression result must be stored as a tri state value, since
@@ -147,32 +151,58 @@ public class IfThenElse extends AbstractDigitalAction
                 entry._lastExpressionResult = _expressionResult;
 
                 if (result) {
-                    _actionEntries.get(i)._socket.execute();
-                    return;
+                    if (socketToExecute == null) {
+                        socketToExecute = _actionEntries.get(i)._socket;
+                    }
+                    if (_evaluateType == EvaluateType.EvaluateNeeded) {
+                        break;
+                    }
                 }
             }
         }
 
         // If here, all expressions where false
-        if (changed) {
-            _actionEntries.get(_actionEntries.size()-1)._socket.execute();
+        if (changed && socketToExecute == null) {
+            socketToExecute = _actionEntries.get(_actionEntries.size()-1)._socket;
+        }
+
+        if (socketToExecute != null) {
+            socketToExecute.execute();
+        } else {
+            log.trace("socketToExecute is null");
         }
     }
 
     /**
-     * Get the type.
+     * Get the execute type.
      * @return the type
      */
-    public Type getType() {
-        return _type;
+    public ExecuteType getExecuteType() {
+        return _executeType;
     }
 
     /**
-     * Set the type.
+     * Set the execute type.
      * @param type the type
      */
-    public void setType(Type type) {
-        _type = type;
+    public void setExecuteType(ExecuteType type) {
+        _executeType = type;
+    }
+
+    /**
+     * Get the execute type.
+     * @return the type
+     */
+    public EvaluateType getEvaluateType() {
+        return _evaluateType;
+    }
+
+    /**
+     * Set the execute type.
+     * @param type the type
+     */
+    public void setEvaluateType(EvaluateType type) {
+        _evaluateType = type;
     }
 
     @Override
@@ -363,7 +393,7 @@ public class IfThenElse extends AbstractDigitalAction
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "IfThenElse_Long", _type.toString());
+        return Bundle.getMessage(locale, "IfThenElse_Long", _executeType.toString());
     }
 
     public int getNumExpressions() {
@@ -480,14 +510,14 @@ public class IfThenElse extends AbstractDigitalAction
      * The type of Action. If the type is changed, the action is aborted if it
      * is currently running.
      */
-    public enum Type {
+    public enum ExecuteType {
         /**
          * The "then" or "else" action is executed when the expression changes
          * its result. If the expression has returned "false", but now returns
          * "true", the "then" action is executed. If the expression has
          * returned "true", but now returns "false", the "else" action is executed.
          */
-        ExecuteOnChange(Bundle.getMessage("IfThenElse_ExecuteOnChange")),
+        ExecuteOnChange(Bundle.getMessage("IfThenElse_ExecuteType_ExecuteOnChange")),
 
         /**
          * The "then" or "else" action is always executed when this action is
@@ -495,11 +525,37 @@ public class IfThenElse extends AbstractDigitalAction
          * executed. If the expression returns "false", the "else" action is
          * executed.
          */
-        AlwaysExecute(Bundle.getMessage("IfThenElse_AlwaysExecute"));
+        AlwaysExecute(Bundle.getMessage("IfThenElse_ExecuteType_AlwaysExecute"));
 
         private final String _text;
 
-        private Type(String text) {
+        private ExecuteType(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+
+    public enum EvaluateType {
+        /**
+         * All the connected expression sockets are evaluated.
+         */
+        EvaluateAll(Bundle.getMessage("IfThenElse_EvaluateType_EvaluateAll")),
+
+        /**
+         * Evaluation starts with the first expression socket and continues
+         * until all sockets are evaluated or the result is known.
+         */
+        EvaluateNeeded(Bundle.getMessage("IfThenElse_EvaluateType_EvaluateNeeded"));
+
+        private final String _text;
+
+        private EvaluateType(String text) {
             this._text = text;
         }
 

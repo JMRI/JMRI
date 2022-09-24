@@ -251,7 +251,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </ActionMemory>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0005</systemName>
       <Expressions>
         <Socket>
@@ -326,7 +326,7 @@
         </AbstractMaleSocket>
       </MaleSocket>
     </ShowDialog>
-    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="ExecuteOnChange">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
       <systemName>IQDA:AUTO:0009</systemName>
       <Expressions>
         <Socket>
