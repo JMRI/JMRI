@@ -7,6 +7,9 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference local variables">
   <!--#include virtual="/Style.shtml" -->
+  <style>
+    .add_sub {border: solid thin black !important;}
+  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -45,17 +48,15 @@
       variables</strong>.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter8/local_variables_menu.png"><img src=
-        "images/chapter8/local_variables_menu.png" alt="Chapter 8 local variable menu item" width=
-        "215" height="434"></a>
+        <a href="images/chapter8/local_variables_menu.png"><img class="add_sub" src=
+        "images/chapter8/local_variables_menu.png" alt="Chapter 8 local variable menu item"></a>
       </div>
 
       <p>The local variable dialog window will open.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/local_variables_dialog.png"><img src=
-        "images/chapter8/local_variables_dialog.png" alt="Chapter 8 local variables dialog" width=
-        "467" height="277"></a>
+        "images/chapter8/local_variables_dialog.png" alt="Chapter 8 local variables dialog"></a>
       </div>
 
       <p>To create a local variable, click on the <strong>Add variable</strong> button. A new row
@@ -150,8 +151,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/local_variable_array.png"><img src=
-        "images/chapter8/local_variable_array.png" alt="Chapter 8 local variable array"
-        width="467" height="202"></a>
+        "images/chapter8/local_variable_array.png" alt="Chapter 8 local variable array"></a>
       </div>
 
       <p>Some examples of setting the initial Array values.  <strong>size</strong> is another local
@@ -193,8 +193,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/array_sample.png"><img src=
-        "images/chapter8/array_sample.png" alt="Chapter 8 local variable array sample"
-        width="604" height="854"></a>
+        "images/chapter8/array_sample.png" alt="Chapter 8 local variable array sample"></a>
       </div>
 
       <ul>
@@ -245,8 +244,7 @@ Log local variables done
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/local_variable_map.png"><img src=
-        "images/chapter8/local_variable_map.png" alt="Chapter 8 local variable map"
-        width="467" height="206"></a>
+        "images/chapter8/local_variable_map.png" alt="Chapter 8 local variable map"></a>
       </div>
 
       <p>The rows in the map are accessed by using the key for the row.  To add a new key/value pair:
@@ -267,8 +265,7 @@ Log local variables done
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/map_sample.png"><img src=
-        "images/chapter8/map_sample.png" alt="Chapter 8 local variable map sample"
-        width="527" height="625"></a>
+        "images/chapter8/map_sample.png" alt="Chapter 8 local variable map sample"></a>
       </div>
 
       <div style="margin-left: 2em;">
@@ -309,8 +306,7 @@ Log local variables done
 
       <div style="margin-left: 2em;">
         <a href="images/chapter8/local_variables_scope.png"><img src=
-        "images/chapter8/local_variables_scope.png" alt="Chapter 8 local variables scope" width=
-        "700" height="508"></a>
+        "images/chapter8/local_variables_scope.png" alt="Chapter 8 local variables scope"></a>
       </div>
 
       <p>The output on the JMRI system console shows the result when the ConditionalNG is
