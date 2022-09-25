@@ -442,6 +442,9 @@
               <li><i>Evaluate all expressions</i> - evaluates all the <i>If</i> sockets before executing any action.</i>
               <li><i>Evaluate needed expressions</i> - evaluates the <i>If</i> sockets until one expression returns True.</i>
             </ul>
+            Note that when <i>If Then Else</i> got support for <i>Else_If</i> statements in JMRI 5.1.3, it worked as
+            <i>Evaluate needed expressions</i> it has now changed to <i>Evaluate all expressions</i>, unless the user changes
+            it. For most cases, this will be just fine, but there might be rare cases where this matters.
           </li>
           <li></li>
         </ul>
