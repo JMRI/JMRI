@@ -435,6 +435,14 @@
               </li>
             </ul>
           </li>
+          <li>
+            The <i>If Then Else</i> action has two new options that's relevant when
+            there's more that one <i>If</i> socket.
+            <ul>
+              <li><i>Evaluate all expressions</i> - evaluates all the <i>If</i> sockets before executing any action.</i>
+              <li><i>Evaluate needed expressions</i> - evaluates the <i>If</i> sockets until one expression returns True.</i>
+            </ul>
+          </li>
           <li></li>
         </ul>
 
