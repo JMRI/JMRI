@@ -25,7 +25,6 @@ public class SprogVersionQuery implements SprogListener {
     String replyString;
     SprogTrafficController tc;
     SprogVersion ver;
-    private int _oldTimeout;
 
     // enum for version query states
     enum QueryState {
