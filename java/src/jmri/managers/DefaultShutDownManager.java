@@ -56,6 +56,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     private static volatile boolean shuttingDown = false;
     private static final Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
     private final Set<Callable<Boolean>> callables = new HashSet<>();
+    private final Set<EarlyTask> earlyRunnables = new HashSet<>();
     private final Set<Runnable> runnables = new HashSet<>();
     protected final Thread shutdownHook;
     // use up to 8 threads for parallel tasks
@@ -89,6 +90,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @Override
     public synchronized void register(ShutDownTask s) {
         Objects.requireNonNull(s, NO_NULL_TASK);
+        this.earlyRunnables.add(new EarlyTask(s));
         this.runnables.add(s);
         this.callables.add(s);
         this.addPropertyChangeListener(PROP_SHUTTING_DOWN, s);
@@ -120,6 +122,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         this.removePropertyChangeListener(PROP_SHUTTING_DOWN, s);
         this.callables.remove(s);
         this.runnables.remove(s);
+        for (EarlyTask r : earlyRunnables) {
+            if (r._task == s) earlyRunnables.remove(r);
+        }
     }
 
     /**
@@ -251,6 +256,17 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // wait for parallel tasks to complete
             try {
+                if (!earlyRunnables.isEmpty() && !new ProxyTask(new HashSet<>(earlyRunnables).stream()
+                        .map(task -> RP.post(task, 0, Thread.currentThread().getPriority()))
+                        .collect(Collectors.toSet()))
+                                .waitFinished(timeout)) {
+                    log.warn("Terminating without waiting for stop tasks to complete");
+                }
+            } catch (InterruptedException ex) {
+                // do nothing
+            }
+            // wait for parallel tasks to complete
+            try {
                 if (!runnables.isEmpty() && !new ProxyTask(new HashSet<>(runnables).stream()
                         .map(task -> RP.post(task, 0, Thread.currentThread().getPriority()))
                         .collect(Collectors.toSet()))
@@ -291,7 +307,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         log.debug("Setting shuttingDown to {}", state);
         firePropertyChange(PROP_SHUTTING_DOWN, old, state);
     }
-    
+
     private synchronized static void setStaticShuttingDown(boolean state){
         shuttingDown = state;
     }
@@ -313,4 +329,19 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             }
         }
     }
+
+    private static class EarlyTask implements Runnable {
+
+        private final ShutDownTask _task;
+
+        EarlyTask(ShutDownTask task) {
+            _task = task;
+        }
+
+        @Override
+        public void run() {
+            _task.runEarly();
+        }
+    }
+
 }
