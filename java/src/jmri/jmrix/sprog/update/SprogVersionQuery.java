@@ -25,6 +25,7 @@ public class SprogVersionQuery implements SprogListener {
     String replyString;
     SprogTrafficController tc;
     SprogVersion ver;
+    private int _oldTimeout;
 
     // enum for version query states
     enum QueryState {
@@ -247,13 +248,13 @@ public class SprogVersionQuery implements SprogListener {
                     log.debug("Found: {}", v.toString());
                     notifyVersion(v);
                     state = QueryState.DONE;
-                    break;
+//                    break;
                 }
+                tc.resetTimeout();
                 break;
             }
 
             case DONE:
-                tc.resetTimeout();
                 break;
 
             default: {
