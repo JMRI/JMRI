@@ -4,7 +4,6 @@ import java.util.*;
 
 import javax.swing.table.AbstractTableModel;
 
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.SymbolTable.Symbol;
 
@@ -17,17 +16,14 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
     public static final int COLUMN_NAME = 0;
     public static final int COLUMN_VALUE = 1;
 
-    private final ConditionalNG _conditionalNG;
     private final List<Symbol> _symbols = new ArrayList<>();
+    private SymbolTable _symbolTable = null;
 
 
-    public DebuggerSymbolTableModel(ConditionalNG conditionalNG) {
-        _conditionalNG = conditionalNG;
-    }
-
-    public void update(Map<String, SymbolTable.Symbol> symbols) {
+    public void update(SymbolTable symbolTable) {
+        _symbolTable = symbolTable;
         _symbols.clear();
-        for (Symbol s : symbols.values()) {
+        for (Symbol s : symbolTable.getSymbols().values()) {
             _symbols.add(s);
         }
         fireTableDataChanged();
@@ -79,6 +75,7 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
     /** {@inheritDoc} */
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
+/*
         Symbol symbol = _symbols.get(rowIndex);
 
         switch (columnIndex) {
@@ -88,6 +85,7 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
+*/
     }
 
     /** {@inheritDoc} */
@@ -99,11 +97,12 @@ public class DebuggerSymbolTableModel extends AbstractTableModel {
             case COLUMN_NAME:
                 return _symbols.get(rowIndex).getName();
             case COLUMN_VALUE:
-                if (_conditionalNG.getSymbolTable() == null) return "";
-                return _conditionalNG.getSymbolTable().getValue(_symbols.get(rowIndex).getName());
+                if (_symbolTable == null) return "";
+                return _symbolTable.getValue(_symbols.get(rowIndex).getName());
             default:
                 throw new IllegalArgumentException("Invalid column");
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebuggerSymbolTableModel.class);
 }
