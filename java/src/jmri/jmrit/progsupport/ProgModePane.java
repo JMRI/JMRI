@@ -63,7 +63,8 @@ public class ProgModePane extends ProgModeSelector {
         }
 
         // service mode support, if present
-        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null
+                && InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
 
             mServicePane = new ProgServiceModePane(direction, group);
             JPanel temp = new JPanel();
