@@ -67,11 +67,11 @@ public class ActionShutDownTask
                     try {
                         synchronized(_lock) {
                             conditionalNG.execute(internalSocket);
-                            _lock.wait();
+                            while (!internalSocket._completed) _lock.wait();
                             return internalSocket._result;
                         }
                     } catch (InterruptedException e) {
-                        log.error(e.getMessage(), e);
+                        log.error("Interrupted exception: {}", e, e);
                         return true;
                     }
                 } else {
@@ -90,10 +90,10 @@ public class ActionShutDownTask
                     try {
                         synchronized(_lock) {
                             conditionalNG.execute(internalSocket);
-                            _lock.wait();
+                            while (!internalSocket._completed) _lock.wait();
                         }
                     } catch (InterruptedException e) {
-                        log.error(e.getMessage(), e);
+                        log.error("Interrupted exception: {}", e, e);
                     }
                 }
             }
@@ -244,6 +244,7 @@ public class ActionShutDownTask
 
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
+        private boolean _completed = false;
         private boolean _result = true;     // If no connected socket, return true
 
         public InternalCallSocket() {
@@ -269,6 +270,7 @@ public class ActionShutDownTask
                 _result = _callSocket.evaluate();
                 conditionalNG.setSymbolTable(oldSymbolTable);
                 synchronized(_lock) {
+                    _completed = true;
                     _lock.notifyAll();
                 }
             }
@@ -283,6 +285,7 @@ public class ActionShutDownTask
 
         private ConditionalNG conditionalNG;
         private SymbolTable newSymbolTable;
+        private boolean _completed = false;
 
         public InternalRunSocket() {
             super(null, new FemaleSocketListener(){
@@ -307,6 +310,7 @@ public class ActionShutDownTask
                 _runSocket.execute();
                 conditionalNG.setSymbolTable(oldSymbolTable);
                 synchronized(_lock) {
+                    _completed = true;
                     _lock.notifyAll();
                 }
             }
