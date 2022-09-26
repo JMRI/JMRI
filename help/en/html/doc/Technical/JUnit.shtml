@@ -338,6 +338,7 @@ suite.<br>
    export JMRI_OPTIONS="-Duser.language=en -Duser.region=US"
 </pre>depending on what kind of OS and shell you're using. For more on how this works, see the page
 on <a href="StartUpScripts.shtml">startup scripts</a>.
+
       <h2 id="Continuous">Continuous Integration Test Execution</h2>
       The <a href="ContinuousIntegration.shtml">continuous integration environment</a> senses
       changes in the code repository, rebuilds the code, performs a variety of checks. If no fatal
@@ -1097,14 +1098,27 @@ milliseconds can improve the reliability of tests. Also, setting
       <p>In the future, this could be extended to pick up files automatically, to support xUnit
       testing, etc.</p>
 
-      <h3 id="testingTheTests">Testing the Tests</h3>
+      <h2 id="testingTheTests">Testing the Tests</h2>
+
+      <p>Ideally ( unless there is an actual issue with the code being tested ), all of the Tests will have a 100% success rate.
+      In the real world, tests can become flaky due to unknwon reasons and may not pass on every single execution.</p>
 
       <p><code><a href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Test.html"
       >@Test</a></code> method annotation can be replaced with <code><a href=
       "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/RepeatedTest.html"
       >@RepeatedTest(1000)</a></code>
-      to run the test multiple ( in this case 1000 ) times.
-      <br/>This can be helpful for reproducing errors with occasional test failures.
+      to run the test multiple ( in this case 1000 ) times.</p>
+
+      <p>Check that no remnanat threads are left over after tests, see <code>jmri.util.JUnitUtil.failRemnantThreads</code>
+      in <a href="testingvars">Optional Checks</a>.
+      <br/>Ideally, run whole-package Tests in case other Tests being run around the same time are
+      leaving Threads that interfere with the flaky test.</p>
+
+      <p>Is the Test inheriting objects from other tests?  It may be worth running the tests with a
+      completely fresh <a href="io">JMRI User Profile in a Temporary Directory</a>.</p>
+
+      <p>Mocking Frameworks can create a more controlled environment for the class under test by simulating
+      external dependencies.  JMRI uses <a href="https://site.mockito.org/">Mockito</a>, org.mockito.Mockito.</p>
 
       <p>Spotbugs Static Analysis reports can be generated for the Test classes.
       <pre style="font-family: monospace;">    ant tests-spotbugs</pre>
