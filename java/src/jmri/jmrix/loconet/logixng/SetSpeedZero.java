@@ -59,7 +59,7 @@ public class SetSpeedZero extends AbstractDigitalAction {
                 slot.consistStatus() == LnConstants.CONSIST_MID
                 || slot.consistStatus() == LnConstants.CONSIST_SUB;
 
-        if (inUse && !upLinkConsist) {
+        if (inUse && !upLinkConsist && slot.speed() != 0) {
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, slot.getSlot());
