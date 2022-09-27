@@ -50,16 +50,29 @@ public class SetSpeedZero extends AbstractDigitalAction {
         return _memo;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void execute() {
-        for (int i=1; i <= NUM_LOCO_SLOTS_TO_CHECK; i++) {
-            LocoNetSlot slot = _memo.getSlotManager().slot(i);
+    private void setSlotSpeedZero(LocoNetSlot slot) {
+        boolean inUse =
+                slot.slotStatus() == LnConstants.LOCO_IN_USE
+                || slot.slotStatus() == LnConstants.LOCO_COMMON;
+
+        boolean upLinkConsist =
+                slot.consistStatus() == LnConstants.CONSIST_MID
+                || slot.consistStatus() == LnConstants.CONSIST_SUB;
+
+        if (inUse && !upLinkConsist) {
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, slot.getSlot());
             msg.setElement(2, 0);
             _memo.getLnTrafficController().sendLocoNetMessage(msg);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void execute() {
+        for (int i=1; i <= NUM_LOCO_SLOTS_TO_CHECK; i++) {
+            setSlotSpeedZero(_memo.getSlotManager().slot(i));
         }
     }
 
