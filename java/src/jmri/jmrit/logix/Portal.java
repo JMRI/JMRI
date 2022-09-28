@@ -12,7 +12,7 @@ import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
@@ -274,7 +274,7 @@ public class Portal {
      * @param protectedBlock OBlock the signal protects
      * @return true if signal is set
      */
-    public boolean setProtectSignal(@Nullable NamedBean signal, float length, OBlock protectedBlock) {
+    public boolean setProtectSignal(@CheckForNull NamedBean signal, float length, OBlock protectedBlock) {
         if (protectedBlock == null) {
             return false;
         }
