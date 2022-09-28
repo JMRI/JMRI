@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.tools.debugger.AbstractDebuggerMaleSocket;
 import jmri.jmrit.logixng.tools.debugger.Debugger;
 import jmri.jmrit.logixng.tools.swing.TreePane.FemaleSocketDecorator;
@@ -184,7 +185,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
         JPanel symbolPanel = new JPanel();
         JScrollPane variableScrollPane = new JScrollPane(symbolPanel);
         JTable table = new JTable();
-        _symbolTableModel = new DebuggerSymbolTableModel(_conditionalNG);
+        _symbolTableModel = new DebuggerSymbolTableModel();
         table.setModel(_symbolTableModel);
         JScrollPane scrollpane = new JScrollPane(table);
         scrollpane.setPreferredSize(new Dimension(400, 200));
@@ -431,9 +432,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
                     _currentState = State.None;
             }
 
-            Map<String, SymbolTable.Symbol> symbols =
-                    _conditionalNG.getSymbolTable().getSymbols();
-
+            SymbolTable symbolTable = new DefaultSymbolTable(_conditionalNG.getSymbolTable());
             String infStr = infoString;
             jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
                 if (enableMenuItems.get()) {
@@ -443,7 +442,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
                 }
                 _actionExpressionInfoLabel.setText(infStr);
                 _currentTreePane.updateTree(_currentMaleSocket);
-                _symbolTableModel.update(symbols);
+                _symbolTableModel.update(symbolTable);
             });
 
 //            System.out.format("propertyChange middle: %s, %s, run: %b, currentState: %s%n", evt.getPropertyName(), ((MaleSocket)evt.getNewValue()).getLongDescription(), _run, _currentState.name());

@@ -138,6 +138,7 @@
         <h4>SPROG</h4>
             <ul>
                 <li>Improved display of programmer availability in PanelPro Tools menu.</li>
+                <li>Fixed timeout warnings during programming.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -358,7 +359,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Single CV programmer now checks for availability of global programmer.</li>
         </ul>
 
     <h3>CTC Tool</h3>

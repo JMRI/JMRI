@@ -199,7 +199,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
         send = new CbusSend(memo, bootConsole);
 
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
 
         init();
         setMenuOptions();
