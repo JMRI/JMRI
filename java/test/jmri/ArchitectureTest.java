@@ -330,6 +330,7 @@ public class ArchitectureTest {
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeans$NamedBeanReference")         // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable")                       // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.ActionListenOnBeansTable$NamedBeanReference")    // This class doesn't seem to be able to use LogixNG_SelectNamedBean
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.DigitalCallModule")
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
@@ -352,6 +353,7 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGExpressionsNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.expressions")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.expressions.DigitalCallModule")
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 
