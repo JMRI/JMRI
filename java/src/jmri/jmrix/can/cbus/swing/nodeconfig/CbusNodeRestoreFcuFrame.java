@@ -7,25 +7,26 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
+
 import org.w3c.dom.Document;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 
 /**
@@ -72,7 +73,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         _memo = memo;
         cbusNodeFcuDataModel = new CbusNodeFromFcuTableDataModel(_memo, 2, CbusNodeFromFcuTableDataModel.FCU_MAX_COLUMN);
 
-        nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        nodeModel = memo.get(CbusNodeTableDataModel.class);
 
         initMainPane();
     }
@@ -494,8 +495,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     }
 
     private void updateImportEventsButton() {
-        CbusEventTableDataModel eventModel = jmri.InstanceManager.getNullableDefault(
-            jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        CbusEventTableDataModel eventModel = _memo.get(CbusEventTableDataModel.class);
         if (eventModel==null){
             importEventNamesButton.setEnabled(false);
             importEventNamesButton.setToolTipText("CBUS Event Table Not Running");
@@ -514,10 +514,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
     private void teachJmriEventNamesFromNode( CbusNode nodeWithEvents ){
 
-        CbusEventTableDataModel eventModel;
         // see if CBUS Event Table is running
-
-        eventModel = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        CbusEventTableDataModel eventModel = _memo.get(CbusEventTableDataModel.class);
         if ( eventModel == null ) {
             log.info("CBUS Event Table not running, no Event Names imported.");
             return;
@@ -538,6 +536,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         return Bundle.getMessage("FcuImportTitle");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeRestoreFcuFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeRestoreFcuFrame.class);
 
 }

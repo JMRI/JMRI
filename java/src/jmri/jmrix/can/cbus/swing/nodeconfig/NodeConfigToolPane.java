@@ -11,10 +11,10 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.*;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
@@ -38,14 +38,12 @@ import org.slf4j.LoggerFactory;
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements PropertyChangeListener{
 
-    public CbusNodeTableDataModel nodeModel;
     public JTable nodeTable;
     private CbusPreferences preferences;
 
     protected CbusNodeTablePane nodeTablePane;
     private CbusNodeRestoreFcuFrame fcuFrame;
     private CbusNodeEditEventFrame _editEventFrame;
-    // private CbusNodeBackupsPane _backupPane;
 
     private JScrollPane eventScroll;
     private JSplitPane split;
@@ -80,8 +78,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
-            .provide(CbusNodeTableDataModel.class);
 
         CbusConfigPaneProvider.loadInstances();
 
@@ -278,9 +274,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             nodeTable.setRowSelectionInterval(sel,sel);
 
             // this also starts urgent fetch loop if not currently looping
-            nodeModel.setUrgentFetch(_selectedNode,nodeBefore,nodeAfter);
+            getNodeModel().setUrgentFetch(_selectedNode,nodeBefore,nodeAfter);
 
-            getTabs().get(tabindex).setNode( nodeModel.getNodeByNodeNum(_selectedNode) );
+            getTabs().get(tabindex).setNode( getNodeModel().getNodeByNodeNum(_selectedNode) );
 
         }
         else {
@@ -432,7 +428,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             searchForNodesMenuItem.setEnabled(false);
             busy_dialog = new jmri.util.swing.BusyDialog(topFrame, "Node Search", false);
             busy_dialog.start();
-            nodeModel.startASearchForNodes( this , NODE_SEARCH_TIMEOUT );
+            getNodeModel().startASearchForNodes( this , NODE_SEARCH_TIMEOUT );
         };
         searchForNodesMenuItem.addActionListener(updatenodes);
 
@@ -449,7 +445,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         sendSysResetMenuItem.addActionListener(systemReset);
 
         ActionListener nodeRequestActive = ae -> {
-            nodeModel.setBackgroundAllocateListener( nodeNumRequestMenuItem.isSelected() );
+            getNodeModel().setBackgroundAllocateListener( nodeNumRequestMenuItem.isSelected() );
             preferences.setAllocateNNListener( nodeNumRequestMenuItem.isSelected() );
         };
         nodeNumRequestMenuItem.addActionListener(nodeRequestActive);
@@ -458,15 +454,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         ActionListener fetchListener = ae -> {
             if ( backgroundDisabled.isSelected() ) {
                 preferences.setNodeBackgroundFetchDelay(0L);
-                nodeModel.startBackgroundFetch();
+                getNodeModel().startBackgroundFetch();
             }
             else if ( backgroundSlow.isSelected() ) {
                 preferences.setNodeBackgroundFetchDelay(100L);
-                nodeModel.startBackgroundFetch();
+                getNodeModel().startBackgroundFetch();
             }
             else if ( backgroundFast.isSelected() ) {
                 preferences.setNodeBackgroundFetchDelay(50L);
-                nodeModel.startBackgroundFetch();
+                getNodeModel().startBackgroundFetch();
             }
         };
         backgroundDisabled.addActionListener(fetchListener);
@@ -631,11 +627,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             return false;
         }
 
-        if (nodeModel==null){
-            log.warn("No Node Model");
-            return false;
-        }
-        CbusNode _node = nodeModel.getNodeByNodeNum( _selectedNode );
+        CbusNode _node = getNodeModel().getNodeByNodeNum( _selectedNode );
         if (_node==null){
             log.warn("No Node");
             return false;
@@ -846,11 +838,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     /**
-     * Get the Default Instance Node Model
-     * @return Default Instance Node Model
+     * Get the System Connection Node Model
+     * @return System Connection Node Model
      */
+    @Nonnull
     protected CbusNodeTableDataModel getNodeModel(){
-        return InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        if ( memo == null ) {
+            throw new IllegalStateException("No System Connection Set, call initComponents(memo)");
+        }
+        return ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusNodeTableDataModel.class);
     }
 
     /**

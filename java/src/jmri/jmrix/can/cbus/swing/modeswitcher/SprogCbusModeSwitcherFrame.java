@@ -72,7 +72,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
             return false;
         } else {
             csNode = 65534;
-            CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+            CbusNodeTableDataModel cs =  _memo.get(CbusNodeTableDataModel.class);
             if (cs != null) {
                 CbusNode csnode = cs.getCsByNum(0);
                 if (csnode != null) {

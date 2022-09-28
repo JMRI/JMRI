@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -1041,6 +1039,13 @@ public class Car extends RollingStock {
         }
         if ((a = e.getAttribute(Xml.RWL_LOAD)) != null) {
             _rwlLoadName = a.getValue();
+        }
+        // for backwards compatibility before version 5.1.4
+        if ((a = e.getAttribute(Xml.NEXT_LOAD)) != null && getWait() > 0) {
+            // update the car's load immediately
+            _loadName = a.getValue();
+            _wait = 0;
+            log.info("Setting wait for car ({}) to zero, updating load to ({})", toString(), getLoadName());
         }
         addPropertyChangeListeners();
     }
