@@ -437,6 +437,9 @@
             </ul>
           </li>
           <li></li>
+          <li>The new action <i>Shut down task</i> executes an action when JMRI shuts down.</li>
+          <li>The new LocoNet action <i>Set speed zero</i> sets the speed to zero for all the
+          LocoNet slots.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
