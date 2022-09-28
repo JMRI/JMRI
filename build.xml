@@ -376,6 +376,7 @@
         <exclude name="apps.tests.AllTest.class"/>
         <exclude name="jmri.HeadLessTest.class"/>
         <exclude name="jmri.ArchitectureTest.class"/>
+        <exclude name="jmri.TestArchitectureTest.class"/>
     </fileset>
 
 
