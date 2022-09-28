@@ -103,9 +103,6 @@ public class DigitalCallModule extends AbstractDigitalAction
 
         if (module == null) return;
 
-        ConditionalNG oldConditionalNG = getConditionalNG();
-        module.setCurrentConditionalNG(getConditionalNG());
-
         FemaleSocket femaleSocket = module.getRootSocket();
 
         if (! (femaleSocket instanceof FemaleDigitalActionSocket)) {
@@ -133,8 +130,6 @@ public class DigitalCallModule extends AbstractDigitalAction
         conditionalNG.getStack().setCount(currentStackPos);
 
         conditionalNG.setSymbolTable(newSymbolTable.getPrevSymbolTable());
-
-        module.setCurrentConditionalNG(oldConditionalNG);
     }
 
     @Override
@@ -168,12 +163,20 @@ public class DigitalCallModule extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        if (_selectNamedBean.getNamedBean() != null) {
+            getConditionalNG().addCurrentConditionalNG_Listener(
+                    _selectNamedBean.getNamedBean().getBean());
+        }
         _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        if (_selectNamedBean.getNamedBean() != null) {
+            getConditionalNG().removeCurrentConditionalNG_Listener(
+                    _selectNamedBean.getNamedBean().getBean());
+        }
         _selectNamedBean.unregisterListeners();
     }
 

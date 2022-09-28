@@ -201,6 +201,14 @@ public interface Base extends PropertyChangeProvider {
     public ConditionalNG getConditionalNG();
 
     /**
+     * Set the current ConditionalNG.
+     * @param conditionalNG the current ConditionalNG
+     */
+    public default void setCurrentConditionalNG(ConditionalNG conditionalNG) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
      * Get the LogixNG of this item.
      * @return the LogixNG that owns this item
      */
