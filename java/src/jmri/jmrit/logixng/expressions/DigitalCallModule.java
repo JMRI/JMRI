@@ -161,21 +161,28 @@ public class DigitalCallModule extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (_selectNamedBean.getNamedBean() != null) {
-            getConditionalNG().addCurrentConditionalNG_Listener(
-                    _selectNamedBean.getNamedBean().getBean());
+        if (!_listenersAreRegistered) {
+            if (_selectNamedBean.getNamedBean() != null) {
+                getConditionalNG().addCurrentConditionalNG_Listener(
+                        _selectNamedBean.getNamedBean().getBean());
+            }
+            _selectNamedBean.registerListeners();
+            _listenersAreRegistered = true;
         }
-        _selectNamedBean.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_selectNamedBean.getNamedBean() != null) {
-            getConditionalNG().removeCurrentConditionalNG_Listener(
-                    _selectNamedBean.getNamedBean().getBean());
+        if (_listenersAreRegistered) {
+            if (_selectNamedBean.getNamedBean() != null) {
+                ConditionalNG conditionalNG = getConditionalNG();
+                conditionalNG.removeCurrentConditionalNG_Listener(
+                        _selectNamedBean.getNamedBean().getBean());
+            }
+            _selectNamedBean.unregisterListeners();
+            _listenersAreRegistered = false;
         }
-        _selectNamedBean.unregisterListeners();
     }
 
     /** {@inheritDoc} */
