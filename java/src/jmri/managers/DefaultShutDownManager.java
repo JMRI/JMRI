@@ -7,7 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import java.util.*;
-import java.util.concurrent.Callable;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 import jmri.ShutDownManager;
@@ -55,9 +55,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     private static volatile boolean shuttingDown = false;
     private static final Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
-    private final Set<Callable<Boolean>> callables = new HashSet<>();
-    private final Set<EarlyTask> earlyRunnables = new HashSet<>();
-    private final Set<Runnable> runnables = new HashSet<>();
+    private final Set<Callable<Boolean>> callables = new CopyOnWriteArraySet<>();
+    private final Set<EarlyTask> earlyRunnables = new CopyOnWriteArraySet<>();
+    private final Set<Runnable> runnables = new CopyOnWriteArraySet<>();
     protected final Thread shutdownHook;
     // use up to 8 threads for parallel tasks
     private static final RequestProcessor RP = new RequestProcessor("On Start/Stop", 8); // NOI18N

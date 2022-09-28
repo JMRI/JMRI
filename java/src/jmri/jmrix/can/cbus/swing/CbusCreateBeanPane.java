@@ -6,14 +6,12 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.*;
+
 import jmri.NamedBean;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.can.swing.CanPanel;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Panel to Create Turnouts, Sensor and Lights from CBUS event via drop action.
@@ -31,17 +29,10 @@ public class CbusCreateBeanPane extends JPanel {
     private JButton editUserNameButton;
     protected CbTransferHandler[] transferArray;
 
-    private final jmri.TurnoutManager tm;
-    private final jmri.SensorManager sm;
-    private final jmri.LightManager lm;
-
     public CbusCreateBeanPane(CanPanel mainPane){
         super();
         _mainPane = mainPane;
         nameservice = new CbusNameService(mainPane.getMemo());
-        tm = (jmri.TurnoutManager) mainPane.getMemo().get(jmri.TurnoutManager.class);
-        sm = (jmri.SensorManager) mainPane.getMemo().get(jmri.SensorManager.class);
-        lm = (jmri.LightManager) mainPane.getMemo().get(jmri.LightManager.class);
         init();
     }
 
@@ -183,11 +174,11 @@ public class CbusCreateBeanPane extends JPanel {
     private jmri.ProvidingManager<?> getManagerByIndex(int index){
         switch (index) {
             case 0:
-                return tm;
+                return _mainPane.getMemo().get(jmri.TurnoutManager.class);
             case 1:
-                return sm;
+                return _mainPane.getMemo().get(jmri.SensorManager.class);
             case 2:
-                return lm;
+                return _mainPane.getMemo().get(jmri.LightManager.class);
             default:
                 throw new IllegalArgumentException("Unable to get Manager from Index" + index);
         }
@@ -206,7 +197,7 @@ public class CbusCreateBeanPane extends JPanel {
     }
 
     private boolean showReminder = true;
-    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+    private final boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     /**
      * Show reminder to save Bean Table.
@@ -221,5 +212,5 @@ public class CbusCreateBeanPane extends JPanel {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusCreateBeanPane.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusCreateBeanPane.class);
 }

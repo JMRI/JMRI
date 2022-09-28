@@ -509,6 +509,7 @@
                         <exclude>jmri.util.FailTest</exclude>
                         <!-- exclude the archunit tests from automatic execution -->
                         <exclude>jmri.ArchitectureTest</exclude>
+                        <exclude>jmri.TestArchitectureTest</exclude>
                         <!-- exclude the line endings tests from automatic execution -->
                         <exclude>jmri.util.FileLineEndingsCheck</exclude>
                         <!-- ignore since base classes for other tests -->
