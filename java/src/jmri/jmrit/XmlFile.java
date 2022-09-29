@@ -279,7 +279,7 @@ public abstract class XmlFile {
      */
     static public void dumpElement(@Nonnull Element name) {
         name.getChildren().forEach((element) -> {
-            System.out.println(" Element: " + element.getName() + " ns: " + element.getNamespace());
+            log.info(" Element: {} ns: {}", element.getName(), element.getNamespace());
         });
     }
 
