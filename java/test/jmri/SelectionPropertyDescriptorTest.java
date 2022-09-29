@@ -23,12 +23,6 @@ public class SelectionPropertyDescriptorTest {
     }
 
     @Test
-    public void testGetValueClass() {
-        SelectionPropertyDescriptorImpl t = new SelectionPropertyDescriptorImpl();
-        assertEquals(javax.swing.JComboBox.class, t.getValueClass());
-    }
-
-    @Test
     public void testGetOptions() {
         SelectionPropertyDescriptorImpl t = new SelectionPropertyDescriptorImpl();
         assertArrayEquals(new String[]{"A","B","C"}, t.getOptions());
