@@ -716,7 +716,7 @@ public class VSDNavigation {
         return result;
     }
 
-    private boolean navigate(List<Point2D> points, @Nullable LayoutTrack nextLayoutTrack) {
+    private boolean navigate(List<Point2D> points, @CheckForNull LayoutTrack nextLayoutTrack) {
         boolean result = false;
         double distanceOnTrack = d.getDistance() + d.distanceOnTrack;
         boolean nextLegFlag = true;

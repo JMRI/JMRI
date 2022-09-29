@@ -1365,6 +1365,28 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionShutDownTask shutDownTask = new ActionShutDownTask(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutDownTask);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        shutDownTask = new ActionShutDownTask(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutDownTask);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        And shutDownTaskCallChild = new And(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(shutDownTaskCallChild);
+        maleSocket.setEnabled(false);
+        shutDownTask.getCallSocket().connect(maleSocket);
+
+        DigitalMany shutDownTaskRunChild = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutDownTaskRunChild);
+        maleSocket.setEnabled(false);
+        shutDownTask.getRunSocket().connect(maleSocket);
+
+
         ActionSignalHead actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         maleSocket.setEnabled(false);
@@ -2028,6 +2050,13 @@ public class CreateLogixNGTreeScaffold {
         jmri.jmrix.loconet.logixng.ActionUpdateSlots actionUpdateSlots =
                 new jmri.jmrix.loconet.logixng.ActionUpdateSlots(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionUpdateSlots);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrix.loconet.logixng.SetSpeedZero setSpeedZero =
+                new jmri.jmrix.loconet.logixng.SetSpeedZero(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(setSpeedZero);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
