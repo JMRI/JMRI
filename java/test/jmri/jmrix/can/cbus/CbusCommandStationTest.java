@@ -1,17 +1,11 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -42,18 +36,6 @@ public class CbusCommandStationTest {
         Assert.assertEquals("user name obtainable", "CAN", t.getUserName());
     }
     
-    @Test
-    public void testgetSimLoopbacktc() {
-        Assert.assertNotNull(memo);
-        TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback();
-        memo.setTrafficController(tc);
-        CbusCommandStation ta = new CbusCommandStation(memo);
-        Assert.assertNotNull("exists",ta);
-        Assert.assertNotNull(InstanceManager.getDefault(CbusSimulator.class));
-        
-        tc.terminateThreads();
-    }
-
     // test originates from loconet
     @Test
     public void testSendPacket() {
@@ -212,6 +194,6 @@ public class CbusCommandStationTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusCommandStationTest.class);
+    // private final static org.slf4j.Logger.Logger log = org.slf4j.Logger.LoggerFactory.getLogger(CbusCommandStationTest.class);
 
 }
