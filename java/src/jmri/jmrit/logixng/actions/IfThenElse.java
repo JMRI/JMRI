@@ -88,7 +88,7 @@ public class IfThenElse extends AbstractDigitalAction
 
         // Ensure the copy has as many childs as myself
         while (copy.getChildCount() < this.getChildCount()) {
-            copy.doSocketOperation(copy.getChildCount()-1, FemaleSocketOperation.InsertAfter);
+            copy.doSocketOperation(copy.getChildCount()-2, FemaleSocketOperation.InsertAfter);
         }
 
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
