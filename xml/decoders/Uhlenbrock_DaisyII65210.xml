@@ -18,7 +18,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
     <!-- version 1.1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
     <!-- CVs identical to DaisyII (65200). Because of the way LNCV includes the art.nr. in the CV it could not be included in this file -->
     <decoder>
-        <family name="Manual Throttle" mfg="Uhlenbrock Elektronik" type="Command Station">
+        <family name="Command Station/Throttle" mfg="Uhlenbrock Elektronik" type="Command Station">
             <model model="Daisy II 65210" productID="6521" maxTotalCurrent="2200mA" formFactor="Stationary" comment="Daisy II LocoNet Digitalzentrale/Booster">
               <versionCV />
               <size length="104" width="58" height="33" units="mm" />
