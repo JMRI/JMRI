@@ -153,7 +153,8 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+              <li>New definition for Daisy II model 65210. Uses LNCV programming</li>
+              <li>Fixed bugs in Daisy II (model 65200) definition</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
