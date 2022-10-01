@@ -45,11 +45,17 @@ public class Car extends RollingStock {
 
     // schedule items
     protected String _scheduleId = NONE; // the schedule id assigned to this car
-    protected Location _finalDestination = null; // final destination by schedule or router
+    protected String _nextLoadName = NONE; // next load by schedule
+    protected Location _finalDestination = null; // final destination by
+                                                 // schedule or router
     protected Track _finalDestTrack = null; // final track by schedule or router
-    protected Location _previousFinalDestination = null; // previous final destination (for train resets)
-    protected Track _previousFinalDestTrack = null; // previous final track (for train resets)
-    protected String _previousScheduleId = NONE; // previous schedule id (for train resets)
+    protected Location _previousFinalDestination = null; // previous final
+                                                         // destination (for
+                                                         // train resets)
+    protected Track _previousFinalDestTrack = null; // previous final track (for
+                                                    // train resets)
+    protected String _previousScheduleId = NONE; // previous schedule id (for
+                                                 // train resets)
     protected String _pickupScheduleId = NONE;
 
     public static final String EXTENSION_REGEX = " ";
@@ -108,17 +114,18 @@ public class Car extends RollingStock {
             setDirtyAndFirePropertyChange("car hazardous", old ? "true" : "false", hazardous ? "true" : "false"); // NOI18N
         }
     }
-    
+
     public boolean isCarHazardous() {
         return _hazardous;
     }
-    
+
     public boolean isCarLoadHazardous() {
         return carLoads.isHazardous(getTypeName(), getLoadName());
     }
 
     /**
      * Used to determine if the car is hazardous or the car's load is hazardous.
+     * 
      * @return true if the car or car's load is hazardous.
      */
     public boolean isHazardous() {
@@ -233,7 +240,6 @@ public class Car extends RollingStock {
      * Used to keep track of which item in a schedule was used for this car.
      * 
      * @param id The ScheduleItem id for this car.
-     *
      */
     public void setScheduleItemId(String id) {
         log.debug("Set schedule item id ({}) for car ({})", id, toString());
@@ -247,7 +253,7 @@ public class Car extends RollingStock {
     public String getScheduleItemId() {
         return _scheduleId;
     }
-    
+
     public ScheduleItem getScheduleItem(Track track) {
         ScheduleItem si = null;
         // arrived at spur?
@@ -260,6 +266,24 @@ public class Car extends RollingStock {
             }
         }
         return si;
+    }
+
+    /**
+     * Only here for backwards compatibility before version 5.1.4. The next load
+     * name for this car. Normally set by a schedule.
+     * 
+     * @param load the next load name.
+     */
+    public void setNextLoadName(String load) {
+        String old = _nextLoadName;
+        _nextLoadName = load;
+        if (!old.equals(load)) {
+            setDirtyAndFirePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+        }
+    }
+
+    public String getNextLoadName() {
+        return _nextLoadName;
     }
 
     @Override
@@ -281,8 +305,8 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Returns a car's weight adjusted for load. An empty car's weight is 1/3 the
-     * car's loaded weight.
+     * Returns a car's weight adjusted for load. An empty car's weight is 1/3
+     * the car's loaded weight.
      */
     @Override
     public int getAdjustedWeightTons() {
@@ -352,7 +376,8 @@ public class Car extends RollingStock {
         if (_finalDestination != null) {
             _finalDestination.addPropertyChangeListener(this);
         }
-        // log.debug("Next destination for car ("+toString()+") old: "+old+" new:
+        // log.debug("Next destination for car ("+toString()+") old: "+old+"
+        // new:
         // "+destination);
         if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old))) {
             setDirtyAndFirePropertyChange(FINAL_DESTINATION_CHANGED_PROPERTY, old, destination);
@@ -514,8 +539,8 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Used to determine is car has been given a Return When Loaded (RWL) address or
-     * custom load
+     * Used to determine is car has been given a Return When Loaded (RWL)
+     * address or custom load
      * 
      * @return true if car has RWL
      */
@@ -552,8 +577,8 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Used to determine if car needs to perform a local move. A local move is when
-     * a car is moved to a different track at the same location.
+     * Used to determine if car needs to perform a local move. A local move is
+     * when a car is moved to a different track at the same location.
      * 
      * @return true if local move
      */
@@ -604,7 +629,6 @@ public class Car extends RollingStock {
      * A kernel is a group of cars that are switched as a unit.
      * 
      * @param kernel The assigned Kernel for this car.
-     *
      */
     public void setKernel(Kernel kernel) {
         if (_kernel == kernel) {
@@ -650,8 +674,8 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Updates all cars in a kernel. After the update, the cars will all have the
-     * same final destination, load, and next load.
+     * Updates all cars in a kernel. After the update, the cars will all have
+     * the same final destination, load, and next load.
      */
     public void updateKernel() {
         if (isLead()) {
@@ -668,9 +692,9 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Used to determine if a car can be set out at a destination (location). Track
-     * is optional. In addition to all of the tests that checkDestination performs,
-     * spurs with schedules are also checked.
+     * Used to determine if a car can be set out at a destination (location).
+     * Track is optional. In addition to all of the tests that checkDestination
+     * performs, spurs with schedules are also checked.
      *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK, CAPACITY, SCHEDULE,
      *         CUSTOM
@@ -693,11 +717,11 @@ public class Car extends RollingStock {
      *
      * @param track (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
-     *         acceptable, or "length" if the rolling stock length didn't fit, or
-     *         Schedule if the destination will not accept the car because the spur
-     *         has a schedule and the car doesn't meet the schedule requirements.
-     *         Also changes the car load status when the car reaches its
-     *         destination.
+     *         acceptable, or "length" if the rolling stock length didn't fit,
+     *         or Schedule if the destination will not accept the car because
+     *         the spur has a schedule and the car doesn't meet the schedule
+     *         requirements. Also changes the car load status when the car
+     *         reaches its destination.
      */
     @Override
     public String setDestination(Location destination, Track track) {
@@ -711,15 +735,16 @@ public class Car extends RollingStock {
      * @param force when true ignore track length, type, and road when setting
      *              destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
-     *         acceptable, or "length" if the rolling stock length didn't fit, or
-     *         Schedule if the destination will not accept the car because the spur
-     *         has a schedule and the car doesn't meet the schedule requirements.
-     *         Also changes the car load status when the car reaches its
-     *         destination.
+     *         acceptable, or "length" if the rolling stock length didn't fit,
+     *         or Schedule if the destination will not accept the car because
+     *         the spur has a schedule and the car doesn't meet the schedule
+     *         requirements. Also changes the car load status when the car
+     *         reaches its destination.
      */
     @Override
     public String setDestination(Location destination, Track track, boolean force) {
-        // save destination name and track in case car has reached its destination
+        // save destination name and track in case car has reached its
+        // destination
         String destinationName = getDestinationName();
         Track destinationTrack = getDestinationTrack();
         String status = super.setDestination(destination, track, force);
@@ -738,12 +763,13 @@ public class Car extends RollingStock {
         if (destinationName.equals(NONE) || (destination != null) || getTrain() == null) {
             return status;
         }
-        // car was in a train and has been dropped off, update load, RWE could set a new
+        // car was in a train and has been dropped off, update load, RWE could
+        // set a new
         // final destination
         loadNext(destinationTrack);
         return status;
     }
-    
+
     /**
      * Called when setting a car's destination to this spur. Loads the car with
      * a final destination which is the ship address for the schedule item. Also
@@ -816,8 +842,9 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Updates a car's load when placed at a spur. Load change delayed if wait count
-     * is greater than zero.
+     * Updates a car's load when placed at a spur. Load change delayed if wait
+     * count is greater than zero.
+     * 
      * @param track The spur the car is sitting on
      */
     public void updateLoad(Track track) {
@@ -829,7 +856,11 @@ public class Car extends RollingStock {
         ScheduleItem si = getScheduleItem(track);
         if (si != null) {
             loadName = si.getShipLoadName(); // can be NONE
+        } else {
+        // for backwards compatibility before version 5.1.4
+            loadName = getNextLoadName();
         }
+        setNextLoadName(NONE);
         if (!loadName.equals(NONE)) {
             setLoadName(loadName);
             // RWE or RWL load and no destination?
@@ -850,18 +881,20 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Sets the car's load to empty, triggers RWE load and destination if enabled.
+     * Sets the car's load to empty, triggers RWE load and destination if
+     * enabled.
      */
     private void setLoadEmpty() {
         if (!getLoadName().equals(getReturnWhenEmptyLoadName())) {
-            setLoadName(getReturnWhenEmptyLoadName()); // default RWE load is the "E" load
+            setLoadName(getReturnWhenEmptyLoadName()); // default RWE load is
+                                                       // the "E" load
             setReturnWhenEmpty();
         }
     }
 
     /*
-     * Don't set return address if in staging with the same RWE address and don't
-     * set return address if at the RWE address
+     * Don't set return address if in staging with the same RWE address and
+     * don't set return address if at the RWE address
      */
     private void setReturnWhenEmpty() {
         if (getReturnWhenEmptyDestination() != null &&
@@ -878,18 +911,20 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Sets the car's load to loaded, triggers RWL load and destination if enabled.
+     * Sets the car's load to loaded, triggers RWL load and destination if
+     * enabled.
      */
     private void setLoadLoaded() {
         if (!getLoadName().equals(getReturnWhenLoadedLoadName())) {
-            setLoadName(getReturnWhenLoadedLoadName()); // default RWL load is the "L" load
+            setLoadName(getReturnWhenLoadedLoadName()); // default RWL load is
+                                                        // the "L" load
             setReturnWhenLoaded();
         }
     }
 
     /*
-     * Don't set return address if in staging with the same RWL address and don't
-     * set return address if at the RWL address
+     * Don't set return address if in staging with the same RWL address and
+     * don't set return address if at the RWL address
      */
     private void setReturnWhenLoaded() {
         if (getReturnWhenLoadedDestination() != null &&
@@ -924,12 +959,16 @@ public class Car extends RollingStock {
         }
         return buf.toString();
     }
-    
+
     @Override
     public void reset() {
         setScheduleItemId(getPreviousScheduleId()); // revert to previous
-        setFinalDestination(getPreviousFinalDestination()); // revert to previous
-        setFinalDestinationTrack(getPreviousFinalDestinationTrack()); // revert to previous
+        setNextLoadName(NONE);
+        setFinalDestination(getPreviousFinalDestination()); // revert to
+                                                            // previous
+        setFinalDestinationTrack(getPreviousFinalDestinationTrack()); // revert
+                                                                      // to
+                                                                      // previous
         if (isLoadGeneratedFromStaging()) {
             setLoadGeneratedFromStaging(false);
             setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
@@ -951,8 +990,8 @@ public class Car extends RollingStock {
     private boolean loaded = false;
 
     /**
-     * Construct this Entry from XML. This member has to remain synchronized with
-     * the detailed DTD in operations-cars.dtd
+     * Construct this Entry from XML. This member has to remain synchronized
+     * with the detailed DTD in operations-cars.dtd
      *
      * @param e Car XML element
      */
@@ -1006,6 +1045,10 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.SCHEDULE_ID)) != null) {
             _scheduleId = a.getValue();
         }
+        // for backwards compatibility before version 5.1.4
+        if ((a = e.getAttribute(Xml.NEXT_LOAD)) != null) {
+            _nextLoadName = a.getValue();
+        }
         if ((a = e.getAttribute(Xml.NEXT_DEST_ID)) != null) {
             setFinalDestination(InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue()));
         }
@@ -1039,13 +1082,6 @@ public class Car extends RollingStock {
         }
         if ((a = e.getAttribute(Xml.RWL_LOAD)) != null) {
             _rwlLoadName = a.getValue();
-        }
-        // for backwards compatibility before version 5.1.4
-        if ((a = e.getAttribute(Xml.NEXT_LOAD)) != null && getWait() > 0) {
-            // update the car's load immediately
-            _loadName = a.getValue();
-            _wait = 0;
-            log.info("Setting wait for car ({}) to zero, updating load to ({})", toString(), getLoadName());
         }
         addPropertyChangeListeners();
     }
@@ -1098,14 +1134,19 @@ public class Car extends RollingStock {
         if (!getScheduleItemId().equals(NONE)) {
             e.setAttribute(Xml.SCHEDULE_ID, getScheduleItemId());
         }
-        
+
+        // for backwards compatibility before version 5.1.4
+        if (!getNextLoadName().equals(NONE)) {
+            e.setAttribute(Xml.NEXT_LOAD, getNextLoadName());
+        }
+
         if (getFinalDestination() != null) {
             e.setAttribute(Xml.NEXT_DEST_ID, getFinalDestination().getId());
             if (getFinalDestinationTrack() != null) {
                 e.setAttribute(Xml.NEXT_DEST_TRACK_ID, getFinalDestinationTrack().getId());
             }
         }
-        
+
         if (getPreviousFinalDestination() != null) {
             e.setAttribute(Xml.PREVIOUS_NEXT_DEST_ID, getPreviousFinalDestination().getId());
             if (getPreviousFinalDestinationTrack() != null) {
