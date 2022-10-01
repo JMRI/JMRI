@@ -5,6 +5,7 @@ import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.Assert;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@ToDo("Investigate Jemmy issue")
+@Disabled("Jemmy has trouble locating internal frame")
 @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class ThrottleFrameTest {
 
