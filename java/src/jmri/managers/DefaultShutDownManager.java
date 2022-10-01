@@ -391,6 +391,11 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             task.runEarly();
         }
 
+        @Override // improve error message on failure
+        public String toString(){
+            return task.toString();
+        }
+
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultShutDownManager.class);
