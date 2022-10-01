@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.*;
@@ -146,6 +147,8 @@ public class DefaultConditionalNG extends AbstractBase
             DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
 
             try {
+                conditionalNG.setCurrentConditionalNG(conditionalNG);
+
                 conditionalNG.setSymbolTable(newSymbolTable);
                 if (femaleSocket != null) {
                     femaleSocket.execute();
@@ -194,6 +197,20 @@ public class DefaultConditionalNG extends AbstractBase
             }
         }
 
+    }
+
+    /**
+     * Set the current ConditionalNG.
+     * @param conditionalNG the current ConditionalNG
+     */
+    @Override
+    public void setCurrentConditionalNG(ConditionalNG conditionalNG) {
+        if (this != conditionalNG) {
+            throw new UnsupportedOperationException("The new conditionalNG must be the same as myself");
+        }
+        for (Module m : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
+            m.setCurrentConditionalNG(conditionalNG);
+        }
     }
 
     /** {@inheritDoc} */
