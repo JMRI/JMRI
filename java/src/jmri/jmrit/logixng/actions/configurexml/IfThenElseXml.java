@@ -7,6 +7,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.IfThenElse;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 
@@ -34,7 +35,8 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
         storeCommon(p, element);
 
-        element.setAttribute("type", p.getType().name());
+        element.setAttribute("executeType", p.getExecuteType().name());
+        element.setAttribute("evaluateType", p.getEvaluateType().name());
 
         String socketSystemName;
         Element e = new Element("Expressions");
@@ -77,9 +79,27 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
     @Override
     public boolean load(Element shared, Element perNode) {
 
-        String typeStr = shared.getAttribute("type").getValue();
+        IfThenElse.ExecuteType executeType = IfThenElse.ExecuteType.ExecuteOnChange;
+        IfThenElse.EvaluateType evaluateType = IfThenElse.EvaluateType.EvaluateAll;
 
-        IfThenElse.Type type = IfThenElse.Type.valueOf(typeStr);
+        Attribute typeAttr = shared.getAttribute("executeType");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            executeType = IfThenElse.ExecuteType.valueOf(typeStr);
+        }
+
+        typeAttr = shared.getAttribute("evaluateType");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            evaluateType = IfThenElse.EvaluateType.valueOf(typeStr);
+        }
+
+        // For backward compatibility pre JMRI 5.1.5
+        typeAttr = shared.getAttribute("type");
+        if (typeAttr != null) {
+            String typeStr = typeAttr.getValue();
+            executeType = IfThenElse.ExecuteType.valueOf(typeStr);
+        }
 
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
@@ -145,7 +165,8 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         // For backwards compability up until 5.1.3
 
         IfThenElse h = new IfThenElse(sys, uname, expressionSystemNames, actionSystemNames);
-        h.setType(type);
+        h.setExecuteType(executeType);
+        h.setEvaluateType(evaluateType);
 
         loadCommon(h, shared);
 

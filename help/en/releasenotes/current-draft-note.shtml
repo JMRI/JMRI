@@ -441,6 +441,17 @@
               </li>
             </ul>
           </li>
+          <li>
+            The <i>If Then Else</i> action has two new options that's relevant when
+            there's more that one <i>If</i> socket.
+            <ul>
+              <li><i>Evaluate all expressions</i> - evaluates all the <i>If</i> sockets before executing any action.</i>
+              <li><i>Evaluate needed expressions</i> - evaluates the <i>If</i> sockets until one expression returns True.</i>
+            </ul>
+            Note that when <i>If Then Else</i> got support for <i>Else_If</i> statements in JMRI 5.1.3, it worked as
+            <i>Evaluate needed expressions</i> it has now changed to <i>Evaluate all expressions</i>, unless the user changes
+            it. For most cases, this will be just fine, but there might be rare cases where this matters.
+          </li>
           <li></li>
           <li>The new action <i>Shut down task</i> executes an action when JMRI shuts down.</li>
           <li>The new LocoNet action <i>Set speed zero</i> sets the speed to zero for all the
