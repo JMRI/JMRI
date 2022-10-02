@@ -1237,7 +1237,7 @@
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5</artifactId>
-            <version>0.14.1</version>
+            <version>1.0.0-rc1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
