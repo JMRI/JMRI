@@ -153,7 +153,9 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+              <li>Fixed bugs in Daisy II (model 65200) definition</li>
+              <li>New definition for Daisy II model 65210. Uses LNCV programming just as 65200</li>
+              <li>Daisy II family renamed to "Command Station" (was "Handheld Throttle")</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
