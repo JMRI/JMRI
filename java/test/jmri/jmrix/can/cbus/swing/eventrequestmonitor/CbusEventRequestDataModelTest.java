@@ -31,15 +31,13 @@ public class CbusEventRequestDataModelTest {
     
     @Test
     public void testCanListenAndRemove() {
-        
-        Assert.assertEquals("no listener to start with",0,tcis.numListeners());
+        int numListenersAtStart = tcis.numListeners();
         CbusEventRequestDataModel t = new CbusEventRequestDataModel(
         memo,5,CbusEventRequestDataModel.MAX_COLUMN);
-        Assert.assertTrue("table listening",1 == tcis.numListeners());
-        
+        Assert.assertEquals("table listening", numListenersAtStart+1, tcis.numListeners());
+
         t.dispose();
-        Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
-        
+        Assert.assertEquals("no listener to finish with",numListenersAtStart, tcis.numListeners());
     }
     
     @Test
@@ -208,6 +206,7 @@ public class CbusEventRequestDataModelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         memo.configureManagers();
     }
 

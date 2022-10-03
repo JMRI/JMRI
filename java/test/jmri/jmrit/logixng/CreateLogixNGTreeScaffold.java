@@ -2382,13 +2382,13 @@ public class CreateLogixNGTreeScaffold {
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.ExecuteOnChange);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.ExecuteOnChange);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2836,7 +2836,7 @@ public class CreateLogixNGTreeScaffold {
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.ExecuteOnChange);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.ExecuteOnChange);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

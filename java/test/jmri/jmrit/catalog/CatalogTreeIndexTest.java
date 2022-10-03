@@ -1,6 +1,8 @@
 package jmri.jmrit.catalog;
 
 import jmri.NamedBean;
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -64,4 +66,15 @@ public class CatalogTreeIndexTest {
         n.setProperty("foo", null);
         Assert.assertEquals(null, n.getProperty("foo"));
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

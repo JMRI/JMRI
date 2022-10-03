@@ -3,6 +3,8 @@ package jmri.jmrix.can.cbus.eventtable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.annotation.Nonnull;
+
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
@@ -39,14 +41,14 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
      * @param memo System Connection.
      * @param initialRowSize initial array size.
      */
-    public CbusEventTableDataModel(CanSystemConnectionMemo memo, int initialRowSize) {
+    public CbusEventTableDataModel(@Nonnull CanSystemConnectionMemo memo, int initialRowSize) {
         super(memo, initialRowSize);
-        if (memo !=null) {
-            log.info("Starting {} Event Table",memo.getProtocol());
-            preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
-            shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask "+memo.getSystemPrefix(),this);
-            InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
-        }
+
+        log.info("Starting {} Event Table",memo.getProtocol());
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
+        shutDownTask = new CbusEventTableShutdownTask("CbusEventTableShutdownTask "+memo.getSystemPrefix(),this);
+        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+
         addTc(_memo);
         checkRestoreEvents();
         ta.updatejmricols();
