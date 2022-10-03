@@ -7,6 +7,9 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference getting started">
   <!--#include virtual="/Style.shtml" -->
+  <style>
+    .add_sub {border: solid thin black !important;}
+  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -29,14 +32,14 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_logixng_1.png"><img src=
-        "images/chapter1/create_logixng_1.png" alt="Chapter 1-L1" width="959" height="359"></a>
+        "images/chapter1/create_logixng_1.png" alt="Chapter 1-L1"></a>
       </div>
 
       <p>Click the <strong>Add...</strong> button to add a new LogixNG.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_logixng_2.png"><img src=
-        "images/chapter1/create_logixng_2.png" alt="Chapter 1-L2" width="606" height="263"></a>
+        "images/chapter1/create_logixng_2.png" alt="Chapter 1-L2"></a>
       </div>
 
       <p>By default, the checkbox <strong>Automatically generate System Name</strong> is checked
@@ -47,15 +50,14 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_logixng_3.png"><img src=
-        "images/chapter1/create_logixng_3.png" alt="Chapter 1-L2" width="1037" height="451"></a>
+        "images/chapter1/create_logixng_3.png" alt="Chapter 1-L2"></a>
       </div>
 
       <p>Click the <strong>New ConditionalNG</strong> button to add a new ConditionalNG.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_1.png"><img src=
-        "images/chapter1/create_conditionalng_1.png" alt="Chapter 1-1" width="603" height=
-        "171"></a>
+        "images/chapter1/create_conditionalng_1.png" alt="Chapter 1-1"></a>
       </div>
 
       <p>Click the <strong>Create</strong> button to create it. The ConditionalNG editor will
@@ -65,8 +67,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_2.png"><img src=
-        "images/chapter1/create_conditionalng_2.png" alt="Chapter 1-2" width="781" height=
-        "300"></a>
+        "images/chapter1/create_conditionalng_2.png" alt="Chapter 1-2"></a>
       </div>
 
       <p>A ConditionalNG is a tree of actions and expressions. When the ConditionalNG is created,
@@ -76,55 +77,48 @@
       <p>Right-click on any row to show the context menu for that row.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_3.png"><img src=
-        "images/chapter1/create_conditionalng_3.png" alt="Chapter 1-3" width="265" height=
-        "459"></a>
+        <a href="images/chapter1/create_conditionalng_3.png"><img class="add_sub" src=
+        "images/chapter1/create_conditionalng_3.png" alt="Chapter 1-3"></a>
       </div>
+
+      <p>The common context menu items also have shortcut key combinations.  If <strong>Highlight
+      row in ConditionalNG editor</strong> is enabled in LogixNG preferences, the shortcut keys are
+      also available without displaying the context menu.  See <a href="../LogixNG.shtml#preferences">
+      LogixNG Preferences</a>.</p>
 
       <h3>Create an Action</h3>
 
+      <p class="noted">The process to add a row to the ConditionalNG tree was changed as of JMRI
+      release 5.1.4.  The old process is available at <a href="original_add.shtml">Orignal Add Process</a>.</p>
+
       <p>To create a new action, we right-click with the mouse on the female socket <code>!
-      A</code> and then select <strong>Add</strong> in the popup menu.</p>
+      A</code> and then select <strong>Add</strong> in the popup menu.  The data selection is
+      presented in a series of sub-menus.</p>
+
+      <p>The first sub-menu provides a list of <strong>categories</strong>.  Instead of a very long
+      list of actions and expressions, they are grouped in categories.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_4.png"><img src=
-        "images/chapter1/create_conditionalng_4.png" alt="Chapter 1-4" width="250" height=
-        "121"></a>
+        <a href="images/chapter1/action_categories.png"><img class="add_sub" src=
+        "images/chapter1/action_categories.png" alt="action categories"></a>
       </div>
 
-      <p>We then select which action we want to create. The actions and expressions are organized
-      in categories, so we first select the <strong>Category</strong>. The default category is
-      Item.</p>
+      <p>When a category has been selected, a list of <strong>types</strong> will be displayed.  In
+      this example, the types are from the <strong>Item</strong> category.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_5.png"><img src=
-        "images/chapter1/create_conditionalng_5.png" alt="Chapter 1-5" width="263" height=
-        "137"></a>
+        <a href="images/chapter1/action_item_types.png"><img class="add_sub" src=
+        "images/chapter1/action_item_types.png" alt="action item types"></a>
       </div>
 
-      <p>We then select the action <strong>Type</strong>. Lets start with "Turnout".</p>
-
-      <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_6.png"><img src=
-        "images/chapter1/create_conditionalng_6.png" alt="Chapter 1-6" width="258" height=
-        "399"></a>
-      </div>
-
-      <p>Click the <strong>Create</strong> button to create the action.</p>
-
-      <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_7.png"><img src=
-        "images/chapter1/create_conditionalng_7.png" alt="Chapter 1-7" width="250" height=
-        "121"></a>
-      </div>
+      <p>Let's start with a turnout item.  Click on the Turnout item in the sub-menu.</p>
 
       <p>We now get a dialog box there we can select the turnout to control. And what to do with
       this turnout.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_8.png"><img src=
-        "images/chapter1/create_conditionalng_8.png" alt="Chapter 1-8" width="922" height=
-        "270"></a>
+        "images/chapter1/create_conditionalng_8.png" alt="Chapter 1-8"></a>
       </div>
 
       <p>In this example, we select "IT_1_1" and we tell the action to throw the turnout when the
@@ -132,16 +126,14 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_9.png"><img src=
-        "images/chapter1/create_conditionalng_9.png" alt="Chapter 1-9" width="922" height=
-        "270"></a>
+        "images/chapter1/create_conditionalng_9.png" alt="Chapter 1-9"></a>
       </div>
 
       <p>Click the <strong>Create</strong> button to create this action.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_10.png"><img src=
-        "images/chapter1/create_conditionalng_10.png" alt="Chapter 1-10" width="781" height=
-        "300"></a>
+        "images/chapter1/create_conditionalng_10.png" alt="Chapter 1-10"></a>
       </div>
 
       <p>The action is now created and each time this ConditionalNG is executed, the turnout
@@ -161,9 +153,8 @@
       menu.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_11.png"><img src=
-        "images/chapter1/create_conditionalng_11.png" alt="Chapter 1-11" width="311" height=
-        "459"></a>
+        <a href="images/chapter1/create_conditionalng_11.png"><img class="add_sub" src=
+        "images/chapter1/create_conditionalng_11.png" alt="Chapter 1-11"></a>
       </div>
 
       <p>The action is now moved to the clipboard and the ConditionalNG is empty.</p>
@@ -172,12 +163,11 @@
       by selecting <strong>Tools &rArr; Clipboard</strong> in the ConditionalNG editor.</p>
 
       <p>Right click on <code>! A</code> and select <strong>Add</strong>. This time select the
-      <strong>Common</strong> category and the <strong>If Then Else</strong> type.</p>
+      <strong>Flow Control</strong> category and the <strong>If Then Else</strong> type.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_12.png"><img src=
-        "images/chapter1/create_conditionalng_12.png" alt="Chapter 1-12" width="276" height=
-        "240"></a>
+        "images/chapter1/create_conditionalng_12.png" alt="Chapter 1-12"></a>
       </div>
 
       <p>Click on the <strong>Create</strong> button.</p>
@@ -190,8 +180,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_13.png"><img src=
-        "images/chapter1/create_conditionalng_13.png" alt="Chapter 1-13" width="485" height=
-        "214"></a>
+        "images/chapter1/create_conditionalng_13.png" alt="Chapter 1-13"></a>
       </div>
 
       <p>Click on the <strong>Create</strong> button.</p>
@@ -200,43 +189,30 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_14.png"><img src=
-        "images/chapter1/create_conditionalng_14.png" alt="Chapter 1-14" width="781" height=
-        "300"></a>
+        "images/chapter1/create_conditionalng_14.png" alt="Chapter 1-14"></a>
       </div>
 
       <p>Right-click with the mouse on the <strong>Then</strong> socket and select
       <strong>Paste</strong> in the popup menu to paste the "Set turnout" action.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_15.png"><img src=
-        "images/chapter1/create_conditionalng_15.png" alt="Chapter 1-15" width="289" height=
-        "510"></a>
+        <a href="images/chapter1/create_conditionalng_15.png"><img class="add_sub" src=
+        "images/chapter1/create_conditionalng_15.png" alt="Chapter 1-15"></a>
       </div>
 
       <p>We now have the <strong>If Then Else</strong> action with the Set turnout action.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_16.png"><img src=
-        "images/chapter1/create_conditionalng_16.png" alt="Chapter 1-16" width="781" height=
-        "300"></a>
+        "images/chapter1/create_conditionalng_16.png" alt="Chapter 1-16"></a>
       </div>
 
       <p>Right-click with the mouse on the <strong>If</strong> socket and select
-      <strong>Add</strong> in the popup menu to add a new expression.</p>
+      <strong>Add &rArr; Item &rArr; Sensor</strong> in the popup menu to add a new expression.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_17.png"><img src=
-        "images/chapter1/create_conditionalng_17.png" alt="Chapter 1-17" width="275" height=
-        "488"></a>
-      </div>
-
-      <p>Select the <strong>Item</strong> category and <strong>Sensor</strong> type. Then click on
-      <strong>Create</strong> button.</p>
-
-      <div style="margin-left: 2em">
-        <a href="images/chapter1/create_conditionalng_18.png"><img src=
-        "images/chapter1/create_conditionalng_18.png" alt="Chapter 1-18" width="202" height=
-        "121"></a>
+        "images/chapter1/create_conditionalng_17.png" alt="Chapter 1-17"></a>
       </div>
 
       <p>Select the "IS_1_1" sensor and select "Active". Note also the dropdown box <strong>is / is
@@ -250,8 +226,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_19.png"><img src=
-        "images/chapter1/create_conditionalng_19.png" alt="Chapter 1-19" width="983" height=
-        "303"></a>
+        "images/chapter1/create_conditionalng_19.png" alt="Chapter 1-19"></a>
       </div>
 
       <p>We now have a ConditionalNG which will be executed every time the sensor "IS_1_1" changes
@@ -259,8 +234,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/create_conditionalng_20.png"><img src=
-        "images/chapter1/create_conditionalng_20.png" alt="Chapter 1-20" width="781" height=
-        "300"></a>
+        "images/chapter1/create_conditionalng_20.png" alt="Chapter 1-20"></a>
       </div>
 
       <h2>Additional Example</h2>
@@ -282,8 +256,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter1/conditionalng_example_1.png"><img src=
-        "images/chapter1/conditionalng_example_1.png" alt="Chapter 1 Example 1" width="781" height=
-        "462"></a>
+        "images/chapter1/conditionalng_example_1.png" alt="Chapter 1 Example 1"></a>
       </div>
 
       <h2>Another example: Stop the power during lunch</h2>

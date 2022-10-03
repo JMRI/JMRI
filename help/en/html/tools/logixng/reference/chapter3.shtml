@@ -7,6 +7,9 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference sockets">
   <!--#include virtual="/Style.shtml" -->
+  <style>
+    .add_sub {border: solid thin black !important;}
+  </style>
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -28,9 +31,8 @@
       <p>The right click context menu, introduced in chapter 1, is used to manage sockets.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter3/editor_context_menu.png"><img src=
-        "images/chapter3/editor_context_menu.png" alt="Chapter 3 editor context menu" width="215"
-        height="434"></a>
+        <a href="images/chapter3/editor_context_menu.png"><img class="add_sub" src=
+        "images/chapter3/editor_context_menu.png" alt="Chapter 3 editor context menu"></a>
       </div>
 
       <h3>Rename socket</h3>
@@ -48,7 +50,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter3/rename_socket.png"><img src="images/chapter3/rename_socket.png"
-        alt="Chapter 3 rename socket" width="334" height="93"></a>
+        alt="Chapter 3 rename socket"></a>
       </div>
 
       <h3>Add / Edit / Remove</h3>
@@ -66,8 +68,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/chapter3/remove_confirmation.png"><img src=
-        "images/chapter3/remove_confirmation.png" alt="Chapter 3 remove confirmation" width="335"
-        height="126"></a>
+        "images/chapter3/remove_confirmation.png" alt="Chapter 3 remove confirmation"></a>
       </div>
 
       <h3>Cut / Copy / Paste</h3>
@@ -94,12 +95,12 @@
 
       <div style="margin-left: 2em; float: left;">
         <a href="images/chapter3/move_before.png"><img src="images/chapter3/move_before.png" alt=
-        "Chapter 3 move before" width="251" height="171"></a>
+        "Chapter 3 move before"></a>
       </div>
 
       <div style="margin-left: 2em; float: left;">
         <a href="images/chapter3/move_after.png"><img src="images/chapter3/move_after.png" alt=
-        "Chapter 3 move after" width="241" height="168"></a>
+        "Chapter 3 move after"></a>
       </div>
 
       <div style="clear: both">
@@ -116,7 +117,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter3/disabled_item.png"><img src="images/chapter3/disabled_item.png"
-        alt="Chapter 3 disabled item" width="207" height="55"></a>
+        alt="Chapter 3 disabled item"></a>
       </div>
 
       <h3>Lock / Unlock</h3>
@@ -145,7 +146,7 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter3/user_name.png"><img src="images/chapter3/user_name.png" alt=
-        "Chapter 3 user name" width="626" height="174"></a>
+        "Chapter 3 user name"></a>
       </div>
 
       <h3>Evaluate</h3>
@@ -155,15 +156,14 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter3/evaluate_item.png"><img src="images/chapter3/evaluate_item.png"
-        alt="Chapter 3 evaluate item" width="234" height="76"></a>
+        alt="Chapter 3 evaluate item"></a>
       </div>
 
       <p>A dialog will show the results.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter3/evaluate_result.png"><img src=
-        "images/chapter3/evaluate_result.png" alt="Chapter 3 evaluate result" width="267" height=
-        "118"></a>
+        "images/chapter3/evaluate_result.png" alt="Chapter 3 evaluate result"></a>
       </div>
 
       <h3>Execute</h3>
@@ -173,14 +173,14 @@
 
       <div style="margin-left: 2em;">
         <a href="images/chapter3/execute_item.png"><img src="images/chapter3/execute_item.png" alt=
-        "Chapter 3 execute item" width="231" height="71"></a>
+        "Chapter 3 execute item"></a>
       </div>
 
       <p>A dialog will show the results.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter3/execute_result.png"><img src="images/chapter3/execute_result.png"
-        alt="Chapter 3 execute result" width="262" height="118"></a>
+        alt="Chapter 3 execute result"></a>
       </div>
 
       <hr>

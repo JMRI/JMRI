@@ -116,7 +116,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated OpenLCB library to include PR #205. Now properly
+                    sends AMD in response to relevant AME.</li>
             </ul>
 
         <h4>RFID</h4>
@@ -136,7 +137,8 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Improved display of programmer availability in PanelPro Tools menu.</li>
+                <li>Fixed timeout warnings during programming.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -151,7 +153,9 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+              <li>Fixed bugs in Daisy II (model 65200) definition</li>
+              <li>New definition for Daisy II model 65210. Uses LNCV programming just as 65200</li>
+              <li>Daisy II family renamed to "Command Station" (was "Handheld Throttle")</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -274,6 +278,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko</h4>
+        <ul>
+          <li>Fixed Piko_SmartDecoder_4.1_Sound decoder definition</li>
+        </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -357,7 +366,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Single CV programmer now checks for availability of global programmer.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -446,9 +455,21 @@
               shown in the Browse window.</li>
             </ul>
             These two options together makes it easier to find in which action or
-            expression the error occurs.
+            expression the error occurs.</li>
+            <li>The <i>If Then Else</i> action has two new options that's relevant when
+            there's more that one <i>If</i> socket.
+            <ul>
+              <li><i>Evaluate all expressions</i> - evaluates all the <i>If</i> sockets before executing any action.</i>
+              <li><i>Evaluate needed expressions</i> - evaluates the <i>If</i> sockets until one expression returns True.</i>
+            </ul>
+            Note that when <i>If Then Else</i> got support for <i>Else_If</i> statements in JMRI 5.1.3, it worked as
+            <i>Evaluate needed expressions</i> it has now changed to <i>Evaluate all expressions</i>, unless the user changes
+            it. For most cases, this will be just fine, but there might be rare cases where this matters.
           </li>
           <li></li>
+          <li>The new action <i>Shut down task</i> executes an action when JMRI shuts down.</li>
+          <li>The new LocoNet action <i>Set speed zero</i> sets the speed to zero for all the
+          LocoNet slots.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

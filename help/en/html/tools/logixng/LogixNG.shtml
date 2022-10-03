@@ -88,6 +88,17 @@
         individual LogixNGs, log errors, and "throw" an exception for further analysis.  See
         <a href="ErrorHandling.shtml">Error Handling</a></p></dd>
 
+        <dt>Threads</dt>
+
+        <dd>LogixNG runs in its own Java thread.  This reduces conflicts between LogixNG processes
+        and the rest of the JMRI.  Two threads are always present.  The first
+        is for normal LogixNG actions and the second is used for the LogixNG debugger.  When the
+        debugger is used in single step mode, the thread is stopped.  By running the ConditionalNG
+        in the debugger thread, other LogixNG processing is not affected.  For additional information
+        on using threads, see
+        <a href="../../../package/jmri/jmrit/logixng/LogixNGTableEditor.shtml#EditThreads">
+        ConditionalNG Threads</a>.</dd>
+
         </dl>
 
 
@@ -166,7 +177,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/Preferences.png"><img src="images/Preferences.png" alt=
-        "LogixNG Preferences" width="298" height="225"></a>
+        "LogixNG Preferences"></a>
       </div>
 
       <dl>
@@ -179,8 +190,9 @@
 
         <dt>Install Debugger</dt>
 
-        <dd>There is an option in the LogixNG editor list for debugging a CondditionalNG. This has
-        to be enabled during start up to work.</dd>
+        <dd>LogixNG has a built in debugger. This option needs to be enabled during start up for the
+        debugger to work. See <a href="../../../package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml">
+        LogixNG Debugger</a> for information about the debugger.</dd>
 
         <dt>Show system names and user names</dt>
 
@@ -190,8 +202,24 @@
 
         <dt>Highlight row in ConditionalNG editor</dt>
 
-        <dd>When this option is enabled, the currently selected row will be highlighted.  This can
-        provide visual feedback, such as when the popup menu is open.</dd>
+        <dd>
+          <p>When this option is enabled, the currently selected row will be highlighted.  This can
+          provide visual feedback, such as when the popup menu is open.</p>
+
+          <p><span class="since">since 5.1.5</span>The arrow keys can be used to move between rows
+          and shortcut keys are available to perform menu items without opening the context menu.</p>
+
+          <ul>
+            <li>Ctrl + N: Create new</li>
+            <li>Ctrl + E: Edit</li>
+            <li>Ctrl + R: Remove</li>
+            <li>Ctrl + X: Cut</li>
+            <li>Ctrl + C: Copy</li>
+            <li>Ctrl + V: Paste</li>
+          </ul>
+
+          <p>For macOS, use Cmd instead of Ctrl.</p>
+        </dd>
 
         <dt>Error Handling Options</dt>
 
@@ -243,7 +271,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_panel.png"><img src="images/sample_panel.png" alt=
-        "LogixNG sample panel" width="523" height="203"></a>
+        "LogixNG sample panel"></a>
       </div>
 
       <p>The logic uses a table to identify the turnouts, the toggle sensors and the lock
@@ -251,7 +279,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_table.png"><img src="images/sample_table.png" alt=
-        "LogixNG sample table" width="257" height="140"></a>
+        "LogixNG sample table"></a>
       </div>
 
       <p>Each turnout has a ConditionalNG that is triggered when the toggle sensor changes state.
@@ -260,7 +288,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_logixng.png"><img src="images/sample_logixng.png" alt=
-        "LogixNG sample logixng" width="345" height="142"></a>
+        "LogixNG sample logixng"></a>
       </div>
 
       <p>The module checks the lock sensor based on the row number and if ok, toggles the turnout
@@ -268,7 +296,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_module.png"><img src="images/sample_module.png" alt=
-        "LogixNG sample module" width="630" height="198"></a>
+        "LogixNG sample module"></a>
       </div>
 
       <p>An initialization LogixNG is used to set the initial sensor and turnout states. This
@@ -276,7 +304,7 @@
 
       <div style="margin-left: 2em">
         <a href="images/sample_initialization.png"><img src="images/sample_initialization.png" alt=
-        "LogixNG sample initialization" width="853" height="479"></a>
+        "LogixNG sample initialization"></a>
       </div>
       <!--#include virtual="/Footer.shtml" -->
     </div>

@@ -230,6 +230,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (desc == null) {
                     return null;
                 }
+                if ( desc instanceof SelectionPropertyDescriptor ){
+                    return JComboBox.class;
+                }
                 return desc.getValueClass();
         }
     }

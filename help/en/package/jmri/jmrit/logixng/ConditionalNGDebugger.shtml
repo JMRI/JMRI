@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: LogixNG Debugger</title>
+  <meta name="author" content="Daniel Bergqvist">
+  <meta name="keywords" content="JMRI logixng debugger"><!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml"-->
+
+    <div id="mainContent">
+      <h1>JMRI: LogixNG Debugger</h1>
+
+      <p>Sometimes it can be difficult to understand exactly what's going on in a ConditionalNG.
+      LogixNG therefore has a debugger that allows a step by step walk thru a ConditionalNG to
+      see what it's actually doing.</p>
+
+      <p>To use the debugger, it must be enabled. In <strong>Preferences &rArr; LogixNG</strong>,
+      the option <strong>Install debugger</strong> must be enabled.</p>
+
+
+
+      <h2>Using the debugger</h2>
+
+      <p>To run a ConditionalNG using the debugger, click on the <strong>Debug</strong> button in the
+      LogixNG ConditionalNG list.  The status pane will open with the editor listing in the left
+      section.</p>
+
+      <p>The Debugger menu will be in the menu bar.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/DebugMenu.png"><img src="images/DebugMenu.png" alt="Debug Menu"></a>
+      </div>
+
+      <p>The debugger starts when the ConditionalNG is executed, for example when one of its
+      actions or expressions triggers it. The ConditionalNG can also be executed by selecting
+      the menu choice <strong>Debug &rArr; Execute</strong>.</p>
+
+      <p>The current action/expression has a thick top border before it is processed and and a thick
+      lower border afterwards.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/DebugBefore.png"><img src="images/DebugBefore.png" alt="Debug Before"></a>
+        <a href="images/DebugAfter.png"><img src="images/DebugAfter.png" alt="Debug After"></a>
+      </div>
+
+      <p>When the ConditionalNG has started executing, the debugger will stop it before the
+      first action.</p>
+
+      <p>You can then step by step thru the ConditionalNG by selecting the menu item
+      <strong>Debug &rArr; Step into</strong>.  The debugger will then stop both before and after
+      executing/evaluating the action/expression.</p>
+
+      <p>If the item has children, you can jump over the children by instead selecting the menu item
+      <strong>Debug &rArr; Step over</strong>.  <em>Step over</em> means that the debugger
+      will process the children items without stopping before and after each one.  When the children
+      items have been processed, the debugger will stop after the parent item.  Note:  If a child
+      has a breakpoint, processing will stop at that child even though <em>step over</em> is active.</p>
+
+      <p>If you want to run the ConditionalNG instead of stopping on each item, you select the menu item
+      <strong>Debug &rArr; Run</strong>.  <em>Run</em> is frequently used with breakpoints to stop
+      at a particular row.</p>
+
+      <p>Breakpoints can be set on a row using the context menu.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/DebugBreakpoint.png"><img style="border: solid thin black !important;"
+        src="images/DebugBreakpoint.png" alt="Debug Breakpoint"></a>
+      </div>
+
+      <p>The breakpoint border uses the same border concept for before and after.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/DebugBreakpointSet.png"><img src="images/DebugBreakpointSet.png"
+        alt="Debug Breakpoint set"></a>
+      </div>
+
+      <p>When the breakpoint occurs, the borders are combined.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/DebugBreakpointActive.png"><img src="images/DebugBreakpointActive.png"
+        alt="Debug Breakpoint active"></a>
+      </div>
+
+      <h2>Status pane</h2>
+
+      <p>On the right side of the debugger window, there are three panes. The top pane shows status if it's
+      available. Example of status is the return value of expressions. If the debugger stops after an
+      expression, the status pane will show the result of the expression, for example <i>Return value True</i>.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/DebugPane.png"><img src="images/DebugPane.png"
+        alt="Debug Pane"></a>
+      </div>
+
+      <h2>Local variables pane</h2>
+
+      <p>On the right side of the debugger window, the middle pane shows the current local variables.</p>
+
+
+      <h2>LogixNG threads and the debugger</h2>
+
+      <p>When the debugger stops before or after an action/expression in the ConditionalNG,
+      it blocks further execution of both this ConditionalNG and all other
+      ConditionalNGs that is executed in the same thread. It's therefore recommended to move
+      the ConditionalNG to a separate thread when the debugger is used, so that the debugger
+      doesn't block the other ConditionalNGs.  See <a href="LogixNGTableEditor.shtml#EditThreads">
+      Edit ConditionalNG Threads</a>.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>

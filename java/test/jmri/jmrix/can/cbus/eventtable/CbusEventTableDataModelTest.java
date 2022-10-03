@@ -2,22 +2,13 @@ package jmri.jmrix.can.cbus.eventtable;
 
 import java.io.File;
 
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.TrafficControllerScaffoldLoopback;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
-
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -28,7 +19,8 @@ public class CbusEventTableDataModelTest {
 
     @Test
     public void testCTor() {
-        CbusEventTableDataModel t = new CbusEventTableDataModel(memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         Assert.assertNotNull("exists",t);
         t.skipSaveOnDispose();
         t.dispose();
@@ -37,7 +29,8 @@ public class CbusEventTableDataModelTest {
     @Test
     public void testCanReply() {
         
-        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         Assert.assertNotNull("exists",t);
         
         Assert.assertTrue(t.getRowCount()==0);
@@ -93,10 +86,11 @@ public class CbusEventTableDataModelTest {
     @Test
     public void testCanMessage() {
         Assertions.assertNotNull(tcis);
-        Assert.assertEquals("no listener to start with",0,tcis.numListeners());
+        int startListeners = tcis.numListeners();
         
-        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
-        Assert.assertEquals("listener attached",1,tcis.numListeners());
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
+        Assert.assertEquals("listener attached",startListeners+1,tcis.numListeners());
         
         Assert.assertEquals("rowcount 0",0,t.getRowCount());
         t.message(new CanMessage( new int[]{0x05},0x12 ));
@@ -156,16 +150,17 @@ public class CbusEventTableDataModelTest {
         Assert.assertTrue(t.getRowCount()==0); 
         
         
-        Assert.assertEquals("listener",1,tcis.numListeners());
+        Assert.assertEquals("listener",startListeners+1,tcis.numListeners());
         t.skipSaveOnDispose();
         t.dispose();
-        Assert.assertEquals("listener",0,tcis.numListeners());
+        Assert.assertEquals("listener",startListeners,tcis.numListeners());
     }
 
     @Test
     public void testColumnHeadings() {
         
-        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         
         Assert.assertEquals("column count",CbusEventTableDataModel.MAX_COLUMN,t.getColumnCount());
         
@@ -198,7 +193,8 @@ public class CbusEventTableDataModelTest {
     @Test
     public void testColumns() {
         
-        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         
         Assert.assertEquals("column count", 28, t.getColumnCount() );
         
@@ -219,7 +215,8 @@ public class CbusEventTableDataModelTest {
         Assertions.assertNotNull(memo);
         memo.setTrafficController(tcisl);
         
-        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         Assert.assertEquals("rowcount 0",0,t.getRowCount());
         
         CanMessage m = new CanMessage(tcisl.getCanid());
@@ -368,7 +365,8 @@ public class CbusEventTableDataModelTest {
     @Test
     public void testProvidesEvent() {
     
-        CbusEventTableDataModel t = new CbusEventTableDataModel( memo,4,CbusEventTableDataModel.MAX_COLUMN);
+        CbusEventTableDataModel t = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            .provide(CbusEventTableDataModel.class);
         
         CbusTableEvent event1 = t.provideEvent(123,456);
         Assert.assertTrue(t.getRowCount()==1);
@@ -391,11 +389,13 @@ public class CbusEventTableDataModelTest {
     @BeforeEach
     public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         JUnitUtil.resetInstanceManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        memo.configureManagers();
         
     }
 

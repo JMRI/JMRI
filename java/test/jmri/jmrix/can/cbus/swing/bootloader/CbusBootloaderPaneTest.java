@@ -11,7 +11,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  *
  * @author Bob Andrew Crosland (C) 2020
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true")
 public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
@@ -44,7 +44,9 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         tcis = new jmri.jmrix.can.TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
+        
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        // memo.configureManagers();
         
         panel = new CbusBootloaderPane();
         helpTarget="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane";

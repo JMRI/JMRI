@@ -1365,6 +1365,28 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionShutDownTask shutDownTask = new ActionShutDownTask(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutDownTask);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        shutDownTask = new ActionShutDownTask(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutDownTask);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        And shutDownTaskCallChild = new And(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(shutDownTaskCallChild);
+        maleSocket.setEnabled(false);
+        shutDownTask.getCallSocket().connect(maleSocket);
+
+        DigitalMany shutDownTaskRunChild = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutDownTaskRunChild);
+        maleSocket.setEnabled(false);
+        shutDownTask.getRunSocket().connect(maleSocket);
+
+
         ActionSignalHead actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         maleSocket.setEnabled(false);
@@ -2032,6 +2054,13 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrix.loconet.logixng.SetSpeedZero setSpeedZero =
+                new jmri.jmrix.loconet.logixng.SetSpeedZero(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(setSpeedZero);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrix.mqtt.logixng.Publish publish =
                 new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
         maleSocket = digitalActionManager.registerAction(publish);
@@ -2353,13 +2382,13 @@ public class CreateLogixNGTreeScaffold {
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.ExecuteOnChange);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.ExecuteOnChange);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.AlwaysExecute);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2807,7 +2836,7 @@ public class CreateLogixNGTreeScaffold {
 
         ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null);
         ifThenElse.setComment("A comment");
-        ifThenElse.setType(IfThenElse.Type.ExecuteOnChange);
+        ifThenElse.setExecuteType(IfThenElse.ExecuteType.ExecuteOnChange);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
