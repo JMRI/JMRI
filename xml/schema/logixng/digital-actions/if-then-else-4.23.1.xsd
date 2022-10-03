@@ -100,7 +100,8 @@
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            <xs:attribute name="type" use="required">
+
+            <xs:attribute name="executeType">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
                   <xs:enumeration value="ExecuteOnChange"/>
@@ -108,6 +109,27 @@
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>
+
+            <xs:attribute name="evaluateType">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="EvaluateAll"/>
+                  <xs:enumeration value="EvaluateNeeded"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+
+            <!-- This is for backwards compability up until JMRI 5.1.4 -->
+            <xs:attribute name="type">
+              <xs:simpleType>
+                <xs:restriction base="xs:token">
+                  <xs:enumeration value="ExecuteOnChange"/>
+                  <xs:enumeration value="AlwaysExecute"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <!-- This is for backwards compability up until JMRI 5.1.4 -->
+
             <xs:attribute name="enabled" type="yesNoType" />
             <xs:attribute name="class" type="classType" use="required"/>
         

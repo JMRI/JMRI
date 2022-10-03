@@ -11,7 +11,8 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.IfThenElse.Type;
+import jmri.jmrit.logixng.actions.IfThenElse.ExecuteType;
+import jmri.jmrit.logixng.actions.IfThenElse.EvaluateType;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -21,7 +22,8 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class IfThenElseSwing extends AbstractDigitalActionSwing {
 
-    private JComboBox<Type> _typeComboBox;
+    private JComboBox<ExecuteType> _executeTypeComboBox;
+    private JComboBox<EvaluateType> _evaluateTypeComboBox;
 
 
     @Override
@@ -35,14 +37,25 @@ public class IfThenElseSwing extends AbstractDigitalActionSwing {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        _typeComboBox = new JComboBox<>();
-        for (Type type : Type.values()) _typeComboBox.addItem(type);
-        JComboBoxUtil.setupComboBoxMaxRows(_typeComboBox);
-        if (action != null) _typeComboBox.setSelectedItem(action.getType());
+        _executeTypeComboBox = new JComboBox<>();
+        for (ExecuteType type : ExecuteType.values()) _executeTypeComboBox.addItem(type);
+        JComboBoxUtil.setupComboBoxMaxRows(_executeTypeComboBox);
+        if (action != null) _executeTypeComboBox.setSelectedItem(action.getExecuteType());
 
+        _evaluateTypeComboBox = new JComboBox<>();
+        for (EvaluateType type : EvaluateType.values()) _evaluateTypeComboBox.addItem(type);
+        JComboBoxUtil.setupComboBoxMaxRows(_evaluateTypeComboBox);
+        if (action != null) _evaluateTypeComboBox.setSelectedItem(action.getEvaluateType());
+
+        JPanel typeOuterPanel = new JPanel();
         JPanel typePanel = new JPanel();
-        typePanel.add(_typeComboBox);
-        panel.add(typePanel);
+        java.awt.GridLayout layout = new java.awt.GridLayout(0,1);
+        typePanel.setLayout(layout);
+        layout.setVgap(15);
+        typePanel.add(_executeTypeComboBox);
+        typePanel.add(_evaluateTypeComboBox);
+        typeOuterPanel.add(typePanel);
+        panel.add(typeOuterPanel);
 
         JPanel labelPanel = new JPanel();
         labelPanel.add(new JLabel(Bundle.getMessage("IfThenElse_Info")));
@@ -72,7 +85,8 @@ public class IfThenElseSwing extends AbstractDigitalActionSwing {
 
         IfThenElse action = (IfThenElse)object;
 
-        action.setType(_typeComboBox.getItemAt(_typeComboBox.getSelectedIndex()));
+        action.setExecuteType(_executeTypeComboBox.getItemAt(_executeTypeComboBox.getSelectedIndex()));
+        action.setEvaluateType(_evaluateTypeComboBox.getItemAt(_evaluateTypeComboBox.getSelectedIndex()));
     }
 
     /** {@inheritDoc} */

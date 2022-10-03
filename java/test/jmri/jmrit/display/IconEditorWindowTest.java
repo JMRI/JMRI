@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import javax.swing.JComponent;
 
 import jmri.InstanceManager;
@@ -12,17 +11,11 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
-import org.junit.rules.Timeout;
-import jmri.util.junit.rules.RetryRule;
-import org.junit.runner.Description;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -31,33 +24,15 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  */
+@Timeout(10)
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class IconEditorWindowTest {
-
-    @Rule
-    public TestRule watcher = new TestWatcher() {
-        @Override
-        protected void starting(Description description) {
-            if (Boolean.valueOf(System.getenv("TRAVIS_PULL_REQUEST"))) {
-                // use System.out.println instead of logging to avoid using
-                // warning or error while still providing this output on PRs
-                // in Travis CI (and blocking elsewhere)
-                System.out.println("Starting test: " + description.getMethodName());
-            }
-        }
-    };
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     Editor _editor = null;
     JComponent _panel;
 
     @Test
     public void testSensorEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         _editor.addSensorEditor();
 
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Sensor");
@@ -106,7 +81,6 @@ public class IconEditorWindowTest {
 
     @Test
     public void testRightTOEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -149,7 +123,6 @@ public class IconEditorWindowTest {
 
     @Test
     public void testLeftTOEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("LeftTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -170,8 +143,8 @@ public class IconEditorWindowTest {
             _panel.repaint();
         });
 
-        new java.awt.Point(x + icon.getSize().width / 2,
-                y + icon.getSize().height / 2);
+        Assertions.assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
+                y + icon.getSize().height / 2));
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, turnout.getState());
 
@@ -196,7 +169,6 @@ public class IconEditorWindowTest {
 
     @Test
     public void testLightEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Light");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -214,8 +186,8 @@ public class IconEditorWindowTest {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        new java.awt.Point(x + icon.getSize().width / 2,
-                y + icon.getSize().height / 2);
+        Assertions.assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
+                y + icon.getSize().height / 2));
 
         Assert.assertEquals("initial state", Light.OFF, light.getState());
 
@@ -240,7 +212,6 @@ public class IconEditorWindowTest {
 
     @Test
     public void testSignalHeadEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("SignalHead");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -260,8 +231,8 @@ public class IconEditorWindowTest {
         icon.setLocation(x, y);
         _panel.repaint();
 
-        new java.awt.Point(x + icon.getSize().width / 2,
-                y + icon.getSize().height / 2);
+        Assertions.assertNotNull(new java.awt.Point(x + icon.getSize().width / 2,
+                y + icon.getSize().height / 2));
 
         int[] states = signalHead.getValidStates();
         Assert.assertEquals("initial state", states[0], signalHead.getState());
@@ -290,7 +261,6 @@ public class IconEditorWindowTest {
 
     @Test
     public void testMemoryEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Memory");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -353,7 +323,6 @@ public class IconEditorWindowTest {
 
     @Test
     public void testReporterEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("Reporter");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);
@@ -380,7 +349,7 @@ public class IconEditorWindowTest {
         iefo.requestClose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -390,15 +359,14 @@ public class IconEditorWindowTest {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initInternalSignalHeadManager();
 
-        if (!GraphicsEnvironment.isHeadless()) {
-            _editor = new PanelEditor("IconEditorTestPanel");
-            Assert.assertNotNull(JFrameOperator.waitJFrame("IconEditorTestPanel", true, true));
-            _panel = _editor.getTargetPanel();
-            Assert.assertNotNull(_panel);
-        }
+        _editor = new PanelEditor("IconEditorTestPanel");
+        Assert.assertNotNull(JFrameOperator.waitJFrame("IconEditorTestPanel", true, true));
+        _panel = _editor.getTargetPanel();
+        Assert.assertNotNull(_panel);
+
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
 
         // Delete the editor by calling dispose() defined in PanelEditor

@@ -14,12 +14,12 @@ Broadcast mode, but you have to be sure only one such device is powered, as they
 programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-    <version author="Egbert Broerse" version="1.1" lastUpdated="20220725"/>
-    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
-    <!-- Identical to DaisyII65210. Because of the way LNCV includes the art.nr. in the CV it could not be included in this file -->
+    <version author="Egbert Broerse" version="1.1" lastUpdated="20231001"/>
+    <!-- version 1.1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
+    <!-- CVs identical to DaisyII (65200). Because of the way LNCV includes the art.nr. in the CV it could not be included in this file -->
     <decoder>
         <family name="Command Station" mfg="Uhlenbrock Elektronik" type="Command Station">
-            <model model="Daisy II 65200" productID="6520" maxTotalCurrent="2000mA" formFactor="Stationary" comment="Daisy II LocoNet Digitalzentrale/Booster">
+            <model model="Daisy II 65210" productID="6521" maxTotalCurrent="2200mA" formFactor="Stationary" comment="Daisy II LocoNet Digitalzentrale/Booster">
               <versionCV />
               <size length="104" width="58" height="33" units="mm" />
             </model>
@@ -30,7 +30,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
         </programming>
 
         <variables>
-            <variable CV="6520.0" item="Long Address" default="1" comment="Module address" readOnly="yes">
+            <variable CV="6521.0" item="Long Address" default="1" comment="Module address" readOnly="yes">
               <decVal min="1" max="1"/>
               <label xml:lang="it">Indirizzo Modulo: </label>
               <label xml:lang="fr">Adresse Module: </label>
@@ -39,7 +39,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label>Module Address: </label>
               <tooltip>Read only, always 1</tooltip>
             </variable>
-          <variable CV="6520.1" mask="XXXXXXVV" item="Operating Mode" default="0">
+          <variable CV="6521.1" mask="XXXXXXVV" item="Operating Mode" default="0">
             <enumVal>
               <enumChoice value="0">
                 <choice>Command Station</choice>
@@ -55,7 +55,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
             <label xml:lang="de">Daisy II arbeitet als: </label>
             <label xml:lang="nl">Daisy II werkt als: </label>
           </variable>
-            <variable CV="6520.2" item="Starting Phase Wait" default="30">
+            <variable CV="6521.2" item="Starting Phase Wait" default="30">
               <decVal min="0" max="255"/>
               <label>Starting phase wait: </label>
               <label xml:lang="de">Start Wartezeit: </label>
@@ -64,7 +64,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Startphase Wartezeit in 0,5s Schritten. Werkseinstellung ~ 3 s.</tooltip>
               <tooltip xml:lang="nl">Wachttijd inschakelen in stappen van 0,5s. Standaard ingesteld op ca. 3 s.</tooltip>
             </variable>
-            <variable CV="6520.6" item="Restart Wait" default="0">
+            <variable CV="6521.6" item="Restart Wait" default="0">
               <decVal min="0" max="255"/>
               <label xml:lang="de">Wartezeit nach Kurzschluss: </label>
               <label xml:lang="fr">Activation d'après court-circuit: </label>
@@ -75,13 +75,13 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="fr">Activation automatique si court-circuit en étapes de 0,5 s. La valeur standard équivaut à env. 10 secondes. Valeur 0: automatique désactivé.</tooltip>
               <tooltip xml:lang="nl">Wachttijd tot de herstart na kortsluiting. De standaardwaarde ca. 10 secondes. (Het instellen gebeurt in stappen van 0,5 s)</tooltip>
             </variable>
-            <variable CV="6520.12" item="Power ON at startup" default="1">
+            <variable CV="6521.12" item="Power ON at startup" default="1">
               <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
               <label>Power ON at startup: </label>
               <label xml:lang="de">Zentrale startet im GO Modus: </label>
               <label xml:lang="nl">Spanning Aan na opstarten: </label>
             </variable>
-            <variable CV="6520.43" item="RailCom Cutout Time" default="62">
+            <variable CV="6521.43" item="RailCom Cutout Time" default="62">
               <decVal min="0" max="70"/>
               <label>RailCom® CutOut: </label>
               <label xml:lang="de">RailCom® CutOut: </label>
@@ -90,7 +90,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">RailCom® CutOut-Dauer in 7,5 μs Schritten, 0 = Aus</tooltip>
               <tooltip xml:lang="nl">RailCom® CutOut-tijd in stappen van 7,5 μs, 0 = Uit</tooltip>
             </variable>
-            <variable CV="6520.44" mask="XXXXXXVV" item="DataFormat" default="2">
+            <variable CV="6521.44" mask="XXXXXXVV" item="DataFormat" default="2">
               <enumVal>
                 <enumChoice value="0">
                   <choice>DCC 14</choice>
@@ -106,7 +106,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <label xml:lang="de">Allgemeines Datenformat:</label>
               <label xml:lang="nl">Gegevensformaat:</label>
             </variable>
-            <variable CV="6520.45" item="Purging Time" default="0">
+            <variable CV="6521.45" item="Purging Time" default="0">
               <decVal min="0" max="255"/>
               <label xml:lang="de">Purgingzeit: </label>
               <label xml:lang="nl">Purgingtijd: </label>
@@ -115,7 +115,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Nur für Experten: Dauer nach dem letzten Befehl, bis eine Lokadresse aus dem Refresh-Zyklus gelöscht wird, im 0,5 s Schritten (0 = kein Purging)</tooltip>
               <tooltip xml:lang="nl">Voor gevorderden: Tijd na laatste commando voordat locadres gewist wordt, in stappen van 0,5 s (0 = Purging Uit)</tooltip>
             </variable>
-            <variable CV="6520.46" item="Min Pulse Duration" default="5">
+            <variable CV="6521.46" item="Min Pulse Duration" default="5">
               <decVal min="0" max="255"/>
               <label xml:lang="de">Min. Schaltzeit: </label>
               <label xml:lang="nl">Min. Schakelpulsduus: </label>
@@ -124,7 +124,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Minimum Weichenschaltzeit (20ms Schritte)</tooltip>
               <tooltip xml:lang="nl">Min. schakeltijd wissels (in stappen van 20 ms)</tooltip>
             </variable>
-            <variable CV="6520.47" item="Max Pulse Duration" default="100">
+            <variable CV="6521.47" item="Max Pulse Duration" default="100">
               <decVal min="0" max="255"/>
               <label xml:lang="de">Max. Schaltzeit: </label>
               <label xml:lang="nl">Max. Schakelpulsduus: </label>
@@ -133,7 +133,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Maximum Weichenschaltzeit (20ms Schritte)</tooltip>
               <tooltip xml:lang="nl">Max. schakeltijd wissels (in stappen van 20 ms)</tooltip>
             </variable>
-            <variable CV="6520.48" item="On-Off Interval" default="10">
+            <variable CV="6521.48" item="On-Off Interval" default="10">
               <decVal min="0" max="255"/>
               <label xml:lang="de">On/Off Intervall: </label>
               <label xml:lang="nl">Aan/Uit Interval: </label>
@@ -142,7 +142,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="de">Pause zwischen on und off eines Fahrstraßenbefehls (20ms Schritte)</tooltip>
               <tooltip xml:lang="nl">Pauze tussen Aan-Uit commando's in een Wisselstraat (stappen van 20 ms)</tooltip>
             </variable>
-            <variable CV="6520.49" item="Route Interval" default="11">
+            <variable CV="6521.49" item="Route Interval" default="11">
               <decVal min="0" max="255"/>
               <label xml:lang="de">Fahrstraßen-intervall: </label>
               <label xml:lang="nl">Interval Wisselstraat: </label>
@@ -152,32 +152,32 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
               <tooltip xml:lang="nl">Pauze tussen 2 Wisselstraatcommando's (stappen van 20 ms)</tooltip>
             </variable>
             <!--FRED Modus-->
-            <variable CV="6520.81" item="FRED F1" default="0">
+            <variable CV="6521.81" item="FRED F1" default="0">
               <decVal min="0" max="9999"/>
               <label xml:lang="de">Adresse für FRED f1-Taste: </label>
               <label xml:lang="nl">Adres voor FRED F1 Toets: </label>
               <label>FRED F1 Key Address: </label>
             </variable>
-            <variable CV="6520.82" item="FRED F2" default="0">
+            <variable CV="6521.82" item="FRED F2" default="0">
               <decVal min="0" max="9999"/>
               <label xml:lang="de">Adresse für FRED f2-Taste: </label>
               <label xml:lang="nl">Adres voor FRED F2 Toets: </label>
               <label>FRED F2 Key Address: </label>
             </variable>
-            <variable CV="6520.83" item="FRED F3" default="0">
+            <variable CV="6521.83" item="FRED F3" default="0">
               <decVal min="0" max="9999"/>
               <label xml:lang="de">Adresse für FRED f3-Taste: </label>
               <label xml:lang="nl">Adres voor FRED F3 Toets: </label>
               <label>FRED F3 Key Address: </label>
             </variable>
-            <variable CV="6520.84" item="FRED F4" default="0">
+            <variable CV="6521.84" item="FRED F4" default="0">
               <decVal min="0" max="9999"/>
               <label xml:lang="de">Adresse für FRED f4-Taste: </label>
               <label xml:lang="nl">Adres voor FRED F4 Toets: </label>
               <label>FRED F4 Key Address: </label>
             </variable>
 
-            <variable CV="6520.90" item="Decoder Version" readOnly="yes">
+            <variable CV="6521.90" item="Decoder Version" readOnly="yes">
                 <decVal/>
                 <label xml:lang="it">Versione: </label>
                 <label xml:lang="fr">Version: </label>
@@ -186,413 +186,413 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
                 <label>Firmware Version: </label>
               </variable>
             <!--Route 1-->
-            <variable CV="6520.100" item="Route1 Step1" default="0">
+            <variable CV="6521.100" item="Route1 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 1 Steps:   </label>
               <tooltip>R1 step 1</tooltip>
             </variable>
-            <variable CV="6520.101" item="Route1 Step2" default="0">
+            <variable CV="6521.101" item="Route1 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 2</tooltip>
             </variable>
-            <variable CV="6520.102" item="Route1 Step3" default="0">
+            <variable CV="6521.102" item="Route1 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 3</tooltip>
             </variable>
-            <variable CV="6520.103" item="Route1 Step4" default="0">
+            <variable CV="6521.103" item="Route1 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 4</tooltip>
             </variable>
-            <variable CV="6520.104" item="Route1 Step5" default="0">
+            <variable CV="6521.104" item="Route1 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 5</tooltip>
             </variable>
-            <variable CV="6520.105" item="Route1 Step6" default="0">
+            <variable CV="6521.105" item="Route1 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 6</tooltip>
             </variable>
-            <variable CV="6520.106" item="Route1 Step7" default="0">
+            <variable CV="6521.106" item="Route1 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 7</tooltip>
             </variable>
-            <variable CV="6520.107" item="Route1 Step8" default="0">
+            <variable CV="6521.107" item="Route1 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 8</tooltip>
             </variable>
-            <variable CV="6520.108" item="Route1 Step9" default="0">
+            <variable CV="6521.108" item="Route1 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 S9: </tooltip>
             </variable>
-            <variable CV="6520.109" item="Route1 Step10" default="0">
+            <variable CV="6521.109" item="Route1 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R1 step 10</tooltip>
             </variable>
             <!--Route 2-->
-            <variable CV="6520.110" item="Route2 Step1" default="0">
+            <variable CV="6521.110" item="Route2 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 2 Steps:   </label>
             </variable>
-            <variable CV="6520.111" item="Route2 Step2" default="0">
+            <variable CV="6521.111" item="Route2 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 2</tooltip>
             </variable>
-            <variable CV="6520.112" item="Route2 Step3" default="0">
+            <variable CV="6521.112" item="Route2 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 3</tooltip>
             </variable>
-            <variable CV="6520.113" item="Route2 Step4" default="0">
+            <variable CV="6521.113" item="Route2 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 4</tooltip>
             </variable>
-            <variable CV="6520.114" item="Route2 Step5" default="0">
+            <variable CV="6521.114" item="Route2 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 5</tooltip>
             </variable>
-            <variable CV="6520.115" item="Route2 Step6" default="0">
+            <variable CV="6521.115" item="Route2 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 6</tooltip>
             </variable>
-            <variable CV="6520.116" item="Route2 Step7" default="0">
+            <variable CV="6521.116" item="Route2 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 7</tooltip>
             </variable>
-            <variable CV="6520.117" item="Route2 Step8" default="0">
+            <variable CV="6521.117" item="Route2 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 8</tooltip>
             </variable>
-            <variable CV="6520.118" item="Route2 Step9" default="0">
+            <variable CV="6521.118" item="Route2 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 S9: </tooltip>
             </variable>
-            <variable CV="6520.119" item="Route2 Step10" default="0">
+            <variable CV="6521.119" item="Route2 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R2 step 10</tooltip>
             </variable>
             <!--Route 3-->
-            <variable CV="6520.120" item="Route3 Step1" default="0">
+            <variable CV="6521.120" item="Route3 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 3 Steps:   </label>
             </variable>
-            <variable CV="6520.121" item="Route3 Step2" default="0">
+            <variable CV="6521.121" item="Route3 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 2</tooltip>
             </variable>
-            <variable CV="6520.122" item="Route3 Step3" default="0">
+            <variable CV="6521.122" item="Route3 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 3</tooltip>
             </variable>
-            <variable CV="6520.123" item="Route3 Step4" default="0">
+            <variable CV="6521.123" item="Route3 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 4</tooltip>
             </variable>
-            <variable CV="6520.124" item="Route3 Step5" default="0">
+            <variable CV="6521.124" item="Route3 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 5</tooltip>
             </variable>
-            <variable CV="6520.125" item="Route3 Step6" default="0">
+            <variable CV="6521.125" item="Route3 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 6</tooltip>
             </variable>
-            <variable CV="6520.126" item="Route3 Step7" default="0">
+            <variable CV="6521.126" item="Route3 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 7</tooltip>
             </variable>
-            <variable CV="6520.127" item="Route3 Step8" default="0">
+            <variable CV="6521.127" item="Route3 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 8</tooltip>
             </variable>
-            <variable CV="6520.128" item="Route3 Step9" default="0">
+            <variable CV="6521.128" item="Route3 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 S9: </tooltip>
             </variable>
-            <variable CV="6520.129" item="Route3 Step10" default="0">
+            <variable CV="6521.129" item="Route3 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R3 step 10</tooltip>
             </variable>
             <!--Route 4-->
-            <variable CV="6520.130" item="Route4 Step1" default="0">
+            <variable CV="6521.130" item="Route4 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 4 Steps:   </label>
             </variable>
-            <variable CV="6520.131" item="Route4 Step2" default="0">
+            <variable CV="6521.131" item="Route4 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 2</tooltip>
             </variable>
-            <variable CV="6520.132" item="Route4 Step3" default="0">
+            <variable CV="6521.132" item="Route4 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 3</tooltip>
             </variable>
-            <variable CV="6520.133" item="Route4 Step4" default="0">
+            <variable CV="6521.133" item="Route4 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 4</tooltip>
             </variable>
-            <variable CV="6520.134" item="Route4 Step5" default="0">
+            <variable CV="6521.134" item="Route4 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 5</tooltip>
             </variable>
-            <variable CV="6520.135" item="Route4 Step6" default="0">
+            <variable CV="6521.135" item="Route4 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 6</tooltip>
             </variable>
-            <variable CV="6520.136" item="Route4 Step7" default="0">
+            <variable CV="6521.136" item="Route4 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 7</tooltip>
             </variable>
-            <variable CV="6520.137" item="Route4 Step8" default="0">
+            <variable CV="6521.137" item="Route4 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 8</tooltip>
             </variable>
-            <variable CV="6520.138" item="Route4 Step9" default="0">
+            <variable CV="6521.138" item="Route4 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 S9: </tooltip>
             </variable>
-            <variable CV="6520.139" item="Route4 Step10" default="0">
+            <variable CV="6521.139" item="Route4 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R4 step 10</tooltip>
             </variable>
             <!--Route 5-->
-            <variable CV="6520.140" item="Route5 Step1" default="0">
+            <variable CV="6521.140" item="Route5 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 5 Steps:   </label>
             </variable>
-            <variable CV="6520.141" item="Route5 Step2" default="0">
+            <variable CV="6521.141" item="Route5 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 2</tooltip>
             </variable>
-            <variable CV="6520.142" item="Route5 Step3" default="0">
+            <variable CV="6521.142" item="Route5 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 3</tooltip>
             </variable>
-            <variable CV="6520.143" item="Route5 Step4" default="0">
+            <variable CV="6521.143" item="Route5 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 4</tooltip>
             </variable>
-            <variable CV="6520.144" item="Route5 Step5" default="0">
+            <variable CV="6521.144" item="Route5 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 5</tooltip>
             </variable>
-            <variable CV="6520.145" item="Route5 Step6" default="0">
+            <variable CV="6521.145" item="Route5 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 6</tooltip>
             </variable>
-            <variable CV="6520.146" item="Route5 Step7" default="0">
+            <variable CV="6521.146" item="Route5 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 7</tooltip>
             </variable>
-            <variable CV="6520.147" item="Route5 Step8" default="0">
+            <variable CV="6521.147" item="Route5 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 8</tooltip>
             </variable>
-            <variable CV="6520.148" item="Route5 Step9" default="0">
+            <variable CV="6521.148" item="Route5 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 S9: </tooltip>
             </variable>
-            <variable CV="6520.149" item="Route5 Step10" default="0">
+            <variable CV="6521.149" item="Route5 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R5 step 10</tooltip>
             </variable>
             <!--Route 6-->
-            <variable CV="6520.150" item="Route6 Step1" default="0">
+            <variable CV="6521.150" item="Route6 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 6 Steps:   </label>
             </variable>
-            <variable CV="6520.151" item="Route6 Step2" default="0">
+            <variable CV="6521.151" item="Route6 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 2</tooltip>
             </variable>
-            <variable CV="6520.152" item="Route6 Step3" default="0">
+            <variable CV="6521.152" item="Route6 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 3</tooltip>
             </variable>
-            <variable CV="6520.153" item="Route6 Step4" default="0">
+            <variable CV="6521.153" item="Route6 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 4</tooltip>
             </variable>
-            <variable CV="6520.154" item="Route6 Step5" default="0">
+            <variable CV="6521.154" item="Route6 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 5</tooltip>
             </variable>
-            <variable CV="6520.155" item="Route6 Step6" default="0">
+            <variable CV="6521.155" item="Route6 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 6</tooltip>
             </variable>
-            <variable CV="6520.156" item="Route6 Step7" default="0">
+            <variable CV="6521.156" item="Route6 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 7</tooltip>
             </variable>
-            <variable CV="6520.157" item="Route6 Step8" default="0">
+            <variable CV="6521.157" item="Route6 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 8</tooltip>
             </variable>
-            <variable CV="6520.158" item="Route6 Step9" default="0">
+            <variable CV="6521.158" item="Route6 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 S9: </tooltip>
             </variable>
-            <variable CV="6520.159" item="Route6 Step10" default="0">
+            <variable CV="6521.159" item="Route6 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R6 step 10</tooltip>
             </variable>
             <!--Route 7-->
-            <variable CV="6520.160" item="Route7 Step1" default="0">
+            <variable CV="6521.160" item="Route7 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 7 Steps:   </label>
             </variable>
-            <variable CV="6520.161" item="Route7 Step2" default="0">
+            <variable CV="6521.161" item="Route7 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 2</tooltip>
             </variable>
-            <variable CV="6520.162" item="Route7 Step3" default="0">
+            <variable CV="6521.162" item="Route7 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 3</tooltip>
             </variable>
-            <variable CV="6520.163" item="Route7 Step4" default="0">
+            <variable CV="6521.163" item="Route7 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 4</tooltip>
             </variable>
-            <variable CV="6520.164" item="Route7 Step5" default="0">
+            <variable CV="6521.164" item="Route7 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 5</tooltip>
             </variable>
-            <variable CV="6520.165" item="Route7 Step6" default="0">
+            <variable CV="6521.165" item="Route7 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 6</tooltip>
             </variable>
-            <variable CV="6520.166" item="Route7 Step7" default="0">
+            <variable CV="6521.166" item="Route7 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 7</tooltip>
             </variable>
-            <variable CV="6520.167" item="Route7 Step8" default="0">
+            <variable CV="6521.167" item="Route7 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 8</tooltip>
             </variable>
-            <variable CV="6520.168" item="Route7 Step9" default="0">
+            <variable CV="6521.168" item="Route7 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 S9: </tooltip>
             </variable>
-            <variable CV="6520.169" item="Route7 Step10" default="0">
+            <variable CV="6521.169" item="Route7 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R7 step 10</tooltip>
             </variable>
             <!--Route 8-->
-            <variable CV="6520.170" item="Route8 Step1" default="0">
+            <variable CV="6521.170" item="Route8 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 8 Steps:   </label>
             </variable>
-            <variable CV="6520.171" item="Route8 Step2" default="0">
+            <variable CV="6521.171" item="Route8 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 2</tooltip>
             </variable>
-            <variable CV="6520.172" item="Route8 Step3" default="0">
+            <variable CV="6521.172" item="Route8 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 3</tooltip>
             </variable>
-            <variable CV="6520.173" item="Route8 Step4" default="0">
+            <variable CV="6521.173" item="Route8 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 4</tooltip>
             </variable>
-            <variable CV="6520.174" item="Route8 Step5" default="0">
+            <variable CV="6521.174" item="Route8 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 5</tooltip>
             </variable>
-            <variable CV="6520.175" item="Route8 Step6" default="0">
+            <variable CV="6521.175" item="Route8 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 6</tooltip>
             </variable>
-            <variable CV="6520.176" item="Route8 Step7" default="0">
+            <variable CV="6521.176" item="Route8 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 7</tooltip>
             </variable>
-            <variable CV="6520.177" item="Route8 Step8" default="0">
+            <variable CV="6521.177" item="Route8 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 8</tooltip>
             </variable>
-            <variable CV="6520.178" item="Route8 Step9" default="0">
+            <variable CV="6521.178" item="Route8 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 S9: </tooltip>
             </variable>
-            <variable CV="6520.179" item="Route8 Step10" default="0">
+            <variable CV="6521.179" item="Route8 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R8 step 10</tooltip>
             </variable>
             <!--Route 9-->
-            <variable CV="6520.180" item="Route9 Step1" default="0">
+            <variable CV="6521.180" item="Route9 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 9 Steps:   </label>
             </variable>
-            <variable CV="6520.181" item="Route9 Step2" default="0">
+            <variable CV="6521.181" item="Route9 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 2</tooltip>
             </variable>
-            <variable CV="6520.182" item="Route9 Step3" default="0">
+            <variable CV="6521.182" item="Route9 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 3</tooltip>
             </variable>
-            <variable CV="6520.183" item="Route9 Step4" default="0">
+            <variable CV="6521.183" item="Route9 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 4</tooltip>
             </variable>
-            <variable CV="6520.184" item="Route9 Step5" default="0">
+            <variable CV="6521.184" item="Route9 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 5</tooltip>
             </variable>
-            <variable CV="6520.185" item="Route9 Step6" default="0">
+            <variable CV="6521.185" item="Route9 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 6</tooltip>
             </variable>
-            <variable CV="6520.186" item="Route9 Step7" default="0">
+            <variable CV="6521.186" item="Route9 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 7</tooltip>
             </variable>
-            <variable CV="6520.187" item="Route9 Step8" default="0">
+            <variable CV="6521.187" item="Route9 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 8</tooltip>
             </variable>
-            <variable CV="6520.188" item="Route9 Step9" default="0">
+            <variable CV="6521.188" item="Route9 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 S9: </tooltip>
             </variable>
-            <variable CV="6520.189" item="Route9 Step10" default="0">
+            <variable CV="6521.189" item="Route9 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R9 step 10</tooltip>
             </variable>
             <!--Route 10-->
-            <variable CV="6520.190" item="Route10 Step1" default="0">
+            <variable CV="6521.190" item="Route10 Step1" default="0">
               <decVal min="1" max="2048"/>
               <label>Route 10 Steps: </label>
             </variable>
-            <variable CV="6520.191" item="Route10 Step2" default="0">
+            <variable CV="6521.191" item="Route10 Step2" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 2</tooltip>
             </variable>
-            <variable CV="6520.192" item="Route10 Step3" default="0">
+            <variable CV="6521.192" item="Route10 Step3" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 3</tooltip>
             </variable>
-            <variable CV="6520.193" item="Route10 Step4" default="0">
+            <variable CV="6521.193" item="Route10 Step4" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 4</tooltip>
             </variable>
-            <variable CV="6520.194" item="Route10 Step5" default="0">
+            <variable CV="6521.194" item="Route10 Step5" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 5</tooltip>
             </variable>
-            <variable CV="6520.195" item="Route10 Step6" default="0">
+            <variable CV="6521.195" item="Route10 Step6" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 6</tooltip>
             </variable>
-            <variable CV="6520.196" item="Route10 Step7" default="0">
+            <variable CV="6521.196" item="Route10 Step7" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 7</tooltip>
             </variable>
-            <variable CV="6520.197" item="Route10 Step8" default="0">
+            <variable CV="6521.197" item="Route10 Step8" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 8</tooltip>
             </variable>
-            <variable CV="6520.198" item="Route10 Step9" default="0">
+            <variable CV="6521.198" item="Route10 Step9" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 9</tooltip>
             </variable>
-            <variable CV="6520.199" item="Route10 Step10" default="0">
+            <variable CV="6521.199" item="Route10 Step10" default="0">
               <decVal min="1" max="2048"/>
               <tooltip>R10 step 10</tooltip>
             </variable>
