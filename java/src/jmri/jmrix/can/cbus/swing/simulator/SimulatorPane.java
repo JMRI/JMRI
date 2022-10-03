@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -38,11 +39,8 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
      * {@inheritDoc}
      */
     @Override
-    public void initComponents(CanSystemConnectionMemo memo) {
+    public void initComponents(@Nonnull CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        if ( memo == null){
-            throw new IllegalStateException("memo should not be null here");
-        }
         _sim = memo.get(CbusSimulator.class);
         init();
     }
