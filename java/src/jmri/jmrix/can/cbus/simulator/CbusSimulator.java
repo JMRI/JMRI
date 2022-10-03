@@ -96,7 +96,7 @@ public class CbusSimulator implements jmri.Disposable {
     /**
      * Disposes of all simulated objects.
      * CanListeners can be removed and command stations can stop session timers.
-     * Does not 
+     * Does not remove instance from InstanceManager or CAN memo.
      */
     @Override
     public void dispose() {
