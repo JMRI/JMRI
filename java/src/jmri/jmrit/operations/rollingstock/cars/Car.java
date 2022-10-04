@@ -46,16 +46,11 @@ public class Car extends RollingStock {
     // schedule items
     protected String _scheduleId = NONE; // the schedule id assigned to this car
     protected String _nextLoadName = NONE; // next load by schedule
-    protected Location _finalDestination = null; // final destination by
-                                                 // schedule or router
+    protected Location _finalDestination = null; 
     protected Track _finalDestTrack = null; // final track by schedule or router
-    protected Location _previousFinalDestination = null; // previous final
-                                                         // destination (for
-                                                         // train resets)
-    protected Track _previousFinalDestTrack = null; // previous final track (for
-                                                    // train resets)
-    protected String _previousScheduleId = NONE; // previous schedule id (for
-                                                 // train resets)
+    protected Location _previousFinalDestination = null;
+    protected Track _previousFinalDestTrack = null;
+    protected String _previousScheduleId = NONE;
     protected String _pickupScheduleId = NONE;
 
     public static final String EXTENSION_REGEX = " ";
@@ -376,9 +371,6 @@ public class Car extends RollingStock {
         if (_finalDestination != null) {
             _finalDestination.addPropertyChangeListener(this);
         }
-        // log.debug("Next destination for car ("+toString()+") old: "+old+"
-        // new:
-        // "+destination);
         if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old))) {
             setDirtyAndFirePropertyChange(FINAL_DESTINATION_CHANGED_PROPERTY, old, destination);
         }
@@ -517,7 +509,6 @@ public class Car extends RollingStock {
         if ((old != null && !old.equals(track)) || (track != null && !track.equals(old))) {
             setDirtyAndFirePropertyChange(RETURN_WHEN_LOADED_CHANGED_PROPERTY, null, null);
         }
-
     }
 
     public Track getReturnWhenLoadedDestTrack() {
@@ -764,8 +755,7 @@ public class Car extends RollingStock {
             return status;
         }
         // car was in a train and has been dropped off, update load, RWE could
-        // set a new
-        // final destination
+        // set a new final destination
         loadNext(destinationTrack);
         return status;
     }
@@ -964,11 +954,8 @@ public class Car extends RollingStock {
     public void reset() {
         setScheduleItemId(getPreviousScheduleId()); // revert to previous
         setNextLoadName(NONE);
-        setFinalDestination(getPreviousFinalDestination()); // revert to
-                                                            // previous
-        setFinalDestinationTrack(getPreviousFinalDestinationTrack()); // revert
-                                                                      // to
-                                                                      // previous
+        setFinalDestination(getPreviousFinalDestination());
+        setFinalDestinationTrack(getPreviousFinalDestinationTrack());
         if (isLoadGeneratedFromStaging()) {
             setLoadGeneratedFromStaging(false);
             setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
