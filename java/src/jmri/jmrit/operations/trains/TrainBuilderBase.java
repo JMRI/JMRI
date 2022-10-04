@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Version;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -1360,6 +1358,24 @@ public class TrainBuilderBase extends TrainCommon {
                     i--;
                     continue;
                 }
+                // does the car have a pick up day?
+                if (!car.getPickupScheduleId().equals(Car.NONE)) {
+                    if (trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY) ||
+                            car.getPickupScheduleId().equals(trainScheduleManager.getTrainScheduleActiveId())) {
+                        car.setPickupScheduleId(Car.NONE);
+                    } else {
+                        TrainSchedule sch = trainScheduleManager.getScheduleById(car.getPickupScheduleId());
+                        if (sch != null) {
+                            addLine(_buildReport, SEVEN,
+                                    MessageFormat.format(Bundle.getMessage("buildExcludeCarSchedule"),
+                                            new Object[] { car.toString(), car.getTypeName(), car.getLocationName(),
+                                                    car.getTrackName(), sch.getName() }));
+                            _carList.remove(car);
+                            i--;
+                            continue;
+                        }
+                    }
+                }
                 // does car have a wait count?
                 if (car.getWait() > 0) {
                     addLine(_buildReport, SEVEN,
@@ -1385,24 +1401,6 @@ public class TrainBuilderBase extends TrainCommon {
                     _carList.remove(car);
                     i--;
                     continue;
-                }
-                // does the car have a pick up day?
-                if (!car.getPickupScheduleId().equals(Car.NONE)) {
-                    if (trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY) ||
-                            car.getPickupScheduleId().equals(trainScheduleManager.getTrainScheduleActiveId())) {
-                        car.setPickupScheduleId(Car.NONE);
-                    } else {
-                        TrainSchedule sch = trainScheduleManager.getScheduleById(car.getPickupScheduleId());
-                        if (sch != null) {
-                            addLine(_buildReport, SEVEN,
-                                    MessageFormat.format(Bundle.getMessage("buildExcludeCarSchedule"),
-                                            new Object[] { car.toString(), car.getTypeName(), car.getLocationName(),
-                                                    car.getTrackName(), sch.getName() }));
-                            _carList.remove(car);
-                            i--;
-                            continue;
-                        }
-                    }
                 }
             }
         }
