@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ShutDownTask;
 
-import jmri.util.LoggingUtil;
-
 /**
  * Abstract ShutDownTask implementation.
  * <p>
