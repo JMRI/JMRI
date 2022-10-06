@@ -8,6 +8,7 @@ import java.util.*;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 import jmri.*;
 import jmri.jmrit.roster.Roster;
@@ -696,11 +697,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setOpaque(false);
         speedSlider.setValue(0);
         speedSlider.setFocusable(false);
+        speedSlider.addMouseListener(new JSliderPreciseMouseAdapter());
 
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setOpaque(false);
         speedSliderContinuous.setFocusable(false);
+        speedSliderContinuous.addMouseListener(new JSliderPreciseMouseAdapter());        
 
         speedSpinner = new JSpinner();
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
@@ -1462,6 +1465,26 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         @Override
         public void writeImage(BufferedImage bi, TranscoderOutput to) throws TranscoderException {
             //not required here, do nothing
+        }
+    }
+   
+    // this mouse adapter makes sure to move the slider cursor to precisely where the user clicks
+    // see https://jmri-developers.groups.io/g/jmri/message/7874
+    private class JSliderPreciseMouseAdapter extends MouseAdapter {
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON1) {
+                JSlider sourceSlider = (JSlider) e.getSource();
+                BasicSliderUI ui = (BasicSliderUI) sourceSlider.getUI();
+                int value;
+                if (sourceSlider.getOrientation() == JSlider.VERTICAL) {
+                    value = ui.valueForYPosition(e.getY());
+                } else {
+                    value = ui.valueForXPosition(e.getX());
+                }
+                sourceSlider.setValue(value);
+            }
         }
     }
 
