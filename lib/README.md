@@ -386,9 +386,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ## For unit tests & development work only:
 
-##### ArchUnit: archunit-0.11.0.jar archunit-junit4-0.11.0.jar
+##### ArchUnit: archunit-*.jar, archunit-junit5-api-*.jar, archunit-junit5-engine-*.jar, archunit-junit5-engine-api*.jar
 - See https://www.archunit.org
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
+- version 1.0.0-rc1
 
 ##### byte-buddy-1.10.14
 - version 1.10.14

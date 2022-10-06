@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 
@@ -90,6 +91,11 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             storeToMemoAndInstance(getConsistManager(), ConsistManager.class);
         }
 
+        // kick-start cbus sim tools ( Dummy Command Station etc. ) if using loopback connection
+        if ( adapterMemo.getTrafficController() instanceof jmri.jmrix.can.adapters.loopback.LoopbackTrafficController) {
+            adapterMemo.get( CbusSimulator.class);
+        }
+
     }
 
     /**
@@ -107,6 +113,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         } else if (type.equals(GlobalProgrammerManager.class)) {
             return getProgrammerManager().isGlobalProgrammerAvailable();
         } else if (type.equals(ConsistManager.class)) {
+            return true;
+        } else if (type.equals(CbusSimulator.class)) {
             return true;
         } else {
             return DEFAULT_CLASSES.contains(type);
@@ -129,6 +137,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getProgrammerManager();
         } else if (T.equals(ConsistManager.class)) {
             return (T) getConsistManager();
+        } else if (T.equals(CbusSimulator.class)) {
+            return provide(T);
         } else if ( DEFAULT_CLASSES.contains(T) ) {
             return provide(T);
         }
@@ -232,6 +242,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(adapterMemo));
             storeToMemoAndInstance(new CbusPredefinedMeters(adapterMemo), CbusPredefinedMeters.class);
         }
+        else if (T.equals(CbusSimulator.class)) {
+            storeToMemoAndInstance(new CbusSimulator(adapterMemo), CbusSimulator.class);
+        }
         return adapterMemo.getFromMap(T); // if class not in map, class not provided.
     }
 
@@ -243,6 +256,11 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     private <T> void storeToMemoAndInstanceDefault(@Nonnull T item, @Nonnull Class<T> type){
         adapterMemo.store(item, type); // store with memo
         InstanceManager.setDefault( type, item); // and with InstanceManager
+    }
+
+    public  <T> void disposeOf(@Nonnull T item, @Nonnull Class<T> type ) {
+        InstanceManager.deregister(item, type);
+        adapterMemo.deregister(item, type);
     }
 
     /**

@@ -444,7 +444,19 @@
             </ul>
           </li>
           <li>
-            The <i>If Then Else</i> action has two new options that's relevant when
+            LogixNG has now two new options that work together:
+            <ul>
+              <li><i>Preferences -> LogixNG</i> has the option
+              <i>Show system name in exceptions</i>. If it's checked, the system name
+              of an action/expression will be shown in the error message in the log if
+              an error occurs and <i>Abort</i> is selected in the error dialog.</li>
+              <li><i>LogixNG Browse</i> has the option <i>Print system names</i>. If
+              this option is checked, the system names of actions and expressions is
+              shown in the Browse window.</li>
+            </ul>
+            These two options together makes it easier to find in which action or
+            expression the error occurs.</li>
+            <li>The <i>If Then Else</i> action has two new options that's relevant when
             there's more that one <i>If</i> socket.
             <ul>
               <li><i>Evaluate all expressions</i> - evaluates all the <i>If</i> sockets before executing any action.</i>
@@ -503,7 +515,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li></li>
+            <li>Purple on, off icons added to USS sensor directory.</li>
         </ul>
 
     <h3>Roster</h3>
