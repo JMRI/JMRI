@@ -11,13 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.FileUtil;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).
@@ -43,25 +41,10 @@ public class TrainCsvManifest extends TrainCsvCommon {
             printTrainName(fileOut, train.getName());
             printTrainDescription(fileOut, train.getDescription());
             printPrinterName(fileOut, locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName());
-            // add logo
-            String logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
-            if (!train.getManifestLogoPathName().equals(Train.NONE)) {
-                logoURL = FileUtil.getExternalFilename(train.getManifestLogoPathName());
-            }
-            if (!logoURL.isEmpty()) {
-                fileOut.printRecord("LOGO", Bundle.getMessage("csvLogoFilePath"), logoURL);
-            }
+            printLogoURL(fileOut, train);
             printValidity(fileOut, getDate(true));
-            // train comment can have multiple lines
-            if (!train.getCommentWithColor().equals(Train.NONE)) {
-                String[] comments = train.getCommentWithColor().split(NEW_LINE);
-                for (String comment : comments) {
-                    fileOut.printRecord("TC", Bundle.getMessage("csvTrainComment"), comment); // NOI18N
-                }
-            }
-            if (Setup.isPrintRouteCommentsEnabled()) {
-                fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
-            }
+            printTrainComment(fileOut, train);
+            printRouteComment(fileOut, train);
 
             // get engine and car lists
             List<Engine> engineList = engineManager.getByTrainBlockingList(train);
@@ -86,25 +69,12 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     } else {
                         fileOut.printRecord("EDT", Bundle.getMessage("csvEstimatedDepartureTime"), train.getExpectedDepartureTime(rl)); // NOI18N
                     }
-
-                    Location location = rl.getLocation();
-                    // add location comment
-                    if (Setup.isPrintLocationCommentsEnabled() && !location.getCommentWithColor().equals(Location.NONE)) {
-                        // location comment can have multiple lines
-                        String[] comments = location.getCommentWithColor().split(NEW_LINE); // NOI18N
-                        for (String comment : comments) {
-                            printLocationComment(fileOut, comment);
-                        }
-                    }
-                    if (Setup.isPrintTruncateManifestEnabled() && location.isSwitchListEnabled()) {
+                    printLocationComment(fileOut, rl.getLocation());
+                    if (Setup.isPrintTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled()) {
                         fileOut.printRecord("TRUN", Bundle.getMessage("csvTruncate"));
                     }
                 }
-                // add route comment
-                if (!rl.getComment().equals(RouteLocation.NONE)) {
-                    printRouteLocationComment(fileOut, rl.getComment());
-                }
-
+                printRouteLocationComment(fileOut, rl);
                 printTrackComments(fileOut, rl, carList);
 
                 // engine change or helper service?
