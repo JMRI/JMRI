@@ -53,6 +53,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     static final String PRINT_ERROR_HANDLING_OPTION = "jmri.jmrit.logixng.ErrorHandling";
     static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
     static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
+    static final String PRINT_SYSTEM_NAMES_OPTION = "jmri.jmrit.logixng.SystemNames";
 
     JTextArea _textContent;
 
@@ -805,6 +806,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             _printTreeSettings._printErrorHandling = prefMgr.getSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION);
             _printTreeSettings._printNotConnectedSockets = prefMgr.getSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION);
             _printTreeSettings._printLocalVariables = prefMgr.getSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION);
+            _printTreeSettings._printSystemNames = prefMgr.getSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION);
         });
     }
 
@@ -987,6 +989,19 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
         });
         checkBoxPanel.add(printLocalVariables);
+
+        JCheckBox printSystemNames = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintSystemNames"));
+        printSystemNames.setSelected(_printTreeSettings._printSystemNames);
+        printSystemNames.addChangeListener((event) -> {
+            if (_printTreeSettings._printSystemNames != printSystemNames.isSelected()) {
+                _printTreeSettings._printSystemNames = printSystemNames.isSelected();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION, printSystemNames.isSelected());
+                });
+                updateBrowserText();
+            }
+        });
+        checkBoxPanel.add(printSystemNames);
 
         return checkBoxPanel;
     }

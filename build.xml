@@ -237,10 +237,10 @@
         <pathelement location="${libdir}/junit-jupiter-params-5.6.0.jar"/>
         <pathelement location="${libdir}/opentest4j-1.2.0.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
-        <pathelement location="${libdir}/archunit-0.14.1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-api-0.14.1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-engine-0.14.1.jar"/>
-        <pathelement location="${libdir}/archunit-junit5-engine-api-0.14.1.jar"/>
+        <pathelement location="${libdir}/archunit-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-api-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-1.0.0-rc1.jar"/>
+        <pathelement location="${libdir}/archunit-junit5-engine-api-1.0.0-rc1.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
@@ -1709,7 +1709,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
-            <jvmarg value="-Xmx3000m"/> <!-- needs to cover ArchUnit test run under coverage -->
+            <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
         </java>
