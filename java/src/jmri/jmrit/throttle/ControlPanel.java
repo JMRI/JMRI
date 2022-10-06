@@ -15,7 +15,9 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
-import jmri.util.swing.*;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
@@ -1475,6 +1477,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         public void mousePressed(JmriMouseEvent e) {
             if (e.getButton() == JmriMouseEvent.BUTTON1) {
                 JSlider sourceSlider = (JSlider) e.getSource();
+                if (!sourceSlider.isEnabled()) {
+                    return;
+                }
                 BasicSliderUI ui = (BasicSliderUI) sourceSlider.getUI();
                 int value;
                 if (sourceSlider.getOrientation() == JSlider.VERTICAL) {
