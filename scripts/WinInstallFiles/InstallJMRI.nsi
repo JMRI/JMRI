@@ -381,7 +381,7 @@ SetCompressor /SOLID /FINAL lzma
 !include "WordFunc.nsh" ; add header for word manipulation
 !insertmacro VersionCompare ; add function to compare versions
 
-;-- form https://nsis.sourceforge.io/GetInQuotes:_Get_string_from_between_quotes
+;-- from https://nsis.sourceforge.io/GetInQuotes:_Get_string_from_between_quotes
 Function GetInQuotes
 Exch $R0
 Push $R1
@@ -1139,17 +1139,8 @@ Function CheckJRE
 
   ; -- Read from host machine registry
   JRESearch:
-    IntOp $JREINSTALLCOUNT $JREINSTALLCOUNT + 1
-    ClearErrors
-  ;--check directory for jre
-  ;--Dont think we can check this d
-  ; strCpy $R1 "$EXEDIR\jre"
-  ; DetailPrint "Checking local path [$R1\bin\$JAVAEXE]"
-  ; IfFileExists  "$R1\bin\$JAVAEXE" 0 JRESearchNoLocal
-  ;    StrCpy $UseDefJava "0"
-  ;    DetailPrint "Using Local  $R1"
-  ;    Goto JRECheck
-  ; JRESearchNoLocal:
+        IntOp $JREINSTALLCOUNT $JREINSTALLCOUNT + 1
+        ClearErrors
         DetailPrint "Checking default java first"
         ; -- Check default java
         ClearErrors
