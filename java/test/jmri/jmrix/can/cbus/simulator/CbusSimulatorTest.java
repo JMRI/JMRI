@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.simulator;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusTrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -29,6 +31,11 @@ public class CbusSimulatorTest {
         Assert.assertNotNull("cs get ", t.getCS(0));
        //  Assert.assertNotNull("nd get ", t.getNd(0));
         Assert.assertNotNull("ev get ", t.getEv(0));
+        
+        t.dispose();
+        Assertions.assertEquals(0, t._csArr.size());
+        Assertions.assertEquals(0, t._csArr.size());
+        Assertions.assertEquals(0, t._csArr.size());
     }
     
     @Test
@@ -40,12 +47,23 @@ public class CbusSimulatorTest {
         Assert.assertTrue("cs 2 ", t.getNumCS() == 2);
         Assert.assertTrue("ev 2 ", t.getNumEv() == 2);        
         
+        t.dispose();
+        Assertions.assertEquals(0, t._csArr.size());
+        Assertions.assertEquals(0, t._csArr.size());
+        Assertions.assertEquals(0, t._csArr.size());
     }
 
+    private CanSystemConnectionMemo memo;
+    // private CbusTrafficControllerScaffold tcis;
+    
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        t = new CbusSimulator(null);
+        memo = new CanSystemConnectionMemo();
+        // tcis = new CbusTrafficControllerScaffold(memo);
+        // memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        t = memo.get(CbusSimulator.class);
     }
 
     @AfterEach
@@ -53,6 +71,11 @@ public class CbusSimulatorTest {
         Assertions.assertNotNull(t);
         t.dispose();
         t = null;
+        // Assertions.assertNotNull(tcis);
+        // tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 
