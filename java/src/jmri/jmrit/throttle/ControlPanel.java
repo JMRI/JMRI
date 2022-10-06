@@ -15,8 +15,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
-import jmri.util.swing.JmriMouseAdapter;
-import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.*;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.transcoder.*;
@@ -697,13 +696,13 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setOpaque(false);
         speedSlider.setValue(0);
         speedSlider.setFocusable(false);
-        speedSlider.addMouseListener(new JSliderPreciseMouseAdapter());
+        speedSlider.addMouseListener(JmriMouseListener.adapt(new JSliderPreciseMouseAdapter()));
 
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setOpaque(false);
         speedSliderContinuous.setFocusable(false);
-        speedSliderContinuous.addMouseListener(new JSliderPreciseMouseAdapter());        
+        speedSliderContinuous.addMouseListener(JmriMouseListener.adapt(new JSliderPreciseMouseAdapter()));
 
         speedSpinner = new JSpinner();
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
@@ -1470,11 +1469,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
    
     // this mouse adapter makes sure to move the slider cursor to precisely where the user clicks
     // see https://jmri-developers.groups.io/g/jmri/message/7874
-    private static class JSliderPreciseMouseAdapter extends java.awt.event.MouseAdapter {
+    private static class JSliderPreciseMouseAdapter extends JmriMouseAdapter {
 
         @Override
-        public void mousePressed(java.awt.event.MouseEvent e) {
-            if (e.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+        public void mousePressed(JmriMouseEvent e) {
+            if (e.getButton() == JmriMouseEvent.BUTTON1) {
                 JSlider sourceSlider = (JSlider) e.getSource();
                 BasicSliderUI ui = (BasicSliderUI) sourceSlider.getUI();
                 int value;
