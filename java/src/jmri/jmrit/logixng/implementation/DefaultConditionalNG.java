@@ -163,10 +163,13 @@ public class DefaultConditionalNG extends AbstractBase
                 log.info("ConditionalNG {} was aborted during execute: {}",
                         conditionalNG.getSystemName(), e.getCause(), e.getCause());
             } catch (AbortConditionalNGExecutionException e) {
-//                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
-//                        conditionalNG.getSystemName(), e, e);
-                log.warn("ConditionalNG {} was aborted during execute: {}",
-                        conditionalNG.getSystemName(), e.getCause(), e.getCause());
+                if (InstanceManager.getDefault(LogixNGPreferences.class).getShowSystemNameInException()) {
+                    log.warn("ConditionalNG {} was aborted during execute in the item {}: {}",
+                            conditionalNG.getSystemName(), e.getMaleSocket().getSystemName(), e.getCause(), e.getCause());
+                } else {
+                    log.warn("ConditionalNG {} was aborted during execute: {}",
+                            conditionalNG.getSystemName(), e.getCause(), e.getCause());
+                }
             } catch (JmriException | RuntimeException e) {
 //                LoggingUtil.warnOnce(log, "ConditionalNG {} got an exception during execute: {}",
 //                        conditionalNG.getSystemName(), e, e);
