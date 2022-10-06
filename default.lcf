@@ -95,9 +95,12 @@ log4j.category.org.jdom2.transform=SEVERE
 # Turn off logging for Java JMDNS; if logs SEVERE and WARNING excessively
 # log4j.category.javax.jmdns=OFF
 log4j.category.javax.jmdns.impl.DNSIncoming=ERROR
+log4j.category.javax.jmdns.impl.DNSRecord=ERROR
 log4j.category.javax.jmdns.impl.constants.DNSRecordClass=ERROR
 log4j.category.javax.jmdns.impl.constants.DNSRecordType=ERROR
 log4j.category.javax.jmdns.impl.DNSIncoming$MessageInputStream=ERROR
+log4j.category.javax.jmdns.impl.JmDNSImpl=ERROR
+log4j.category.javax.jmdns.impl.tasks.state.DNSStateTask=ERROR
 
 # Examples of changing priority of specific categories (classes, packages):
 #
