@@ -8,6 +8,7 @@ import jmri.*;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -178,6 +179,7 @@ public class CbusConfigurationManagerTest {
         toReturn.add(LightManager.class);
         toReturn.add(CabSignalManager.class);
         toReturn.add(CbusPredefinedMeters.class);
+        toReturn.add(CbusSimulator.class);
         return toReturn;
     }
     
@@ -196,6 +198,22 @@ public class CbusConfigurationManagerTest {
         assertNull(memo.getFromMap(classToTest));
         assertEquals(0, tcis.numListeners(),"All listeners removed " + tcis.getListeners());
     
+    }
+
+    @Test
+    public void testGetDisposeSimulator() {
+        
+        CbusSimulator simA = memo.getFromMap(CbusSimulator.class);
+        assertNull(simA);
+        CbusSimulator sim = memo.get(CbusSimulator.class);
+        assertNotNull(sim);
+        simA = memo.getFromMap(CbusSimulator.class);
+        assertNotNull(simA);
+        assertTrue(sim == simA);
+        
+        t.disposeOf(sim, CbusSimulator.class);
+        simA = memo.getFromMap(CbusSimulator.class);
+        assertNull(simA);
     }
 
     private CanSystemConnectionMemo memo;

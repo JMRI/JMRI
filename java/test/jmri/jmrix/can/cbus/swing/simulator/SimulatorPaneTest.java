@@ -80,6 +80,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
 
         panel = new SimulatorPane();
     }

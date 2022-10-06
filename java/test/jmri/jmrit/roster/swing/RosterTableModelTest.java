@@ -42,21 +42,21 @@ public class RosterTableModelTest {
         RosterTableModel t = new RosterTableModel();
 
         Assert.assertEquals("id 1", t.getValueAt(0, RosterTableModel.IDCOL));
-        Assert.assertEquals(12, t.getValueAt(0, RosterTableModel.ADDRESSCOL));
+        Assert.assertEquals(12, (int)t.getValueAt(0, RosterTableModel.ADDRESSCOL));
         Assert.assertEquals("33", t.getValueAt(0, RosterTableModel.DECODERCOL));
 
         Assert.assertEquals("id 2", t.getValueAt(1, RosterTableModel.IDCOL));
-        Assert.assertEquals(13, t.getValueAt(1, RosterTableModel.ADDRESSCOL));
+        Assert.assertEquals(13,(int) t.getValueAt(1, RosterTableModel.ADDRESSCOL));
         Assert.assertEquals("34", t.getValueAt(1, RosterTableModel.DECODERCOL));
 
         Assert.assertEquals("id 3", t.getValueAt(2, RosterTableModel.IDCOL));
-        Assert.assertEquals(14, t.getValueAt(2, RosterTableModel.ADDRESSCOL));
+        Assert.assertEquals(14, (int)t.getValueAt(2, RosterTableModel.ADDRESSCOL));
         Assert.assertEquals("35", t.getValueAt(2, RosterTableModel.DECODERCOL));
     }
 
     // create a standard test roster
     static int NENTRIES = 3;
-    static int NKEYS = 4;
+    // static int NKEYS = 4;
 
     @BeforeEach
     public void setUp() {

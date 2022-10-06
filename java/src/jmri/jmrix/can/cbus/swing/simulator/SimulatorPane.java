@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
 // import org.slf4j.Logger;
@@ -37,17 +39,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
      * {@inheritDoc}
      */
     @Override
-    public void initComponents(CanSystemConnectionMemo memo) {
+    public void initComponents(@Nonnull CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        
-        // todo - run on memo, not instance
-        _sim = jmri.InstanceManager.getNullableDefault(CbusSimulator.class);
-         
-        if ( _sim == null ) {
-            jmri.util.ThreadingUtil.runOnLayout( ()->{
-                _sim = new CbusSimulator(memo);
-            });
-        }
+        _sim = memo.get(CbusSimulator.class);
         init();
     }
 
@@ -178,8 +172,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public void dispose() {
         super.dispose();
-        if ( _disposeSimOnWindowClose ) {
-            _sim.dispose();
+        if ( memo != null && _disposeSimOnWindowClose ) {
+            ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+                .disposeOf(_sim, CbusSimulator.class);
         }
     }
 
