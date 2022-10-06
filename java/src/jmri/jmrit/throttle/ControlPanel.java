@@ -1470,11 +1470,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
    
     // this mouse adapter makes sure to move the slider cursor to precisely where the user clicks
     // see https://jmri-developers.groups.io/g/jmri/message/7874
-    private static class JSliderPreciseMouseAdapter extends MouseAdapter {
+    private static class JSliderPreciseMouseAdapter extends java.awt.event.MouseAdapter {
 
         @Override
-        public void mousePressed(MouseEvent e) {
-            if (e.getButton() == MouseEvent.BUTTON1) {
+        public void mousePressed(java.awt.event.MouseEvent e) {
+            if (e.getButton() == java.awt.event.MouseEvent.BUTTON1) {
                 JSlider sourceSlider = (JSlider) e.getSource();
                 BasicSliderUI ui = (BasicSliderUI) sourceSlider.getUI();
                 int value;
