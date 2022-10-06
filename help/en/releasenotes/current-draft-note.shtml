@@ -21,7 +21,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Improved Node Manager and Event Table support for multiple CBUS Connections.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -116,8 +116,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated OpenLCB library to include PR #205. Now properly
-                    sends AMD in response to relevant AME.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -137,8 +136,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li>Improved display of programmer availability in PanelPro Tools menu.</li>
-                <li>Fixed timeout warnings during programming.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -153,9 +151,7 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-              <li>Fixed bugs in Daisy II (model 65200) definition</li>
-              <li>New definition for Daisy II model 65210. Uses LNCV programming just as 65200</li>
-              <li>Daisy II family renamed to "Command Station" (was "Handheld Throttle")</li>
+                <li></li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -278,11 +274,6 @@
                 <li></li>
             </ul>
 
-        <h4>Piko</h4>
-        <ul>
-          <li>Fixed Piko_SmartDecoder_4.1_Sound decoder definition</li>
-        </ul>
-
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -366,7 +357,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Single CV programmer now checks for availability of global programmer.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -378,11 +369,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Always on top option for AutoTrainsFrame</li>
-             <li>Cancel timers on stop immediate</li>
-             <li>Add EStop to Transit Action</li>
-             <li>correct stop resume in ready state</li>
-             <li>On Restart, reset current block and section</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -417,59 +404,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Keyboard support has been added to the ConditionalNG editor.
-            <ul>
-              <li>
-                When <i>Preferences -> LogixNG</i> option <i>Highlight row in
-                ConditionalNG editor</i> is enabled, use the arrow keys to move to the
-                desired row and then use one of the shortcut keys.
-              </li>
-              <li>
-                Except for the N shortcut key, the other shortcut keys are available in
-                the right click popup menu.
-              </li>
-              <li>Shortcut keys:
-                <ul>
-                  <li>Ctrl + N: Create new</li>
-                  <li>Ctrl + E: Edit</li>
-                  <li>Ctrl + R: Remove</li>
-                  <li>Ctrl + X: Cut</li>
-                  <li>Ctrl + C: Copy</li>
-                  <li>Ctrl + V: Paste</li>
-                </ul>
-              </li>
-              <li>
-                For macOS, use Cmd instead of Ctrl.
-              </li>
-            </ul>
-          </li>
-          <li>
-            LogixNG has now two new options that work together:
-            <ul>
-              <li><i>Preferences -> LogixNG</i> has the option
-              <i>Show system name in exceptions</i>. If it's checked, the system name
-              of an action/expression will be shown in the error message in the log if
-              an error occurs and <i>Abort</i> is selected in the error dialog.</li>
-              <li><i>LogixNG Browse</i> has the option <i>Print system names</i>. If
-              this option is checked, the system names of actions and expressions is
-              shown in the Browse window.</li>
-            </ul>
-            These two options together makes it easier to find in which action or
-            expression the error occurs.</li>
-            <li>The <i>If Then Else</i> action has two new options that's relevant when
-            there's more that one <i>If</i> socket.
-            <ul>
-              <li><i>Evaluate all expressions</i> - evaluates all the <i>If</i> sockets before executing any action.</i>
-              <li><i>Evaluate needed expressions</i> - evaluates the <i>If</i> sockets until one expression returns True.</i>
-            </ul>
-            Note that when <i>If Then Else</i> got support for <i>Else_If</i> statements in JMRI 5.1.3, it worked as
-            <i>Evaluate needed expressions</i> it has now changed to <i>Evaluate all expressions</i>, unless the user changes
-            it. For most cases, this will be just fine, but there might be rare cases where this matters.
-          </li>
           <li></li>
-          <li>The new action <i>Shut down task</i> executes an action when JMRI shuts down.</li>
-          <li>The new LocoNet action <i>Set speed zero</i> sets the speed to zero for all the
-          LocoNet slots.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -515,7 +450,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li>Purple on, off icons added to USS sensor directory.</li>
+            <li></li>
         </ul>
 
     <h3>Roster</h3>
@@ -645,6 +580,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Updated File Chooser to enable directories to be selectable.</li>
+            <li></li>
         </ul>
 
