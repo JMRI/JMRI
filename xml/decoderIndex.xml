@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.1.3plus+jake+20220913T2203Z+R41d25722f5 on Tue Sep 13 18:04:22 EDT 2022-->
-  <decoderIndex version="29">
+  <!--Written by JMRI version 5.1.4plus+jake+20221006T2026Z+R76e3265b52 on Thu Oct 06 16:27:40 EDT 2022-->
+  <decoderIndex version="31">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -39341,10 +39341,16 @@
           <size length="22" width="12.5" height="2.5" units="mm" />
         </model>
       </family>
-      <family name="Manual Throttle" mfg="Uhlenbrock Elektronik" type="Command Station" file="Uhlenbrock_DaisyII.xml">
-        <model model="Daisy II" productID="6520" maxTotalCurrent="400mA" formFactor="Handheld" comment="3.5A Multiprotocol Booster">
+      <family name="Command Station" mfg="Uhlenbrock Elektronik" type="Command Station" file="Uhlenbrock_DaisyII.xml">
+        <model model="Daisy II 65200" productID="6520" maxTotalCurrent="2000mA" formFactor="Stationary" comment="Daisy II LocoNet Digitalzentrale/Booster">
           <versionCV />
-          <size length="200" width="60" height="40" units="mm" />
+          <size length="104" width="58" height="33" units="mm" />
+        </model>
+      </family>
+      <family name="Command Station" mfg="Uhlenbrock Elektronik" type="Command Station" file="Uhlenbrock_DaisyII65210.xml">
+        <model model="Daisy II 65210" productID="6521" maxTotalCurrent="2200mA" formFactor="Stationary" comment="Daisy II LocoNet Digitalzentrale/Booster">
+          <versionCV />
+          <size length="104" width="58" height="33" units="mm" />
         </model>
       </family>
       <family name="Wireless" mfg="Uhlenbrock Elektronik" type="stationary" file="Uhlenbrock_FunkMaster66400.xml">
