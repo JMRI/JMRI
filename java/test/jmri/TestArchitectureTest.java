@@ -4,7 +4,8 @@ import org.junit.jupiter.api.*;
 
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noMethods;
+
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
 
 /**
  * Check the architecture of the JMRI library Tests 
@@ -43,7 +44,36 @@ public class TestArchitectureTest {
      * Prevent @RepeatedTest annotations from being accidentally merged.
      */
     @ArchTest
-    public static final ArchRule rule = noMethods().should()
+    public static final ArchRule repeatedTestRule = noMethods().should()
         .beAnnotatedWith(org.junit.jupiter.api.RepeatedTest.class);
 
+    /**
+     * Please use org.junit.jupiter.api.Test
+     */
+    @ArchTest
+    public static final ArchRule junit4TestRule = noClasses().that()
+        .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
+
+    /**
+     * Please use org.junit.jupiter.api.BeforeEach
+     */
+    @ArchTest
+    public static final ArchRule junit4BeforeRule = noClasses().that()
+        .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Before");
+    
+    /**
+     * Please use org.junit.jupiter.api.AfterEach
+     */
+    @ArchTest
+    public static final ArchRule junit4AfterRule = noClasses().that()
+        .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
+        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
 }
