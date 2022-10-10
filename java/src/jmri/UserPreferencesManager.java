@@ -6,6 +6,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 /**
  * Interface for the User Preferences Manager.
  * <p>
@@ -153,6 +156,7 @@ public interface UserPreferencesManager {
      * @param n        the position in an array
      * @return the name of the preference or null if non-existent
      */
+    @CheckForNull
     public String getPreferenceItemName(String strClass, int n);
 
     /**
@@ -162,6 +166,7 @@ public interface UserPreferencesManager {
      * @param item     the name of the item
      * @return the description of the preference
      */
+    @CheckForNull
     public String getPreferenceItemDescription(String strClass, String item);
 
     /**
@@ -268,6 +273,7 @@ public interface UserPreferencesManager {
      * @param comboBoxName the combo box name
      * @return the selected value
      */
+    @CheckForNull
     public String getComboBoxLastSelection(String comboBoxName);
 
     /**
@@ -315,6 +321,7 @@ public interface UserPreferencesManager {
      * @param strClass the class name
      * @return the description
      */
+    @Nonnull
     public String getClassDescription(String strClass);
 
     /**
@@ -322,6 +329,7 @@ public interface UserPreferencesManager {
      *
      * @return the list of class names
      */
+    @Nonnull
     public ArrayList<String> getPreferencesClasses();
 
     /**
