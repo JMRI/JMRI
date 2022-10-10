@@ -50,36 +50,39 @@ class processPanels():
     controlSensors.append([7, 'setDispatchSensor', 'Run Dispatch', 0, 2])
     controlSensors.append([8, 'setRouteSensor', 'Setup Route', 0, 2])
     controlSensors.append([9, 'setStoppingDistanceSensor', 'Set Stopping Length', 0, 2])
+    controlSensors.append([10, 'setStationWaitTimeSensor', 'Set Station Wait Time', 0, 2])
 
-    controlSensors.append([10, 'runRouteSensor', 'Run Route', 10, 5])
-    controlSensors.append([11, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
-    controlSensors.append([12, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
-    controlSensors.append([13, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
-    controlSensors.append([14, 'showClockSensor', 'Show Analog Clock', 10, 5])
-    controlSensors.append([15, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
+    controlSensors.append([11, 'runRouteSensor', 'Run Route', 10, 5])
+    controlSensors.append([12, 'editRoutesSensor', 'View/Edit Routes', 10, 5])
+    controlSensors.append([13, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5])
+    controlSensors.append([14, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5])
+    controlSensors.append([15, 'showClockSensor', 'Show Analog Clock', 10, 5])
+    controlSensors.append([16, 'startSchedulerSensor', 'Start Scheduler', 10, 5])
 
     def __init__(self):
         self.define_DisplayProgress_global()
 
+
         if self.perform_initial_checks():
+            self.dispatcher_panel_needs_updating = self.panel_needs_updating() # needs to be done before self.addSensors()
             self.show_progress(0)
             self.removeIconsAndLabels()
             self.removeLogix()
             self.removeTransits()
             self.removeSections()
             self.removeSML()
-            self.show_progress(30)
+            self.show_progress(20)
             self.removeSensors()
-            self.show_progress(60)
+            self.show_progress(40)
 
             self.get_list_of_stopping_points()
             self.addSensors()
             self.generateSML()
-            self.show_progress(80)
+            self.show_progress(60)
             self.generateSections()
             self.show_progress(90)
             self.addLogix()
-            self.addIcons()
+            self.addIcons()     #uses self.dispatcher_panel_needs_updating
             self.end_show_progress()
             #msg = 'The JMRI tables and panels have been udpated to support the Dispatcher System\nA store is recommended.'
             #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
@@ -95,6 +98,23 @@ class processPanels():
     def end_show_progress(self):
         global dpg
         dpg.killLabel()
+
+    def panel_needs_updating(self):
+        panel_version = 0
+        if self.editorManager.get("Dispatcher System") is not None:
+            contents =  self.editorManager.get("Dispatcher System").getContents()
+            for c in contents:
+                print c.getNameString()
+                if "setStationWaitTimeSensor" in c.getNameString():
+                    panel_version = 1
+
+        # we will check later to see whether the new_version == panel_version and if so not update the panel
+        new_version = 1  #version of panel to be installed
+        if panel_version < new_version:
+            return True
+        else:
+            return False
+
 
     # **************************************************
     # perform initial checks
@@ -475,12 +495,13 @@ class processPanels():
 
         deleteList = []     # Prevent concurrent modification
         for sensor in sensors.getNamedBeanSet():
+            systemName = sensor.getSystemName()
             userName = sensor.getUserName()
-            if userName is not None:
-                if 'MoveTo' in userName or 'MoveInProgress' in userName:
-                    deleteList.append(sensor)
-                elif userName in controlName:
-                    deleteList.append(sensor)
+            #check for 'MoveTo' and 'MoveInProgress' sensors
+            if 'DSCT:' in systemName or 'DSMP:' in systemName or 'DSMP:' in systemName:   #use system name in case some sensors existed without user names
+                deleteList.append(sensor)
+            elif userName is not None and userName in controlName:
+                deleteList.append(sensor)
 
         for item in deleteList:
             #print 'remove sensor {}'.format(item.getDisplayName())
@@ -514,10 +535,10 @@ class processPanels():
                 index += 1
                 moveto = sensors.provideSensor('IS:DSMT:' + str(index))
                 if moveto is not None:
-                    moveto.setUserName('MoveTo' + block.getDisplayName() + '_stored')
+                    moveto.setUserName('MoveTo' + block.getDisplayName().replace(" ","_") + '_stored')
                 inproc = sensors.provideSensor('IS:DSMP:' + str(index))
                 if inproc is not None:
-                    inproc.setUserName('MoveInProgress' + block.getDisplayName())
+                    inproc.setUserName('MoveInProgress' + block.getDisplayName().replace(" ","_"))
 
     # **************************************************
     # generate SML
@@ -533,6 +554,7 @@ class processPanels():
     def generateSections(self):
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         smlManager.generateSection()
+        self.show_progress(80)
         sections.generateBlockSections()
 
     # **************************************************
@@ -563,7 +585,8 @@ class processPanels():
 
             self.addStopIcons(panel)
             self.addOccupancyIconsAndLabels(panel)
-            self.addControlIconsAndLabels(panel)
+        #add control icons in separate editor panel
+        self.addControlIconsAndLabels()
 
     def getBlockCenterPoints(self, panel):
         self.blockPoints.clear()
@@ -621,11 +644,11 @@ class processPanels():
                 x = self.blockPoints[blockName].getX()
                 y = self.blockPoints[blockName].getY()
 
-                mtSensor = sensors.getSensor('MoveTo' + blockName + '_stored')
+                mtSensor = sensors.getSensor('MoveTo' + blockName.replace(" ","_") + '_stored')
                 if mtSensor is not None:
                     self.addMarkerIcon(panel, mtSensor, blockName, x, y)
 
-                mpSensor = sensors.getSensor('MoveInProgress' + blockName)
+                mpSensor = sensors.getSensor('MoveInProgress' + blockName.replace(" ","_"))
                 if mpSensor is not None:
                     self.addSmallIcon(panel, mpSensor.getDisplayName(), x - 10, y)
 
@@ -648,14 +671,15 @@ class processPanels():
     # **************************************************
     # control sensor icons and label
     # **************************************************
-    def addControlIconsAndLabels(self, panel):
-        if self.editorManager.get("Dispatcher System") is not None:
+    def addControlIconsAndLabels(self):
+        if not self.dispatcher_panel_needs_updating:
+            # do not replace control icon panel "Dispatcher System"
             return
-
+        if self.editorManager.get("Dispatcher System") is not None:
+            self.editorManager.get("Dispatcher System").dispose()
         # Create the Dispatcher System control panel
         panel = jmri.jmrit.display.layoutEditor.LayoutEditor("Dispatcher System")
         self.editorManager.add(panel)
-
         for control in self.controlSensors:
             sensor = sensors.getSensor('IS:DSCT:' + str(control[0]))
             if sensor is not None:
@@ -666,7 +690,7 @@ class processPanels():
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 400)
+        panel.setSize(300, 450)
         panel.setAllEditable(False)
         panel.setVisible(True)
 

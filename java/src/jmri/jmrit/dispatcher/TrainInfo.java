@@ -79,6 +79,8 @@ public class TrainInfo {
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
 
+    private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
+
 
     //
     // Access methods for manual and automatic instance variables
@@ -559,5 +561,11 @@ public class TrainInfo {
 
     public float getMaxTrainLength() {
         return maxTrainLength;
+    }
+
+    public void setWaitTime(float f) { waitTime = f; }
+
+    public float getWaitTime() {
+        return waitTime;
     }
 }

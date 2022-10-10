@@ -15,13 +15,12 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    logLevel = 0
+    logLevel = 1
 
     def __init__(self):
         pass
 
     def run_transits(self, filename, backupfile, backupfilename):
-        if self.logLevel > 1: print "will store new panel in filename" , filename_run
         #self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
 
         self.process_panels()
@@ -150,11 +149,11 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         for section in sections:
             if self.logLevel > 1: print "mast", signal_mast.getUserName() , "section",section.getUserName()
             section_name = str(section.getUserName())
-            test = signal_mast_name in section_name
+            test = self.signal_mast_name_in_section_name(signal_mast_name, section_name)
 
 
             if self.logLevel > 1: print test
-            if signal_mast_name in section_name:
+            if self.signal_mast_name_in_section_name(signal_mast_name, section_name):
                 found_section_name = section_name
                 if self.logLevel > 0: print "     signal_mast_name", signal_mast_name, "section_name", section_name, "found_section", found_section_name
                 break
@@ -190,6 +189,25 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             first_signal_mast = None
         return first_signal_mast
 
+    def signal_mast_name_in_section_name(self, signal_mast_name, section_name):
+        #need to check whether the signal_mast_name is one of the masts comprising the section_name
+        # section_nam e is of the form [signal_mast_name1 : signal_mast_name2]
+
+        #split the section_name into two signal_masts
+
+        if section_name.find(":") != -1:
+            # get the two signal masts
+            signal_masts = section_name.split(":")
+            if signal_mast_name == signal_masts[0]:
+                return True
+            elif signal_mast_name == signal_masts[1]:
+                return True
+            else:
+                return False
+            if self.logLevel > 0: print "signal_masts",signal_masts,"signal_mast_name",signal_mast_name
+        else:
+            return None
+                                                                           
     def get_signal_masts(self, layout_block, signal_mast_list_all):
         signal_masts_associated_with_current_block = []
         block = layout_block.getBlock()
@@ -218,14 +236,14 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "&&&& producing signal mast list for  &&&&", e.getItem("path_name")
             if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
             signal_mast_list = java.util.ArrayList()
-            signal_mast_list_all = java.util.ArrayList()   #all the signal masts, possibly in a jumbled list, due to them beig appended hapazardly
+            signal_mast_list_all = java.util.ArrayList()   #all the signal masts, possibly in a jumbled list, due to them being appended haphazardly
             signal_mast_list_view = []
             signal_mast_list_views = java.util.ArrayList()
             panelNo = 0
             no_panels_used = 0
             for panel in layoutPanels:
                 panelNo += 1
-                if self.logLevel > 0: print "*****panel" ,panelNo,"**********"
+                if self.logLevel > 0: print "*****panel" ,panelNo,"**********panelName", panel.getLayoutName()
                 # 1) get the signal mast list excluding the last signal mast
 
                 #if self.logLevel > 1: print "stopping",g.dict_path_stopping
@@ -265,6 +283,17 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "signal_mast_list_all", signal_mast_list_all
             if self.logLevel > 0: print "signal_mast_list_all", [s.getUserName() for s in signal_mast_list_all]
             if self.logLevel > 0: print "no_panels_used", no_panels_used
+            
+            if signal_mast_list_all.size() == 0 :
+                msg = "there must be signal masts between and beyond each pair of stopping points. "
+                msg = msg + "please insert a signal mast, or remove a station for the station pair: "
+                msg = msg + e.getItem("first_block_name") + " : " + e.getItem("last_block_name")
+               
+                print msg
+                
+                dpg=DisplayProgress_global()
+                dpg.resize()
+                dpg.Update(msg)
 
             if no_panels_used > 1:
 
@@ -672,7 +701,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             test = signal_mast_name in section_name
             if self.logLevel > 1: print "signal_mast_name", signal_mast_name
             if self.logLevel > 1: print test
-            if signal_mast_name in section_name:
+            if self.signal_mast_name_in_section_name(signal_mast_name, section_name):
                 found_section_name = section_name
                 if self.logLevel > 0: print "found_section", found_section_name
                 break
@@ -1408,3 +1437,6 @@ class DisplayProgress:
     def killLabel(self):
         self.frame1.setVisible(False)
         self.frame1 = None
+        
+    def resize(self):
+        self.frame1.size=(1300, 50)

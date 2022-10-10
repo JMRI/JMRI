@@ -389,7 +389,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
         if self.logLevel > 0: print "train to remove", train_name
         # for train in trains_allocated:
-        #     if self.logLevel > 0: print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
+        #     if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
         #     if train == train_name:
         #         trains_allocated.remove(train)
         for train in trains_dispatched:
@@ -516,8 +516,10 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "end handle"
         #self.waitMsec(20000)
         return False
+
     def get_route_dispatch_buttons(self):
-        self.setuproute_or_rundispatch_or_setstoppingdistance_sensors = [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor", "setRouteSensor", "setStoppingDistanceSensor"]]
+        self.setuproute_or_rundispatch_or_setstoppingdistance_sensors = \
+            [sensors.getSensor(sensorName) for sensorName in ["setDispatchSensor", "setRouteSensor", "setStoppingDistanceSensor", "setStationWaitTime"]]
         #self.route_dispatch_states = [self.check_sensor_state(rd_sensor) for rd_sensor in self.setup_route_or_run_dispatch_sensors]
         pass
 
@@ -604,6 +606,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         set_route_sensor = sensors.getSensor("setRouteSensor")
         run_route_sensor = sensors.getSensor("runRouteSensor")
         modify_stopping_length_sensor = sensors.getSensor("setStoppingDistanceSensor")
+        modify_station_wait_time_sensor = sensors.getSensor("setStationWaitTimeSensor")
         if self.logLevel > 0: print "set_route_sensor.getKnownState()",set_route_sensor.getKnownState(),
         self.reset_buttons(button_sensors_to_watch_JavaList)
         if set_route_sensor.getKnownState() == ACTIVE:
@@ -624,10 +627,16 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 #cancelled: reset all buttons so we check all of them
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
+        elif modify_station_wait_time_sensor.getKnownState() == ACTIVE:
+            if self.modify_individual_station_wait_time(sensor_changed, button_sensor_name, button_station_name):
+                sensor_changed.setKnownState(INACTIVE)
+            else:
+                #cancelled: reset all buttons so we check all of them
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
 
         else:
-            title = "station bunnon error"
-            msg = "select one of 'Run Dispatch', 'Setup Route', 'Set Stopping Length' \nfor the station buttons to have effect"
+            title = "station button error"
+            msg = "select one of 'Run Dispatch', 'Setup Route', 'Set Stopping Length', 'Set Station Wait Time' \nfor the station buttons to have effect"
             self.od.displayMessage(msg,title)
             pass
 
@@ -860,6 +869,119 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         return True
 
+    def modify_individual_station_wait_time(self, sensor_changed, button_sensor_name, button_station_name):
+        msg = "selected station " + button_station_name + ". \nSelect the next station to modify the station wait time?"
+        title = "Select next Station"
+
+        opt1 = "Select next station"
+        opt2 = "Cancel station wait time modification"
+
+        s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+        if self.od.CLOSED_OPTION == True:
+            return False
+        if s == opt2:
+            return False
+        if self.logLevel > 0: print "button_station_name", button_station_name
+        if self.logLevel > 0: print "button_sensor_name", button_sensor_name
+        #set name of route
+        if self.logLevel > 0: print ("in modify station wait time")
+
+        # #modify stopping length
+        # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        # route = RouteManager.newRoute("temp_name")
+        #
+        # LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+        # #if self.logLevel > 0: print "button_station_name", button_station_name
+        # location = LocationManager.newLocation(button_station_name)
+        first_station = button_station_name
+        last_station = first_station
+        # route.addLocation(location)
+        self.button_sensors_to_watch = copy.copy(self.button_sensors)
+        self.button_sensors_to_watch.remove(sensor_changed)
+        complete = False
+        while complete == False:
+            if self.logLevel > 0: print ("In loop")
+            button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
+            self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
+            sensor_changed = [sensor for sensor in self.button_sensors_to_watch if sensor.getKnownState() == ACTIVE][0]
+            button_sensor_name = sensor_changed.getUserName()
+            button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
+
+            # location = LocationManager.newLocation(button_station_name)
+            # route.addLocation(location)
+            last_station = button_station_name
+
+            #get the transit corresponding to first_station last_station
+
+            for e in g.g_express.edgeSet():
+                from_station_name = g.g_stopping.getEdgeSource(e)
+                to_station_name = g.g_stopping.getEdgeTarget(e)
+                if from_station_name == first_station and to_station_name == last_station:
+                    found_edge = e
+                    break
+            filename_fwd = self.get_filename(found_edge, "fwd")
+            filename_rvs = self.get_filename(found_edge, "rvs")
+
+            msg = "selected station " + button_station_name + ". \nDo you wish to modify the station wait time ?"
+            title = "Continue selecting stations"
+
+            opt1 = "Cancel Station Wait Time modification"
+            opt2 = "Modify station wait time"
+
+            s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
+            if self.od.CLOSED_OPTION == True :
+                sensor_changed.setKnownState(INACTIVE)
+                sensors.getSensor("setStationWaitTimeSensor").setKnownState(INACTIVE)
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
+                return False
+            elif s == opt1:
+                sensor_changed.setKnownState(INACTIVE)
+                sensors.getSensor("setStationWaitTimeSensor").setKnownState(INACTIVE)
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
+                return False
+            if s == opt2:
+                sensor_changed.setKnownState(INACTIVE)
+                complete = True
+            Firstloop = False
+            self.get_buttons()
+            self.button_sensors_to_watch = copy.copy(self.button_sensors)
+            self.button_sensors_to_watch.remove(sensor_changed)
+            sensor_changed.setKnownState(INACTIVE)
+
+        #go to trhis bit when complete == True
+
+        #get traininfo and stopping fraction
+        filename_fwd = self.get_filename(found_edge, "fwd")
+        trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
+        station_wait_time = trainInfo_fwd.getWaitTime()
+
+        default_value = round(station_wait_time,1)
+        title = "Pause train at beginning of section"
+        msg = "Transit name: " + str(filename_fwd) + \
+              ".\nStation Wait Time is: " + str(round(station_wait_time,2)) + \
+              "\n\nEnter new station wait time in secs:"
+        new_station_wait_time = self.od.input(msg, title, default_value)
+        if new_station_wait_time == None: return
+        msg = "new Station Wait Time: "+ str(round(float(new_station_wait_time),1))
+        self.od.displayMessage(msg)
+        trainInfo_fwd.setWaitTime(float(new_station_wait_time))
+
+        #write the newtraininfo back to file
+        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_fwd, filename_fwd)
+
+        #do same with reverse
+        filename_rvs = self.get_filename(found_edge, "rvs")
+        trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
+        #stopping_fraction = trainInfo_rvs.getStopBySpeedProfileAdjust()
+        trainInfo_rvs.setWaitTime(float(new_station_wait_time))
+
+        #write the newtraininfo back to file
+        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo_rvs, filename_rvs)
+
+        if self.logLevel > 0: print "saved new station wait time", float(new_stopping_fraction)
+
+        return True
+
     def last_section_of_transit(self, trainInfo_fwd):
 
         transit_id = trainInfo_fwd.getTransitId()
@@ -891,8 +1013,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         filename = filename + "_" + suffix + ".xml"
 
         return filename
-
-
 
     def get_transit(self, transit_name):
         # print e

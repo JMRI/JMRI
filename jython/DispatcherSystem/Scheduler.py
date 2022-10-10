@@ -359,7 +359,7 @@ class RunRoute(MoveTrain):
                     if self.logLevel > 0: print "************************************moving train******************",train_to_move
                     self.move_between_stations(station_from, station_to, train_to_move, self.graph)
                     if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
-                    #end_block = blocks.getBlock(station_to)  #do following in case the block sensor is a bit dodgy - removed because train sometimes changes direction
+                    end_block = blocks.getBlock(station_to)  
                     msg = "finished move between stations station_from = " + station_from + "state of block" + str(end_block.getState())
                     if self.logLevel > 0: print "state of block" , end_block.getState()
                     title = "Information after moving"
