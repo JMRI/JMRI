@@ -278,7 +278,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         if (memo != null) {
             return (memo.getUserName() + " Send Can Frame");
         }
-        return "Send CAN Frames and LCC / OpenLCB Messages";
+        return "Send CAN Frames and OpenLCB Messages";
     }
 
     JComponent addLineLabel(String text) {

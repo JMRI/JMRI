@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 public class MonitorAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
     public MonitorAction() {
-        super("LCC / OpenLCB Monitor",
+        super(Bundle.getMessage("MonitorTitle"),
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 MonitorPane.class.getName(),
                 jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
