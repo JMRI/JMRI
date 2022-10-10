@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 public class NetworkTreeAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
     public NetworkTreeAction() {
-        super("Openlcb Network Tree",
+        super("LCC / Openlcb Network Tree",
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 NetworkTreePane.class.getName(),
                 jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));

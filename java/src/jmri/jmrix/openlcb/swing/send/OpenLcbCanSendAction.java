@@ -10,7 +10,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 public class OpenLcbCanSendAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
     public OpenLcbCanSendAction() {
-        super("Send CAN Frames and OpenLCB Messages",
+        super("Send CAN Frames and LCC / OpenLCB Messages",
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 OpenLcbCanSendPane.class.getName(),
                 jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));

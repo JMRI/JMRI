@@ -69,9 +69,12 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     @Override
     public String getTitle() {
+        if (memo != null) {
+            return (memo.getUserName() + " Monitor");
+        }
         return Bundle.getMessage("MonitorTitle");
     }
-
+    
     @Override
     protected void init() {
     }
