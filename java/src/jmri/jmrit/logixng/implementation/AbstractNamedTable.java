@@ -1,10 +1,9 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +21,11 @@ import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.util.FileUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.input.BOMInputStream;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+
 
 /**
  * The default implementation of a NamedTable
@@ -157,7 +161,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull String fileName, boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
-        List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
+        //List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
+        List<String> lines = readIt(new File(fileName));
         return loadFromCSV(systemName, userName, fileName, lines, registerInManager);
     }
     
@@ -167,9 +172,34 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             @Nonnull File file, boolean registerInManager)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
-        List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+        //List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+        List<String> lines = readIt(file);
         return loadFromCSV(systemName, userName, file.getPath(), lines, registerInManager);
     }
+
+    private static List<String> readIt(File infile) {
+        ArrayList<String> returnList = new ArrayList<>();
+        InputStream in = null;
+        try {
+            in = FileUtils.openInputStream(infile);
+            BOMInputStream bomInputStream = new BOMInputStream(in);
+            if (bomInputStream.hasBOM()) {
+                log.debug("Input file has a Byte Order Marker attached");
+            }
+            InputStreamReader rdr = new InputStreamReader( bomInputStream);
+            BufferedReader buffered = new BufferedReader(rdr);
+            for (;;) {
+                String line = buffered.readLine();
+                if (line == null)
+                    break;
+                returnList.add(line);
+            }
+        } catch (IOException e) {
+            log.error("IOException reading input file", e);
+        }
+        return returnList;
+    }
+
     
     /**
      * {@inheritDoc}
@@ -256,6 +286,9 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     public int getColumnNumber(String columnName) {
         return _internalTable.getColumnNumber(columnName);
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNamedTable.class);
+
 /*    
     protected void insertColumn(int col) {
         _internalTable.insertColumn(col);
