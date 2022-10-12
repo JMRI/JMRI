@@ -2,25 +2,34 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SerialLightManagerTest {
+public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
 
+    @Override
+    public String getSystemName(int i) {
+        return ("CL"+i);
+    }
+
     @Test
     public void testCTor() {
-        SerialLightManager t = new SerialLightManager(memo);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(l, "exists");
+    }
+
+    @Test
+    public void testCanAddRange() {
+        Assertions.assertTrue(l.allowMultipleAdditions(getSystemName(2)));
     }
 
     @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
@@ -28,6 +37,7 @@ public class SerialLightManagerTest {
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
         Assertions.assertNotNull(new SerialNode(0, SerialNode.SMINI,tcis));
+        l = new SerialLightManager(memo);
     }
 
     @AfterEach
