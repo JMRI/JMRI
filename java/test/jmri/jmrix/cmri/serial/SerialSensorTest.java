@@ -32,9 +32,9 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     public void checkStatusRequestMsgSent() {}
 
     @Test
-    public void test2ParamCTor() {
-        SerialSensor t = new SerialSensor("CS4","Test");
-        Assert.assertNotNull("exists",t);
+    public void test2ParamSerialSensorCtor() {
+        SerialSensor st = new SerialSensor("CS4","Test");
+        Assert.assertNotNull("exists",st);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
-        new SerialNode(0, SerialNode.SMINI,tcis);
+        Assertions.assertNotNull(new SerialNode(0, SerialNode.SMINI,tcis));
         t = new SerialSensor("CS4");
     }
 
