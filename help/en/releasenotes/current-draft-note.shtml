@@ -116,7 +116,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added connection-specific titles to the menu apps. </li>
             </ul>
 
         <h4>RFID</h4>
