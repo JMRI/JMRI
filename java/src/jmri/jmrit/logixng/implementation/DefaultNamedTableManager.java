@@ -149,7 +149,11 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     public NamedTable loadTableFromCSVData(
             @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true);
+        try {
+            return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
