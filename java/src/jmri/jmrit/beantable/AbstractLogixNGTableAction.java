@@ -94,6 +94,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected abstract String getBeanText(E bean);
 
+    protected abstract String getBrowserTitle();
+
     protected abstract String getAddTitleKey();
 
     protected abstract String getCreateButtonHintKey();
@@ -823,7 +825,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
-        JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("LogixNG_Browse_Title"), false, true);   // NOI18N
+        JmriJFrame condBrowserFrame = new JmriJFrame(this.getBrowserTitle(), false, true);
 
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -949,7 +951,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 updateBrowserText();
             }
         });
-        checkBoxPanel.add(printLineNumbers);
 
         JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
         printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
@@ -962,7 +963,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 updateBrowserText();
             }
         });
-        checkBoxPanel.add(printErrorHandling);
 
         JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
         printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
@@ -975,7 +975,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 });
             }
         });
-        checkBoxPanel.add(printNotConnectedSockets);
 
         JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
         printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
@@ -988,7 +987,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 });
             }
         });
-        checkBoxPanel.add(printLocalVariables);
 
         JCheckBox printSystemNames = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintSystemNames"));
         printSystemNames.setSelected(_printTreeSettings._printSystemNames);
@@ -1001,7 +999,14 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 updateBrowserText();
             }
         });
-        checkBoxPanel.add(printSystemNames);
+
+        if (this instanceof LogixNGTableAction || this instanceof LogixNGModuleTableAction) {
+            checkBoxPanel.add(printLineNumbers);
+            checkBoxPanel.add(printErrorHandling);
+            checkBoxPanel.add(printNotConnectedSockets);
+            checkBoxPanel.add(printLocalVariables);
+            checkBoxPanel.add(printSystemNames);
+        }
 
         return checkBoxPanel;
     }

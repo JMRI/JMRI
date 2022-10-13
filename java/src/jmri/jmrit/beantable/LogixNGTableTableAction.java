@@ -183,6 +183,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
+    protected String getBrowserTitle() {
+        return Bundle.getMessage("LogixNG_Table_Browse_Title");
+    }
+
+    @Override
     protected String getAddTitleKey() {
         return "TitleLogixNGTableTable";
     }

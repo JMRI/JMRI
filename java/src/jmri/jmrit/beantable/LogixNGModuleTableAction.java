@@ -130,6 +130,11 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected String getBrowserTitle() {
+        return Bundle.getMessage("LogixNG_Module_Browse_Title");
+    }
+
+    @Override
     protected String getAddTitleKey() {
         return "TitleAddLogixNGModule";
     }

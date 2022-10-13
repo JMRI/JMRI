@@ -4,6 +4,8 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -128,9 +130,39 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
         return false;
     }
 
+    @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
     @Override
     protected String getBeanText(GlobalVariable e) {
-        return e.toString();
+        var content = new StringBuilder(Bundle.getMessage("LogixNG_GlobalVar_Browse_Header",
+                e.getSystemName(),
+                e.getUserName(),
+                e.getInitialValueType()));
+        content.append(Bundle.getMessage("LogixNG_GlobalVar_Browse_Value"));
+        var value = e.getValue();
+
+        if (value instanceof Map) {
+            var map = ((Map<? extends Object, ? extends Object>)value);
+            for (var entry : map.entrySet()) {
+                var line = String.format("%n        %s -> %s",
+                        entry.getKey(),
+                        entry.getValue());
+                content.append(line);
+            }
+        } else if (value instanceof List) {
+            var list = ((List<? extends Object>)value);
+            for (int i=0; i < list.size(); i++) {
+                var line = String.format("%n        %s", list.get(i));
+                content.append(line);
+            }
+        } else {
+            content.append(value);
+        }
+        return content.toString();
+    }
+
+    @Override
+    protected String getBrowserTitle() {
+        return Bundle.getMessage("LogixNG_GlobalVar_Browse_Title");
     }
 
     @Override
