@@ -456,9 +456,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 3.5.11
 
 ##### OpenIDE Utilities
-- org-openide-util-RELEASE126.jar
-- org-openide-util-lookup-RELEASE126.jar
-- Downloaded from Maven Central 2021-12-21
+- org-openide-util-lookup-RELEASE150.jar
+- Downloaded from Maven Central 2022-10-07
+- https://mvnrepository.com/artifact/org.netbeans.api/org-openide-util-lookup/RELEASE150
 
 ##### PlantUML
 - plantuml.jar
@@ -564,6 +564,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 - No longer used as of JMRI 5.1.3
+
+##### org-openide-util-RELEASE126.jar
+- No longer used as of JMRI 5.1.5
 
 #### SpotBugs static analysis
 - used in pom.xml
