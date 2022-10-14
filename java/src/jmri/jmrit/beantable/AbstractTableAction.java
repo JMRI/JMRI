@@ -281,9 +281,10 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         if (manager instanceof ProxyManager) {
             UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
             String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-            if (upm.getComboBoxLastSelection(systemSelectionCombo) != null) {
+            String userPref = upm.getComboBoxLastSelection(systemSelectionCombo);
+            if ( userPref != null) {
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
-                        .getSystemConnectionMemoForUserName(upm.getComboBoxLastSelection(systemSelectionCombo));
+                        .getSystemConnectionMemoForUserName(userPref);
                 if (memo!=null) {
                     comboBox.setSelectedItem(memo.get(managerClass));
                 } else {
