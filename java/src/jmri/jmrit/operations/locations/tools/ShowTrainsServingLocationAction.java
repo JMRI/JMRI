@@ -15,11 +15,11 @@ import jmri.jmrit.operations.locations.Track;
 public class ShowTrainsServingLocationAction extends AbstractAction {
 
     public ShowTrainsServingLocationAction(Location location, Track track) {
-        super(track == null ? Bundle.getMessage("MenuItemShowTrainsLocation")
-                : Bundle.getMessage("MenuItemShowTrainsTrack"));
+        super(location == null ? Bundle.getMessage("TitleShowTrains")
+                : track == null ? Bundle.getMessage("MenuItemShowTrainsLocation")
+                        : Bundle.getMessage("MenuItemShowTrainsTrack"));
         _location = location;
         _track = track;
-        setEnabled(_location != null);
     }
 
     Location _location;

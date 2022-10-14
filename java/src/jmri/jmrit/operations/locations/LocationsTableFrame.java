@@ -91,6 +91,8 @@ public class LocationsTableFrame extends OperationsFrame {
             toolMenu.add(new SetPhysicalLocationAction(null));
         }
         toolMenu.addSeparator();
+        toolMenu.add(new ShowTrainsServingLocationAction(null, null));
+        toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false));
         toolMenu.add(new PrintLocationsAction(true));
         menuBar.add(toolMenu);
