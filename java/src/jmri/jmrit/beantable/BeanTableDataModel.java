@@ -1411,7 +1411,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     private class BtComboboxEditor extends jmri.jmrit.symbolicprog.ValueEditor {
 
-        public BtComboboxEditor(){
+        BtComboboxEditor(){
             super();
         }
 
@@ -1443,7 +1443,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     private class BtValueRenderer implements TableCellRenderer {
 
-        public BtValueRenderer() {
+        BtValueRenderer() {
             super();
         }
 
