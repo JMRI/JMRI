@@ -405,6 +405,7 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Update the Global Variable table browser to provide detail information.</li>
+          <li>LogixNG Formula now supports the boolean XOR operator <i>^^</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
