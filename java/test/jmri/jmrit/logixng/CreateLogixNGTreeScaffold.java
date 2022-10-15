@@ -2040,6 +2040,35 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrix.logixng.ActionRequestUpdateAllSensors actionRequestUpdateAllSensors =
+                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        actionRequestUpdateAllSensors =
+                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        actionRequestUpdateAllSensors.setMemo(null);
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionRequestUpdateAllSensors =
+                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        actionRequestUpdateAllSensors.setMemo(_mqttMemo);
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionRequestUpdateAllSensors =
+                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        actionRequestUpdateAllSensors.setMemo(_locoNetMemo);
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrix.loconet.logixng.ActionClearSlots actionClearSlots =
                 new jmri.jmrix.loconet.logixng.ActionClearSlots(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionClearSlots);
@@ -4631,9 +4660,11 @@ public class CreateLogixNGTreeScaffold {
         _locoNetMemo = new LocoNetSystemConnectionMemo(lnis, sm);
         sm.setSystemConnectionMemo(_locoNetMemo);
         InstanceManager.setDefault(LocoNetSystemConnectionMemo.class, _locoNetMemo);
+        InstanceManager.store(_locoNetMemo, SystemConnectionMemo.class);
 
         _mqttMemo = new MqttSystemConnectionMemo();
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, _mqttMemo);
+        InstanceManager.store(_mqttMemo, SystemConnectionMemo.class);
 
 //        JUnitUtil.initLogixNGManager();
 

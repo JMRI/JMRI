@@ -405,6 +405,8 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>Update the Global Variable table browser to provide detail information.</li>
+          <li>The action <i>Request update of all sensors</i> has been added. It requests
+          that all sensors gets updated from the layout.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
