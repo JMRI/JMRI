@@ -3064,7 +3064,7 @@
         for your spurs to create demand for cars with custom loads.
       </p>
 
-      <h5 id="SpurOption">Spur Option</h5>
+      <h5 id="SpurOption">Spur Option (Hold cars with custom loads when spurs are full)</h5>
 
       <p>
         In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
