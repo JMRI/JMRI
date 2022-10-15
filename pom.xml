@@ -24,7 +24,7 @@
         <jackson.version>2.12.6</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.31</openlcb.version>
-        <netbeans.version>RELEASE126</netbeans.version>
+        <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
@@ -34,8 +34,8 @@
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
         <ant.version>1.10.11</ant.version>
-        <junit5.version>5.6.0</junit5.version>
-        <junit.platform.version>1.6.0</junit.platform.version>
+        <junit5.version>5.9.1</junit5.version>
+        <junit.platform.version>1.9.1</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <!-- define argLines to allow running surefire:test -->
@@ -1584,19 +1584,6 @@
             <artifactId>jemmy-2.3.1.1</artifactId>
             <version>${jemmy.version}</version>
             <scope>test</scope>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>com.github.stefanbirkner</groupId>
-            <artifactId>system-rules</artifactId>
-            <version>1.16.0</version>
-            <scope>test</scope>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util</artifactId>
-            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>

@@ -432,17 +432,13 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Sept 13, 2021
 - From https://mvnrepository.com/artifact/org.netbeans.external/jemmy-2.3.1.1/RELEASE125
 
-##### junit-4.12.jar
-- version 4.12
-- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
-
 ##### junit-jupiter-*
-- version 5.6.0
+- version 5.9.1
 
 ##### junit-platform-*
-- version 1.6
+- version 1.9.1
 
-##### junit-vintage-engine-5.6.0.jar
+##### junit-vintage-engine-5.9.1.jar
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.
@@ -456,9 +452,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 3.5.11
 
 ##### OpenIDE Utilities
-- org-openide-util-RELEASE126.jar
-- org-openide-util-lookup-RELEASE126.jar
-- Downloaded from Maven Central 2021-12-21
+- org-openide-util-lookup-RELEASE150.jar
+- Downloaded from Maven Central 2022-10-07
+- https://mvnrepository.com/artifact/org.netbeans.api/org-openide-util-lookup/RELEASE150
 
 ##### PlantUML
 - plantuml.jar
@@ -506,6 +502,11 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 0.8.5
 
 ## Older, no longer present:
+
+##### junit-4.12.jar
+- version 4.12
+- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
+- JUnit4 classes currently accessed via junit-platform-console-standalone
 
 ##### UmlGraph-5.7
 - from http://www.umlgraph.org/download.html
@@ -564,6 +565,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 - No longer used as of JMRI 5.1.3
+
+##### org-openide-util-RELEASE126.jar
+- No longer used as of JMRI 5.1.5
 
 #### SpotBugs static analysis
 - used in pom.xml

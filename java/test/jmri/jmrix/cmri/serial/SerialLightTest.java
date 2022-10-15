@@ -20,7 +20,7 @@ public class SerialLightTest {
     private SerialTrafficControlScaffold tcis = null;
 
     @Test
-    public void test2ParamCTor() {
+    public void testSerialLightSystemNameAndMemoConstructor() {
         SerialLight t = new SerialLight("CL4",memo);
         Assert.assertNotNull("exists",t);
     }
@@ -96,7 +96,7 @@ public class SerialLightTest {
         tcis = new SerialTrafficControlScaffold();
         memo = new jmri.jmrix.cmri.CMRISystemConnectionMemo();
         memo.setTrafficController(tcis);
-        new SerialNode(0, SerialNode.SMINI,tcis);
+        Assertions.assertNotNull(new SerialNode(0, SerialNode.SMINI,tcis));
     }
 
     @AfterEach
