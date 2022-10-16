@@ -425,7 +425,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
 //    @OverridingMethodsMustInvokeSuper
     public final void deleteBean(@Nonnull LogixNG logixNG, @Nonnull String property) throws PropertyVetoException {
-        for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
+        for (int i=logixNG.getNumConditionalNGs()-1; i >= 0; i--) {
             ConditionalNG child = logixNG.getConditionalNG(i);
             InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(child, property);
         }
