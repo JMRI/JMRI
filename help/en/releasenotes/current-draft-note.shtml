@@ -408,6 +408,9 @@
           that LogixNG was deleted but that's fixed now.</li>
           <li>Update the Global Variable table browser to provide detail information.</li>
           <li>LogixNG Formula now supports the boolean XOR operator <i>^^</i>.</li>
+          <li>The ConditionalNG editor and the Module editor now have the option
+          <i>Paste copy</i>. With it, you can paste from the clipboard as many times
+          as needed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
