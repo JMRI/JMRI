@@ -182,13 +182,13 @@ public class Track extends PropertyChangeSupport {
     public static final String MIN_LENGTH_CHANGED_PROPERTY = "trackMinLength"; // NOI18N
     public static final String SCHEDULE_CHANGED_PROPERTY = "trackScheduleChange"; // NOI18N
     public static final String DISPOSE_CHANGED_PROPERTY = "trackDispose"; // NOI18N
-    public static final String TRAINDIRECTION_CHANGED_PROPERTY = "trackTrainDirection"; // NOI18N
+    public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trackTrainDirection"; // NOI18N
     public static final String DROP_CHANGED_PROPERTY = "trackDrop"; // NOI18N
     public static final String PICKUP_CHANGED_PROPERTY = "trackPickup"; // NOI18N
     public static final String TRACK_TYPE_CHANGED_PROPERTY = "trackType"; // NOI18N
     public static final String LOADS_CHANGED_PROPERTY = "trackLoads"; // NOI18N
     public static final String POOL_CHANGED_PROPERTY = "trackPool"; // NOI18N
-    public static final String PLANNEDPICKUPS_CHANGED_PROPERTY = "plannedPickUps"; // NOI18N
+    public static final String PLANNED_PICKUPS_CHANGED_PROPERTY = "plannedPickUps"; // NOI18N
     public static final String LOAD_OPTIONS_CHANGED_PROPERTY = "trackLoadOptions"; // NOI18N
     public static final String DESTINATIONS_CHANGED_PROPERTY = "trackDestinations"; // NOI18N
     public static final String DESTINATION_OPTIONS_CHANGED_PROPERTY = "trackDestinationOptions"; // NOI18N
@@ -197,7 +197,7 @@ public class Track extends PropertyChangeSupport {
     public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
     public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
-    public static final String TRACK_REPORTER_PROPERTY = "trackReporterChange"; // NOI18N
+    public static final String TRACK_REPORTER_CHANGED_PROPERTY = "trackReporterChange"; // NOI18N
     public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
     public static final String HOLD_CARS_CHANGED_PROPERTY ="trackHoldCarsWithCustomLoads"; // NOI18N
 
@@ -593,7 +593,7 @@ public class Track extends PropertyChangeSupport {
         int old = _ignoreUsedLengthPercentage;
         _ignoreUsedLengthPercentage = percentage;
         if (old != percentage) {
-            setDirtyAndFirePropertyChange(PLANNEDPICKUPS_CHANGED_PROPERTY, Integer.toString(old),
+            setDirtyAndFirePropertyChange(PLANNED_PICKUPS_CHANGED_PROPERTY, Integer.toString(old),
                     Integer.toString(percentage));
         }
     }
@@ -894,7 +894,7 @@ public class Track extends PropertyChangeSupport {
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old),
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old),
                     Integer.toString(direction));
         }
     }
@@ -2789,7 +2789,7 @@ public class Track extends PropertyChangeSupport {
         Reporter old = _reader;
         _reader = r;
         if (old != r) {
-            setDirtyAndFirePropertyChange(TRACK_REPORTER_PROPERTY, old, r);
+            setDirtyAndFirePropertyChange(TRACK_REPORTER_CHANGED_PROPERTY, old, r);
         }
     }
 

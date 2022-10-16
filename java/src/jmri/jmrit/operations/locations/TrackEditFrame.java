@@ -144,6 +144,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(Setup.class).addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
         routeManager.addPropertyChangeListener(this);
 
@@ -1235,8 +1236,9 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
                 e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateCheckboxes();
         }
-        if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TRAIN_DIRECTION_CHANGED_PROPERTY) || 
+                e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
             updateTrainDir();
         }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
