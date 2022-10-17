@@ -60,4 +60,4 @@
     <!ATTLIST traininfo usespeedprofile        	CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofile      CDATA "no">
     <!ATTLIST traininfo stopbyspeedprofileadjust CDATA "1500">
-
+    <!ATTLIST traininfo waitTime                CDATA "0">
