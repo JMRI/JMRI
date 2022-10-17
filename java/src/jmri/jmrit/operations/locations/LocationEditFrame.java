@@ -330,6 +330,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(EngineTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(DivisionManager.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(Setup.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -869,6 +870,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (e.getPropertyName().equals(DivisionManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateDivisionComboBox();
+        }
+        if (e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
+            setTrainDirectionBoxes();
         }
     }
 
