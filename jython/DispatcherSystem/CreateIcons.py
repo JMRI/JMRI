@@ -62,9 +62,7 @@ class processPanels():
     def __init__(self):
         self.define_DisplayProgress_global()
 
-
         if self.perform_initial_checks():
-            self.dispatcher_panel_needs_updating = self.panel_needs_updating() # needs to be done before self.addSensors()
             self.show_progress(0)
             self.removeIconsAndLabels()
             self.removeLogix()
@@ -80,9 +78,9 @@ class processPanels():
             self.generateSML()
             self.show_progress(60)
             self.generateSections()
-            self.show_progress(90)
+            self.show_progress(80)
             self.addLogix()
-            self.addIcons()     #uses self.dispatcher_panel_needs_updating
+            self.addIcons()
             self.end_show_progress()
             #msg = 'The JMRI tables and panels have been udpated to support the Dispatcher System\nA store is recommended.'
             #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
@@ -99,23 +97,6 @@ class processPanels():
         global dpg
         dpg.killLabel()
 
-    def panel_needs_updating(self):
-        panel_version = 0
-        if self.editorManager.get("Dispatcher System") is not None:
-            contents =  self.editorManager.get("Dispatcher System").getContents()
-            for c in contents:
-                print c.getNameString()
-                if "setStationWaitTimeSensor" in c.getNameString():
-                    panel_version = 1
-
-        # we will check later to see whether the new_version == panel_version and if so not update the panel
-        new_version = 1  #version of panel to be installed
-        if panel_version < new_version:
-            return True
-        else:
-            return False
-
-
     # **************************************************
     # perform initial checks
     # **************************************************
@@ -126,8 +107,6 @@ class processPanels():
         block_sensors_OK = False
         stops_OK = False
         lengths_OK = False
-
-
 
         #JOptionPane.showMessageDialog(None, "Performing some preliminary checks to ensure the trains run correctly\nAll errors will need to be fixed for Dispatcher to run correctly\nSome errors will cause the panel to be set up incorrectly in this stage", 'Checks', JOptionPane.WARNING_MESSAGE)
 
@@ -495,13 +474,12 @@ class processPanels():
 
         deleteList = []     # Prevent concurrent modification
         for sensor in sensors.getNamedBeanSet():
-            systemName = sensor.getSystemName()
             userName = sensor.getUserName()
-            #check for 'MoveTo' and 'MoveInProgress' sensors
-            if 'DSCT:' in systemName or 'DSMP:' in systemName or 'DSMP:' in systemName:   #use system name in case some sensors existed without user names
-                deleteList.append(sensor)
-            elif userName is not None and userName in controlName:
-                deleteList.append(sensor)
+            if userName is not None:
+                if 'MoveTo' in userName or 'MoveInProgress' in userName:
+                    deleteList.append(sensor)
+                elif userName in controlName:
+                    deleteList.append(sensor)
 
         for item in deleteList:
             #print 'remove sensor {}'.format(item.getDisplayName())
@@ -672,11 +650,8 @@ class processPanels():
     # control sensor icons and label
     # **************************************************
     def addControlIconsAndLabels(self):
-        if not self.dispatcher_panel_needs_updating:
-            # do not replace control icon panel "Dispatcher System"
-            return
         if self.editorManager.get("Dispatcher System") is not None:
-            self.editorManager.get("Dispatcher System").dispose()
+            return
         # Create the Dispatcher System control panel
         panel = jmri.jmrit.display.layoutEditor.LayoutEditor("Dispatcher System")
         self.editorManager.add(panel)

@@ -15,7 +15,7 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    logLevel = 1
+    logLevel = 0
 
     def __init__(self):
         pass

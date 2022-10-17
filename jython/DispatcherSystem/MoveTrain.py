@@ -1,7 +1,7 @@
 ###############################################################################
 #
 # class MoveTrain
-# Calls dispatcher to move train from one station to another
+# Calls dispatcher to e train from one station to another
 # given engine and start and end positions
 #
 ###############################################################################
@@ -87,6 +87,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             if count_path == 0:
                 # we are on a new path and must determine the direction
                 [transit_direction, transit_instruction]  = self.set_direction(previous_block, current_block, next_block, previous_direction)
+                self.announce1(e, transit_direction, transit_instruction, train)
             else:
                 # if there are several edges in a path, then we are on an express route, and there is a change in direction at each junction
                 if previous_block.getUserName() == next_block.getUserName() : #we are at a stub/siding
@@ -98,14 +99,17 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 else:
                     [transit_direction, transit_instruction] = self.set_direction(previous_block, current_block, next_block, previous_direction)
 
-
+                speech_reqd = self.speech_required_flag()
+                # make announcement as train enters platform
+                print "making announcement"
+                self.announce1(e, transit_direction, transit_instruction, train)
                 time_to_stop_in_station = self.get_time_to_stop_in_station(e, transit_direction)
                 t = time_to_stop_in_station / 1000
                 msg = "started waiting for " + str(int(t)) + " seconds"
-                self.speak(msg)
+                if self.logLevel > 0: self.speak(msg)
                 self.waitMsec(int(time_to_stop_in_station))
                 msg = "finished waiting for " + str(t) + " seconds"
-                self.speak(msg)
+                if self.logLevel > 0: self.speak(msg)
 
             result = self.move(e, transit_direction, transit_instruction,  train_name)
             if self.logLevel > 1: print "returned from self.move, result = ", result
@@ -164,6 +168,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             return float(n).is_integer()
 
+    def announce1(self, e, direction, instruction, train):
+        to_name = e.getTarget()
+        from_name = e.getSource()
+        speech_reqd = self.speech_required_flag()
+        self.announce( from_name, to_name, speech_reqd, direction, instruction)
+
     def move(self, e, direction, instruction, train):
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         if self.logLevel > 1: print e, "Target", e.getTarget()
@@ -176,7 +186,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         self.set_sensor(sensor_move_name, "active")
         speech_reqd = self.speech_required_flag()
-        self.announce( from_name, to_name, speech_reqd, direction, instruction)
+        #self.announce( from_name, to_name, speech_reqd, direction, instruction)  # now done when train arrives in platfor instead of when leaving
         if self.logLevel > 1: print "***************************"
         result = self.call_dispatch(e, direction, train)
         if self.logLevel > 1: print "______________________"
@@ -357,8 +367,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         to_station = self.get_station_name(toblockname)
 
         if speak_on == True:
-            #self.speak("The train in "+ from_station + " is due to depart to " + to_station + " " + direction + " " + instruction )
-            self.speak("The train in "+ from_station + " is due to depart to " + to_station )
+            if direction == "forward":
+                platform = " platform 1 "
+            else:
+                platform = " platform 2 "
+            self.speak("The train in" + platform + " is due to depart to " + to_station)
+            #self.speak("The train in "+ from_station + " is due to depart to " + to_station )
 
     def get_station_name(self, block_name):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
