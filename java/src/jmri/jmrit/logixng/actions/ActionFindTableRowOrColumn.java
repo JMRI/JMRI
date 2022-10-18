@@ -140,7 +140,7 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
         return Category.OTHER;
     }
 
-    private Map<String, Object> getRow(Object value) {
+    private Map<String, Object> getRow(Object value) throws JmriException {
         if (_selectNamedBean.getNamedBean() == null) {
             log.error("No table name is given");
             return null;    // No row found
@@ -150,7 +150,7 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
             return null;    // No row found
         }
 
-        NamedTable table = _selectNamedBean.getNamedBean().getBean();
+        NamedTable table = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
             int row = table.getRowNumber(_rowOrColumnName);
@@ -204,7 +204,7 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws JmriException {
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
         Object value;
         if ((_localVariableNamedBean != null) && (_localVariableRow != null)) {
