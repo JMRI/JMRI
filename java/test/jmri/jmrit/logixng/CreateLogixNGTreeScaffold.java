@@ -539,6 +539,52 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionFindTableRowOrColumn actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
+        actionFindTableRowOrColumn.setComment("A comment");
+        actionFindTableRowOrColumn.getSelectNamedBean().setNamedBean(csvTable);
+        maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
+        actionFindTableRowOrColumn.setComment("A comment");
+        actionFindTableRowOrColumn.getSelectNamedBean().setNamedBean(csvTable);
+        actionFindTableRowOrColumn.setRowOrColumnName("Signal before");
+        actionFindTableRowOrColumn.setTableRowOrColumn(TableRowOrColumn.Row);
+        actionFindTableRowOrColumn.setIncludeCellsWithoutHeader(false);
+        actionFindTableRowOrColumn.setLocalVariableNamedBean("variableNamedBean");
+        actionFindTableRowOrColumn.setLocalVariableRow("variableRow");
+        maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
+        actionFindTableRowOrColumn.setComment("A comment");
+        actionFindTableRowOrColumn.getSelectNamedBean().setNamedBean(csvTable);
+        actionFindTableRowOrColumn.setRowOrColumnName("2");
+        actionFindTableRowOrColumn.setTableRowOrColumn(TableRowOrColumn.Column);
+        actionFindTableRowOrColumn.setIncludeCellsWithoutHeader(false);
+        maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
+        actionFindTableRowOrColumn.setComment("A comment");
+        actionFindTableRowOrColumn.getSelectNamedBean().setNamedBean(csvTable);
+        actionFindTableRowOrColumn.setIncludeCellsWithoutHeader(true);
+        maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionFindTableRowOrColumn = new ActionFindTableRowOrColumn(digitalActionManager.getAutoSystemName(), null);
+        actionFindTableRowOrColumn.setComment("A comment");
+        actionFindTableRowOrColumn.getSelectNamedBean().setNamedBean(csvTable);
+        actionFindTableRowOrColumn.setIncludeCellsWithoutHeader(true);
+        maleSocket = digitalActionManager.registerAction(actionFindTableRowOrColumn);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionLight actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionLight);
         maleSocket.setEnabled(false);
