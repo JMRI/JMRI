@@ -163,6 +163,17 @@ public class TreeEditor extends TreeViewer {
                         }
                     }
                 }
+                if (e.getModifiersEx() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + InputEvent.SHIFT_DOWN_MASK) {
+                    if (e.getKeyCode() == 'V') {    // Paste copy
+                        TreePath path = tree.getSelectionPath();
+                        if (path != null) {
+                            FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
+                            if (!femaleSocket.isConnected()) {
+                                pasteCopy((FemaleSocket) path.getLastPathComponent(), path);
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
@@ -1369,6 +1380,9 @@ public class TreeEditor extends TreeViewer {
                 Clipboard clipboard =
                         InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                 try {
+                    if (clipboard.getTopItem() == null) {
+                        return;
+                    }
                     femaleSocket.connect(clipboard.fetchTopItem());
                     List<String> errors = new ArrayList<>();
                     if (!femaleSocket.setParentForAllChildren(errors)) {
@@ -1397,6 +1411,66 @@ public class TreeEditor extends TreeViewer {
         }
     }
 
+    private void pasteCopy(FemaleSocket femaleSocket, TreePath path) {
+        if (parentIsSystem(femaleSocket) && abortEditAboutSystem(femaleSocket.getParent())) {
+            return;
+        }
+
+        if (! femaleSocket.isConnected()) {
+            _treePane._femaleRootSocket.unregisterListeners();
+
+            runOnConditionalNGThreadOrGUIThreadEventually(
+                    _treePane._femaleRootSocket.getConditionalNG(),
+                    () -> {
+                Clipboard clipboard =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
+
+                Map<String, String> systemNames = new HashMap<>();
+                Map<String, String> userNames = new HashMap<>();
+                MaleSocket maleSocket = null;
+                try {
+                    maleSocket = (MaleSocket) clipboard.getTopItem()
+                            .getDeepCopy(systemNames, userNames);
+                } catch (JmriException ex) {
+                    log.error("getDeepCopy thrown exception: {}", ex, ex);
+                    ThreadingUtil.runOnGUIEventually(() -> {
+                        JOptionPane.showMessageDialog(null,
+                                "An exception has occured: "+ex.getMessage(),
+                                "An error has occured",
+                                JOptionPane.ERROR_MESSAGE);
+                    });
+                }
+                if (maleSocket != null) {
+                    try {
+                        femaleSocket.connect(maleSocket);
+                        List<String> errors = new ArrayList<>();
+                        if (!femaleSocket.setParentForAllChildren(errors)) {
+                            JOptionPane.showMessageDialog(this,
+                                    String.join("<br>", errors),
+                                    Bundle.getMessage("TitleError"),
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (SocketAlreadyConnectedException ex) {
+                        log.error("item cannot be connected", ex);
+                    }
+                    ThreadingUtil.runOnGUIEventually(() -> {
+                        _treePane._femaleRootSocket.forEntireTree((Base b) -> {
+                            // Remove the listener if it is already
+                            // added so we don't end up with duplicate
+                            // listeners.
+                            b.removePropertyChangeListener(_treePane);
+                            b.addPropertyChangeListener(_treePane);
+                        });
+                        _treePane._femaleRootSocket.registerListeners();
+                        _treePane.updateTree(femaleSocket, path.getPath());
+                    });
+                }
+            });
+        } else {
+            log.error("_currentFemaleSocket is connected");
+        }
+    }
+
 
     protected final class PopupMenu extends JPopupMenu implements ActionListener {
 
@@ -1406,6 +1480,7 @@ public class TreeEditor extends TreeViewer {
         private static final String ACTION_COMMAND_CUT = "cut";
         private static final String ACTION_COMMAND_COPY = "copy";
         private static final String ACTION_COMMAND_PASTE = "paste";
+        private static final String ACTION_COMMAND_PASTE_COPY = "pasteCopy";
         private static final String ACTION_COMMAND_ENABLE = "enable";
         private static final String ACTION_COMMAND_DISABLE = "disable";
         private static final String ACTION_COMMAND_LOCK = "lock";
@@ -1425,6 +1500,7 @@ public class TreeEditor extends TreeViewer {
         private JMenuItem menuItemCut;
         private JMenuItem menuItemCopy;
         private JMenuItem menuItemPaste;
+        private JMenuItem menuItemPasteCopy;
         private final Map<FemaleSocketOperation, JMenuItem> menuItemFemaleSocketOperation
                 = new HashMap<>();
         private JMenuItem menuItemEnable;
@@ -1528,6 +1604,12 @@ public class TreeEditor extends TreeViewer {
                 menuItemPaste.setActionCommand(ACTION_COMMAND_PASTE);
                 menuItemPaste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 add(menuItemPaste);
+                menuItemPasteCopy = new JMenuItem(Bundle.getMessage("PopupMenuPasteCopy"));
+                menuItemPasteCopy.addActionListener(this);
+                menuItemPasteCopy.setActionCommand(ACTION_COMMAND_PASTE_COPY);
+                menuItemPasteCopy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
+                        Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + InputEvent.SHIFT_DOWN_MASK));
+                add(menuItemPasteCopy);
                 addSeparator();
 
                 for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
@@ -1589,6 +1671,7 @@ public class TreeEditor extends TreeViewer {
                 menuItemCut.setEnabled(_isConnected && !_isLocked && !_parentIsLocked && !_disableForRoot);
                 menuItemCopy.setEnabled(_isConnected && !_disableForRoot);
                 menuItemPaste.setEnabled(!_isConnected && !_parentIsLocked && _canConnectFromClipboard);
+                menuItemPasteCopy.setEnabled(!_isConnected && !_parentIsLocked && _canConnectFromClipboard);
 
                 if (_isConnected && !_disableForRoot) {
                     menuItemEnable.setEnabled(!femaleSocket.getConnectedSocket().isEnabled() && !_isLocked);
@@ -1704,6 +1787,10 @@ public class TreeEditor extends TreeViewer {
 
                 case ACTION_COMMAND_PASTE:
                     pasteItem(_currentFemaleSocket, _currentPath);
+                    break;
+
+                case ACTION_COMMAND_PASTE_COPY:
+                    pasteCopy(_currentFemaleSocket, _currentPath);
                     break;
 
                 case ACTION_COMMAND_ENABLE:

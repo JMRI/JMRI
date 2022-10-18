@@ -3,15 +3,11 @@ package jmri.jmrit.operations.trains;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
@@ -119,11 +115,11 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             }
         }
         
+        setDirty(false); // clear dirty flag
+        
         // loading complete run startup scripts
         InstanceManager.getDefault(TrainManager.class).runStartUpScripts();       
         InstanceManager.getDefault(AutomationManager.class).runStartupAutomation();
-        
-        setDirty(false); // clear dirty flag
     }
 
     public boolean isTrainFileLoaded() {

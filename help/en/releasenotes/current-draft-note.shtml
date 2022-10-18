@@ -404,7 +404,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Fixes a serious bug when deleting a LogixNG. Not all ConditionalNGs of
+          that LogixNG was deleted but that's fixed now.</li>
           <li>Update the Global Variable table browser to provide detail information.</li>
+          <li>LogixNG Formula now supports the boolean XOR operator <i>^^</i>.</li>
+          <li>The ConditionalNG editor and the Module editor now have the option
+          <i>Paste copy</i>. With it, you can paste from the clipboard as many times
+          as needed.</li>
           <li>The action <i>Request update of all sensors</i> has been added. It requests
           that all sensors gets updated from the layout.</li>
           <li>The action <i>Find table row or column</i> has been added.</li>

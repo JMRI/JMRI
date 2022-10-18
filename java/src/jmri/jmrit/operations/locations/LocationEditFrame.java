@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.locations;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.text.MessageFormat;
@@ -14,15 +12,9 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsPanel;
-import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.divisions.Division;
-import jmri.jmrit.operations.locations.divisions.DivisionEditFrame;
-import jmri.jmrit.operations.locations.divisions.DivisionManager;
+import jmri.*;
+import jmri.jmrit.operations.*;
+import jmri.jmrit.operations.locations.divisions.*;
 import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -360,12 +352,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (_location != null && !_location.isStaging()) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
-        toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
         }
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(false, _location));
         toolMenu.add(new PrintLocationsAction(true, _location));

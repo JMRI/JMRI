@@ -154,12 +154,12 @@
 
                 <li><a href="#TrackBlockingOrder">Track Blocking Order</a></li>
 
-                <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this
-                    Location</a></li>
-
                 <li><a href="#EditCarType">Edit Car Type</a></li>
 
                 <li><a href="#ShowCars">Show Cars</a></li>
+                
+                <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this
+                    Location</a></li>
 
                 <li><a href="#PrintLocation">Print or Preview</a></li>
               </ul></li>
@@ -234,10 +234,10 @@
 
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
 
+                <li><a href="#ShowCars">Show Cars</a></li>
+                
                 <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this
                     track</a></li>
-
-                <li><a href="#ShowCars">Show Cars</a></li>
               </ul></li>
 
             <li><a href="#LocationsTools">Locations Tools</a>
@@ -390,13 +390,13 @@
 
                 <li><a href="#CopyTrain">Copy Train</a></li>
 
-                <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
-                    (Diagnostic Tool)</a></li>
-
                 <li><a href="#TrainConductor">Train Conductor</a>
                   <ul>
                     <li><a href="#ShowCarsInTrain">Show Cars in Train</a></li>
                   </ul></li>
+                  
+                <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
+                    (Diagnostic Tool)</a></li>
 
                 <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train
                     Manifests</a></li>
@@ -411,9 +411,6 @@
                 <li><a href="#BuildReportDetails">Build Report Options</a></li>
 
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
-
-                <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
-                    (Diagnostic Tool)</a></li>
 
                 <li><a href="#ChangeTrainDepartureTimes">Change Train Departure Times</a></li>
 
@@ -437,6 +434,9 @@
                 <li><a href="#ExportTimetable">Export Timetable Data</a></li>
 
                 <li><a href="#ExportTrainLineups">Export Train Lineups</a></li>
+                
+                <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
+                    (Diagnostic Tool)</a></li>
               </ul></li>
 
             <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
@@ -2212,13 +2212,6 @@
         enabled.
       </p>
 
-      <h4 id="ShowTrainsServicingThisLocation">Show Trains Servicing this Location</h4>
-
-      <p>This tool can show you which trains can service a location. If you only want to see
-        trains that can can actually work the location, deselect the "Show all Trains" checkbox. You
-        can also determine if a certain car type will be serviced by the trains visiting the
-        location. Use the "Type" drop down menu to select a car type.</p>
-
       <h4 id="EditCarType">Edit Car Type</h4>
 
       <p>
@@ -2243,6 +2236,13 @@
         associated with a car or locomotive. See <a href="#Options">Options</a> to enable this
         feature.
       </p>
+      
+      <h4 id="ShowTrainsServicingThisLocation">Show Trains Servicing this Location</h4>
+
+      <p>This tool can show you which trains can service a location. If you only want to see
+        trains that can can actually work the location, deselect the "Show all Trains" checkbox. You
+        can also determine if a certain car type will be serviced by the trains visiting the
+        location. Use the "Type" drop down menu to select a car type.</p>
 
       <h3 id="Yards">Yards</h3>
       A yard is used to store cars and locomotives. A car's load status does not change when
@@ -3064,7 +3064,7 @@
         for your spurs to create demand for cars with custom loads.
       </p>
 
-      <h5 id="SpurOption">Spur Option</h5>
+      <h5 id="SpurOption">Spur Option (Hold cars with custom loads when spurs are full)</h5>
 
       <p>
         In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
@@ -3279,16 +3279,18 @@
       <h4 id="ChangeTrackType">Change Track Type</h4>
       If you want to change the track type to a spur, interchange or yard, in the edit track window,
       select Tools-&gt;Change Track Type. Select the desired track type and press "Save".
-      <h4 id="ShowTrainsServicingThisTrack">Show Trains Servicing this Track</h4>
-      This tool will show which trains can service the track being editing. If you only want to see
-      trains that can can actually work the track, deselect the "Show all Trains" checkbox. You can
-      also determine if a certain car type will be serviced by the trains visiting the track. Use
-      the "Type" drop down menu to select a car type.
+      
       <h4>Show Cars</h4>
 
       <p>This will open a "Cars" window displaying only the cars for the track selected. Note
         that the Export Cars tool will only export cars for the track selected, and the delete cars
         tool will only delete the cars for the track selected.</p>
+        
+      <h4 id="ShowTrainsServicingThisTrack">Show Trains Servicing this Track</h4>
+      This tool will show which trains can service the track being editing. If you only want to see
+      trains that can can actually work the track, deselect the "Show all Trains" checkbox. You can
+      also determine if a certain car type will be serviced by the trains visiting the track. Use
+      the "Type" drop down menu to select a car type.
 
       <h3 id="LocationsTools">Locations Tools</h3>
 
@@ -4758,235 +4760,7 @@
         download and can be found in the jmri-&gt;jython-&gt;operations directory.
       </p>
 
-      <h3 id="TrainShowCarTypesServiced">Show Car Types Serviced</h3>
 
-      <p>This diagnostic tool can help you determine why a train will not service a particular
-        car type. You can select a car type and see how the train will service that car type. You
-        can also select a specific car to see how that car would be serviced.</p>
-
-      <p>
-        <img src="images/ShowCarTypesServicedTrain.png" alt="">
-      </p>
-
-      <p>The window shows the train's route along with every location and track that can be
-        serviced by the train. To the right of each track is the current status for the car type
-        currently selected in the drop down menu. If the status is "OK" then this train can pick up
-        and set out this type of car to that specific track. If the status is "Pick Up Only" or "Set
-        Out Only" then the train can only pick up or set out cars to that particular track. A status
-        that begins with an "X" means that the train will not service the track. The following table
-        provides a summary of the various statuses.</p>
-
-      <table>
-        <tr>
-          <th>Status</th>
-          <th>Description</th>
-        </tr>
-
-        <tr>
-          <td style="width: 20%">OK</td>
-          <td>Selected car type can be picked up or set out</td>
-        </tr>
-
-        <tr>
-          <td>Pick Up Only</td>
-          <td>Selected car type can only be <a href="#EditRoute">picked up</a> from this track
-          </td>
-        </tr>
-
-        <tr>
-          <td>Set Out Only</td>
-          <td>Selected car type can only be <a href="#EditRoute">set out</a> to this track
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Type)</td>
-          <td>Selected car <a href="#TrainRollingStock">type</a> is not serviced by this train
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Built)</td>
-          <td>Selected car's <a href="#TrainBuildOptions">built date</a> is not serviced by
-            this train
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Load)</td>
-          <td>Selected car's <a href="#TrainLoadOptions">load</a> is not serviced by this train
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Owner)</td>
-          <td>Selected car's <a href="#TrainBuildOptions">owner</a> is not serviced by this
-            train
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Road)</td>
-          <td>Selected car's <a href="#TrainRoadOptions">road</a> is not serviced by this train
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Skips)</td>
-          <td>The <a href="#TrainEdit">train</a> doesn't service this location
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Pick up)</td>
-          <td>The train can't <a href="#EditRoute">pick up</a> cars from this <a
-            href="#RestrictingTrackToCertainTrains">track</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Set out)</td>
-          <td>The train can't <a href="#EditRoute">set out</a> cars to this <a
-            href="#RestrictingTrackToCertainTrains">track</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Local Move)</td>
-          <td>The train <a href="#TrainBuildOptions">option</a> to allow local moves for cars
-            with custom loads or FD is disabled
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Local Move)</td>
-          <td>The train won't perform a local move for cars with a default load</td>
-        </tr>
-
-        <tr>
-          <td>X (Route)</td>
-          <td>The <a href="#EditRoute">route</a> doesn't allow pick ups or set outs for this
-            location
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Route Moves)</td>
-          <td>The number of requested car <a href="#EditRoute">moves</a> for this location is
-            zero
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Location Type)</td>
-          <td>The location doesn't service the selected car <a href="#LocationRollingStock">type</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Type)</td>
-          <td>The track doesn't service the selected car <a href="#RollingStockServiced">type</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Load)</td>
-          <td>The track doesn't service the selected car's <a href="#LoadOptions">load</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Road)</td>
-          <td>The track doesn't service the selected car's <a href="#RoadOptions">road</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Train)</td>
-          <td>The <a href="#RestrictingTrackToCertainTrains">track</a> doesn't service this
-            train
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Route)</td>
-          <td>The <a href="#RestrictingTrackToCertainTrains">track</a> doesn't service the
-            train's route
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Destination)</td>
-          <td>The track doesn't service the car's <a href="#TrackDestinations">final
-              destination</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Track Custom Load)</td>
-          <td>The track can't service a car with a custom load <a href="#Schedules">(FD can
-              override)</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Dir Loc)</td>
-          <td>Based on the train's <a href="#EditRoute">departure direction</a>, the <a
-            href="#LocationServiceDirection">location</a> doesn't allow set outs or pick ups
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Dir Trk)</td>
-          <td>Based on the train's <a href="#EditRoute">departure direction</a>, the <a
-            href="#TrackServiceDirection">track</a> doesn't allow set outs or pick ups
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Train Schedule)</td>
-          <td>The spur's <a href="#Schedules">schedule</a> train schedule selection prevents
-            the car from being serviced.
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Schedule Type)</td>
-          <td>The spur's <a href="#Schedules">schedule</a> does not allow the car's type to be
-            serviced.
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Schedule Load)</td>
-          <td>The spur's <a href="#Schedules">schedule</a> does not allow the car's load to be
-            serviced.
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Schedule Road)</td>
-          <td>The spur's <a href="#Schedules">schedule</a> does not allow the car's road to be
-            serviced.
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Schedule)</td>
-          <td>The spur's <a href="#Schedules">schedule</a> does not allow the combination of
-            the car's type, load, and road.
-          </td>
-        </tr>
-
-        <tr>
-          <td>X (Division)</td>
-          <td>The car's <a href="#LocationDivision">division</a> and load will not allow set
-            outs.
-          </td>
-        </tr>
-      </table>
-
-      <p>FD = Final Destination</p>
 
       <h3 id="TrainConductor">Train Conductor</h3>
       The train conductor window provides a train manifest for each location that the train visits.
@@ -5420,6 +5194,237 @@
       <h4 id="ExportTrainLineups">Export Train Lineups</h4>
       The export Trains Lineups tool produces a comma separated values (.csv) file for built trains
       that are also selected in the "Build" column.
+        
+      <h4 id="TrainShowCarTypesServiced">Show Car Types Serviced</h4>
+
+      <p>This diagnostic tool can help you determine why a train will not service a particular
+        car type. You can select a car type and see how the train will service that car type. You
+        can also select a specific car to see how that car would be serviced.</p>
+
+      <p>
+        <img src="images/ShowCarTypesServicedTrain.png" alt="">
+      </p>
+
+      <p>The window shows the train's route along with every location and track that can be
+        serviced by the train. To the right of each track is the current status for the car type
+        currently selected in the drop down menu. If the status is "OK" then this train can pick up
+        and set out this type of car to that specific track. If the status is "Pick Up Only" or "Set
+        Out Only" then the train can only pick up or set out cars to that particular track. A status
+        that begins with an "X" means that the train will not service the track. The following table
+        provides a summary of the various statuses.</p>
+
+      <table>
+        <tr>
+          <th>Status</th>
+          <th>Description</th>
+        </tr>
+
+        <tr>
+          <td style="width: 20%">OK</td>
+          <td>Selected car type can be picked up or set out</td>
+        </tr>
+
+        <tr>
+          <td>Pick Up Only</td>
+          <td>Selected car type can only be <a href="#EditRoute">picked up</a> from this track
+          </td>
+        </tr>
+
+        <tr>
+          <td>Set Out Only</td>
+          <td>Selected car type can only be <a href="#EditRoute">set out</a> to this track
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Type)</td>
+          <td>Selected car <a href="#TrainRollingStock">type</a> is not serviced by this train
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Built)</td>
+          <td>Selected car's <a href="#TrainBuildOptions">built date</a> is not serviced by
+            this train
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Load)</td>
+          <td>Selected car's <a href="#TrainLoadOptions">load</a> is not serviced by this train
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Owner)</td>
+          <td>Selected car's <a href="#TrainBuildOptions">owner</a> is not serviced by this
+            train
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Road)</td>
+          <td>Selected car's <a href="#TrainRoadOptions">road</a> is not serviced by this train
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Skips)</td>
+          <td>The <a href="#TrainEdit">train</a> doesn't service this location
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Pick up)</td>
+          <td>The train can't <a href="#EditRoute">pick up</a> cars from this <a
+            href="#RestrictingTrackToCertainTrains">track</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Set out)</td>
+          <td>The train can't <a href="#EditRoute">set out</a> cars to this <a
+            href="#RestrictingTrackToCertainTrains">track</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Local Move)</td>
+          <td>The train <a href="#TrainBuildOptions">option</a> to allow local moves for cars
+            with custom loads or FD is disabled
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Local Move)</td>
+          <td>The train won't perform a local move for cars with a default load</td>
+        </tr>
+
+        <tr>
+          <td>X (Route)</td>
+          <td>The <a href="#EditRoute">route</a> doesn't allow pick ups or set outs for this
+            location
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Route Moves)</td>
+          <td>The number of requested car <a href="#EditRoute">moves</a> for this location is
+            zero
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Location Type)</td>
+          <td>The location doesn't service the selected car <a href="#LocationRollingStock">type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Type)</td>
+          <td>The track doesn't service the selected car <a href="#RollingStockServiced">type</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Load)</td>
+          <td>The track doesn't service the selected car's <a href="#LoadOptions">load</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Road)</td>
+          <td>The track doesn't service the selected car's <a href="#RoadOptions">road</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Train)</td>
+          <td>The <a href="#RestrictingTrackToCertainTrains">track</a> doesn't service this
+            train
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Route)</td>
+          <td>The <a href="#RestrictingTrackToCertainTrains">track</a> doesn't service the
+            train's route
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Destination)</td>
+          <td>The track doesn't service the car's <a href="#TrackDestinations">final
+              destination</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Track Custom Load)</td>
+          <td>The track can't service a car with a custom load <a href="#Schedules">(FD can
+              override)</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Dir Loc)</td>
+          <td>Based on the train's <a href="#EditRoute">departure direction</a>, the <a
+            href="#LocationServiceDirection">location</a> doesn't allow set outs or pick ups
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Dir Trk)</td>
+          <td>Based on the train's <a href="#EditRoute">departure direction</a>, the <a
+            href="#TrackServiceDirection">track</a> doesn't allow set outs or pick ups
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Train Schedule)</td>
+          <td>The spur's <a href="#Schedules">schedule</a> train schedule selection prevents
+            the car from being serviced.
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Schedule Type)</td>
+          <td>The spur's <a href="#Schedules">schedule</a> does not allow the car's type to be
+            serviced.
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Schedule Load)</td>
+          <td>The spur's <a href="#Schedules">schedule</a> does not allow the car's load to be
+            serviced.
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Schedule Road)</td>
+          <td>The spur's <a href="#Schedules">schedule</a> does not allow the car's road to be
+            serviced.
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Schedule)</td>
+          <td>The spur's <a href="#Schedules">schedule</a> does not allow the combination of
+            the car's type, load, and road.
+          </td>
+        </tr>
+
+        <tr>
+          <td>X (Division)</td>
+          <td>The car's <a href="#LocationDivision">division</a> and load will not allow set
+            outs.
+          </td>
+        </tr>
+      </table>
+
+      <p>FD = Final Destination</p>
+      
       <h3 id="SwitcherService">Switcher Service (Local)</h3>
       Many operators assign a locomotive to a location to do the local switching. Using the
       location's switch list allows the person assigned to the location to service all trains that
