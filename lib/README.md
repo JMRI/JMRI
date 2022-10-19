@@ -143,10 +143,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.0.6
 - from <jdom.org>
 
-##### jackson-annotations-2.12.6.jar, jackson-core-2.12.6.jar, jackson-databind-2.12.6.1.jar
+##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.1.jar
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.12.6.1
 
 ##### json-schema-validator-1.0.28.jar
 - JSON Schema validation library
