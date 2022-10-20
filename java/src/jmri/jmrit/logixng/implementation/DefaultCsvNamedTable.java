@@ -28,6 +28,9 @@ import jmri.jmrit.logixng.NamedTableManager;
 public class DefaultCsvNamedTable extends AbstractNamedTable {
 
     private String _fileName;
+    public enum CsvType {
+        TABBED, RFC
+    }
     
     /**
      * Create a new named table.
@@ -45,6 +48,7 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
         super(sys,user,data);
         
         _fileName = fileName;
+
     }
     
     public String getFileName() {

@@ -45,6 +45,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     ButtonGroup _buttonGroup = new ButtonGroup();
     JTextField _csvFileName = new JTextField(50);
 
+    ButtonGroup _csvGroup = new ButtonGroup();
+    JRadioButton _csvTabbed = new JRadioButton(Bundle.getMessage("LogixNG_CsvType_Tabbed"));
+    JRadioButton _csvRFC = new JRadioButton(Bundle.getMessage("LogixNG_CsvType_RFC"));
+
+    JLabel _csvLabel = new JLabel(Bundle.getMessage("LogixNG_CsvType") + ":");
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -260,6 +265,19 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         p.add(_userNameLabel, c);
         _userNameLabel.setLabelFor(_addUserName);
         c.gridy = 2;
+        _csvLabel.setLabelFor(null);
+        p.add(_csvLabel, c);
+        JPanel csvPanel = new JPanel();
+        csvPanel.setLayout(new FlowLayout());
+        _csvGroup.add(_csvTabbed);
+        _csvGroup.add(_csvRFC);
+        _csvTabbed.setSelected(true);
+        csvPanel.add(_csvTabbed);
+        csvPanel.add(_csvRFC);
+        c.gridx = 1;
+        p.add(csvPanel,c);
+        c.gridx = 0;
+        c.gridy = 3;
         p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
 
         c.gridx = 1;
@@ -271,7 +289,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 1;
         p.add(_addUserName, c);
 
-        c.gridy = 2;
+        c.gridy = 3;
         createFileChooser();
         p.add(createFileChooser(), c);
 
