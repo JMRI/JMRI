@@ -211,7 +211,7 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
             return items;   // The list is empty
         }
 
-        NamedTable table = _selectNamedBean.getNamedBean().getBean();
+        NamedTable table = _selectNamedBean.getBean();
 
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
             int systemNameRow = table.getRowNumber(_rowOrColumnSystemName);
