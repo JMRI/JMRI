@@ -22,6 +22,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionBlock.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionClock.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionClockRate.class),
+                        new AbstractMap.SimpleEntry<>(Category.OTHER, ActionCreateBeansFromTable.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionDispatcher.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionEntryExit.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, ActionFindTableRowOrColumn.class),

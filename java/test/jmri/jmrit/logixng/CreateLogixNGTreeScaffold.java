@@ -532,6 +532,59 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionCreateBeansFromTable actionCreateBeansFromTable = new ActionCreateBeansFromTable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionCreateBeansFromTable = new ActionCreateBeansFromTable(digitalActionManager.getAutoSystemName(), null);
+        actionCreateBeansFromTable.setComment("A comment");
+        actionCreateBeansFromTable.getSelectNamedBean().setNamedBean(csvTable);
+        maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionCreateBeansFromTable = new ActionCreateBeansFromTable(digitalActionManager.getAutoSystemName(), null);
+        actionCreateBeansFromTable.setComment("A comment");
+        actionCreateBeansFromTable.getSelectNamedBean().setNamedBean(csvTable);
+        actionCreateBeansFromTable.setRowOrColumnSystemName("Signal before sysName");
+        actionCreateBeansFromTable.setRowOrColumnUserName("Signal before userName");
+        actionCreateBeansFromTable.setTableRowOrColumn(TableRowOrColumn.Row);
+        actionCreateBeansFromTable.setIncludeCellsWithoutHeader(false);
+        actionCreateBeansFromTable.setMoveUserName(true);
+        actionCreateBeansFromTable.setRemoveOldBean(false);
+        maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionCreateBeansFromTable = new ActionCreateBeansFromTable(digitalActionManager.getAutoSystemName(), null);
+        actionCreateBeansFromTable.setComment("A comment");
+        actionCreateBeansFromTable.getSelectNamedBean().setNamedBean(csvTable);
+        actionCreateBeansFromTable.setRowOrColumnSystemName("2");
+        actionCreateBeansFromTable.setRowOrColumnUserName("3");
+        actionCreateBeansFromTable.setTableRowOrColumn(TableRowOrColumn.Column);
+        actionCreateBeansFromTable.setIncludeCellsWithoutHeader(false);
+        actionCreateBeansFromTable.setMoveUserName(true);
+        actionCreateBeansFromTable.setRemoveOldBean(true);
+        maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionCreateBeansFromTable = new ActionCreateBeansFromTable(digitalActionManager.getAutoSystemName(), null);
+        actionCreateBeansFromTable.setComment("A comment");
+        actionCreateBeansFromTable.getSelectNamedBean().setNamedBean(csvTable);
+        actionCreateBeansFromTable.setRowOrColumnSystemName("Something");
+        actionCreateBeansFromTable.setIncludeCellsWithoutHeader(true);
+        actionCreateBeansFromTable.setMoveUserName(false);
+        actionCreateBeansFromTable.setRemoveOldBean(false);
+        maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionCreateBeansFromTable = new ActionCreateBeansFromTable(digitalActionManager.getAutoSystemName(), null);
+        actionCreateBeansFromTable.setComment("A comment");
+        actionCreateBeansFromTable.getSelectNamedBean().setNamedBean(csvTable);
+        actionCreateBeansFromTable.setIncludeCellsWithoutHeader(true);
+        maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionDispatcher actionDispatcher = new ActionDispatcher(digitalActionManager.getAutoSystemName(), null);
         actionDispatcher.getSelectEnum().setEnum(ActionDispatcher.DirectOperation.TrainPriority);
         maleSocket = digitalActionManager.registerAction(actionDispatcher);
