@@ -411,6 +411,8 @@
           <li>The ConditionalNG editor and the Module editor now have the option
           <i>Paste copy</i>. With it, you can paste from the clipboard as many times
           as needed.</li>
+          <li>The expression <i>Power</i> now supports the <i>Idle</i> status. Therefore
+          the option <i>Other</i> has been renamed to <i>Neither On or Off</i>.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

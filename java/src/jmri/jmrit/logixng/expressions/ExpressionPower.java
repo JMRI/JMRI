@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.util.parser.*;
 
 /**
  * This expression sets the state of a power.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ExpressionPower extends AbstractDigitalExpression
@@ -17,12 +17,12 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private PowerState _powerState = PowerState.On;
-    
+
     public ExpressionPower(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -35,23 +35,23 @@ public class ExpressionPower extends AbstractDigitalExpression
         copy.setBeanState(_powerState);
         return manager.registerExpression(copy);
     }
-    
+
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
     }
-    
+
     public Is_IsNot_Enum get_Is_IsNot() {
         return _is_IsNot;
     }
-    
+
     public void setBeanState(PowerState state) {
         _powerState = state;
     }
-    
+
     public PowerState getBeanState() {
         return _powerState;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -61,17 +61,23 @@ public class ExpressionPower extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        
+
         PowerState checkPowerState = _powerState;
-        
+
         PowerState currentPowerState =
                 PowerState.get(InstanceManager.getDefault(PowerManager.class)
                         .getPower());
-        
-        if (_is_IsNot == Is_IsNot_Enum.Is) {
-            return currentPowerState == checkPowerState;
+
+        boolean result;
+        if (_powerState == PowerState.NeitherOnOrOff) {
+            result = currentPowerState != PowerState.On && currentPowerState != PowerState.Off;
         } else {
-            return currentPowerState != checkPowerState;
+            result = currentPowerState == checkPowerState;
+        }
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
+            return result;
+        } else {
+            return !result;
         }
     }
 
@@ -94,13 +100,13 @@ public class ExpressionPower extends AbstractDigitalExpression
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Power_Long", _is_IsNot.toString(), _powerState._text);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -110,7 +116,7 @@ public class ExpressionPower extends AbstractDigitalExpression
             _listenersAreRegistered = true;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -120,56 +126,60 @@ public class ExpressionPower extends AbstractDigitalExpression
             _listenersAreRegistered = false;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         getConditionalNG().execute();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
+
+
     public enum PowerState {
         On(PowerManager.ON, Bundle.getMessage("PowerStateOn")),
         Off(PowerManager.OFF, Bundle.getMessage("PowerStateOff")),
-        Other(-1, Bundle.getMessage("PowerStateOther"));
-        
+        Idle(PowerManager.IDLE, Bundle.getMessage("PowerStateIdle")),
+        NeitherOnOrOff(-1, Bundle.getMessage("PowerStateNeitherOnOrOff"));
+
         private final int _id;
         private final String _text;
-        
+
         private PowerState(int id, String text) {
             this._id = id;
             this._text = text;
         }
-        
+
         static public PowerState get(int id) {
             switch (id) {
                 case PowerManager.OFF:
                     return Off;
-                    
+
                 case PowerManager.ON:
                     return On;
-                    
+
+                case PowerManager.IDLE:
+                    return Idle;
+
                 default:
-                    return Other;
+                    return NeitherOnOrOff;
             }
         }
-        
+
         public int getID() {
             return _id;
         }
-        
+
         @Override
         public String toString() {
             return _text;
         }
-        
+
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
-    
+
 }
