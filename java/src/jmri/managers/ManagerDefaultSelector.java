@@ -214,6 +214,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
      *         occur
      */
     @CheckForNull
+    @SuppressWarnings("unchecked")
     public InitializationException configure(Profile profile) {
         InitializationException error = null;
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
