@@ -78,11 +78,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
     StateMachine<Boolean> litMachine;
     StateMachine<Boolean> heldMachine;
     StateMachine<String> aspectMachine;
-    
+
     NodeID node;
     Connection connection;
-        
-    // not sure why this is a CanSystemConnectionMemo in simulator, but it is 
+
+    // not sure why this is a CanSystemConnectionMemo in simulator, but it is
     jmri.jmrix.can.CanSystemConnectionMemo systemMemo;
 
     protected void configureFromName(String systemName) {
@@ -121,7 +121,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         mast = mast.substring(0, mast.indexOf('('));
         setMastType(mast);
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(')')); // +2 because we're looking for 2 characters
-        
+
         try {
             mastNumber = Integer.parseInt(tmp);
             if (mastNumber > lastRef) {
@@ -134,25 +134,25 @@ public class OlcbSignalMast extends AbstractSignalMast {
         configureAspectTable(system, mast);
 
         if (systemMemo != null) { // initialization that requires a connection, normally present
-            node = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getNodeId();
-            connection = ((OlcbInterface)systemMemo.get(OlcbInterface.class)).getOutputConnection();
- 
+            node = systemMemo.get(OlcbInterface.class).getNodeId();
+            connection = systemMemo.get(OlcbInterface.class).getOutputConnection();
+
             litMachine = new StateMachine<>(connection, node, Boolean.TRUE);
             heldMachine = new StateMachine<>(connection, node, Boolean.FALSE);
             aspectMachine = new StateMachine<>(connection, node, getAspect());
-        
-            ((OlcbInterface)systemMemo.get(OlcbInterface.class)).registerMessageListener(new MessageDecoder(){
+
+            systemMemo.get(OlcbInterface.class).registerMessageListener(new MessageDecoder(){
                 @Override
                 public void put(Message msg, Connection sender) {
                     handleMessage(msg);
                 }
             });
 
-        }   
+        }
     }
 
     int mastNumber; // used to tell them apart
-    
+
     public void setOutputForAppearance(String appearance, String event) {
         aspectMachine.setEventForState(appearance, event);
     }
@@ -160,7 +160,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public boolean isOutputConfigured(String appearance) {
         return aspectMachine.getEventStringForState(appearance) != null;
     }
-    
+
     public String getOutputForAppearance(String appearance) {
         String retval = aspectMachine.getEventStringForState(appearance);
         if (retval == null) {
@@ -178,7 +178,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     /**
      * Handle incoming messages.
-     * 
+     *
      * @param msg the message to handle.
      */
     public void handleMessage(Message msg) {
@@ -186,24 +186,24 @@ public class OlcbSignalMast extends AbstractSignalMast {
         Boolean litBefore = litMachine.getState();
         Boolean heldBefore = heldMachine.getState();
         String aspectBefore = aspectMachine.getState(); // before the update
-        
+
         // handle message
         msg.applyTo(litMachine, null);
         msg.applyTo(heldMachine, null);
         msg.applyTo(aspectMachine, null);
-        
+
         // handle changes, if any
         if (!litBefore.equals(litMachine.getState())) firePropertyChange("Lit", litBefore, litMachine.getState());
         if (!heldBefore.equals(heldMachine.getState())) firePropertyChange("Held", heldBefore, heldMachine.getState());
-        
+
         this.aspect = aspectMachine.getState();  // after the update
         this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
         // need to check aspect != null because original getAspect (at ctor time) can return null, even though StateMachine disallows it.
         if (aspect==null || ! aspect.equals(aspectBefore)) firePropertyChange("Aspect", aspectBefore, aspect);
 
     }
-    
-    /** 
+
+    /**
      * Always communicates via OpenLCB
      */
     @Override
@@ -216,7 +216,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
         return litMachine.getState();
     }
 
-    /** 
+    /**
      * Always communicates via OpenLCB
      */
     @Override
@@ -259,10 +259,10 @@ public class OlcbSignalMast extends AbstractSignalMast {
     public String getNotHeldEventId() { return heldMachine.getEventStringForState(Boolean.FALSE); }
 
     /**
-     * Implement a general state machine where state transitions are 
+     * Implement a general state machine where state transitions are
      * associated with the production and consumption of specific events.
      * There's a one-to-one mapping between transitions and events.
-     * EventID storage is via Strings, so that the user-visible 
+     * EventID storage is via Strings, so that the user-visible
      * eventID string is preserved.
      */
     static class StateMachine<T> extends org.openlcb.MessageDecoder {
@@ -271,7 +271,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
             this.node = node;
             this.state = start;
         }
-        
+
         final Connection connection;
         final NodeID node;
         T state;
@@ -279,30 +279,30 @@ public class OlcbSignalMast extends AbstractSignalMast {
         protected final HashMap<T, String> stateToEventString = new HashMap<>();
         protected final HashMap<T, EventID> stateToEventID = new HashMap<>();
         protected final HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
-        
+
         public void setState(@Nonnull T newState) {
             log.debug("sending PCER to {}", getEventStringForState(newState));
             connection.put(
                     new ProducerConsumerEventReportMessage(node, getEventIDForState(newState)),
                     null);
         }
-        
+
         private static final EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
-        
+
         @Nonnull
         public T getState() { return state; }
-        
+
         public void setEventForState(@Nonnull T key, @Nonnull String value) {
             stateToEventString.put(key, value);
 
             EventID eid = new OlcbAddress(value).toEventID();
             stateToEventID.put(key, eid);
-            
+
             // check for whether already there; so, we're done.
             if (eventToState.get(eid) == null) {
                 // Not there yet, save it
                 eventToState.put(eid, key);
-            
+
                 if (! nullEvent.equals(eid)) { // and if not the null (i.e. not the "don't send") event
                     // emit Producer, Consumer Identified messages to show our interest
                     connection.put(
@@ -322,7 +322,7 @@ public class OlcbSignalMast extends AbstractSignalMast {
                 }
             }
         }
-        
+
         @CheckForNull
         public EventID getEventIDForState(@Nonnull T key) {
             EventID retval = stateToEventID.get(key);
@@ -450,9 +450,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
                     null);
             }
         }
-        
+
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
 
 }
