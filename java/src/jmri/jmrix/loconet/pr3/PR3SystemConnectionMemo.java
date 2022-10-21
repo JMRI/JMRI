@@ -31,7 +31,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         if (getDisabled()) {
             return null;
         }

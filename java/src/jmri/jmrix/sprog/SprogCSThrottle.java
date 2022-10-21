@@ -47,7 +47,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         //@see AbstractThrottleManager.supportedSpeedModes()
         // Find our command station
         if ((memo != null) && (memo.get(jmri.CommandStation.class) != null)) {
-            commandStation = memo.get(jmri.CommandStation.class);
+            commandStation = (SprogCommandStation) memo.get(jmri.CommandStation.class);
         } else {
             commandStation = (SprogCommandStation) jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class);
         }

@@ -88,19 +88,19 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
     }
 
     public MarklinTurnoutManager getTurnoutManager() {
-        return get(TurnoutManager.class);
+        return (MarklinTurnoutManager)get(TurnoutManager.class);
     }
 
     public MarklinSensorManager getSensorManager() {
-        return get(SensorManager.class);
+        return (MarklinSensorManager)get(SensorManager.class);
     }
 
     public MarklinThrottleManager getThrottleManager() {
-        return get(ThrottleManager.class);
+        return (MarklinThrottleManager)get(ThrottleManager.class);
     }
 
     public MarklinPowerManager getPowerManager() {
-        return get(PowerManager.class);
+        return (MarklinPowerManager)get(PowerManager.class);
     }
 
     @Override

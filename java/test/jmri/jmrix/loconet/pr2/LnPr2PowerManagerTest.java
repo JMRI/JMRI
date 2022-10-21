@@ -140,7 +140,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     @ToDo("investigate failure in parent class test and make corrections, either to initialization or to this overriden test")
     public void testStateOff() throws JmriException {
     }
-    
+
     @Test
     @Override
     public void testImplementsIdle() {
@@ -161,7 +161,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
         memo.configureManagers();
         jmri.InstanceManager.setThrottleManager(memo.getPr2ThrottleManager());
         memo.getPr2ThrottleManager().requestThrottleSetup(new jmri.DccLocoAddress(3,false),true);
-        p = pwr = memo.get(jmri.PowerManager.class);
+        p = pwr = (LnPowerManager) memo.get(jmri.PowerManager.class);
     }
 
     @AfterEach
