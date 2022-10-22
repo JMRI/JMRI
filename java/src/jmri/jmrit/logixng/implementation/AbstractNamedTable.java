@@ -29,6 +29,7 @@ import static jmri.jmrit.logixng.implementation.DefaultCsvNamedTable.CsvType.TAB
  * The default implementation of a NamedTable
  *
  * @author Daniel Bergqvist 2018
+ * @author J. Scott Walton (c) 2022 (Csv Types)
  */
 public abstract class AbstractNamedTable extends AbstractNamedBean implements NamedTable {
 

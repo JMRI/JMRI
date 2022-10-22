@@ -35,6 +35,7 @@ import jmri.util.JmriJFrame;
  * @author Matthew Harris copyright (c) 2009  (ConditionalListEdit)
  * @author Dave Sand copyright (c) 2017  (ConditionalListEdit)
  * @author Daniel Bergqvist (c) 2019
+ * @author J. Scott Walton (c) 2022 (Csv Types)
  */
     public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
 
@@ -182,6 +183,25 @@ import jmri.util.JmriJFrame;
             contentPane.add(panel3);
 
             if (isCsvTable) {
+                JPanel csvTypePanel = new JPanel();
+                csvTypePanel.setLayout(new FlowLayout());
+                csvTypePanel.add(new JLabel(Bundle.getMessage("TableEditor_Csv_Type") + ":"));
+                ButtonGroup csvGroup = new ButtonGroup();
+                JButton tabbedButton = new JButton(Bundle.getMessage("TableEditor_Csv_Tabbed"));
+                csvTypePanel.add(tabbedButton);
+                JButton rfcButton = new JButton(Bundle.getMessage("TableEditor_Csv_RFC"));
+                csvTypePanel.add(rfcButton);
+                csvGroup.add(tabbedButton);
+                csvGroup.add(rfcButton);
+                DefaultCsvNamedTable.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
+                if (csvType == null || csvType.equals(DefaultCsvNamedTable.CsvType.TABBED)) {
+                    tabbedButton.setSelected(true);
+                } else if (csvType.equals(DefaultCsvNamedTable.CsvType.RFC)) {
+                    rfcButton.setSelected(true);
+                } else {
+                    throw new RuntimeException("unrecognized csvType");
+                }
+                contentPane.add(csvTypePanel);
                 JPanel panel4 = new JPanel();
                 panel4.setLayout(new FlowLayout());
                 JLabel tableFileNameLabel = new JLabel(Bundle.getMessage("TableEditor_FileName") + ": ");  // NOI18N

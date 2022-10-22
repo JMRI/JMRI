@@ -38,6 +38,7 @@ import jmri.jmrit.logixng.tools.swing.TableEditor;
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
  * @author Dave Sand copyright (c) 2021
+ * @author J. Scott Walton (c) 2022 (Csv types)
  */
 public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
