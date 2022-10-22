@@ -127,10 +127,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
                 String[] newCells = new String[numColumns];
                 System.arraycopy(cells, 0, newCells, 0, cells.length);
                 csvCells[rowCount] = newCells;
-                for (int i = cells.length; i < numColumns; i++) {
-                    newCells[i] = "";
+                for (int i = cells.length; i < numColumns; i++) newCells[i] = "";
                     csvCells[rowCount] = newCells;
-                }
             }
         }
 
