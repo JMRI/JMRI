@@ -1,14 +1,17 @@
 package jmri.jmrix.bachrus;
 
-import jmri.util.startup.AbstractStartupActionFactory;
 import java.util.Locale;
+import jmri.util.startup.AbstractStartupActionFactory;
+import jmri.util.startup.StartupActionFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
- * {@link apps.startup.StartupActionFactory} for the
+ * {@link jmri.util.startup.StartupActionFactory} for the
  * {@link jmri.jmrix.bachrus.SpeedoConsoleAction}.
  * 
- * @author Todd Wegter Copyright (C) 2019
+ * @author Todd Wegter Copyright (C) 2022
  */
+@ServiceProvider(service = StartupActionFactory.class)
 public class SpeedoStartupActionFactory extends AbstractStartupActionFactory{
 
     @Override
