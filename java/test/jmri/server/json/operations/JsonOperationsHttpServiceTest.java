@@ -140,6 +140,8 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean()).isFalse();
         assertThat(data.path(JSON.STATUS).isValueNode()).isTrue();
         assertThat(data.path(JSON.STATUS).asText().isEmpty()).isTrue();
+        assertThat(data.path(JSON.IS_LOCAL).isValueNode()).isTrue();
+        assertThat(data.path(JSON.IS_LOCAL).asBoolean()).isFalse();
         // add (PUT) a car
         data = mapper.createObjectNode().put(JSON.ROAD, "MEC").put(JSON.NUMBER, "31995");
         validateData(JsonOperations.CAR, data, false);
@@ -196,6 +198,8 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean()).isFalse();
         assertThat(data.path(JSON.STATUS).isValueNode()).isTrue();
         assertThat(data.path(JSON.STATUS).asText().isEmpty()).isTrue();
+        assertThat(data.path(JSON.IS_LOCAL).isValueNode()).isTrue();
+        assertThat(data.path(JSON.IS_LOCAL).asBoolean()).isFalse();
         // delete a car
         data = mapper.createObjectNode().put(JSON.NAME, car.getId());
         validateData(JsonOperations.CAR, data, false);
@@ -295,6 +299,8 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(data.path(JsonOperations.OUT_OF_SERVICE).asBoolean()).isTrue();
         assertThat(data.path(JSON.STATUS).isValueNode()).isTrue();
         assertThat(data.path(JSON.STATUS).asText()).as("Out of service status").isEqualTo("<O> ");
+        assertThat(data.path(JSON.IS_LOCAL).isValueNode()).isTrue();
+        assertThat(data.path(JSON.IS_LOCAL).asBoolean()).isFalse();
         // edit a non-existent car
         assertThat(manager.getById("-1")).isNull();
         assertThatCode(() -> service.doPost(JsonOperations.CAR, "-1", NullNode.getInstance(),
