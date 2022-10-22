@@ -34,9 +34,6 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
 
     @Override
     public void setPower(int v) throws JmriException {
-        int old = power;
-        power = UNKNOWN;
-
         checkTC();
         if (v == ON) {
             // send GPON
@@ -54,8 +51,6 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
             l.setOpCode(LnConstants.OPC_IDLE);
             tc.sendLocoNetMessage(l);
         }
-
-        firePowerPropertyChange(old, power);
     }
 
     // to free resources when no longer used
@@ -169,7 +164,7 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
             log.trace("LnTrackStatusUpdateThread start check loop");
             for (int i = 1; i <=10; i++) {
                 if (tc.status()) break; // TrafficController is reporting ready
-                
+
                 log.trace("LnTrackStatusUpdateThread waiting {} time", i);
                 // else wait, then try again
                 try {
@@ -188,7 +183,7 @@ public class LnPowerManager extends AbstractPowerManager<LocoNetSystemConnection
                 Thread.currentThread().interrupt(); // retain if needed later
                 return; // and stop work
             }
-            
+
             log.trace("LnTrackStatusUpdateThread sending request");
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
