@@ -18,9 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
 
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
@@ -41,6 +39,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -451,8 +450,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             checkCustomScale();
         });
 
-
-
         scaleLabel.setText(Bundle.getMessage("Scale"));
         scaleLabel.setVisible(true);
 
@@ -592,12 +589,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         basicPane.add(speedPanel);
 
         //</editor-fold>
-        //<editor-fold defaultstate="collapsed" desc="Speed Profiling and Speed Matching Panels">
-        /*
-         * Pane for profiling loco speed curve
-         */
-        JPanel profilePane = new JPanel();
-        profilePane.setLayout(new BorderLayout());
+        //<editor-fold defaultstate="collapsed" desc="Address, Speed Profiling, Speed Matching,and Title Panels">
+         JPanel profileAndSpeedMatchingPane = new JPanel();
+        profileAndSpeedMatchingPane.setLayout(new BorderLayout());
 
         //<editor-fold defaultstate="collapsed" desc="Address Panel">
         JPanel addrPane = new JPanel();
@@ -657,11 +651,17 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         topLeftPane.add(modePanel, BorderLayout.NORTH);
         topLeftPane.add(addrPane, BorderLayout.SOUTH);
 
-        profilePane.add(topLeftPane, BorderLayout.NORTH);
+        profileAndSpeedMatchingPane.add(topLeftPane, BorderLayout.NORTH);
 
 
         //</editor-fold>
-        //<editor-fold defaultstate="collapsed" desc="Graph and Buttons Panel">
+        //<editor-fold defaultstate="collapsed" desc="Speed Matching and Profiling Panels">
+        JTabbedPane profileAndSpeedMatchingTabs = new JTabbedPane();
+
+        // Pane for profiling loco speed curve
+        JPanel profilePane = new JPanel();
+        profilePane.setLayout(new BorderLayout());
+
         // pane to hold the graph
         spFwd = new DccSpeedProfile(29);       // 28 step plus step 0
         spRev = new DccSpeedProfile(29);       // 28 step plus step 0
@@ -691,48 +691,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profileButtonPane.add(loadProfileButton);
         loadProfileButton.setToolTipText(Bundle.getMessage("TTLoadProfile"));
 
-        // pane to hold the title
-        JPanel profileTitlePane = new JPanel();
-        profileTitlePane.setLayout(new BoxLayout(profileTitlePane, BoxLayout.X_AXIS));
-        //JTextArea profileTitle = new JTextArea("Title: ");
-        //profileTitlePane.add(profileTitle);
-        printTitleText.setToolTipText(Bundle.getMessage("TTPrintTitle"));
-        printTitleText.setText(Bundle.getMessage("TTText1"));
-        profileTitlePane.add(printTitleText);
-
         // pane to wrap buttons and title
         JPanel profileSouthPane = new JPanel();
         profileSouthPane.setLayout(new BoxLayout(profileSouthPane, BoxLayout.Y_AXIS));
         profileSouthPane.add(profileButtonPane);
-
-        //</editor-fold>
-        //<editor-fold defaultstate="collapsed" desc="Speed Matching Panel">
-        // pane for speed matching
-        speedStep1TargetField.setHorizontalAlignment(JTextField.RIGHT);
-        speedStep1TargetUnit.setPreferredSize(new Dimension(35, 16));
-        speedStep28TargetField.setHorizontalAlignment(JTextField.RIGHT);
-        speedStep28TargetUnit.setPreferredSize(new Dimension(35, 16));
-        speedMatchWarmUpCheckBox.setSelected(true);
-
-        profileSouthPane.add(new JSeparator());
-
-        JPanel speedMatchPane = new JPanel();
-        speedMatchPane.setLayout(new FlowLayout());
-        speedMatchPane.add(speedStep1TargetLabel);
-        speedMatchPane.add(speedStep1TargetField);
-        speedMatchPane.add(speedStep1TargetUnit);
-        speedMatchPane.add(speedStep28TargetLabel);
-        speedMatchPane.add(speedStep28TargetField);
-        speedMatchPane.add(speedStep28TargetUnit);
-        speedMatchPane.add(speedMatchWarmUpCheckBox);
-        speedMatchPane.add(speedMatchButton);
-        profileSouthPane.add(speedMatchPane);
-
-        profileSouthPane.add(profileTitlePane);
-
         profilePane.add(profileSouthPane, BorderLayout.SOUTH);
 
-        //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Control Panel">
         // Pane to hold controls
         JPanel profileControlPane = new JPanel();
@@ -823,24 +787,68 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
             profileGraphPane.repaint();
         });
+        
+        profileAndSpeedMatchingTabs.addTab("Speed Profile", profilePane);
+        //</editor-fold>
+        
+         //<editor-fold defaultstate="collapsed" desc="Basic Speed Matching Panel">
+        // pane for speed matching
+        // TODO: TRW - Add momentum setting
+        // TODO: TRW - Add reverse toggle
+        // TODO: TRW - Add description of limitations
+        speedStep1TargetField.setHorizontalAlignment(JTextField.RIGHT);
+        speedStep1TargetUnit.setPreferredSize(new Dimension(35, 16));
+        speedStep28TargetField.setHorizontalAlignment(JTextField.RIGHT);
+        speedStep28TargetUnit.setPreferredSize(new Dimension(35, 16));
+        speedMatchWarmUpCheckBox.setSelected(true);
+        JPanel speedMatchPane = new JPanel();
+        speedMatchPane.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        speedMatchPane.add(speedStep1TargetLabel, gbc);
+        speedMatchPane.add(speedStep1TargetField, gbc);
+        speedMatchPane.add(speedStep1TargetUnit, gbc);
+        speedMatchPane.add(speedStep28TargetLabel, gbc);
+        speedMatchPane.add(speedStep28TargetField, gbc);
+        speedMatchPane.add(speedStep28TargetUnit, gbc);
+        speedMatchPane.add(speedMatchWarmUpCheckBox, gbc);
+        speedMatchPane.add(speedMatchButton, gbc);
+        profileAndSpeedMatchingTabs.addTab("Basic Speed Matching", speedMatchPane);
+
+        profileAndSpeedMatchingPane.add(profileAndSpeedMatchingTabs, BorderLayout.CENTER);
+        //</editor-fold>
+       
+        //<editor-fold defaultstate="collapsed" desc="Advanced Speed Matching Panel">
+        // TODO: TRW - Add complex speed table based speed matching
+        //</editor-fold>
+        // pane to hold the title
+        JPanel titlePane = new JPanel();
+        titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
+        titlePane.setBorder(new EmptyBorder(3, 0, 3, 0));
+        //JTextArea profileTitle = new JTextArea("Title: ");
+        //profileTitlePane.add(profileTitle);
+        printTitleText.setToolTipText(Bundle.getMessage("TTPrintTitle"));
+        printTitleText.setText(Bundle.getMessage("TTText1"));
+        titlePane.add(printTitleText);
+
+        profileAndSpeedMatchingPane.add(titlePane, BorderLayout.SOUTH);
 
         //</editor-fold>
         //</editor-fold>
-        /*
-         * Create the tabbed pane and add the panes
-         */
-        JPanel tabbedPane = new JPanel();
-        tabbedPane.setLayout(new BoxLayout(tabbedPane, BoxLayout.X_AXIS));
+
+        // Create the main pane and add the sub-panes
+        JPanel mainPane = new JPanel();
+        mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.X_AXIS));
         // make basic panel
-        tabbedPane.add(basicPane);
+        mainPane.add(basicPane);
 
-        if (((dccServices & THROTTLE) == THROTTLE)
-                || ((dccServices & COMMAND) == COMMAND)) {
-            tabbedPane.add(profilePane);
-        } else {
-            log.info("{} Connection:{}", Bundle.getMessage("StatNoDCC"), _memo.getUserName());
-            statusLabel.setText(Bundle.getMessage("StatNoDCC"));
-        }
+        //TODO: TRW - add profilePane without condition to test/debug without DCC system
+        //if (((dccServices & THROTTLE) == THROTTLE)
+        //        || ((dccServices & COMMAND) == COMMAND)) {
+            mainPane.add(profileAndSpeedMatchingPane);
+        //} else {
+        //   log.info("{} Connection:{}", Bundle.getMessage("StatNoDCC"), _memo.getUserName());
+        //   statusLabel.setText(Bundle.getMessage("StatNoDCC"));
+        //}
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrix.bachrus.SpeedoConsoleFrame", true);
@@ -853,7 +861,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         statusPanel.add(statusLabel, BorderLayout.WEST);
 
         statusPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
-        statusWrapper.add(tabbedPane, BorderLayout.CENTER);
+        statusWrapper.add(mainPane, BorderLayout.CENTER);
         statusWrapper.add(statusPanel, BorderLayout.SOUTH);
 
         getContentPane().add(statusWrapper);
