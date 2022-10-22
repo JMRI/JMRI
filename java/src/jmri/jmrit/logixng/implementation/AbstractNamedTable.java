@@ -16,6 +16,7 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
+import jmri.util.FileUtil;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BOMInputStream;
@@ -166,16 +167,24 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String fileName, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName,
+                                                   @CheckForNull String userName,
+                                                   @Nonnull String fileName,
+                                                   boolean registerInManager,
+                                                   DefaultCsvNamedTable.CsvType csvType)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
 
         //List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
-        List<List<String>> lines = readIt(new File(fileName),  csvType);
+        List<List<String>> lines = readIt(FileUtil.getFile(fileName),  csvType);
         return loadFromCSV(systemName, userName, fileName, lines, registerInManager, csvType);
     }
 
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName, @CheckForNull String userName, @Nonnull File file, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName,
+                                                   @CheckForNull String userName,
+                                                   @Nonnull File file,
+                                                   boolean registerInManager,
+                                                   DefaultCsvNamedTable.CsvType csvType)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
 
         //List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
