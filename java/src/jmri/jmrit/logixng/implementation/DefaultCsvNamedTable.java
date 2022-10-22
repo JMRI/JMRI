@@ -28,9 +28,12 @@ import jmri.jmrit.logixng.NamedTableManager;
 public class DefaultCsvNamedTable extends AbstractNamedTable {
 
     private String _fileName;
+
     public enum CsvType {
         TABBED, RFC
     }
+
+    private CsvType _csvType;
     
     /**
      * Create a new named table.
@@ -43,12 +46,13 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
     public DefaultCsvNamedTable(
             @Nonnull String sys, @CheckForNull String user,
             @CheckForNull String fileName,
-            @Nonnull Object[][] data)
+            @Nonnull Object[][] data,
+            CsvType csvType)
             throws BadUserNameException, BadSystemNameException {
         super(sys,user,data);
         
         _fileName = fileName;
-
+        _csvType = csvType;
     }
     
     public String getFileName() {
@@ -58,5 +62,13 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
     public void setFileName(String fileName) {
         this._fileName = fileName;
     }
-    
+
+    public void setCsvType(CsvType csvType) {
+        _csvType = csvType;
+    }
+
+    public CsvType getCsvType() {
+        return _csvType;
+    }
+
 }

@@ -1,10 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,19 +12,17 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.NamedBean.BadUserNameException;
-import jmri.NamedBean.BadSystemNameException;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
-import jmri.util.FileUtil;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.io.input.CharSequenceReader;
+
+import static jmri.jmrit.logixng.implementation.DefaultCsvNamedTable.CsvType.TABBED;
 
 
 /**
@@ -95,7 +90,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     @Nonnull
-    private static NamedTable loadFromCSV(@Nonnull String systemName, @CheckForNull String userName, @CheckForNull String fileName, @Nonnull List<List<String>> lines, boolean registerInManager) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+    private static NamedTable loadFromCSV(@Nonnull String systemName, @CheckForNull String userName, @CheckForNull String fileName, @Nonnull List<List<String>> lines, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
 
         NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
 
@@ -136,7 +132,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             }
         }
 
-        NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells);
+        NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells, csvType);
 
         if (registerInManager)
             manager.register(table);
@@ -159,32 +155,34 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     @Nonnull
-    public static NamedTable loadTableFromCSV_Text(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String text, boolean registerInManager)
+    public static NamedTable loadTableFromCSV_Text(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String text, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
             throws BadUserNameException, BadSystemNameException, IOException{
 
         //List<String> lines = Arrays.asList(text.split("\\r?\\n", -1));
         Reader rdr = new CharSequenceReader(text);
         List<List<String>> lines = parseCSV(rdr, CSVFormat.TDF);
-        return loadFromCSV(systemName, userName, null, lines, registerInManager);
+        return loadFromCSV(systemName, userName, null, lines, registerInManager, csvType);
     }
 
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String fileName, boolean registerInManager) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String fileName, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
 
         //List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
-        List<List<String>> lines = readIt(new File(fileName));
-        return loadFromCSV(systemName, userName, fileName, lines, registerInManager);
+        List<List<String>> lines = readIt(new File(fileName),  csvType);
+        return loadFromCSV(systemName, userName, fileName, lines, registerInManager, csvType);
     }
 
     @Nonnull
-    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName, @CheckForNull String userName, @Nonnull File file, boolean registerInManager) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+    public static NamedTable loadTableFromCSV_File(@Nonnull String systemName, @CheckForNull String userName, @Nonnull File file, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
 
         //List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        List<List<String>> lines = readIt(file);
-        return loadFromCSV(systemName, userName, file.getPath(), lines, registerInManager);
+        List<List<String>> lines = readIt(file, csvType);
+        return loadFromCSV(systemName, userName, file.getPath(), lines, registerInManager, csvType);
     }
 
-    private static List<List<String>> readIt(File infile) throws IOException {
+    private static List<List<String>> readIt(File infile, DefaultCsvNamedTable.CsvType csvType) throws IOException {
         List<List<String>> returnList = null;
         InputStream in = null;
         in = FileUtils.openInputStream(infile);
@@ -194,7 +192,15 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         }
         InputStreamReader rdr = new InputStreamReader(bomInputStream);
         BufferedReader buffered = new BufferedReader(rdr);
-        returnList = parseCSV(buffered, CSVFormat.TDF);
+        CSVFormat format = null;
+        if (csvType == TABBED) {
+            format = CSVFormat.TDF;
+        } else if (csvType == DefaultCsvNamedTable.CsvType.RFC) {
+            format = CSVFormat.RFC4180;
+        } else {
+            throw new IOException("Unrecognized CSV Format");
+        }
+        returnList = parseCSV(buffered, format);
         return returnList;
     }
 

@@ -395,7 +395,7 @@ import jmri.util.JmriJFrame;
                 AbstractNamedTable.loadTableFromCSV_File(
                         "IQT1",     // Arbitrary LogixNG table name
 //                        InstanceManager.getDefault(NamedTableManager.class).getAutoSystemName(),
-                        null, csvFileName, false);
+                        null, csvFileName, false, ((DefaultCsvNamedTable) _curTable).getCsvType());
             } catch (java.nio.file.NoSuchFileException ex) {
                 log.error("Cannot load table due since the file is not found", ex);
                 JOptionPane.showMessageDialog(_editLogixNGFrame,

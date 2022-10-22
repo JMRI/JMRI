@@ -35,7 +35,16 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         storeCommon(p, element);
         
         element.addContent(new Element("fileName").addContent(p.getFileName()));
-        
+        DefaultCsvNamedTable.CsvType csvType = p.getCsvType();
+        String csvString;
+        if (csvType == null || csvType.equals(DefaultCsvNamedTable.CsvType.TABBED)) {
+            csvString = "Tabbed";
+        } else if (csvType.equals(DefaultCsvNamedTable.CsvType.RFC)) {
+            csvString = "RFC";
+        } else {
+            throw new RuntimeException("Unrecognized CSVType");
+        }
+        element.addContent(new Element("csvType").addContent(csvString));
         return element;
     }
     
@@ -44,7 +53,16 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         String fileName = shared.getChild("fileName").getTextTrim();
-        NamedTable h = InstanceManager.getDefault(NamedTableManager.class).newCSVTable(sys, uname, fileName);
+        String csvString = "Tabbed";
+        if (shared.getChild("csvType") != null)
+            csvString = shared.getChild("csvType").getTextTrim();
+        DefaultCsvNamedTable.CsvType csvType = DefaultCsvNamedTable.CsvType.TABBED;
+        if (csvString == null || csvString.equals("Tabbed")) {
+            csvType = DefaultCsvNamedTable.CsvType.TABBED;
+        } else if (csvString.equals("RFC")) {
+            csvType = DefaultCsvNamedTable.CsvType.RFC;
+        }
+        NamedTable h = InstanceManager.getDefault(NamedTableManager.class).newCSVTable(sys, uname, fileName, csvType);
         
         loadCommon(h, shared);
         

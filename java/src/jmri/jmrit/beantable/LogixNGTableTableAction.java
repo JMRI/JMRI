@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.Manager;
+import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
@@ -118,8 +119,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                         JOptionPane.ERROR_MESSAGE);
                 return null;
             }
-            return InstanceManager.getDefault(NamedTableManager.class)
-                    .newCSVTable(systemName, userName, fileName);
+            if (_csvTabbed.isSelected()) {
+                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName);
+            } else if (_csvRFC.isSelected()) {
+                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, DefaultCsvNamedTable.CsvType.RFC);
+            }
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
@@ -219,12 +223,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             // handle selection or cancel
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 // set selected file location
-                try {
-                    _csvFileName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
-                } catch (java.io.IOException ex) {
-                    log.error("exception setting file location", ex);  // NOI18N
-                    _csvFileName.setText("");
-                }
+                _csvFileName.setText(csvFileChooser.getSelectedFile().toString());
             }
         });
         return selectFileButton;

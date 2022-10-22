@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
 
 /**
  * A manager for a NamedTable
@@ -36,7 +37,11 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @return the new table
      */
     public NamedTable newCSVTable(String systemName, String userName, String fileName);
-    
+
+
+    public NamedTable newCSVTable(String systemName, String userName, String fileName, DefaultCsvNamedTable.CsvType csvType);
+
+
     /**
      * Create a new internal named table.
      * This table is stored in the manager together with its contents. Note
