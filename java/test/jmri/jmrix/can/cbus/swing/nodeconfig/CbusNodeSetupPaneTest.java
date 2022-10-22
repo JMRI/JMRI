@@ -31,11 +31,11 @@ public class CbusNodeSetupPaneTest {
 
         CbusNodeSetupPane t = new CbusNodeSetupPane(null);
         t.setNode(nodeToEdit); // node num 256
-        
+
         Assertions.assertNotNull(t);
 
     }
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis = null;
     private CbusNodeTableDataModel nodeModel = null;
@@ -50,11 +50,11 @@ public class CbusNodeSetupPaneTest {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         memo.register();
-        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class)).provide(CbusNodeTableDataModel.class);
+        nodeModel = memo.get(CbusConfigurationManager.class).provide(CbusNodeTableDataModel.class);
         nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
         nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
-        
+
     }
 
     @AfterEach
@@ -69,7 +69,7 @@ public class CbusNodeSetupPaneTest {
         memo.dispose();
         memo = null;
         tcis = null;
-        
+
         JUnitUtil.tearDown();
 
     }

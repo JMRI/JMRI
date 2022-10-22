@@ -37,20 +37,20 @@ public class CbusCreateBeanPaneTest  {
         // for now, just makes sure there isn't an exception.
         assertNotNull(new CbusCreateBeanPane(mainPane));
     }
-    
+
     @Test
     public void testCreateBean() {
         // for now, just makes sure there isn't an exception.
-        
+
         CbusCreateBeanPane t = new CbusCreateBeanPane(mainPane);
-        
+
         JmriJFrame f = new JmriJFrame();
         f.add(t);
         f.setTitle("Test CBUS Create Bean");
         f.pack();
         f.setVisible(true);
         JFrameOperator jfo = new JFrameOperator( "Test CBUS Create Bean" );
-        
+
         dm = new CbusEventTableDataModel(memo,0,0);
         dm.provideEvent(123, 456).setName("TestEvent1");
         dm.provideEvent(0, 7);
@@ -67,46 +67,46 @@ public class CbusCreateBeanPaneTest  {
         });
         dialog_thread.setName("Reminder Dialog Close Thread");
         dialog_thread.start();
-        
+
         t.transferArray[0].importData(new JLabel("Turnout"), trnfr);
-        
+
         JUnitUtil.waitFor(()->{return !(dialog_thread.isAlive());}, "Reminder Dialog closed");
 
         t.transferArray[0].importData(new JLabel("NotABeanType"), trnfr);
 
         assertNotNull(memo);
-        NamedBean bean = ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).getBySystemName("MT+N123E456"); 
-        NamedBean notAbean = ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).getBySystemName("NotABean");
-        
+        NamedBean bean = memo.get(jmri.TurnoutManager.class).getBySystemName("MT+N123E456");
+        NamedBean notAbean = memo.get(jmri.TurnoutManager.class).getBySystemName("NotABean");
+
         assertNotNull(bean);
         assertNull(notAbean);
-        
+
         table.setRowSelectionInterval(1, 1);
         trnfr = dh.createTransferable(table);
-        
+
         t.transferArray[2].importData(new JLabel("Light"), trnfr);
         t.transferArray[2].importData(new JLabel("Light"), trnfr);
-        
-        bean = ((jmri.LightManager) memo.get(jmri.LightManager.class)).getBySystemName("ML+7"); 
-        notAbean = ((jmri.LightManager) memo.get(jmri.LightManager.class)).getBySystemName("NotABean");
-        
+
+        bean = memo.get(jmri.LightManager.class).getBySystemName("ML+7");
+        notAbean = memo.get(jmri.LightManager.class).getBySystemName("NotABean");
+
         assertNotNull(bean);
         assertNull(notAbean);
 
         new JTextFieldOperator(jfo,0).setText("NewName");
         new JButtonOperator(jfo,0).doClick();
         assertEquals("NewName",bean.getUserName());
-        
+
         dh.dispose();
-        
+
     }
-    
+
     private static class TestPane extends CanPanel{
     }
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis = null;
-    
+
     private TestPane mainPane = null;
     private CbusEventTableDataModel dm;
 

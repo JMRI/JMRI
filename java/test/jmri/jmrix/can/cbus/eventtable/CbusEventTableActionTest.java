@@ -211,7 +211,7 @@ public class CbusEventTableActionTest {
         sm = (CbusSensorManager) memo.get(jmri.SensorManager.class);
         lm = (CbusLightManager) memo.get(jmri.LightManager.class);
 
-        model = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        model = memo.get(CbusConfigurationManager.class)
             .provide(CbusEventTableDataModel.class);
 
     }

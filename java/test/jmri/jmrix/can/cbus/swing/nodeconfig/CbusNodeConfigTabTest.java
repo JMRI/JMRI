@@ -31,7 +31,7 @@ public class CbusNodeConfigTabTest {
         protected void changedNode( CbusNode node ) {}
 
     }
-    
+
     @Test
     public void testCtor() {
 
@@ -40,17 +40,17 @@ public class CbusNodeConfigTabTest {
         Assert.assertNotNull("exists",nodeToEdit);
         t.dispose();
     }
-    
+
     @Test
     public void testInit() {
 
         TestClass t = new TestClass(null);
         t.setNode(nodeToEdit); // node num 256
-        
+
         Assert.assertNotNull("exists",t);
         t.dispose();
     }
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis = null;
     private CbusNodeTableDataModel nodeModel = null;
@@ -64,15 +64,15 @@ public class CbusNodeConfigTabTest {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
-        
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
-        
+
         nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
         nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
-        
+
     }
 
     @AfterEach
@@ -87,7 +87,7 @@ public class CbusNodeConfigTabTest {
         memo.dispose();
         memo = null;
         tcis = null;
-        
+
         JUnitUtil.tearDown();
 
     }
