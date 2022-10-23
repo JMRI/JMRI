@@ -292,9 +292,12 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 153) {  // TCS
             productIDhighest = value;
             if (((productIDlowest >= 129 && productIDlowest <= 135) && (productIDlow == 5))||(modelID >= 5)){
-                productID = productIDlowest+(productIDlow*256)+(productIDhigh*256*256)+(productIDhighest*256*256*256);
-            } else if ((((productIDlowest >= 129 && productIDlowest <= 135) || (productIDlowest >= 170 && productIDlowest <= 172) || productIDlowest == 180) && (modelID == 4)) ||
-                ((productIDlowest == 180) && (modelID == 5))) {
+                if ((productIDlowest == 180) && (modelID == 5)) {
+                    productID = productIDlowest+(productIDlow*256);
+                } else {
+                    productID = productIDlowest+(productIDlow*256)+(productIDhigh*256*256)+(productIDhighest*256*256*256);
+                }
+            } else if ((((productIDlowest >= 129 && productIDlowest <= 135) || (productIDlowest >= 170 && productIDlowest <= 172) || productIDlowest == 180) && (modelID == 4))) {
                 productID = productIDlowest+(productIDlow*256);
             } else {
                 productID = productIDlowest;
