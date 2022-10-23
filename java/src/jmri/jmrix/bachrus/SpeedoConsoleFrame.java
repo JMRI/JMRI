@@ -295,15 +295,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //</editor-fold>
    //<editor-fold defaultstate="collapsed" desc="Basic Speed Matching GUI Elements">
     protected JLabel basicSpeedMatchInfo = new JLabel("<html><p>" + 
-        "You may need to adjust some of the provided settings to use this speed matcher with your decoders as different decoder manufacturers interpret the NMRA standards differently." +
+        "You may need to adjust some of the provided settings since different decoder manufacturers interpret the NMRA standards differently." +
         "<br/><br/>Settings for some common manufactures:" +
         "<br/><ul>" +
-        "<li>NCE - simple or complex speed table, disable Trim Reverse Speed - (NCE implements the trim CVs in a way that doesn't work well for automated speed matching)</li>" +
-        "<li>Digitrax - complex speed table, enable Trim Reverse Speed - (Digitrax only uses the trim CVs when using the complex speed table</li>" +
-        "<li>ESU - simple speed table, enable Trim Reverse Speed - (ESU still respects CVs 2 and 5 when using the complex speed table, which doesn't work with how this speed matcher sets the complex speed table)</li>" +
-        "<li>SoundTraxx - simple or complex speed table, enable Trim Reverse Speed</li>" +
+	"<li>NCE - simple or complex speed table, disable Trim Reverse Speed</li>" +
+        "<li>Digitrax - complex speed table only, enable or disable Trim Reverse Speed</li>" +
+        "<li>ESU - simple speed table only, enable Trim Reverse Speed</li>" +
+        "<li>SoundTraxx - simple or complex speed table, enable or disable Trim Reverse Speed</li>" +
         "</ul>" +
-        "It is recommended to enable Warm Up Locomotive if you haven't been running your locomotive. This will yield a more accurate result." +
+	"It is recommended to enable Warm Up Locomotive if your locomotive isn't already warmed up to help achieve a more accurate result." +
         "<br/><br/></p></html>");
     
     protected JLabel speedMatchForwardMomentumLabel = new JLabel("Forward Momentum: ");
@@ -858,6 +858,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedMatchTableTypePane.add(speedMatchComplexTableButton);
         basicSpeedMatchSettingsPane.add(speedMatchTableTypePane);
 
+        //Other Settings
+        JPanel speedMatchOtherSettingsPane = new JPanel();
+        speedMatchOtherSettingsPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Other Speed Matching Settings"));
+        speedMatchOtherSettingsPane.setLayout(new FlowLayout());
+        speedMatchOtherSettingsPane.add(speedMatchWarmUpCheckBox);
+        speedMatchOtherSettingsPane.add(speedMatchReverseCheckbox);
+        basicSpeedMatchSettingsPane.add(speedMatchOtherSettingsPane);
+        
         //Momentum
         JPanel speedMatchMomentumPane = new JPanel();
         speedMatchMomentumPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Set Momentum (If Desired)"));
@@ -867,14 +875,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedMatchMomentumPane.add(speedMatchReverseMomentumLabel);
         speedMatchMomentumPane.add(speedMatchReverseMomentumField);
         basicSpeedMatchSettingsPane.add(speedMatchMomentumPane);
-
-        //Other Settings
-        JPanel speedMatchOtherSettingsPane = new JPanel();
-        speedMatchOtherSettingsPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Other Speed Matching Settings"));
-        speedMatchOtherSettingsPane.setLayout(new FlowLayout());
-        speedMatchOtherSettingsPane.add(speedMatchWarmUpCheckBox);
-        speedMatchOtherSettingsPane.add(speedMatchReverseCheckbox);
-        basicSpeedMatchSettingsPane.add(speedMatchOtherSettingsPane);
 
         //Speed Settings
         JPanel speedMatchSpeedPane = new JPanel();
