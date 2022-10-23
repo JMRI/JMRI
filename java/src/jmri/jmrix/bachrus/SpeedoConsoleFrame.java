@@ -303,7 +303,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         "<li>ESU - simple speed table, enable Trim Reverse Speed - (ESU still respects CVs 2 and 5 when using the complex speed table, which doesn't work with how this speed matcher sets the complex speed table)</li>" +
         "<li>SoundTraxx - simple or complex speed table, enable Trim Reverse Speed</li>" +
         "</ul>" +
-        "</p></html>");
+        "It is recommended to enable Warm Up Locomotive if you haven't been running your locomotive. This will yield a more accurate result." +
+        "<br/><br/></p></html>");
     
     protected JLabel speedMatchForwardMomentumLabel = new JLabel("Forward Momentum: ");
     protected JTextField speedMatchForwardMomentumField = new JTextField(3);
