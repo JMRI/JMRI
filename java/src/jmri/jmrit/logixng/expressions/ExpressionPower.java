@@ -17,6 +17,7 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private PowerState _powerState = PowerState.On;
+    private boolean _ignoreUnknownState = true;
 
     public ExpressionPower(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -33,6 +34,7 @@ public class ExpressionPower extends AbstractDigitalExpression
         copy.setComment(getComment());
         copy.set_Is_IsNot(_is_IsNot);
         copy.setBeanState(_powerState);
+        copy.setIgnoreUnknownState(_ignoreUnknownState);
         return manager.registerExpression(copy);
     }
 
@@ -52,6 +54,14 @@ public class ExpressionPower extends AbstractDigitalExpression
         return _powerState;
     }
 
+    public void setIgnoreUnknownState(boolean ignoreUnknownState) {
+        _ignoreUnknownState = ignoreUnknownState;
+    }
+
+    public boolean isIgnoreUnknownState() {
+        return _ignoreUnknownState;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -69,8 +79,8 @@ public class ExpressionPower extends AbstractDigitalExpression
                         .getPower());
 
         boolean result;
-        if (_powerState == PowerState.NeitherOnOrOff) {
-            result = currentPowerState != PowerState.On && currentPowerState != PowerState.Off;
+        if (_powerState == PowerState.OnOrOff) {
+            result = currentPowerState == PowerState.On || currentPowerState == PowerState.Off;
         } else {
             result = currentPowerState == checkPowerState;
         }
@@ -98,7 +108,14 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Power_Long", _is_IsNot.toString(), _powerState._text);
+        if (_ignoreUnknownState) {
+            return Bundle.getMessage(locale, "Power_Long",
+                    _is_IsNot.toString(),
+                    _powerState._text,
+                    ". " + Bundle.getMessage(locale, "Power_IgnoreUnknownState"));
+        } else {
+            return Bundle.getMessage(locale, "Power_Long", _is_IsNot.toString(), _powerState._text);
+        }
     }
 
     /** {@inheritDoc} */
@@ -130,6 +147,12 @@ public class ExpressionPower extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (_ignoreUnknownState
+                && PowerManager.POWER.equals(evt.getPropertyName())
+                && evt.getNewValue().equals(PowerManager.UNKNOWN)) {
+            log.debug("Ignoring unknown state");
+            return;
+        }
         getConditionalNG().execute();
     }
 
@@ -143,7 +166,8 @@ public class ExpressionPower extends AbstractDigitalExpression
         On(PowerManager.ON, Bundle.getMessage("PowerStateOn")),
         Off(PowerManager.OFF, Bundle.getMessage("PowerStateOff")),
         Idle(PowerManager.IDLE, Bundle.getMessage("PowerStateIdle")),
-        NeitherOnOrOff(-1, Bundle.getMessage("PowerStateNeitherOnOrOff"));
+        Unknown(PowerManager.UNKNOWN, Bundle.getMessage("PowerStateUnknown")),
+        OnOrOff(-1, Bundle.getMessage("PowerStateOnOrOff"));
 
         private final int _id;
         private final String _text;
@@ -164,8 +188,11 @@ public class ExpressionPower extends AbstractDigitalExpression
                 case PowerManager.IDLE:
                     return Idle;
 
+                case PowerManager.UNKNOWN:
+                    return Unknown;
+
                 default:
-                    return NeitherOnOrOff;
+                    throw new IllegalArgumentException("Unknown state: "+Integer.toString(id));
             }
         }
 
@@ -180,6 +207,6 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
 
 }

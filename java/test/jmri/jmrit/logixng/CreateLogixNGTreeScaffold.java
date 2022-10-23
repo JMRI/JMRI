@@ -3501,13 +3501,15 @@ public class CreateLogixNGTreeScaffold {
         expressionPower.setComment("A comment");
         expressionPower.setBeanState(ExpressionPower.PowerState.Idle);
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionPower.setIgnoreUnknownState(true);
         maleSocket = digitalExpressionManager.registerExpression(expressionPower);
         and.getChild(indexExpr++).connect(maleSocket);
 
         expressionPower = new ExpressionPower(digitalExpressionManager.getAutoSystemName(), null);
         expressionPower.setComment("A comment");
-        expressionPower.setBeanState(ExpressionPower.PowerState.NeitherOnOrOff);
+        expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionPower.setIgnoreUnknownState(false);
         maleSocket = digitalExpressionManager.registerExpression(expressionPower);
         and.getChild(indexExpr++).connect(maleSocket);
 

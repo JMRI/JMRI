@@ -39,6 +39,8 @@ public class ExpressionPowerXml extends jmri.managers.configurexml.AbstractNamed
 
         element.addContent(new Element("powerState").addContent(p.getBeanState().name()));
 
+        element.addContent(new Element("ignoreUnknownState").addContent(p.isIgnoreUnknownState() ? "yes" : "no"));
+
         return element;
     }
 
@@ -58,8 +60,18 @@ public class ExpressionPowerXml extends jmri.managers.configurexml.AbstractNamed
         Element powerState = shared.getChild("powerState");
         if (powerState != null) {
             String powerStateStr = powerState.getTextTrim();
-            if ("Other".equals(powerStateStr)) powerStateStr = "NeitherOnOrOff";
+            if ("Other".equals(powerStateStr)) {
+                powerStateStr = "OnOrOff";
+                h.set_Is_IsNot(h.get_Is_IsNot().getOpposite());
+            }
             h.setBeanState(ExpressionPower.PowerState.valueOf(powerStateStr));
+        }
+
+        Element ignoreUnknownState = shared.getChild("ignoreUnknownState");
+        if (ignoreUnknownState != null) {
+            h.setIgnoreUnknownState("yes".equals(ignoreUnknownState.getTextTrim()));
+        } else {
+            h.setIgnoreUnknownState(false);
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

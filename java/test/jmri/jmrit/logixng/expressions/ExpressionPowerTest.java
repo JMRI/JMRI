@@ -140,17 +140,18 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("String matches", "Off", ExpressionPower.PowerState.Off.toString());
         Assert.assertEquals("String matches", "On", ExpressionPower.PowerState.On.toString());
         Assert.assertEquals("String matches", "Idle", ExpressionPower.PowerState.Idle.toString());
-        Assert.assertEquals("String matches", "Neither On or Off", ExpressionPower.PowerState.NeitherOnOrOff.toString());
+        Assert.assertEquals("String matches", "On or Off", ExpressionPower.PowerState.OnOrOff.toString());
 
         Assert.assertTrue("objects are equal", ExpressionPower.PowerState.Off == ExpressionPower.PowerState.get(PowerManager.OFF));
         Assert.assertTrue("objects are equal", ExpressionPower.PowerState.On == ExpressionPower.PowerState.get(PowerManager.ON));
-        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.NeitherOnOrOff == ExpressionPower.PowerState.get(PowerManager.UNKNOWN));
-        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.NeitherOnOrOff == ExpressionPower.PowerState.get(-1));
+        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.Idle == ExpressionPower.PowerState.get(PowerManager.IDLE));
+        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.Unknown == ExpressionPower.PowerState.get(PowerManager.UNKNOWN));
+//        Assert.assertTrue("objects are equal", ExpressionPower.PowerState.OnOrOff == ExpressionPower.PowerState.get(-1));
 
         Assert.assertEquals("ID matches", PowerManager.ON, ExpressionPower.PowerState.On.getID());
         Assert.assertEquals("ID matches", PowerManager.OFF, ExpressionPower.PowerState.Off.getID());
         Assert.assertEquals("ID matches", PowerManager.IDLE, ExpressionPower.PowerState.Idle.getID());
-        Assert.assertEquals("ID matches", -1, ExpressionPower.PowerState.NeitherOnOrOff.getID());
+        Assert.assertEquals("ID matches", -1, ExpressionPower.PowerState.OnOrOff.getID());
     }
 
     @Test
@@ -170,8 +171,8 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Power is Off".equals(expressionPower.getLongDescription()));
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Power is not Off".equals(expressionPower.getLongDescription()));
-        expressionPower.setBeanState(ExpressionPower.PowerState.NeitherOnOrOff);
-        Assert.assertTrue("Power is not Neither On or Off".equals(expressionPower.getLongDescription()));
+        expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
+        Assert.assertTrue("Power is not On or Off".equals(expressionPower.getLongDescription()));
     }
 
     @Test
@@ -250,7 +251,19 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         powerManager.setPower(PowerManager.UNKNOWN);
         Assert.assertFalse(expressionPower.evaluate());
 
-        expressionPower.setBeanState(ExpressionPower.PowerState.NeitherOnOrOff);
+        expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
+        expressionPower.set_Is_IsNot(Is_IsNot_Enum.Is);
+        powerManager.setPower(PowerManager.OFF);
+        Assert.assertTrue(expressionPower.evaluate());
+        powerManager.setPower(PowerManager.ON);
+        Assert.assertTrue(expressionPower.evaluate());
+        powerManager.setPower(PowerManager.IDLE);
+        Assert.assertFalse(expressionPower.evaluate());
+        powerManager.setPower(PowerManager.UNKNOWN);
+        Assert.assertFalse(expressionPower.evaluate());
+
+        expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
+        expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         powerManager.setPower(PowerManager.OFF);
         Assert.assertFalse(expressionPower.evaluate());
         powerManager.setPower(PowerManager.ON);
