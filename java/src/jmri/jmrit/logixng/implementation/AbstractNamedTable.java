@@ -23,9 +23,6 @@ import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.io.input.CharSequenceReader;
 
-import static jmri.jmrit.logixng.implementation.DefaultCsvNamedTable.CsvType.TABBED;
-
-
 /**
  * The default implementation of a NamedTable
  *
@@ -45,7 +42,11 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * @param numRows    the number or rows in the table
      * @param numColumns the number of columns in the table
      */
-    public AbstractNamedTable(@Nonnull String sys, @CheckForNull String user, int numRows, int numColumns) throws BadUserNameException, BadSystemNameException {
+    public AbstractNamedTable(@Nonnull String sys,
+                              @CheckForNull String user,
+                              int numRows,
+                              int numColumns)
+            throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _internalTable = new DefaultAnonymousTable(numRows, numColumns);
     }
@@ -59,7 +60,10 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * @param data       the data in the table. Note that this data is not copied to an new array but used by the table
      *                   as is.
      */
-    public AbstractNamedTable(@Nonnull String systemName, @CheckForNull String userName, @Nonnull Object[][] data) throws BadUserNameException, BadSystemNameException {
+    public AbstractNamedTable(@Nonnull String systemName,
+                              @CheckForNull String userName,
+                              @Nonnull Object[][] data)
+            throws BadUserNameException, BadSystemNameException {
         super(systemName, userName);
 
         // Do this test here to ensure all the tests are using correct system names
@@ -80,7 +84,11 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * @param data       the data in the table. Note that this data is not copied to an new array but used by the table
      *                   as is.
      */
-    public AbstractNamedTable(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String fileName, @Nonnull Object[][] data) throws BadUserNameException, BadSystemNameException {
+    public AbstractNamedTable(@Nonnull String systemName,
+                              @CheckForNull String userName,
+                              @Nonnull String fileName,
+                              @Nonnull Object[][] data)
+            throws BadUserNameException, BadSystemNameException {
         super(systemName, userName);
 
         // Do this test here to ensure all the tests are using correct system names
@@ -92,20 +100,27 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     @Nonnull
-    private static NamedTable loadFromCSV(@Nonnull String systemName, @CheckForNull String userName, @CheckForNull String fileName, @Nonnull List<List<String>> lines, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+    private static NamedTable loadFromCSV(@Nonnull String systemName,
+                                          @CheckForNull String userName,
+                                          @CheckForNull String fileName,
+                                          @Nonnull List<List<String>> lines,
+                                          boolean registerInManager,
+                                          CsvType csvType)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
 
         NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
 
-        if (userName != null && userName.isEmpty())
+        if (userName != null && userName.isEmpty()) {
             userName = null;
+        }
 
         // First row is column names.
         int numRows = lines.size() - 1;
 
         // If the last row is empty string, ignore it.
-        if (lines.get(lines.size() - 1).isEmpty())
+        if (lines.get(lines.size() - 1).isEmpty()) {
             numRows--;
+        }
 
         int numColumns = 0;
 
@@ -134,9 +149,9 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
 
         NamedTable table = new DefaultCsvNamedTable(systemName, userName, fileName, csvCells, csvType);
 
-        if (registerInManager)
+        if (registerInManager) {
             manager.register(table);
-
+        }
         return table;
     }
 
@@ -155,7 +170,11 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     @Nonnull
-    public static NamedTable loadTableFromCSV_Text(@Nonnull String systemName, @CheckForNull String userName, @Nonnull String text, boolean registerInManager, DefaultCsvNamedTable.CsvType csvType)
+    public static NamedTable loadTableFromCSV_Text(@Nonnull String systemName,
+                                                   @CheckForNull String userName,
+                                                   @Nonnull String text,
+                                                   boolean registerInManager,
+                                                   CsvType csvType)
             throws BadUserNameException, BadSystemNameException, IOException{
 
         //List<String> lines = Arrays.asList(text.split("\\r?\\n", -1));
@@ -169,7 +188,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
                                                    @CheckForNull String userName,
                                                    @Nonnull String fileName,
                                                    boolean registerInManager,
-                                                   DefaultCsvNamedTable.CsvType csvType)
+                                                   CsvType csvType)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
 
         //List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
@@ -182,7 +201,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
                                                    @CheckForNull String userName,
                                                    @Nonnull File file,
                                                    boolean registerInManager,
-                                                   DefaultCsvNamedTable.CsvType csvType)
+                                                   CsvType csvType)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
 
         //List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
@@ -190,7 +209,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         return loadFromCSV(systemName, userName, file.getPath(), lines, registerInManager, csvType);
     }
 
-    private static List<List<String>> readIt(File infile, DefaultCsvNamedTable.CsvType csvType) throws IOException {
+    private static List<List<String>> readIt(File infile, CsvType csvType) throws IOException {
         List<List<String>> returnList = null;
         InputStream in = null;
         in = FileUtils.openInputStream(infile);
@@ -201,9 +220,9 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         InputStreamReader rdr = new InputStreamReader(bomInputStream);
         BufferedReader buffered = new BufferedReader(rdr);
         CSVFormat format = null;
-        if (csvType == TABBED) {
+        if (csvType == CsvType.TABBED) {
             format = CSVFormat.TDF;
-        } else if (csvType == DefaultCsvNamedTable.CsvType.RFC) {
+        } else if (csvType == CsvType.RFC) {
             format = CSVFormat.RFC4180;
         } else {
             throw new IOException("Unrecognized CSV Format");
@@ -225,7 +244,10 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(@Nonnull File file, @CheckForNull String systemName, @CheckForNull String userName) throws FileNotFoundException {
+    public void storeTableAsCSV(@Nonnull File file,
+                                @CheckForNull String systemName,
+                                @CheckForNull String userName)
+            throws FileNotFoundException {
 
         _internalTable.storeTableAsCSV(file, systemName, userName);
     }

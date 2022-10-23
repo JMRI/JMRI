@@ -193,10 +193,10 @@ import jmri.util.JmriJFrame;
                 csvTypePanel.add(rfcButton);
                 csvGroup.add(tabbedButton);
                 csvGroup.add(rfcButton);
-                DefaultCsvNamedTable.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
-                if (csvType == null || csvType.equals(DefaultCsvNamedTable.CsvType.TABBED)) {
+                Table.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
+                if (csvType == null || csvType.equals(Table.CsvType.TABBED)) {
                     tabbedButton.setSelected(true);
-                } else if (csvType.equals(DefaultCsvNamedTable.CsvType.RFC)) {
+                } else if (csvType.equals(Table.CsvType.RFC)) {
                     rfcButton.setSelected(true);
                 } else {
                     throw new RuntimeException("unrecognized csvType");

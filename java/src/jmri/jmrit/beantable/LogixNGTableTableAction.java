@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
 import jmri.Manager;
+import jmri.jmrit.logixng.Table;
 import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -121,9 +122,10 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return null;
             }
             if (_csvTabbed.isSelected()) {
-                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName);
+                return InstanceManager.getDefault(NamedTableManager.class)
+                        .newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
             } else if (_csvRFC.isSelected()) {
-                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, DefaultCsvNamedTable.CsvType.RFC);
+                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.RFC);
             }
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor

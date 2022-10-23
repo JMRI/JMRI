@@ -39,7 +39,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public NamedTable newCSVTable(String systemName, String userName, String fileName);
 
 
-    public NamedTable newCSVTable(String systemName, String userName, String fileName, DefaultCsvNamedTable.CsvType csvType);
+    public NamedTable newCSVTable(String systemName, String userName, String fileName, Table.CsvType csvType);
 
 
     /**

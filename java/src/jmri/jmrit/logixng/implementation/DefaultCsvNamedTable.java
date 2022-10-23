@@ -29,10 +29,6 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
 
     private String _fileName;
 
-    public enum CsvType {
-        TABBED, RFC
-    }
-
     private CsvType _csvType;
     
     /**
@@ -54,6 +50,12 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
         _fileName = fileName;
         _csvType = csvType;
     }
+    @Override
+    public boolean isCsvTypeSupported() {
+        return true;
+    }
+
+
     
     public String getFileName() {
         return _fileName;

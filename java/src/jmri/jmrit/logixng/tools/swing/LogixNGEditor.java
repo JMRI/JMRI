@@ -22,7 +22,7 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable.CsvType;
+
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
@@ -65,7 +65,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     private final JTextField _addUserName = new JTextField(20);
 
     //  default is tabbed type, due to prior usage
-    private CsvType csvType = CsvType.TABBED;
+    private Table.CsvType csvType = Table.CsvType.TABBED;
 
 
     /**

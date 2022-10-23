@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.Table;
 import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
 
 import org.jdom2.Element;
@@ -35,16 +36,16 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         storeCommon(p, element);
         
         element.addContent(new Element("fileName").addContent(p.getFileName()));
-        DefaultCsvNamedTable.CsvType csvType = p.getCsvType();
+        Table.CsvType csvType = p.getCsvType();
         String csvString;
-        if (csvType == null || csvType.equals(DefaultCsvNamedTable.CsvType.TABBED)) {
-            csvString = "Tabbed";
-        } else if (csvType.equals(DefaultCsvNamedTable.CsvType.RFC)) {
-            csvString = "RFC";
+        Element csvElement = new Element("csvType");
+        if (csvType == null)
+        {
+            csvElement.addContent(Table.CsvType.TABBED.name());
         } else {
-            throw new RuntimeException("Unrecognized CSVType");
+            csvElement.addContent(p.getCsvType().name());
         }
-        element.addContent(new Element("csvType").addContent(csvString));
+        element.addContent(csvElement);
         return element;
     }
     
@@ -54,13 +55,9 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         String uname = getUserName(shared);
         String fileName = shared.getChild("fileName").getTextTrim();
         String csvString = "Tabbed";
-        if (shared.getChild("csvType") != null)
-            csvString = shared.getChild("csvType").getTextTrim();
-        DefaultCsvNamedTable.CsvType csvType = DefaultCsvNamedTable.CsvType.TABBED;
-        if (csvString == null || csvString.equals("Tabbed")) {
-            csvType = DefaultCsvNamedTable.CsvType.TABBED;
-        } else if (csvString.equals("RFC")) {
-            csvType = DefaultCsvNamedTable.CsvType.RFC;
+        Table.CsvType csvType = Table.CsvType.TABBED;
+        if (shared.getChild("csvType") != null) {
+            csvType = Table.CsvType.valueOf(shared.getChild("csvType").getText());
         }
         NamedTable h = InstanceManager.getDefault(NamedTableManager.class).newCSVTable(sys, uname, fileName, csvType);
         

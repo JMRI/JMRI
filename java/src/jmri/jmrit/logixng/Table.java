@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import javax.annotation.CheckForNull;
@@ -136,7 +138,39 @@ public interface Table {
      * @throws ColumnNotFoundException if the column is not found
      */
     public int getColumnNumber(String columnName) throws ColumnNotFoundException;
-    
+
+    /**
+     * The available types of CSV from which to load a table
+     * The default is TABBED, as that was previously the only choice
+     * TABBED results in parsing the CSV file with tabs as the delimiters
+     * RFC (for RFC-4180) parses with commas as the delimiter, but dut does not allow empty lines
+     */
+    public enum CsvType {
+
+        TABBED, RFC;
+        private CsvType _csvType;
+        public void setCsvType(CsvType typeValue) {
+            _csvType = typeValue;
+        }
+
+        public CsvType getCsvType() {
+            return _csvType;
+        }
+
+    }
+
+    public default boolean isCsvTypeSupported() {
+        return false;
+    }
+
+    public default void setCsvType(CsvType csvType) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    public default CsvType getCsvType() {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
     /**
      * Store the table to a CSV file.
      * @param file the CSV file
