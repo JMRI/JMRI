@@ -517,11 +517,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        if (car.path(JsonOperations.LOCATION).path(JSON.ROUTE).isMissingNode()
-                || car.path(JsonOperations.DESTINATION).path(JSON.ROUTE).isMissingNode()) {
-            return false;
-        }
-        return car.path(JsonOperations.LOCATION).path(JSON.ROUTE).equals(car.path(JsonOperations.DESTINATION).path(JSON.ROUTE));
+        return car.path(JSON.IS_LOCAL).booleanValue();        
     }
 
     protected boolean isUtilityCar(JsonNode car) {
