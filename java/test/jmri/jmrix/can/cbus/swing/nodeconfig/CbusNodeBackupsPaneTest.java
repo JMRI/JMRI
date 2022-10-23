@@ -32,52 +32,52 @@ public class CbusNodeBackupsPaneTest {
     public void testCtor() {
 
         t = new CbusNodeBackupsPane(null);
-        
+
         assertThat(t).isNotNull();
         assertThat(nodeToEdit).isNotNull();
-        
+
     }
-    
+
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testTableData() {
 
         Assertions.assertNotNull(nodeToEdit);
         nodeToEdit.getNodeBackupManager().doLoad();
-        
+
         t = new CbusNodeBackupsPane(null);
         t.initComponents();
-        
+
         t.setNode(nodeToEdit);
-        
+
         // check pane has loaded something
         JmriJFrame f = new JmriJFrame();
         f.add(t);
         f.setTitle("CBUS Node Backups Pane");
         f.pack();
         f.setVisible(true);
-        
+
         JFrameOperator frame = new JFrameOperator(f);
 
         JTableOperator tbl = new JTableOperator(new JFrameOperator(f), 0);
-        
+
         assertEquals(0, nodeToEdit.getNodeBackupManager().getBackups().size(),"0 entry in node xml");
-        
+
         assertThat(tbl.getRowCount()).withFailMessage("No Rows at Startup").isEqualTo(0);
         assertThat(tbl.getColumnCount()).withFailMessage("column count").isEqualTo(5);
-        
+
         JemmyUtil.pressButton(frame,("Create New Backup"));
-        
+
         assertEquals(1, nodeToEdit.getNodeBackupManager().getBackups().size(),"1 entry in node xml");
-        
+
         f.dispose();
         t.dispose();
         // JemmyUtil.pressButton(frame,("Pause Test"));
-    
+
     }
-    
+
     private CbusNodeBackupsPane t;
-    
+
     private CbusNodeTableDataModel nodeModel = null;
     private CbusNode nodeToEdit = null;
     private CanSystemConnectionMemo memo = null;
@@ -89,14 +89,14 @@ public class CbusNodeBackupsPaneTest {
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(tempDir));
         memo = new CanSystemConnectionMemo();
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
-        
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
         nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
         nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
-        
+
     }
 
     @AfterEach
@@ -108,7 +108,7 @@ public class CbusNodeBackupsPaneTest {
         Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
-       
+
         JUnitUtil.tearDown();
 
     }
