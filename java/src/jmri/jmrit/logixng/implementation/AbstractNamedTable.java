@@ -228,6 +228,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             throw new IOException("Unrecognized CSV Format");
         }
         returnList = parseCSV(buffered, format);
+        rdr.close();
         return returnList;
     }
 

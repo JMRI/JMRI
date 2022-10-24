@@ -37,7 +37,6 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         
         element.addContent(new Element("fileName").addContent(p.getFileName()));
         Table.CsvType csvType = p.getCsvType();
-        String csvString;
         Element csvElement = new Element("csvType");
         if (csvType == null)
         {
