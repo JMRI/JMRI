@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -24,7 +23,6 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
-import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 /**
@@ -186,23 +184,25 @@ import jmri.util.JmriJFrame;
                 JPanel csvTypePanel = new JPanel();
                 csvTypePanel.setLayout(new FlowLayout());
                 csvTypePanel.add(new JLabel(Bundle.getMessage("TableEditor_Csv_Type") + ":"));
-                ButtonGroup csvGroup = new ButtonGroup();
+                JLabel csvTypeLabel = new JLabel();
+                Table.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
+                if (csvType == null || csvType.equals(Table.CsvType.TABBED)) {
+                    csvTypeLabel.setText(Table.CsvType.TABBED.toString());
+                } else if (csvType.equals(Table.CsvType.COMMA)) {
+                    csvTypeLabel.setText(Table.CsvType.COMMA.toString());
+                } else {
+                    throw new RuntimeException("unrecognized csvType");
+                }
+               /*  ButtonGroup csvGroup = new ButtonGroup();
                 JButton tabbedButton = new JButton(Table.CsvType.TABBED.toString());
                 csvTypePanel.add(tabbedButton);
                 JButton commaButton = new JButton(Table.CsvType.COMMA.toString());
                 csvTypePanel.add(commaButton);
                 csvGroup.add(tabbedButton);
                 csvGroup.add(commaButton);
-                Table.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
-                if (csvType == null || csvType.equals(Table.CsvType.TABBED)) {
-                    tabbedButton.setSelected(true);
-                } else if (csvType.equals(Table.CsvType.COMMA)) {
-                    commaButton.setSelected(true);
-                } else {
-                    throw new RuntimeException("unrecognized csvType");
-                }
                 tabbedButton.setEnabled(false);
-                commaButton.setEnabled(false);
+                commaButton.setEnabled(false);*/
+                csvTypePanel.add(csvTypeLabel);
                 contentPane.add(csvTypePanel);
                 JPanel panel4 = new JPanel();
                 panel4.setLayout(new FlowLayout());
