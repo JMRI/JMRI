@@ -413,10 +413,10 @@
           as needed.</li>
         </ul>
         <ul>
-          <li>Adds support of multiple types of CSV files to LogixNG Tables</li>
-          <li>Tab separated files are the default, but you may choose Comma</li>
-          <li>as the separator. This allows you load CSV files created by</li>
-          <li>spreadsheet programs.</li>
+          <li>Adds support of multiple types of CSV files to LogixNG Tables
+          Tab separated files are the default, but you may choose Comma
+          as the separator. This allows you load CSV files created by
+          spreadsheet programs.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
