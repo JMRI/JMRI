@@ -155,7 +155,7 @@ public interface Table {
             this._text = text;
         }
         private CsvType _csvType;
-        public void setCsvType(CsvType typeValue) {
+        protected void setCsvType(CsvType typeValue) {
             _csvType = typeValue;
         }
 
