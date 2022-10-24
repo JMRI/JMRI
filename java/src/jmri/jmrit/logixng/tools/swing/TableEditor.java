@@ -101,29 +101,29 @@ import jmri.util.JmriJFrame;
 //    private JRadioButton _triggerOnChangeButton;
 
     // ------------ Methods for Edit NamedTable Pane ------------
-
-    private JButton createFileChooser() {
-        JButton selectFileButton = new JButton("..."); // "File" replaced by ...
-        selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
-        selectFileButton.setToolTipText(Bundle.getMessage("TableEdit_FileButtonHint"));  // NOI18N
-        selectFileButton.addActionListener((ActionEvent e) -> {
-            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
-            csvFileChooser.rescanCurrentDirectory();
-            int retVal = csvFileChooser.showOpenDialog(null);
-            // handle selection or cancel
-            if (retVal == JFileChooser.APPROVE_OPTION) {
-                // set selected file location
-                try {
-                    editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
-                } catch (java.io.IOException ex) {
-                    log.error("exception setting file location", ex);  // NOI18N
-                    editCsvTableName.setText("");
-                }
-            }
-        });
-        return selectFileButton;
-    }
+//
+//    private JButton createFileChooser() {
+//        JButton selectFileButton = new JButton("..."); // "File" replaced by ...
+//        selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
+//        selectFileButton.setToolTipText(Bundle.getMessage("TableEdit_FileButtonHint"));  // NOI18N
+//        selectFileButton.addActionListener((ActionEvent e) -> {
+//            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+//            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
+//            csvFileChooser.rescanCurrentDirectory();
+//            int retVal = csvFileChooser.showOpenDialog(null);
+//            // handle selection or cancel
+//            if (retVal == JFileChooser.APPROVE_OPTION) {
+//                // set selected file location
+//                try {
+//                    editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
+//                } catch (java.io.IOException ex) {
+//                    log.error("exception setting file location", ex);  // NOI18N
+//                    editCsvTableName.setText("");
+//                }
+//            }
+//        });
+//        return selectFileButton;
+//    }
 
 
     /**
@@ -189,18 +189,20 @@ import jmri.util.JmriJFrame;
                 ButtonGroup csvGroup = new ButtonGroup();
                 JButton tabbedButton = new JButton(Table.CsvType.TABBED.toString());
                 csvTypePanel.add(tabbedButton);
-                JButton rfcButton = new JButton(Table.CsvType.COMMA.toString());
-                csvTypePanel.add(rfcButton);
+                JButton commaButton = new JButton(Table.CsvType.COMMA.toString());
+                csvTypePanel.add(commaButton);
                 csvGroup.add(tabbedButton);
-                csvGroup.add(rfcButton);
+                csvGroup.add(commaButton);
                 Table.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
                 if (csvType == null || csvType.equals(Table.CsvType.TABBED)) {
                     tabbedButton.setSelected(true);
                 } else if (csvType.equals(Table.CsvType.COMMA)) {
-                    rfcButton.setSelected(true);
+                    commaButton.setSelected(true);
                 } else {
                     throw new RuntimeException("unrecognized csvType");
                 }
+                tabbedButton.setEnabled(false);
+                commaButton.setEnabled(false);
                 contentPane.add(csvTypePanel);
                 JPanel panel4 = new JPanel();
                 panel4.setLayout(new FlowLayout());
@@ -208,9 +210,10 @@ import jmri.util.JmriJFrame;
                 panel4.add(tableFileNameLabel);
 //                panel4.add(new JLabel(((DefaultCsvNamedTable)_curTable).getFileName()));
                 editCsvTableName.setText(((DefaultCsvNamedTable)_curTable).getFileName());
+                editCsvTableName.setEditable(false);
                 panel4.add(editCsvTableName);
 //                editCsvTableName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
-                panel4.add(createFileChooser());
+              //  panel4.add(createFileChooser());
                 contentPane.add(panel4);
             }
 
