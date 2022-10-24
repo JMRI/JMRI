@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng;
 
-import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
-import org.stringtemplate.v4.ST;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import javax.annotation.CheckForNull;
