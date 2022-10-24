@@ -49,8 +49,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     JTextField _csvFileName = new JTextField(50);
 
     ButtonGroup _csvGroup = new ButtonGroup();
-    JRadioButton _csvTabbed = new JRadioButton(Bundle.getMessage("LogixNG_CsvType_Tabbed"));
-    JRadioButton _csvRFC = new JRadioButton(Bundle.getMessage("LogixNG_CsvType_RFC"));
+    JRadioButton _csvTabbed = new JRadioButton(Table.CsvType.TABBED.toString());
+    JRadioButton _csvRFC = new JRadioButton(Table.CsvType.COMMA.toString());
 
     JLabel _csvLabel = new JLabel(Bundle.getMessage("LogixNG_CsvType") + ":");
     /**
@@ -125,7 +125,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return InstanceManager.getDefault(NamedTableManager.class)
                         .newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
             } else if (_csvRFC.isSelected()) {
-                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.RFC);
+                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
             }
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
@@ -220,7 +220,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         selectFileButton.setToolTipText(Bundle.getMessage("LogixNG_FileButtonHint"));  // NOI18N
         selectFileButton.addActionListener((ActionEvent e) -> {
             JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
+            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt", "tsv")); // NOI18N
             csvFileChooser.rescanCurrentDirectory();
             int retVal = csvFileChooser.showOpenDialog(null);
             // handle selection or cancel

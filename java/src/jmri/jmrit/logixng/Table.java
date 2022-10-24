@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import jmri.jmrit.logixng.implementation.DefaultCsvNamedTable;
+import org.stringtemplate.v4.ST;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -147,7 +148,14 @@ public interface Table {
      */
     public enum CsvType {
 
-        TABBED, RFC;
+        TABBED(Bundle.getMessage("CsvType_Tabbed")),
+        COMMA(Bundle.getMessage("CsvType_Tabbed"));
+
+        private final String _text;
+
+        private CsvType(String text) {
+            this._text = text;
+        }
         private CsvType _csvType;
         public void setCsvType(CsvType typeValue) {
             _csvType = typeValue;
@@ -155,6 +163,11 @@ public interface Table {
 
         public CsvType getCsvType() {
             return _csvType;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
         }
 
     }

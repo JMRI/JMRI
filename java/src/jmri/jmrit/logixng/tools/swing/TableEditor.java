@@ -196,7 +196,7 @@ import jmri.util.JmriJFrame;
                 Table.CsvType csvType = ((DefaultCsvNamedTable) _curTable).getCsvType();
                 if (csvType == null || csvType.equals(Table.CsvType.TABBED)) {
                     tabbedButton.setSelected(true);
-                } else if (csvType.equals(Table.CsvType.RFC)) {
+                } else if (csvType.equals(Table.CsvType.COMMA)) {
                     rfcButton.setSelected(true);
                 } else {
                     throw new RuntimeException("unrecognized csvType");

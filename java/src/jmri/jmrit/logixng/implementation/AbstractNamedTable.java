@@ -222,7 +222,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         CSVFormat format = null;
         if (csvType == CsvType.TABBED) {
             format = CSVFormat.TDF;
-        } else if (csvType == CsvType.RFC) {
+        } else if (csvType == CsvType.COMMA) {
             format = CSVFormat.RFC4180;
         } else {
             throw new IOException("Unrecognized CSV Format");
