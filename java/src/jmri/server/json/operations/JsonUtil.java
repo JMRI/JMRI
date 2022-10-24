@@ -16,18 +16,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.consist.JsonConsist;
@@ -143,6 +139,7 @@ public class JsonUtil {
         data.put(JSON.ADD_COMMENT, car.getPickupComment());
         data.put(JSON.KERNEL, car.getKernel() != null ? car.getKernelName() : null);
         data.put(JSON.UTILITY, car.isUtility());
+        data.put(JSON.IS_LOCAL, car.isLocalMove());
         if (car.getFinalDestinationTrack() != null) {
             data.set(JSON.FINAL_DESTINATION, this.getRSLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
         } else if (car.getFinalDestination() != null) {

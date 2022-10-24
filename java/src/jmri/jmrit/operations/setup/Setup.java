@@ -2,9 +2,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,9 +10,7 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.Disposable;
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
@@ -2103,7 +2099,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String dir = a.getValue();
                 log.debug("direction: {}", dir);
                 try {
-                    setTrainDirection(Integer.parseInt(dir));
+                    getDefault().traindir = Integer.parseInt(dir);
                 } catch (NumberFormatException ee) {
                     log.error("Train direction ({}) isn't a valid number", a.getValue());
                 }

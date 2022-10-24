@@ -1086,7 +1086,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Location.TRAIN_DIRECTION_CHANGED_PROPERTY)) {
             updateLocationCheckboxes();
             pack();
             repaint();

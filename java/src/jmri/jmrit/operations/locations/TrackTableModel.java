@@ -513,10 +513,10 @@ public abstract class TrackTableModel extends AbstractTableModel implements Prop
                         e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) ||
-                        e.getPropertyName().equals(Track.PLANNEDPICKUPS_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.PLANNED_PICKUPS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY) ||
-                        e.getPropertyName().equals(Track.TRACK_REPORTER_PROPERTY))) {
+                        e.getPropertyName().equals(Track.TRACK_REPORTER_CHANGED_PROPERTY))) {
             setColumnsVisible();
         }
         if (e.getSource() instanceof TableColumn && e.getPropertyName().equals("preferredWidth")) {

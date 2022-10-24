@@ -98,9 +98,9 @@ public class CbusPredefinedMetersTest {
         disable();
         Assert.assertEquals("not listening",0,tcis.numListeners());
 
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setAllocateNNListener(false);
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
         Assertions.assertEquals(1,tcis.numListeners(),"node table listening "+tcis.getListeners());
@@ -126,9 +126,9 @@ public class CbusPredefinedMetersTest {
     @Test
     public void testMultiMCanReply(){
 
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setAllocateNNListener(false);
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
@@ -228,9 +228,9 @@ public class CbusPredefinedMetersTest {
     @Test
     public void testMultiMExtraCanReply(){
 
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setAllocateNNListener(false);
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
@@ -330,9 +330,9 @@ public class CbusPredefinedMetersTest {
     @Test
     public void testMultiMVoltCanReply(){
 
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setAllocateNNListener(false);
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);

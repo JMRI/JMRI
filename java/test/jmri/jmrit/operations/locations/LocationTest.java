@@ -57,7 +57,7 @@ public class LocationTest extends OperationsTestCase {
         Assert.assertEquals("Location Constant TYPES_CHANGED_PROPERTY", "locationTypes",
                 Location.TYPES_CHANGED_PROPERTY);
         Assert.assertEquals("Location Constant TRAINDIRECTION_CHANGED_PROPERTY", "locationTrainDirection",
-                Location.TRAINDIRECTION_CHANGED_PROPERTY);
+                Location.TRAIN_DIRECTION_CHANGED_PROPERTY);
         Assert.assertEquals("Location Constant LENGTH_CHANGED_PROPERTY", "locationTrackLengths",
                 Location.LENGTH_CHANGED_PROPERTY);
         Assert.assertEquals("Location Constant USEDLENGTH_CHANGED_PROPERTY", "locationUsedLength",

@@ -44,11 +44,11 @@ public class CbusEventTableXmlFileTest {
         File systemFile = new File(dir, "EventTableData-1.xml");
 
         FileUtil.createDirectory(x.oldFileLocation);
-        
+
         File newFile = new File (x.oldFileLocation, x.getFileName());
 
         try {
-            java.nio.file.Files.copy(systemFile.toPath(), newFile.toPath(), 
+            java.nio.file.Files.copy(systemFile.toPath(), newFile.toPath(),
                 java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException ex){
@@ -58,7 +58,7 @@ public class CbusEventTableXmlFileTest {
         CbusEventTableXmlAction.restoreEventsFromXmlTablestart(model);
         Assertions.assertEquals(3, model.getRowCount());
         JUnitAppender.assertWarnMessage("Migrated existing CBUS Event Table Data to CAN");
-        
+
     }
 
     private CbusEventTableDataModel model = null;
@@ -68,13 +68,13 @@ public class CbusEventTableXmlFileTest {
     public void setUp( @TempDir Path tempDir ) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
-        
+
         // tcis = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         // memo.setTrafficController(tcis);
-        
-        ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class)).provide(CbusEventTableDataModel.class);
+
+        memo.get(CbusConfigurationManager.class).provide(CbusEventTableDataModel.class);
         model = memo.get(CbusEventTableDataModel.class);
         model.skipSaveOnDispose();
     }

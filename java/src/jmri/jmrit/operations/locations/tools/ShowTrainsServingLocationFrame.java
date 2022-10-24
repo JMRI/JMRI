@@ -318,8 +318,8 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                 e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateTypeComboBox();
         }
-        if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY) ||
+        if (e.getPropertyName().equals(Location.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Track.DROP_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Track.PICKUP_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.TRAIN_ROUTE_CHANGED_PROPERTY) ||

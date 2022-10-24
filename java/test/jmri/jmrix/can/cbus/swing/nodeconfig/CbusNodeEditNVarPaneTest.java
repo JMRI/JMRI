@@ -19,39 +19,39 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  */
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class CbusNodeEditNVarPaneTest {
-    
+
     @Test
     public void testCtorWithMain() {
         NodeConfigToolPane mainpane = new NodeConfigToolPane();
-        
+
         t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
-        
+
     }
-    
+
     @Test
     public void testInit() {
         NodeConfigToolPane mainpane = new NodeConfigToolPane();
 
         Assertions.assertNotNull(memo);
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
         mainpane.initComponents(memo);
-        
-        
+
+
         t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
-        
+
         t.initComponents(memo);
-        
+
         CbusNode nodeToEdit = nodeModel.provideNodeByNodeNum(256);
         // set node to 3 node vars , param6
         nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
-        
+
         t.setNode( nodeToEdit );
-        
+
         nodeToEdit.dispose();
 
     }

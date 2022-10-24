@@ -56,16 +56,16 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     public SimulatorPane() {
         super();
     }
-    
+
     private void init() {
-        
+
         _disposeSimOnWindowClose=false;
-        
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        p1 = new JPanel();        
+
+        p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-        
+
         _csPanes = new JPanel();
         _evPanes = new JPanel();
         _ndPanes = new JPanel();
@@ -76,7 +76,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         _csPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CmndStations")));
         _evPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ResponseEvents")));
         _ndPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CbusNodes")));
-        
+
         for ( int i=0 ; ( i < _sim.getNumCS() ) ; i++ ) {
             CsPane thispane = new CsPane(_sim.getCS(i)); // id , type
             _csPanes.add(thispane);
@@ -92,16 +92,16 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         NdPane thispanend = new NdPane(null, memo); // id , type
         _ndPanes.add(thispanend);
         thispanend.setVisible(true);
-        
+
         for ( int i=0 ; ( i < _sim.getNumEv() ) ; i++ ) {
             EvResponderPane thispane = new EvResponderPane(_sim.getEv(i)); // id , mode
             _evPanes.add(thispane);
             thispane.setVisible(true);
         }
-        
+
         _csPanes.setVisible(true);
         _evPanes.setVisible(true);
-        _ndPanes.setVisible(true);        
+        _ndPanes.setVisible(true);
 
         p1.add(_csPanes);
         p1.add(_ndPanes);
@@ -110,7 +110,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         mainScroll = new JScrollPane (p1);
         this.add(mainScroll);
     }
-    
+
     /**
      * Creates a Menu List
      */
@@ -119,13 +119,13 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         List<JMenu> menuList = new ArrayList<>();
         JMenu optionsMenu = new JMenu(Bundle.getMessage("OptionsMenu"));
         JMenu addMenu = new JMenu(Bundle.getMessage("MenuAdd"));
-        
+
         JCheckBoxMenuItem closeSimOnDispose = new JCheckBoxMenuItem(Bundle.getMessage("StopSimWinClose"));
         closeSimOnDispose.setSelected(false);
         closeSimOnDispose.addActionListener ((ActionEvent e) -> {
             _disposeSimOnWindowClose = closeSimOnDispose.isSelected();
         });
-        
+
         JMenuItem newCs = new JMenuItem(Bundle.getMessage("CommandStation"));
         newCs.addActionListener ((ActionEvent e) -> {
             CsPane thispane = new CsPane(_sim.getNewCS());
@@ -152,12 +152,12 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         addMenu.add(newCs);
         addMenu.add(newEv);
         addMenu.add(newNd);
-        
+
         menuList.add(optionsMenu);
         menuList.add(addMenu);
         return menuList;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -173,7 +173,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     public void dispose() {
         super.dispose();
         if ( memo != null && _disposeSimOnWindowClose ) {
-            ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+            memo.get(CbusConfigurationManager.class)
                 .disposeOf(_sim, CbusSimulator.class);
         }
     }

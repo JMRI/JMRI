@@ -100,7 +100,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     // For property change
     public static final String TRACK_LISTLENGTH_CHANGED_PROPERTY = "trackListLength"; // NOI18N
     public static final String TYPES_CHANGED_PROPERTY = "locationTypes"; // NOI18N
-    public static final String TRAINDIRECTION_CHANGED_PROPERTY = "locationTrainDirection"; // NOI18N
+    public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "locationTrainDirection"; // NOI18N
     public static final String LENGTH_CHANGED_PROPERTY = "locationTrackLengths"; // NOI18N
     public static final String USEDLENGTH_CHANGED_PROPERTY = "locationUsedLength"; // NOI18N
     public static final String NAME_CHANGED_PROPERTY = "locationName"; // NOI18N
@@ -110,8 +110,8 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String POOL_LENGTH_CHANGED_PROPERTY = "poolLengthChanged"; // NOI18N
     public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
-    public static final String LOCATION_REPORTER_PROPERTY = "locationReporterChange"; // NOI18N
-    public static final String LOCATION_DIVISION_PROPERTY = "homeDivisionChange"; // NOI18N
+    public static final String LOCATION_REPORTER_CHANGED_PROPERTY = "locationReporterChange"; // NOI18N
+    public static final String LOCATION_DIVISION_CHANGED_PROPERTY = "homeDivisionChange"; // NOI18N
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -308,7 +308,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         int old = _trainDir;
         _trainDir = direction;
         if (old != direction) {
-            setDirtyAndFirePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old),
+            setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old),
                     Integer.toString(direction));
         }
     }
@@ -639,7 +639,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Division old = _division;
         _division = division;
         if (old != _division) {
-            setDirtyAndFirePropertyChange(LOCATION_DIVISION_PROPERTY, old, division);
+            setDirtyAndFirePropertyChange(LOCATION_DIVISION_CHANGED_PROPERTY, old, division);
         }
     }
 
@@ -1324,7 +1324,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Reporter old = _reader;
         _reader = r;
         if (old != r) {
-            setDirtyAndFirePropertyChange(LOCATION_REPORTER_PROPERTY, old, r);
+            setDirtyAndFirePropertyChange(LOCATION_REPORTER_CHANGED_PROPERTY, old, r);
         }
     }
 
