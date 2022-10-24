@@ -53,8 +53,7 @@ public class ActionRequestUpdateAllSensors extends AbstractDigitalAction {
     public void execute() {
         if (_memo != null) {
             if (_memo.provides(SensorManager.class)) {
-//                _memo.get(SensorManager.class).updateAll();
-                ((SensorManager)_memo.get(SensorManager.class)).updateAll();
+                _memo.get(SensorManager.class).updateAll();
             } else {
                 throw new RuntimeException("_memo doesn't provide a sensor manager");
             }
