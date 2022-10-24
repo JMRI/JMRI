@@ -54,7 +54,6 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         String fileName = shared.getChild("fileName").getTextTrim();
-        String csvString = "Tabbed";
         Table.CsvType csvType = Table.CsvType.TABBED;
         if (shared.getChild("csvType") != null) {
             csvType = Table.CsvType.valueOf(shared.getChild("csvType").getText());

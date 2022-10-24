@@ -63,10 +63,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";         // NOI18N
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
-
-    //  default is tabbed type, due to prior usage
-    private Table.CsvType csvType = Table.CsvType.TABBED;
-
+    
 
     /**
      * Create a new ConditionalNG List View editor.
