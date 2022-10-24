@@ -1,7 +1,4 @@
-package jmri.jmrix.logixng;
-
-import jmri.jmrix.loconet.logixng.*;
-import jmri.jmrit.logixng.actions.*;
+package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
 import java.util.Map;

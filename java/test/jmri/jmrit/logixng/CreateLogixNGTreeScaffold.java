@@ -2139,29 +2139,29 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        jmri.jmrix.logixng.ActionRequestUpdateAllSensors actionRequestUpdateAllSensors =
-                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+        jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors actionRequestUpdateAllSensors =
+                new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
         actionRequestUpdateAllSensors =
-                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+                new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         actionRequestUpdateAllSensors.setMemo(null);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionRequestUpdateAllSensors =
-                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+                new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         actionRequestUpdateAllSensors.setMemo(_mqttMemo);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionRequestUpdateAllSensors =
-                new jmri.jmrix.logixng.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
+                new jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
         actionRequestUpdateAllSensors.setMemo(_locoNetMemo);
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateAllSensors);
         maleSocket.setEnabled(false);

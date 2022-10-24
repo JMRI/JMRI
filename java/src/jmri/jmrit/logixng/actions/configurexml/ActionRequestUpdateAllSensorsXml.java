@@ -1,11 +1,11 @@
-package jmri.jmrix.logixng.configurexml;
+package jmri.jmrit.logixng.actions.configurexml;
 
 import java.util.*;
 
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrix.logixng.ActionRequestUpdateAllSensors;
+import jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors;
 
 import org.jdom2.Element;
 

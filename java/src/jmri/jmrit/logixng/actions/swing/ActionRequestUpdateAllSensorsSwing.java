@@ -1,4 +1,4 @@
-package jmri.jmrix.logixng.swing;
+package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.Color;
 import java.util.*;
@@ -11,8 +11,7 @@ import jmri.*;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.actions.swing.AbstractDigitalActionSwing;
-import jmri.jmrix.logixng.ActionRequestUpdateAllSensors;
+import jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors;
 
 /**
  * Configures an ActionRequestUpdateAllSensors object with a Swing JPanel.
