@@ -59,7 +59,7 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
 
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Power is On ::: Use default%n");
+        return String.format("Power is On. Ignore unknown state ::: Use default%n");
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
                 "      ! A%n" +
                 "         If Then Else. Execute on change ::: Use default%n" +
                 "            ? If%n" +
-                "               Power is On ::: Use default%n" +
+                "               Power is On. Ignore unknown state ::: Use default%n" +
                 "            ! Then%n" +
                 "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
@@ -95,12 +95,12 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         expression2 = new ExpressionPower("IQDE321", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Power is On", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Power is On. Ignore unknown state", expression2.getLongDescription());
 
         expression2 = new ExpressionPower("IQDE321", "My power");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My power", expression2.getUserName());
-        Assert.assertEquals("String matches", "Power is On", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "Power is On. Ignore unknown state", expression2.getLongDescription());
 
         boolean thrown = false;
         try {
@@ -165,14 +165,14 @@ public class ExpressionPowerTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
 
         Assert.assertTrue("Power".equals(expressionPower.getShortDescription()));
-        Assert.assertTrue("Power is On".equals(expressionPower.getLongDescription()));
+        Assert.assertTrue("Power is On. Ignore unknown state".equals(expressionPower.getLongDescription()));
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionPower.setBeanState(ExpressionPower.PowerState.Off);
-        Assert.assertTrue("Power is Off".equals(expressionPower.getLongDescription()));
+        Assert.assertTrue("Power is Off. Ignore unknown state".equals(expressionPower.getLongDescription()));
         expressionPower.set_Is_IsNot(Is_IsNot_Enum.IsNot);
-        Assert.assertTrue("Power is not Off".equals(expressionPower.getLongDescription()));
+        Assert.assertTrue("Power is not Off. Ignore unknown state".equals(expressionPower.getLongDescription()));
         expressionPower.setBeanState(ExpressionPower.PowerState.OnOrOff);
-        Assert.assertTrue("Power is not On or Off".equals(expressionPower.getLongDescription()));
+        Assert.assertTrue("Power is not On or Off. Ignore unknown state".equals(expressionPower.getLongDescription()));
     }
 
     @Test

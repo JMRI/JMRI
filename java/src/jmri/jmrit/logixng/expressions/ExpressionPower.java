@@ -109,12 +109,12 @@ public class ExpressionPower extends AbstractDigitalExpression
     @Override
     public String getLongDescription(Locale locale) {
         if (_ignoreUnknownState) {
-            return Bundle.getMessage(locale, "Power_Long",
+            return Bundle.getMessage(locale, "Power_Long3",
                     _is_IsNot.toString(),
                     _powerState._text,
-                    ". " + Bundle.getMessage(locale, "Power_IgnoreUnknownState"));
+                    Bundle.getMessage(locale, "Power_IgnoreUnknownState"));
         } else {
-            return Bundle.getMessage(locale, "Power_Long", _is_IsNot.toString(), _powerState._text);
+            return Bundle.getMessage(locale, "Power_Long2", _is_IsNot.toString(), _powerState._text);
         }
     }
 
