@@ -50,7 +50,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     ButtonGroup _csvGroup = new ButtonGroup();
     JRadioButton _csvTabbed = new JRadioButton(Table.CsvType.TABBED.toString());
-    JRadioButton _csvRFC = new JRadioButton(Table.CsvType.COMMA.toString());
+    JRadioButton _csvComma = new JRadioButton(Table.CsvType.COMMA.toString());
 
     JLabel _csvLabel = new JLabel(Bundle.getMessage("LogixNG_CsvType") + ":");
     /**
@@ -124,7 +124,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             if (_csvTabbed.isSelected()) {
                 return InstanceManager.getDefault(NamedTableManager.class)
                         .newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
-            } else if (_csvRFC.isSelected()) {
+            } else if (_csvComma.isSelected()) {
                 return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
             }
         } else if (_typeInternalTable.isSelected()) {
@@ -272,10 +272,10 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         JPanel csvPanel = new JPanel();
         csvPanel.setLayout(new FlowLayout());
         _csvGroup.add(_csvTabbed);
-        _csvGroup.add(_csvRFC);
+        _csvGroup.add(_csvComma);
         _csvTabbed.setSelected(true);
         csvPanel.add(_csvTabbed);
-        csvPanel.add(_csvRFC);
+        csvPanel.add(_csvComma);
         c.gridx = 1;
         p.add(csvPanel,c);
         c.gridx = 0;

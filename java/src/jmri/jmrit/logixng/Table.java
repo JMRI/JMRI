@@ -144,12 +144,13 @@ public interface Table {
      * The available types of CSV from which to load a table
      * The default is TABBED, as that was previously the only choice
      * TABBED results in parsing the CSV file with tabs as the delimiters
-     * RFC (for RFC-4180) parses with commas as the delimiter, but dut does not allow empty lines
+     * COMMA uses csvFormat of RFC-4180, which is the standard Comma
+     * Seperated Value format, but does not allow empty lines
      */
     public enum CsvType {
 
         TABBED(Bundle.getMessage("CsvType_Tabbed")),
-        COMMA(Bundle.getMessage("CsvType_Tabbed"));
+        COMMA(Bundle.getMessage("CsvType_Comma"));
 
         private final String _text;
 

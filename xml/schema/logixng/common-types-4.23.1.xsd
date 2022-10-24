@@ -93,7 +93,7 @@
       <xs:simpleType name="LogixNG_CSVtype">
         <xs:restriction base="xs:token">
           <xs:enumeration value="TABBED"/>
-          <xs:enumeration value="RFC"/>
+          <xs:enumeration value="COMMA"/>
         </xs:restriction>
       </xs:simpleType>
 
