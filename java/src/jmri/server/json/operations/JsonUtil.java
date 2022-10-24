@@ -87,7 +87,7 @@ public class JsonUtil {
      */
     public ObjectNode getEngine(Engine engine, ObjectNode data, Locale locale) {
         data.put(JSON.MODEL, engine.getModel());
-        data.put(JsonConsist.CONSIST, engine.getConsist() != null ? engine.getConsistName() : null);
+        data.put(JsonConsist.CONSIST, engine.getConsistName());
         return data;
     }
 
@@ -137,7 +137,7 @@ public class JsonUtil {
         data.put(JsonOperations.FRED, car.hasFred());
         data.put(JSON.REMOVE_COMMENT, car.getDropComment());
         data.put(JSON.ADD_COMMENT, car.getPickupComment());
-        data.put(JSON.KERNEL, car.getKernel() != null ? car.getKernelName() : null);
+        data.put(JSON.KERNEL, car.getKernelName());
         data.put(JSON.UTILITY, car.isUtility());
         data.put(JSON.IS_LOCAL, car.isLocalMove());
         if (car.getFinalDestinationTrack() != null) {
@@ -178,7 +178,7 @@ public class JsonUtil {
         data.put(JSON.LENGTH, location.getLength());
         data.put(JSON.COMMENT, location.getComment());
         Reporter reporter = location.getReporter();
-        data.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
+        data.put(REPORTER, reporter != null ? reporter.getSystemName() : "");
         // note type defaults to all in-use rolling stock types
         ArrayNode types = data.putArray(JsonOperations.CAR_TYPE);
         for (String type : location.getTypeNames()) {
@@ -228,7 +228,7 @@ public class JsonUtil {
         // only includes location ID to avoid recursion
         node.put(JsonOperations.LOCATION, track.getLocation().getId());
         Reporter reporter = track.getReporter();
-        node.put(REPORTER, reporter != null ? reporter.getSystemName() : null);
+        node.put(REPORTER, reporter != null ? reporter.getSystemName() : "");
         node.put(JSON.TYPE, track.getTrackType());
         // note type defaults to all in-use rolling stock types
         ArrayNode types = node.putArray(JsonOperations.CAR_TYPE);
@@ -293,12 +293,12 @@ public class JsonUtil {
         ObjectNode node = mapper.createObjectNode();
         node.put(JSON.NAME, rs.getId());
         node.put(JSON.NUMBER, TrainCommon.splitString(rs.getNumber()));
-        node.put(JSON.ROAD, rs.getRoadName());
+        node.put(JSON.ROAD, rs.getRoadName().split(TrainCommon.HYPHEN)[0]);
         // second half of string can be anything
-        String[] type = rs.getTypeName().split("-", 2);
+        String[] type = rs.getTypeName().split(TrainCommon.HYPHEN, 2);
         node.put(JSON.RFID, rs.getRfid());
         node.put(JsonOperations.CAR_TYPE, type[0]);
-        node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : null);
+        node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : "");
         node.put(JSON.LENGTH, rs.getLengthInteger());
         try {
             node.put(JsonOperations.WEIGHT, Double.parseDouble(rs.getWeight()));

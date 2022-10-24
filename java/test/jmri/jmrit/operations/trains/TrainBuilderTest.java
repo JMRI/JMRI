@@ -17196,9 +17196,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         train.addTypeName("-");
 
         // 3 cars at Acton Yard using hyphen for road and car type
-        Car c1 = JUnitOperationsUtil.createAndPlaceCar("-", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("A-", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "-", "40", "DAB", "1958", actonYard1, 1);
-        Car c3 = JUnitOperationsUtil.createAndPlaceCar("-", "3", "-", "40", "DAB", "1958", actonYard1, 2);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("-A", "3", "-", "40", "DAB", "1958", actonYard1, 2);
 
         Assert.assertTrue(new TrainBuilder().build(train));
         
