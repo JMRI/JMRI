@@ -224,6 +224,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         } else if (csvType == CsvType.COMMA) {
             format = CSVFormat.RFC4180;
         } else {
+            buffered.close();
             throw new IOException("Unrecognized CSV Format");
         }
         returnList = parseCSV(buffered, format);
