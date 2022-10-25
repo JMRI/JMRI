@@ -859,7 +859,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             boolean warmUpLoco;
             int acceleration;
             int deceleration;
-            String error = "";
 
             if ((speedMatcher == null) && (profileState == ProfileState.IDLE)) {
                 targetStartSpeed = startSpeedSM.getNumber().intValue();

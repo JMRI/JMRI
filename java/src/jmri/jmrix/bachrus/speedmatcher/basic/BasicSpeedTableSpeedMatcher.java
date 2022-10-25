@@ -10,14 +10,14 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
-    private final int INITIAL_SPEED_TABLE_STEP = 1;
+    //private final int INITIAL_SPEED_TABLE_STEP = 1;
     private final int INITIAL_STEP28 = 255;
     private final int INITIAL_TRIM = 128;
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
-    private int speedTableStepValue = INITIAL_STEP28;
-    private int lastSpeedTableStepValue = INITIAL_STEP28;
+    //private int speedTableStepValue = INITIAL_STEP28;
+    //private int lastSpeedTableStepValue = INITIAL_STEP28;
     private int reverseTrimValue = INITIAL_TRIM;
     private int lastReverseTrimValue = INITIAL_TRIM;
     
