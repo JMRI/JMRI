@@ -144,9 +144,16 @@
       Tables Table. The user name is usually used to provide a more descriptive name, for example,
       "Signal 5 Table".</p>
 
-      <p>Use the file selector button to find and and load a CSV file. The CSV file is created by
-      using the export CSV file option in a spreadsheet program. The default location will be the
-      user files location.</p>
+      <p>Select the delimiter used for the CSV, either <strong>Tabbed</strong> (the default)
+      or <strong>Comma</strong>.</p>
+
+      <p>Use the file selector button to find and load a CSV file. A CSV type file (comma delimited) may be
+      created by saving a spreadsheet using the "Save As" function. You may also create a comma
+      seperated file by using a standard text editor and seperating each column entry with a comma.
+      A Tab delimited file may be created by using a spreadsheet and using the "Export" function and
+      selecting "Tab" as the delimiter. You may create a Tab delimted file with a text editor, but
+      many text editors will automatically change tabs to spaces (and that will not load correctly).
+      The default location will be the user files location.</p>
 
       <p>The ability to create an internal table is not implemented yet.</p>
 
