@@ -66,9 +66,10 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         return newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
     }
 
-        /**
-         * {@inheritDoc}
-         */
+    /**
+    * {@inheritDoc}
+    */
+    @Override
     public NamedTable newCSVTable(String systemName, String userName, String fileName, Table.CsvType csvType)
             throws IllegalArgumentException {
 
