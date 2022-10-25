@@ -840,10 +840,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
 
         // The block list for an interlocking NX still has the facing block if there are no signals.
-        boolean facing = getSource().getSourceSignal() == null;
+        boolean facing = getSource().getStart().getUseExtraColor();
         for (LayoutBlock blk : routeDetails) {
             if (facing) {
-                // skip facing Block
+                // skip the facing block when there is an active NX pair immediately before this one.
                 facing = false;
                 continue;
             }
