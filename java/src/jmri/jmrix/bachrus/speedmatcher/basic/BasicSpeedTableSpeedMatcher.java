@@ -11,7 +11,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
     //private final int INITIAL_SPEED_TABLE_STEP = 1;
-    private final int INITIAL_STEP28 = 255;
+    //private final int INITIAL_STEP28 = 255;
     private final int INITIAL_TRIM = 128;
     //</editor-fold>
     
