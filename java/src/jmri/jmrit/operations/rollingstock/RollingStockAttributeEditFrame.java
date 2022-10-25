@@ -49,7 +49,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_CANNOT_BE_FINAL") // needs access in subpackage
     protected static boolean showDialogBox = true;
-    public static boolean showQuanity = false;
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("MS_CANNOT_BE_FINAL") // needs access in subpackage
+    protected static boolean showQuanity = false;
 
     // property change
     public static final String DISPOSE = "dispose"; // NOI18N
