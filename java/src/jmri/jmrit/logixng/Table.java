@@ -154,15 +154,7 @@ public interface Table {
         private CsvType(String text) {
             this._text = text;
         }
-        private CsvType _csvType;
-        protected void setCsvType(CsvType typeValue) {
-            _csvType = typeValue;
-        }
-
-        public CsvType getCsvType() {
-            return _csvType;
-        }
-
+        
         @Override
         public String toString() {
             return _text;
