@@ -126,12 +126,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
 
         String[][] csvCells = new String[numRows + 1][];
         for (int rowCount = 0; rowCount < numRows + 1; rowCount++) {
-            List<String> thisRow = lines.get(rowCount);
-            String[] theseColumns = new String[thisRow.size()];
-            for (int columns = 0; columns < thisRow.size(); columns++) {
-                theseColumns[columns] = thisRow.get(columns);
-            }
-            csvCells[rowCount] = theseColumns;
+            csvCells[rowCount] = lines.get(rowCount).toArray(new String[0]);
+            numColumns = Math.max(numColumns, csvCells[rowCount].length);
         }
 
         // Ensure all rows have same number of columns
