@@ -37,7 +37,8 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
      * @param user the user name or null if no user name
      * @param fileName the file name of the CSV table
      * @param data the data in the table. Note that this data is not copied to
-     * an new array but used by the table as is.
+     *        a new array but used by the table as is.
+     * @param csvType the type of delimiter used for the file (comma or tab)
      */
     public DefaultCsvNamedTable(
             @Nonnull String sys, @CheckForNull String user,
