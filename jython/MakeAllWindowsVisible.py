@@ -1,27 +1,27 @@
-#   The "UnHide Panels" script was designed to cope with a Windows OS problem described in the lengthy 
-#   "Layout Panels will not display." message thread found at 
-#   https://groups.io/g/jmriusers/topic/93328449#207914 and perhaps in earlier Groups.io topics.  
+#   The MakeAllWindowsVisible.py script was designed to cope with a Windows OS problem described in the lengthy
+#   "Layout Panels will not display." message thread found at
+#   https://groups.io/g/jmriusers/topic/93328449#207914 and perhaps in earlier Groups.io topics.
 #
-#   One outcome of the identified message thread was the Issue "Copied Panel xml file is not 
+#   One outcome of the identified message thread was the Issue "Copied Panel xml file is not
 #   always usable on some Windows destination computers #11381" at https://github.com/JMRI/JMRI/issues/11381
 
 #   A Panel xml file created on a computer with a large screen and/or with multiple screens an then used on different
-#   Windows can be at risk.  
+#   Windows can be at risk.
 #
-#   If the Windows destination computer has either a smaller screen or has fewer screens, it is possible to leave 
-#   one or more defined panels completely or partially outside of the physical screen pixel area. 
+#   If the Windows destination computer has either a smaller screen or has fewer screens, it is possible to leave
+#   one or more defined panels completely or partially outside of the physical screen pixel area.
 
 #       Apparently features of Linux and Mac operating systems will always move and display such panels.
 
-#   The Pull Request "WIP - Move invisible windows to main screen #11384" at 
-#   https://github.com/JMRI/JMRI/pull/11384 was CLOSED without any modification to the JMRI software, 
+#   The Pull Request "WIP - Move invisible windows to main screen #11384" at
+#   https://github.com/JMRI/JMRI/pull/11384 was CLOSED without any modification to the JMRI software,
 #   probably based on the statement:
-#       "If this PR is to be merged, the comment by @devel-bobm needs to be resolved. There needs to be an 
-#       option to opt u[o]t of this test. That's easy to do, but I'm not sure if this issue should be resolved in another 
-#       way. See the thread for the discussion. 
+#       "If this PR is to be merged, the comment by @devel-bobm needs to be resolved. There needs to be an
+#       option to opt u[o]t of this test. That's easy to do, but I'm not sure if this issue should be resolved in another
+#       way. See the thread for the discussion.
 #       https://jmri-developers.groups.io/g/jmri/message/7772 "
 #
-#   This script offers Windows users another option, allowing the user to decide to move or skip each JmriJFrame.  
+#   This script offers Windows users another option, allowing the user to decide to move or skip each JmriJFrame.
 
 
     #   It should be noted that what we call the "main screen" is named within the JMRI software as "\Display0"
@@ -38,23 +38,23 @@ import javax
 import javax.swing
 import javax.swing.JButton
 
-import org.apache.log4j     ##  For the log output 
+import org.apache.log4j     ##  For the log output
 ##
 ##  In order to see the debug output in the session.log file and/or the JMRI System Console window
 ##  Do the following steps:
-##      1)  if not already done, make a copy of the file named "default.lcf" in the program: folder and save it in the settings: folder 
-##      2)  edit your copy to insert the line "log4j.category.jmri.jmrit.jython.exec=DEBUG" (without the quotes) near the bottom of 
+##      1)  if not already done, make a copy of the file named "default.lcf" in the program: folder and save it in the settings: folder
+##      2)  edit your copy to insert the line "log4j.category.jmri.jmrit.jython.exec=DEBUG" (without the quotes) near the bottom of
 ##
 
 
 
 class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 
-    #   Creates two dialog windows for user input. 
-        #       The user override option is in response to the concerns identified by the developers. 
+    #   Creates two dialog windows for user input.
+        #       The user override option is in response to the concerns identified by the developers.
     #   Allows the user to "Cancel" without modifying the PanelPro panel XML file.
     #   Discovers a list of all display screens.
-        #       Based on limited hardware available for testing, assumes 
+        #       Based on limited hardware available for testing, assumes
         #       that the display screens are oriented
         #       from left to right as horizontal pixel count increases.
     #   Makes use of waitMsec() inherited from AbstractAutomaton to allow for user input delays
@@ -100,15 +100,15 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 # END OF moveLeftOutPanels.init()
 ##############################
 
-    #   Onetime pass through the handle() method will, assuming the user has 
-    #   not canceled, discover a list of all of the JMRI Windows including 
-    #   all the Panels and some other things inherited from the Java class JFrame.  
+    #   Onetime pass through the handle() method will, assuming the user has
+    #   not canceled, discover a list of all of the JMRI Windows including
+    #   all the Panels and some other things inherited from the Java class JFrame.
     def handle( self ) :  # inherited from AbstractAutomaton
 
         # What the user chose to do or not
         if self.isFindingHidden :
 
-            # Begin allowing the user to decide which panels to move to a visible 
+            # Begin allowing the user to decide which panels to move to a visible
             # location in the main screen AKA \Display0
             self.buildMoveSkipDialog()
 
@@ -118,7 +118,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 
             #   Since each panel is a JmriJFrame object the cleanest option is
             #   to first retrieve the list of those windows.
-            #       There is also a slight chance that one of the other kind of 
+            #       There is also a slight chance that one of the other kind of
             #       Frames got hidden too.
             allKnownFrameList = jmri.util.JmriJFrame.getFrameList().size()
             self.log.debug ( "JmriJFrameList Count = {0}".format ( allKnownFrameList ) )
@@ -130,20 +130,20 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 
                 someJmriJFrame = jmri.util.JmriJFrame.getFrameList().get(dummyIndex)
                 self.activeWindowTitle = someJmriJFrame.getTitle()
-                self.log.debug ( 
-                    'JmriJFrame Index # ' + str(dummyIndex) 
+                self.log.debug (
+                    'JmriJFrame Index # ' + str(dummyIndex)
                 )
 
-                self.log.debug ( 
+                self.log.debug (
                     'JmriJFrame Title \"' + self.activeWindowTitle + '\"'
                 )
 
-                #   Because we created a Dialog window that is also a JmriJFrame, 
+                #   Because we created a Dialog window that is also a JmriJFrame,
                 #   we need to ignore that dialog Frame to avoid confusion
                 if ( self.activeWindowTitle <> self.moveJmriJFrameTitle ) :
 
-                    # Establish a mechanism to force a delay until user chooses 
-                    # to either move or skip any outside-of-the-box windows 
+                    # Establish a mechanism to force a delay until user chooses
+                    # to either move or skip any outside-of-the-box windows
                     self.isDelayed = True
                     delayCount = 0
 
@@ -165,7 +165,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.moveJmriJFrame.dispose()
 
         return False    # terminate the thread
-                        # and thus release all resources. 
+                        # and thus release all resources.
 
 # END OF moveLeftOutPanels.handle()
 #################################################
@@ -173,11 +173,11 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
     #   Before doing anything
     #   provide the user with a CAUTION dialog
     def cautionDialog( self ) :
-    
+
         self.log.debug ( '  Begin building the CAUTION dialog' )
         self.cautionJmriJFrame.contentPane.setLayout (
                 javax.swing.BoxLayout (
-                self.cautionJmriJFrame.contentPane, 
+                self.cautionJmriJFrame.contentPane,
                 javax.swing.BoxLayout.Y_AXIS
                 )
             )
@@ -210,7 +210,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.continueButton.actionPerformed = self.whenContinueButtonClicked
         self.continueButton.enabled = True
         tempPanel = javax.swing.JPanel()
-        tempPanel.setLayout(java.awt.FlowLayout())  
+        tempPanel.setLayout(java.awt.FlowLayout())
         tempPanel.add( self.continueButton )
         self.cautionJmriJFrame.contentPane.add(tempPanel)
         # self.log.debug ( "Continue Button of CAUTION dialog" )
@@ -232,7 +232,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         #       Because the information about the number of and size of your screens
         #       is available as a member function of the JmriJFrame class, we
-        #       piggyback this confusing code here prior to looking for any Panels 
+        #       piggyback this confusing code here prior to looking for any Panels
         self.screenDimensionsList = self.cautionJmriJFrame.getScreenDimensions()
         self.screenCount = len( self.screenDimensionsList )
         self.log.debug ( "Number of Screens = {0}".format( self.screenCount ) )
@@ -303,44 +303,44 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 #################################################
 
 
-    #   For each Frame AKA "window," we first decide if it is ENTIRELY OUTSIDE 
-    #   the screen and that requires four comparisons 
+    #   For each Frame AKA "window," we first decide if it is ENTIRELY OUTSIDE
+    #   the screen and that requires four comparisons
     def maybeMoveSkip( self, faJmriJFrame) :
 
         #   Each "JFrame" object has a member that allows us to discover
-        #   something about the display screen.  For a computer with 
-        #   multiple screens and a JFrame that spans the boundary between 
-        #   two screens it is not clear what the provided display screen 
-        #   information means.  
+        #   something about the display screen.  For a computer with
+        #   multiple screens and a JFrame that spans the boundary between
+        #   two screens it is not clear what the provided display screen
+        #   information means.
         pixelScreenSize = faJmriJFrame.getToolkit().getScreenSize()
-        #   pixelScreenSize is in pixels ( width, height ) and includes all of the 
-        #   physical pixels on the user's screen, including any task bar or other 
-        #   system defined insert or assistant. 
+        #   pixelScreenSize is in pixels ( width, height ) and includes all of the
+        #   physical pixels on the user's screen, including any task bar or other
+        #   system defined insert or assistant.
 
-        # self.log.debug ( 
+        # self.log.debug (
             # '/\/\ Screen Dimension in pixels is ' + str (pixelScreenSize)
         # )
 
         # pixelScreenWidth  = pixelScreenSize.width     ### NOT USED
         pixelScreenHeight = pixelScreenSize.height
 
-        self.log.debug ( 
-           # ' pixelScreenWidth = ' + str( pixelScreenWidth ) + 
+        self.log.debug (
+           # ' pixelScreenWidth = ' + str( pixelScreenWidth ) +
            '\/\/ pixelScreenHeight = ' + str( pixelScreenHeight )
         )
 
         # get the upper left corner of the faJmriJFrame under scrutiny in Screen coordinates
         frame_X = faJmriJFrame.x
         frame_Y = faJmriJFrame.y
-        self.log.debug ( 
-            '\/\/ Upper Left Corner = ( ' + str ( frame_X ) 
+        self.log.debug (
+            '\/\/ Upper Left Corner = ( ' + str ( frame_X )
             + ', ' +str( frame_Y ) + ' )'
         )
 
         # get the width and height of the faJmriJFrame under scrutiny in Screen coordinates
         frameWidth = faJmriJFrame.width
         frameHeight = faJmriJFrame.height
-        self.log.debug ( 
+        self.log.debug (
             "\/\/ JmriJFrame width = " + str(frameWidth)
             + " and height = " + str(frameHeight)
         )
@@ -348,23 +348,23 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
         # calculate the lower right corner of the faJmriJFrame under scrutiny in Screen coordinates
         frame_Right_X = faJmriJFrame.x + frameWidth
         frame_Lower_Y = faJmriJFrame.y + frameHeight
-        
-        self.log.debug ( 
-            '\/\/ Lower Right Corner = ( ' + str ( frame_Right_X ) 
+
+        self.log.debug (
+            '\/\/ Lower Right Corner = ( ' + str ( frame_Right_X )
             + ', ' +str( frame_Lower_Y ) + ' )'
         )
 
         # Four tests are made to detect a JmriJFrame to possibly be "hidden" or "invisible"
-        # But in fact we are testing for Frames that are even PARTIALLY off one of 
+        # But in fact we are testing for Frames that are even PARTIALLY off one of
         # the edges of the entire display screen combination.
 
         # Top and bottom edge testing is done on the basis of the individual containing Screen.
 
-        # Left and right edge testing is done for the entire combined screen width. 
+        # Left and right edge testing is done for the entire combined screen width.
                 # Assumption done with the results of limited number of screen hardware available
 
         # NOTE that some panel edges may meet more than one condition, but only
-        # the first reason detected is used.  NO further testing is done.  
+        # the first reason detected is used.  NO further testing is done.
         reasonText = ''
         if ( frame_Right_X < 0 ) :
             reasonText = 'Tooo far LEFT'
@@ -378,7 +378,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.updateMoveSkipDialog ( faJmriJFrame, reasonText )
         elif ( frame_X > self.totalScreenWidthpixels ) :
             #   Only if the Frame is outside the entire left to right cumulative display
-            #   Assumption: JMRI aligns multiple screens from left to right??? 
+            #   Assumption: JMRI aligns multiple screens from left to right???
             reasonText = 'Tooo far RIGHT'
             self.log.debug ( '/\/\ Reason ="' + reasonText + '"' )
             self.log.debug ( '/\/\ frame_X = {0} > self.totalScreenWidthpixels = {1}'.format( frame_X, self.totalScreenWidthpixels ) )
@@ -389,20 +389,20 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.log.debug ( '/\/\ frame_Y = {0} > pixelScreenHeight = {1}'.format( frame_Y, pixelScreenHeight ) )
             self.updateMoveSkipDialog ( faJmriJFrame, reasonText )
         else :  ##  The Usual window position is the "Ignore" exception in this logic
-            #       Expect the Usual case that some, perhaps most of the windows sit 
-            #       completely within the main screen.  
+            #       Expect the Usual case that some, perhaps most of the windows sit
+            #       completely within the main screen.
             #       In this twisted logic, the usual case requires handling an exceptional
             #       "Ignore" condition.
             self.log.debug ( "  Ignoring ON-SCREEN JmriJFrame" )
-            #   Kick the trigger in lieu of a user decision 
+            #   Kick the trigger in lieu of a user decision
             #   to cancel the delay waiting for human response
             self.isDelayed = False      #   Trigger the 'Break-out of the Wait loop'
 
 # END OF moveLeftOutPanels.maybeMoveSkip()
 #################################################
 
-    #   If any one of the four tests indicates a window that is even partially 
-    #   out of bounds, give the user the information and let them make a choice 
+    #   If any one of the four tests indicates a window that is even partially
+    #   out of bounds, give the user the information and let them make a choice
     def updateMoveSkipDialog( self, faJmriJFrame, faReason ) :
         self.activeWindow = faJmriJFrame
         #   Display the title of the Frame
@@ -415,14 +415,14 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 # END OF moveLeftOutPanels.updateMoveSkipDialog()
 #################################################
 
-    #   The tedious GUI stuff from the initialization is corralled 
+    #   The tedious GUI stuff from the initialization is corralled
     #   into an isolated lump
     def buildMoveSkipDialog( self ) :
 
         self.log.debug ( '  Begin building the Move or Skip Dialog' )
         self.moveJmriJFrame.contentPane.setLayout (
                 javax.swing.BoxLayout (
-                self.moveJmriJFrame.contentPane, 
+                self.moveJmriJFrame.contentPane,
                 javax.swing.BoxLayout.Y_AXIS
                 )
             )
@@ -446,7 +446,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.moveButton.actionPerformed = self.whenApproveButtonClicked
         self.moveButton.enabled = True
         tempPanel = javax.swing.JPanel()
-        tempPanel.setLayout(java.awt.FlowLayout())  
+        tempPanel.setLayout(java.awt.FlowLayout())
         tempPanel.add( self.identifyJFrame )
         tempPanel.add( self.moveButton )
         self.moveJmriJFrame.contentPane.add(tempPanel)
@@ -493,7 +493,7 @@ class moveLeftOutPanels(jmri.jmrit.automat.AbstractAutomaton):
 
 ## Clicking the skip Button will cancel the delay interval and continue with the looping
     def whenSkipButtonClicked( self, event ) :
-        # Essentially do nothing, but allow the the next Frame 
+        # Essentially do nothing, but allow the the next Frame
         self.log.debug ( "  skipping at user's choice" )
         # Trigger the condition that breaks us out of the delay loop
         self.isDelayed = False      #   Trigger the 'Break-out of the Wait loop'
