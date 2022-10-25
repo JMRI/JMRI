@@ -154,7 +154,7 @@ public interface Table {
         private CsvType(String text) {
             this._text = text;
         }
-        
+
         @Override
         public String toString() {
             return _text;
