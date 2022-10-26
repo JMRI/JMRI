@@ -411,7 +411,7 @@
           <li>The ConditionalNG editor and the Module editor now have the option
           <i>Paste copy</i>. With it, you can paste from the clipboard as many times
           as needed.</li>
-          <li>Adds support of multiple types of CSV files to LogixNG Tables
+          <li>Adds support of multiple types of CSV files to LogixNG Tables.
           Tab separated files are the default, but you may choose Comma
           as the separator. This allows you load CSV files created by
           spreadsheet programs.</li>
