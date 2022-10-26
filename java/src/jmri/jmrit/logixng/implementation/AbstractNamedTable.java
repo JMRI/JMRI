@@ -52,13 +52,13 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     /**
-     * Create a new named table with an existing array of cells. Row 0 has the column names and column 0 has the row
-     * names.
+     * Create a new named table with an existing array of cells.
+     * Row 0 has the column names and column 0 has the row names.
      *
      * @param systemName the system name
      * @param userName   the user name
-     * @param data       the data in the table. Note that this data is not copied to an new array but used by the table
-     *                   as is.
+     * @param data       the data in the table. Note that this data is not
+     *                   copied to a new array but used by the table as is.
      */
     public AbstractNamedTable(@Nonnull String systemName,
                               @CheckForNull String userName,
@@ -75,14 +75,14 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
 
     /**
-     * Create a new named table with an existing array of cells. Row 0 has the column names and column 0 has the row
-     * names.
+     * Create a new named table with an existing array of cells.
+     * Row 0 has the column names and column 0 has the row names.
      *
      * @param systemName the system name
      * @param userName   the user name
      * @param fileName   the file name of the CSV table
-     * @param data       the data in the table. Note that this data is not copied to an new array but used by the table
-     *                   as is.
+     * @param data       the data in the table. Note that this data is not
+     *                   copied to a new array but used by the table as is.
      */
     public AbstractNamedTable(@Nonnull String systemName,
                               @CheckForNull String userName,

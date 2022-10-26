@@ -22,7 +22,6 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
-
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;

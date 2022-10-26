@@ -159,13 +159,10 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public NamedTable loadTableFromCSVData(
             @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        try {
+            throws NamedBean.BadUserNameException,
+            NamedBean.BadSystemNameException,
+            IOException {
             return AbstractNamedTable.loadTableFromCSV_Text(sys, user, text, true, Table.CsvType.TABBED);
-        } catch (IOException e) {
-            log.error("Load from table failed with an IOException", e);
-            return null;
-        }
     }
 
     /**

@@ -61,10 +61,11 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param user the user name of the new table or null if no user name
      * @param text the CSV text
      * @return the loaded table
+     * @throws java.io.IOException in case of an exception
      */
     public NamedTable loadTableFromCSVData(
             @Nonnull String sys, @CheckForNull String user, @Nonnull String text)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException;
+            throws IOException;
     
     /**
      * Load a table from a CSV finle.
@@ -77,7 +78,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public NamedTable loadTableFromCSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull String fileName)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
+            throws IOException;
     
     /**
      * Load a table from a CSV finle.
@@ -90,7 +91,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public NamedTable loadTableFromCSV(
             @Nonnull String sys, @CheckForNull String user,
             @Nonnull File file)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
+            throws IOException;
     
     /**
      * Locate via user name, then system name if needed. Does not create a new

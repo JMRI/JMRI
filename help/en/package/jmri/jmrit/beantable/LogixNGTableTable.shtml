@@ -152,7 +152,8 @@
       separated file by using a standard text editor and separating each column entry with a comma.
       A Tab separated file may be created by using a spreadsheet and using the "Export" function and
       selecting "Tab" as the separater. You may create a Tab separated file with a text editor, but
-      many text editors will automatically change tabs to spaces (and that will not load correctly).
+      some text editors might automatically change tabs to spaces (and that will not load correctly).
+      In that case, change the preferences of the editor, or use a different editor.
       The default location will be the user files location.</p>
 
       <p>The ability to create an internal table is not implemented yet.</p>

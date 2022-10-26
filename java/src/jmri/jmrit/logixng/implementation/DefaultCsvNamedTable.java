@@ -55,21 +55,21 @@ public class DefaultCsvNamedTable extends AbstractNamedTable {
     public boolean isCsvTypeSupported() {
         return true;
     }
-
-
     
     public String getFileName() {
         return _fileName;
     }
-    
+
     public void setFileName(String fileName) {
         this._fileName = fileName;
     }
 
+    @Override
     public void setCsvType(CsvType csvType) {
         _csvType = csvType;
     }
 
+    @Override
     public CsvType getCsvType() {
         return _csvType;
     }
