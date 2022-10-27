@@ -5645,6 +5645,7 @@
       <systemName>IQDE:AUTO:0065</systemName>
       <is_isNot>Is</is_isNot>
       <powerState>On</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5707,6 +5708,7 @@
       <comment>A comment</comment>
       <is_isNot>IsNot</is_isNot>
       <powerState>Off</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5769,6 +5771,7 @@
       <comment>A comment</comment>
       <is_isNot>IsNot</is_isNot>
       <powerState>On</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
@@ -5829,8 +5832,9 @@
     <ExpressionPower class="jmri.jmrit.logixng.expressions.configurexml.ExpressionPowerXml">
       <systemName>IQDE:AUTO:0068</systemName>
       <comment>A comment</comment>
-      <is_isNot>IsNot</is_isNot>
-      <powerState>Other</powerState>
+      <is_isNot>Is</is_isNot>
+      <powerState>OnOrOff</powerState>
+      <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">

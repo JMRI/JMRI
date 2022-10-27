@@ -2487,7 +2487,7 @@
         <exec executable="${nsis.home}makensis"
               dir="scripts/WinInstallFiles/"
               failonerror="true">
-            <arg line="-V2 LaunchJMRI.nsi"/>
+            <arg line="-V2 -DJMRI_VER=${release.version-string} LaunchJMRI.nsi"/>
         </exec>
     </target>
 

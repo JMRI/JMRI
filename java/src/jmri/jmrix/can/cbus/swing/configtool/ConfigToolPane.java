@@ -111,7 +111,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             @Override
             void create(String name) {
                 try {
-                    ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor(name);
+                    memo.get(jmri.SensorManager.class).provideSensor(name);
                 }
                 catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(this,
@@ -128,7 +128,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             @Override
             void create(String name) {
                 try {
-                    ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout(name);
+                    memo.get(jmri.TurnoutManager.class).provideTurnout(name);
                 }
                 catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(this,
@@ -145,7 +145,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             @Override
             void create(String name) {
                 try {
-                    ((jmri.LightManager) memo.get(jmri.LightManager.class)).provideLight(name);
+                    memo.get(jmri.LightManager.class).provideLight(name);
                 }
                 catch (Exception ex) {
                     JOptionPane.showMessageDialog(this,

@@ -24,20 +24,20 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     public void testInitComp() {
 
         Assertions.assertNotNull(memo);
-        ((CbusPreferences)memo.get(CbusPreferences.class)).setNodeBackgroundFetchDelay(0);
-        CbusNodeTableDataModel nodeModel = ((CbusConfigurationManager)memo.get(CbusConfigurationManager.class))
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
-        
+
         NodeConfigToolPane nodeConfigpanel = new NodeConfigToolPane();
         nodeConfigpanel.initComponents(memo);
-        
+
         Assert.assertNotNull("exists", nodeConfigpanel);
         Assert.assertNotNull("core node model exists", nodeModel);
-        
+
         nodeModel.dispose();
 
     }
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis = null;
 

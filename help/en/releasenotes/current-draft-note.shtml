@@ -415,6 +415,13 @@
           Tab separated files are the default, but you may choose Comma
           as the separator. This allows you load CSV files created by
           spreadsheet programs.</li>
+          <li>The expression <i>Power</i> now supports the <i>Idle</i> and <i>Unknown</i>
+          states. Therefore the option <i>Other</i> has been renamed to <i>On or Off</i>.
+          A Power expression that had the state <i>Other</i> now has the state <i>On or Off</i>,
+          with <i>Is/IsNot</i> inverted.</li>
+          <li>The expression <i>Power</i> can now ignore the <i>Unknown</i> state. Most
+          power managers in JMRI sets the state to Unknown before changing the state. This might
+          cause problems when using the expression Power with IfThenElse with ExecuteOnChange.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

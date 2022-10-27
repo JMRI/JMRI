@@ -31,12 +31,12 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<T> T) {
         if (getDisabled()) {
             return null;
         }
         if (mode == MS100MODE) {
-            return (T) super.get(T);
+            return super.get(T);
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -52,7 +52,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             return (T) getPowerManager();
         }
         if(T.equals(jmri.ConsistManager.class)){
-           return (T) getConsistManager();
+            return (T) getConsistManager();
         }
         return null;
     }
