@@ -13,6 +13,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 /**
  * Test ReferenceUtil
  * 
@@ -376,7 +378,9 @@ public class ReferenceUtilTest {
         }, IllegalArgumentException.class, "Memory 'Memory  abc' is not found");
     }
     
-    private void setupTables() {
+    private void setupTables()
+        throws IOException
+    {
         // Note that editors, like NetBeans, may insert spaces instead of tabs
         // when pressing the <Tab> key, which may be a problem when editing the
         // CSV table data below, since the separator between columns must be a
@@ -410,7 +414,7 @@ public class ReferenceUtilTest {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();

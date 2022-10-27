@@ -230,6 +230,7 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="fileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="csvType" type="LogixNG_CSVtype" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="class" type="classType" use="required"/>
           </xs:complexType>
