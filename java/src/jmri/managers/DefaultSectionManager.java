@@ -5,32 +5,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.EntryPoint;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.Manager;
-import jmri.Path;
-import jmri.Section;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
+import jmri.*;
 
 import jmri.implementation.DefaultSection;
 
 import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 /**
  * Basic Implementation of a SectionManager.
@@ -270,21 +258,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * Generate Block Sections in stubs/sidings. Called after generating signal logic.
      */
 
-
-    public void generateBlockSections() {
-        //find blocks with no paths through i.e. stub (siding)
-        LayoutBlockManager LayoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
-        //print "Layout Block"
-        for (LayoutBlock layoutBlock : LayoutBlockManager.getNamedBeanSet()){
-            if (layoutBlock.getNumberOfThroughPaths() == 0){
-                if (!blockSectionExists(layoutBlock)){
-                    //create block section"
-                    createBlockSection(layoutBlock);
-                }
-            }
-        }
-    }
-
     /**
      * Check if Block Section already exists
      * @param layoutBlock
@@ -302,41 +275,164 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         return false;
     }
 
-    private void createBlockSection(LayoutBlock layoutBlock){
-        Section section;
-        try {
-            section = createNewSection(layoutBlock.getUserName());
-        }
-        catch (IllegalArgumentException ex){
-            log.error("Could not create Section from LayoutBlock {}",layoutBlock.getDisplayName());
-            return;
-        }
-        section.addBlock(layoutBlock.getBlock());
-        ArrayList<EntryPoint> entryPointList = new ArrayList<>();
-        Block sb = layoutBlock.getBlock();
-        List <Path> paths = sb.getPaths();
-        for (int j=0; j<paths.size(); j++){
-            Path p = paths.get(j);
-            if (p.getBlock() != sb){
-                //this is path to an outside block, so need an Entry Point
-                String pbDir = Path.decodeDirection(p.getFromBlockDirection());
-                EntryPoint ep = new EntryPoint(sb, p.getBlock(), pbDir);
-                entryPointList.add(ep);
+    public void generateBlockSections() {
+        //find blocks with no paths through i.e. stub (siding)
+        LayoutBlockManager LayoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        //// print "Layout Block"
+        for (LayoutBlock layoutBlock : LayoutBlockManager.getNamedBeanSet()){
+            if (layoutBlock.getNumberOfThroughPaths() == 0){
+                if (!blockSectionExists(layoutBlock)){
+                    //create block section"
+                    createBlockSection(layoutBlock);
+                }
             }
         }
+    }
 
-        Block beginBlock = sb;
-        // Set directions where possible
-        List <EntryPoint> epList = getBlockEntryPointsList(beginBlock,entryPointList);
-        if (epList.size() == 1) {
-            (epList.get(0)).setTypeForward();
+    private void createBlockSection(LayoutBlock layoutBlock) {
+         /*
+         Method
+         get block at siding b, and call createBlockSection
+         create sectionBlockList: set origin_block = b curr_block = b prev_block = None
+         call createSections
+         get blocks from curr_block (paths) and iterate through them
+         each iteration set nextBlock, do not use if nextBlock == prevBlock
+         get anchors of nextBlock, we want the ones which goes to the one after next
+         get the blocks either side of each anchor
+         if one of those blocks is currBlock eliminate that anchor
+         get the signal masts connected to the anchor
+         get the direction of the nextBlock, get the corresponding signal mast
+         if the signal mast exists finish, and set the entry points (i=only one because stub/siding)
+         otherwise call createSections again
+          */
+        Block layoutBlk = layoutBlock.getBlock();
+        ArrayList<Block> sectionBlockList = new ArrayList<>();
+        int index = 0;
+        Block originBlock = layoutBlk;
+        Block currBlock = layoutBlk;
+        Block prevBlock = null;
+        String indent = "  ";    //used to indent the debug statements
+        createSections(originBlock, currBlock, prevBlock, sectionBlockList, index, indent);
+    }
+
+    private void createSections(Block originBlock, Block currBlock, Block prevBlock,
+                                ArrayList<Block>sectionBlockList, int index, String indent){
+
+        index += 1;
+        // print Indent + "index", index
+        sectionBlockList.add(currBlock);
+        List <Path>paths = currBlock.getPaths();
+        //log.debug ( "{} paths {} size {} block {}", indent, paths, paths.size(), currBlock.getUserName());
+        for (int j=0; j<paths.size(); j++){
+            Path p = paths.get(j);
+            Block nextBlock = p.getBlock();
+            log.debug( "{}****", indent);
+            log.debug( "{} iterating through paths {} nextBlock {}", indent, j, nextBlock.getUserName());
+            if (isNull(prevBlock) || nextBlock != prevBlock){
+                log.debug("{}", indent);
+                log.debug("{} index {} path interation {} path {} block {} ", indent, index, j, p, nextBlock.getUserName());
+                if (isNull(prevBlock)) {
+                    log.debug("{} nextBlock {} must not equal prevBlock {}", indent, nextBlock.getUserName(), "null");
+                }else{
+                    log.debug("{} nextBlock {} must not equal prevBlock {}", indent, nextBlock.getUserName(), prevBlock.getUserName());
+                }
+                String pbDir = Path.decodeDirection(p.getFromBlockDirection());
+                // get the panel and cutil for this Block
+                LayoutBlockManager LayoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+                LayoutBlock lBlock = LayoutBlockManager.getLayoutBlock(currBlock);
+                LayoutEditor panel = lBlock.getMaxConnectedPanel();
+                if (isNull(panel)) {
+                    log.error("Unable to get a panel for '{}' in 'createSections'", currBlock.getDisplayName());
+                    continue;
+                }
+                ConnectivityUtil cUtil = new ConnectivityUtil(panel);
+                List<PositionablePoint> anchors = cUtil.getAnchorBoundariesThisBlock(nextBlock);
+                int a = 0;
+                for(PositionablePoint p1 : anchors){
+                    a +=1;
+                    log.debug ("{} before check anchor blocks {} :  {} must not be current block {}",
+                        indent, p1.getConnect1().getBlockName(), p1.getConnect2().getBlockName(),
+                        currBlock.getUserName());
+                    boolean Connect1_OK, Connect2_OK;
+                    if(!p1.getConnect1().getBlockName().equals(currBlock.getUserName()) &&
+                            !p1.getConnect2().getBlockName().equals(currBlock.getUserName())){
+                        log.debug ("{} after check anchor blocks {} :  {} must not be current block {}",
+                                indent, p1.getConnect1().getBlockName(), p1.getConnect2().getBlockName(),
+                                currBlock.getUserName());
+                        log.debug("{} passed check  p1 {} pbDir {}", indent, p1, pbDir);
+                        NamedBeanHandle<SignalMast> sme = p1.getEastBoundSignalMastNamed();
+                        NamedBeanHandle<SignalMast> smw = p1.getWestBoundSignalMastNamed();
+                        if (isNull(sme)){
+                            log.debug( "{} sme = null", indent);
+                        }else{
+                            log.debug("{} sme = {}", indent, sme);
+                        }
+                        if (isNull(smw)){
+                            log.debug( "{} smw = null", indent);
+                        }else{
+                            log.debug("{} smw = {}", indent, smw);
+                        }
+                        NamedBeanHandle<SignalMast> sm;
+                        if (pbDir != "East") {
+                            sm = p1.getEastBoundSignalMastNamed();
+                        } else {
+                            sm = p1.getWestBoundSignalMastNamed();
+                        }
+                        if (isNull(sm)){
+                            log.debug( "{} sm = null", indent);
+                        }else{
+                            log.debug("{} sm = {}", indent, sm);
+                        }
+                        if (nonNull(sm)) {
+                            Section section;
+                            String sectionName = originBlock.getUserName() + ":" + sm.getName();
+                            // print Indent + "sec_name", sec_name
+                            log.debug("{} sectionName = {}", indent, sectionName);
+                            try {
+                                section = createNewSection(sectionName);
+                            } catch (IllegalArgumentException ex) {
+                                log.error("Could not create Section named {}", sectionName);
+                                return;
+                            }
+                            log.debug("{} sectionBlockList = {}", indent, sectionBlockList);
+                            for (Block blk : sectionBlockList) {
+                                section.addBlock(blk);
+                            }
+                            log.debug("{} finished", indent);
+                            setEntryPoints(currBlock, nextBlock, pbDir, section);
+                        } else {
+                            indent = indent + "  ";    // increase indent
+                            createSections(originBlock, nextBlock, currBlock, sectionBlockList, index, indent);
+                            indent = indent.substring(2);
+                        }
+                    }else{
+                        log.warn("anchor {} {} not valid in createSections", a , p1 );
+                    }
+                }
+            }
         }
-        Block endBlock = sb;
-        epList = getBlockEntryPointsList(endBlock, entryPointList);
-        if (epList.size() == 1) {
+    }
+
+    private void setEntryPoints(Block curr_block, Block next_block, String pbDir, Section section) {
+
+        ArrayList<EntryPoint> entryPointList = new ArrayList<>();
+        EntryPoint ep1 = new EntryPoint(curr_block, next_block, pbDir);
+        entryPointList.add(ep1);
+
+//        Block beginBlock = ep.getBlock();          // don't need this because eminating from stub
+//        // Set directions where possible
+//        List <EntryPoint> epList = getBlockEntryPointsList(beginBlock, entryPointList)
+//        if( epList.size() == 1) {
+//            epList.get(0).setTypeForward();
+//        }
+
+        Block endBlock = ep1.getBlock();
+        List <EntryPoint> epList = getBlockEntryPointsList(endBlock, entryPointList);
+        if( epList.size() == 1) {
             (epList.get(0)).setTypeReverse();
         }
 
+        // print "entryPointList.size()", entryPointList.size(), "entryPointList", entryPointList
         for (int j=0; j<entryPointList.size(); j++){
             EntryPoint ep = entryPointList.get(j);
             if (ep.isForwardType()){
