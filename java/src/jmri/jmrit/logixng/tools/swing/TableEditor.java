@@ -47,16 +47,6 @@ import jmri.util.JmriJFrame;
 
     private final SymbolTable symbolTable = new DefaultSymbolTable();
 
-//    private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
-//    private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
-//    private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
-//    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";         // NOI18N
-//    private final JTextField _systemName = new JTextField(20);
-//    private final JTextField _addUserName = new JTextField(20);
-
-//    private NamedBeanComboBox<NamedTable> _nameComboBox = null;
-
-
     /**
      * Create a new ConditionalNG List View editor.
      *
@@ -73,56 +63,9 @@ import jmri.util.JmriJFrame;
     private JmriJFrame _editLogixNGFrame = null;
     private final JTextField editUserName = new JTextField(20);
     private final JTextField editCsvTableName = new JTextField(40);
-//    private JLabel status = new JLabel(" ");
 
     // ------------ ConditionalNG Variables ------------
     private TableTableModel tableTableModel = null;
-//    private ConditionalNG _curConditionalNG = null;
-//    private int _conditionalRowNumber = 0;
-//    private boolean _inReorderMode = false;
-//    private boolean _inActReorder = false;
-//    private boolean _inVarReorder = false;
-//    private int _nextInOrder = 0;
-
-    // ------------ Select NamedTable/ConditionalNG Variables ------------
-//    private JPanel _selectLogixNGPanel = null;
-//    private JPanel _selectConditionalNGPanel = null;
-//    private JComboBox<String> _selectLogixNGComboBox = new JComboBox<>();
-//    private JComboBox<String> _selectConditionalNGComboBox = new JComboBox<>();
-//    private TreeMap<String, String> _selectLogixNGMap = new TreeMap<>();
-//    private ArrayList<String> _selectConditionalNGList = new ArrayList<>();
-
-    // ------------ Edit ConditionalNG Variables ------------
-//    private boolean _inEditConditionalNGMode = false;
-//    private JmriJFrame _editConditionalNGFrame = null;
-//    private JTextField _conditionalUserName = new JTextField(22);
-//    private JRadioButton _triggerOnChangeButton;
-
-    // ------------ Methods for Edit NamedTable Pane ------------
-//
-//    private JButton createFileChooser() {
-//        JButton selectFileButton = new JButton("..."); // "File" replaced by ...
-//        selectFileButton.setMaximumSize(selectFileButton.getPreferredSize());
-//        selectFileButton.setToolTipText(Bundle.getMessage("TableEdit_FileButtonHint"));  // NOI18N
-//        selectFileButton.addActionListener((ActionEvent e) -> {
-//            JFileChooser csvFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-//            csvFileChooser.setFileFilter(new FileNameExtensionFilter("CSV files", "csv", "txt")); // NOI18N
-//            csvFileChooser.rescanCurrentDirectory();
-//            int retVal = csvFileChooser.showOpenDialog(null);
-//            // handle selection or cancel
-//            if (retVal == JFileChooser.APPROVE_OPTION) {
-//                // set selected file location
-//                try {
-//                    editCsvTableName.setText(FileUtil.getPortableFilename(csvFileChooser.getSelectedFile().getCanonicalPath()));
-//                } catch (java.io.IOException ex) {
-//                    log.error("exception setting file location", ex);  // NOI18N
-//                    editCsvTableName.setText("");
-//                }
-//            }
-//        });
-//        return selectFileButton;
-//    }
-
 
     /**
      * Create and/or initialize the Edit NamedTable pane.
@@ -193,27 +136,16 @@ import jmri.util.JmriJFrame;
                 } else {
                     throw new RuntimeException("unrecognized csvType");
                 }
-               /*  ButtonGroup csvGroup = new ButtonGroup();
-                JButton tabbedButton = new JButton(Table.CsvType.TABBED.toString());
-                csvTypePanel.add(tabbedButton);
-                JButton commaButton = new JButton(Table.CsvType.COMMA.toString());
-                csvTypePanel.add(commaButton);
-                csvGroup.add(tabbedButton);
-                csvGroup.add(commaButton);
-                tabbedButton.setEnabled(false);
-                commaButton.setEnabled(false);*/
+
                 csvTypePanel.add(csvTypeLabel);
                 contentPane.add(csvTypePanel);
                 JPanel panel4 = new JPanel();
                 panel4.setLayout(new FlowLayout());
                 JLabel tableFileNameLabel = new JLabel(Bundle.getMessage("TableEditor_FileName") + ": ");  // NOI18N
                 panel4.add(tableFileNameLabel);
-//                panel4.add(new JLabel(((DefaultCsvNamedTable)_curTable).getFileName()));
                 editCsvTableName.setText(((DefaultCsvNamedTable)_curTable).getFileName());
                 editCsvTableName.setEditable(false);
                 panel4.add(editCsvTableName);
-//                editCsvTableName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint2"));  // NOI18N
-              //  panel4.add(createFileChooser());
                 contentPane.add(panel4);
             }
 
@@ -225,7 +157,6 @@ import jmri.util.JmriJFrame;
             contentPane.add(pctSpace);
             JPanel pTitle = new JPanel();
             pTitle.setLayout(new FlowLayout());
-//            pTitle.add(new JLabel(Bundle.getMessage("ConditionalNGTableTitle")));  // NOI18N
             contentPane.add(pTitle);
             // initialize table of conditionals
             tableTableModel = new TableTableModel();
