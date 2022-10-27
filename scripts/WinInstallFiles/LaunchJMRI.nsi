@@ -167,7 +167,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2022 JMRI Community" ; Copyright string
-!define VER        "0.1.27.0"                     ; Launcher version
+!define VER        "0.1.28.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -350,7 +350,7 @@ Section "Main"
   ; --check directory for jre
   JRESearch:
     ClearErrors
-    strCpy $R1 "$EXEDIR\jre"
+    strCpy $R0 "$EXEDIR\jre"
     DetailPrint "Checking local path [$R0\bin\$JAVAEXE]"
     IfFileExists  "$R0\bin\$JAVAEXE" 0 JRESearchNoLocal
        StrCpy $UseDefJava "0"
