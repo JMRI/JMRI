@@ -175,6 +175,10 @@
                     Trains or Routes</a></li>
 
                 <li><a href="#Schedules">Schedules</a></li>
+                
+                <li><a href="#ScheduleMode">Schedule Mode (Sequential or Match)</a></li>
+                
+                <li><a href="#ScheduleExample">Schedule Example</a></li>
 
                 <li><a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and
                     Loads</a></li>
@@ -2411,7 +2415,7 @@
           href="#LocationRollingStock">location</a>.
       </p>
 
-      <h4>Schedule Sequential or Match Mode</h4>
+      <h4 id = "ScheduleMode">Schedule Sequential or Match Mode</h4>
 
       <p>Schedules can operate in one of two modes, "Sequential" where the order in which car
         types and loads arrive is important, or in "Match" mode where car type and load order isn't
@@ -2528,23 +2532,28 @@
         ship load, or whatever is appropriate if a ship load wasn't specified. Each time a train is
         built that could service the car, the car's wait count is decremented.</p>
 
-      <h4>Schedule Example</h4>
+      <h4 id = "ScheduleExample">Schedule Example</h4>
 
       <p>In the schedule shown above, the schedule is operating in sequential mode and is
         requesting two SP boxcars in a row with any load, then a tank car with with a load of "Oil".</p>
 
-      <p>Reading the entire schedule line for the two SP boxcars, it also states that there
-        isn't a random delivery for the cars, the cars can be delivered any day of the week. The
-        load received selection is blank meaning any load is accepted, including the default "E" and
-        "L" loads, and all boxcar custom loads. The load shipped is also blank, therefore the ship
-        load for the boxcars can only be the default empty "E" or default load "L". There isn't a
-        destination for the cars, so the program can send them anywhere that is willing to accept
-        the boxcars with their new load. And finally the cars can be picked up at any time.
+      <p>
+        Reading the entire schedule line for the two SP boxcars, it also states that there isn't a
+        random delivery for the cars, the cars can be delivered any day of the week. The load
+        received selection is blank meaning any load is accepted, including the default "E" and "L"
+        loads, and all boxcar custom loads. The load shipped is also blank, therefore the ship load
+        for the boxcars can be the default empty "E" or default load "L", or the car's <a
+          href="#ReturnWhenEmpty">Return When Empty</a> or <a href="#ReturnWhenLoaded">Return
+          When Loaded</a> load if specified. There isn't a destination for the cars, so the program can send
+        them anywhere that is willing to accept the boxcars with their new load. And finally the
+        cars can be picked up at any time.
+      
       <p>
         The next line in the schedule is requesting a tank car with a custom load of "Oil". Reading
         the entire schedule line for the tank car, there isn't an random value, the car is only
         delivered on Mondays, the tank car's road name doesn't matter, only tank cars with "Oil" are
-        allowed, and the new load will be the default empty or "E" since the car arrived with a <a
+        allowed, and the new load will be the default empty or "E" or the car's <a
+          href="#ReturnWhenEmpty">Return When Empty</a> load since the car arrived with a <a
           href="#EditCarLoads">custom load</a>. And finally the car is to be sent to "Susanville",
         but only on Fridays.
       </p>
@@ -3577,21 +3586,33 @@
 
       <p>Now set the car's location on the layout. If the car is off the layout, set the
         location to none (blank space).</p>
+        
+      <h4>Color</h4>
+      You have the option to set the car's color.  Useful if you provide it on your Manifests or
+      switch lists. See <a href="#MessageFormats">Message Formats</a> to display the car's color.
 
       <h4 id="CarLoad">Load</h4>
-      You can optionally set the load state of the car. Select "E" for empty or "L" for loaded. You
-      can also create your own <a href="#EditCarLoads">custom loads</a>, but there are restrictions.
-      Normally <a href="#Sidings">spurs</a> with <a href="#Schedules">schedules</a> are used to load
-      or unload cars with custom loads that you've created. You can also use <a
-        href="#StagingAndCarLoads">staging tracks</a> to load or unload your car with a custom load.
-      It is also suggested that you use a format similar to L(commodity) to describe your loads so
-      it looks good on your Manifests and switch lists. For example a load of tools could be entered
-      as "L(Tools)" or just "Tools" if desired.
+      You can optionally set the load state of the car. Select "E" for empty or "L" for loaded. Use
+      the
+      <a href="#EditCarLoads">Edit Car Loads</a> tool to rename the default load names if you wish.
+      You can also create your own
+      <a href="#EditCarLoads">custom loads</a>, but there are restrictions. Normally
+      <a href="#Sidings">spurs</a> with <a href="#Schedules">schedules</a> are used to load or
+      unload cars with custom loads that you've created. You can also use
+      <a href="#StagingAndCarLoads">staging tracks</a> to load or unload your car with a custom
+      load. It is also suggested that you use a format similar to L(commodity) to describe your
+      loads so it looks good on your Manifests and switch lists. For example a load of tools could
+      be entered as "L(Tools)" or just "Tools" if desired.
       <p>
         Some operators don't want the default empty or "E" load for a car when the car's load flips
         from the "L" load or when a car's custom load is removed. To set a custom empty load for
         car, see <a href="#CarsSet">Set Car</a> and the <a href="#ReturnWhenEmpty">Return When
           Empty</a> fields. You can tell the program which custom empty load you want each car to have.
+      </p>
+      <p>
+        The same goes the the car's default load or "L" load, you can use the <a
+          href="#ReturnWhenLoaded">Return When Loaded</a> feature to set a custom load rather than
+        the "L" load when a car's load status changes from empty.
       </p>
 
       <h4 id="Kernel">Kernel (Group of Cars)</h4>
@@ -3610,11 +3631,18 @@
         by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window.
       </p>
 
-      <h4>Optional Fields</h4>
+      <h4>Built</h4>
+      An optional built date can be entered for the car. The built date can be entered as a two or
+      four digit year, or in the format of month-year (mm-yy). A two digit year will be converted to
+      a car built in the 1900s. Trains can be
+      <a href="#TrainBuildOptions">configured</a> to only carry cars with a certain built date.
 
-      <p>Finally you can optionally enter the color, built date, owner and comment for this car.
-        The built date can be entered as a two or four digit year, or in the format of month-year
-        (mm-yy). A two digit year will be converted to a car built in the 1900s.</p>
+      <h4>Owner</h4>
+      You can optionally enter the owner's name. Trains can be
+      <a href="#TrainBuildOptions">configured</a> to only accept certain owner names.
+
+      <h4>Comment</h4>
+      You can enter a comment for this car. The comment isn't shown on Manifests or switch lists.
 
       <h4 id="CARIDTAG">Id Tag</h4>
       The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a>
@@ -3994,8 +4022,9 @@
       and track grade is used by the program to calculate how many locomotives are required when
       using the "Auto" feature when building trains. Stream engines use tractive effort rather than
       horsepower to describe their potential for pulling trains. Enter the tractive effort in lbf
-      (pounds force) and the program will convert it to the approximate horsepower at 25 MPH when
-      you press the Save button.
+      (pounds force) and the program will convert it to the approximate horsepower at 25 MPH and 60%
+      efficiency when you press the Save button.
+      
       <p>Now set the locomotive's location on the layout. If the locomotive is off the layout,
         set the location to none (blank space). You can also enter the built date, owner and a
         comment for this locomotive. The built date can be in the format of a two or four digit
