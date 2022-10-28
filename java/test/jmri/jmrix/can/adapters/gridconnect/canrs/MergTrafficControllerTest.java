@@ -4,6 +4,7 @@ import java.io.*;
 
 import jmri.jmrix.*;
 import jmri.jmrix.can.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -110,6 +111,27 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
         ltc.disconnectPort(pcs);
         memo.dispose();
 
+    }
+
+    @Test
+    public void testGetNewMessage() {
+        Assertions.assertInstanceOf(MergMessage.class, ((MergTrafficController)tc).newMessage());
+    } 
+
+    @Test
+    public void testErrorOnIncorrectReply() {
+        ((MergTrafficController)tc).decodeFromHardware(new NotAMergReply());
+        JUnitAppender.assertErrorMessageStartsWith("NotAMergReply is not a MergReply");
+    }
+
+    private static class NotAMergReply extends AbstractMRReply {
+        NotAMergReply(){
+            super("NotAMergReply");
+        }
+        @Override
+        protected int skipPrefix(int index) {
+            return 0;
+        }
     }
 
     @Override
