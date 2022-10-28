@@ -68,10 +68,10 @@ class PropertiesMergeTool {
                         // check if translation in 2nd file
                         if (bundle2.containsKey(key)) {
                             // write translated value
-                            writeOutLine(part1+"="+pad+bundle2.getString(lookUpKey));
+                            writeOutLine(part1+"="+pad.toString()+bundle2.getString(lookUpKey));
                         } else {
                             // write untranslated value
-                            writeOutLine(part1+"="+pad+bundle1.getString(lookUpKey));
+                            writeOutLine(part1+"="+pad.toString()+bundle1.getString(lookUpKey));
                         }
                     } else if (isBlankLine(line)) {
                         // blank line
