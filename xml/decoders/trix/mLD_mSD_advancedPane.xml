@@ -30,6 +30,7 @@
       <text xml:lang="de">Protokolle Aktivieren</text>
       <text xml:lang="fr">Protocoles activés</text>      
       <text xml:lang="ca">Protocols Habilitats</text>
+      <text xml:lang="cs">Povolený protokol</text>
     </label>
     <label>
       <text> </text>
@@ -49,6 +50,7 @@
       <text>Save Settings</text>
       <text xml:lang="de">Speichereinstellungen</text>
       <text xml:lang="fr">Paramètres d'enregistrement</text>      
+      <text xml:lang="cs">Uložit nastavení</text>
     </label>
     <label>
       <text> </text>
@@ -68,6 +70,7 @@
       <text xml:lang="de">Bremsstrecken</text>
       <text xml:lang="fr">Sections de freinage</text>       
       <text xml:lang="ca">Seccions de Frenada</text>
+      <text xml:lang="cs">Sekce brždění</text>
     </label>
     <label>
       <text> </text>
@@ -85,6 +88,7 @@
       <text>Speed</text>
       <text xml:lang="de">Geschwindigkeit</text>
       <text xml:lang="fr">Vitesse</text>       
+      <text xml:lang="cs">Rychlost</text>
     </label>
     <label>
       <text> </text>
@@ -105,6 +109,7 @@
     <separator/>
     <label>
       <text>Timer</text>
+      <text xml:lang="cs">Časovač</text>
     </label>
     <label>
       <text> </text>
