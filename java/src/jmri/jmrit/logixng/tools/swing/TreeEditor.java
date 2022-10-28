@@ -192,8 +192,7 @@ public class TreeEditor extends TreeViewer {
                 }
 
                 for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
-                    if (true
-                            && e.getKeyCode() == oper.getKeyCode()
+                    if (e.getKeyCode() == oper.getKeyCode()
                             && e.getModifiersEx() == oper.getModifiers()) {
 
                         TreePath path = tree.getSelectionPath();
@@ -1785,6 +1784,10 @@ public class TreeEditor extends TreeViewer {
                     menuItem.setActionCommand(oper.name());
                     add(menuItem);
                     menuItemFemaleSocketOperation.put(oper, menuItem);
+                    if (oper.hasKey()) {
+                        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                                oper.getKeyCode(), oper.getModifiers()));
+                    }
                 }
 
                 addSeparator();
