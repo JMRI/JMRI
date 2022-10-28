@@ -178,6 +178,15 @@ public class TreeEditor extends TreeViewer {
                             openPopupMenu(tree, path, rect.x, rect.y, true);
                         }
                     }
+                    if (e.getKeyCode() == 'D') {    // Disable
+                        TreePath path = tree.getSelectionPath();
+                        if (path != null) {
+                            FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
+                            if (femaleSocket.isConnected()) {
+                                doIt(ACTION_COMMAND_DISABLE, femaleSocket, path);
+                            }
+                        }
+                    }
                 }
                 if (e.getModifiersEx() == Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + InputEvent.SHIFT_DOWN_MASK) {
                     if (e.getKeyCode() == 'V') {    // Paste copy
@@ -186,6 +195,15 @@ public class TreeEditor extends TreeViewer {
                             FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
                             if (!femaleSocket.isConnected()) {
                                 pasteCopy((FemaleSocket) path.getLastPathComponent(), path);
+                            }
+                        }
+                    }
+                    if (e.getKeyCode() == 'D') {    // Enable
+                        TreePath path = tree.getSelectionPath();
+                        if (path != null) {
+                            FemaleSocket femaleSocket = (FemaleSocket) path.getLastPathComponent();
+                            if (femaleSocket.isConnected()) {
+                                doIt(ACTION_COMMAND_ENABLE, femaleSocket, path);
                             }
                         }
                     }
@@ -1794,10 +1812,14 @@ public class TreeEditor extends TreeViewer {
                 menuItemEnable = new JMenuItem(Bundle.getMessage("PopupMenuEnable"));
                 menuItemEnable.addActionListener(this);
                 menuItemEnable.setActionCommand(ACTION_COMMAND_ENABLE);
+                menuItemEnable.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+                        Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() + InputEvent.SHIFT_DOWN_MASK));
                 add(menuItemEnable);
                 menuItemDisable = new JMenuItem(Bundle.getMessage("PopupMenuDisable"));
                 menuItemDisable.addActionListener(this);
                 menuItemDisable.setActionCommand(ACTION_COMMAND_DISABLE);
+                menuItemDisable.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+                        Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
                 add(menuItemDisable);
                 menuItemLock = new JMenuItem(Bundle.getMessage("PopupMenuLock"));
                 menuItemLock.addActionListener(this);
