@@ -720,12 +720,13 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     void updateMemory(Date date) {
         if (timeStorageFormat == null) {
+            String pattern = java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
+                .getString("TimeStorageFormat");
             try {
-                timeStorageFormat = new java.text.SimpleDateFormat(
-               java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
-                    .getString("TimeStorageFormat"));
+                timeStorageFormat = new java.text.SimpleDateFormat(pattern);
             } catch (IllegalArgumentException e) {
-                log.info("Dropping back to default time format due to exception", e);
+                log.info("Unable to parse date format time format: {}",pattern);
+                log.info("Dropping back to default time format (h:mm a) due to exception", e);
                 timeStorageFormat = new java.text.SimpleDateFormat("h:mm a");
             }
         }
