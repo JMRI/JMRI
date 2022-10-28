@@ -58,10 +58,10 @@ class PropertiesMergeTool {
                         String key = part1.trim();
                         var lookUpKey = key.replace("\\", "");
                         String part2 = line.substring(index+1);
-                        String pad = "";
+                        StringBuilder pad = new StringBuilder();
                         // pad with same number of leading spaces
                         while (part2.startsWith(" ") || part2.startsWith("\t")) {
-                            pad = pad+part2.substring(0,1);
+                            pad.append(part2.substring(0,1));
                             part2 = part2.substring(1);
                         }
 
