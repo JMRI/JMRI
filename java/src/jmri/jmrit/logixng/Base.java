@@ -598,6 +598,25 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
+    default boolean existsInTree(Base b) {
+        if (b.getParent() != null) {
+            Base parent = b.getParent();
+            if (!existsInTree(parent)) return false;
+            for (int i=0; i < parent.getChildCount(); i++) {
+                if (parent.getChild(i) == b) return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Does this item exists in the tree?
+     * @return true if the item exists in the tree, false otherwise
+     */
+    public default boolean existsInTree() {
+        return existsInTree(this);
+    }
+
 
     public interface RunnableWithBase {
         public void run(@Nonnull Base b);
