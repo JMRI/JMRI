@@ -27,6 +27,7 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
     private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
     private JCheckBox _moveUserNameCheckBox;
+    private JCheckBox _updateToUserNameCheckBox;
     private JCheckBox _removeOldBeanCheckBox;
 
     @Override
@@ -101,6 +102,12 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
         moveUserNamePanel.add(_moveUserNameCheckBox);
         panel.add(moveUserNamePanel);
 
+        JPanel updateToUserNamePanel = new JPanel();
+        updateToUserNamePanel.add(new JLabel(Bundle.getMessage("ActionCreateBeansFromTableSwing_UpdateToUserName")));
+        _updateToUserNameCheckBox = new JCheckBox();
+        updateToUserNamePanel.add(_updateToUserNameCheckBox);
+        panel.add(updateToUserNamePanel);
+
         JPanel removeOldBeanPanel = new JPanel();
         removeOldBeanPanel.add(new JLabel(Bundle.getMessage("ActionCreateBeansFromTableSwing_RemoveOldBeanCheckBox")));
         _removeOldBeanCheckBox = new JCheckBox();
@@ -118,6 +125,7 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
             _includeCellsWithoutHeaderCheckBox.setSelected(action.isIncludeCellsWithoutHeader());
             _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
             _moveUserNameCheckBox.setSelected(action.isMoveUserName());
+            _updateToUserNameCheckBox.setSelected(action.isUpdateToUserName());
             _removeOldBeanCheckBox.setSelected(action.isRemoveOldBean());
         }
     }
@@ -221,6 +229,7 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
         }
         action.setIncludeCellsWithoutHeader(_includeCellsWithoutHeaderCheckBox.isSelected());
         action.setMoveUserName(_moveUserNameCheckBox.isSelected());
+        action.setUpdateToUserName(_updateToUserNameCheckBox.isSelected());
         action.setRemoveOldBean(_removeOldBeanCheckBox.isSelected());
     }
 

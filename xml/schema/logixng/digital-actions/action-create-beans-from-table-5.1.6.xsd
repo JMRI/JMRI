@@ -63,6 +63,7 @@
             
             <xs:attribute name="includeCellsWithoutHeader" type="yesNoType" use="required"/>
             <xs:attribute name="moveUserName" type="yesNoType" use="required"/>
+            <xs:attribute name="updateToUserName" type="yesNoType" use="required"/>
             <xs:attribute name="removeOldBean" type="yesNoType" use="required"/>
 
             <xs:attribute name="class" type="classType" use="required"/>

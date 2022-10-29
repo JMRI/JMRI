@@ -28,6 +28,7 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     private boolean _includeCellsWithoutHeader = false;
     private final List<Map.Entry<NamedBean, String>> _namedBeansEntries = new ArrayList<>();
     private boolean _moveUserName = false;
+    private boolean _updateToUserName = false;
     private boolean _removeOldBean = false;
 
     public ActionCreateBeansFromTable(String sys, String user)
@@ -51,6 +52,7 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
         copy.setRowOrColumnUserName(_rowOrColumnUserName);
         copy.setIncludeCellsWithoutHeader(_includeCellsWithoutHeader);
         copy.setMoveUserName(_moveUserName);
+        copy.setUpdateToUserName(_updateToUserName);
         copy.setRemoveOldBean(_removeOldBean);
 
         for (var entry : _namedBeansEntries) {
@@ -133,7 +135,7 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     }
 
     /**
-     * Set whenever to include cells that doesn't have a header.
+     * Get whenever to include cells that doesn't have a header.
      * Cells without headers can be used to use some cells in the table
      * as comments.
      * @return true if include cells that doesn't have a header, false otherwise
@@ -154,19 +156,15 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     }
 
     /**
-     * Set whenever to include cells that doesn't have a header.
-     * Cells without headers can be used to use some cells in the table
-     * as comments.
-     * @return true if include cells that doesn't have a header, false otherwise
+     * Get whenever to move the user name to the new bean.
+     * @return true if username should be moved, false otherwise
      */
     public boolean isMoveUserName() {
         return _moveUserName;
     }
 
     /**
-     * Set whenever to include cells that doesn't have a header.
-     * Cells without headers can be used to use some cells in the table
-     * as comments.
+     * Set whenever to move the user name to the new bean.
      * @param isMoveUserName true if username should be moved, false otherwise
      */
     public void setMoveUserName(boolean isMoveUserName) {
@@ -174,20 +172,32 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     }
 
     /**
-     * Set whenever to include cells that doesn't have a header.
-     * Cells without headers can be used to use some cells in the table
-     * as comments.
-     * @return true if include cells that doesn't have a header, false otherwise
+     * Get whenever to use the user name for beans that already uses the system name.
+     * @return true if update beans to use user name, false otherwise
+     */
+    public boolean isUpdateToUserName() {
+        return _updateToUserName;
+    }
+
+    /**
+     * Set whenever to use the user name for beans that already uses the system name.
+     * @param updateToUserName true if update beans to use user name, false otherwise
+     */
+    public void setUpdateToUserName(boolean updateToUserName) {
+        _updateToUserName = updateToUserName;
+    }
+
+    /**
+     * Get whenever to remove the old bean.
+     * @return true if remove old bean, false otherwise
      */
     public boolean isRemoveOldBean() {
         return _removeOldBean;
     }
 
     /**
-     * Set whenever to include cells that doesn't have a header.
-     * Cells without headers can be used to use some cells in the table
-     * as comments.
-     * @param removeOldBean true if username should be moved, false otherwise
+     * Set whenever to remove the old bean.
+     * @param removeOldBean true if remove old bean, false otherwise
      */
     public void setRemoveOldBean(boolean removeOldBean) {
         _removeOldBean = removeOldBean;
@@ -259,6 +269,23 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
         return items;
     }
 
+    private void moveUserName(
+            NamedBean oldNameBean,
+            NamedBean newNameBean,
+            String userName)
+            throws JmriException {
+
+        NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
+        oldNameBean.setUserName(null);
+        newNameBean.setUserName(userName);
+        nbMan.moveBean(oldNameBean, newNameBean, userName);
+        if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
+            if (_updateToUserName) {
+                nbMan.updateBeanFromSystemToUser(newNameBean);
+            }
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -267,46 +294,48 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
             NamedBean sysBean = _namedBeanType.getManager().getBySystemName(beanName._systemName);
             NamedBean userBean = null;
             if (beanName._userName != null && !beanName._userName.isBlank()) {
-                userBean = _namedBeanType.getManager().getBySystemName(beanName._userName);
+                userBean = _namedBeanType.getManager().getByUserName(beanName._userName);
             }
-            if (sysBean != null) {
-                if (userBean != null) {
-                    if (sysBean == userBean) {
-                        continue;
-                    } else {
-                        if (_moveUserName) {
-                            sysBean.setUserName(beanName._userName);
-                            if (_removeOldBean) {
-                                try {
-                                    _namedBeanType.getDeleteBean().deleteBean(userBean, "CanDelete");
-                                    _namedBeanType.getDeleteBean().deleteBean(userBean, "DoDelete");
-                                } catch (java.beans.PropertyVetoException e) {
-                                    throw new JmriException("Cannot delete bean: "+e.getLocalizedMessage(), e);
-                                }
-                            }
-                        } else {
-                            throw new JmriException("System name and user name belongs to two different beans");
-                        }
-                    }
-                } else {
-                    continue;
+
+            // Create new bean if it doesn't exists
+            if (sysBean == null) {
+                String userName = userBean != null ? null : beanName._userName;
+                try {
+                    sysBean = _namedBeanType.getCreateBean().createBean(beanName._systemName, userName);
+                } catch (IllegalArgumentException e) {
+                    throw new JmriException(Bundle.getMessage(
+                            "ActionCreateBeansFromTable_Exception_CantCreateBean2",
+                            beanName._systemName, e.getLocalizedMessage()));
+                }
+                if (sysBean == null) {
+                    throw new JmriException(Bundle.getMessage(
+                            "ActionCreateBeansFromTable_Exception_CantCreateBean",
+                            beanName._systemName));
                 }
             }
-            if (!_moveUserName && userBean != null) {
-                throw new RuntimeException("User name cannot be moved to the new bean");
+
+            if (userBean == null || sysBean == userBean) continue;
+
+            if (!_moveUserName) {
+                throw new JmriException(Bundle.getMessage("ActionCreateBeansFromTable_Exception_CantMoveUserName"));
             }
-            String userName = userBean != null ? null : beanName._userName;
-            try {
-                sysBean = _namedBeanType.getCreateBean().createBean(beanName._systemName, userName);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Cannot create bean "+beanName._systemName+". "+e.getMessage());
-            }
-            if (sysBean == null) {
-                throw new JmriException("New bean could not be created: "+beanName._systemName);
-            }
-            if (beanName._userName != null && userBean != null) {
-                userBean.setUserName(null);
-                sysBean.setUserName(beanName._userName);
+
+            moveUserName(userBean, sysBean, beanName._userName);
+
+            // Remove old bean if desired
+            if (_removeOldBean) {
+                try {
+                    _namedBeanType.getDeleteBean().deleteBean(userBean, "CanDelete");
+                } catch (java.beans.PropertyVetoException e) {
+                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                        throw new JmriException(String.format("Cannot delete bean: %s", e.getPropertyChangeEvent().getOldValue()), e);
+                    }
+                }
+                try {
+                    _namedBeanType.getDeleteBean().deleteBean(userBean, "DoDelete");
+                } catch (java.beans.PropertyVetoException e) {
+                    throw new JmriException(String.format("Cannot delete bean: %s", e.getPropertyChangeEvent().getOldValue()), e);
+                }
             }
         }
     }
@@ -337,6 +366,10 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
                 ? Bundle.getMessage(locale, "ActionCreateBeansFromTable_FlagStr",
                         Bundle.getMessage(locale, "ActionCreateBeansFromTable_MoveUserName"))
                 : "";
+        String updateToUserNameStr = _updateToUserName
+                ? Bundle.getMessage(locale, "ActionCreateBeansFromTable_FlagStr",
+                        Bundle.getMessage(locale, "ActionCreateBeansFromTable_UpdateToUserName"))
+                : "";
         String includeRemoveOldBeanStr = _removeOldBean
                 ? Bundle.getMessage(locale, "ActionCreateBeansFromTable_FlagStr",
                         Bundle.getMessage(locale, "ActionCreateBeansFromTable_RemoveOldBean"))
@@ -351,6 +384,7 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
                 _rowOrColumnUserName,
                 includeCellsWithoutHeaderStr,
                 includeMoveUserNameStr,
+                updateToUserNameStr,
                 includeRemoveOldBeanStr);
     }
 

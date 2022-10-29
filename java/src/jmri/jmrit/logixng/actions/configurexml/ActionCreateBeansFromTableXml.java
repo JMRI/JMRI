@@ -55,6 +55,9 @@ public class ActionCreateBeansFromTableXml extends jmri.managers.configurexml.Ab
         element.setAttribute("moveUserName",
                 p.isMoveUserName()? "yes" : "no");  // NOI18N
 
+        element.setAttribute("updateToUserName",
+                p.isUpdateToUserName()? "yes" : "no");  // NOI18N
+
         element.setAttribute("removeOldBean",
                 p.isRemoveOldBean()? "yes" : "no");  // NOI18N
 
@@ -104,6 +107,13 @@ public class ActionCreateBeansFromTableXml extends jmri.managers.configurexml.Ab
             moveUserName = attribute.getValue();  // NOI18N
         }
         h.setMoveUserName("yes".equals(moveUserName));
+
+        String updateToUserName = "no";
+        attribute = shared.getAttribute("updateToUserName");
+        if (attribute != null) {  // NOI18N
+            updateToUserName = attribute.getValue();  // NOI18N
+        }
+        h.setUpdateToUserName("yes".equals(updateToUserName));
 
         String removeOldBean = "no";
         attribute = shared.getAttribute("removeOldBean");

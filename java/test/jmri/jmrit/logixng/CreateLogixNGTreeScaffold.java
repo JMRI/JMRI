@@ -551,6 +551,7 @@ public class CreateLogixNGTreeScaffold {
         actionCreateBeansFromTable.setTableRowOrColumn(TableRowOrColumn.Row);
         actionCreateBeansFromTable.setIncludeCellsWithoutHeader(false);
         actionCreateBeansFromTable.setMoveUserName(true);
+        actionCreateBeansFromTable.setUpdateToUserName(true);
         actionCreateBeansFromTable.setRemoveOldBean(false);
         maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -563,6 +564,7 @@ public class CreateLogixNGTreeScaffold {
         actionCreateBeansFromTable.setTableRowOrColumn(TableRowOrColumn.Column);
         actionCreateBeansFromTable.setIncludeCellsWithoutHeader(false);
         actionCreateBeansFromTable.setMoveUserName(true);
+        actionCreateBeansFromTable.setUpdateToUserName(false);
         actionCreateBeansFromTable.setRemoveOldBean(true);
         maleSocket = digitalActionManager.registerAction(actionCreateBeansFromTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
