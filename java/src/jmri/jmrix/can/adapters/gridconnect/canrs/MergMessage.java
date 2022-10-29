@@ -2,8 +2,6 @@ package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class for messages for a MERG CAN-RS hardware adapter.
@@ -38,22 +36,20 @@ public class MergMessage extends GridConnectMessage {
         setExtended(m.isExtended());
 
         // Copy the header
-        setHeader(m.getHeader());
+        MergMessage.this.setHeader(m.getHeader());
 
         // Normal or Remote frame?
-        setRtr(m.isRtr());
+        MergMessage.this.setRtr(m.isRtr());
 
         // Data payload
         for (int i = 0; i < m.getNumDataElements(); i++) {
-            setByte(m.getElement(i), i);
+            MergMessage.this.setByte(m.getElement(i), i);
         }
         // Terminator
         int offset = isExtended() ? 11 : 7;  // differs here from superclass
         setElement(offset + m.getNumDataElements() * 2, ';');
         setNumDataElements(offset + 1 + m.getNumDataElements() * 2);
-        if (log.isDebugEnabled()) {
-            log.debug("encoded as {}", this.toString());
-        }
+        log.debug("encoded as {}", MergMessage.this);
     }
 
     /**
@@ -66,22 +62,12 @@ public class MergMessage extends GridConnectMessage {
         int munged;
         if (isExtended()) {
             munged = ((header << 3) & 0xFFE00000) | 0x80000 | (header & 0x3FFFF);
-            if (log.isDebugEnabled()) {
-                log.debug("Extended header is {}", header);
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Munged header is {}", munged);
-            }
+            log.debug("Extended header is {}, munged header is {}", header, munged);
             super.setHeader(munged);
         } else {
             // 11 header bits are left justified
             munged = header << 5;
-            if (log.isDebugEnabled()) {
-                log.debug("Standard header is {}", header);
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Munged header is {}", munged);
-            }
+            log.debug("Standard header is {}, munged header is {}", header, munged);
             // Can't use super() as we want to send 4 digits
             setHexDigit((munged >> 12) & 0xF, 2);
             setHexDigit((munged >> 8) & 0xF, 3);
@@ -109,19 +95,16 @@ public class MergMessage extends GridConnectMessage {
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 7);  // differs here from superclass
-            try {
-                if ((val < 0) || (val > 255)) {
-                    val = 0;
-                    throw new IllegalArgumentException();
-                }
-            }
-            catch(IllegalArgumentException e) {
-                log.error("Value out of range for MergMessage data payload", e);
+            if ((val < 0) || (val > 255)) {
+                log.error("Byte value {} out of range 0-255 for MergMessage data payload", val, new IllegalArgumentException());
+                val = 0;
             }
             setHexDigit((val / 16) & 0xF, index++);
             setHexDigit(val & 0xF, index);
+            return;
         }
+        log.error("Byte Index {} out of range 0-7 for MergMessage data payload", n, new IllegalArgumentException());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergMessage.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergMessage.class);
 }

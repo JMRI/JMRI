@@ -52,7 +52,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         this.memo = memo;
 
         // connect to SlotManager for updates
-        memo.getSlotManager().addSlotListener(this);
+        memo.getSlotManager().addSlotListener(SlotMonDataModel.this);
 
         // start update process
         memo.getSlotManager().update();
@@ -591,6 +591,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
+    // gets called on SlotMonPane.dispose
     public void dispose() {
         memo.getSlotManager().removeSlotListener(this);
     }
