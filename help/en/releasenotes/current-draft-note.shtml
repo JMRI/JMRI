@@ -421,6 +421,14 @@
           <li>The expression <i>Power</i> can now ignore the <i>Unknown</i> state. Most
           power managers in JMRI sets the state to Unknown before changing the state. This might
           cause problems when using the expression Power with IfThenElse with ExecuteOnChange.</li>
+          <li>Additional shortcut keys have been added to the ConditionalNG editor.
+            <ul>
+              <li>Ctrl + Shift + R: Remove socket</li>
+              <li>Ctrl + Shift + D: Enable</li>
+              <li>Ctrl + D: Disable</li>
+              <li>For macOS, use Cmd instead of Ctrl.</li>
+            </ul>
+          </li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
