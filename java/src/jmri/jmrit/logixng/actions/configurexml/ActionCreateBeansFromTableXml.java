@@ -49,6 +49,9 @@ public class ActionCreateBeansFromTableXml extends jmri.managers.configurexml.Ab
         }
         element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
 
+        element.setAttribute("onlyCreatableTypes",
+                p.isOnlyCreatableTypes()? "yes" : "no");  // NOI18N
+
         element.setAttribute("includeCellsWithoutHeader",
                 p.isIncludeCellsWithoutHeader() ? "yes" : "no");  // NOI18N
 
@@ -94,8 +97,15 @@ public class ActionCreateBeansFromTableXml extends jmri.managers.configurexml.Ab
             h.setRowOrColumnUserName(rowOrColumnUserName.getTextTrim());
         }
 
+        String onlyCreatableTypes = "yes";
+        Attribute attribute = shared.getAttribute("onlyCreatableTypes");
+        if (attribute != null) {  // NOI18N
+            onlyCreatableTypes = attribute.getValue();  // NOI18N
+        }
+        h.setOnlyCreatableTypes("yes".equals(onlyCreatableTypes));
+
         String includeCellsWithoutHeader = "no";
-        Attribute attribute = shared.getAttribute("includeCellsWithoutHeader");
+        attribute = shared.getAttribute("includeCellsWithoutHeader");
         if (attribute != null) {  // NOI18N
             includeCellsWithoutHeader = attribute.getValue();  // NOI18N
         }

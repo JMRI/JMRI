@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
 public class ActionCreateBeansFromTable extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
+    private boolean _onlyCreatableTypes = true;
     private NamedBeanType _namedBeanType = NamedBeanType.Light;
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
@@ -45,6 +46,7 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionCreateBeansFromTable copy = new ActionCreateBeansFromTable(sysName, userName);
         copy.setComment(getComment());
+        copy.setOnlyCreatableTypes(_onlyCreatableTypes);
         copy.setNamedBeanType(_namedBeanType);
         _selectNamedBean.copy(copy._selectNamedBean);
         copy.setTableRowOrColumn(_tableRowOrColumn);
@@ -61,6 +63,23 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
         }
 
         return manager.registerAction(copy);
+    }
+
+    /**
+     * Get whenever to show only types that can be created with this action.
+     * @return true if show only types that can be created, false otherwise
+     */
+    public boolean isOnlyCreatableTypes() {
+        return _onlyCreatableTypes;
+    }
+
+    /**
+     * Set whenever to show only types that can be created with this action.
+     * @param onlyCreatableTypes true show only types that can be created,
+     *                           false otherwise
+     */
+    public void setOnlyCreatableTypes(boolean onlyCreatableTypes) {
+        _onlyCreatableTypes = onlyCreatableTypes;
     }
 
     /**
@@ -299,6 +318,12 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
 
             // Create new bean if it doesn't exists
             if (sysBean == null) {
+                if (_namedBeanType.getCreateBean() == null) {
+                    throw new JmriException(Bundle.getMessage(
+                            "ActionCreateBeansFromTable_Exception_CreateBeanNotSupported",
+                            _namedBeanType.getName(true)));
+                }
+
                 String userName = userBean != null ? null : beanName._userName;
                 try {
                     sysBean = _namedBeanType.getCreateBean().createBean(beanName._systemName, userName);

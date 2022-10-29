@@ -549,6 +549,7 @@ public class CreateLogixNGTreeScaffold {
         actionCreateBeansFromTable.setRowOrColumnSystemName("Signal before sysName");
         actionCreateBeansFromTable.setRowOrColumnUserName("Signal before userName");
         actionCreateBeansFromTable.setTableRowOrColumn(TableRowOrColumn.Row);
+        actionCreateBeansFromTable.setOnlyCreatableTypes(false);
         actionCreateBeansFromTable.setIncludeCellsWithoutHeader(false);
         actionCreateBeansFromTable.setMoveUserName(true);
         actionCreateBeansFromTable.setUpdateToUserName(true);
@@ -562,6 +563,7 @@ public class CreateLogixNGTreeScaffold {
         actionCreateBeansFromTable.setRowOrColumnSystemName("2");
         actionCreateBeansFromTable.setRowOrColumnUserName("3");
         actionCreateBeansFromTable.setTableRowOrColumn(TableRowOrColumn.Column);
+        actionCreateBeansFromTable.setOnlyCreatableTypes(true);
         actionCreateBeansFromTable.setIncludeCellsWithoutHeader(false);
         actionCreateBeansFromTable.setMoveUserName(true);
         actionCreateBeansFromTable.setUpdateToUserName(false);

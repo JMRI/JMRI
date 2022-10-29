@@ -25,6 +25,7 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
     private JComboBox<String> _rowOrColumnSystemNameComboBox;
     private JComboBox<String> _rowOrColumnUserNameComboBox;
     private JCheckBox _includeCellsWithoutHeaderCheckBox;
+    private JCheckBox _onlyCreatableTypesCheckBox;
     private JComboBox<NamedBeanType> _namedBeanTypeComboBox;
     private JCheckBox _moveUserNameCheckBox;
     private JCheckBox _updateToUserNameCheckBox;
@@ -84,14 +85,17 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
         includeCellsWithoutHeaderPanel.add(_includeCellsWithoutHeaderCheckBox);
         panel.add(includeCellsWithoutHeaderPanel);
 
+        JPanel onlyCreatableTypesPanel = new JPanel();
+        onlyCreatableTypesPanel.add(new JLabel(Bundle.getMessage("ActionCreateBeansFromTableSwing_OnlyCreatableTypesCheckBox")));
+        _onlyCreatableTypesCheckBox = new JCheckBox();
+        _onlyCreatableTypesCheckBox.setSelected(true);
+        _onlyCreatableTypesCheckBox.addActionListener((evt)->{ updateNamedBeanTypeComboBox(); });
+        onlyCreatableTypesPanel.add(_onlyCreatableTypesCheckBox);
+        panel.add(onlyCreatableTypesPanel);
+
         JPanel namedBeanTypePanel = new JPanel();
         namedBeanTypePanel.add(new JLabel(Bundle.getMessage("ActionCreateBeansFromTableSwing_NamedBeanType")));
         _namedBeanTypeComboBox = new JComboBox<>();
-        for (NamedBeanType item : NamedBeanType.values()) {
-            if (item.getCreateBean() != null) {
-                _namedBeanTypeComboBox.addItem(item);
-            }
-        }
         JComboBoxUtil.setupComboBoxMaxRows(_namedBeanTypeComboBox);
         namedBeanTypePanel.add(_namedBeanTypeComboBox);
         panel.add(namedBeanTypePanel);
@@ -123,10 +127,35 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
             }
             _tableRowOrColumnComboBox.setSelectedItem(action.getTableRowOrColumn());
             _includeCellsWithoutHeaderCheckBox.setSelected(action.isIncludeCellsWithoutHeader());
-            _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
             _moveUserNameCheckBox.setSelected(action.isMoveUserName());
             _updateToUserNameCheckBox.setSelected(action.isUpdateToUserName());
             _removeOldBeanCheckBox.setSelected(action.isRemoveOldBean());
+
+            // All types must be in the list when the type is selected.
+            _onlyCreatableTypesCheckBox.setSelected(false);
+            updateNamedBeanTypeComboBox();
+            _namedBeanTypeComboBox.setSelectedItem(action.getNamedBeanType());
+            _onlyCreatableTypesCheckBox.setSelected(action.isOnlyCreatableTypes());
+        }
+    }
+
+    private void updateNamedBeanTypeComboBox() {
+        NamedBeanType lastSelectedItem =
+                _namedBeanTypeComboBox.getSelectedIndex() != -1
+                ? _namedBeanTypeComboBox.getItemAt(
+                        _namedBeanTypeComboBox.getSelectedIndex())
+                : null;
+
+        _namedBeanTypeComboBox.removeAllItems();
+        for (NamedBeanType item : NamedBeanType.values()) {
+            if (!_onlyCreatableTypesCheckBox.isSelected()
+                    || item.getCreateBean() != null) {
+                _namedBeanTypeComboBox.addItem(item);
+            }
+        }
+
+        if (lastSelectedItem != null) {
+            _namedBeanTypeComboBox.setSelectedItem(lastSelectedItem);
         }
     }
 
@@ -224,6 +253,7 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
         } else {
             action.setRowOrColumnUserName("");
         }
+        action.setOnlyCreatableTypes(_onlyCreatableTypesCheckBox.isSelected());
         if (_namedBeanTypeComboBox.getSelectedIndex() != -1) {
             action.setNamedBeanType(_namedBeanTypeComboBox.getItemAt(_namedBeanTypeComboBox.getSelectedIndex()));
         }
