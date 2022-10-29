@@ -198,7 +198,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the SensorManager
-        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor"));
+        StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameSensor")));
 
         // Compose the first proposed system name from parts:
         sName = sensorPrefix + InstanceManager.getDefault(SensorManager.class).typeLetter() + curAddress;
@@ -231,10 +231,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // add first and last names to statusMessage uName feedback string
             // only mention first and last of rangeBox added
             if (x == 0 || x == numberOfSensors - 1) {
-                statusMessage = statusMessage + " " + sName + " (" + uName + ")";
+                statusMessage.append(" ").append(sName).append(" (").append(uName).append(")");
             }
             if (x == numberOfSensors - 2) {
-                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+                statusMessage.append(" ").append(Bundle.getMessage("ItemCreateUpTo")).append(" ");
             }
 
             // except on last pass
@@ -259,7 +259,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         // provide success feedback to user
-        statusBarLabel.setText(statusMessage);
+        statusBarLabel.setText(statusMessage.toString());
         statusBarLabel.setForeground(Color.gray);
 
         p.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
