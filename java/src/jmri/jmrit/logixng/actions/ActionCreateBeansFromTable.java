@@ -330,12 +330,12 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String tableName = _selectNamedBean.getDescription(locale);
         return Bundle.getMessage(locale, "ActionCreateBeansFromTable_Long",
-                _namedBeanType.toString(),
+                _namedBeanType.getName(true).toLowerCase(),
+                tableName,
                 _tableRowOrColumn.getOpposite().toStringLowerCase(),
                 _tableRowOrColumn.toStringLowerCase(),
                 _rowOrColumnSystemName,
-                _rowOrColumnUserName,
-                tableName);
+                _rowOrColumnUserName);
     }
 
     /** {@inheritDoc} */

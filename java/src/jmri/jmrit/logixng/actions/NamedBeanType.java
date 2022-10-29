@@ -19,6 +19,7 @@ public enum NamedBeanType {
 
     Block(
             Bundle.getMessage("BeanNameBlock"),
+            Bundle.getMessage("BeanNameBlocks"),
             Block.class,
             null,
             () -> InstanceManager.getDefault(BlockManager.class),
@@ -30,6 +31,7 @@ public enum NamedBeanType {
 
     GlobalVariable(
             Bundle.getMessage("BeanNameGlobalVariable"),
+            Bundle.getMessage("BeanNameGlobalVariables"),
             GlobalVariable.class,
             "value",
             () -> InstanceManager.getDefault(GlobalVariableManager.class),
@@ -41,6 +43,7 @@ public enum NamedBeanType {
 
     EntryExit(
             Bundle.getMessage("BeanNameEntryExit"),
+            Bundle.getMessage("BeanNameEntryExits"),
             DestinationPoints.class,
             "active",
             () -> InstanceManager.getDefault(EntryExitPairs.class),
@@ -52,6 +55,7 @@ public enum NamedBeanType {
 
     Light(
             Bundle.getMessage("BeanNameLight"),
+            Bundle.getMessage("BeanNameLights"),
             Light.class,
             "KnownState",
             () -> InstanceManager.getDefault(LightManager.class),
@@ -63,6 +67,7 @@ public enum NamedBeanType {
 
     Memory(
             Bundle.getMessage("BeanNameMemory"),
+            Bundle.getMessage("BeanNameMemories"),
             Memory.class,
             "value",
             () -> InstanceManager.getDefault(MemoryManager.class),
@@ -74,6 +79,7 @@ public enum NamedBeanType {
 
     OBlock(
             Bundle.getMessage("BeanNameOBlock"),
+            Bundle.getMessage("BeanNameOBlocks"),
             OBlock.class,
             "state",
             () -> InstanceManager.getDefault(OBlockManager.class),
@@ -85,6 +91,7 @@ public enum NamedBeanType {
 
     Reporter(
             Bundle.getMessage("BeanNameReporter"),
+            Bundle.getMessage("BeanNameReporters"),
             Reporter.class,
             "currentReport",
             () -> InstanceManager.getDefault(ReporterManager.class),
@@ -96,6 +103,7 @@ public enum NamedBeanType {
 
     Sensor(
             Bundle.getMessage("BeanNameSensor"),
+            Bundle.getMessage("BeanNameSensors"),
             Sensor.class,
             "KnownState",
             () -> InstanceManager.getDefault(SensorManager.class),
@@ -107,6 +115,7 @@ public enum NamedBeanType {
 
     SignalHead(
             Bundle.getMessage("BeanNameSignalHead"),
+            Bundle.getMessage("BeanNameSignalHeads"),
             SignalHead.class,
             "Appearance",
             () -> InstanceManager.getDefault(SignalHeadManager.class),
@@ -118,6 +127,7 @@ public enum NamedBeanType {
 
     SignalMast(
             Bundle.getMessage("BeanNameSignalMast"),
+            Bundle.getMessage("BeanNameSignalMasts"),
             SignalMast.class,
             "Aspect",
             () -> InstanceManager.getDefault(SignalMastManager.class),
@@ -129,6 +139,7 @@ public enum NamedBeanType {
 
     Turnout(
             Bundle.getMessage("BeanNameTurnout"),
+            Bundle.getMessage("BeanNameTurnouts"),
             Turnout.class, "KnownState",
             () -> InstanceManager.getDefault(TurnoutManager.class),
             InstanceManager.getDefault(TurnoutManager.class)::newTurnout,
@@ -139,6 +150,7 @@ public enum NamedBeanType {
 
     Warrant(
             Bundle.getMessage("BeanNameWarrant"),
+            Bundle.getMessage("BeanNameWarrants"),
             Warrant.class, "KnownState",
             () -> InstanceManager.getDefault(WarrantManager.class),
             null,
@@ -149,6 +161,7 @@ public enum NamedBeanType {
 
 
     private final String _name;
+    private final String _namePlural;
     private final Class<? extends NamedBean> _clazz;
     private final String _propertyName;
     private final GetManager _getManager;
@@ -156,8 +169,16 @@ public enum NamedBeanType {
     private final CreateBean _createBean;
     private final DeleteBean _deleteBean;
 
-    NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, GetManager getManager, CreateBean createBean, DeleteBean deleteBean) {
+    NamedBeanType(
+            String name,
+            String namePlural,
+            Class<? extends NamedBean> clazz,
+            String propertyName,
+            GetManager getManager,
+            CreateBean createBean,
+            DeleteBean deleteBean) {
         _name = name;
+        _namePlural = namePlural;
         _clazz = clazz;
         _propertyName = propertyName;
         _getManager = getManager;
@@ -169,6 +190,10 @@ public enum NamedBeanType {
     @Override
     public String toString() {
         return _name;
+    }
+
+    public String getName(boolean plural) {
+        return plural ? _namePlural : _name;
     }
 
     public Class<? extends NamedBean> getClazz() {

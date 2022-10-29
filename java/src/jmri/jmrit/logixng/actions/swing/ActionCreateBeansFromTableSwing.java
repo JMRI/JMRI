@@ -107,8 +107,8 @@ public class ActionCreateBeansFromTableSwing extends AbstractDigitalActionSwing 
         removeOldBeanPanel.add(_removeOldBeanCheckBox);
         panel.add(removeOldBeanPanel);
 
-        panel.add(new JLabel("AA: Not all bean types can be created this way,"));
-        panel.add(new JLabel("AA: so the list of bean type only list the ones that can."));
+        panel.add(new JLabel(Bundle.getMessage("ActionCreateBeansFromTableSwing_Message1")));
+        panel.add(new JLabel(Bundle.getMessage("ActionCreateBeansFromTableSwing_Message2")));
 
         if (action != null) {
             if (action.getSelectNamedBean().getNamedBean() != null) {
