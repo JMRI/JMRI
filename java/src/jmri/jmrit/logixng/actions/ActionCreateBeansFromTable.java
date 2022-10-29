@@ -329,13 +329,29 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         String tableName = _selectNamedBean.getDescription(locale);
+        String includeCellsWithoutHeaderStr = _includeCellsWithoutHeader
+                ? Bundle.getMessage(locale, "ActionCreateBeansFromTable_FlagStr",
+                        Bundle.getMessage(locale, "ActionCreateBeansFromTable_IncludeCellsWithoutHeader"))
+                : "";
+        String includeMoveUserNameStr = _moveUserName
+                ? Bundle.getMessage(locale, "ActionCreateBeansFromTable_FlagStr",
+                        Bundle.getMessage(locale, "ActionCreateBeansFromTable_MoveUserName"))
+                : "";
+        String includeRemoveOldBeanStr = _removeOldBean
+                ? Bundle.getMessage(locale, "ActionCreateBeansFromTable_FlagStr",
+                        Bundle.getMessage(locale, "ActionCreateBeansFromTable_RemoveOldBean"))
+                : "";
+
         return Bundle.getMessage(locale, "ActionCreateBeansFromTable_Long",
                 _namedBeanType.getName(true).toLowerCase(),
                 tableName,
                 _tableRowOrColumn.getOpposite().toStringLowerCase(),
                 _tableRowOrColumn.toStringLowerCase(),
                 _rowOrColumnSystemName,
-                _rowOrColumnUserName);
+                _rowOrColumnUserName,
+                includeCellsWithoutHeaderStr,
+                includeMoveUserNameStr,
+                includeRemoveOldBeanStr);
     }
 
     /** {@inheritDoc} */
