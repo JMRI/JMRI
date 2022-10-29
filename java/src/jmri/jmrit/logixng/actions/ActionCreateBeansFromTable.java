@@ -377,16 +377,12 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-/*
-        log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
-        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (bean.equals(namedBeanReference._handle.getBean())) {
-                    report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-                }
+        log.debug("getUsageReport :: ActionCreateBeansFromTable: bean = {}, report = {}", cdl, report);
+        if (_selectNamedBean.getBean() != null) {
+            if (bean.equals(_selectNamedBean.getBean())) {
+                report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
             }
         }
-*/
     }
 
 
