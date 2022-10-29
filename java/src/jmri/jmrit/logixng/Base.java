@@ -598,13 +598,14 @@ public interface Base extends PropertyChangeProvider {
         }
     }
 
-    default boolean existsInTree(Base b) {
-        if (b.getParent() != null) {
-            Base parent = b.getParent();
-            if (!existsInTree(parent)) return false;
-            for (int i=0; i < parent.getChildCount(); i++) {
-                if (parent.getChild(i) == b) return true;
-            }
+    /**
+     * Does this item has the child b?
+     * @param  b the child
+     * @return true if this item has the child b, false otherwise
+     */
+    default boolean hasChild(@Nonnull Base b) {
+        for (int i=0; i < getChildCount(); i++) {
+            if (getChild(i) == b) return true;
         }
         return false;
     }
@@ -614,7 +615,8 @@ public interface Base extends PropertyChangeProvider {
      * @return true if the item exists in the tree, false otherwise
      */
     public default boolean existsInTree() {
-        return existsInTree(this);
+        Base parent = getParent();
+        return parent == null || (parent.hasChild(this) && parent.existsInTree());
     }
 
 
