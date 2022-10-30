@@ -417,8 +417,51 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
             default:
                 log.debug("More than 2 neighbors for layout block '{}'", layoutBlock.getDisplayName());
+                nextBlock = getNextConnectedBlock(layoutBlock);
         }
         return nextBlock;
+    }
+
+    /**
+     * Attempt to find the next block when there are multiple connections.  Track segments have
+     * two connections but blocks with turnouts can have any number of connections.
+     * <p>
+     * {@link jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools#checkValidDest()}
+     * is used to find the first valid connection between the current block, its facing block and
+     * the possible destination blocks.
+     * @param layoutBlock The layout block with more than 2 connections.
+     * @return the next block or null.
+     */
+    private Block getNextConnectedBlock(LayoutBlock currentBlock) {
+        var lbmManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        var lbTools = lbmManager.getLayoutBlockConnectivityTools();
+        var pathMethod = jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.Routing.NONE;
+
+        // The facing block is the one before the current block or the first block.
+        var index = blockList.size() - 2;
+        if (index < 0) {
+            index = 0;
+        }
+        var facingBlock = lbmManager.getLayoutBlock(blockList.get(index));
+        if (facingBlock == null) {
+            log.error("The facing block not found for current block '{}'", currentBlock.getDisplayName());
+            return null;
+        }
+
+        for (int i = 0; i < currentBlock.getNumberOfNeighbours(); i++) {
+            var dest = currentBlock.getNeighbourAtIndex(i);
+            var destBlock = lbmManager.getLayoutBlock(dest);
+            try {
+                boolean valid = lbTools.checkValidDest(facingBlock, currentBlock, destBlock, new ArrayList<LayoutBlock>(), pathMethod);
+                if (valid) {
+                    return dest;
+                }
+            } catch (JmriException ex) {
+                log.error("getNextConnectedBlock exeption: {}", ex.getMessage());
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -427,11 +470,11 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      */
     private List<Block> createBlocksUsedList() {
         List<Block> usedList = new ArrayList<>();
-        for (Section section : getNamedBeanSet()){
-            if (section.getSectionType() != Section.SIGNALMASTLOGIC) {
-                usedList.addAll(section.getBlockList());
-            }
-        }
+//         for (Section section : getNamedBeanSet()){
+//             if (section.getSectionType() != Section.SIGNALMASTLOGIC) {
+//                 usedList.addAll(section.getBlockList());
+//             }
+//         }
         return usedList;
     }
 
