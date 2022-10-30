@@ -62,7 +62,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     }
 
     @Override
-    protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
+    protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableDataModel<LogixNG> m, String sName) {
         return new LogixNGEditor(m, sName);
     }
 

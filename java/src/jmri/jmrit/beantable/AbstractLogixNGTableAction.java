@@ -68,7 +68,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         super.setEnabled(false);
     }
 
-    protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableFrame<E> f, BeanTableDataModel<E> m, String sName);
+    protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableDataModel<E> m, String sName);
 
     protected boolean isEditSupported() {
         return true;
@@ -594,7 +594,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         }
 
         // Create a new bean edit view, add the listener.
-        _editor = getEditor(f, m, sName);
+        _editor = getEditor(m, sName);
 
         if (_editor == null) return;    // Editor not implemented yet for LogixNG Tables
 
