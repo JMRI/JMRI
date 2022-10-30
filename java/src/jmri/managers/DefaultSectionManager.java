@@ -308,15 +308,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
             return;
         }
 
-        // Verify that none of the blocks are currently in a block based section.
-        var usedList = createBlocksUsedList();
-        blockList.forEach((blk) -> {
-            if (usedList.contains(blk)) {
-                log.warn("Block '{}' is already used by a section", blk.getDisplayName());
-                return;
-            }
-        });
-
         // Create a new section using the block name(s) as the section name.
         var sectionName = blockList.get(0).getDisplayName();
         if (blockList.size() > 1) {
@@ -328,7 +319,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
             section = createNewSection(sectionName);
         }
         catch (IllegalArgumentException ex){
-            log.error("Could not create Section from layout block '{}'",layoutBlock.getDisplayName());
+            log.error("Could not create Section for layout block '{}'",layoutBlock.getDisplayName());
             return;
         }
 
@@ -426,10 +417,9 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * Attempt to find the next block when there are multiple connections.  Track segments have
      * two connections but blocks with turnouts can have any number of connections.
      * <p>
-     * {@link jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools#checkValidDest()}
-     * is used to find the first valid connection between the current block, its facing block and
-     * the possible destination blocks.
-     * @param layoutBlock The layout block with more than 2 connections.
+     * The checkValidDest method in getLayoutBlockConnectivityTools is used to find the first valid
+     * connection between the current block, its facing block and the possible destination blocks.
+     * @param currentBlock The layout block with more than 2 connections.
      * @return the next block or null.
      */
     private Block getNextConnectedBlock(LayoutBlock currentBlock) {
@@ -462,20 +452,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         }
 
         return null;
-    }
-
-    /**
-     * Create a list of blocks currently used in block based sections.
-     * @return a list of blocks.
-     */
-    private List<Block> createBlocksUsedList() {
-        List<Block> usedList = new ArrayList<>();
-//         for (Section section : getNamedBeanSet()){
-//             if (section.getSectionType() != Section.SIGNALMASTLOGIC) {
-//                 usedList.addAll(section.getBlockList());
-//             }
-//         }
-        return usedList;
     }
 
     @Override
