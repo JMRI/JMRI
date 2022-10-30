@@ -1,19 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<title>JMRI: Building with IntelliJ IDEA</title>
-<meta name="author" content="Egbert Broerse">
-<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 2016 IDE">
-<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-28 -->
-<!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Building with IntelliJ IDEA</title>
+  <meta name="author" content="Egbert Broerse">
+  <meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 2016 IDE">
+  <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-28 -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-	<!--#include virtual="Sidebar" -->
-	<div id="mainContent">
-		<!-- Page Body -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
 
 <h1>JMRI: Construction avec IntelliJ IDEA</h1>
 
@@ -327,8 +327,9 @@
 	<a name="more"></a><h2>Aide suppl&#233;mentaire</h2>
 	<p>Voir la r&#233;f&#233;rence web <a href="https://www.jetbrains.com/idea/help/reference.html">IntelliJ IDEA</a> et autres <a href="https://www.jetbrains.com/idea/help/using-online-resources.html">ressources</a> pour plus d'information sur l'utilisation de cet IDE.
 
-  <!--#include virtual="/Footer.shtml" -->
-  </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+    <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

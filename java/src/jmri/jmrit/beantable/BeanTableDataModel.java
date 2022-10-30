@@ -6,9 +6,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -34,6 +31,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.ComboBoxToolTipRenderer;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.StayOpenCheckBoxItem;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -69,7 +69,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         super();
         initModel();
     }
-    
+
     /**
      * Internal routine to avoid over ride method call in constructor.
      */
@@ -210,7 +210,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
-                    return "btm unknown"; // NOI18N 
+                    return "btm unknown"; // NOI18N
                 }
                 return desc.getColumnHeaderText();
         }
@@ -234,6 +234,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
                     return null;
+                }
+                if ( desc instanceof SelectionPropertyDescriptor ){
+                    return JComboBox.class;
                 }
                 return desc.getValueClass();
         }
@@ -342,7 +345,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     /**
      * Get the Table Model Bean Manager.
      * In many cases, especially around Model startup,
-     * this will be the Proxy Manager, which is then changed to the 
+     * this will be the Proxy Manager, which is then changed to the
      * hardware specific manager.
      * @return current Manager in use by the Model.
      */
@@ -350,9 +353,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Set the Model Bean Manager.
-     * Note that for many Models this may not work as the manager is 
+     * Note that for many Models this may not work as the manager is
      * currently obtained directly from the Action class.
-     * 
+     *
      * @param man Bean Manager that the Model should use.
      */
     protected void setManager(@Nonnull Manager<T> man) {
@@ -464,7 +467,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             getManager().deleteBean(bean, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("doDelete should not fail after canDelete. {}", e.getMessage());
         }
     }
 
@@ -492,19 +495,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();
         for (int i = 0; i < columnModel.getColumnCount(false); i++) {
-            
+
             // resize columns as requested
             int width = getPreferredWidth(i);
             columnModel.getColumnByModelIndex(i).setPreferredWidth(width);
-            
+
         }
         table.sizeColumnsToFit(-1);
 
         configValueColumn(table);
         configDeleteColumn(table);
 
-        MouseListener popupListener = new PopupListener();
-        table.addMouseListener(popupListener);
+        JmriMouseListener popupListener = new PopupListener();
+        table.addMouseListener(JmriMouseListener.adapt(popupListener));
         this.persistTable(table);
     }
 
@@ -686,9 +689,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
             // TODO: Create base BeanTableJTable.java,
             // extend TurnoutTableJTable from it as next 2 classes duplicate.
-            
+
             @Override
-            public String getToolTipText(MouseEvent e) {
+            public String getToolTipText(java.awt.event.MouseEvent e) {
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
                 int colIndex = columnAtPoint(p);
@@ -696,7 +699,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 int realColumnIndex = convertColumnIndexToModel(colIndex);
                 return getCellToolTip(this, realRowIndex, realColumnIndex);
             }
-            
+
             /**
              * Disable Windows Key or Mac Meta Keys being pressed acting
              * as a trigger for editing the focused cell.
@@ -743,7 +746,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Get String of the Single Bean Type.
      * In many cases the return is Bundle localised
      * so should not be used for matching Bean types.
-     * 
+     *
      * @return Bean Type String.
      */
     protected String getBeanType(){
@@ -765,6 +768,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Is a bean allowed to have the user name cleared?
+     * @return true if clear is allowed, false otherwise
+     */
+    protected boolean isClearUserNameAllowed() {
+        return true;
+    }
+
+    /**
      * Display popup menu when right clicked on table cell.
      * <p>
      * Copy UserName
@@ -775,7 +786,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Delete
      * @param e source event.
      */
-    protected void showPopup(MouseEvent e) {
+    protected void showPopup(JmriMouseEvent e) {
         JTable source = (JTable) e.getSource();
         int row = source.rowAtPoint(e.getPoint());
         int column = source.columnAtPoint(e.getPoint());
@@ -793,9 +804,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> renameBean(rowindex, 0));
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
-        menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
-        popupMenu.add(menuItem);
+        if (isClearUserNameAllowed()) {
+            menuItem = new JMenuItem(Bundle.getMessage("ClearName"));
+            menuItem.addActionListener((ActionEvent e1) -> removeName(rowindex, 0));
+            popupMenu.add(menuItem);
+        }
 
         menuItem = new JMenuItem(Bundle.getMessage("MoveName"));
         menuItem.addActionListener((ActionEvent e1) -> moveBean(rowindex, 0));
@@ -852,7 +865,15 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             return;  // NOI18N
         }
 
-        nBean.setUserName(newName);
+        try {
+            nBean.setUserName(newName);
+        } catch (NamedBean.BadSystemNameException | NamedBean.BadUserNameException ex) {
+            JOptionPane.showMessageDialog(null, ex.getLocalizedMessage(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         fireTableRowsUpdated(row, row);
         if (!newName.isEmpty()) {
             if (oldName == null || oldName.isEmpty()) {
@@ -1007,8 +1028,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Display the comment text for the current row as a tool tip.
-     * 
-     * Most of the bean tables use the standard model with comments in column 3.  
+     *
+     * Most of the bean tables use the standard model with comments in column 3.
      * The SignalMastLogic table uses column 4 for the comment field.
      * TurnoutTableAction has its own getCellToolTip.
      * <p>
@@ -1064,7 +1085,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @param e Instigating event ( e.g. from Mouse click )
      * @param table table to get columns from
      */
-    protected void showTableHeaderPopup(MouseEvent e, JTable table) {
+    protected void showTableHeaderPopup(JmriMouseEvent e, JTable table) {
         JPopupMenu popupMenu = new JPopupMenu();
         XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
         for (int i = 0; i < tcm.getColumnCount(false); i++) {
@@ -1081,8 +1102,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     protected void addMouseListenerToHeader(JTable table) {
-        MouseListener mouseHeaderListener = new TableHeaderListener(table);
-        table.getTableHeader().addMouseListener(mouseHeaderListener);
+        JmriMouseListener mouseHeaderListener = new TableHeaderListener(table);
+        table.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
     }
 
     /**
@@ -1114,13 +1135,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Set identities for any columns that need an identity.
-     * 
-     * It is recommended that all columns get a constant identity to 
+     *
+     * It is recommended that all columns get a constant identity to
      * prevent identities from being subject to changes due to translation.
      * <p>
      * The default implementation sets column identities to the String
      * {@code Column#} where {@code #} is the model index for the column.
-     * Note that if the TableColumnModel is a {@link jmri.util.swing.XTableColumnModel}, 
+     * Note that if the TableColumnModel is a {@link jmri.util.swing.XTableColumnModel},
      * the index includes hidden columns.
      *
      * @param table the table to set identities for.
@@ -1188,7 +1209,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 getManager().deleteBean(t, "CanDelete");  // NOI18N
             } catch (PropertyVetoException e) {
                 if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
-                    log.warn(e.getMessage());
+                    log.warn("Should not delete {}, {}", t.getDisplayName((DisplayOptions.USERNAME_SYSTEMNAME)), e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
                             Bundle.getMessage("WarningTitle"),
@@ -1278,12 +1299,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 dialog.getContentPane().add(container);
                 dialog.pack();
-                
+
                 dialog.getRootPane().setDefaultButton(noButton);
                 noButton.requestFocusInWindow(); // set default keyboard focus, after pack() before setVisible(true)
                 dialog.getRootPane().registerKeyboardAction(e -> { // escape to exit
                         dialog.setVisible(false);
-                        dialog.dispose(); }, 
+                        dialog.dispose(); },
                     KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
 
                 dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
@@ -1310,13 +1331,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Listener to trigger display of table cell menu.
      * Delete / Rename / Move etc.
      */
-    class PopupListener extends MouseAdapter {
+    class PopupListener extends JmriMouseAdapter {
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
@@ -1326,7 +1347,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
          * {@inheritDoc}
          */
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showPopup(e);
             }
@@ -1353,7 +1374,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     /**
      * Listener to trigger display of table header column menu.
      */
-    class TableHeaderListener extends MouseAdapter {
+    class TableHeaderListener extends JmriMouseAdapter {
 
         private final JTable table;
 
@@ -1366,7 +1387,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
          * {@inheritDoc}
          */
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e, table);
             }
@@ -1376,7 +1397,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
          * {@inheritDoc}
          */
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e, table);
             }
@@ -1386,7 +1407,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
          * {@inheritDoc}
          */
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
                 showTableHeaderPopup(e, table);
             }
@@ -1394,21 +1415,21 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     private class BtComboboxEditor extends jmri.jmrit.symbolicprog.ValueEditor {
-    
-        public BtComboboxEditor(){
+
+        BtComboboxEditor(){
             super();
         }
-        
+
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
             boolean isSelected,
             int row, int column) {
             if (value instanceof JComboBox) {
-                ((JComboBox) value).addActionListener((ActionEvent e1) -> table.getCellEditor().stopCellEditing());
+                ((JComboBox<?>) value).addActionListener((ActionEvent e1) -> table.getCellEditor().stopCellEditing());
             }
-            
+
             if (value instanceof JComponent ) {
-            
+
                 int modelcol =  table.convertColumnIndexToModel(column);
                 int modelrow = table.convertRowIndexToModel(row);
 
@@ -1416,18 +1437,18 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 boolean editable = table.getModel().isCellEditable(modelrow, modelcol);
 
                 ((JComponent) value).setEnabled(editable);
-            
+
             }
-            
+
             return super.getTableCellEditorComponent(table, value, isSelected, row, column);
         }
-    
-    
+
+
     }
-    
+
     private class BtValueRenderer implements TableCellRenderer {
 
-        public BtValueRenderer() {
+        BtValueRenderer() {
             super();
         }
 

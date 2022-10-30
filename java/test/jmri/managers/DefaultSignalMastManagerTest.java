@@ -6,8 +6,6 @@ import jmri.implementation.AbstractSignalMast;
 import jmri.implementation.SignalMastRepeater;
 import jmri.util.JUnitUtil;
 
-import static org.hamcrest.core.StringContains.containsString;
-
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -58,16 +56,12 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
         SignalMast mbc = mgr.provideCustomSignalMast("IM400", MastB.class);
         Assert.assertNotSame(mb, mbc);
 
-        try {
-            mgr.provideCustomSignalMast("IM300", MastB.class);
-            Assert.fail("provideCustomSignalMast Should have thrown exception.");
-        } catch (JmriException e) {
-            String s = e.toString();
+        Exception ex = Assert.assertThrows(JmriException.class, () ->
+            mgr.provideCustomSignalMast("IM300", MastB.class));
+        Assert.assertTrue("system name text not in exception",ex.getMessage().contains("system name is already used"));
+        Assert.assertTrue("MastA not in exception text", ex.getMessage().contains("MastA"));
+        Assert.assertTrue("MastB not in exception text", ex.getMessage().contains("MastB"));
 
-            Assert.assertThat(s, containsString("system name is already used"));
-            Assert.assertThat(s, containsString("MastA"));
-            Assert.assertThat(s, containsString("MastB"));
-        }
     }
 
     @Test
@@ -89,14 +83,12 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
         Assert.assertSame(rpx, mgr.provideRepeater(m1, m2));
         Assert.assertSame(rpy, mgr.provideRepeater(m1, m3));
 
-        try {
-            mgr.provideRepeater(m2, m1);
-            Assert.fail("provideRepeater Should have thrown exception.");
-        } catch (JmriException e) {
-            String s = e.toString();
-
-            Assert.assertThat(s, containsString("repeater already exists the wrong way"));
-        }
+        Exception ex = Assert.assertThrows(JmriException.class, () ->
+            mgr.provideRepeater(m2, m1));
+        String message = ex.getMessage();
+        Assertions.assertNotNull(message);
+        Assert.assertTrue("wrong way repeater not in exception text",
+            message.contains("repeater already exists the wrong way"));
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
     

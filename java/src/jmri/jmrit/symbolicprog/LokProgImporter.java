@@ -1,5 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -26,7 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 public class LokProgImporter {
 
-    private final static Logger log = LoggerFactory.getLogger(LokProgImporter.class);
+    private static final Logger log = LoggerFactory.getLogger(LokProgImporter.class);
+    private static final String DECODER_PREFIX = "Decoder:";
+    private static final String CREATED_PREFIX = "Created:";
     private static final String INDEX_PREFIX = "Index:";
     private static final String INDEX_1 = "CV31=";
     private static final String INDEX_1_TERMINATOR = ",";
@@ -34,7 +38,10 @@ public class LokProgImporter {
     private static final String INDEX_2_TERMINATOR = ")";
     private static final String CV_PREFIX = "CV ";
     private static final String CV_SEPARATOR = " = ";
+    private static final String NOWARN_THESE_CVs = "(1\\.1\\.\\d+|1\\.0\\.2(58|59|60))";
 
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION",
+        justification = "string not kept between iterations, reduces object creation on each iteration")
     public LokProgImporter(File file, CvTableModel cvModel) throws IOException {
         FileReader fileReader = null;
         BufferedReader bufferedReader = null;
@@ -58,16 +65,22 @@ public class LokProgImporter {
                     value = Integer.parseInt(line.substring(9, 12));
                     cvObject = cvModel.allCvMap().get(name);
                     if (cvObject == null) {
-                        log.warn("CV {} was in import file, but not defined by the decoder definition", name);
+                        if (name.matches(NOWARN_THESE_CVs)) {
+                            log.debug("Skipping warning for added CV {}, not yet supported by JMRI", name);
+                        } else {
+                            log.warn("CV {} was in import file, but not defined by the decoder definition", name);
+                        }
                         cvModel.addCV(name, false, false, false);
                         cvObject = cvModel.allCvMap().get(name);
                     }
                     log.debug("Settting CV {} to {}", name, value);
                     cvObject.setValue(value);
+                } else if (line.startsWith(DECODER_PREFIX) || line.startsWith(CREATED_PREFIX)) {
+                    log.info("Imorting CVs from file {}", line);
                 }
             }
         } catch (IOException e) {
-            log.error("Error reading file: {}", e);
+            log.error("Error reading file", e);
         } finally {
             if (bufferedReader != null) {
                 bufferedReader.close();
@@ -76,6 +89,6 @@ public class LokProgImporter {
                 fileReader.close();
             }
         }
-        log.debug("LokProgImporter finished reading file");
+        log.info("Completed import from LokProgrammer CV List file");
     }
 }

@@ -1,24 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <!-- Updated by Blorec Herv&#233; 2016-08-29-->
 <head>
- <title>
+  <title>
       JMRI: Sections Documentation
- </title>
-    <meta name="author" content="Dave Duchamp">
-    <meta name="keywords" content="JMRI help Sections">
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<!--#include virtual="/Style.shtml" -->
+  </title>
+  <meta name="author" content="Dave Duchamp">
+  <meta name="keywords" content="JMRI help Sections">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>JMRI: Documentation Sections</h1>
+      <h1>JMRI: Documentation Sections</h1>
 
 <h2>Qu'est-ce qu'une Section?</h2>
 
@@ -228,8 +227,9 @@ panneaux dans le m&#234;me fichier ( recommand&#233; ), s&#233;lectionnez <b>Fic
 Panneau dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux-->Sauvegarder le Panneau...</b> dans la fen&#234;tre 
 principale de JMRI.</p>
 
-<!--#include virtual="/Footer.shtml" -->
-      </div><!-- closes #mainContent-->
-    </div> <!-- closes #mBody-->
+      <!--#include virtual="/Footer_fr.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

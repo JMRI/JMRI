@@ -22,7 +22,7 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
     @Override
     public void checkClosedMsgSent() throws InterruptedException {}
 
-    private GpioProvider myProvider;
+    private GpioProvider myProvider = null;
 
     @BeforeEach
     @Override
@@ -38,12 +38,14 @@ public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutT
         };
     }
 
+    @Override
     @AfterEach
     public void tearDown() {
         if (t != null) {
             t.dispose(); // is supposed to unprovisionPin 2
         }
         // shutdown() will forcefully shutdown all GPIO monitoring threads and scheduled tasks, includes unexport.pin
+        Assertions.assertNotNull(myProvider);
         myProvider.shutdown();
 
         JUnitUtil.clearShutDownManager();

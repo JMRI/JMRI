@@ -19,7 +19,7 @@
       "http://www.der-moba.de/index.php/Hauptseite">der Moba</a> model railroad group as a standard
       way of connecting "client" user programs to a "server", which in turn connects to the model
       railroad. There are a number of model railroad SRCP servers available, which in turn can
-      currently connect to the layout via Intellibox and Märklin 605x control units and the Lenz
+      currently connect to the layout via Intellibox and M&auml;rklin 605x control units and the Lenz
       interfaces. Also available is a server that can directly create DCC signals via an RS232
       interface, which DCC booster(s) can then use to power the layout. Other SRCP demons with
       other connections are being developed all the time.</p>
@@ -37,7 +37,7 @@
       <ul>
         <li>It did not support "service mode" for configuring decoders, e.g. setting CVs.</li>
 
-        <li>It needed more testing, especially with Märklin and other non-DCC systems.</li>
+        <li>It needed more testing, especially with M&auml;rklin and other non-DCC systems.</li>
       </ul>
 
       <h2 id="connecting">Connecting</h2>

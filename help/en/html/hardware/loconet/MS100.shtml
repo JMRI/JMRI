@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - Connecting an MS100 to LocoNet®</title>
+  <title>JMRI Hardware Support - Connecting an MS100 to LocoNet&reg;</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
@@ -15,9 +15,9 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: Connecting an MS100 to LocoNet®</h1>
+      <h1>Hardware Support: Connecting an MS100 to LocoNet&reg;</h1>
 
-      <p>The MS100 from Digitrax allows you to connect many types of computers to a LocoNet®.</p>
+      <p>The MS100 from Digitrax allows you to connect many types of computers to a LocoNet&reg;.</p>
 
       <p>Unfortunately, the MS100 is a somewhat old design, and doesn't provide a reliable
       connection to the LocoNet.</p>
@@ -88,7 +88,7 @@ stty speed 38400 &lt; /dev/ttyS0
         <li>Then click on "OK" and continue on.</li>
       </ul>
       This has been reported to work with both RH9 and FC3.
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
 
       <hr class="hide">

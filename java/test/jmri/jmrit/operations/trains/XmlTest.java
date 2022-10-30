@@ -170,7 +170,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setOwnerOption("t3 X owner option");
         t3.setRailroadName("t3 X railroad name");
         t3.setRequirements(Train.CABOOSE);
-        t3.setRoadOption("t3 X road option");
+        t3.setCarRoadOption("t3 X road option");
         t3.setRoute(B);
         t3.setStatusCode(Train.CODE_UNKNOWN);
 
@@ -212,8 +212,10 @@ public class XmlTest extends OperationsTestCase {
         t1.addOwnerName("t1 owner name 1");
         t1.setRailroadName("t1 railroad name");
         t1.setRequirements(Train.NO_CABOOSE_OR_FRED);
-        t1.setRoadOption("t1 road option");
-        t1.addRoadName("t1 road name 1");
+        t1.setCarRoadOption("t1 road option");
+        t1.addCarRoadName("t1 road name 1");
+        t1.setLocoRoadOption("t1 loco road option");
+        t1.addLocoRoadName("t1 loco road name 1");
         t1.setRoute(C);
         t1.setTerminationTrack(trackWestford);
         t1.setSecondLegCabooseRoad("t1 second leg caboose road");
@@ -254,7 +256,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setOwnerOption("t3 owner option");
         t3.setRailroadName("t3 railroad name");
         t3.setRequirements(Train.NO_CABOOSE_OR_FRED);
-        t3.setRoadOption("t3 road option");
+        t3.setCarRoadOption("t3 road option");
         t3.setRoute(A);
         t3.setDepartureTrack(trackWestford);
         t3.setStatusCode(Train.CODE_UNKNOWN);
@@ -283,7 +285,7 @@ public class XmlTest extends OperationsTestCase {
         t5.setOwnerOption("t5 owner option");
         t5.setRailroadName("t5 railroad name");
         t5.setRequirements(Train.NO_CABOOSE_OR_FRED);
-        t5.setRoadOption("t5 road option");
+        t5.setCarRoadOption("t5 road option");
         t5.setRoute(B);
         t5.setStatusCode(Train.CODE_UNKNOWN);
 
@@ -299,7 +301,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
-        Assert.assertEquals("t1 comment", "t1 comment", t1.getComment());
+        Assert.assertEquals("t1 comment", "t1 comment", t1.getCommentWithColor());
         Assert.assertEquals("t1 current location name", "Bedford", t1.getCurrentLocationName());
         Assert.assertEquals("t1 departure hour", "01", t1.getDepartureTimeHour());
         Assert.assertEquals("t1 departure minute", "35", t1.getDepartureTimeMinute());
@@ -315,8 +317,10 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 Owner name", "t1 owner name 1", t1.getOwnerNames()[0]);
         Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
         Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
-        Assert.assertEquals("t1 road option", "t1 road option", t1.getRoadOption());
-        Assert.assertEquals("t1 road name", "t1 road name 1", t1.getRoadNames()[0]);
+        Assert.assertEquals("t1 road option", "t1 road option", t1.getCarRoadOption());
+        Assert.assertEquals("t1 road name", "t1 road name 1", t1.getCarRoadNames()[0]);
+        Assert.assertEquals("t1 loco road option", "t1 loco road option", t1.getLocoRoadOption());
+        Assert.assertEquals("t1 loco road name", "t1 loco road name 1", t1.getLocoRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
         Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
@@ -352,7 +356,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1931", t3.getBuiltStartYear());
         Assert.assertEquals("t3 caboose roadr", "t3 caboose road", t3.getCabooseRoad());
-        Assert.assertEquals("t3 comment", "t3 comment", t3.getComment());
+        Assert.assertEquals("t3 comment", "t3 comment", t3.getCommentWithColor());
         Assert.assertEquals("t3 current location name", "Westford", t3.getCurrentLocationName());
         Assert.assertEquals("t3 departure hour", "04", t3.getDepartureTimeHour());
         Assert.assertEquals("t3 departure minute", "55", t3.getDepartureTimeMinute());
@@ -365,7 +369,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
         Assert.assertEquals("t3 requirements", Train.NO_CABOOSE_OR_FRED, t3.getRequirements());
-        Assert.assertEquals("t3 road option", "t3 road option", t3.getRoadOption());
+        Assert.assertEquals("t3 road option", "t3 road option", t3.getCarRoadOption());
         Assert.assertEquals("t3 route", A, t3.getRoute());
         Assert.assertEquals("t3 departure track", trackWestford, t3.getDepartureTrack());
         // test second leg defaults
@@ -399,7 +403,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
         Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
         Assert.assertEquals("t5 caboose roadr", "t5 caboose road", t5.getCabooseRoad());
-        Assert.assertEquals("t5 comment", "t5 comment", t5.getComment());
+        Assert.assertEquals("t5 comment", "t5 comment", t5.getCommentWithColor());
         Assert.assertEquals("t5 current location name", "Arlington", t5.getCurrentLocationName());
         Assert.assertEquals("t5 departure hour", "23", t5.getDepartureTimeHour());
         Assert.assertEquals("t5 departure minute", "15", t5.getDepartureTimeMinute());
@@ -412,7 +416,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
         Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
         Assert.assertEquals("t5 requirements", Train.NO_CABOOSE_OR_FRED, t5.getRequirements());
-        Assert.assertEquals("t5 road option", "t5 road option", t5.getRoadOption());
+        Assert.assertEquals("t5 road option", "t5 road option", t5.getCarRoadOption());
         Assert.assertEquals("t5 route", B, t5.getRoute());
         Assert.assertEquals("t5 status", Train.UNKNOWN, t5.getStatus());
 
@@ -469,7 +473,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
-        Assert.assertEquals("t1 comment", "t1 comment", t1.getComment());
+        Assert.assertEquals("t1 comment", "t1 comment", t1.getCommentWithColor());
         Assert.assertEquals("t1 current location name", "Bedford", t1.getCurrentLocationName());
         Assert.assertEquals("t1 departure hour", "01", t1.getDepartureTimeHour());
         Assert.assertEquals("t1 departure minute", "35", t1.getDepartureTimeMinute());
@@ -485,8 +489,10 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 Owner name", "t1 owner name 1", t1.getOwnerNames()[0]);
         Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
         Assert.assertEquals("t1 requirements", Train.NO_CABOOSE_OR_FRED, t1.getRequirements());
-        Assert.assertEquals("t1 road option", "t1 road option", t1.getRoadOption());
-        Assert.assertEquals("t1 road name", "t1 road name 1", t1.getRoadNames()[0]);
+        Assert.assertEquals("t1 road option", "t1 road option", t1.getCarRoadOption());
+        Assert.assertEquals("t1 road name", "t1 road name 1", t1.getCarRoadNames()[0]);
+        Assert.assertEquals("t1 loco road option", "t1 loco road option", t1.getLocoRoadOption());
+        Assert.assertEquals("t1 loco road name", "t1 loco road name 1", t1.getLocoRoadNames()[0]);
         Assert.assertEquals("t1 route", C, t1.getRoute());
         Assert.assertEquals("t1 termination track", trackWestford, t1.getTerminationTrack());
         Assert.assertEquals("t1 second leg caboose road", "t1 second leg caboose road", t1
@@ -522,7 +528,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1931", t3.getBuiltStartYear());
         Assert.assertEquals("t3 caboose roadr", "t3 caboose road", t3.getCabooseRoad());
-        Assert.assertEquals("t3 comment", "t3 comment", t3.getComment());
+        Assert.assertEquals("t3 comment", "t3 comment", t3.getCommentWithColor());
         Assert.assertEquals("t3 current location name", "Westford", t3.getCurrentLocationName());
         Assert.assertEquals("t3 departure hour", "04", t3.getDepartureTimeHour());
         Assert.assertEquals("t3 departure minute", "55", t3.getDepartureTimeMinute());
@@ -535,7 +541,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
         Assert.assertEquals("t3 requirements", Train.NO_CABOOSE_OR_FRED, t3.getRequirements());
-        Assert.assertEquals("t3 road option", "t3 road option", t3.getRoadOption());
+        Assert.assertEquals("t3 road option", "t3 road option", t3.getCarRoadOption());
         Assert.assertEquals("t3 route", A, t3.getRoute());
         Assert.assertEquals("t3 departure track", trackWestford, t3.getDepartureTrack());
         // test second leg defaults
@@ -569,7 +575,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
         Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
         Assert.assertEquals("t5 caboose roadr", "t5 caboose road", t5.getCabooseRoad());
-        Assert.assertEquals("t5 comment", "t5 comment", t5.getComment());
+        Assert.assertEquals("t5 comment", "t5 comment", t5.getCommentWithColor());
         Assert.assertEquals("t5 current location name", "Arlington", t5.getCurrentLocationName());
         Assert.assertEquals("t5 departure hour", "23", t5.getDepartureTimeHour());
         Assert.assertEquals("t5 departure minute", "15", t5.getDepartureTimeMinute());
@@ -582,7 +588,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
         Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
         Assert.assertEquals("t5 requirements", Train.NO_CABOOSE_OR_FRED, t5.getRequirements());
-        Assert.assertEquals("t5 road option", "t5 road option", t5.getRoadOption());
+        Assert.assertEquals("t5 road option", "t5 road option", t5.getCarRoadOption());
         Assert.assertEquals("t5 route", B, t5.getRoute());
         Assert.assertEquals("t5 status", Train.UNKNOWN, t5.getStatus());
 
@@ -622,7 +628,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 built end year", "1950", t3.getBuiltEndYear());
         Assert.assertEquals("t3 built start year", "1925", t3.getBuiltStartYear());
         Assert.assertEquals("t3 caboose roadr", "t3 X caboose road", t3.getCabooseRoad());
-        Assert.assertEquals("t3 comment", "t3 X comment", t3.getComment());
+        Assert.assertEquals("t3 comment", "t3 X comment", t3.getCommentWithColor());
         Assert.assertEquals("t3 engine model", "t3 X engine model", t3.getEngineModel());
         Assert.assertEquals("t3 engine road", "t3 X engine road", t3.getEngineRoad());
         Assert.assertEquals("t3 load option", "t3 X load option", t3.getLoadOption());
@@ -631,7 +637,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 Owner option", "t3 X owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 X railroad name", t3.getRailroadName());
         Assert.assertEquals("t3 requirements", Train.CABOOSE, t3.getRequirements());
-        Assert.assertEquals("t3 road option", "t3 X road option", t3.getRoadOption());
+        Assert.assertEquals("t3 road option", "t3 X road option", t3.getCarRoadOption());
         Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
         Assert.assertEquals("After script", 0, t3.getAfterBuildScripts().size());
         Assert.assertEquals("Build script", 0, t3.getBuildScripts().size());

@@ -19,7 +19,7 @@ public class UsbDcs52SystemConnectionMemoTest extends LnSystemConnectionMemoTest
        scm = new UsbDcs52SystemConnectionMemo();
        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(scm);
        scm.setLnTrafficController(lnis);
-       scm.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+       scm.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
        scm.configureManagers();
     }
 

@@ -1,40 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-23-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-10-23-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Modifier l'Aiguillage</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Turnout">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Modifier l'Aiguillage</h1>
 
-      <h2>Aiguillages</h2>L'&eacute;diteur de R&eacute;seau prend
+      <h2>Aiguillages</h2>
+      <p>L'&eacute;diteur de R&eacute;seau prend
       en charge six types diff&eacute;rents d'appareils de voie
       (aiguillages): HR (<b>Droit</b>), LH (<b>Gauche</b> ), WYE (
       <b>Sym&eacute;trique</b>),Double Xover( <b>Bretelle
       Double</b>), RH Xover (<b>Bretelle Droite</b>), et Xover
-      <b>Bretelle Gauche</b>). L' Les deux autres types d'appareils
+      <b>Bretelle Gauche</b>). Les deux autres types d'appareils
       de voie, parfois utilis&eacute;s dans des r&eacute;eaux de
       trains miniatures sont: la jonction double et l'aiguillage
       trois voies, on peut les r&eacute;aliser en utilisant deux
@@ -45,10 +32,11 @@
       cr&eacute;&eacute;, son type ne peut pas &ecirc;tre
       chang&eacute;. Changer le type d'un aiguillage
       n&eacute;cessite de le retirer et de recr&eacute;er
-      l'aiguillage.
+      l'aiguillage.</p>
 
       <h2>Lier Des Dessins d'Aiguillages &agrave; Des Aiguillage
-      R&eacute;els</h2>Les dessins d'Aiguillage dans un
+      R&eacute;els</h2>
+      <p>Les dessins d'Aiguillage dans un
       sch&eacute;ma de voies sont dessin&eacute;s en utilisant les
       lignes pleines pour les deux voies directes et divergentes
       jusqu'&agrave; ce que les dessins des Aiguillage soient
@@ -64,11 +52,11 @@
       central de son dessin (&agrave; condition que <b>Autoriser
       Commandee du R&eacute;seau</b> soit coch&eacute; dans le Menu
       Options, et votre syst&egrave;me DCC met en oeuvre la
-      commandele informatique des aiguillages). L' capacit&eacute;
+      commandele informatique des aiguillages). La capacit&eacute;
       de basculer en cliquant peut &ecirc;tre
       d&eacute;sactiv&eacute;e en cochant
       <b>D&eacute;sactiv&eacute;</b> dans le menu contextuel
-      Aiguillage.
+      Aiguillage.</p>
 
       <p>Vous pouvez lier chaque dessin d'aiguillage avec un
       aiguillage r&eacute;el(interne ou mat&eacute;riel) dans le
@@ -190,8 +178,11 @@
       vides, le Canton par d&eacute;faut est utilis&eacute;. Les
       points de connexions des Cantons sont num&eacute;rot&eacute;s
       1, 2, 3 et 4, partant de la connexion en haut &agrave; gauche
-      dans le sens horaire.</p><!--#include virtual="/Footer.shtml" -->
+      dans le sens horaire.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

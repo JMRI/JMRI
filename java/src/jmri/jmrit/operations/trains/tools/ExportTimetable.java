@@ -31,15 +31,15 @@ import jmri.util.ColorUtil;
 
 /**
  * Provides an export to the Timetable feature.
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2019
- * 
+ *
  * <pre>
  * Copied from TimeTableCsvImport on 11/25/2019
- * 
+ *
  * CSV Record Types. The first field is the record type keyword (not I18N).
  * Most fields are optional.
- * 
+ *
  * "Layout", "layout name", "scale", fastClock, throttles, "metric"
  *            Defaults:  "New Layout", "HO", 4, 0, "No"
  *            Occurs:  Must be first record, occurs once
@@ -116,7 +116,7 @@ public class ExportTimetable extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete", e);
         }
     }
 
@@ -237,14 +237,14 @@ public class ExportTimetable extends XmlFile {
     private void loadTrains(CSVPrinter fileOut) throws IOException {
         int type = 1; // cycle through the 4 train types (chart colors)
         int defaultSpeed = 4;
-        
+
         // the following works pretty good for travel times between 1 and 4 minutes
         if (Setup.getTravelTime() > 0) {
             defaultSpeed = defaultSpeed/Setup.getTravelTime();
         }
 
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
-            if (!train.isBuildEnabled()) {
+            if (!train.isBuildEnabled() || train.getRoute() == null) {
                 continue;
             }
 
@@ -274,11 +274,11 @@ public class ExportTimetable extends XmlFile {
                     }
                 }
                 int duration = 0;
-                if ((rl != train.getTrainDepartsRouteLocation() && !rl.getLocation().isStaging())) {
+                if ((rl != train.getTrainDepartsRouteLocation() && rl.getLocation() != null && !rl.getLocation().isStaging())) {
                     if (train.isBuilt()) {
                         duration = train.getWorkTimeAtLocation(rl) + rl.getWait();
                         if (!rl.getDepartureTime().isEmpty() && !train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
-                            duration = 60 * Integer.parseInt(rl.getDepartureTimeHour()) 
+                            duration = 60 * Integer.parseInt(rl.getDepartureTimeHour())
                                     + Integer.parseInt(rl.getDepartureTimeMinute()) - train.getExpectedTravelTimeInMinutes(rl);
                         }
                     } else {

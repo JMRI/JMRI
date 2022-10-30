@@ -1,26 +1,24 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class PositionableJPanelTest extends PositionableTestBase {
 
     @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testCtor() {
         Assert.assertNotNull("exists", p);
     }
 
     @Test
     @Override
     public void testGetAndSetRotationDegrees() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         p.rotate(50);
         // setting rotation is currently ignored by PositionableJPanel 
         // and it's sub classes.
@@ -30,7 +28,6 @@ public class PositionableJPanelTest extends PositionableTestBase {
     @Test
     @Override
     public void testGetAndSetViewCoordinates() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Default View Coordinates", p.getViewCoordinates());
         p.setViewCoordinates(true);
         Assert.assertTrue("View Coordinates after set true", p.getViewCoordinates());
@@ -42,11 +39,11 @@ public class PositionableJPanelTest extends PositionableTestBase {
     @Override
     public void setUp() {
         super.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            p = new PositionableJPanel(editor);
-            ((PositionableJPanel) p).setName("PositionableJPanel");
-        }
+
+        editor = new EditorScaffold();
+        p = new PositionableJPanel(editor);
+        ((PositionableJPanel) p).setName("PositionableJPanel");
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableJPanelTest.class);

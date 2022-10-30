@@ -86,7 +86,7 @@ public class AnalogMany extends AbstractAnalogAction
                             ae._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load analog action " + socketSystemName);
+                            log.error("cannot load analog action {}", socketSystemName);
                         }
                     }
                 } else {

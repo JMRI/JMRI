@@ -41,7 +41,7 @@
   <!-- Version 12 - added D13NHJ and D13NHP , high Ver ID 38 (2014) -->  
   <!-- Version 13 - add new models -->
   <!-- Version 14 - change D16MTC to 8 function (despite the name) and add CV115 for it alone -->
-  <!-- Version 13 - add new models -->
+  <!-- Version 15 - add new models -->
     <decoder>
     <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="38" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
@@ -325,6 +325,12 @@
         <size length="2.65" width="0.37" height="0.12" units="inches"/>        
       </model>            
       <model model="N14A0" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP40-2, CW40-8, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, TRAINMASTER">
+        <output name="1" label="LED 1" connection="solder"/>
+        <output name="2" label="LED 2" connection="solder"/>
+        <output name="3" label="Pad 3" connection="solder"/>
+        <output name="4" label="Pad 4" connection="solder"/>
+      </model>            
+      <model model="N14A2" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP30, GP35, GP7, GP9">
         <output name="1" label="LED 1" connection="solder"/>
         <output name="2" label="LED 2" connection="solder"/>
         <output name="3" label="Pad 3" connection="solder"/>

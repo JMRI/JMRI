@@ -2,12 +2,14 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalMast;
@@ -16,6 +18,8 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.swing.JmriMouseEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,7 +116,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     private boolean loadIcons(String aspect) {
         String s = getSignalMast().getAppearanceMap().getImageLink(aspect, useIconSet);
-        if (s.equals("")) {
+        if (s.isEmpty()) {
             if (aspect.startsWith("$")) {
                 log.debug("No icon found for specific appearance {}", aspect);
             } else {
@@ -128,7 +132,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 n = new NamedIcon(s, s);
             } catch (java.lang.NullPointerException e) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}), Bundle.getMessage("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                log.error(Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
+                log.error("{} : Cannot load Icon", Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
                 return true;
             }
             _iconMap.put(s, n);
@@ -353,7 +357,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
     }
 
-    static jmri.jmrit.display.layoutEditor.TransitCreationTool tct;
+    static volatile jmri.jmrit.display.layoutEditor.TransitCreationTool tct;
 
     private void setImageTypeList(ButtonGroup iconTypeGroup, JMenu iconSetMenu, final String item) {
         JRadioButtonMenuItem im;
@@ -411,7 +415,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      *
      */
     @Override
-    public void doMouseClicked(java.awt.event.MouseEvent e) {
+    public void doMouseClicked(JmriMouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             return;
         }
@@ -424,7 +428,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      *
      * @param e the mouse click event
      */
-    public void performMouseClicked(java.awt.event.MouseEvent e) {
+    public void performMouseClicked(JmriMouseEvent e) {
         if (e.isMetaDown() || e.isAltDown()) {
             return;
         }

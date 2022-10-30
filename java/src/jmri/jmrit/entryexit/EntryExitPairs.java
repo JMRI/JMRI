@@ -98,6 +98,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     public final static int FULLINTERLOCK = 0x02;
 
     boolean allocateToDispatcher = false;
+    boolean absSignalMode = false;
 
     public final static int PROMPTUSER = 0x00;
     public final static int AUTOCLEAR = 0x01;
@@ -143,6 +144,14 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     public boolean getDispatcherIntegration() {
         return allocateToDispatcher;
+    }
+
+    public void setAbsSignalMode(boolean absMode) {
+        absSignalMode = absMode;
+    }
+
+    public boolean isAbsSignalMode() {
+        return absSignalMode;
     }
 
     /**
@@ -275,35 +284,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @CheckReturnValue
     public int getObjectCount() {
         return getNamedBeanSet().size();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
-        return getEntryExitList();
-    }
-
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a list of Destination Point beans
-     */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<DestinationPoints> getNamedBeanList() {
-        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
-        List<DestinationPoints> beanList = new ArrayList<>();
-        for (Source e : nxpair.values()) {
-            List<String> uidList = e.getDestinationUniqueId();
-            for (String uid : uidList) {
-                beanList.add(e.getByUniqueId(uid));
-            }
-        }
-        return beanList;
     }
 
     /**
@@ -1400,21 +1380,16 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public void addDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation")
     public void removeDataListener(ManagerDataListener<DestinationPoints> e) {
         if (e != null) listeners.remove(e);
     }
 
-    @SuppressWarnings("deprecation")
     final List<ManagerDataListener<DestinationPoints>> listeners = new ArrayList<>();
 
     // initialize logging

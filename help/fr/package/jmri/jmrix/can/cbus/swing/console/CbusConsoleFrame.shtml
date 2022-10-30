@@ -1,84 +1,71 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-11-2-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-11-2-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: CBUS&reg; Console Window</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help monitor">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Fen&Atilde;&ordf;tre Console CBUS&reg;</h1><a href=
+      <h1>Fenêtre Console CBUS&reg;</h1><a href=
       "../../../../../../../html/hardware/can/images/console.jpg"><img src="../../../../../../../html/hardware/can/images/console.jpg"
       width="443" height="265" alt=
-      "&Atilde;&copy;cran de l'outil Console" align=
+      "écran de l'outil Console" align=
       "right"></a><br>
-      JMRI offre une fen&Atilde;&ordf;tre moniteur de communication
+      JMRI offre une fenêtre moniteur de communication
       pour que vous puissiez voir ce qui se passe sur le lien de
-      communication entre le programme et le r&Atilde;&copy;seau
+      communication entre le programme et le réseau
       CBUS.
 
-      <p>Une fois que vous ouvrez une fen&Atilde;&ordf;tre
+      <p>Une fois que vous ouvrez une fenêtre
       moniteur, elle affichera automatiquement tout le trafic sur
       le lien dans les deux sections dans le haut de la
-      fen&Atilde;&ordf;tre. La partie gauche contient les
-      premi&Atilde;&uml;res trames CAN. La partie droite
-      interpr&Atilde;&uml;te leurs significations CBUS</p>
+      fenêtre. La partie gauche contient les
+      premières trames CAN. La partie droite
+      interprète leurs significations CBUS</p>
 
       <h2>Journalisation Dans Un Fichier</h2>Parfois, il est utile
       de capturer ce qui se passe. Par exemple, vous pouvez
       rencontrer un bug (!!), et que vous vouliez envoyer une copie
       de ce qui arrive aux gens qui tentent d'y
-      rem&Atilde;&copy;dier.
+      remédier.
 
-      <p>De petites quantit&Atilde;&copy;s de donn&Atilde;&copy;es
-      peuvent &Atilde;&ordf;tre copi&Atilde;&copy;es &Atilde; 
-      partir de la fen&Atilde;&ordf;tre journal avec la commande
+      <p>De petites quantités de données
+      peuvent être copiées à
+      partir de la fenêtre journal avec la commande
       "Copier" de vos ordinateurs (par exemple Ctrl-C ou cmd-C),
-      puis coll&Atilde;&copy; dans un email.</p>
+      puis collé dans un email.</p>
 
       <p>Si vous voulez en capturer davantage, vous pouvez avoir la
-      fen&Atilde;&ordf;tre qui &Atilde;&copy;crit un fichier
+      fenêtre qui écrit un fichier
       Journal sur le disque de votre ordinateur. Pour ce faire:</p>
 
       <ol>
         <li>Cliquez sur "Choisir le fichier Journal". Une
-        fen&Atilde;&ordf;tre de s&Atilde;&copy;lection de fichier
-        va s'ouvrir. Naviguez &Atilde;  l'endroit o&Atilde;&sup1;
+        fenêtre de sélection de fichier
+        va s'ouvrir. Naviguez à l'endroit où
         vous souhaitez stocker le fichier, entrez un nom pour le
         nouveau fichier journal, puis cliquez sur "Enregistrer".
         Notez que si vous choisissez un fichier qui existe
-        d&Atilde;&copy;j&Atilde; , il sera
-        &Atilde;&copy;cras&Atilde;&copy;.</li>
+        déjà , il sera
+        écrasé.</li>
 
-        <li>Lorsque vous &Atilde;&ordf;tes pr&Atilde;&ordf;t
-        &Atilde;  capturer les donn&Atilde;&copy;es que vous
-        souhaitez, cliquez sur "D&Atilde;&copy;marrer
-        l'enregistrement" sur la fen&Atilde;&ordf;tre du
+        <li>Lorsque vous êtes prêt
+        &Atilde;  capturer les données que vous
+        souhaitez, cliquez sur "Démarrer
+        l'enregistrement" sur la fenêtre du
         moniteur.</li>
 
-        <li>Lorsque vous avez termin&Atilde;&copy;, cliquez sur
-        "Arr&Atilde;&ordf;ter l'enregistrement" pour stocker les
-        donn&Atilde;&copy;es et fermez le fichier.</li>
+        <li>Lorsque vous avez terminé, cliquez sur
+        "Arrêter l'enregistrement" pour stocker les
+        données et fermez le fichier.</li>
       </ol>
 
       <h3>Controles</h3>
@@ -87,29 +74,29 @@
         <dt>Effacer &Atilde;&permil;cran</dt>
 
         <dd>Efface la zone journal au haut de
-        l'&Atilde;&copy;cran.</dd>
+        l'écran.</dd>
 
         <dt>Gel &Atilde;&permil;cran</dt>
 
-        <dd>Arr&Atilde;&ordf;te l'acquisition de nouvelles
+        <dd>Arrête l'acquisition de nouvelles
         informations, de sorte que l'information saisie cesse de
-        d&Atilde;&copy;filer .</dd>
+        défiler .</dd>
 
         <dt>Montrer Horodatage</dt>
 
         <dd>Normalement, le programme affiche simplement les
-        donn&Atilde;&copy;es de la liaison de communication. Si
+        données de la liaison de communication. Si
         vous souhaitez que chaque message soit
-        pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par l'heure
-        &Atilde;  laquelle il a &Atilde;&copy;t&Atilde;&copy;
-        envoy&Atilde;&copy; ou a &Atilde;&copy;t&Atilde;&copy;
-        re&Atilde;&sect;u, cochez cette case.</dd>
+        précédé par l'heure
+        &Atilde;  laquelle il a été
+        envoyé ou a été
+        reçu, cochez cette case.</dd>
 
-        <dt>Montrer les priorit&Atilde;&copy;s</dt>
+        <dt>Montrer les priorités</dt>
 
         <dd>Si vous souhaitez que chaque message soit
-        pr&Atilde;&copy;c&Atilde;&copy;d&Atilde;&copy; par les
-        priorit&Atilde;&copy;s CBUS utilis&Atilde;&copy;s dans
+        précédé par les
+        priorités CBUS utilisés dans
         l'envoi du message, cochez cette case.</dd>
 
         <dt>message Ajouter</dt>
@@ -120,8 +107,8 @@
       </dl>
 
       <h2>Statistiques Paquet</h2>Cette partie de la
-      fen&Atilde;&ordf;tre affiche le nombre de paquets CBUS
-      re&Atilde;&sect;us et transmis et contr&Atilde;&acute;le le
+      fenêtre affiche le nombre de paquets CBUS
+      reçus et transmis et contrôle le
       format de l'affichage.
 
       <h3>Controles</h3>
@@ -129,72 +116,70 @@
       <dl>
         <dt>Effacer</dt>
 
-        <dd>Remet le compteur de paquet &Atilde; 
-        z&Atilde;&copy;ro.</dd>
+        <dd>Remet le compteur de paquet à zéro.</dd>
 
-        <dt>Affichage/Entr&Atilde;&copy;e des Donn&Atilde;&copy;es
-        d&Atilde;&copy;cimales</dt>
+        <dt>Affichage/Entrée des Données
+        décimales</dt>
 
-        <dd>Normalement, la Fen&Atilde;&ordf;tre de Console affiche
-        les donn&Atilde;&copy;es en hexad&Atilde;&copy;cimal et
-        traite les donn&Atilde;&copy;es entr&Atilde;&copy;es en
-        hexad&Atilde;&copy;cimal. Pour changer la valeur par
-        d&Atilde;&copy;faut en d&Atilde;&copy;cimal, cochez cette
+        <dd>Normalement, la Fenêtre de Console affiche
+        les données en hexadécimal et
+        traite les données entrées en
+        hexadécimal. Pour changer la valeur par
+        défaut en décimal, cochez cette
         case.</dd>
       </dl>
 
-      <h2>Les Paquets les Plus R&Atilde;&copy;cents
-      Re&Atilde;&sect;us</h2>Cela affiche les paquets les plus
-      r&Atilde;&copy;cents re&Atilde;&sect;us du
-      r&Atilde;&copy;seayu. les &Atilde;&copy;l&Atilde;&copy;ments
-      individuels affich&Atilde;&copy;s sont la
-      priorit&Atilde;&copy; dynamique et mineure, le premier octet
-      de donn&Atilde;&copy;es qui est l'opcode CBUS et les octets
-      restants de donn&Atilde;&copy;es, jusqu'&Atilde;  sept
+      <h2>Les Paquets les Plus Récents Reçus</h2>
+      <p>Cela affiche les paquets les plus
+      récents reçus du réseayu. les éléments
+      individuels affichés sont la
+      priorité dynamique et mineure, le premier octet
+      de données qui est l'opcode CBUS et les octets
+      restants de données, jusqu'&Atilde;  sept
 
       <h3>Controles</h3>
 
       <dl>
         <dt>Copier</dt>
 
-        <dd>Copie le paquet le plus r&Atilde;&copy;cent
-        re&Atilde;&sect;us dans les champs envoyer des
-        donn&Atilde;&copy;es par paquets.</dd>
+        <dd>Copie le paquet le plus récent
+        reçus dans les champs envoyer des
+        données par paquets.</dd>
       </dl>
 
       <h2>envoyer Paquet</h2>Ici vous pouvez construire un paquet
-      pour l'envoy&Atilde;&copy; au r&Atilde;&copy;seau. Pour un
+      pour l'envoyé au réseau. Pour un
       fonctionnement normal, Ne modifiez pas les valeurs
-      pr&Atilde;&copy;charg&Atilde;&copy;es dans les champs
+      préchargées dans les champs
       prioritaires et dynamique normaux.. Entrez le code
-      op&Atilde;&copy;ration et le nombre correct d'octets de
-      donn&Atilde;&copy;es (selon le opcode).
+      opération et le nombre correct d'octets de
+      données (selon le opcode).
 
-      <p>Si la case affichage/saisie d&Atilde;&copy;cimale n'est
-      pas coch&Atilde;&copy;e, alors l'entr&Atilde;&copy;e des
-      donn&Atilde;&copy;es sera, par d&Atilde;&copy;faut,
-      trait&Atilde;&copy;e comme des hexad&Atilde;&copy;cimales Si
-      la case affichage/donn&Atilde;&copy;es saisies
-      d&Atilde;&copy;cimales est
-      s&Atilde;&copy;lectionn&Atilde;&copy;e, la saisie de
-      donn&Atilde;&copy;es, sera trait&Atilde;&copy;e comme des
-      d&Atilde;&copy;cimales.</p>
+      <p>Si la case affichage/saisie décimale n'est
+      pas cochée, alors l'entrée des
+      données sera, par défaut,
+      traitée comme des hexadécimales Si
+      la case affichage/données saisies
+      décimales est
+      sélectionnée, la saisie de
+      données, sera traitée comme des
+      décimales.</p>
 
-      <p>A tout moment, vous pouvez forcer les donn&Atilde;&copy;es
-      saisies pour &Atilde;&ordf;tre trait&Atilde;&copy;s comme des
-      hexad&Atilde;&copy;cimales, d&Atilde;&copy;cimales ou binaire
-      en ajoutant un pr&Atilde;&copy;fixe "0x", "0d" ou "0b" . Par
-      exemple "0x20", "0d32" et "0b00100000&Acirc;&laquo; tous
-      donnent une valeur d&Atilde;&copy;cimale de 32.</p>
+      <p>A tout moment, vous pouvez forcer les données
+      saisies pour être traités comme des
+      hexadécimales, décimales ou binaire
+      en ajoutant un préfixe "0x", "0d" ou "0b" . Par
+      exemple "0x20", "0d32" et "0b00100000" tous
+      donnent une valeur décimale de 32.</p>
 
       <p>En outre, lors de la saisie si la case
-      affichage/donn&Atilde;&copy;es d&Atilde;&copy;cimales n'est
-      pas coch&Atilde;&copy;e (mode hexad&Atilde;&copy;cimal),
+      affichage/données décimales n'est
+      pas cochée (mode hexadécimal),
       toute valeur &Atilde;  trois chiffres ou plus sera
-      trait&Atilde;&copy;s comme binaires. Lors de la saisie si la
-      case affichage/donn&Atilde;&copy;es d&Atilde;&copy;cimales
-      est coch&Atilde;&copy;e (mode d&Atilde;&copy;cimal), toute
-      valeur de quatre chiffres ou plus seront trait&Atilde;&copy;s
+      traités comme binaires. Lors de la saisie si la
+      case affichage/données décimales
+      est cochée (mode décimal), toute
+      valeur de quatre chiffres ou plus seront traités
       comme binaires.</p>
 
       <h3>Controles</h3>
@@ -202,21 +187,22 @@
       <dl>
         <dt>Envoyer</dt>
 
-        <dd>V&Atilde;&copy;rifie le paquet saisi et l'envoie au
-        r&Atilde;&copy;seau ou signale une erreur de condition
-        d&Atilde;&copy;tect&Atilde;&copy;e (par exemple le nombre
-        d'octets de donn&Atilde;&copy;es ne correspond pas &Atilde;
+        <dd>Vérifie le paquet saisi et l'envoie au
+        réseau ou signale une erreur de condition
+        détectée (par exemple le nombre
+        d'octets de données ne correspond pas &Atilde;
          l'opcode).</dd>
 
         <dt>Effacer</dt>
 
-        <dd>Efface les champs de saisie de donn&Atilde;&copy;es et
-        pr&Atilde;&copy;charge les valeurs de
-        priorit&Atilde;&copy;.</dd>
+        <dd>Efface les champs de saisie de données et
+        précharge les valeurs de
+        priorité.</dd>
       </dl>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

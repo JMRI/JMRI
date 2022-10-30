@@ -35,20 +35,24 @@
       <h3>Categories</h3>
 
       <p>Since there is a large number of actions and expressions, they are assigned a category.
-      The main categories are <strong>Item</strong> and <strong>Common</strong>.</p>
+      The main categories are <strong>Item</strong>, <strong>Common</strong> and <strong>Flow
+      Control</strong>.</p>
 
       <ul>
         <li>Item - Actions and expressions related to items on the layout, for example turnouts and
-        signal masts</li>
+        signal masts.</li>
 
-        <li>Common - The most important actions and expressions that are not in the Item
-        category</li>
+        <li>Common - Important actions and expressions that are not in the Item category, such as
+        <strong>Many</strong>, <strong>And</strong>, <strong>Or</strong>, and <strong>Not</strong>.</li>
 
-        <li>Display - Actions and expressions related to Panels</li>
+        <li>Flow Control - Program logic actions and expressions, such as <strong>If Then Else</strong>
+        and <strong>Call Module</strong>.</li>
 
-        <li>LocoNet - Actions and expressions related to LocoNet</li>
+        <li>Display - Actions and expressions related to Panels.</li>
 
-        <li>Other - Other actions and expressions</li>
+        <li>LocoNet - Actions and expressions related to LocoNet.</li>
+
+        <li>Other - Other actions and expressions.</li>
       </ul>
 
       <h3>Action and Expression types</h3>
@@ -69,7 +73,7 @@
             <td style="text-align:center">!</td>
             <td>Digital action</td>
             <td>Execute, no parameter</td>
-            <td>Item, Common, Other, Display, LocoNet</td>
+            <td>Item, Common, Flow Control, Other, Display, LocoNet</td>
           </tr>
 
           <tr>
@@ -107,7 +111,7 @@
             <td style="text-align:center">?</td>
             <td>Digital expression</td>
             <td>Return boolean</td>
-            <td>Item, Common, Other, LocoNet</td>
+            <td>Item, Common, Flow Control, Other, LocoNet</td>
           </tr>
 
           <tr>
@@ -148,20 +152,22 @@
       <h3>Adding an action or expression</h3>
 
       <p>When <strong>Add</strong> is selected from the context menu for an empty socket, the
-      selection dialog is displayed.</p>
+      category and type sub-menus are displayed.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/chapter4/selection_dialog.png"><img src=
-        "images/chapter4/selection_dialog.png" alt="Chapter 4 selection dialog" width="250" height=
-        "121"></a>
+        <a href="images/chapter4/add_sub_menus.png"><img src=
+        "images/chapter4/add_sub_menus.png" alt="Chapter 4 add sub menus"></a>
       </div>
 
-      <p>The <strong>Category</strong> selection automatically adjusts the <strong>Type</strong>
-      list based on the socket type. For example, Digital Action socket using the Item category is
+      <p>The first sub-menu list contains the <strong>Category</strong> names.  The second level
+      contains the available <strong>Type</strong> names for the selected category.
+
+
+      For example, Digital Action socket using the Item category is
       quite long while Analog Action socket using the Common category is short. The Type list
       always displays the valid selections for the socket type and category.</p>
 
-      <p>There are 20 combinations of socket types and categories. These are described in <a href=
+      <p>There are many combinations of socket types, categories. These are described in <a href=
       "chapter5.shtml">Chapter 5 - Actions</a> and <a href="chapter6.shtml">Chapter 6 -
       Expressions</a>.</p>
 

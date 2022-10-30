@@ -51,7 +51,8 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
 
         # Open file
         
-        csvFile = org.apache.commons.csv.CSVPrinter(java.io.FileWriter(turnoutFile), org.apache.commons.csv.CSVFormat.DEFAULT.withCommentMarker('#'))
+        csvFormat = org.apache.commons.csv.CSVFormat.Builder.create(org.apache.commons.csv.CSVFormat.DEFAULT).setCommentMarker('#').build()
+        csvFile = org.apache.commons.csv.CSVPrinter(java.io.FileWriter(turnoutFile), csvFormat)
 
         # Initialise counter
         turnoutCount = 0
@@ -117,7 +118,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
 
 # Define task to load turnout state at script start
 #
-# This is implemented as a seperate class so that it can run on a
+# This is implemented as a separate class so that it can run on a
 # different thread in the background rather than holding up the main
 # thread while executing
 class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
@@ -139,7 +140,8 @@ class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
         if inFile.exists():
 
             # It does, so load it
-            csvFile = org.apache.commons.csv.CSVParser.parse(inFile, java.nio.charset.StandardCharsets.UTF_8, org.apache.commons.csv.CSVFormat.DEFAULT.withFirstRecordAsHeader().withCommentMarker('#'))
+            csvFormat = org.apache.commons.csv.CSVFormat.Builder.create(org.apache.commons.csv.CSVFormat.DEFAULT).setHeader().setCommentMarker('#').build()
+            csvFile = org.apache.commons.csv.CSVParser.parse(inFile, java.nio.charset.StandardCharsets.UTF_8, csvFormat)
 
             # Write an info entry to the log
             self.log.info("Loading turnout state file: %s" % turnoutFile)

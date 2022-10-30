@@ -16,9 +16,8 @@ import org.junit.jupiter.api.*;
  * @author Mark Underwood 2012
  * @author Paul Bender 2016
  */
-public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
+public class ProxyReporterManagerTest extends AbstractProxyManagerTestBase<ProxyReporterManager, Reporter> {
 
-    @Override
     public String getSystemName(String i) {
         return "IR" + i;
     }
@@ -26,11 +25,11 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
     @Test
     public void testReporterPutGet() {
         // create
-        Reporter t = l.newReporter(getSystemName(getNameToTest1()), "mine");
+        Reporter t = l.newReporter(getSystemName("sysName"), "mine");
         // check
-        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertNotNull("real object returned ", t );
         Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNameToTest1())));
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName("sysName")));
     }
 
     @Test
@@ -71,10 +70,10 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
 
     @Test
     public void testInstanceManagerIntegration() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
 
-        jmri.util.JUnitUtil.initReporterManager();
+        JUnitUtil.initReporterManager();
 
         Assert.assertTrue(InstanceManager.getDefault(ReporterManager.class) instanceof ProxyReporterManager);
 
@@ -87,28 +86,17 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));
         Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2"));
     }
-    
-    // No manager-specific system name validation
-    @Test
-    @Override
-    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
-    // No manager-specific system name validation
-    @Test
-    @Override
-    public void testMakeSystemNameWithPrefixNotASystemName() {}
-    
-    // No manager-specific system name validation
-    @Test
-    @Override
-    public void testIncorrectGetNextValidAddress() {}
 
     @BeforeEach
-    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = InstanceManager.getDefault(jmri.ReporterManager.class);
+        ReporterManager irman = InstanceManager.getDefault(ReporterManager.class);
+        if ( irman instanceof ProxyReporterManager ) {
+            l = (ProxyReporterManager) irman;
+        } else {
+            Assertions.fail("ReporterManager is not a ProxyReporterManager");
+        }
     }
 
     @AfterEach

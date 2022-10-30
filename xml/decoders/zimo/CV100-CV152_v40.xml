@@ -547,10 +547,12 @@
       <enumChoice choice="NMRA/MAN">
         <choice>NMRA/MAN</choice>
         <choice xml:lang="de">NMRA/MAN (12-Funktions-Modus)</choice>
+        <choice xml:lang="cs">NMRA/MAN (Režim 12 funkcí)</choice>
       </enumChoice>
       <enumChoice choice="MAN">
         <choice>MAN</choice>
         <choice xml:lang="de">MAN (8-Funktions-Modus)</choice>
+        <choice xml:lang="cs">NMRA/MAN (Režim 8 funkcí)</choice>
       </enumChoice>
     </enumVal>
     <label>NMRA</label>
@@ -569,9 +571,11 @@
     <enumVal>
       <enumChoice choice="20kHz">
         <choice>20kHz</choice>
+        <choice xml:lang="cs">20 kHz</choice>
       </enumChoice>
       <enumChoice choice="40kHz">
         <choice>40kHz</choice>
+        <choice xml:lang="cs">40 kHz</choice>
       </enumChoice>
     </enumVal>
     <label>PWM Frequency</label>
@@ -585,13 +589,16 @@
     <enumVal>
       <enumChoice choice="short address">
         <choice>Basisadresse</choice>
+        <choice xml:lang="cs">krátká adresa</choice>
       </enumChoice>
       <enumChoice choice="extended address">
         <choice>Erweiterte Adresse</choice>
+        <choice xml:lang="cs">rozšířená adresa</choice>
       </enumChoice>
     </enumVal>
     <label>Addressformat Second Address</label>
     <label xml:lang="de">Zweitadresse Format</label>
+    <label xml:lang="cs">Formát druhé adresy</label>
    </variable>
   <variable CV="112" item="Radio Power Conversion" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -612,10 +619,11 @@
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
-    <label xml:lang="cs">Intenzita přerušní BEMF</label>
+    <label xml:lang="cs">Intenzita přerušení BEMF</label>
     <label xml:lang="de">Regeleinfluss</label>
     <tooltip>Controls how much Feedback Cutoff</tooltip>
     <tooltip xml:lang="de">Ausmaß der EMK, Lastregelung (0=kein EMK bis 255=max)</tooltip>
+    <tooltip xml:lang="cs">Řídí jak moc je kontrolována zátěž</tooltip>
    </variable>
   <variable CV="114" item="Dim Front Light" mask="XXXXXXXV" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -634,6 +642,7 @@
     <label xml:lang="de">Dimmung Lrück</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 1" mask="XXXXXVXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -643,6 +652,7 @@
     <label xml:lang="de">Dimmung FA1</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 2" mask="XXXXVXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -652,6 +662,7 @@
     <label xml:lang="de">Dimmung FA2</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 3" mask="XXXVXXXX" default="0" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -661,6 +672,7 @@
     <label xml:lang="de">Dimmung FA3</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 4" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -670,6 +682,7 @@
     <label xml:lang="de">Dimmung FA4</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 5" mask="XVXXXXXX" default="0" minOut="7" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -679,6 +692,7 @@
     <label xml:lang="de">Dimmung FA5</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="114" item="Dim function output 6" mask="VXXXXXXX" default="0" minOut="8" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -688,6 +702,7 @@
     <label xml:lang="de">Dimmung FA6</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="115" item="Uncoupler" default="0">
     <decVal max="99"/>
@@ -696,6 +711,7 @@
     <label xml:lang="cs">Rozpojovač</label>
     <label xml:lang="de">Kupplung</label>
     <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung (Einheit 0,1 sek d.h. 60 = 6 sek)</tooltip>
+    <tooltip xml:lang="cs">Čas sepnutí digitálního spřáhla (jednotka 0,1 s, t.j. 60 = 6 s)</tooltip>
   </variable>
   <variable CV="116" item="Auto Uncouple" default="0">
     <decVal max="199"/>
@@ -1411,17 +1427,20 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Jingle Sound CV Write</label>
     <label xml:lang="de">Jingle-Sound CV-Schreiben Bestätigung</label>
+    <label xml:lang="cs">Potvrzení zápisu znělkou</label>
     <tooltip>The writing of values is confirmed by a jingle.</tooltip>
     <tooltip xml:lang="de">Das Schreiben von Werten wird durch einen Jingle bestätigt.</tooltip>
+    <tooltip xml:lang="cs">Zápis hodnoty je potvrzen znělkou.</tooltip>
   </variable>
   <variable CV="144" item="Service Mode Programming Read Locked" mask="XXVXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Service Mode Programming Read Locked</label>
     <!--label xml:lang="it">Blocco programmazione in modo Servizio</label-->
-    <!--label xml:lang="cs">Zámek programování v servisním režimu</label-->
+    <label xml:lang="cs">Zámek čtení v servisním režimu</label>
     <label xml:lang="de">„Service mode“-Sperre CV lesen</label>
     <tooltip>Read CV's in "Service mode" locked</tooltip>
     <tooltip xml:lang="de">CV's lesen im "Service mode" gesperrt</tooltip>
+    <tooltip xml:lang="cs">Čtení CV v Servisním režimu je uzamčeno</tooltip>
   </variable>
   <variable CV="144" item="Service Mode Programming Locked" mask="XVXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1430,7 +1449,7 @@
     <label xml:lang="cs">Zámek programování v servisním režimu</label>
     <label xml:lang="de">„Service mode“-Sperre CV schreiben</label>
     <tooltip>Programming lock only in "Service mode"</tooltip>
-    <tooltip xml:lang="de">Programmiersperre nur im „Service mode“</tooltip>
+    <tooltip xml:lang="cs">Programování CV v Servisním režimu je uzamčeno</tooltip>
   </variable>
   <variable CV="144" item="Software Update Locked" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1439,7 +1458,7 @@
     <label xml:lang="cs">Zámek softwarových aktualizací</label>
     <label xml:lang="de">Updatesperre</label>
     <tooltip>Lock the software update</tooltip>
-    <tooltip xml:lang="de">Sperre des Software-Updates</tooltip>
+    <tooltip xml:lang="cs">Softwarové aktualizace jsou uzamčeny</tooltip>
   </variable>
   <variable CV="145" item="Kick Start" default="0" exclude="228,226,232,235,247,MX689_v30">
     <enumVal>
@@ -1493,6 +1512,7 @@
     <label xml:lang="de">Ausgleich Leergang</label>
     <tooltip>Motor Backlash Control</tooltip>
     <tooltip xml:lang="de">Ausgleich des Getriebe-Leerganges bei Richtungsumkehr</tooltip>
+    <tooltip xml:lang="cs">Kompenzace vůle převodovky při změně směru</tooltip>
    </variable>
   <variable CV="147" default="0" item="Total PWM Period" exclude="228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
@@ -1533,49 +1553,49 @@
       <enumChoice choice="Gradual brake application over 1sec from Stop" value="1">
         <choice>Gradual brake application over 1sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 1 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 1 vteřinu před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 1 sekundu před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 1 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 2sec from Stop" value="2">
         <choice>Gradual brake application over 2sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 2 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 2 vteřiny před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 2 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 2 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 3sec from Stop" value="3">
         <choice>Gradual brake application over 3sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 3 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 3 vteřiny před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 3 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 3 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 4sec from Stop" value="4">
         <choice>Gradual brake application over 4sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 4 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 4 vteřiny před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 4 sekundy před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 4 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 5sec from Stop" value="5">
         <choice>Gradual brake application over 5sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 5 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 5 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 5 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 5 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 6sec from Stop" value="6">
         <choice>Gradual brake application over 6sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 6 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 6 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 6 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 6 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 7sec from Stop" value="7">
         <choice>Gradual brake application over 7sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 7 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 7 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 7 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 7 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Gradual brake application over 8sec from Stop" value="8">
         <choice>Gradual brake application over 8sec from Stop</choice>
         <choice xml:lang="it">Frenata graduale oltre 8 sec. dallo stop</choice>
-        <choice xml:lang="cs">Použití motorové brzdy na 8 vteřin před zastavením</choice>
+        <choice xml:lang="cs">Použití motorové brzdy na 8 sekund před zastavením</choice>
         <choice xml:lang="de">Schrittweise Bremsen über 8 Sek vom letzten Stop</choice>
       </enumChoice>
       <enumChoice choice="Full brake application at Stop" value="2">
@@ -1591,6 +1611,7 @@
     <label xml:lang="de">Motorbremse</label>
     <tooltip>Motor braked by shorting output</tooltip>
     <tooltip xml:lang="de">Reduziert die Ausregelung des Motors auf 10 - 90 % des Wertes laut CV #58.</tooltip>
+    <tooltip xml:lang="cs">Snižuje regulaci motoru na 10 – 90 %.</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 7" mask="XXXXXXXV" default="0" minOut="9">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1600,6 +1621,7 @@
     <label xml:lang="de">Dimmung FA7</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 8" mask="XXXXXXVX" default="0" minOut="10">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1609,6 +1631,7 @@
     <label xml:lang="de">Dimmung FA8</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 9" mask="XXXXXVXX" default="0" minOut="11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1618,6 +1641,7 @@
     <label xml:lang="de">Dimmung FA9</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 10" mask="XXXXVXXX" default="0" minOut="12">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1627,6 +1651,7 @@
     <label xml:lang="de">Dimmung FA10</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 11" mask="XXXVXXXX" default="0" minOut="13">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1636,6 +1661,7 @@
     <label xml:lang="de">Dimmung FA11</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="Dim function output 12" mask="XXVXXXXX" default="0" minOut="14">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
@@ -1645,6 +1671,7 @@
     <label xml:lang="de">Dimmung FA12</label>
     <tooltip>If checked the Output is dimmed</tooltip>
     <tooltip xml:lang="de">Wenn gesetzt wird der Ausgang gedimmt</tooltip>
+    <tooltip xml:lang="cs">Pokud je zaškrtnuto, tak výstup je ztlumený</tooltip>
   </variable>
   <variable CV="152" item="FO3 + FO4 directional setting" mask="XVXXXXXX" default="0" minOut="6">
     <enumVal>

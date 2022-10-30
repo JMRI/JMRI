@@ -71,7 +71,7 @@ public class DisplayFrame extends JmriJFrame {
 
     static Color _grayColor = new Color(235, 235, 235);
     static Color _darkGrayColor = new Color(150, 150, 150);
-    static protected Color[] colorChoice = new Color[]{Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
+    static final Color[] colorChoice = new Color[]{Color.white, _grayColor, _darkGrayColor}; // panel bg color picked up directly
 
     // Array of BufferedImage backgrounds loaded as background image in Preview, shared across tabs
     private BufferedImage[] _backgrounds;
@@ -108,7 +108,7 @@ public class DisplayFrame extends JmriJFrame {
      * Such child classes need to provide backgrounds for their panes and panels.
      *
      * @param name         title of the Frame
-     * @param editor       editor of panel items 
+     * @param editor       editor of panel items
      */
     public DisplayFrame(String name, Editor editor) {
         super(name, false, false);
@@ -135,12 +135,12 @@ public class DisplayFrame extends JmriJFrame {
     }
 
     /**
-     * This may be used as a callback to notify children of this class 
+     * This may be used as a callback to notify children of this class
      * when the preview color has changed.
      * Children of this class should override if there are several other
      * members with separate preview panels.  e.g. ItemPalette
      * But prevent a loop when calling super in that process (bug in 4.21.3; fixed in 4.21.4)
-     * 
+     *
      * @param index index of selection in _backgrounds array
      */
     public void setPreviewBg(int index) {
@@ -156,7 +156,7 @@ public class DisplayFrame extends JmriJFrame {
     }
 
     /**
-     * 
+     *
      * @return the color of the background of editor display panel
      */
     public Color getCurrentColor() {
@@ -175,7 +175,7 @@ public class DisplayFrame extends JmriJFrame {
     public void updateBackground(Editor ed) {
         if (ed == null) {
             log.error("updateBackground called for a null editor!");
-            return; 
+            return;
         }
         _editor = ed;
         Color color = ed.getTargetPanel().getBackground();
@@ -214,7 +214,7 @@ public class DisplayFrame extends JmriJFrame {
      * Resizes this frame to accommodate the size of the tab panel when tab is changed.
      * Otherwise it may force the tab panel to use scrollbars or be far oversized.
      * As a trade off to keep right mouse arrow in same place for ItemPalette accept frame is wider in few cases.
-     * 
+     *
      * @param container Container to be resized
      * @param deltaDim Size difference of container with old contents
      * @param newDim Size of the new contents
@@ -224,7 +224,7 @@ public class DisplayFrame extends JmriJFrame {
         container.setPreferredSize(dim);
         container.invalidate();
         if (log.isDebugEnabled())
-            log.debug(" deltaDim= ({}, {}) NewDim= ({}, {}) setPreferredSize to ({}, {})", 
+            log.debug(" deltaDim= ({}, {}) NewDim= ({}, {}) setPreferredSize to ({}, {})",
                 deltaDim.width, deltaDim.height, newDim.width, newDim.height, dim.width, dim.height);
         pack();
         if (log.isDebugEnabled()) {

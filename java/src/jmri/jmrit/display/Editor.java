@@ -38,6 +38,9 @@ import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.DnDStringImportHandler;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.JmriMouseMotionListener;
 
 /**
  * This is the Model and a Controller for panel editor Views. (Panel Editor,
@@ -78,7 +81,7 @@ import jmri.util.swing.JmriColorChooser;
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
-abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
+abstract public class Editor extends JmriJFrame implements JmriMouseListener, JmriMouseMotionListener,
         ActionListener, KeyListener, VetoableChangeListener {
 
     final public static int BKG = 1;
@@ -175,7 +178,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public Editor(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
         setName(name);
-        _defaultToolTip = new ToolTip(null, 0, 0);
+        _defaultToolTip = new ToolTip(null, 0, 0, null);
         setVisible(false);
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
@@ -367,8 +370,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 targetWindowClosingEvent(e);
             }
         });
-        _targetPanel.addMouseListener(this);
-        _targetPanel.addMouseMotionListener(this);
+        _targetPanel.addMouseListener(JmriMouseListener.adapt(this));
+        _targetPanel.addMouseMotionListener(JmriMouseMotionListener.adapt(this));
         _targetPanel.setFocusable(true);
         _targetPanel.addKeyListener(this);
         //_targetFrame.pack();
@@ -1017,10 +1020,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }
             ed.setAllEditable(isEditable());
-            ed.setAllPositionable(allPositionable());
+            //ed.setAllPositionable(allPositionable());
             //ed.setShowCoordinates(showCoordinates());
             ed.setAllShowToolTip(showToolTip());
-            ed.setAllControlling(allControlling());
+            //ed.setAllControlling(allControlling());
             ed.setShowHidden(isVisible());
             ed.setPanelMenuVisible(frame.getJMenuBar().isVisible());
             ed.setScroll(getScrollable());
@@ -1431,7 +1434,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (p.getDisplayLevel() == BKG) {
             return;
         }
+
         JMenu edit = new JMenu(Bundle.getMessage("EditTooltip"));
+
         JCheckBoxMenuItem showToolTipItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowTooltip"));
         showToolTipItem.setSelected(p.showToolTip());
         showToolTipItem.addActionListener(new ActionListener() {
@@ -1450,33 +1455,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }.init(p, showToolTipItem));
         edit.add(showToolTipItem);
+
         edit.add(CoordinateEdit.getToolTipEditAction(p));
-        NamedBean bean = p.getNamedBean();
-        if (bean != null) {
-            edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
-                Positionable comp;
-                NamedBean bean;
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    ToolTip tip = comp.getToolTip();
-                    if (tip != null) {
-                        String uName = bean.getUserName();
-                        String sName = bean.getSystemName();
-                        if (uName != null && uName.length() > 0) {
-                            sName = uName + "(" + sName + ")";
-                        }
-                        tip.setText(sName);
-                    }
-                }
+        JCheckBoxMenuItem prependToolTipWithDisplayNameItem = new JCheckBoxMenuItem(Bundle.getMessage("PrependTooltipWithDisplayName"));
+        prependToolTipWithDisplayNameItem.setSelected(p.getToolTip().getPrependToolTipWithDisplayName());
+        prependToolTipWithDisplayNameItem.addActionListener(new ActionListener() {
+            Positionable comp;
+            JCheckBoxMenuItem checkBox;
 
-                AbstractAction init(Positionable pos, NamedBean b) {
-                    comp = pos;
-                    bean = b;
-                    return this;
-                }
-            }.init(p, bean));
-        }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comp.getToolTip().setPrependToolTipWithDisplayName(checkBox.isSelected());
+            }
+
+            ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
+                comp = pos;
+                checkBox = cb;
+                return this;
+            }
+        }.init(p, prependToolTipWithDisplayNameItem));
+        edit.add(prependToolTipWithDisplayNameItem);
+
         popup.add(edit);
     }
 
@@ -1734,7 +1734,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * ************ Icon editors for adding content ***********
      */
-    static final public String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
+    static final String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
         "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light",
         "Reporter", "Background", "MultiSensor", "Icon", "Text", "Block Contents"};
 
@@ -2691,12 +2691,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
      * **************** Mouse Methods **********************
      */
-    public void showToolTip(Positionable selection, MouseEvent event) {
+    public void showToolTip(Positionable selection, JmriMouseEvent event) {
         ToolTip tip = selection.getToolTip();
-        String txt = tip.getText();
-        if (txt == null || txt.isEmpty()) {
-            return;
-        }
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
         setToolTip(tip);
     }
@@ -2833,7 +2829,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-    protected List<Positionable> getSelectedItems(MouseEvent event) {
+    protected List<Positionable> getSelectedItems(JmriMouseEvent event) {
         Rectangle rect = new Rectangle();
         ArrayList<Positionable> selections = new ArrayList<>();
         for (Positionable p : _contents) {
@@ -2879,7 +2875,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Gather all items inside _selectRect
      * Keep old group if Control key is down
      */
-    protected void makeSelectionGroup(MouseEvent event) {
+    protected void makeSelectionGroup(JmriMouseEvent event) {
         if (!event.isControlDown() || _selectionGroup == null) {
             _selectionGroup = new ArrayList<>();
         }
@@ -2917,7 +2913,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * If there, delete.
      * make new group if Cntl key is not held down
      */
-    protected void modifySelectionGroup(Positionable selection, MouseEvent event) {
+    protected void modifySelectionGroup(Positionable selection, JmriMouseEvent event) {
         if (!event.isControlDown() || _selectionGroup == null) {
             _selectionGroup = new ArrayList<>();
         }
@@ -3208,25 +3204,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * ********************* Abstract Methods ***********************
      */
     @Override
-    abstract public void mousePressed(MouseEvent event);
+    abstract public void mousePressed(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseReleased(MouseEvent event);
+    abstract public void mouseReleased(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseClicked(MouseEvent event);
+    abstract public void mouseClicked(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseDragged(MouseEvent event);
+    abstract public void mouseDragged(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseMoved(MouseEvent event);
+    abstract public void mouseMoved(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseEntered(MouseEvent event);
+    abstract public void mouseEntered(JmriMouseEvent event);
 
     @Override
-    abstract public void mouseExited(MouseEvent event);
+    abstract public void mouseExited(JmriMouseEvent event);
 
     /*
      * set up target panel, frame etc.
@@ -3260,7 +3256,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param p     the item containing or requiring the context menu
      * @param event the event triggering the menu
      */
-    abstract protected void showPopUp(Positionable p, MouseEvent event);
+    abstract protected void showPopUp(Positionable p, JmriMouseEvent event);
 
     /**
      * After construction, initialize all the widgets to their saved config
@@ -3274,49 +3270,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param p the item to copy
      */
     abstract protected void copyItem(Positionable p);
-
-    /**
-     * Get a List of the currently-existing Editor objects. The returned list is
-     * a copy made at the time of the call, so it can be manipulated as needed
-     * by the caller.
-     *
-     * @return a List of Editors
-     * @deprecated since 4.19.6; use {@link EditorManager#getAll()} instead
-     */
-    @Deprecated
-    synchronized public static List<Editor> getEditors() {
-        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll());
-    }
-
-    /**
-     * Get a list of currently-existing Editor objects that are specific
-     * sub-classes of Editor.
-     * <p>
-     * The returned list is a copy made at the time of the call, so it can be
-     * manipulated as needed by the caller.
-     *
-     * @param <T>  the Class the list should be limited to.
-     * @param type the Class the list should be limited to.
-     * @return a List of Editors.
-     * @deprecated since 4.19.6; use {@link EditorManager#getAll(Class)} instead
-     */
-    @Deprecated
-    synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
-        return new ArrayList<>(InstanceManager.getDefault(EditorManager.class).getAll(type));
-    }
-
-    /**
-     * Get an Editor of a particular name. If more than one exists, there's no
-     * guarantee as to which is returned.
-     *
-     * @param name the editor to get
-     * @return an Editor or null if no matching Editor could be found
-     * @deprecated since 4.19.6; use {@link EditorManager#get(String)} instead
-     */
-    @Deprecated
-    public static Editor getEditor(String name) {
-        return InstanceManager.getDefault(EditorManager.class).get(name);
-    }
 
     public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
         List<NamedBeanUsageReport> report = new ArrayList<>();

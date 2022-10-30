@@ -1,0 +1,1476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2020 All rights reserved   -->
+<!-- LOCONETLNCVMODE requires 3 elements to address an LNCV module on LocoNet:
+1. Article Number (aka type/class ID) = decoder model productID (integer)
+2. Module Address (optional, see below)
+3. CV number
+For processing by JMRI LnOpsProgrammer, elements 1. and 3. are combined in the CV number e.g., "1.3".
+Uhlenbrock and Digikeijs/Digirails publish the Article number for each (new) device.
+The Uhlenbrock Switch Control #63400 has an Article number 6340, which was registered with Uhlenbrock.
+See LNCV help in help/en/package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+    <version author="Egbert Broerse" version="1.0" lastUpdated="20220804"/>
+    <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 and decoder.4.15.2.xsd -->
+
+    <decoder>
+        <family name="Switch Module" mfg="Uhlenbrock Elektronik" type="stationary">
+            <model model="Switch Control 63400" productID="6340" formFactor="Stationary" comment="LocoNet Switch Control">
+              <versionCV />
+            </model>
+        </family>
+
+        <programming direct="no" paged="no" register="no" ops="no">
+          <mode>LOCONETLNCVMODE</mode>
+        </programming>
+
+        <variables>
+            <variable CV="6340.0" item="Long Address" mask="VVVVVVVVVVVVVVVV" default="1" comment="Board address" >
+              <decVal min="0" max="65534"/>
+              <label xml:lang="it">Indirizzo Primario: </label>
+              <label xml:lang="fr">Adresse décodeur: </label>
+              <label xml:lang="de">Decoderadresse: </label>
+              <label xml:lang="nl">Decoderadres: </label>
+              <label>Decoder Address: </label>
+              <tooltip>Enter as decimal value (0-65534)</tooltip>
+            </variable>
+
+              <!-- LNCV 1-5 -->
+            <variable CV="6340.1" item="Assist 1 Address" writeOnly="yes" default="1">
+              <decVal min="1" max="2048"/>
+              <label xml:lang="de">Taster/Lampengruppe 1 Adresse:</label>
+              <label xml:lang="nl">Knop/Lampgroep 1 Adres:</label>
+              <label>Key/Lamp Group 1 Address:</label>
+              <tooltip>Address to set/follow on key 1</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse (1-2048), die geschaltet bzw. überwacht werden soll von Taste 1</tooltip>
+              <tooltip xml:lang="nl">Adres dat wordt gestuurd/gevolgd door knop 1</tooltip>
+            </variable>
+            <variable CV="6340.2" item="Assist 2 Address" writeOnly="yes" default="2">
+              <decVal min="1" max="2048"/>
+              <label xml:lang="de">Taster/Lampengruppe 2 Adresse:</label>
+              <label xml:lang="nl">Knop/Lampgroep 2 Adres:</label>
+              <label>Key/Lamp Group 2 Address:</label>
+              <tooltip>Address to set/follow on key 2</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse (1-2048), die geschaltet bzw. überwacht werden soll von Taste 2</tooltip>
+              <tooltip xml:lang="nl">Adres dat wordt gestuurd/gevolgd door knop 2</tooltip>
+            </variable>
+            <variable CV="6340.3" item="Assist 3 Address" writeOnly="yes" default="3">
+              <decVal min="1" max="2048"/>
+              <label xml:lang="de">Taster/Lampengruppe 3 Adresse:</label>
+              <label xml:lang="nl">Knop/Lampgroep 3 Adres:</label>
+              <label>Key/Lamp Group 3 Address:</label>
+              <tooltip>Address to set/follow on key 3</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse (1-2048), die geschaltet bzw. überwacht werden soll von Taste 3</tooltip>
+              <tooltip xml:lang="nl">Adres dat wordt gestuurd/gevolgd door knop 3</tooltip>
+            </variable>
+            <variable CV="6340.4" item="Assist 4 Address" writeOnly="yes" default="4">
+              <decVal min="1" max="2048"/>
+              <label xml:lang="de">Taster/Lampengruppe 4 Adresse:</label>
+              <label xml:lang="nl">Knop/Lampgroep 4 Adres:</label>
+              <label>Key/Lamp Group 4 Address:</label>
+              <tooltip>Address to set/follow on key 4</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse (1-2048), die geschaltet bzw. überwacht werden soll von Taste 4</tooltip>
+              <tooltip xml:lang="nl">Adres dat wordt gestuurd/gevolgd door knop 4</tooltip>
+            </variable>
+            <variable CV="6340.5" item="Assist 5 Address" writeOnly="yes" default="5">
+              <decVal min="1" max="2048"/>
+              <label xml:lang="de">Taster/Lampengruppe 5 Adresse:</label>
+              <label xml:lang="nl">Knop/Lampgroep 5 Adres:</label>
+              <label>Key/Lamp Group 5 Address:</label>
+              <tooltip>Address to set/follow on key 5</tooltip>
+              <tooltip xml:lang="de">Magnetartikeladresse (1-2048), die geschaltet bzw. überwacht werden soll von Taste 5</tooltip>
+              <tooltip xml:lang="nl">Adres dat wordt gestuurd/gevolgd door knop 5</tooltip>
+            </variable>
+
+            <variable CV="6340.6" item="ProgramAssistErase" default="0">
+              <enumVal>
+                <enumChoice choice="1" value="0">
+                  <choice>Choose and write...</choice>
+                  <choice xml:lang="nl">Kies optie en schrijf...</choice>
+                </enumChoice>
+                <enumChoice choice="2" value="1">
+                  <choice>Erase Key 1 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 1</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 1</choice>
+                </enumChoice>
+                <enumChoice choice="3" value="2">
+                  <choice>Erase Key 2 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 2</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 2</choice>
+                </enumChoice>
+                <enumChoice choice="4" value="3">
+                  <choice>Erase Key 3 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 3</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 3</choice>
+                </enumChoice>
+                <enumChoice choice="5" value="4">
+                  <choice>Erase Key 4 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 4</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 4</choice>
+                </enumChoice>
+                <enumChoice choice="6" value="5">
+                  <choice>Erase Key 5 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 5</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 5</choice>
+                </enumChoice>
+                <enumChoice choice="7" value="6">
+                  <choice>Erase Key 6 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 6</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 6</choice>
+                </enumChoice>
+                <enumChoice choice="8" value="7">
+                  <choice>Erase Key 7 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 7</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 7</choice>
+                </enumChoice>
+                <enumChoice choice="9" value="8">
+                  <choice>Erase Key 8 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 8</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 8</choice>
+                </enumChoice>
+                <enumChoice choice="10" value="9">
+                  <choice>Erase Key 9 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 9</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 9</choice>
+                </enumChoice>
+                <enumChoice choice="11" value="10">
+                  <choice>Erase Key 10 configuration</choice>
+                  <choice xml:lang="de">Lösche Programm Taster 10</choice>
+                  <choice xml:lang="nl">Wis instelling Knop 10</choice>
+                </enumChoice>
+                <enumChoice choice="12" value="11">
+                  <choice>Reset all Key settings</choice>
+                  <choice xml:lang="de">Reset alle Taster</choice>
+                  <choice xml:lang="nl">Wis alle toetsinstellingen</choice>
+                </enumChoice>
+              </enumVal>
+              <label>Erase settings:</label>
+              <label xml:lang="de">Speicher löschen:</label>
+              <label xml:lang="nl">Instelling wissen:</label>
+              <tooltip>Resets configuration for 1 or for all keys (keeps module address)</tooltip>
+              <tooltip xml:lang="de">Konfiguration für 1 oder alle Taster löschen bis auf die Moduladresse</tooltip>
+              <tooltip xml:lang="nl">Kies instelling voor 1 of alle Toetsen (oplopend vanaf startadres) m.u.v. module-adres</tooltip>
+            </variable>
+
+            <variable CV="6340.6" item="ProgramAssistToggle" mask="10000" default="1">
+              <enumVal max="10">
+                <enumChoice choice="1" value="0">
+                  <choice>Erase keys</choice>
+                  <choice xml:lang="de">Taster löschen</choice>
+                  <choice xml:lang="nl">Toets wissen</choice>
+                </enumChoice>
+                <enumChoice choice="2" value="1">
+                  <choice>2 keys and 2 lamps</choice>
+                  <choice xml:lang="de">2 Taster und 2 Lampen</choice>
+                  <choice xml:lang="nl">1 toets en 1 lamp</choice>
+                </enumChoice>
+                <enumChoice choice="3" value="2">
+                  <choice>1 key and 1 lamp</choice>
+                  <choice xml:lang="de">1 Taste und 1 Lampe</choice>
+                  <choice xml:lang="nl">1 toets en 1 lamp</choice>
+                </enumChoice>
+              </enumVal>
+              <label>Per address use:</label>
+              <label xml:lang="de">Pro Adresse nutze:</label>
+              <label xml:lang="nl">Stuur/Volg wissels met:</label>
+              <tooltip>Module setting for number of keys/lamps to set/follow a turnout</tooltip>
+              <tooltip xml:lang="de">Modul steuert (von Anfangsadresse)</tooltip>
+              <tooltip xml:lang="nl">Stel in voor hele module (vanaf startadres)</tooltip>
+            </variable>
+
+            <variable CV="6340.6" item="Start Address" mask="1">
+              <decVal max="9999"/>
+              <label xml:lang="de">Anfangsadresse:</label>
+              <label xml:lang="nl">Beginadres:</label>
+              <label>Start Address:</label>
+              <tooltip>Start Address (output 1; 1-2048). Outputs 2-5: +1</tooltip>
+            </variable>
+
+            <!-- CV 10-19: Settings outputs 1-10 On -->
+
+            <!-- Events for CV 10-19 as per docs: see include uhlenbrock/enumEventChoice.xml-->
+            <!-- E = 0 Lamp output is switched on when the solenoid is switched to “red” status.-->
+            <!-- E = 1 Lamp output is switched on when the solenoid is switched to “green” status. -->
+            <!-- E = 2 Lamp output is switched on when the feedback module reports “vacant”.-->
+            <!-- E = 3 Lamp output is switched on when the feedback module reports “occupied”.-->
+            <!-- E = 4 If the Lamp is to switch on when a key or key combination is operated-->
+
+            <variable CV="6340.10" item="Lamp 10 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 10 On?</tooltip>
+            </variable>
+            <variable CV="6340.10" item="Lamp 10 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 10 On</tooltip>
+            </variable>
+            <variable CV="6340.10" item="Lamp 10 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 10 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.10" item="Lamp 10 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 10 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.11" item="Lamp 1 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 1 On?</tooltip>
+            </variable>
+            <variable CV="6340.11" item="Lamp 1 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 1 On</tooltip>
+            </variable>
+            <variable CV="6340.11" item="Lamp 1 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 1 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.11" item="Lamp 1 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 1 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.12" item="Lamp 2 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 2 On?</tooltip>
+            </variable>
+            <variable CV="6340.12" item="Lamp 2 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 2 On</tooltip>
+            </variable>
+            <variable CV="6340.12" item="Lamp 2 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 2 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.12" item="Lamp 2 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 2 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.13" item="Lamp 3 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 3 On?</tooltip>
+            </variable>
+            <variable CV="6340.13" item="Lamp 3 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 3 On</tooltip>
+            </variable>
+            <variable CV="6340.13" item="Lamp 3 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 3 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.13" item="Lamp 3 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 3 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.14" item="Lamp 4 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 4 On?</tooltip>
+            </variable>
+            <variable CV="6340.14" item="Lamp 4 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 4 On</tooltip>
+            </variable>
+            <variable CV="6340.14" item="Lamp 4 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 4 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.14" item="Lamp 4 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 4 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.15" item="Lamp 5 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 5 On?</tooltip>
+            </variable>
+            <variable CV="6340.15" item="Lamp 5 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 5 On</tooltip>
+            </variable>
+            <variable CV="6340.15" item="Lamp 5 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 5 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.15" item="Lamp 5 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 5 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.16" item="Lamp 6 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 6 On?</tooltip>
+            </variable>
+            <variable CV="6340.16" item="Lamp 6 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 6 On</tooltip>
+            </variable>
+            <variable CV="6340.16" item="Lamp 6 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 6 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.16" item="Lamp 6 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 6 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.17" item="Lamp 7 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 7 On?</tooltip>
+            </variable>
+            <variable CV="6340.17" item="Lamp 7 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 7 On</tooltip>
+            </variable>
+            <variable CV="6340.17" item="Lamp 7 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 7 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.17" item="Lamp 7 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 7 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.18" item="Lamp 8 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 8 On?</tooltip>
+            </variable>
+            <variable CV="6340.18" item="Lamp 8 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 8 On</tooltip>
+            </variable>
+            <variable CV="6340.18" item="Lamp 8 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 8 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.18" item="Lamp 8 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 8 On Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.19" item="Lamp 9 On Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>On Event:</label>
+              <tooltip>What triggers Lamp 9 On?</tooltip>
+            </variable>
+            <variable CV="6340.19" item="Lamp 9 On Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 9 On</tooltip>
+            </variable>
+            <variable CV="6340.19" item="Lamp 9 On Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 9 On (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.19" item="Lamp 9 On Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 9 On Address (1-2048)</tooltip>
+            </variable>
+
+            <!-- CV 20-29: Settings Lamps 1-10 Off -->
+
+            <variable CV="6340.20" item="Lamp 10 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 10 On?</tooltip>
+            </variable>
+            <variable CV="6340.20" item="Lamp 10 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 10 On</tooltip>
+            </variable>
+            <variable CV="6340.20" item="Lamp 10 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 10 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.20" item="Lamp 10 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 10 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.21" item="Lamp 1 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 1 On?</tooltip>
+            </variable>
+            <variable CV="6340.21" item="Lamp 1 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 1 On</tooltip>
+            </variable>
+            <variable CV="6340.21" item="Lamp 1 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 1 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.21" item="Lamp 1 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 1 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.22" item="Lamp 2 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 2 On?</tooltip>
+            </variable>
+            <variable CV="6340.22" item="Lamp 2 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 2 On</tooltip>
+            </variable>
+            <variable CV="6340.22" item="Lamp 2 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 2 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.22" item="Lamp 2 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 2 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.23" item="Lamp 3 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 3 On?</tooltip>
+            </variable>
+            <variable CV="6340.23" item="Lamp 3 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 3 On</tooltip>
+            </variable>
+            <variable CV="6340.23" item="Lamp 3 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 3 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.23" item="Lamp 3 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 3 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.24" item="Lamp 4 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 4 On?</tooltip>
+            </variable>
+            <variable CV="6340.24" item="Lamp 4 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 4 On</tooltip>
+            </variable>
+            <variable CV="6340.24" item="Lamp 4 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 4 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.24" item="Lamp 4 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 4 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.25" item="Lamp 5 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 5 On?</tooltip>
+            </variable>
+            <variable CV="6340.25" item="Lamp 5 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 5 On</tooltip>
+            </variable>
+            <variable CV="6340.25" item="Lamp 5 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 5 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.25" item="Lamp 5 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 5 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.26" item="Lamp 6 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 6 On?</tooltip>
+            </variable>
+            <variable CV="6340.26" item="Lamp 6 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 6 On</tooltip>
+            </variable>
+            <variable CV="6340.26" item="Lamp 6 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 6 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.26" item="Lamp 6 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 6 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.27" item="Lamp 7 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 7 On?</tooltip>
+            </variable>
+            <variable CV="6340.27" item="Lamp 7 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 7 On</tooltip>
+            </variable>
+            <variable CV="6340.27" item="Lamp 7 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 7 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.27" item="Lamp 7 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 7 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.28" item="Lamp 8 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 8 On?</tooltip>
+            </variable>
+            <variable CV="6340.28" item="Lamp 8 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 8 On</tooltip>
+            </variable>
+            <variable CV="6340.28" item="Lamp 8 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 8 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.28" item="Lamp 8 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 8 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <variable CV="6340.29" item="Lamp 9 Off Event" mask="1" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumEventChoice.xml"/>
+              <label xml:lang="de">Ereignis Ein:</label>
+              <label xml:lang="nl">Actie Aan:</label>
+              <label>Off Event:</label>
+              <tooltip>What triggers Lamp 9 On?</tooltip>
+            </variable>
+            <variable CV="6340.29" item="Lamp 9 Off Start Key" mask="100" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit34.xml"/>
+              <label xml:lang="de"> Starttaste:</label>
+              <label xml:lang="nl"> Begintoets:</label>
+              <label> Start Key:</label>
+              <tooltip>Key 1 to turn Lamp 9 On</tooltip>
+            </variable>
+            <variable CV="6340.29" item="Lamp 9 Off Finish Key" mask="10" default="1">
+              <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enum-keys0-9Digit2.xml"/>
+              <label xml:lang="de"> Zieltaste:</label>
+              <label xml:lang="nl"> Eindtoets:</label>
+              <label> Finish Key:</label>
+              <tooltip>Key 2 to turn Lamp 9 Off (select same key to operate on 1 key)</tooltip>
+            </variable>
+            <variable CV="6340.29" item="Lamp 9 Off Address" mask="10">
+              <decVal max="10000"/>
+              <label xml:lang="de"> Adresse:</label>
+              <label xml:lang="nl"> Adres:</label>
+              <label> Address:</label>
+              <tooltip>Lamp 9 Off Address (1-2048)</tooltip>
+            </variable>
+
+            <!--          TODO add Start Key-Finish Key functions - LNCV 100 to 199 -->
+
+           </variables>
+      </decoder>
+
+      <!-- Programming tabbed panes layout -->
+      <pane>
+        <name>LNCV Module</name>
+        <name xml:lang="de">LNCV Modul</name>
+        <name xml:lang="nl">LNCV Module</name>
+
+        <column>
+          <label>
+            <text>&lt;html&gt;&lt;h1&gt;Module Settings&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Module Instellingen&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Moduleingaben&lt;/h1&gt;&lt;/html&gt;</text>
+            <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;Configuration Modules&lt;/h1&gt;&lt;/html&gt;</text>
+          </label>
+
+          <label>
+            <text>Before writing, open a Programming</text>
+            <text xml:lang="nl">Voordat je waarden schrijft eerst</text>
+            <text xml:lang="de">Bevor man Werten schreiben darf, zuerst mit Hilfe des LNCV</text>
+            <text xml:lang="fr">Avant qu'on peut écrire des valuers, demarrez</text>
+            <text xml:lang="cs">Před zápisem hodnot otevřete relaci programování</text>
+          </label>
+          <label>
+            <text>session using the LocoNet LNCV Tool.</text>
+            <text xml:lang="nl">een Programmeersessie starten met het LocoNet LNCV Gereedschap.</text>
+            <text xml:lang="de">Werkzeugs einen LNCV Programmieraufgang starten.</text>
+            <text xml:lang="fr">une session de programmation avec l'Util LNCV.</text>
+            <text xml:lang="cs">s použitím nástroje LocoNet Konfigurovat moduly LNCV.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+
+          <separator/>
+
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Module-wide Programming Assistance&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Modulkonfigurationshilfe&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Configuratie-assistent Module&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <row>
+            <display item="ProgramAssistToggle"/>
+
+            <group><!--hide/see Erase toggle-->
+              <qualifier>
+                <variableref>ProgramAssistToggle</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+              </qualifier>
+              <row>
+                <display item="ProgramAssistErase"/>
+              </row>
+            </group>
+
+            <group><!--hide/see Address box-->
+              <qualifier>
+                <variableref>ProgramAssistToggle</variableref>
+                <relation>ne</relation>
+                <value>0</value>
+              </qualifier>
+              <row>
+                <display item="Start Address"/>
+              </row>
+            </group>
+
+          </row>
+
+          <label>
+            <text>  </text>
+          </label>
+
+          <label>
+            <text>&lt;html&gt;&lt;strong&gt;Quick Setup Keys and Lamps&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Programmeerhulp Toetsen en Lampen&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Programmierhilfe Taster und Lampen&lt;/strong&gt;&lt;/html&gt;</text>
+          </label>
+          <separator/>
+            <display item="Assist 1 Address"/>
+            <display item="Assist 2 Address"/>
+            <display item="Assist 3 Address"/>
+            <display item="Assist 4 Address"/>
+            <display item="Assist 5 Address"/>
+       </column>
+
+        <column>
+                  <row>
+                    <label>
+                      <text>&lt;html&gt;&lt;strong&gt;Lamp 1&lt;/strong&gt;&lt;/html&gt;</text>
+                      <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 1&lt;/strong&gt;&lt;/html&gt;</text>
+                      <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 1&lt;/strong&gt;&lt;/html&gt;</text>
+                    </label>
+                    <row>
+                    <column>
+                    <row>
+                      <display item="Lamp 1 On Event"/>
+                      <group><!--hide/see Address box-->
+                        <qualifier>
+                          <variableref>Lamp 1 On Event</variableref>
+                          <relation>ne</relation>
+                          <value>4</value>
+                        </qualifier>
+                        <row>
+                          <display item="Lamp 1 On Address"/>
+                        </row>
+                      </group>
+                      <group><!--hide/see Keys combos -->
+                        <qualifier>
+                          <variableref>Lamp 1 On Event</variableref>
+                          <relation>eq</relation>
+                          <value>4</value>
+                        </qualifier>
+                        <row>
+                          <display item="Lamp 1 On Start Key"/>
+                          <display item="Lamp 1 On Finish Key"/>
+                        </row>
+                      </group>
+                    </row>
+
+                    <row>
+                      <display item="Lamp 1 Off Event"/>
+                      <group><!--hide/see Address box-->
+                        <qualifier>
+                          <variableref>Lamp 1 Off Event</variableref>
+                          <relation>ne</relation>
+                          <value>4</value>
+                        </qualifier>
+                        <row>
+                          <display item="Lamp 1 Off Address"/>
+                        </row>
+                      </group>
+                      <group><!--hide/see Keys combos -->
+                        <qualifier>
+                          <variableref>Lamp 1 Off Event</variableref>
+                          <relation>eq</relation>
+                          <value>4</value>
+                        </qualifier>
+                        <row>
+                          <display item="Lamp 1 Off Start Key"/>
+                          <display item="Lamp 1 Off Finish Key"/>
+                        </row>
+                      </group>
+                    </row>
+                    </column>
+                    </row>
+                  </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 2&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 2&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 2&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 2 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 2 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 2 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 2 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 2 On Start Key"/>
+                    <display item="Lamp 2 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 2 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 2 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 2 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 2 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 2 Off Start Key"/>
+                    <display item="Lamp 2 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 3&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 3&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 3&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 3 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 3 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 3 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 3 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 3 On Start Key"/>
+                    <display item="Lamp 3 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 3 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 3 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 3 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 3 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 3 Off Start Key"/>
+                    <display item="Lamp 3 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 4&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 4&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 4&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 4 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 4 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 4 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 4 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 4 On Start Key"/>
+                    <display item="Lamp 4 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 4 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 4 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 4 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 4 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 4 Off Start Key"/>
+                    <display item="Lamp 4 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 5&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 5&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 5&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 5 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 5 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 5 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 5 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 5 On Start Key"/>
+                    <display item="Lamp 5 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 5 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 5 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 5 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 5 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 5 Off Start Key"/>
+                    <display item="Lamp 5 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 6&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 6&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 6&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 6 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 6 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 6 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 6 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 6 On Start Key"/>
+                    <display item="Lamp 6 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 6 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 6 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 6 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 6 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 6 Off Start Key"/>
+                    <display item="Lamp 6 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 7&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 7&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 7&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 7 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 7 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 7 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 7 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 7 On Start Key"/>
+                    <display item="Lamp 7 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 7 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 7 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 7 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 7 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 7 Off Start Key"/>
+                    <display item="Lamp 7 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 8&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 8&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 8&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 8 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 8 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 8 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 8 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 8 On Start Key"/>
+                    <display item="Lamp 8 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 8 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 8 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 8 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 8 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 8 Off Start Key"/>
+                    <display item="Lamp 8 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 9&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 9&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 9&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 9 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 9 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 9 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 9 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 9 On Start Key"/>
+                    <display item="Lamp 9 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 9 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 9 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 9 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 9 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 9 Off Start Key"/>
+                    <display item="Lamp 9 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+                <separator/>
+                <label>
+                  <text>&lt;html&gt;&lt;strong&gt;Lamp 10&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Lamp 10&lt;/strong&gt;&lt;/html&gt;</text>
+                  <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Lampe 10&lt;/strong&gt;&lt;/html&gt;</text>
+                </label>
+          <row>
+            <column>
+              <row>
+                <display item="Lamp 10 On Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 10 On Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 10 On Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 10 On Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 10 On Start Key"/>
+                    <display item="Lamp 10 On Finish Key"/>
+                  </row>
+                </group>
+              </row>
+
+              <row>
+                <display item="Lamp 10 Off Event"/>
+                <group><!--hide/see Address box-->
+                  <qualifier>
+                    <variableref>Lamp 10 Off Event</variableref>
+                    <relation>ne</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 10 Off Address"/>
+                  </row>
+                </group>
+                <group><!--hide/see Keys combos -->
+                  <qualifier>
+                    <variableref>Lamp 10 Off Event</variableref>
+                    <relation>eq</relation>
+                    <value>4</value>
+                  </qualifier>
+                  <row>
+                    <display item="Lamp 10 Off Start Key"/>
+                    <display item="Lamp 10 Off Finish Key"/>
+                  </row>
+                </group>
+              </row>
+            </column>
+          </row>
+
+              </column>
+
+      </pane>
+
+  </decoder-config>

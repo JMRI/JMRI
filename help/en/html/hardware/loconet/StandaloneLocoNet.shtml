@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - Standalone LocoNet®</title>
+  <title>JMRI Hardware Support - Standalone LocoNet&reg;</title>
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax LocoNet BDL16 BDL162 BDL168 DS64 PR3 DCS100 DB150 JMRI LocoBuffer-USB LocoBuffer-II LocoBuffer FastClock">
@@ -21,7 +21,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: Standalone LocoNet®</h1>
+      <h1>Hardware Support: Standalone LocoNet&reg;</h1>
 
       <h2>Contents</h2>
 
@@ -115,7 +115,7 @@
         </li>
 
         <li>
-          <a href="#examples">Standalone LocoNet® Examples</a>
+          <a href="#examples">Standalone LocoNet&reg; Examples</a>
           <ul>
             <li>
               <a href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet Turnouts,
@@ -144,7 +144,7 @@
 
       <h2 id="generalideas">Introduction</h2>
 
-      <p>A "Standalone" LocoNet® is a LocoNet bus which does not have a LocoNet command station.
+      <p>A "Standalone" LocoNet&reg; is a LocoNet bus which does not have a LocoNet command station.
       Since it does not have a LocoNet command station, it cannot control locomotives, and cannot
       directly influence the DCC track signal created by a DCC command station.</p>
 
@@ -205,7 +205,7 @@
       "RailSync" signal, LocoNet Data signal termination, and fast clock master. The table below
       shows some LocoNet devices and their requirements.</p>
 
-      <table border="3">
+      <table class="wide">
         <tr>
           <th colspan="5">Command Stations and Boosters</th>
         </tr>
@@ -230,7 +230,7 @@
 
               <li>DCS240</li>
 
-              <li>DCS210</li>
+              <li>DCS210/DCS210+</li>
             </ul>
           </td>
           <td>Provides</td>
@@ -249,7 +249,7 @@
 
               <li>DCS240</li>
 
-              <li>DCS210</li>
+              <li>DCS210/DCS210+</li>
 
               <li>DCS50/DCS51/DCS52</li>
 
@@ -274,7 +274,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Uhlenbrock Daisy System (Daisy throttle plus Power2 booster)</td>
+          <td>Uhlenbrock Daisy System (Daisy<br>throttle plus Powerxx booster<br>or Daisy II Zentrale<br>)</td>
           <td>Provides</td>
           <td>Can provide a DCC signal *</td>
           <td>Provides</td>
@@ -323,7 +323,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits LocoBuffer-USB Rev N, LocoBuffer-USB Rev O</td>
+          <td>RR-CirKits LocoBuffer-USB Rev N,<BR>LocoBuffer-USB Rev O</td>
           <td>Optional</td>
           <td>Required for power **</td>
           <td>Required, <em>cannot provide</em></td>
@@ -363,7 +363,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax DT100x/DT200x/DT300x/DT400x/DT402x/DT500x throttle</td>
+          <td>Digitrax DT100x/DT200x/DT300x/<br>DT400x/DT402x/DT500x/DT602x/UTx throttle</td>
           <td>Required</td>
           <td>Optional, for power</td>
           <td>Required</td>
@@ -393,7 +393,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Digitrax DS54/DS64</td>
+          <td>Digitrax DS54/DS64/DS74/DS78V</td>
           <td>
           </td>
           <td>
@@ -519,7 +519,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>RR-CirKits Motorman, MotorMan-II, SignalMan, TowerMan, Watchman</td>
+          <td>RR-CirKits Motorman, MotorMan-II,<br>SignalMan, TowerMan, Watchman</td>
           <td>
           </td>
           <td>
@@ -611,7 +611,7 @@
         </tr>
 
         <tr class="ctr">
-          <td>Möllehem Gårdsproduktion (MGP) LocoNet Termination card</td>
+          <td>M&ouml;llehem G&aring;rdsproduktion (MGP)<br>LocoNet Termination card</td>
           <td>
           </td>
           <td>Can provide DC power</td>
@@ -619,40 +619,38 @@
           <td>
           </td>
         </tr>
-
-        <tr class="ctr">
-          <td colspan="5">
-            <p>* Some circuitry may be required to generate the RailSync signals from a non-LocoNet
-            booster. See <a href="#rsfromnondtcs">RailSync from a non-Digitrax command station</a>,
-            below.</p>
-
-            <p>** LocoNet devices with an isolated LocoNet interfaces must take power from the
-            LocoNet RailSync wires to power the LocoNet side of their isolation hardware. These
-            devices may not require that the RailSync wires have a copy of the DCC track signal,
-            but they do require sufficient voltage and current. A DC power supply, as shown below
-            in <a href="#rspowersupply">RailSync power from a DC power supply</a>, is sufficient to
-            meet the power needs of the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB
-            Rev-n, and the TC-64. If the RailSync wires do not provide sufficient voltage and
-            current, these devices will be unable to communicate reliably with LocoNet.</p>
-
-            <p>*** Some versions of the LocoBuffer design can provide LocoNet termination if
-            additional components are installed on the LocoBuffer board. Other versions of the
-            original LocoBuffer design do not have places for the additional components to be
-            installed. These comments do not apply to the LocoBuffer-II or LocoBuffer-USB
-            designs.</p>
-
-            <p>**** Intellibox documentation notes that only opto-isolated boosters may be
-            connected to its LocoNet connection. It is unclear whether any device using the signal
-            on the RailSync lines from the Intellibox must have opto-isolation circuitry.</p>
-
-            <p>***** PR4 devices require either a low-power copy of the DCC Track Signal or DC
-            power on the "RailSync" wires. The PR4 uses the signal on the RailSync wires to power
-            its LocoNet isolation and interface circuitry. Failure to provide sufficient power on
-            the RailSync wires will prevent the PR4 from communicating with LocoNet or result in
-            unreliable communication.</p>
-          </td>
-        </tr>
       </table>
+
+      <p>Notes:</p>
+
+      <p>* Some circuitry may be required to generate the RailSync signals from a non-LocoNet
+      booster. See <a href="#rsfromnondtcs">RailSync from a non-Digitrax command station</a>,
+      below.</p>
+
+      <p>** LocoNet devices with an isolated LocoNet interfaces must take power from the
+      LocoNet RailSync wires to power the LocoNet side of their isolation hardware. These
+      devices may not require that the RailSync wires have a copy of the DCC track signal,
+      but they do require sufficient voltage and current. A DC power supply, as shown below
+      in <a href="#rspowersupply">RailSync power from a DC power supply</a>, is sufficient to
+      meet the power needs of the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB
+      Rev-n, and the TC-64. If the RailSync wires do not provide sufficient voltage and
+      current, these devices will be unable to communicate reliably with LocoNet.</p>
+
+      <p>*** Some versions of the LocoBuffer design can provide LocoNet termination if
+      additional components are installed on the LocoBuffer board. Other versions of the
+      original LocoBuffer design do not have places for the additional components to be
+      installed. These comments do not apply to the LocoBuffer-II or LocoBuffer-USB
+      designs.</p>
+
+      <p>**** Intellibox documentation notes that only opto-isolated boosters may be
+      connected to its LocoNet connection. It is unclear whether any device using the signal
+      on the RailSync lines from the Intellibox must have opto-isolation circuitry.</p>
+
+      <p>***** PR4 devices require either a low-power copy of the DCC Track Signal or DC
+      power on the "RailSync" wires. The PR4 uses the signal on the RailSync wires to power
+      its LocoNet isolation and interface circuitry. Failure to provide sufficient power on
+      the RailSync wires will prevent the PR4 from communicating with LocoNet or result in
+      unreliable communication.</p>
 
       <h3 id="dataterm">LocoNet Data Signal "Termination"</h3>
 
@@ -725,7 +723,7 @@
         <li>
           <p id="PR3config">The PR3 provides two different operating modes which may be useful when
           the PR3 is used to interface to a standalone LocoNet. One useful mode provides <a href=
-          "#dataterm">LocoNet Data Signal "Termination"</a> in it's MS100 mode, while the other
+          "#dataterm">LocoNet Data Signal "Termination"</a> in its MS100 mode, while the other
           mode does not provide LocoNet Data Signal termination.</p>
 
           <ul>
@@ -735,9 +733,12 @@
               its "Power" jack, JMRI should be configured in a way which will automatically set the
               PR3 to its "MS100 mode with termination" mode at JMRI program start-up time. This can
               be accomplished by configuring the JMRI connection settings for the PR3 so that the
-              "<code><strong>Command Station type</strong></code>" is set to
-              "<code><strong>Stand-alone LocoNet; interface device 'terminates' the LocoNet Data
-              signal</strong></code> ".</p>
+              "<code>Command Station type:</code>" is set to
+              <span class="wide">
+              "<code>Stand-alone LocoNet; interface device 'terminates' the LocoNet Data signal</code>"
+              </span>
+              (currently the Terminate option is not available)
+              </p>
 
               <p>Note that this PR3 operating mode is not recommended when there is some other
               source of "LocoNet Data Signal Termination" connected to LocoNet, and it is not
@@ -749,9 +750,13 @@
               provides <a href="#dataterm">LocoNet Data Signal "Termination"</a>, then it is more
               appropriate to use the PR3 in its MS100 mode <em>without</em> enabling the PR3's Data
               signal termination feature. In this case, it is appropriate to configure the PR3
-              connection for a "<code><strong>Command Station type</strong></code>" of
-              "<code><strong>Stand-alone LocoNet; interface device does not 'terminate' the LocoNet
-              Data signal</strong></code>".</p>
+              connection for a "<code>Command Station type:</code>" of
+                <span class="wide">
+              "<code>Stand-alone LocoNet; interface device does not 'terminate' the LocoNet
+              Data signal</code>"
+              </span>
+              (currently the Terminate option is not available)
+              </p>
             </li>
           </ul>
         </li>
@@ -783,7 +788,7 @@
         </li>
 
         <li>
-          <strong>Möllehem Gårdsproduktion LocoNet Termination card</strong>
+          <strong>M&ouml;llehem G&aring;rdsproduktion LocoNet Termination card</strong>
           <p>This device may be configured to provide LocoNet Data Signal termination. It may also
           be configured to provide DC power on the RailSync wires.</p>
         </li>
@@ -804,7 +809,7 @@
       <p>The 15 mA current source block in the diagram above may be implemented in a wide variety
       of ways. As an example, Dick Bronson shows a circuit for a 15 mA current source that can be
       used to provide LocoNet Data Signal termination at his <a href=
-      "http://www.rr-cirkits.com">RR-CirKits web site</a> on the <a href=
+      "http://www.rr-cirkits.com">RR-CirKits website</a> on the <a href=
       "http://www.rr-cirkits.com/Notebook/Standalone-LocoNet.html">Notebook page for Standalone
       LocoNet</a>. Look for the section titled "Pull Up" which shows a circuit using two 2N2222 NPN
       transistors and two resistors. The circuit node shown as <strong>LN</strong> should be
@@ -863,7 +868,7 @@
         </li>
 
         <li>
-          <strong>Möllehem Gårdsproduktion LocoNet Termination card</strong>
+          <strong>M&ouml;llehem G&aring;rdsproduktion LocoNet Termination card</strong>
           <p>This device may be configured to provide DC power on the RailSync wires. It may also
           be configured to provide LocoNet Data Signal termination.</p>
         </li>
@@ -1099,7 +1104,7 @@
       connectivity", so devices which connect to LocoNet must be powered with care. A safe "general
       rule" is that a power supply should be connected to, at most, one type of board.</p>
 
-      <h2 id="examples">Standalone LocoNet® Examples</h2>
+      <h2 id="examples">Standalone LocoNet&reg; Examples</h2>
 
       <h3 id="isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet Turnouts, Detection &
       Signaling</h3>
@@ -1210,16 +1215,16 @@
       <p>Information and support for the Logic Rail Technologies LocoNet Fast Clock may be found at
       <a href="http://www.logicrailtech.com">the Logic Rail Technologies website</a>.</p>
 
-      <p>Information and support for products by CML Electronics is now provided by Sig-naTrak® by
-      GFB Designs at <a href="https://www.signatrak.co.uk/">the Sig-naTrak® web site</a>.</p>
+      <p>Information and support for products by CML Electronics is now provided by Sig-naTrak&reg; by
+      GFB Designs at <a href="https://www.signatrak.co.uk/">the Sig-naTrak&reg; website</a>.</p>
 
       <p>Information and support for products by Tam Valley Depot may be found at <a href=
       "http://www.tamvalleydepot.com/">the TAM Valley Depot website</a>.</p>
 
-      <p>Information and support for products by Möllehem Gårdsproduktion MGP) may be found at
-      <a href="http://www.mollehem.se/index.php/en/">The Möllehem Gårdsproduktion website</a>.</p>
+      <p>Information and support for products by M&ouml;llehem G&aring;rdsproduktion MGP) may be found at
+      <a href="http://www.mollehem.se/index.php/en/">The M&ouml;llehem G&aring;rdsproduktion website</a>.</p>
 
-      <p>LocoNet® is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
+      <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax,
       Inc.</a></p>
       <!--#include virtual="/Footer.shtml" -->
     </div>

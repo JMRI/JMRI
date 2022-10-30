@@ -3,15 +3,15 @@ package jmri.jmrit.logixng.expressions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionOBlock;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
 /**
- * Handle XML configuration for ExpressionLightXml objects.
+ * Handle XML configuration for ExpressionOBlockXml objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
@@ -20,7 +20,7 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
 
     public ExpressionOBlockXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -34,21 +34,14 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
         Element element = new Element("ExpressionOBlock");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle oblock = p.getOBlock();
-        if (oblock != null) {
-            element.addContent(new Element("oblock").addContent(oblock.getName()));
-        }
-        
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
-        element.addContent(new Element("reference").addContent(p.getReference()));
-        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
-        element.addContent(new Element("formula").addContent(p.getFormula()));
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<OBlock>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-        
+
         element.addContent(new Element("stateAddressing").addContent(p.getStateAddressing().name()));
         element.addContent(new Element("oblockStatus").addContent(p.getBeanState().name()));
         element.addContent(new Element("stateReference").addContent(p.getStateReference()));
@@ -57,7 +50,7 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
 
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
@@ -66,54 +59,35 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
 
         loadCommon(h, shared);
 
-        Element oblockName = shared.getChild("oblock");
-        if (oblockName != null) {
-            OBlock t = InstanceManager.getDefault(OBlockManager.class).getOBlock(oblockName.getTextTrim());
-            if (t != null) h.setOBlock(t);
-            else h.removeOBlock();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<OBlock>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "oblock");
 
         try {
-            Element elem = shared.getChild("addressing");
-            if (elem != null) {
-                h.setAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
-            }
-            
-            elem = shared.getChild("reference");
-            if (elem != null) h.setReference(elem.getTextTrim());
-            
-            elem = shared.getChild("localVariable");
-            if (elem != null) h.setLocalVariable(elem.getTextTrim());
-            
-            elem = shared.getChild("formula");
-            if (elem != null) h.setFormula(elem.getTextTrim());
-            
-            
             Element is_IsNot = shared.getChild("is_isNot");
             if (is_IsNot != null) {
                 h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
             }
-            
-            
-            elem = shared.getChild("stateAddressing");
+
+            Element elem = shared.getChild("stateAddressing");
             if (elem != null) {
                 h.setStateAddressing(NamedBeanAddressing.valueOf(elem.getTextTrim()));
             }
-            
+
             Element oblockState = shared.getChild("oblockStatus");
             if (oblockState != null) {
                 h.setBeanState(OBlock.OBlockStatus.valueOf(oblockState.getTextTrim()));
             }
-            
+
             elem = shared.getChild("stateReference");
             if (elem != null) h.setStateReference(elem.getTextTrim());
-            
+
             elem = shared.getChild("stateLocalVariable");
             if (elem != null) h.setStateLocalVariable(elem.getTextTrim());
-            
+
             elem = shared.getChild("stateFormula");
             if (elem != null) h.setStateFormula(elem.getTextTrim());
-            
+
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
@@ -121,6 +95,6 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionOBlockXml.class);
 }

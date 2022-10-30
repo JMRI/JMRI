@@ -132,11 +132,11 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             } catch (InterruptedException ex) {
                 restartcount++;
             } catch (java.lang.reflect.InvocationTargetException ex) {
-                log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause());
+                log.error("failed to start debounced Sensor update for \"{}\" due to {}", getDisplayName(), ex.getCause().toString());
             }
         };
 
-        thr = jmri.util.ThreadingUtil.newThread(r);
+        thr = jmri.util.ThreadingUtil.newThread(r , "Debounce thread " + getDisplayName() );
         thr.start();
     }
 
@@ -332,12 +332,20 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     /**
      * Get the pull resistance.
      *
-     * @return the currently set PullResistance value.  In this default 
+     * @return the currently set PullResistance value.  In this default
      * implementation, PullResistance.PULL_OFF is always returned.
      */
     @Override
     public PullResistance getPullResistance(){
        return PullResistance.PULL_OFF;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (thr != null) { // try to stop the debounce thread 
+            thr.interrupt();
+        }
     }
 
 }

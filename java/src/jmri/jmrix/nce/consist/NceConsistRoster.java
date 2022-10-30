@@ -46,17 +46,8 @@ import org.slf4j.LoggerFactory;
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
-    
-    public NceConsistRoster() {
-    }
 
-    /**
-     * @return The NCE consist roster object
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    public static synchronized NceConsistRoster instance() {
-        return InstanceManager.getDefault(NceConsistRoster.class);
+    public NceConsistRoster() {
     }
 
     /**
@@ -65,9 +56,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      * @param e Entry to add
      */
     public void addEntry(NceConsistRosterEntry e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Add entry {}", e);
-        }
+        log.debug("Add entry {}", e);
         int i = _list.size() - 1;// Last valid index
         while (i >= 0) {
             if (e.getId().compareTo(_list.get(i).getId())> 0) {
@@ -87,10 +76,8 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      * @param e Entry to remove
      */
     public void removeEntry(NceConsistRosterEntry e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Remove entry {}", e);
-        }
-        _list.remove(_list.indexOf(e));
+        log.debug("Remove entry {}", e);
+        _list.remove(e);
         setDirty(true);
         firePropertyChange("remove", null, e);
     }
@@ -111,7 +98,9 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      *
      */
     public JComboBox<String> fullRosterComboBox() {
-        return matchingComboBox(null, null, null, null, null, null, null, null, null, null);
+        return matchingComboBox(null, null, null, null,
+                null, null, null, null, null,
+                null);
     }
 
     /**
@@ -144,7 +133,9 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
     }
 
     public void updateComboBox(JComboBox<String> box) {
-        List<NceConsistRosterEntry> l = matchingList(null, null, null, null, null, null, null, null, null, null);
+        List<NceConsistRosterEntry> l = matchingList(null, null, null,
+                null, null, null, null, null,
+                null, null);
         box.removeAllItems();
         for (int i = 0; i < l.size(); i++) {
             NceConsistRosterEntry r = _list.get(i);
@@ -267,9 +258,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
      * @throws java.io.IOException when fault accessing file
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}", name);
-        }
+        log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
@@ -309,12 +298,12 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
                 if (tempComment.startsWith("\n", k)) {
                     buf.append("<?p?>");
                 } else {
-                    buf.append(tempComment.substring(k, k + 1));
+                    buf.append(tempComment.charAt(k));
                 }
             }
             r.setComment(buf.toString());
         }
-        //All Comments and Decoder Comment line feeds have been changed to processor directives
+        // All Comments and Decoder Comment line feeds have been changed to processor directives
 
         // add top-level elements
         Element values;
@@ -339,11 +328,10 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
                     buf.append("\n");
                     k = k + 4;
                 } else {
-                    buf.append(xmlComment.substring(k, k + 1));
+                    buf.append(xmlComment.charAt(k));
                 }
             }
             r.setComment(buf.toString());
-
         }
 
         // done - roster now stored, so can't be dirty
@@ -372,8 +360,8 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
             if (log.isDebugEnabled()) {
                 log.debug("readFile sees {} children", l.size());
             }
-            for (int i = 0; i < l.size(); i++) {
-                addEntry(new NceConsistRosterEntry(l.get(i)));
+            for (Element element : l) {
+                addEntry(new NceConsistRosterEntry(element));
             }
 
             //Scan the object to check the Comment and Decoder Comment fields for
@@ -394,14 +382,14 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
                         buf.append("\n");
                         k = k + 4;
                     } else {
-                        buf.append(tempComment.substring(k, k + 1));
+                        buf.append(tempComment.charAt(k));
                     }
                 }
                 r.setComment(buf.toString());
             }
 
         } else {
-            log.error("Unrecognized ConsistRoster file contents in file: {}", name);
+            log.error("Unrecognized ConsistRoster file contents in file: {}", name); // NOI18N
         }
     }
 
@@ -416,9 +404,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
         if (dirty) {
             log.error("Dispose invoked on dirty ConsistRoster");
         }
@@ -448,7 +434,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
         try {
             readFile(defaultNceConsistRosterFilename());
         } catch (IOException | JDOMException e) {
-            log.error("Exception during ConsistRoster reading: {}", e.getMessage());
+            log.error("Exception during ConsistRoster reading: {}", e.getMessage()); // NOI18N
         }
     }
 
@@ -503,7 +489,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
 
         firePropertyChange("change", null, r);
     }
-    
+
     @Override
     public void initialize() {
         if (checkFile(defaultNceConsistRosterFilename())) {
@@ -514,7 +500,7 @@ public class NceConsistRoster extends XmlFile implements InstanceManagerAutoDefa
             }
         }
     }
-    
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(NceConsistRoster.class);
 

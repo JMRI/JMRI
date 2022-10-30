@@ -1,5 +1,6 @@
 # build artifacts
 jmri.jar
+jmri-tests.jar
 /dist
 java/docs
 /target
@@ -32,6 +33,7 @@ session.log
 /java/tmp
 /java/doc
 /java/test-classes/
+/scripts/HOWTO-distribution.md.bak
 *.class
 /temp
 .pydevproject

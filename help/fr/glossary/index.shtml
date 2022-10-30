@@ -1,19 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- sort routine Copyright http://www.kryogenix.org/code/browser/sorttable/ -->
 
-  <title>JiMRI: Glossary</title>
+  <title>JMRI: Glossaire</title>
   <meta name="author" content="Egbert Broerse">
-  <meta name="keywords" content="model railroad JiMRI decoderpro panelpro operations GUI I18N">
-  <!-- Style -->
+  <meta name="keywords" content="model railroad JMRI decoderpro panelpro operations GUI I18N">
+  <!--#include virtual="/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/JiMRI.ico" type="image/png">
-  <link rel="home" title="home" href="/"><!-- /Style -->
+
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
@@ -30,30 +26,31 @@
   }
   </style>
 </head>
+
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../html/Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JiMRI : Glossaire</h1>
+      <h1>JMRI : Glossaire</h1>
 
-      <p>Cette page est le glossaire de JiMRI, fournissant de brèves définitions pour les termes
-      spécifiques à JiMRI, et des liens vers d'autres informations complémentaires.<br>
+      <p>Cette page est le glossaire de JMRI, fournissant de brèves définitions pour les termes
+      spécifiques à JMRI, et des liens vers d'autres informations complémentaires.<br>
       N'hésitez pas à soumettre des suggestions d'améliorations ou d'ajouts aux <a href=
-      "https://groups.io/g/JiMRIusers">utilisateurs JiMRI</a> sur Groups.io, envois intitulés
+      "https://groups.io/g/JMRIusers">utilisateurs JMRI</a> sur Groups.io, envois intitulés
       "Glossary".</p>
 
       <p>Cliquez sur un titre pour trier la liste vers le haut ou vers le bas.</p>
 
       <table class="sortable" summary="">
-        <!-- Le tableau du glossaire JiMRI, trier en cliquant sur un en-t&#234;te -->
+        <!-- Le tableau du glossaire JMRI, trier en cliquant sur un en-t&#234;te -->
         <!-- Copiez &#233;galement toutes les modifications apport&#233;es &#224; help/fr/glossary/index.shtml pour garder les deux &#224; jour -->
 
         <tr style="text-align : left">
           <th>App</th>
-          <th width="10%">Terme JiMRI (US)</th>
+          <th width="10%">Terme JMRI (US)</th>
           <th>Message</th>
           <th width="10%">Deutsch</th>
           <th width="10%">Italiano</th>
@@ -91,7 +88,7 @@
         <tr>
           <td class="app">Tout</td>
           <td class="en">Lumière</td>
-          <td class="descr">Bits de sortie JiMRI qui fonctionnent comme des interrupteurs
+          <td class="descr">Bits de sortie JMRI qui fonctionnent comme des interrupteurs
           marche/arrêt. Lorsqu'il est 'activé', un feu répond aux aux changements de son capteur de
           commande, de son aiguillage ou de son horloge rapide. Les Lumières variables affichent
           différentes intensités (avec un décodeur de sortie spécial). Un feu ou un aiguillage,
@@ -123,7 +120,7 @@
         <tr>
           <td class="app">Tout</td>
           <td class="en">Mémoire (Variable)</td>
-          <td class="descr">Objet logiciel de JiMRI qui peut contenir n'importe quel type de
+          <td class="descr">Objet logiciel de JMRI qui peut contenir n'importe quel type de
           contenu, comme une chaîne de texte ou une image. Logix peut tester - et définir - le
           contenu d'une variable de mémoire. Les panneaux peuvent les afficher. <a href=
           "../html/tools/Memories.shtml">...</a></td>
@@ -138,7 +135,7 @@
         <tr>
           <td class="app">Tout</td>
           <td class="en">Rapport</td>
-          <td class="descr">Objet logiciel de JiMRI représentant des les informations rapportées
+          <td class="descr">Objet logiciel de JMRI représentant des les informations rapportées
           par le réseau. Il peut contenir des informations arbitraires, contrairement à un capteur.
           Chaque Rapport est associé à une source spécifique d'informations sur le réseau. <a href=
           "../html/tools/Reporters.shtml">...</a></td>
@@ -154,7 +151,7 @@
           <td class="app">Tout</td>
           <td class="en">Scripts</td>
           <td class="descr">Série d'instructions pré-écrites pour faire fonctionner (certaines
-          parties de) la JiMRI. <a href="../html/tools/scripting/index.shtml">...</a></td>
+          parties de) la JMRI. <a href="../html/tools/scripting/index.shtml">...</a></td>
           <td class="de">Ablauf(-programme/ datei)/-skript</td>
           <td class="it">Scripts</td>
           <td class="fr">Scripts</td>
@@ -166,7 +163,7 @@
         <tr>
           <td class="app">Tout</td>
           <td class="en">Entrée script</td>
-          <td class="descr">Série d'instructions stockées sur le disque. et lues dans JiMRI pour
+          <td class="descr">Série d'instructions stockées sur le disque. et lues dans JMRI pour
           être interprétées, écrites en langage Python. Python. <a href=
           "../html/tools/scripting/index.shtml">...</a></td>
           <td class="de">Skripteingabe</td>
@@ -182,7 +179,7 @@
         <tr>
           <td class="app">Tout</td>
           <td class="en">Capteur</td>
-          <td class="descr">Entrée JiMRI de l'agencement, utilisée pour représenter l'état d'un
+          <td class="descr">Entrée JMRI de l'agencement, utilisée pour représenter l'état d'un
           détecteur d'occupation de bloc, d'un bouton-poussoir sur la façade, etc. Un détecteur
           peut être soit ACTIF ou INACTIF (ou INCONNU). <a href=
           "../html/tools/Capteurs.shtml">...</a></td>
@@ -198,7 +195,7 @@
           <td class="app">Tout</td>
           <td class="en">Nom Système</td>
           <td class="descr">Un nom unique faisant référence à un périphérique/entrée etc. dans
-          JiMRI, soit physiquement présent sur la la maquette ou virtuellement dans le logiciel
+          JMRI, soit physiquement présent sur la la maquette ou virtuellement dans le logiciel
           uniquement <a href="../html/doc/Technical/Names.shtml">...</a></td>
           <td class="de">Nom Système</td>
           <td class="it">Nome Sistema</td>
@@ -213,7 +210,7 @@
           <td class="en">TTurnout</td>
           <td class="descr">1. Installation mécanique permettant de guider les trains d'une voie à
           une autre.<br>
-          2. Dans JiMRI : sortie Tout ou Rien vers le réseau, commandée par des décodeurs
+          2. Dans JMRI : sortie Tout ou Rien vers le réseau, commandée par des décodeurs
           accessoires DCC. via des décodeurs accessoires DCC. Les broches de sortie individuelles
           sur un système C/MRI sont également appelées aiguillages. Les deux états de la sortie
           sont appelés "Direct" (état éteint, inactif, non inactif, non commandé) et "Dévié"
@@ -230,7 +227,7 @@
         <tr>
           <td class="app">Tout</td>
           <td class="en">Nom Utilisateur</td>
-          <td class="descr">Nom lisible se référant à un élément dans JiMRI, qui peut être modifié
+          <td class="descr">Nom lisible se référant à un élément dans JMRI, qui peut être modifié
           et même réutilisé pour d'autres éléments. <a href=
           "../html/doc/Technical/Names.shtml">...</a></td>
           <td class="de">Nutzername</td>
@@ -413,7 +410,7 @@
         <tr>
           <td class="app">Logix</td>
           <td class="en">Logix</td>
-          <td class="descr">Objets logiciels de JiMRI qui surveillent une ou plusieurs conditions
+          <td class="descr">Objets logiciels de JMRI qui surveillent une ou plusieurs conditions
           sur un réseau, et prennent des mesures lorsque ces conditions changent d'une manière
           spécifiée par l'utilisateur pour contrôler les sorties sur le réseau. <a href=
           "../html/tools/Logix.shtml">...</a></td>
@@ -741,9 +738,9 @@
         <tr>
           <td class="app">Ops</td>
           <td class="en">Operations (menu)</td>
-          <td class="descr">Module JiMRI vous permettant de créer des manifestes de train générés
+          <td class="descr">Module JMRI vous permettant de créer des manifestes de train générés
           par ordinateur pour votre chemin de fer selon des critères prédéfinis. <a href=
-          "../package/JiMRI/JiMRIt/operations/Operations.shtml">...</a></td>
+          "../package/JMRI/JMRIt/operations/Operations.shtml">...</a></td>
           <td class="de">Betrieb</td>
           <td class="it">Esercizio</td>
           <td class="fr">Exploitations</td>
@@ -787,7 +784,7 @@
           <td class="en">Route (ops)</td>
           <td class="descr">Une série d'emplacements et de voies où les wagons peuvent être pris ou
           déposés. Les trains sont affectés à des Itinéraires, en suivant éventuellement un tableau
-          horaire. <a href="../package/JiMRI/JiMRIt/operations/Operations.shtml#Routes">...</a>
+          horaire. <a href="../package/JMRI/JMRIt/operations/Operations.shtml#Routes">...</a>
           (see <a href="#pproute">PP</a>)</td>
           <td class="de">Fahrstrecke</td>
           <td class="it">Itinerario</td>
@@ -937,9 +934,9 @@
           (l'horaire), à moins qu'il ne soit remplacé par des ordres de marche transmis au train
           par le répartiteur, par le biais d'intermédiaires locaux. <a href=
           "https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
-          2. Dans JiMRI OperationsPro : un tableau définissant quels trains circuleront un jour
+          2. Dans JMRI OperationsPro : un tableau définissant quels trains circuleront un jour
           donné de la semaine. <a href=
-          "../package/JiMRI/JiMRIt/operations/Operations.shtml#TrainSchedules">...</a></td>
+          "../package/JMRI/JMRIt/operations/Operations.shtml#TrainSchedules">...</a></td>
           <td class="de">Fahrplan/Kursbuch</td>
           <td class="it">Tabella Orario</td>
           <td class="fr">Horaire</td>
@@ -997,11 +994,11 @@
           <td class="descr">1. Permission permettant d'autoriser l'utilisation de la l igne
           principale par un train. Les dispatchers les délivrent aux équipes de train au lieu
           d'utiliser les signaux. <a href="https://en.wikipedia.org/wiki/Track_warrant">...</a><br>
-          2. Un JiMRI Logix spécial contenant des informations pour faire fonctionner un train
+          2. Un JMRI Logix spécial contenant des informations pour faire fonctionner un train
           automatisé. En l'activant, il configurera l es aiguillages pour une <a href=
           "#pproute">route</a> spécifiée et conduira le train sur l'itinéraire, en utilisant
           éventuellement des ajustements préenregistrés dur égulateurr.. <a href=
-          "../package/JiMRI/JiMRIt/logix/Warrant.shtml">...</a></td>
+          "../package/JMRI/JMRIt/logix/Warrant.shtml">...</a></td>
           <td class="de">Fahrerlaubnis</td>
           <td class="it">Autorizzazione</td>
           <td class="fr">Bulletin d'Ordre</td>
@@ -1028,7 +1025,7 @@
         <tr>
           <td class="app">PP</td>
           <td class="en">Layout Editor</td>
-          <td class="descr">Une application JiMRI pour faire un schéma intelligent de votre réseau
+          <td class="descr">Une application JMRI pour faire un schéma intelligent de votre réseau
           tout en construisant la logique pour les signaux, les itinéraires etc.. <a href=
           "../html/apps/PanelPro/index.shtml#le">...</a></td>
           <td class="de">Anlageeditor</td>
@@ -1068,7 +1065,7 @@
         <tr>
           <td class="app">PP</td>
           <td class="en">Panel Editor</td>
-          <td class="descr">Une application JiMRI permettant de dessiner graphiquement un Panneau,
+          <td class="descr">Une application JMRI permettant de dessiner graphiquement un Panneau,
           puis d'en animer certaines parties pour montrer l'état des éléments de votre réseau et de
           cliquer pour les commander. <a href="../html/apps/PanelPro/index.shtml#pe">...</a></td>
           <td class="de">Gleisstellbildeditor</td>
@@ -1197,7 +1194,7 @@
           <td class="en">Signal Head</td>
           <td class="descr">Unité de signal individuelle sur un mât de signal lumineux ou
           sémaphore. Il présente exactement une apparence, généralement une couleur (mais pas
-          toujours, par exemple pour les sémaphores) définie par JiMRI, par exemple "rouge" ou
+          toujours, par exemple pour les sémaphores) définie par JMRI, par exemple "rouge" ou
           "jaune clignotant".. <a href="../html/tools/signaling/SignalHeads.shtml">...</a></td>
           <td class="de">Signalschirm</td>
           <td class="it">Vela Segnale</td>
@@ -1224,7 +1221,7 @@
         <tr>
           <td class="app">Signals</td>
           <td class="en">Simple Signal Logic (SSL)</td>
-          <td class="descr">Un outil JiMRI qui fournit une logique de type BAL pour piloter les
+          <td class="descr">Un outil JMRI qui fournit une logique de type BAL pour piloter les
           signaux de votre réseau. <a href=
           "../html/tools/signaling/SimpleSignalExample.shtml">...</a></td>
           <td class="de">Einfache Signallogik</td>
@@ -1265,7 +1262,7 @@
           <td class="app">Tools</td>
           <td class="en">Power</td>
           <td class="descr">Outilpour activer ou désactiver la tension du rail <a href=
-          "../package/JiMRI/JiMRIt/powerpanel/PowerPanelFrame.shtml">...</a></td>
+          "../package/JMRI/JMRIt/powerpanel/PowerPanelFrame.shtml">...</a></td>
           <td class="de">Stromversorgung</td>
           <td class="it">Alimentazione</td>
           <td class="fr">Alimentation Voie</td>
@@ -1788,10 +1785,11 @@
       <!-- end of Glossary table -->
 
       <p>Traduction 2021-03-24</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
 </body>
 </html>

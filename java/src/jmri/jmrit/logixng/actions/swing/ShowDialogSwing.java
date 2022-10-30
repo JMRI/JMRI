@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
 
 /**
  * Configures an ShowDialog object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ShowDialogSwing extends AbstractDigitalActionSwing {
@@ -34,19 +34,19 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
     private JCheckBox _multiLineCheckBox;
     private JTextField _localVariableForSelectedButton;
     private JTextField _localVariableForInputString;
-    
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && (! (object instanceof ShowDialog))) {
             throw new IllegalArgumentException("object is not a ShowDialog: " + object.getClass().getName());
         }
         ShowDialog showDialog = (ShowDialog)object;
-        
+
         panel = new JPanel();
-        
+
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        
-        
+
+
         JPanel buttonCheckBoxPanel = new JPanel();
         buttonCheckBoxPanel.setBorder(BorderFactory.createTitledBorder(
                 Bundle.getMessage("ShowDialog_Buttons")));
@@ -63,8 +63,8 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
             }
         }
         panel.add(buttonCheckBoxPanel);
-        
-        
+
+
         JPanel formatTypePanel = new JPanel();
         _formatType = new JComboBox<>();
         for (ShowDialog.FormatType formatType : ShowDialog.FormatType.values()) {
@@ -73,17 +73,16 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         formatTypePanel.add(new JLabel(Bundle.getMessage("ShowDialog_FormatType")));
         formatTypePanel.add(_formatType);
         panel.add(formatTypePanel);
-        
+
         JPanel formatPanel = new JPanel();
         _format = new JTextField(40);
         formatPanel.add(new JLabel(Bundle.getMessage("ShowDialog_Format")));
         formatPanel.add(_format);
         panel.add(formatPanel);
-        
-        
-        JPanel tablePanel = new JPanel();
+
+
         _showDialogTable = new JTable();
-        
+
         if (showDialog != null) {
             List<ShowDialog.Data> dataList
                     = new ArrayList<>(showDialog.getDataList());
@@ -92,7 +91,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         } else {
             _showDialogTableModel = new ShowDialogTableModel(null);
         }
-        
+
         _showDialogTable.setModel(_showDialogTableModel);
         _showDialogTable.setDefaultRenderer(ShowDialog.DataType.class,
                 new ShowDialogTableModel.CellRenderer());
@@ -101,7 +100,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         _showDialogTableModel.setColumnsForComboBoxes(_showDialogTable);
         _showDialogTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         _showDialogTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
-        
+
         JButton testButton = new JButton("XXXXXX");  // NOI18N
         _showDialogTable.setRowHeight(testButton.getPreferredSize().height);
         TableColumn deleteColumn = _showDialogTable.getColumnModel()
@@ -109,7 +108,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         deleteColumn.setMinWidth(testButton.getPreferredSize().width);
         deleteColumn.setMaxWidth(testButton.getPreferredSize().width);
         deleteColumn.setResizable(false);
-        
+
         // The dummy column is used to be able to force update of the
         // other columns when the panel is closed.
         TableColumn dummyColumn = _showDialogTable.getColumnModel()
@@ -117,42 +116,41 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         dummyColumn.setMinWidth(0);
         dummyColumn.setPreferredWidth(0);
         dummyColumn.setMaxWidth(0);
-        
+
         JScrollPane scrollpane = new JScrollPane(_showDialogTable);
         scrollpane.setPreferredSize(new Dimension(400, 200));
-        tablePanel.add(scrollpane, BorderLayout.CENTER);
-        panel.add(tablePanel);
-        
+        panel.add(scrollpane);
+
         // Add parameter
         JButton add = new JButton(Bundle.getMessage("ShowDialog_TableAdd"));
         buttonPanel.add(add);
         add.addActionListener((ActionEvent e) -> {
             _showDialogTableModel.add();
         });
-        
-        
+
+
         _modalCheckBox = new JCheckBox(Bundle.getMessage("ShowDialog_Modal"));
         panel.add(_modalCheckBox);
-        
+
         _multiLineCheckBox = new JCheckBox(Bundle.getMessage("ShowDialog_Multiline"));
         panel.add(_multiLineCheckBox);
-        
+
         panel.add(new JLabel(Bundle.getMessage("ShowDialog_MultilineHelp")));
-        
-        
+
+
         JPanel localVariableForSelectedButtonPanel = new JPanel();
         _localVariableForSelectedButton = new JTextField(20);
         localVariableForSelectedButtonPanel.add(new JLabel(Bundle.getMessage("ShowDialog_LocalVariableForSelectedButton")));
         localVariableForSelectedButtonPanel.add(_localVariableForSelectedButton);
         panel.add(localVariableForSelectedButtonPanel);
-        
+
         JPanel localVariableForInputStringPanel = new JPanel();
         _localVariableForInputString = new JTextField(20);
         localVariableForInputStringPanel.add(new JLabel(Bundle.getMessage("ShowDialog_LocalVariableForInputString")));
         localVariableForInputStringPanel.add(_localVariableForInputString);
         panel.add(localVariableForInputStringPanel);
-        
-        
+
+
         if (showDialog != null) {
             _modalCheckBox.setSelected(showDialog.getModal());
             _multiLineCheckBox.setSelected(showDialog.getMultiLine());
@@ -162,7 +160,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
             _format.setText(showDialog.getFormat());
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
@@ -175,7 +173,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
             errorMessages.add(Bundle.getMessage("ShowDialog_ErrorNoEnabledButton"));
             result = false;
         }
-        
+
         for (ShowDialog.Data data : _showDialogTableModel.getDataList()) {
             if (data.getDataType() == ShowDialog.DataType.Formula) {
                 try {
@@ -190,7 +188,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         }
         return result;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -198,7 +196,7 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -206,63 +204,74 @@ public class ShowDialogSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object is not a ShowDialog: " + object.getClass().getName());
         }
         ShowDialog showDialog = (ShowDialog)object;
-        
-        
+
+
         Set<Button> enabledButtons = showDialog.getEnabledButtons();
         enabledButtons.clear();
-        
+
         for (ButtonCheckBox buttonCheckBox : _buttonCheckBoxes) {
             if (buttonCheckBox._checkBox.isSelected()) {
                 enabledButtons.add(buttonCheckBox._button);
             }
         }
-        
-        
+
+
         showDialog.setLocalVariableForSelectedButton(_localVariableForSelectedButton.getText());
         showDialog.setLocalVariableForInputString(_localVariableForInputString.getText());
-        
+
         showDialog.setFormatType(_formatType.getItemAt(_formatType.getSelectedIndex()));
         showDialog.setFormat(_format.getText());
-        
-        
+
+
         showDialog.setModal(_modalCheckBox.isSelected());
         showDialog.setMultiLine(_multiLineCheckBox.isSelected());
-        
+
         showDialog.setFormatType(_formatType.getItemAt(_formatType.getSelectedIndex()));
         showDialog.setFormat(_format.getText());
-        
-        
+
+
         // Do this to force update of the table
         _showDialogTable.editCellAt(0, 2);
-        
+
         showDialog.getDataList().clear();
-        
+
         for (ShowDialog.Data data : _showDialogTableModel.getDataList()) {
             showDialog.getDataList().add(data);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("ShowDialog_Short");
     }
-    
+
+    @Override
+    public void setDefaultValues() {
+        boolean hasEnabledButton = false;
+        for (ButtonCheckBox buttonCheckBox : _buttonCheckBoxes) {
+            hasEnabledButton |= buttonCheckBox._checkBox.isSelected();
+        }
+        if (!hasEnabledButton) {
+            _buttonCheckBoxes.get(0)._checkBox.setSelected(true);
+        }
+    }
+
     @Override
     public void dispose() {
     }
-    
-    
+
+
     private static class ButtonCheckBox {
-        
+
         private final Button _button;
         private final JCheckBox _checkBox;
-        
+
         private ButtonCheckBox(Button button, JCheckBox checkBox) {
             this._button = button;
             this._checkBox = checkBox;
         }
-        
+
     }
-    
+
 }

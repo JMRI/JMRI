@@ -1,45 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
-  <title>JMRI: Send CAN Frame</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <title>JMRI: Envoi Trame OpenLCB</title>
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help send loconet packets">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  --&gt; <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
-  <!-- Style -->
-   <!-- /Style -->
-   <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+   <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>Envoi Trame OpenLCB</h1><a href="SendFrame.jpg"><img src=
       "SendFrame.jpg" width="221" height="176" alt=
-      "Send Frame Tool image" align="right"></a><br>
+      "Send Frame Tool image" align="right"></a>
+      <p>
       L'outil "Envoyer trame OpenLCB" vous permet d'envoyer
       directement <a href=
       "../../../../../../html/hardware/can/index.shtml">des trames
-      CAN</a> , et certains types de messages OpenLCB.
+      CAN</a> , et certains types de messages OpenLCB.</p>
 
       <p>Il fonctionne mieux en combinaison avec l'option "Afficher
       des donn&eacute;es brutes" dans la fen&ecirc;tre du moniteur,
       parce que les paquets sont entr&eacute;s ici en format
-      hexad&eacute;cimal .</p>
+      hexad&eacute;cimal.</p>
 
       <p>La section sup&eacute;rieure de la fen&ecirc;tre vous
       permet d'envoyer une trame unique. Il suffit de taper le
@@ -48,7 +35,7 @@
       sp&eacute;cifier le contenu d'en-t&ecirc;te, faites
       pr&eacute;c&eacute;der le paquet de donn&eacute;es avec la
       t&ecirc;te dans "()" Caract&egrave;res ou
-      &Acirc;&laquo;[]&Acirc;&raquo; caract&egrave;res pour un
+      "[]" caract&egrave;res pour un
       en-t&ecirc;te standard ou &eacute;tendu, respectivement.
       (OpenLCB utilise uniquement l'en-t&ecirc;te &eacute;tendu,
       mais nous permet d'envoyer les deux de sorte que vous pouvez
@@ -76,18 +63,18 @@
       sp&eacute;cifiques OpenLCB:</p>
 
       <ul>
-        <li>"Envoyer V&eacute;rifiez Noeud";: en utilisant l'alias
+        <li>"Envoyer V&eacute;rifiez Noeud": en utilisant l'alias
         de source que vous avez fournie dans la section
         sup&eacute;rieure et un ID de noeud sp&eacute;cifi&eacute;
         ici, cela envoie une demande de v&eacute;rification de la
-        r&eacute;ponse du noeud.</li>
+        r&eacute;ponse du n&oelig;ud.</li>
 
         <li>"Envoyer Demande &eacute;v&eacute;nements": en
         utilisant l'alias de source que vous avez fournie dans la
-        section sup&eacute;rieure et un ID de n&Aring;"ud
+        section sup&eacute;rieure et un ID de n&oelig;ud
         sp&eacute;cifi&eacute; ici, cela envoie une demande pour
         obtenir des renseignements sur les noeuds produits et
-        consomm&eacute; par le noeud.</li>
+        consomm&eacute; par le n&oelig;ud.</li>
 
         <li>"Envoyer Demande Utilisateurs": En utilisant l'alias de
         source que vous avez fournie dans la section
@@ -134,14 +121,15 @@
 
       <p>Ensuite, soit entrer le nombre d&eacute;sir&eacute;
       d'octets et cliquez sur Lire, ou les donn&eacute;es &agrave;
-      &eacute;crire (deux octets dans cette mise en &Aring;"uvre)
+      &eacute;crire (deux octets dans cette mise en &oelig;uvre)
       et appuyer sur "&eacute;crire".</p>
 
       <p>"Envoyer Confirmation" envoie la confirmation de tous les
       datagrammes que vous recevez en r&eacute;ponse.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+   <script src="/js/main.js"></script>
 </body>
 </html>

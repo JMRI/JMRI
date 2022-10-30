@@ -165,7 +165,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode);
         }
-        boolean isLong = ((jmri.ThrottleManager) adapterMemo.get(jmri.ThrottleManager.class)).canBeLongAddress(address.getNumber());
+        boolean isLong = adapterMemo.get(jmri.ThrottleManager.class).canBeLongAddress(address.getNumber());
         switch (address.getProtocol()) {
             case DCC:
                 if (Mode == SpeedStepMode.NMRA_DCC_28 && isLong) {

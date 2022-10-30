@@ -8,7 +8,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
-import jmri.script.ScriptFileChooser;
+import jmri.script.swing.ScriptFileChooser;
 import org.openide.util.lookup.ServiceProvider;
 
 /**

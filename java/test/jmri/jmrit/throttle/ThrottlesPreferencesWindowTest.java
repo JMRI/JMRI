@@ -1,10 +1,13 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of ThrottlesPreferencesWindow
@@ -13,26 +16,36 @@ import org.junit.jupiter.api.*;
  */
 public class ThrottlesPreferencesWindowTest {
 
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCtor() {
         try {
-            Assume.assumeFalse(GraphicsEnvironment.isHeadless());
             ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
-            Assert.assertNotNull("exists", w);
+            Assertions.assertNotNull(w, "exists");
+            w.pack();
+            ThreadingUtil.runOnGUI(() -> {
+                w.setVisible(true);
+            });
+
+            JFrameOperator jfo = new JFrameOperator(w.getTitle());
+            Assertions.assertNotNull(jfo);
+            new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).doClick();
+            jfo.waitClosed();
+            
         } catch (IndexOutOfBoundsException e) {
-            Assert.fail("IndexOutOfBoundsException\n"+e);
+            Assertions.fail("IndexOutOfBoundsException\n",e);
         }
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
 
     }
 }

@@ -1,139 +1,123 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
-
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-11-1-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Configure Grapevine Nodes</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI help configure grapevine node">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <meta name="keywords" content="JMRI help configure grapevine node">
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>Configurer les N&Aring;"uds Grapevine</h1>Ceci est la
-      page d'aide
-      help/en/jmri/jmrix/grapevine/nodetable/NodeTableFrame
+      <h1>Configurer les N&oelig;uds Grapevine</h1>
+      
+      <p>Ceci est la page d'aide
+      help/en/jmri/jmrix/grapevine/nodetable/NodeTableFrame</p>
 
-      <p>L'outil &Acirc;&laquo;Table N&Aring;"uds" vous permet de
-      voir tous vos n&Aring;"uds &Atilde;  la fois. Chaque ligne du
-      tableau correspond &Atilde;  une adresse de n&Aring;"ud. Les
+      <p>L'outil "Table N&oelig;uds" vous permet de
+      voir tous vos n&oelig;uds &agrave; la fois. Chaque ligne du
+      tableau correspond &agrave; une adresse de noeud. Les
       colonnes sont les suivants:</p>
 
       <dl>
         <dt>Adresse</dt>
 
-        <dd>Le num&Atilde;&copy;ro de n&Aring;"ud</dd>
+        <dd>Le num&eacute;ro de noeud</dd>
 
         <dt>&Atilde;&permil;tat</dt>
 
         <dd>
-          L'&Atilde;&copy;tat actuel de ce n&Aring;"ud.
+          L'&eacute;tat actuel de ce noeud.
 
           <dl>
-            <dt>Configur&Atilde;&copy;</dt>
+            <dt>Configur&eacute;</dt>
 
-            <dd>Ce n&Aring;"ud a &Atilde;&copy;t&Atilde;&copy;
-            configur&Atilde;&copy; dans JMRI. vous pouvez dialoguer
-            avec ses Aiguillages, T&Atilde;&ordf;tes de Signal,
+            <dd>Ce n&oelig;ud a &eacute;t&eacute;
+            configur&eacute; dans JMRI. vous pouvez dialoguer
+            avec ses Aiguillages, T&ecirc;tes de Signal,
             Capteurs, etc</dd>
 
-            <dd>Pr&Atilde;&copy;sent</dd>
+            <dt>Pr&eacute;sent</dt>
 
-            <dt>Ce n&Aring;"ud a &Atilde;&copy;t&Atilde;&copy;
-            d&Atilde;&copy;tect&Atilde;&copy;e sur Grapevine, mais
+            <dd>Ce n&oelig;ud a &eacute;t&eacute;
+            d&eacute;tect&eacute;e sur Grapevine, mais
             vous devez le configurer avant de pouvoir y
-            acc&Atilde;&copy;der dans le programme.</dt>
+            acc&eacute;der dans le programme.</dd>
 
             <dt>(blanc)</dt>
 
-            <dd>Le n&Aring;"ud n'est pas configur&Atilde;&copy;, et
-            n'a pas &Atilde;&copy;t&Atilde;&copy; vu sur Grapevine.
-            &lt;/ dl&gt;</dd>
+            <dd>Le noeud n'est pas configur&eacute;, et
+            n&apos;a pas &eacute;t&eacute; vu sur Grapevine.
+            </dd>
 
             <dt>Ajouter/&Atilde;&permil;diter</dt>
 
-            <dd>La troisi&Atilde;&uml;me colonne fournit un bouton
-            pour vous pourajouter un n&Aring;"ud manquant ou
-            modifier la configuration d'un n&Aring;"ud existant. Si
-            vous Ajouter ou modifier un n&Aring;"ud, n'oubliez pas
-            de sauvegarder vos
-            pr&Atilde;&copy;f&Atilde;&copy;rences &Atilde; 
-            nouveau!</dd>
+            <dd>La troisi&egrave;me colonne fournit un bouton
+            pour vous pourajouter un noeud manquant ou
+            modifier la configuration d&apos;un noeud existant. Si
+            vous Ajouter ou modifier un noeud, n&apos;oubliez pas
+            de sauvegarder vos pr&eacute;f&eacute;rences &agrave; nouveau!</dd>
 
             <dt>Init</dt>
 
-            <dd>Si le n&Aring;"ud est configur&Atilde;&copy;, il ya
-            un bouton dans la 4e colonne qui vous permet d'envoyer
-            les messages d'initialisation pour le n&Aring;"ud. Cet
-            est utile si par exemple le n&Aring;"ud a
-            &Atilde;&copy;t&Atilde;&copy; Off et On, il doit donc
-            &Atilde;&ordf;tre
-            r&Atilde;&copy;initialis&Atilde;&copy;. Ceci est
-            uniquement disponible pour les n&Aring;"uds
-            configur&Atilde;&copy;s.</dd>
+            <dd>Si le noeud est configur&eacute;, il ya
+            un bouton dans la 4e colonne qui vous permet d&apos;envoyer
+            les messages d&apos;initialisation pour le noeud. Cet
+            est utile si par exemple le n&oelig;ud a
+            &eacute;t&eacute; Off et On, il doit donc
+            &ecirc;tre r&eacute;initialis&eacute;. Ceci est
+            uniquement disponible pour les noeuds
+            configur&eacute;s.</dd>
           </dl>
 
-          <p>Au bas de la fen&Atilde;&ordf;tre est un bouton
-          "V&Atilde;&copy;rifier" et un champ &Atilde;&copy;tat.
-          Cliquez sur "V&Atilde;&copy;rifier" pour balayer le
-          Grapevine pour v&Atilde;&copy;rifier son
-          &Atilde;&copy;tat et localiser les n&Aring;"uds. Les
-          champ d'&Atilde;&copy;tat sont les suivant:</p>
+          <p>Au bas de la fen&ecirc;tre est un bouton
+          &quot;V&eacute;rifier&quot; et un champ &eacute;tat.
+          Cliquez sur &quot;V&eacute;rifier&quot; pour balayer le
+          Grapevine pour v&eacute;rifier son
+          &eacute;tat et localiser les noeuds. Les
+          champ d&apos;&eacute;tat sont les suivant:</p>
 
           <dl>
-            <dt>D&Atilde;&copy;marrer</dt>
+            <dt>D&eacute;marrer</dt>
 
             <dd>Un balayage commence, mais aucune
-            r&Atilde;&copy;ponse n'a &Atilde;&copy;t&Atilde;&copy;
+            r&eacute;ponse n&apos;a &eacute;t&eacute;
             entendu de Grapevine encore.</dd>
 
-            <dt>V&Atilde;&copy;rification</dt>
+            <dt>V&eacute;rification</dt>
 
             <dd>Balayage en cours, et le Grapevine semble
             fonctionner.</dd>
 
             <dt>OK</dt>
 
-            <dd>OK Analyse termin&Atilde;&copy;e.</dd>
+            <dd>OK Analyse termin&eacute;e.</dd>
 
-            <dt>Grapevine &Atilde;&copy;chou&Atilde;&copy;</dt>
+            <dt>Grapevine &eacute;chou&eacute;</dt>
 
-            <dd>Analyse termin&Atilde;&copy;e sans rien entendre de
-            Grapevine. Peut-&Atilde;&ordf;tre le c&Atilde;&cent;ble
-            n'est pas compl&Atilde;&uml;tement
-            connect&Atilde;&copy;, ou quelques
-            &Atilde;&copy;l&Atilde;&copy;ments ne sont pas
-            aliment&Atilde;&copy;s.</dd>
+            <dd>Analyse termin&eacute;e sans rien entendre de
+            Grapevine. Peut-&ecirc;tre le c&acirc;ble
+            n&apos;est pas compl&egrave;tement
+            connect&eacute;, ou quelques
+            &eacute;l&eacute;ments ne sont pas
+            aliment&eacute;s.</dd>
           </dl>
 
-          <p>Il y a aussi un bouton &Acirc;&laquo; Changement
-          d'Adresse N&Aring;"ud Carte", ce qui peut
-          &Atilde;&ordf;tre utilis&Atilde;&copy; pour changer
-          l'adresse d'un noeud de Grapevine. Il ouvre une <a href=
-          "RenumberFrame.shtml">nouvelle fen&Atilde;&ordf;tre</a> .</p>
-
-          <!--#include virtual="/Footer.shtml" -->
+          <p>Il y a aussi un bouton "Changement
+          d'Adresse N&oelig;ud Carte", ce qui peut
+          &ecirc;tre utilis&eacute; pour changer
+          l'adresse d'un n&oelig;ud de Grapevine. Il ouvre une <a href=
+          "RenumberFrame.shtml">nouvelle fen&ecirc;tre</a>.</p>
         </dd>
       </dl>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

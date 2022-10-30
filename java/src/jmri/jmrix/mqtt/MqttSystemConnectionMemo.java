@@ -52,7 +52,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class c) -> {
+        return (MqttTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class<?> c) -> {
                     MqttTurnoutManager t = new MqttTurnoutManager(this);
                     t.setSendTopicPrefix(getMqttAdapter().getOptionState("10.3"));
                     t.setRcvTopicPrefix(getMqttAdapter().getOptionState("10.5"));
@@ -65,7 +65,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (MqttSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class c) -> {
+        return (MqttSensorManager) classObjectMap.computeIfAbsent(SensorManager.class,(Class<?> c) -> {
                     MqttSensorManager t = new MqttSensorManager(this);
                     t.setSendTopicPrefix(getMqttAdapter().getOptionState("11.3"));
                     t.setRcvTopicPrefix(getMqttAdapter().getOptionState("11.5"));
@@ -77,7 +77,7 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         if (getDisabled()) {
             return null;
         }
-        return (MqttLightManager) classObjectMap.computeIfAbsent(LightManager.class,(Class c) -> {
+        return (MqttLightManager) classObjectMap.computeIfAbsent(LightManager.class,(Class<?> c) -> {
                     MqttLightManager t = new MqttLightManager(this);
                     t.setSendTopicPrefix(getMqttAdapter().getOptionState("12.3"));
                     t.setRcvTopicPrefix(getMqttAdapter().getOptionState("12.5"));

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 public class AnymaDMX_ConnectionTypeListTest {
 
     @Test
-    public void ConstructorTest() {
+    public void testCtor() {
         Assert.assertNotNull("ConnectionConfig constructor", new AnymaDMX_ConnectionTypeList());
     }
 

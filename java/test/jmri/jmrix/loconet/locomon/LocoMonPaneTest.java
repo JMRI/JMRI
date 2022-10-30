@@ -128,7 +128,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.util.JUnitUtil.initInternalSensorManager();
-        s = new jmri.jmrix.loconet.LnSensorManager(memo);
+        s = new jmri.jmrix.loconet.LnSensorManager(memo, false);
         jmri.InstanceManager.setSensorManager(s);
 
         jmri.util.JUnitUtil.initReporterManager();

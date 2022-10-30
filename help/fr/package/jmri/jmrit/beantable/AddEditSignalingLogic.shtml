@@ -4,17 +4,18 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding/Editing Signal Mast Logic</title>
   <!-- copy from jmrit/beantable/ to  jmrit/signalling/ to keep identical-->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="Date.Modified" content="20150523">
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help SignalMast Logic Add Edit">
   <!--#include virtual="/Style.shtml" -->
 </head>
-<body>
-  <!--#include virtual="/Header.shtml" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
       <h1><a id="Adding_Editing_Routes"></a>Ajout/Modification Logique Mât de Signalisation</h1>
 
       <p>Après avoir cliquer sur le bouton "Ajouter.." au-dessous du <a href=
@@ -96,7 +97,7 @@
       Mât de Signalisation</a>.</p>
 
       <p>Traduction 2021-03-26</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

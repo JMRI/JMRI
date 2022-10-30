@@ -2,7 +2,6 @@ package jmri.implementation;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -667,8 +666,8 @@ public class DefaultConditional extends AbstractNamedBean
                     case SET_ROUTE_TURNOUTS:
                         conditionalExecute.setRouteTurnouts(action, (Warrant) nb, actionCount, errorList);
                         break;
-                    case THROTTLE_FACTOR:
-                        log.info("Set warrant Throttle Factor deprecated - Use Warrrant Preferences");  // NOI18N
+                    case GET_TRAIN_LOCATION:
+                        conditionalExecute.getTrainLocation(action, (Warrant) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
                         break;
                     case SET_TRAIN_ID:
                         conditionalExecute.setTrainId(action, (Warrant) nb, getActionString(action), actionCount, errorList);
@@ -707,7 +706,7 @@ public class DefaultConditional extends AbstractNamedBean
                         conditionalExecute.setBlockError(action, (OBlock) nb, actionCount, errorList);
                         break;
                     case CLEAR_BLOCK_ERROR:
-                        conditionalExecute.clearBlockValue(action, (OBlock) nb, errorList);
+                        conditionalExecute.clearBlockError(action, (OBlock) nb, errorList);
                         break;
                     case DEALLOCATE_BLOCK:
                         conditionalExecute.deallocateBlock(action, (OBlock) nb, actionCount, errorList);
@@ -717,6 +716,12 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case SET_BLOCK_IN_SERVICE:
                         conditionalExecute.setBlockInService(action, (OBlock) nb, actionCount, errorList);
+                        break;
+                    case GET_BLOCK_TRAIN_NAME:
+                        conditionalExecute.getBlockTrainName(action, (OBlock) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
+                        break;
+                    case GET_BLOCK_WARRANT:
+                        conditionalExecute.getBlockWarrant(action, (OBlock) nb, getMemory(action.getActionString()), getActionString(action), actionCount, errorList);
                         break;
                     case SET_NXPAIR_ENABLED:
                         conditionalExecute.setNXPairEnabled(action, actionCount, errorList, devName);
@@ -738,7 +743,7 @@ public class DefaultConditional extends AbstractNamedBean
         }
         if (errorList.size() > 0) {
             for (int i = 0; i < errorList.size(); i++) {
-                log.error("{} - {}", getDisplayName(), errorList.get(i));
+                log.error(" error: {} - {}", getDisplayName(), errorList.get(i));
             }
             if (!GraphicsEnvironment.isHeadless()) {
                 java.awt.Toolkit.getDefaultToolkit().beep();
@@ -752,7 +757,11 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }   // takeActionIfNeeded
 
-    static private boolean _skipErrorDialog = false;
+    private static volatile boolean _skipErrorDialog = false;
+
+    private static synchronized void setSkipErrorDialog( boolean skip ) {
+        _skipErrorDialog = skip;
+    }
 
     class ErrorDialog extends JDialog {
 
@@ -782,14 +791,9 @@ public class DefaultConditional extends AbstractNamedBean
 
             panel = new JPanel();
             JButton closeButton = new JButton("Close");  // NOI18N
-            closeButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    if (rememberSession.isSelected()) {
-                        _skipErrorDialog = true;
-                    }
-                    dispose();
-                }
+            closeButton.addActionListener((ActionEvent a) -> {
+                DefaultConditional.setSkipErrorDialog(rememberSession.isSelected());
+                dispose();
             });
             panel.add(closeButton);
             contentPanel.add(panel);

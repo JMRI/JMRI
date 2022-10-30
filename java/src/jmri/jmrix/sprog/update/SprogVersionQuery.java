@@ -62,9 +62,17 @@ public class SprogVersionQuery implements SprogListener {
         }
     }
 
+    /**
+     * Remove a SprogVersionListener.
+     * Stops Timer ( if running ), when no further Listeners are present.
+     * @param l the Listener to remove.
+     */
     public synchronized void removeSprogVersionListener(SprogVersionListener l) {
         if (versionListeners.contains(l)) {
             versionListeners.removeElement(l);
+        }
+        if (versionListeners.size() == 0 ) {
+            stopTimer();
         }
     }
 
@@ -239,13 +247,13 @@ public class SprogVersionQuery implements SprogListener {
                     log.debug("Found: {}", v.toString());
                     notifyVersion(v);
                     state = QueryState.DONE;
-                    break;
+//                    break;
                 }
+                tc.resetTimeout();
                 break;
             }
 
             case DONE:
-                tc.resetTimeout();
                 break;
 
             default: {

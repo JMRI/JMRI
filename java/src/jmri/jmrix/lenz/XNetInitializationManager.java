@@ -20,33 +20,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class XNetInitializationManager {
 
-    /**
-     * Construct a memo using the defaults and a version check.  This Constructor
-     * is included for backwards compatability and should not be used for new code.
-     * @param memo The connectionmemo to initialize.
-     * @deprecated since 4.21.1. Use {@link #XNetInitializationManager()} and the builder
-     * interface instead.
-     */
-    @Deprecated
-    public XNetInitializationManager(XNetSystemConnectionMemo memo){
-        memo(memo);
-        setDefaults();
-        setTimeout(getInitTimeout());
-        versionCheck();
-        init();
-    }
-
     public XNetInitializationManager() {
-    }
-
-    /**
-     * Define the default timeout used during initialization
-     * @return timeout value in milliseconds
-     * @deprecated since 4.21.1.  Use {@link #setTimeout(int)} instead.
-     */
-    @Deprecated
-    protected int getInitTimeout() {
-        return initTimeout;
     }
 
     private XNetSystemConnectionMemo systemMemo;

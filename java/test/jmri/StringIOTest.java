@@ -35,12 +35,11 @@ public class StringIOTest {
           jmri.util.JUnitUtil.tearDown();
     }
 
-    
-    private class MyStringIO extends AbstractNamedBean implements StringIO {
+    private static class MyStringIO extends AbstractNamedBean implements StringIO {
 
         String _value = "";
         
-        public MyStringIO(String sys) {
+        private MyStringIO(String sys) {
             super(sys);
         }
         

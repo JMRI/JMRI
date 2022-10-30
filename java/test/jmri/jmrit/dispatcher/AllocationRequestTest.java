@@ -13,9 +13,9 @@ public class AllocationRequestTest {
 
     @Test
     public void testCTor() {
-        jmri.Transit transit = new jmri.Transit("TT1");
+        jmri.Transit transit = new jmri.implementation.DefaultTransit("TT1");
         ActiveTrain at = new ActiveTrain(transit,"Train",ActiveTrain.USER);
-        jmri.Section section1 = new jmri.Section("TS1");
+        jmri.Section section1 = new jmri.implementation.DefaultSection("TS1");
         AllocationRequest t = new AllocationRequest(section1,1,1,at);
         Assert.assertNotNull("exists",t);
     }

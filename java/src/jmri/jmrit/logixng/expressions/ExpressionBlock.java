@@ -11,6 +11,7 @@ import jmri.BlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -31,14 +32,11 @@ import jmri.util.TypeConversionUtil;
  * @author Dave Sand Copyright 2021
  */
 public class ExpressionBlock extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Block> _blockHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
+    private final LogixNG_SelectNamedBean<Block> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Block.class, InstanceManager.getDefault(BlockManager.class), this);
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
@@ -70,11 +68,8 @@ public class ExpressionBlock extends AbstractDigitalExpression
         if (sysName == null) sysName = manager.getAutoSystemName();
         ExpressionBlock copy = new ExpressionBlock(sysName, userName);
         copy.setComment(getComment());
-        copy.setAddressing(_addressing);
-        if (_blockHandle != null) copy.setBlock(_blockHandle);
-        copy.setReference(_reference);
-        copy.setLocalVariable(_localVariable);
-        copy.setFormula(_formula);
+
+        _selectNamedBean.copy(copy._selectNamedBean);
 
         copy.set_Is_IsNot(_is_IsNot);
 
@@ -92,90 +87,9 @@ public class ExpressionBlock extends AbstractDigitalExpression
         return manager.registerExpression(copy);
     }
 
-    public void setBlock(@Nonnull String blockName) {
-        assertListenersAreNotRegistered(log, "setBlock");
-        Block block =
-                InstanceManager.getDefault(BlockManager.class).getNamedBean(blockName);
-        if (block != null) {
-            ExpressionBlock.this.setBlock(block);
-        } else {
-            removeBlock();
-            log.warn("block \"{}\" is not found", blockName);
-        }
+    public LogixNG_SelectNamedBean<Block> getSelectNamedBean() {
+        return _selectNamedBean;
     }
-
-    public void setBlock(@Nonnull Block block) {
-        assertListenersAreNotRegistered(log, "setBlock");
-        ExpressionBlock.this.setBlock(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(block.getDisplayName(), block));
-    }
-
-    public void setBlock(@Nonnull NamedBeanHandle<Block> handle) {
-        assertListenersAreNotRegistered(log, "setBlock");
-        _blockHandle = handle;
-        InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
-    }
-
-    public void removeBlock() {
-        assertListenersAreNotRegistered(log, "removeBlock");
-        if (_blockHandle != null) {
-            InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
-            _blockHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Block> getBlock() {
-        return _blockHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
 
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
@@ -300,19 +214,6 @@ public class ExpressionBlock extends AbstractDigitalExpression
         return _blockValue;
     }
 
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
-            if (evt.getOldValue() instanceof Block) {
-                if (evt.getOldValue().equals(getBlock().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("Block_BlockInUseVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -386,44 +287,9 @@ public class ExpressionBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        Block block;
+        Block block = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        switch (_addressing) {
-            case Direct:
-                block = _blockHandle != null ? _blockHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                block = InstanceManager.getDefault(BlockManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable =
-                        getConditionalNG().getSymbolTable();
-                block = InstanceManager.getDefault(BlockManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                block = _expressionNode != null ?
-                        InstanceManager.getDefault(BlockManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        if (block == null) {
-            return false;
-        }
+        if (block == null) return false;
 
         BlockState checkBlockState;
 
@@ -487,35 +353,8 @@ public class ExpressionBlock extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
+        String namedBean = _selectNamedBean.getDescription(locale);
         String state;
-
-        switch (_addressing) {
-            case Direct:
-                String blockName;
-                if (_blockHandle != null) {
-                    blockName = _blockHandle.getBean().getDisplayName();
-                } else {
-                    blockName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", blockName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
 
         switch (_stateAddressing) {
             case Direct:
@@ -571,8 +410,9 @@ public class ExpressionBlock extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_blockHandle != null)) {
-            _blockHandle.getBean().addPropertyChangeListener(this);
+        if (!_listenersAreRegistered) {
+            _selectNamedBean.addPropertyChangeListener(this);
+            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -581,7 +421,8 @@ public class ExpressionBlock extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _blockHandle.getBean().removePropertyChangeListener(this);
+            _selectNamedBean.removePropertyChangeListener(this);
+            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -626,9 +467,7 @@ public class ExpressionBlock extends AbstractDigitalExpression
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ExpressionBlock: bean = {}, report = {}", cdl, report);
-        if (getBlock() != null && bean.equals(getBlock().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionBlock.class);

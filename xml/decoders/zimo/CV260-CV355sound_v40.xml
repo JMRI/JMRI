@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!--  version 1.8, added CV 339 340.  - Nigel Cliffe, 14 Feb 2022 -->
 <!-- version 1.7, seperate #273, #274, #351 & #352 for Non-Sound-Decoder, Ronald Kuhn, 29 Nov 2021 -->
 <!-- version 1.6, for Unified Software version 37, added Brake squel suppressed, Ronald Kuhn, 30 Apr 2019 -->
 <!-- version 1.5, added CV309 and CV349 for brake (function) key control, in decoders from zimo version 33.25.  Nigel Cliffe, 20 Sept 2018 -->
@@ -837,6 +838,7 @@
     <label xml:lang="cs">Klávesa zapíná/vypíná funkční zvuk</label>
     <tooltip>Defines the key that turns the function sounds (e.g. F2 bell) on or off.</tooltip>
     <tooltip xml:lang="de">Definieren einer Ein/Ausschalt-Taste für Sounds die den Funktionstasten zugeordnet sind; = 0: Funktionstastensounds immer aktiv</tooltip>
+    <tooltip xml:lang="cs">Definuje která klávesa přepíná funkci zvuku (např. F2 zvon) zapnuto/vypnuto.</tooltip>
   </variable>
   <variable item="Blow-off key" CV="312" default="4">
     <enumVal>
@@ -910,6 +912,7 @@
     <label xml:lang="cs">Klávesa pro odvodňovací ventil</label>
     <tooltip>Defines the key to play-back the blow-off sound manually</tooltip>
     <tooltip xml:lang="de">Definieren einer Funktions-Taste, mit welcher das Entwässerungs-Geräusch ausgelöst werden kann</tooltip>
+    <tooltip xml:lang="cs">Definuje která klávesa ručně spustí přehrání zvuku odvodňovacího ventilu</tooltip>
   </variable>
   <variable item="Mute key" CV="313" default="8">
     <enumVal>
@@ -1040,6 +1043,7 @@
     <label xml:lang="cs">Klávesa ztlumit</label>
     <tooltip>Defines key to fade in and out driving sounds</tooltip>
     <tooltip xml:lang="de">Alle Geräusche Aus-/Einblenden</tooltip>
+    <tooltip xml:lang="cs">Definuje která klávesa ztlumí běžící zvuk</tooltip>
   </variable>
   <variable item="Fade in/out time" CV="314" default="0" tooltip="Time of fade in 10ths of second. 0 is same as 10 (1sec).">
     <decVal min="0" max="255"/>
@@ -1216,6 +1220,104 @@
     <label xml:lang="de">Zufallsgenerator Z8 Abspieldauer</label>
     <label xml:lang="cs">Doba přehrávání pro náhodný generátor Z8</label>
   </variable>
+  <variable item="Function Key to raise diesel sound step" CV="339" tooltip="">
+    <enumVal>
+      <enumChoice choice="No key assigned">
+        <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine Taste</choice>
+        <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function key to raise diesel sound step</label>
+  </variable>  
+  <variable item="Diesel sound step" CV="340" tooltip="">
+    <decVal min="0" max="10"/>
+  </variable>    
   <variable item="Switch input 1 playback time" CV="341" default="0" include="208,210,214,215,221,222,224,227,230">
     <decVal min="0" max="255"/>
     <label>Switch input 1 playback time</label>
@@ -1224,6 +1326,7 @@
     <label xml:lang="cs">Doba přehrání spínací vstup 1</label>
     <tooltip>Seconds. 0 = Play sample back once (as recorded).</tooltip>
     <tooltip xml:lang="de">Zugeordneter Sound am S1 wird mit der definierten Dauer abgespielt</tooltip>
+    <tooltip xml:lang="cs">Sekundy. 0 = Jednou přehraje zvukový záznam (tak jak je nahrán).</tooltip>
   </variable>
   <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,210,224,227,230">
     <decVal min="0" max="255"/>
@@ -1508,6 +1611,8 @@
   
    <variable item="Brake Key Deceleration Rate" CV="349" default="0" tooltip="CV349, brake key time">
 	<decVal min="0" max="255"/>
+    <label>Brake Key Deceleration Rate</label>
+    <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
   </variable>
    
   
@@ -1522,15 +1627,19 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Second exhaust Fan and -steam</label>
     <label xml:lang="de">2. Rauch-Ventilator und -Heizung</label>
+    <label xml:lang="cs">Druhý ventilátor výfuku a -páry</label>
     <tooltip>CV348 bit 3</tooltip>
     <tooltip xml:lang="de">Mit CV348 Bit3=1 wird der 2. Rauch-Venti und die Heizung auf dem jeweils höheren Ausgang deaktiviert.</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit3=1 deaktivuje druhý ventilátor výfuku a topení na vyšší výkon.</tooltip>
   </variable>
   <variable item="Brake squel suppressed" CV="348" default="0" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake squel can be suppressed with switch-over key</label>
     <label xml:lang="de">Bremsenquietschen mit Lokfahrtaste unterdrücken</label>
+    <label xml:lang="cs">Skřípění brzdy lze potlačit přepínacím tlačítkem</label>
     <tooltip>CV348 bit 4</tooltip>
     <tooltip xml:lang="de">Wenn CV348 Bit4=1 und Lokfahrtaste eingeschalten, Bremsenquietschen unterdrücken</tooltip>
+    <tooltip xml:lang="cs">CV348 Bit4=1 a tlačítko pohonu lokomotivy je zapnuté, tak se potlačí skřípění brzdy</tooltip>
   </variable>
 </variables>
 
@@ -1549,6 +1658,7 @@
     <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
     <tooltip>0 to 252, 25sec per unit</tooltip>
     <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
+    <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
   </variable>
   <variable item="Steam chuff frequency at speed step 1" CV="354" default="0">
     <decVal min="0" max="255"/>
@@ -1558,6 +1668,7 @@
     <label xml:lang="cs">Frekvence výfuků páry na prvním rychlostním stupni</label>
     <tooltip>0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV267</tooltip>
     <tooltip xml:lang="de">0 = kein Effekt, 1-127 = mehr Dampfschläge, 255-128 = weniger Dampfschläge relativ zu CV267</tooltip>
+    <tooltip xml:lang="cs">0 = bez efektu, 1 – 127 = více výfuků, 255 – 128 = méně výfuků ve srovnání s CV267</tooltip>
   </variable>
   <variable item="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133">
     <decVal min="0" max="255"/>

@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
@@ -11,19 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 
 /**
- * This routine will import engines into the operation database.
- *
- * Each field is space or comma delimited. Field order: Number Road Model Length
- * Owner Built Location - Track
+ * This routine will import engines into the operation database. Each field is
+ * space or comma delimited. Field order: Number Road Model Length Owner Built
+ * Location - Track Consist HP WeightTons Type
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2013
  */
@@ -45,16 +40,15 @@ public class ImportEngines extends ImportRollingStock {
 
     // only for CSV files
     private static final int ENG_CONSIST = 9;
-    //private static final int ENG_MOVES = 10;
-    //private static final int ENG_VALUE = 12;
+    // private static final int ENG_MOVES = 10;
+    // private static final int ENG_VALUE = 12;
     private static final int ENG_HP = 13;
     private static final int ENG_WEIGHT = 14;
     private static final int ENG_TYPE = 15;
-   // private static final int ENG_COMMENT = 16;
-   // private static final int ENG_MISCELLANEOUS = 17;
+    // private static final int ENG_COMMENT = 16;
+    // private static final int ENG_MISCELLANEOUS = 17;
 
     // as of 7/23/2018 there were 18 attributes exported by operations
-
 
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
@@ -159,44 +153,54 @@ public class ImportEngines extends ImportRollingStock {
 
                 log.debug("Checking engine number ({}) road ({}) model ({}) length ({})", engineNumber, engineRoad,
                         engineModel, engineLength); // NOI18N
-                if (engineNumber.trim().isEmpty()) {
+                if (engineNumber.isEmpty()) {
                     log.info("Import line {} missing engine number", lineNum);
+                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                            Bundle.getMessage("RoadNumberNotSpecified"), new Object[]{lineNum}),
+                            Bundle.getMessage("RoadNumberMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (engineRoad.trim().isEmpty()) {
+                if (engineRoad.isEmpty()) {
                     log.info("Import line {} missing engine road", lineNum);
+                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                            Bundle.getMessage("RoadNameNotSpecified"), new Object[]{lineNum}),
+                            Bundle.getMessage("RoadNameMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (engineModel.trim().isEmpty()) {
+                if (engineModel.isEmpty()) {
                     log.info("Import line {} missing engine model", lineNum);
+                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                            Bundle.getMessage("EngineModelNotSpecified"), new Object[]{lineNum}),
+                            Bundle.getMessage("EngineModelMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (engineLength.trim().isEmpty()) {
+                if (engineLength.isEmpty()) {
                     log.info("Import line {} missing engine length", lineNum);
+                    JOptionPane.showMessageDialog(null, MessageFormat.format(
+                            Bundle.getMessage("EngineLengthNotSpecified"), new Object[]{lineNum}),
+                            Bundle.getMessage("EngineLengthMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineNumber.length() > Control.max_len_string_road_number) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineRoadNumberTooLong"),
-                            new Object[]{(engineRoad + " " + engineNumber),
-                                    engineNumber}),
+                    JOptionPane.showMessageDialog(
+                            null, MessageFormat.format(Bundle.getMessage("EngineRoadNumberTooLong"),
+                                    new Object[]{engineRoad, engineNumber, engineNumber}),
                             Bundle.getMessage("RoadNumMustBeLess"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineRoad.length() > Control.max_len_string_attibute) {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(
                             Bundle.getMessage("EngineRoadNameTooLong"), new Object[]{
-                                    (engineRoad + " " + engineNumber), engineRoad}),
-                            MessageFormat.format(Bundle
-                                    .getMessage("engineAttribute"), new Object[]{Control.max_len_string_attibute}),
+                                    engineRoad, engineNumber, engineRoad}),
+                            MessageFormat.format(Bundle.getMessage("engineAttribute"),
+                                    new Object[]{Control.max_len_string_attibute}),
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineModel.length() > Control.max_len_string_attibute) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineModelNameTooLong"),
-                            new Object[]{(engineRoad + " " + engineNumber),
-                                    engineModel}),
+                    JOptionPane.showMessageDialog(
+                            null, MessageFormat.format(Bundle.getMessage("EngineModelNameTooLong"),
+                                    new Object[]{engineRoad, engineNumber, engineModel}),
                             MessageFormat.format(Bundle.getMessage("engineAttribute"),
                                     new Object[]{Control.max_len_string_attibute}),
                             JOptionPane.ERROR_MESSAGE);
@@ -210,8 +214,7 @@ public class ImportEngines extends ImportRollingStock {
                             engineNumber +
                             ")" +
                             NEW_LINE +
-                            MessageFormat
-                                    .format(Bundle.getMessage("modelNameNotExist"), new Object[]{engineModel}),
+                            MessageFormat.format(Bundle.getMessage("modelNameNotExist"), new Object[]{engineModel}),
                             Bundle.getMessage("engineAddModel"), JOptionPane.YES_NO_CANCEL_OPTION);
                     if (results == JOptionPane.YES_OPTION) {
                         InstanceManager.getDefault(EngineModels.class).addName(engineModel);
@@ -220,10 +223,9 @@ public class ImportEngines extends ImportRollingStock {
                     }
                 }
                 if (engineLength.length() > Control.max_len_string_length_name) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineLengthNameTooLong"),
-                            new Object[]{(engineRoad + " " + engineNumber),
-                                    engineLength}),
+                    JOptionPane.showMessageDialog(
+                            null, MessageFormat.format(Bundle.getMessage("EngineLengthNameTooLong"),
+                                    new Object[]{engineRoad, engineNumber, engineLength}),
                             MessageFormat.format(Bundle.getMessage("engineAttribute"),
                                     new Object[]{Control.max_len_string_length_name}),
                             JOptionPane.ERROR_MESSAGE);
@@ -232,10 +234,9 @@ public class ImportEngines extends ImportRollingStock {
                 try {
                     Integer.parseInt(engineLength);
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineLengthNameNotNumber"),
-                            new Object[]{(engineRoad + " " + engineNumber),
-                                    engineLength}),
+                    JOptionPane.showMessageDialog(
+                            null, MessageFormat.format(Bundle.getMessage("EngineLengthNameNotNumber"),
+                                    new Object[]{engineRoad, engineNumber, engineLength}),
                             Bundle.getMessage("EngineLengthMissing"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
@@ -248,12 +249,10 @@ public class ImportEngines extends ImportRollingStock {
                 if (inputLine.length > base + ENG_OWNER) {
                     engineOwner = inputLine[base + ENG_OWNER].trim();
                     if (engineOwner.length() > Control.max_len_string_attibute) {
-                        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                                .getMessage("EngineOwnerNameTooLong"),
-                                new Object[]{
-                                        (engineRoad + " " + engineNumber), engineOwner}),
-                                MessageFormat.format(Bundle
-                                        .getMessage("engineAttribute"),
+                        JOptionPane.showMessageDialog(null,
+                                MessageFormat.format(Bundle.getMessage("EngineOwnerNameTooLong"),
+                                        new Object[]{engineRoad, engineNumber, engineOwner}),
+                                MessageFormat.format(Bundle.getMessage("engineAttribute"),
                                         new Object[]{Control.max_len_string_attibute}),
                                 JOptionPane.ERROR_MESSAGE);
                         break;
@@ -262,10 +261,9 @@ public class ImportEngines extends ImportRollingStock {
                 if (inputLine.length > base + ENG_BUILT) {
                     engineBuilt = inputLine[base + ENG_BUILT].trim();
                     if (engineBuilt.length() > Control.max_len_string_built_name) {
-                        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                                .getMessage("EngineBuiltDateTooLong"),
-                                new Object[]{
-                                        (engineRoad + " " + engineNumber), engineBuilt}),
+                        JOptionPane.showMessageDialog(null,
+                                MessageFormat.format(Bundle.getMessage("EngineBuiltDateTooLong"),
+                                        new Object[]{engineRoad, engineNumber, engineBuilt}),
                                 MessageFormat.format(Bundle.getMessage("engineAttribute"),
                                         new Object[]{Control.max_len_string_built_name}),
                                 JOptionPane.ERROR_MESSAGE);
@@ -306,41 +304,35 @@ public class ImportEngines extends ImportRollingStock {
                 }
 
                 if (engineLocationName.length() > Control.max_len_string_location_name) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineLocationNameTooLong"),
-                            new Object[]{
-                                    (engineRoad + " " + engineNumber), engineLocationName}),
-                            MessageFormat.format(Bundle
-                                    .getMessage("engineAttribute"),
+                    JOptionPane.showMessageDialog(null,
+                            MessageFormat.format(Bundle.getMessage("EngineLocationNameTooLong"),
+                                    new Object[]{engineRoad, engineNumber, engineLocationName}),
+                            MessageFormat.format(Bundle.getMessage("engineAttribute"),
                                     new Object[]{Control.max_len_string_location_name}),
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineTrackName.length() > Control.max_len_string_track_name) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineTrackNameTooLong"),
-                            new Object[]{
-                                    (engineRoad + " " + engineNumber), engineTrackName}),
-                            MessageFormat.format(Bundle
-                                    .getMessage("engineAttribute"),
+                    JOptionPane.showMessageDialog(null,
+                            MessageFormat.format(Bundle.getMessage("EngineTrackNameTooLong"),
+                                    new Object[]{engineRoad, engineNumber, engineTrackName}),
+                            MessageFormat.format(Bundle.getMessage("engineAttribute"),
                                     new Object[]{Control.max_len_string_track_name}),
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                Location location = InstanceManager.getDefault(LocationManager.class).getLocationByName(engineLocationName);
+                Location location =
+                        InstanceManager.getDefault(LocationManager.class).getLocationByName(engineLocationName);
                 Track track = null;
                 if (location == null && !engineLocationName.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                            .getMessage("EngineLocationDoesNotExist"),
-                            new Object[]{
-                                    (engineRoad + " " + engineNumber), engineLocationName}),
-                            Bundle
-                                    .getMessage("engineLocation"),
-                            JOptionPane.ERROR_MESSAGE);
-                    int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                            .getMessage("DoYouWantToCreateLoc"), new Object[]{engineLocationName}), Bundle
-                                    .getMessage("engineLocation"),
-                            JOptionPane.YES_NO_OPTION);
+                    JOptionPane.showMessageDialog(null,
+                            MessageFormat.format(Bundle.getMessage("EngineLocationDoesNotExist"),
+                                    new Object[]{engineRoad, engineNumber, engineLocationName}),
+                            Bundle.getMessage("engineLocation"), JOptionPane.ERROR_MESSAGE);
+                    int results = JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("DoYouWantToCreateLoc"),
+                                    new Object[]{engineLocationName}),
+                            Bundle.getMessage("engineLocation"), JOptionPane.YES_NO_OPTION);
                     if (results == JOptionPane.YES_OPTION) {
                         log.debug("Create location ({})", engineLocationName);
                         location = InstanceManager.getDefault(LocationManager.class).newLocation(engineLocationName);
@@ -351,18 +343,15 @@ public class ImportEngines extends ImportRollingStock {
                 if (location != null && !engineTrackName.isEmpty()) {
                     track = location.getTrackByName(engineTrackName, null);
                     if (track == null) {
-                        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                                .getMessage("EngineTrackDoesNotExist"),
-                                new Object[]{
-                                        (engineRoad + " " + engineNumber), engineTrackName, engineLocationName}),
-                                Bundle
-                                        .getMessage("engineTrack"),
-                                JOptionPane.ERROR_MESSAGE);
-                        int results = JOptionPane.showConfirmDialog(null, MessageFormat
-                                .format(Bundle.getMessage("DoYouWantToCreateTrack"), new Object[]{engineTrackName,
-                                        engineLocationName}),
-                                Bundle.getMessage("engineTrack"),
-                                JOptionPane.YES_NO_OPTION);
+                        JOptionPane.showMessageDialog(
+                                null, MessageFormat.format(Bundle.getMessage("EngineTrackDoesNotExist"),
+                                        new Object[]{engineRoad, engineNumber, engineTrackName,
+                                                engineLocationName}),
+                                Bundle.getMessage("engineTrack"), JOptionPane.ERROR_MESSAGE);
+                        int results = JOptionPane.showConfirmDialog(null,
+                                MessageFormat.format(Bundle.getMessage("DoYouWantToCreateTrack"),
+                                        new Object[]{engineTrackName, engineLocationName}),
+                                Bundle.getMessage("engineTrack"), JOptionPane.YES_NO_OPTION);
                         if (results == JOptionPane.YES_OPTION) {
                             if (!location.isStaging()) {
                                 log.debug("Create 1000 foot yard track ({})", engineTrackName);
@@ -422,7 +411,7 @@ public class ImportEngines extends ImportRollingStock {
                 if (engine.getWeightTons().equals(Engine.NONE)) {
                     engine.setWeightTons(engineWeightTons);
                 }
-                engine.setOwner(engineOwner);
+                engine.setOwnerName(engineOwner);
                 engine.setBuilt(engineBuilt);
                 // consist?
                 if (!engineConsistName.isEmpty()) {
@@ -436,19 +425,17 @@ public class ImportEngines extends ImportRollingStock {
                     String status = engine.setLocation(location, track);
                     if (!status.equals(Track.OKAY)) {
                         log.debug("Can't set engine's location because of {}", status);
-                        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
-                                .getMessage("CanNotSetEngineAtLocation"),
-                                new Object[]{(engineRoad + " " + engineNumber), engineModel, engineLocationName,
-                                        engineTrackName, status}),
-                                Bundle.getMessage("rsCanNotLoc"),
-                                JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(
+                                null, MessageFormat.format(Bundle.getMessage("CanNotSetEngineAtLocation"),
+                                        new Object[]{engineRoad, engineNumber, engineModel, engineLocationName,
+                                                engineTrackName, status}),
+                                Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                         if (status.startsWith(Track.TYPE)) {
-                            int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("DoYouWantToAllowService"),
-                                    new Object[]{engineLocationName,
-                                            engineTrackName, (engineRoad + " " + engineNumber), engine.getTypeName()}),
-                                    Bundle
-                                            .getMessage("ServiceEngineType"),
+                            int results = JOptionPane.showConfirmDialog(
+                                    null, MessageFormat.format(Bundle.getMessage("DoYouWantToAllowService"),
+                                            new Object[]{engineLocationName, engineTrackName,
+                                                    engineRoad, engineNumber, engine.getTypeName()}),
+                                    Bundle.getMessage("ServiceEngineType"),
                                     JOptionPane.YES_NO_OPTION);
                             if (results == JOptionPane.YES_OPTION) {
                                 location.addTypeName(engine.getTypeName());
@@ -458,11 +445,11 @@ public class ImportEngines extends ImportRollingStock {
                                 break;
                             }
                         }
-                        if (status.startsWith(Track.LENGTH)) {
-                            int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("DoYouWantIncreaseLength"), new Object[]{engineTrackName}), Bundle
-                                            .getMessage("TrackLength"),
-                                    JOptionPane.YES_NO_OPTION);
+                        if (status.startsWith(Track.LENGTH) || status.startsWith(Track.CAPACITY)) {
+                            int results = JOptionPane.showConfirmDialog(null,
+                                    MessageFormat.format(Bundle.getMessage("DoYouWantIncreaseLength"),
+                                            new Object[]{engineTrackName}),
+                                    Bundle.getMessage("TrackLength"), JOptionPane.YES_NO_OPTION);
                             if (results == JOptionPane.YES_OPTION) {
                                 track.setLength(track.getLength() + 1000);
                                 status = engine.setLocation(location, track);
@@ -471,22 +458,21 @@ public class ImportEngines extends ImportRollingStock {
                             }
                         }
                         if (!status.equals(Track.OKAY)) {
-                            int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
-                                    .getMessage("DoYouWantToForceEngine"),
-                                    new Object[]{
-                                            (engineRoad + " " + engineNumber), engineLocationName, engineTrackName}),
-                                    Bundle
-                                            .getMessage("OverRide"),
-                                    JOptionPane.YES_NO_OPTION);
+                            int results = JOptionPane.showConfirmDialog(
+                                    null, MessageFormat.format(Bundle.getMessage("DoYouWantToForceEngine"),
+                                            new Object[]{engineRoad, engineNumber, engineLocationName,
+                                                    engineTrackName}),
+                                    Bundle.getMessage("OverRide"), JOptionPane.YES_NO_OPTION);
                             if (results == JOptionPane.YES_OPTION) {
-                                engine.setLocation(location, track, RollingStock.FORCE); // force engine
+                                engine.setLocation(location, track, RollingStock.FORCE); // force
                             } else {
                                 break;
                             }
                         }
                     }
                 } else {
-                    // log.debug("No location for engine ("+engineRoad+" "+engineNumber+")");
+                    // log.debug("No location for engine ("+engineRoad+"
+                    // "+engineNumber+")");
                 }
             } else if (!line.isEmpty()) {
                 log.info("Engine import line {} missing attributes: {}", lineNum, line);
@@ -509,7 +495,7 @@ public class ImportEngines extends ImportRollingStock {
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),
                     new Object[]{enginesAdded}), Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
         }
-        
+
         // kill status panel
         fstatus.dispose();
     }

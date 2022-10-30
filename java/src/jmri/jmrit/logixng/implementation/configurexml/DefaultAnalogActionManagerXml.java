@@ -43,7 +43,7 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
         if (tm != null) {
             if (tm.getNamedBeanSet().isEmpty()) return null;
             for (MaleAnalogActionSocket action : tm.getNamedBeanSet()) {
-                log.debug("action system name is " + action.getSystemName());  // NOI18N
+                log.debug("action system name is {}", action.getSystemName() );  // NOI18N
                 try {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets

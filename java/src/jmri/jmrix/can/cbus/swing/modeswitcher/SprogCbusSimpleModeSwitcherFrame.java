@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import jmri.InstanceManager;
 import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.CbusConsistManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,22 +79,31 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
 
             // Handle Programmer mode button activity
             ActionListener listener = ae -> {
+                CbusConsistManager cm = (CbusConsistManager)InstanceManager.getNullableDefault(jmri.ConsistManager.class);
                 if (progModeButton.isSelected() && mode != PROG_MODE) {
                     // Switch to programmer mode
                     log.info("Setting Global Programmer Available");
                     pm.setGlobalProgrammerAvailable(true);
+                    log.info("Setting Addressed Programmer Unavailable");
                     pm.setAddressedModePossible(false);
                     _memo.setMultipleThrottles(false);
                     showServiceModeWarningDialogue();
                     closeProgrammerWarningDialogue();
+                    if (cm != null) {
+                        cm.setEnabled(false);
+                    }
                     mode = PROG_MODE;
                 } else if (cmdModeButton.isSelected() && mode != CMD_MODE) {
                     // Switch to command station mode
                     log.info("Setting Global Programmer Unavailable");
                     pm.setGlobalProgrammerAvailable(false);
+                    log.info("Setting Addressed Programmer Available");
                     pm.setAddressedModePossible(true);
                     _memo.setMultipleThrottles(true);
                     closeProgrammerWarningDialogue();
+                    if (cm != null) {
+                        cm.setEnabled(true);
+                    }
                     mode = CMD_MODE;
                 }
                 setHardwareMode(mode);

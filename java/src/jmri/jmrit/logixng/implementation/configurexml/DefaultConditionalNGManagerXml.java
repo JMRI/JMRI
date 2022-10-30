@@ -47,7 +47,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                 for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
                     ConditionalNG conditionalNG = logixNG.getConditionalNG(i);
 
-                    log.debug("ConditionalNG system name is " + conditionalNG.getSystemName());  // NOI18N
+                    log.debug("ConditionalNG system name is {}", conditionalNG.getSystemName());  // NOI18N
                     boolean enabled = conditionalNG.isEnabled();
                     Element elem = new Element("ConditionalNG");  // NOI18N
                     elem.addContent(new Element("systemName").addContent(conditionalNG.getSystemName()));  // NOI18N
@@ -118,7 +118,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
      */
     public void loadConditionalNGs(Element conditionalNGs) {
         List<Element> conditionalNGList = conditionalNGs.getChildren("ConditionalNG");  // NOI18N
-        log.debug("Found " + conditionalNGList.size() + " ConditionalNGs");  // NOI18N
+        log.debug("Found {} ConditionalNGs", conditionalNGList.size() );  // NOI18N
         ConditionalNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class);
 
         for (int i = 0; i < conditionalNGList.size(); i++) {
@@ -127,7 +127,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
 
             String sysName = getSystemName(conditionalNG_Element);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + conditionalNG_Element);  // NOI18N
+                log.warn("unexpected null in systemName {}", conditionalNG_Element);  // NOI18N
                 break;
             }
 
@@ -141,8 +141,8 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
             if (conditionalNG_Element.getAttribute("enabled") != null) {  // NOI18N
                 enabled = conditionalNG_Element.getAttribute("enabled").getValue();  // NOI18N
             }
-            log.debug("create ConditionalNG: (" + sysName + ")("  // NOI18N
-                    + (userName == null ? "<null>" : userName) + ")");  // NOI18N
+            log.debug("create ConditionalNG: ({})({})", // NOI18N
+                sysName, userName == null ? "<null>" : userName);  // NOI18N
 
             // Create a new ConditionalNG but don't setup the initial tree.
             LogixNG logixNG = tm.getParentLogixNG(sysName);

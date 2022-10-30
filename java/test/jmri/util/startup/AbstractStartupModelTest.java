@@ -2,37 +2,14 @@ package jmri.util.startup;
 
 import jmri.JmriException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 /**
  *
  * @author Randall Wood (C) 2016
  */
 public class AbstractStartupModelTest {
-
-    public AbstractStartupModelTest() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-    }
-
-    @BeforeEach
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
-    }
 
     /**
      * Test of getName method, of class AbstractStartupModel.
@@ -98,10 +75,20 @@ public class AbstractStartupModelTest {
         Assert.assertTrue("Nonempty name is valid", model.isValid());
     }
 
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
     /**
      * Minimal implementation of AbstractStartupModel
      */
-    public class AbstractStartupModelImpl extends AbstractStartupModel {
+    private static class AbstractStartupModelImpl extends AbstractStartupModel {
 
         @Override
         public void performAction() throws JmriException {

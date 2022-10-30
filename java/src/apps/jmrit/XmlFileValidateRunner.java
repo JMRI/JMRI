@@ -42,6 +42,8 @@ public class XmlFileValidateRunner extends jmri.jmrit.XmlFileValidateAction {
         } else {
             apps.util.Log4JUtil.initLogging("default.lcf");
             new XmlFileValidateRunner("", (Component) null) {
+                @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                                    justification="I18N of log message")
                 @Override
                 protected void showFailResults(Component who, String fileName, String text) {
                     log.error("{}: {}", Bundle.getMessage("ValidationErrorInFile", fileName), text);

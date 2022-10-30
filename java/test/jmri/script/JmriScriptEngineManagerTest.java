@@ -42,12 +42,10 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testEval_String_ScriptEngine() throws ScriptException {
-        Object result = null;
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-        assertNull(result);
         assertNull(manager.getBySystemName("IT1"));
-        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.PYTHON);
-        result = jsem.eval("turnouts.provideTurnout(\"1\")", engine);
+        ScriptEngine engine = jsem.getEngine(JmriScriptEngineManager.JYTHON);
+        Object result = jsem.eval("turnouts.provideTurnout(\"1\")", engine);
         assertNotNull(result);
         assertNotNull(manager.getBySystemName("IT1"));
         assertEquals(manager.getBySystemName("IT1"), result);
@@ -55,11 +53,9 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testEval_File() throws IOException, ScriptException {
-        Object result = null;
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
-        assertNull(result);
         assertNull(manager.getBySystemName("IT1"));
-        result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/turnout.py"));
+        Object result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/turnout.py"));
         assertNotNull(result);
         assertNotNull(manager.getBySystemName("IT1"));
         assertEquals(InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT1"), result);
@@ -74,12 +70,12 @@ public class JmriScriptEngineManagerTest {
         JUnitUtil.resetProfileManager();
         Bindings bindings = new SimpleBindings();
         bindings.put("profiles", ProfileManager.getDefault());
-        Object result = null;
+
         ProfileManager manager = ProfileManager.getDefault();
-        assertNull(result);
-        result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/profile.py"), bindings);
+        assertNotNull(manager);
+        Object result = jsem.eval(FileUtil.getFile("program:java/test/jmri/script/exec-file-profile/profile.py"), bindings);
         assertNotNull(result);
-        assertEquals(Integer.valueOf(manager.getAutoStartActiveProfileTimeout()), result);
+        assertEquals(manager.getAutoStartActiveProfileTimeout(), result);
     }
 
     @Test
@@ -120,7 +116,7 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetEnginePython() {
-        assertNotNull(jsem.getEngine(JmriScriptEngineManager.PYTHON));
+        assertNotNull(jsem.getEngine(JmriScriptEngineManager.JYTHON));
     }
 
     @Test
@@ -190,7 +186,7 @@ public class JmriScriptEngineManagerTest {
 
     @Test
     public void testGetFactoryPython() {
-        assertNotNull(jsem.getFactory(JmriScriptEngineManager.PYTHON));
+        assertNotNull(jsem.getFactory(JmriScriptEngineManager.JYTHON));
     }
 
     @Test
@@ -264,6 +260,7 @@ public class JmriScriptEngineManagerTest {
         field.setAccessible(true);
         @SuppressWarnings("unchecked")
         HashMap<String, ScriptEngineFactory> factories = (HashMap<String, ScriptEngineFactory>) field.get(jsem);
+        assertNotNull(factories);
         field = jsem.getClass().getDeclaredField("engines");
         field.setAccessible(true);
         @SuppressWarnings("unchecked")
@@ -292,7 +289,6 @@ public class JmriScriptEngineManagerTest {
     public void tearDown() {
         jsem = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

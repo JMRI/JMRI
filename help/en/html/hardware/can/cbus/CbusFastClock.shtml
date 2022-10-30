@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI CBUS setup Fast Clock Fastclock time speed rate FCLK">
-  <title>JMRI Hardware Support - CBUS® Fast Clock</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - CBUS&reg; Fast Clock</title><!--#include virtual="/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/Header.shtml" -->
@@ -149,7 +149,7 @@
       "../../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock">JMRI
       Light Controllers</a> - Fast Clock Controlled.</p>
 
-      <p>CBUS® is a registered trade mark of Dr Michael Bolton</p>
+      <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
       <!--#include virtual="/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

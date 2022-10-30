@@ -84,7 +84,6 @@ public class WarrantFrameTest {
         _warrantMgr.dispose();
         _warrantMgr = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

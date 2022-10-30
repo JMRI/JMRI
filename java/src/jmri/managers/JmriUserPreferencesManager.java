@@ -159,6 +159,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return simplePreferenceList.contains(name);
     }
 
+    @Nonnull
     @Override
     public ArrayList<String> getSimplePreferenceStateList() {
         return new ArrayList<>(simplePreferenceList);
@@ -218,6 +219,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         a.add(new PreferenceList(item, description));
     }
 
+    @Nonnull
     @Override
     public ArrayList<String> getPreferenceList(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
@@ -233,6 +235,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @CheckForNull
     public String getPreferenceItemName(String strClass, int n) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getPreferenceName(n);
@@ -241,6 +244,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @CheckForNull
     public String getPreferenceItemDescription(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
@@ -398,6 +402,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     @Override
+    @CheckForNull
     public String getComboBoxLastSelection(String comboBoxName) {
         return this.comboBoxLastSelection.get(comboBoxName);
     }
@@ -583,6 +588,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return windowDetails.containsKey(strClass);
     }
 
+    @Nonnull
     @Override
     public String getClassDescription(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
@@ -591,6 +597,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return "";
     }
 
+    @Nonnull
     @Override
     public ArrayList<String> getPreferencesClasses() {
         return new ArrayList<>(this.classPreferenceList.keySet());

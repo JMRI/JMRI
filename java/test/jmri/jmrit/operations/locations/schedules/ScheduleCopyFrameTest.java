@@ -29,10 +29,14 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
     public void testCopy() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ScheduleManager sManager = InstanceManager.getDefault(ScheduleManager.class);
-        Schedule s = sManager.newSchedule("Test Schedule A");
-        Assert.assertNotNull("Test Schedule A exists", s);
+        Schedule sch = sManager.newSchedule("Test Schedule A");
+        Assert.assertNotNull("Test Schedule A exists", sch);
+        
+        // add some schedule items to copy
+        sch.addItem("Boxcar");
+        sch.addItem("Tank car");
 
-        ScheduleCopyFrame scf = new ScheduleCopyFrame(s);
+        ScheduleCopyFrame scf = new ScheduleCopyFrame(sch);
         Assert.assertNotNull("exists", scf);
 
         // no new schedule name
@@ -65,12 +69,6 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
                 .getMessage("CanNotSchedule"), new Object[]{Bundle.getMessage("ButtonCopy")}),
                 Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(scf);
-        
-//        ScheduleEditFrame editScheduleFrame =
-//                (ScheduleEditFrame) JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleEdit"));
-//        Assert.assertNotNull("Edit frame", editScheduleFrame);
-
-//        JUnitUtil.dispose(editScheduleFrame);
         JUnitUtil.dispose(scf);
     }
 }

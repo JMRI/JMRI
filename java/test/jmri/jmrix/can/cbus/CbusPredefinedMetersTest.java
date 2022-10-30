@@ -34,16 +34,18 @@ public class CbusPredefinedMetersTest {
 
         // This test requires a registred connection config since ProxyMeterManager
         // auto creates system meter managers using the connection configs.
-        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+
+       /* InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
         jmri.jmrix.NetworkPortAdapter pa = new jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter();
         pa.setSystemPrefix("M");
         jmri.jmrix.ConnectionConfig cc = new jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig(pa);
         InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(cc);
-
+*/
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        mm = new CbusPredefinedMeters(memo);
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
+        mm = memo.get(CbusPredefinedMeters.class);
     }
 
     @AfterEach
@@ -57,15 +59,21 @@ public class CbusPredefinedMetersTest {
     }
 
     public double getCurrent() {
-        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter").getKnownAnalogValue();
+        var meter = InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter");
+        Assertions.assertNotNull(meter);
+        return meter.getKnownAnalogValue();
     }
 
     public double getCurrentExtra() {
-        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter2").getKnownAnalogValue();
+        var meter = InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter2");
+        Assertions.assertNotNull(meter);
+        return meter.getKnownAnalogValue();
     }
 
     public double getVoltage() {
-        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSVoltageMeter").getKnownAnalogValue();
+        var meter = InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSVoltageMeter");
+        Assertions.assertNotNull(meter);
+        return meter.getKnownAnalogValue();
     }
 
     private void enable() {
@@ -90,9 +98,12 @@ public class CbusPredefinedMetersTest {
         disable();
         Assert.assertEquals("not listening",0,tcis.numListeners());
 
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
-        Assert.assertEquals("node table listening",1,tcis.numListeners());
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
+
+        Assertions.assertEquals(1,tcis.numListeners(),"node table listening "+tcis.getListeners());
         enable();
         Assert.assertEquals("mm listening",2,tcis.numListeners());
         disable();
@@ -115,8 +126,10 @@ public class CbusPredefinedMetersTest {
     @Test
     public void testMultiMCanReply(){
 
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
         testCs.setCsNum(0);
@@ -215,8 +228,10 @@ public class CbusPredefinedMetersTest {
     @Test
     public void testMultiMExtraCanReply(){
 
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
         testCs.setCsNum(0);
@@ -315,8 +330,10 @@ public class CbusPredefinedMetersTest {
     @Test
     public void testMultiMVoltCanReply(){
 
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
+        memo.get(CbusPreferences.class).setAllocateNNListener(false);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
 
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
         testCs.setCsNum(0);

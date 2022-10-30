@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+  <!-- v1. Nigel Cliffe.  Feb 14th 2022.  New feature added in JMRI 4.99.3 to add further menus to top  -->
+  <!--     of decoder pane, for CVs which don't really work as DecoderPro elements, such as Pseudo Programming and Load Calibration -->
+  <!--     CVs also removed from decoder normal list at same date -->
+<extraMenu name="Pseudo/Incremental Programming" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+           <mode>OPSBITMODE</mode>
+           <mode>OPSBYTEMODE</mode>
+           <extraMenuItem CV="300" default="100" >
+             <label>PP - Select Steam Chuff Set</label>
+             <label xml:lang="cs">PP – Vybrat sadu výfuky páry</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="128" >
+             <label>PP - Boiling sounds (Steam loco)</label>
+             <label xml:lang="cs">PP – Zvuky varu (Parní lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="133" >
+             <label>PP - Blow-off sound (Steam loco)</label>
+             <label xml:lang="cs">PP – Zvuk odfouknutí (Parní lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem label="" CV="300" default="129" >
+             <label>PP - Direction-change sound</label>
+             <label xml:lang="cs">PP – Zvuk změna směru</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="130" >
+             <label>PP - Brake squeal</label>
+             <label xml:lang="cs">PP – Skřípění brzd</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="132" >
+             <label>PP - Start whistle or horn</label>
+             <label xml:lang="cs">PP – Spuštění píšťaly nebo houkačky</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="135" >
+             <label>PP - Rolling noise</label>
+             <label xml:lang="cs">PP – Hluk valení</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="134" >
+             <label>PP - Driving sounds (Electric loco)</label>
+             <label xml:lang="cs">PP – Zvuk jízdy (Elektrická lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="131" >
+             <label>PP - Thyrister-control start (Electric loco)</label>
+             <label xml:lang="cs">PP – Spuštění tyristorové regulace (Elektrická lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="136" >
+             <label>PP - Switchgear sound (Electric loco)</label>
+             <label xml:lang="cs">PP – Zvuk hlavního vypínače (Elektrická lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="137" >
+             <label>PP - Second Thyristor (Electric Loco)</label>
+             <label xml:lang="cs">PP – Druhý tyristor (Elektrická lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="142" >
+             <label>PP - Dynamic brake (Electric loco)</label>
+             <label xml:lang="cs">PP – Elektrodynamická brzda (Elektrická lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="141" >
+             <label>PP - Turbo charger (Diesel loco)</label>
+             <label xml:lang="cs">PP – Turbodmychadlo (Motorová lokomotiva)</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="101" >
+             <label>PP - Random Generator Z1</label>
+             <label xml:lang="cs">PP – Generátor náhody Z1</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="102" >
+             <label>PP - Random Generator Z2</label>
+             <label xml:lang="cs">PP – Generátor náhody Z2</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="103" >
+             <label>PP - Random Generator Z3</label>
+             <label xml:lang="cs">PP – Generátor náhody Z3</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="104" >
+             <label>PP - Random Generator Z4</label>
+             <label xml:lang="cs">PP – Generátor náhody Z4</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="105" >
+             <label>PP - Random Generator Z5</label>
+             <label xml:lang="cs">PP – Generátor náhody Z5</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="106" >
+             <label>PP - Random Generator Z6</label>
+             <label xml:lang="cs">PP – Generátor náhody Z6</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="107" >
+             <label>PP - Random Generator Z7</label>
+             <label xml:lang="cs">PP – Generátor náhody Z7</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="108" >
+             <label>PP - Random Generator Z8</label>
+             <label xml:lang="cs">PP – Generátor náhody Z8</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="111" >
+             <label>PP - Switch Input S1</label>
+             <label xml:lang="cs">PP – Vstup spínače S1</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="112" >
+             <label>PP - Switch Input S2</label>
+             <label xml:lang="cs">PP – Vstup spínače S2</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="113" >
+             <label>PP - Switch Input S3</label>
+             <label xml:lang="cs">PP – Vstup spínače S3</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="1" >
+             <label>PP - Function key F1</label>
+             <label xml:lang="cs">PP – Funkční klávesa F1</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="2" >
+             <label>PP - Function key F2</label>
+             <label xml:lang="cs">PP – Funkční klávesa F2</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="3" >
+             <label>PP - Function key F3</label>
+             <label xml:lang="cs">PP – Funkční klávesa F3</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="4" >
+             <label>PP - Function key F4</label>
+             <label xml:lang="cs">PP – Funkční klávesa F4</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="5" >
+             <label>PP - Function key F5</label>
+             <label xml:lang="cs">PP – Funkční klávesa F5</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="6" >
+             <label>PP - Function key F6</label>
+             <label xml:lang="cs">PP – Funkční klávesa F6</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="7" >
+             <label>PP - Function key F7</label>
+             <label xml:lang="cs">PP – Funkční klávesa F7</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="8" >
+             <label>PP - Function key F8</label>
+             <label xml:lang="cs">PP – Funkční klávesa F8</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="9" >
+             <label>PP - Function key F9</label>
+             <label xml:lang="cs">PP – Funkční klávesa F9</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="10" >
+             <label>PP - Function key F10</label>
+             <label xml:lang="cs">PP – Funkční klávesa F10</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="11" >
+             <label>PP - Function key F11</label>
+             <label xml:lang="cs">PP – Funkční klávesa F11</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="12" >
+             <label>PP - Function key F12</label>
+             <label xml:lang="cs">PP – Funkční klávesa F12</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="13" >
+             <label>PP - Function key F13</label>
+             <label xml:lang="cs">PP – Funkční klávesa F13</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="14" >
+             <label>PP - Function key F14</label>
+             <label xml:lang="cs">PP – Funkční klávesa F14</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="15" >
+             <label>PP - Function key F15</label>
+             <label xml:lang="cs">PP – Funkční klávesa F15</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="16" >
+             <label>PP - Function key F16</label>
+             <label xml:lang="cs">PP – Funkční klávesa F16</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="17" >
+             <label>PP - Function key F17</label>
+             <label xml:lang="cs">PP – Funkční klávesa F17</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="18" >
+             <label>PP - Function key F18</label>
+             <label xml:lang="cs">PP – Funkční klávesa F18</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="19" >
+             <label>PP - Function key F19</label>
+             <label xml:lang="cs">PP – Funkční klávesa F19</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="20" >
+             <label>PP - Function key F0</label>
+             <label xml:lang="cs">PP – Funkční klávesa F0</label>
+           </extraMenuItem>
+           <extraMenuItem CV="301" default="0" >
+             <label>Incremental Progamming</label>
+             <label xml:lang="cs">Přírůstkové programování</label>
+           </extraMenuItem>
+           <extraMenuItem CV="301" default="66" >
+             <label>IP - Group 1 CV66-68</label>
+             <label xml:lang="cs">IP – Skupina 1 CV66-68</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="69" >
+             <label>IP - Group 2 CV69-71</label>
+             <label xml:lang="cs">IP – Skupina 2 CV69-71</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="72" >
+             <label>IP - Group 3 CV72-74</label>
+             <label xml:lang="cs">IP – Skupina 3 CV72-74</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="75" >
+             <label>IP - Group 4 CV75-77</label>
+             <label xml:lang="cs">IP – Skupina 4 CV75-77</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="78" >
+             <label>IP - Group 5 CV78-80</label>
+             <label xml:lang="cs">IP – Skupina 5 CV78-80</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="81" >
+             <label>IP - Group 6 CV81-83</label>
+             <label xml:lang="cs">IP – Skupina 6 CV81-83</label>
+           </extraMenuItem>
+           <extraMenuItem CV="300" default="84" >
+             <label>IP - Group 7 CV84-86</label>
+             <label xml:lang="cs">IP – Skupina 7 CV84-86</label>
+           </extraMenuItem>
+    </extraMenu>

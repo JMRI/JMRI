@@ -51,7 +51,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
         _memo = memo;
         _pms = memo.getProgModeSwitch();
         
-        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        preferences = memo.get(jmri.jmrix.can.cbus.CbusPreferences.class);
 
         pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
         
@@ -72,7 +72,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
             return false;
         } else {
             csNode = 65534;
-            CbusNodeTableDataModel cs =  jmri.InstanceManager.getNullableDefault(CbusNodeTableDataModel.class);
+            CbusNodeTableDataModel cs =  _memo.get(CbusNodeTableDataModel.class);
             if (cs != null) {
                 CbusNode csnode = cs.getCsByNum(0);
                 if (csnode != null) {

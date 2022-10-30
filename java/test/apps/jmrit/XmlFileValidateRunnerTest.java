@@ -32,12 +32,12 @@ public class XmlFileValidateRunnerTest {
             }
             @Override
             public void actionPerformed(ActionEvent e) {
-                 processFile(new File("java/test/jmri/configurexml/valid/RosterSchemaTest.xml"));   
+                 processFile(new File("java/test/jmri/configurexml/valid/RosterSchemaTest.xml"));
             }
         };
-        
+
         t.actionPerformed(null);
-        
+
         Assert.assertTrue(pass);
         Assert.assertFalse(fail);
     }
@@ -52,17 +52,17 @@ public class XmlFileValidateRunnerTest {
             }
             @Override
             protected void showFailResults(Component who, String fileName, String text) {
-                Assert.assertTrue("check message", text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1] declared for identity constraint \"turnoutName\""));
+                Assert.assertTrue("check message", text.startsWith("Error on line 14: cvc-identity-constraint.4.2.2: Duplicate key value [LT1]"));
                 fail = true;
             }
             @Override
             public void actionPerformed(ActionEvent e) {
-                 processFile(new File("java/test/jmri/configurexml/invalid/TurnoutDuplicateSystemName.xml"));   
+                 processFile(new File("java/test/jmri/configurexml/invalid/TurnoutDuplicateSystemName.xml"));
             }
         };
-        
+
         t.actionPerformed(null);
-        
+
         Assert.assertTrue(fail);
         Assert.assertFalse(pass);
     }

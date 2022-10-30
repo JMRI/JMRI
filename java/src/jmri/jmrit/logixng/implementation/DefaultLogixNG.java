@@ -34,6 +34,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _inline = false;
     private boolean _enabled = false;
+    private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
 
 
@@ -128,7 +129,7 @@ public class DefaultLogixNG extends AbstractNamedBean
                     if (entry._conditionalNG != null) {
                         entry._conditionalNG.setup();
                     } else {
-                        log.error("cannot load conditionalNG " + systemName);
+                        log.error("cannot load conditionalNG {}", systemName);
                     }
                 }
             } else {
@@ -161,6 +162,12 @@ public class DefaultLogixNG extends AbstractNamedBean
         } else {
             unregisterListeners();
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void activate() {
+        _isActive = true;
     }
 
     /** {@inheritDoc} */
@@ -286,7 +293,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
-        return _enabled && _manager.isActive();
+        return _enabled && _isActive && _manager.isActive();
     }
 
     /** {@inheritDoc} */
@@ -457,6 +464,8 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SLF4J_SIGN_ONLY_FORMAT",
+                                                        justification="Specific log message format")
     public void getUsageTree(int level, NamedBean bean, List<jmri.NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("** {} :: {}", level, this.getClass().getName());
 

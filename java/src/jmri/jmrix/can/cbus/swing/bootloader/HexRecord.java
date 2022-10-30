@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
 import java.io.IOException;
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,7 @@ public class HexRecord {
     static final byte DATA = 0;
     static final byte END = 1;
     // Maximum data length
-    static final int MAX_LEN = 16;
+    static final int MAX_LEN = 256;
     // Offsets of fields within the record
 
     // Record property members
@@ -32,7 +34,7 @@ public class HexRecord {
     
     
     /**
-     * Create an empty record with invalid status.
+     * Create an empty record with unprogrammed data and invalid status.
      */
     public HexRecord() {
         len = 0;
@@ -42,6 +44,7 @@ public class HexRecord {
         checksum = 0;
         valid = false;
         data = new byte[MAX_LEN];
+        Arrays.fill(data, (byte)0xFF);
         lineNo = -1;
     }
     

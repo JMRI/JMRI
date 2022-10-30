@@ -1,25 +1,25 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 
 import jmri.JmriException;
 import jmri.util.*;
 import jmri.util.junit.annotations.*;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of LayoutSlip
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class LayoutSlipTest {
 
     @Test
     public void testNew() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -27,7 +27,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testToString() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -43,7 +42,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetDisplayName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -54,7 +52,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetSlipType() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -65,7 +62,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetSlipState() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -76,21 +72,19 @@ public class LayoutSlipTest {
 
     @Test
     public void testTurnoutB() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
 
-        Assert.assertTrue("lts.getTurnoutBName() is ''", lts.getTurnoutBName() == "");
+        Assert.assertTrue("lts.getTurnoutBName() is ''", lts.getTurnoutBName().isEmpty());
         Assert.assertNull("lts.getTurnoutB() is null", lts.getTurnoutB());
 
-        Assert.assertTrue("ltd.getTurnoutBName() is ''", ltd.getTurnoutBName() == "");
+        Assert.assertTrue("ltd.getTurnoutBName() is ''", ltd.getTurnoutBName().isEmpty());
         Assert.assertNull("ltd.getTurnoutB() is null", ltd.getTurnoutB());
     }
 
     @Test
     public void testGetConnectionTypes() throws jmri.JmriException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -108,7 +102,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetConnectionTypesFail() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -131,7 +124,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testSlipState() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -173,7 +165,6 @@ public class LayoutSlipTest {
     @Disabled("No Test yet")
     @ToDo("finish initialization of test and write code to test activation of turnouts")
     public void testActivateTurnout() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -185,7 +176,6 @@ public class LayoutSlipTest {
     @Disabled("No Test yet")
     @ToDo("finish initialization of test and write code to test deactivation of turnouts")
     public void testDeactivateTurnout() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -195,7 +185,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testIsMainline() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -206,7 +195,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetConnectionInvalid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -232,7 +220,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testGetConnectionValid() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -269,7 +256,6 @@ public class LayoutSlipTest {
 
     @Test
     public void testSetConnection() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
         Assert.assertNotNull("LayoutSlip single not null", lts);
         Assert.assertNotNull("LayoutSlip double not null", ltd);
@@ -330,10 +316,8 @@ public class LayoutSlipTest {
     @BeforeAll
     public static void beforeClass() {
         JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-            layoutEditor = new LayoutEditor();
-        }
+        JUnitUtil.resetProfileManager();
+        layoutEditor = new LayoutEditor();
     }
 
     @AfterAll
@@ -343,22 +327,21 @@ public class LayoutSlipTest {
         }
         layoutEditor = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            lts = new LayoutSingleSlip("single", layoutEditor);
-            lvs = new LayoutSingleSlipView(lts, new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
-            layoutEditor.addLayoutTrack(lts, lvs);
 
-            ltd = new LayoutDoubleSlip("double", layoutEditor);
-            lvd = new LayoutDoubleSlipView(ltd, new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
-            layoutEditor.addLayoutTrack(ltd, lvd);
-        }
+        lts = new LayoutSingleSlip("single", layoutEditor);
+        lvs = new LayoutSingleSlipView(lts, new Point2D.Double(50.0, 100.0), +45.0, layoutEditor);
+        layoutEditor.addLayoutTrack(lts, lvs);
+
+        ltd = new LayoutDoubleSlip("double", layoutEditor);
+        lvd = new LayoutDoubleSlipView(ltd, new Point2D.Double(100.0, 50.0), -45.0, layoutEditor);
+        layoutEditor.addLayoutTrack(ltd, lvd);
+
     }
 
     @AfterEach

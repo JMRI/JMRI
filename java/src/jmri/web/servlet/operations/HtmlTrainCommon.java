@@ -7,9 +7,7 @@ package jmri.web.servlet.operations;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.*;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -101,9 +99,6 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     protected String pickUpCar(Car car, int count, String[] format) {
-        if (car.isLocalMove()) {
-            return ""; // print nothing local move, see dropCar
-        }
         StringBuilder builder = new StringBuilder();
         // count the number of utility cars
         if (count != 0) {
@@ -169,6 +164,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             builder.append(
                     String.format(locale, strings.getProperty("Attribute"),
@@ -191,6 +187,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append(Setup.getPickupEnginePrefix()).append(" ");
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             builder.append(
                     String.format(locale, strings.getProperty("Attribute"),
@@ -249,9 +246,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return splitString(rs.getNumber());
         } else if (attribute.equals(Setup.ROAD)) {
-            return StringEscapeUtils.escapeHtml4(rs.getRoadName().split("-")[0]);
+            return StringEscapeUtils.escapeHtml4(rs.getRoadName().split(TrainCommon.HYPHEN)[0]);
         } else if (attribute.equals(Setup.TYPE)) {
-            return rs.getTypeName().split("-")[0];
+            return rs.getTypeName().split(TrainCommon.HYPHEN)[0];
         } else if (attribute.equals(Setup.LENGTH)) {
             return rs.getLength();
         } else if (attribute.equals(Setup.COLOR)) {
@@ -279,7 +276,7 @@ public class HtmlTrainCommon extends TrainCommon {
                     .escapeHtml4(splitString(rs.getDestinationName())), StringEscapeUtils.escapeHtml4(splitString(rs
                     .getDestinationTrackName())));
         } else if (attribute.equals(Setup.OWNER)) {
-            return StringEscapeUtils.escapeHtml4(rs.getOwner());
+            return StringEscapeUtils.escapeHtml4(rs.getOwnerName());
         } else if (attribute.equals(Setup.COMMENT)) {
             return StringEscapeUtils.escapeHtml4(rs.getComment());
         } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER)

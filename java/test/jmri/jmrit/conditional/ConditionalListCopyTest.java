@@ -1,22 +1,17 @@
 package jmri.jmrit.conditional;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.NamedBean.DisplayOptions;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JListOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
 
 /*
 * Tests for the ConditionalListEdit Class.
@@ -31,8 +26,9 @@ public class ConditionalListCopyTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void CopyConditionalChangeNameTest() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Copy for IX102");  // NOI18N
         Assert.assertNotNull(x3);
 
@@ -43,9 +39,9 @@ public class ConditionalListCopyTest {
         Assert.assertNotNull(copyFrame);
 
         // test no selection
+        Thread t1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ReminderTitle"), "OK");
         new JButtonOperator(copyFrame, Bundle.getMessage("CopyConditionalButton")).push();  // NOI18N
-        JDialogOperator jdo = new JDialogOperator(copyFrame, Bundle.getMessage("ReminderTitle"));
-        new JButtonOperator(jdo, "OK").push();
+        JUnitUtil.waitFor(() -> {return !t1.isAlive();});
 
         Conditional cond1 = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName("IX102C1");
         Assert.assertNotNull(cond1);
@@ -53,19 +49,21 @@ public class ConditionalListCopyTest {
         new JButtonOperator(copyFrame, Bundle.getMessage("CopyConditionalButton")).push();  // NOI18N
 
         // test copy first conditional
-        new Thread(() -> {
-            JFrameOperator ciFrame = new JFrameOperator(Bundle.getMessage("TitleCopyConditional", "IX102"));  // NOI18N
-            Assert.assertNotNull(ciFrame);
-            new JTextFieldOperator(ciFrame, 0).setText("Copy 1");  // NOI18N
-            new JButtonOperator(ciFrame, Bundle.getMessage("ButtonSave")).push();  // NOI18N
-        }).start();
+        JFrameOperator ciFrame = new JFrameOperator(Bundle.getMessage("TitleCopyConditional",
+                cond1.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));  // NOI18N
+        Assert.assertNotNull(ciFrame);
+        new JTextFieldOperator(ciFrame, 0).setText("Copy 1");  // NOI18N
+        new JButtonOperator(ciFrame, Bundle.getMessage("ButtonSave")).push();  // NOI18N
+        ciFrame.waitClosed();
 
         new JButtonOperator(copyFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
+        copyFrame.waitClosed();
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void CopyConditionalFullEditTest() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Copy for IX102");  // NOI18N
         Assert.assertNotNull(x3);
 
@@ -84,14 +82,15 @@ public class ConditionalListCopyTest {
         new JButtonOperator(copyFrame, Bundle.getMessage("CopyConditionalButton")).push();  // NOI18N
 
         // test copy first conditional with full edit frame
-        new Thread(() -> {
-            JFrameOperator ciFrame = new JFrameOperator(Bundle.getMessage("TitleCopyConditional", "IX102"));  // NOI18N
-            Assert.assertNotNull(ciFrame);
-            new JTextFieldOperator(ciFrame, 0).setText("Copy 1");  // NOI18N
-            new JButtonOperator(ciFrame, Bundle.getMessage("ButtonSave")).push();  // NOI18N
-        }).start();
+        JFrameOperator ciFrame = new JFrameOperator(Bundle.getMessage("TitleCopyConditional",
+            cond1.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));  // NOI18N
+        Assert.assertNotNull(ciFrame);
+        new JTextFieldOperator(ciFrame, 0).setText("Copy 1");  // NOI18N
+        new JButtonOperator(ciFrame, Bundle.getMessage("ButtonSave")).push();  // NOI18N
+        ciFrame.waitClosed();
 
         new JButtonOperator(copyFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
+        copyFrame.waitClosed();
     }
 
     @BeforeEach
@@ -107,7 +106,6 @@ public class ConditionalListCopyTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

@@ -7,7 +7,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Bob Jacobsen Copyright (C) 2007, 2010
  */
 @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
-@SuppressWarnings("InterfaceIsType") // Silence Checkstyle
 public interface SdfConstants {
 
     /* **********************
@@ -42,7 +41,7 @@ public interface SdfConstants {
     final static String[] premptNames = new String[]{"ZAP", "RUN_WHILE_TRIG", "NO_PREEMPT_TRIG", "NOT_TRIG", "NORMAL"}; // NOI18N
 
 //----------
-// TRIGGER initiate CODES 
+// TRIGGER initiate CODES
     final static int TRIG_NEVER = 0x00; // 0 is INACTIVE entry (NULL,not a valid INITIATE coding)
     final static int TRIG_MODE_CHNG = 0x01;
     final static int TRIG_MATH = 0x02; // math result trigger
@@ -76,7 +75,7 @@ public interface SdfConstants {
     final static int TRIG_SF7 = 0x12;
     final static int TRIG_SF8 = 0x13;
 
-    final static int TRIG_SF13 = 0x14; // BYTE 2, bit 4, 
+    final static int TRIG_SF13 = 0x14; // BYTE 2, bit 4,
     final static int TRIG_SF14 = 0x15;
     final static int TRIG_SF15 = 0x16;
     final static int TRIG_SF16 = 0x17;
@@ -393,10 +392,10 @@ public interface SdfConstants {
     final static int FMATH_LODE = 0x00; // load DATA,,MATH_FLAG SET shows whole WORK is ZERO- DEFAULT task
     final static int FMATH_AND = 0x20; // use to CLR bit(s),MATH_FLAG SET shows whole WORK is ZERO
     final static int FMATH_OR = 0x40; // use to SET  bit(S), MATH FLAG SET shows whole WORK is 1's
-    final static int FMATH_XOR = 0x60; // use to flip bit(s), MATH FLAG SET if all flipped bits are now 0 
+    final static int FMATH_XOR = 0x60; // use to flip bit(s), MATH FLAG SET if all flipped bits are now 0
 
 //;FMATH_ADD EQU 0x80 ;add signed value  (commented out in original Digitrax file)
-    final static int FMATH_INTEGRATE = 0xA0; // add signed value to WORK,MATH_FLAG SET if over/underflo,or clamp LIMIT   
+    final static int FMATH_INTEGRATE = 0xA0; // add signed value to WORK,MATH_FLAG SET if over/underflo,or clamp LIMIT
     final static int FMATH_TEST_ZERO = 0xC0; // see if WORK under MASK is ZERO, if ZERO set MATH bit
 
 // -----1111----------------
@@ -428,7 +427,7 @@ public interface SdfConstants {
 //==================
 // 32 predefined user visible WORK/STATE regs, use these defined values
 // first 16 WORK visible reg address codes.
-    final static int WORK_SPEED = 0x00; // SOUND target PWM/SPD 
+    final static int WORK_SPEED = 0x00; // SOUND target PWM/SPD
     final static int WORK_NOTCH = 0x01; // CHNL# for NOTCH Modified spd info, MODUL0 8
     final static int WORK_SERVO = 0x02;
     final static int WORK_MVOLTS = 0x03;
@@ -513,8 +512,8 @@ public interface SdfConstants {
 //========================
 // SCATTER commands as arg bytes in MTYPE_SCATTER
 // is MODIFY SCTR command  -  1110-0100, cccc-XAAA, aaaa-aaaa, bbbb-bbbb, AAA is 1 of 8 scat tasks/chnls
-// is SCTR_PERIOD command  -  1110-0100, 0001-PAAA, Srrr-rrrr, IIIw-wwww, 
-// AAA is 1 of 8 scat tasks/chnls,  P=WORK scatter POLARITY, 
+// is SCTR_PERIOD command  -  1110-0100, 0001-PAAA, Srrr-rrrr, IIIw-wwww,
+// AAA is 1 of 8 scat tasks/chnls,  P=WORK scatter POLARITY,
 // S=1 is SOUNDCV src  [0x80=CV141 etc], S=0 rrr-rrrr is RATE in approx 1 sec counts, rate=0 is CNTR hold...
 // III=scatter intensity- 000=no SCATTER, w-wwww is a WORK reg# as SCATTER vary data src
 // cccc is 16 SCATTER command modes, dddd and eeee are ARG Regs for run modes
@@ -532,10 +531,10 @@ public interface SdfConstants {
     final static int SCAT_PERIOD_POLARITY_BIT = 3; // 1= reverse WORK influence
     final static int SKATTER_INCREMENT = 8; // phase INCREMENT
 
-    final static int SCAT_CHNL0 = 0x00; // SCATTER task0 
-    final static int SCAT_CHNL1 = 0x01; // SCATTER task1 
-    final static int SCAT_CHNL2 = 0x02; // SCATTER task2 
-    final static int SCAT_CHNL3 = 0x03; // SCATTER task3 
+    final static int SCAT_CHNL0 = 0x00; // SCATTER task0
+    final static int SCAT_CHNL1 = 0x01; // SCATTER task1
+    final static int SCAT_CHNL2 = 0x02; // SCATTER task2
+    final static int SCAT_CHNL3 = 0x03; // SCATTER task3
     final static int SCAT_CHNL4 = 0x04; // SCATTER task4- visible WORK reg
     final static int SCAT_CHNL5 = 0x05; // SCATTER task5- visible WORK reg
     final static int SCAT_CHNL6 = 0x06; // SCATTER task6- visible WORK reg
@@ -548,7 +547,7 @@ public interface SdfConstants {
 
     final static int SINTEN_IMMED = 0xE0; // use WORK# as immediate data
     final static int SINTEN_HIGH = 0xC0;
-    final static int SINTEN_MID = 0x60; // mid scatter intensity 
+    final static int SINTEN_MID = 0x60; // mid scatter intensity
     final static int SINTEN_LOW = 0x40;
     final static int SINTEN_MIN = 0x20;
     final static int SINTEN_OFF = 0x00;
@@ -710,7 +709,7 @@ public interface SdfConstants {
     final static int SCV_MUTE_VOL = 0x86; // CV135= vol level when MUTE action is triggered, e.g. F8=ON
     final static int SCV_MAIN_PITCH = 0x87; // CV136
     final static int SCV_137 = 0x88;
-    final static int SCV_138 = 0x89; // SCV138= 
+    final static int SCV_138 = 0x89; // SCV138=
     final static int SCV_DISTANCE_RATE = 0x8A; // SCV139= mask for controlling DISTANCE rate event/trigger
     final static int SCV_FREEFORM = 0x8B; // SCV_140, here the SCV's are SDF defined
 

@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.LastResultOfDigitalExpression;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Element;
 
@@ -17,7 +18,7 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
 
     public LastResultOfDigitalExpressionXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -31,17 +32,15 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
         Element element = new Element("LastResultOfDigitalExpression");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
 
-        NamedBeanHandle handle = p.getDigitalExpression();
-        if (handle != null) {
-            element.addContent(new Element("expression").addContent(handle.getName()));
-        }
-        
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<MaleDigitalExpressionSocket>();
+        element.addContent(selectNamedBeanXml.store(p.getSelectNamedBean(), "namedBean"));
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
@@ -50,18 +49,13 @@ public class LastResultOfDigitalExpressionXml extends jmri.managers.configurexml
 
         loadCommon(h, shared);
 
-        Element lightName = shared.getChild("expression");
-        if (lightName != null) {
-            DigitalExpressionBean t = InstanceManager
-                    .getDefault(DigitalExpressionManager.class)
-                    .getNamedBean(lightName.getTextTrim());
-            if (t != null) h.setDigitalExpression(t);
-            else h.removeDigitalExpression();
-        }
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<MaleDigitalExpressionSocket>();
+        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean(), true);
+        selectNamedBeanXml.loadLegacy(shared, h.getSelectNamedBean(), "expression", null, null, null, null);
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
-    
+
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LastResultOfDigitalExpressionXml.class);
 }

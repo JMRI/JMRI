@@ -35,6 +35,11 @@ public class SprogSlot {
         f9to12Packet = false;
         f13to20Packet = false;
         f21to28Packet = false;
+        f29to36Packet = false;
+        f37to44Packet = false;
+        f45to52Packet = false;
+        f53to60Packet = false;
+        f61to68Packet = false;
         repeat = -1;
         addr = 0;
         isLong = false;
@@ -61,6 +66,11 @@ public class SprogSlot {
     private boolean f9to12Packet;
     private boolean f13to20Packet;
     private boolean f21to28Packet;
+    private boolean f29to36Packet;
+    private boolean f37to44Packet;
+    private boolean f45to52Packet;
+    private boolean f53to60Packet;
+    private boolean f61to68Packet;
 
     public boolean isF0to4Packet() {
         return f0to4Packet;
@@ -80,6 +90,26 @@ public class SprogSlot {
 
     public boolean isF21to28Packet() {
         return f21to28Packet;
+    }
+
+    public boolean isF29to36Packet() {
+        return f29to36Packet;
+    }
+
+    public boolean isF37to44Packet() {
+        return f37to44Packet;
+    }
+
+    public boolean isF45to52Packet() {
+        return f45to52Packet;
+    }
+
+    public boolean isF53to60Packet() {
+        return f53to60Packet;
+    }
+
+    public boolean isF61to68Packet() {
+        return f61to68Packet;
     }
 
     private boolean repeatF0 = false;
@@ -111,6 +141,46 @@ public class SprogSlot {
     private boolean repeatF26 = false;
     private boolean repeatF27 = false;
     private boolean repeatF28 = false;
+    private boolean repeatF29 = false;
+    private boolean repeatF30 = false;
+    private boolean repeatF31 = false;
+    private boolean repeatF32 = false;
+    private boolean repeatF33 = false;
+    private boolean repeatF34 = false;
+    private boolean repeatF35 = false;
+    private boolean repeatF36 = false;
+    private boolean repeatF37 = false;
+    private boolean repeatF38 = false;
+    private boolean repeatF39 = false;
+    private boolean repeatF40 = false;
+    private boolean repeatF41 = false;
+    private boolean repeatF42 = false;
+    private boolean repeatF43 = false;
+    private boolean repeatF44 = false;
+    private boolean repeatF45 = false;
+    private boolean repeatF46 = false;
+    private boolean repeatF47 = false;
+    private boolean repeatF48 = false;
+    private boolean repeatF49 = false;
+    private boolean repeatF50 = false;
+    private boolean repeatF51 = false;
+    private boolean repeatF52 = false;
+    private boolean repeatF53 = false;
+    private boolean repeatF54 = false;
+    private boolean repeatF55 = false;
+    private boolean repeatF56 = false;
+    private boolean repeatF57 = false;
+    private boolean repeatF58 = false;
+    private boolean repeatF59 = false;
+    private boolean repeatF60 = false;
+    private boolean repeatF61 = false;
+    private boolean repeatF62 = false;
+    private boolean repeatF63 = false;
+    private boolean repeatF64 = false;
+    private boolean repeatF65 = false;
+    private boolean repeatF66 = false;
+    private boolean repeatF67 = false;
+    private boolean repeatF68 = false;
 
     /**
      * Set the contents of the slot. Intended for accessory packets.
@@ -150,6 +220,11 @@ public class SprogSlot {
         this.f9to12Packet = false;
         this.f13to20Packet = false;
         this.f21to28Packet = false;
+        this.f29to36Packet = false;
+        this.f37to44Packet = false;
+        this.f45to52Packet = false;
+        this.f53to60Packet = false;
+        this.f61to68Packet = false;
         this.forward = forward;
         if (mode == SpeedStepMode.NMRA_DCC_28) {
             this.payload = jmri.NmraPacket.speedStep28Packet(true, addr,
@@ -312,6 +387,216 @@ public class SprogSlot {
         this.status = SprogConstants.SLOT_IN_USE;
     }
 
+    public void f29to36packet(int address, boolean isLongAddress,
+            boolean f29, boolean f29Momentary,
+            boolean f30, boolean f30Momentary,
+            boolean f31, boolean f31Momentary,
+            boolean f32, boolean f32Momentary,
+            boolean f33, boolean f33Momentary,
+            boolean f34, boolean f34Momentary,
+            boolean f35, boolean f35Momentary,
+            boolean f36, boolean f36Momentary) {
+
+        this.f29to36Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF29 && !f29)
+                || (this.repeatF30 && !f30)
+                || (this.repeatF31 && !f31)
+                || (this.repeatF32 && !f32)
+                || (this.repeatF33 && !f33)
+                || (this.repeatF34 && !f34)
+                || (this.repeatF35 && !f35)
+                || (this.repeatF36 && !f36)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF29 = !f29Momentary && f29;
+        this.repeatF30 = !f30Momentary && f30;
+        this.repeatF31 = !f31Momentary && f31;
+        this.repeatF32 = !f32Momentary && f32;
+        this.repeatF33 = !f33Momentary && f33;
+        this.repeatF34 = !f34Momentary && f34;
+        this.repeatF35 = !f35Momentary && f35;
+        this.repeatF36 = !f36Momentary && f36;
+
+        this.payload = jmri.NmraPacket.function29Through36Packet(address,
+                isLongAddress,
+                f29, f30, f31, f32,
+                f33, f34, f35, f36);
+        this.status = SprogConstants.SLOT_IN_USE;
+    }
+
+    public void f37to44packet(int address, boolean isLongAddress,
+            boolean f37, boolean f37Momentary,
+            boolean f38, boolean f38Momentary,
+            boolean f39, boolean f39Momentary,
+            boolean f40, boolean f40Momentary,
+            boolean f41, boolean f41Momentary,
+            boolean f42, boolean f42Momentary,
+            boolean f43, boolean f43Momentary,
+            boolean f44, boolean f44Momentary) {
+
+        this.f37to44Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF37 && !f37)
+                || (this.repeatF38 && !f38)
+                || (this.repeatF39 && !f39)
+                || (this.repeatF40 && !f40)
+                || (this.repeatF41 && !f41)
+                || (this.repeatF42 && !f42)
+                || (this.repeatF43 && !f43)
+                || (this.repeatF44 && !f44)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF37 = !f37Momentary && f37;
+        this.repeatF38 = !f38Momentary && f38;
+        this.repeatF39 = !f39Momentary && f39;
+        this.repeatF40 = !f40Momentary && f40;
+        this.repeatF41 = !f41Momentary && f41;
+        this.repeatF42 = !f42Momentary && f42;
+        this.repeatF43 = !f43Momentary && f43;
+        this.repeatF44 = !f44Momentary && f44;
+
+        this.payload = jmri.NmraPacket.function37Through44Packet(address,
+                isLongAddress,
+                f37, f38, f39, f40,
+                f41, f42, f43, f44);
+        this.status = SprogConstants.SLOT_IN_USE;
+    }
+
+    public void f45to52packet(int address, boolean isLongAddress,
+            boolean f45, boolean f45Momentary,
+            boolean f46, boolean f46Momentary,
+            boolean f47, boolean f47Momentary,
+            boolean f48, boolean f48Momentary,
+            boolean f49, boolean f49Momentary,
+            boolean f50, boolean f50Momentary,
+            boolean f51, boolean f51Momentary,
+            boolean f52, boolean f52Momentary) {
+
+        this.f45to52Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF45 && !f45)
+                || (this.repeatF46 && !f46)
+                || (this.repeatF47 && !f47)
+                || (this.repeatF48 && !f48)
+                || (this.repeatF49 && !f49)
+                || (this.repeatF50&& !f50)
+                || (this.repeatF51 && !f51)
+                || (this.repeatF52 && !f52)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF45 = !f45Momentary && f45;
+        this.repeatF46 = !f46Momentary && f46;
+        this.repeatF47 = !f47Momentary && f47;
+        this.repeatF48 = !f48Momentary && f48;
+        this.repeatF49 = !f49Momentary && f49;
+        this.repeatF50 = !f50Momentary && f50;
+        this.repeatF51 = !f51Momentary && f51;
+        this.repeatF52 = !f52Momentary && f52;
+
+        this.payload = jmri.NmraPacket.function45Through52Packet(address,
+                isLongAddress,
+                f45, f46, f47, f48,
+                f49, f50, f51, f52);
+        this.status = SprogConstants.SLOT_IN_USE;
+    }
+
+    public void f53to60packet(int address, boolean isLongAddress,
+            boolean f53, boolean f53Momentary,
+            boolean f54, boolean f54Momentary,
+            boolean f55, boolean f55Momentary,
+            boolean f56, boolean f56Momentary,
+            boolean f57, boolean f57Momentary,
+            boolean f58, boolean f58Momentary,
+            boolean f59, boolean f59Momentary,
+            boolean f60, boolean f60Momentary) {
+
+        this.f53to60Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF53 && !f53)
+                || (this.repeatF54 && !f54)
+                || (this.repeatF55 && !f55)
+                || (this.repeatF56 && !f56)
+                || (this.repeatF57 && !f57)
+                || (this.repeatF58&& !f59)
+                || (this.repeatF59 && !f59)
+                || (this.repeatF60 && !f60)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF53 = !f53Momentary && f53;
+        this.repeatF54 = !f54Momentary && f54;
+        this.repeatF55 = !f55Momentary && f55;
+        this.repeatF56 = !f56Momentary && f56;
+        this.repeatF57 = !f57Momentary && f57;
+        this.repeatF58 = !f58Momentary && f58;
+        this.repeatF59 = !f59Momentary && f59;
+        this.repeatF60 = !f60Momentary && f60;
+
+        this.payload = jmri.NmraPacket.function53Through60Packet(address,
+                isLongAddress,
+                f53, f54, f55, f56,
+                f57, f58, f59, f60);
+        this.status = SprogConstants.SLOT_IN_USE;
+    }
+
+    public void f61to68packet(int address, boolean isLongAddress,
+            boolean f61, boolean f61Momentary,
+            boolean f62, boolean f62Momentary,
+            boolean f63, boolean f63Momentary,
+            boolean f64, boolean f64Momentary,
+            boolean f65, boolean f65Momentary,
+            boolean f66, boolean f66Momentary,
+            boolean f67, boolean f67Momentary,
+            boolean f68, boolean f68Momentary) {
+
+        this.f61to68Packet = true;
+        this.addr = address;
+        this.isLong = isLongAddress;
+
+        //Were we repeating any functions which we are now not?
+        if ((this.repeatF61 && !f61)
+                || (this.repeatF62 && !f62)
+                || (this.repeatF63 && !f63)
+                || (this.repeatF64 && !f64)
+                || (this.repeatF65 && !f65)
+                || (this.repeatF66&& !f66)
+                || (this.repeatF67 && !f67)
+                || (this.repeatF68 && !f68)) {
+            this.repeat = 3; //Then repeat 3 times
+        }
+
+        this.repeatF61 = !f61Momentary && f61;
+        this.repeatF62 = !f62Momentary && f62;
+        this.repeatF63 = !f63Momentary && f63;
+        this.repeatF64 = !f64Momentary && f64;
+        this.repeatF65 = !f65Momentary && f65;
+        this.repeatF66 = !f66Momentary && f66;
+        this.repeatF67 = !f67Momentary && f67;
+        this.repeatF68 = !f68Momentary && f68;
+
+        this.payload = jmri.NmraPacket.function61Through68Packet(address,
+                isLongAddress,
+                f61, f62, f63, f64,
+                f65, f66, f67, f68);
+        this.status = SprogConstants.SLOT_IN_USE;
+    }
+
     public void f0to4packet(int address, boolean isLongAddress,
             boolean f0, boolean f0Momentary,
             boolean f1, boolean f1Momentary,
@@ -400,6 +685,11 @@ public class SprogSlot {
         f9to12Packet = false;
         f13to20Packet = false;
         f21to28Packet = false;
+        f29to36Packet = false;
+        f37to44Packet = false;
+        f45to52Packet = false;
+        f53to60Packet = false;
+        f61to68Packet = false;
         if (payload != null) {
             payload[0] = 0;
             payload[1] = 0;

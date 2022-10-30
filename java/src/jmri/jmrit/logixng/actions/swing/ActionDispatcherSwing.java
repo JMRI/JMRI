@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -13,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionDispatcher.DirectOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.DispatcherActiveTrainManager;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.BeanSelectPanel;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -35,18 +37,7 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     private JTextField _dispatcherLocalVariableTextField;
     private JTextField _dispatcherFormulaTextField;
 
-
-    private JTabbedPane _tabbedPaneOperation;
-    private JPanel _panelOperationDirect;
-    private JPanel _panelOperationReference;
-    private JPanel _panelOperationLocalVariable;
-    private JPanel _panelOperationFormula;
-
-    private JComboBox<DirectOperation> _stateComboBox;
-    private JTextField _dispatcherOperReferenceTextField;
-    private JTextField _dispatcherOperLocalVariableTextField;
-    private JTextField _dispatcherOperFormulaTextField;
-
+    private LogixNG_SelectEnumSwing<DirectOperation> _selectOperationSwing;
 
     private JTabbedPane _tabbedPaneData;
     private JPanel _panelDataDirect;
@@ -54,6 +45,9 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     private JPanel _panelDataLocalVariable;
     private JPanel _panelDataFormula;
 
+    JLabel _priorityLabel;
+    JLabel _resetLabel;
+    JLabel _terminateLabel;
     private JSpinner _priority;
     private JCheckBox _resetOption;
     private JCheckBox _terminateOption;
@@ -62,9 +56,18 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     private JTextField _dispatcherDataFormulaTextField;
 
 
+    public ActionDispatcherSwing() {
+    }
+
+    public ActionDispatcherSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionDispatcher action = (ActionDispatcher)object;
+
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
 
@@ -101,38 +104,13 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
 
 
         // Center section
-        _tabbedPaneOperation = new JTabbedPane();
-        _panelOperationDirect = new javax.swing.JPanel();
-        _panelOperationReference = new javax.swing.JPanel();
-        _panelOperationLocalVariable = new javax.swing.JPanel();
-        _panelOperationFormula = new javax.swing.JPanel();
+        JPanel _tabbedPaneOperation;
 
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Direct.toString(), _panelOperationDirect);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Reference.toString(), _panelOperationReference);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelOperationLocalVariable);
-        _tabbedPaneOperation.addTab(NamedBeanAddressing.Formula.toString(), _panelOperationFormula);
-
-        _stateComboBox = new JComboBox<>();
-        for (DirectOperation e : DirectOperation.values()) {
-            _stateComboBox.addItem(e);
+        if (action != null) {
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), DirectOperation.values());
+        } else {
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, DirectOperation.values());
         }
-        JComboBoxUtil.setupComboBoxMaxRows(_stateComboBox);
-        _stateComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
-            setDataPanelState();
-        });
-        _panelOperationDirect.add(_stateComboBox);
-
-        _dispatcherOperReferenceTextField = new JTextField();
-        _dispatcherOperReferenceTextField.setColumns(30);
-        _panelOperationReference.add(_dispatcherOperReferenceTextField);
-
-        _dispatcherOperLocalVariableTextField = new JTextField();
-        _dispatcherOperLocalVariableTextField.setColumns(30);
-        _panelOperationLocalVariable.add(_dispatcherOperLocalVariableTextField);
-
-        _dispatcherOperFormulaTextField = new JTextField();
-        _dispatcherOperFormulaTextField.setColumns(30);
-        _panelOperationFormula.add(_dispatcherOperFormulaTextField);
 
 
         // Right section
@@ -148,13 +126,39 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
         _tabbedPaneData.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelDataLocalVariable);
         _tabbedPaneData.addTab(NamedBeanAddressing.Formula.toString(), _panelDataFormula);
 
-        JPanel dataGroup = new JPanel();
+
+        _priorityLabel = new JLabel(Bundle.getMessage("ActionDispatcher_Priority"));
         _priority = new JSpinner(new SpinnerNumberModel(5, 0, 100, 1));
-        dataGroup.add(_priority);
+        _resetLabel = new JLabel(Bundle.getMessage("ActionDispatcher_Reset"));
         _resetOption = new JCheckBox();
-        dataGroup.add(_resetOption);
+        _terminateLabel = new JLabel(Bundle.getMessage("ActionDispatcher_Terminate"));
         _terminateOption = new JCheckBox();
-        dataGroup.add(_terminateOption);
+
+        JPanel dataGroup = new JPanel();
+        dataGroup.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 1;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
+        dataGroup.add(_priorityLabel, constraint);
+        _priorityLabel.setLabelFor(_priority);
+        constraint.gridy = 1;
+        dataGroup.add(_resetLabel, constraint);
+        _resetLabel.setLabelFor(_resetOption);
+        constraint.gridy = 2;
+        dataGroup.add(_terminateLabel, constraint);
+        _terminateLabel.setLabelFor(_terminateOption);
+        constraint.gridx = 1;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.WEST;
+        dataGroup.add(_priority, constraint);
+        constraint.gridy = 1;
+        dataGroup.add(_resetOption, constraint);
+        constraint.gridy = 2;
+        dataGroup.add(_terminateOption, constraint);
+
         _panelDataDirect.add(dataGroup);
 
         _dispatcherDataReferenceTextField = new JTextField();
@@ -168,8 +172,6 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
         _dispatcherDataFormulaTextField = new JTextField();
         _dispatcherDataFormulaTextField.setColumns(30);
         _panelDataFormula.add(_dispatcherDataFormulaTextField);
-
-        setDataPanelState();
 
 
         if (action != null) {
@@ -185,19 +187,6 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
             _dispatcherLocalVariableTextField.setText(action.getLocalVariable());
             _dispatcherFormulaTextField.setText(action.getFormula());
 
-            switch (action.getOperationAddressing()) {
-                case Direct: _tabbedPaneOperation.setSelectedComponent(_panelOperationDirect); break;
-                case Reference: _tabbedPaneOperation.setSelectedComponent(_panelOperationReference); break;
-                case LocalVariable: _tabbedPaneOperation.setSelectedComponent(_panelOperationLocalVariable); break;
-                case Formula: _tabbedPaneOperation.setSelectedComponent(_panelOperationFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
-            }
-            _stateComboBox.setSelectedItem(action.getOperationDirect());
-            setDataPanelState();
-            _dispatcherOperReferenceTextField.setText(action.getOperationReference());
-            _dispatcherOperLocalVariableTextField.setText(action.getOperationLocalVariable());
-            _dispatcherOperFormulaTextField.setText(action.getOperFormula());
-
             switch (action.getDataAddressing()) {
                 case Direct: _tabbedPaneData.setSelectedComponent(_panelDataDirect); break;
                 case Reference: _tabbedPaneData.setSelectedComponent(_panelDataReference); break;
@@ -211,8 +200,12 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
             _dispatcherDataReferenceTextField.setText(action.getDataReference());
             _dispatcherDataLocalVariableTextField.setText(action.getDataLocalVariable());
             _dispatcherDataFormulaTextField.setText(action.getDataFormula());
-
         }
+
+        setDataPanelState();
+
+        _selectOperationSwing.addAddressingListener((evt) -> { setDataPanelState(); });
+        _selectOperationSwing.addEnumListener((evt) -> { setDataPanelState(); });
 
         JComponent[] components = new JComponent[]{
             _tabbedPaneDispatcher,
@@ -226,24 +219,33 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     }
 
     private void setDataPanelState() {
+
+        _priorityLabel.setVisible(false);
         _priority.setVisible(false);
+        _resetLabel.setVisible(false);
         _resetOption.setVisible(false);
+        _terminateLabel.setVisible(false);
         _terminateOption.setVisible(false);
 
         boolean newState = false;
-        DirectOperation oper = _stateComboBox.getItemAt(_stateComboBox.getSelectedIndex());
 
-        if (oper == DirectOperation.TrainPriority) {
+        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
+                DirectOperation.TrainPriority)) {
+            _priorityLabel.setVisible(true);
             _priority.setVisible(true);
             newState = true;
         }
 
-        if (oper == DirectOperation.ResetWhenDoneOption) {
+        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
+                DirectOperation.ResetWhenDoneOption)) {
+            _resetLabel.setVisible(true);
             _resetOption.setVisible(true);
             newState = true;
         }
 
-        if (oper == DirectOperation.TerminateWhenDoneOption) {
+        if (_selectOperationSwing.isEnumSelectedOrIndirectAddressing(
+                DirectOperation.TerminateWhenDoneOption)) {
+            _terminateLabel.setVisible(true);
             _terminateOption.setVisible(true);
             newState = true;
         }
@@ -257,8 +259,16 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
+        // Create a temporary action to test formula
+        ActionDispatcher action = new ActionDispatcher("IQDA2", null);
+
         validateInfoFileSection(errorMessages);
-        validateOperationSection(errorMessages);
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
+
+        if ((_selectOperationSwing.getAddressing() == NamedBeanAddressing.Direct)
+                && (_selectOperationSwing.getEnum() == DirectOperation.None)) {
+            errorMessages.add(Bundle.getMessage("ActionDispatcher_ErrorDispatcherActionNotSelected"));
+        }
         validateDataSection(errorMessages);
         return errorMessages.isEmpty();
     }
@@ -293,48 +303,11 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
 
-        if (_tabbedPaneDispatcher.getSelectedComponent() == _panelDispatcherDirect) {
-            if (_stateComboBox.getSelectedItem() == null) {
-                errorMessages.add(Bundle.getMessage("ActionDispatcher_ErrorFile"));
-            }
-        }
-    }
-
-    private void validateOperationSection(List<String> errorMessages) {
-        // Create a temporary action to test formula
-        ActionDispatcher action = new ActionDispatcher("IQDA2", null);
-
-        try {
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationReference(_dispatcherOperReferenceTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return;
-        }
-
-        try {
-            action.setOperationFormula(_dispatcherOperFormulaTextField.getText());
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-            } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
-            }
-        } catch (ParserException e) {
-            errorMessages.add("Cannot parse formula: " + e.getMessage());
-        }
-
-        if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-            if (_stateComboBox.getSelectedIndex() < 1) {
-                errorMessages.add(Bundle.getMessage("ActionDispatcher_ErrorStateAction"));
-            }
-        }
+//        if (_tabbedPaneDispatcher.getSelectedComponent() == _panelDispatcherDirect) {
+//            if (_stateComboBox.getSelectedItem() == null) {
+//                errorMessages.add(Bundle.getMessage("ActionDispatcher_ErrorFile"));
+//            }
+//        }
     }
 
     private void validateDataSection(List<String> errorMessages) {
@@ -404,21 +377,7 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
             }
 
             // Center section
-            if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationDirect) {
-                action.setOperationAddressing(NamedBeanAddressing.Direct);
-                action.setOperationDirect(_stateComboBox.getItemAt(_stateComboBox.getSelectedIndex()));
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationReference) {
-                action.setOperationAddressing(NamedBeanAddressing.Reference);
-                action.setOperationReference(_dispatcherOperReferenceTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationLocalVariable) {
-                action.setOperationAddressing(NamedBeanAddressing.LocalVariable);
-                action.setOperationLocalVariable(_dispatcherOperLocalVariableTextField.getText());
-            } else if (_tabbedPaneOperation.getSelectedComponent() == _panelOperationFormula) {
-                action.setOperationAddressing(NamedBeanAddressing.Formula);
-                action.setOperationFormula(_dispatcherOperFormulaTextField.getText());
-            } else {
-                throw new IllegalArgumentException("_tabbedPaneOperation has unknown selection");
-            }
+            _selectOperationSwing.updateObject(action.getSelectEnum());
 
             // Right section
             if (_tabbedPaneData.getSelectedComponent() == _panelDataDirect) {
@@ -450,7 +409,13 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
     }
 
     @Override
+    public void setDefaultValues() {
+        _selectOperationSwing.setEnum(DirectOperation.LoadTrainFromFile);
+    }
+
+    @Override
     public void dispose() {
+        _selectOperationSwing.dispose();
     }
 
 

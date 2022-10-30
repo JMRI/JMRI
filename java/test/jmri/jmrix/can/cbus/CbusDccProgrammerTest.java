@@ -34,6 +34,17 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((CbusDccProgrammer)programmer2).getBestMode());        
     }
 
+    @Test
+    public void testDispose() {
+    
+        Assertions.assertEquals(2, tcis.numListeners(),"2 tcis listeners");
+    
+        programmer.dispose();
+        programmer2.dispose();
+        
+        Assertions.assertEquals(0, tcis.numListeners(),"0 tcis listeners");
+    }
+    
 /*
     @Test
     public void testSetGetMode() {
@@ -80,8 +91,8 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 */
     
     protected Programmer programmer2;
-    private TrafficControllerScaffold tcis;
-    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis = null;
+    private CanSystemConnectionMemo memo = null;
 
     @Override
     @BeforeEach
@@ -97,10 +108,14 @@ public class CbusDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     @AfterEach
     public void tearDown() {
+        programmer.dispose();
+        programmer2.dispose();
         programmer2 = null;
         programmer = null;
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
         tcis = null;
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

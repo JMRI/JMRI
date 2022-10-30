@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Import CV values from a generic CSV format CV list file such as those written
@@ -28,32 +26,25 @@ import org.slf4j.LoggerFactory;
  */
 public class CsvImporter {
 
-    private final static Logger log = LoggerFactory.getLogger(CsvImporter.class);
+    public CsvImporter(File file, CvTableModel cvModel)
+            throws IOException, NumberFormatException {
 
-    public CsvImporter(File file, CvTableModel cvModel) throws IOException {
-        FileReader fileReader=null;
-        BufferedReader bufferedReader=null;
+        try (FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
-        try {
-            CvValue cvObject;
-            String line = null;
-            String name = null;
-            int value = 0;
-
-            fileReader = new FileReader(file);
-            bufferedReader = new BufferedReader(fileReader);
+            String line;
 
             while ((line = bufferedReader.readLine()) != null) {
                 String[] lineStrings = line.split(" *, *");
                 if (lineStrings.length < 2) {
                     bufferedReader.close();
                     throw new IOException();
-                } else if (lineStrings[0].equals("CV")) {
+                } else if (lineStrings[0].contains("CV")) {
                     log.debug("Header OK");
                 } else {
-                    name = lineStrings[0].trim();
-                    value = Integer.parseInt(lineStrings[1].trim());
-                    cvObject = cvModel.allCvMap().get(name);
+                    String name = lineStrings[0].trim();
+                    int value = Integer.parseInt(lineStrings[1].trim());
+                    CvValue cvObject = cvModel.allCvMap().get(name);
                     if (cvObject == null) {
                         log.warn("CV {} was in import file, but not defined by the decoder definition", name);
                         cvModel.addCV(name, false, false, false);
@@ -62,16 +53,8 @@ public class CsvImporter {
                     cvObject.setValue(value);
                 }
             }
-        } catch (IOException e) {
-            log.error("Error reading file: {}", e);
-        } finally {
-            if(bufferedReader!=null) {
-               bufferedReader.close();
-            }
-            if(fileReader!=null) {
-               fileReader.close();
-            }
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CsvImporter.class);
 }

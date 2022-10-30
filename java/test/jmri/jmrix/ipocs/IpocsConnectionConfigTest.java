@@ -9,7 +9,9 @@ import static org.mockito.Mockito.when;
 
 import javax.swing.JOptionPane;
 
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
 
 public class IpocsConnectionConfigTest {
@@ -128,4 +130,15 @@ public class IpocsConnectionConfigTest {
     cc.setDisabled(true);
     assertEquals(true, cc.getDisabled());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

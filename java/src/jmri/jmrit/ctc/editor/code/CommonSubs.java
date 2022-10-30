@@ -3,9 +3,7 @@ package jmri.jmrit.ctc.editor.code;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -21,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.BlockManager;
-import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
@@ -32,7 +29,6 @@ import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -94,7 +90,9 @@ public class CommonSubs {
                 }
             }
         }
-        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(), CSVFormat.DEFAULT.withQuote(null).withRecordSeparator(null))) {
+        try (CSVPrinter printer = new CSVPrinter(new StringBuilder(),
+                CSVFormat.Builder.create(CSVFormat.DEFAULT)
+                        .setQuote(null).setRecordSeparator(null).build())) {
             printer.printRecord(entries);
             return printer.getOut().toString();
         } catch (IOException ex) {
@@ -242,7 +240,7 @@ public class CommonSubs {
                 });
                 break;
             default:
-                log.error(Bundle.getMessage("CommonSubsBeanType"), beanType);   // NOI18N
+                log.error("Unhandled, {}", Bundle.getMessage("CommonSubsBeanType", beanType));   // NOI18N
         }
         list.sort(new jmri.util.AlphanumComparator());
         list.forEach((item) -> {

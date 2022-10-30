@@ -72,14 +72,46 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     static private JUnitAppender instance = null;
 
     // package-level access for testing
-    static boolean unexpectedFatalSeen = false;
-    static String  unexpectedFatalContent = null;
-    static boolean unexpectedErrorSeen = false;
-    static String  unexpectedErrorContent = null;
-    static boolean unexpectedWarnSeen = false;
-    static String  unexpectedWarnContent = null;
-    static boolean unexpectedInfoSeen = false;
-    static String  unexpectedInfoContent = null;
+    static volatile boolean unexpectedFatalSeen = false;
+    static volatile String  unexpectedFatalContent = null;
+    static volatile boolean unexpectedErrorSeen = false;
+    static volatile String  unexpectedErrorContent = null;
+    static volatile boolean unexpectedWarnSeen = false;
+    static volatile String  unexpectedWarnContent = null;
+    static volatile boolean unexpectedInfoSeen = false;
+    static volatile String  unexpectedInfoContent = null;
+
+    static synchronized void setUnexpectedFatalSeen(boolean seen) {
+        unexpectedFatalSeen = seen;
+    }
+
+    static synchronized void setUnexpectedErrorSeen(boolean seen) {
+        unexpectedErrorSeen = seen;
+    }
+
+    static synchronized void setUnexpectedWarnSeen(boolean seen) {
+        unexpectedWarnSeen = seen;
+    }
+
+    static synchronized void setUnexpectedInfoSeen(boolean seen) {
+        unexpectedInfoSeen = seen;
+    }
+
+    static synchronized void setUnexpectedFatalContent(String content) {
+        unexpectedFatalContent = content;
+    }
+
+    static synchronized void setUnexpectedErrorContent(String content) {
+        unexpectedErrorContent = content;
+    }
+
+    static synchronized void setUnexpectedWarnContent(String content) {
+        unexpectedWarnContent = content;
+    }
+
+    static synchronized void setUnexpectedInfoContent(String content) {
+        unexpectedInfoContent = content;
+    }
 
     public static boolean unexpectedMessageSeen(Level l) {
         if (l == Level.FATAL) {
@@ -119,23 +151,25 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SF_SWITCH_FALLTHROUGH",
+        justification = "cases statements are organized to flow")
+    @SuppressWarnings("fallthrough")
     public static void resetUnexpectedMessageFlags(Level severity) {
-        // cases statements are organized to flow
         switch (severity.toInt()) {
             case Level.INFO_INT:
-                unexpectedInfoSeen = false;
+                setUnexpectedInfoSeen(false);
                 unexpectedInfoContent = null;
                 //$FALL-THROUGH$
             case Level.WARN_INT:
-                unexpectedWarnSeen = false;
+                setUnexpectedWarnSeen(false);
                 unexpectedWarnContent = null;
                 //$FALL-THROUGH$
             case Level.ERROR_INT:
-                unexpectedErrorSeen = false;
+                setUnexpectedErrorSeen(false);
                 unexpectedErrorContent = null;
                 //$FALL-THROUGH$
             case Level.FATAL_INT:
-                unexpectedFatalSeen = false;
+                setUnexpectedFatalSeen(false);
                 unexpectedFatalContent = null;
                 break;
             default:
@@ -174,24 +208,24 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     void superappend(LoggingEvent l) {
         if (l.getLevel() == Level.FATAL) {
-            unexpectedFatalSeen = true;
-            unexpectedFatalContent = l.getMessage().toString();
+            setUnexpectedFatalSeen(true);
+            setUnexpectedFatalContent(l.getMessage().toString());
         }
         if (l.getLevel() == Level.ERROR) {
             if (compare(l, "Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
                 // still an error, just suppressed
             } else {
-                unexpectedErrorSeen = true;
-                unexpectedErrorContent = l.getMessage().toString();
+                setUnexpectedErrorSeen(true);
+                setUnexpectedErrorContent(l.getMessage().toString());
             }
         }
         if (l.getLevel() == Level.WARN) {
-            unexpectedWarnSeen = true;
-            unexpectedWarnContent = l.getMessage().toString();
+            setUnexpectedWarnSeen(true);
+            setUnexpectedWarnContent(l.getMessage().toString());
         }
         if (l.getLevel() == Level.INFO) {
-            unexpectedInfoSeen = true;
-            unexpectedInfoContent = l.getMessage().toString();
+            setUnexpectedInfoSeen(true);
+            setUnexpectedInfoContent(l.getMessage().toString());
         }
 
         super.append(l);
@@ -342,12 +376,12 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
-     * Check that the next queued message was of Warn severity, and has a
-     * specific message. White space is ignored.
+     * Check that the next queued message was of Warn severity, and text
+     * is at start of this message. White space is ignored.
      * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
-     * @param msg the message to assert exists
+     * @param msg the message to assert starts with
      */
     public static void assertWarnMessageStartsWith(String msg) {
         if (list.isEmpty()) {
@@ -368,7 +402,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
         // check the remaining message, if any
         if (evt.getLevel() != Level.WARN) {
-            Assert.fail("Level mismatch when looking for ERROR message: \"" +
+            Assert.fail("Level mismatch when looking for WARN message: \"" +
                     msg +
                     "\" found \"" +
                     (String) evt.getMessage() +
@@ -436,7 +470,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * ignored.
      *
      * @param level the level at which to suppress the message
-     * @param msg   the message to suppress
+     * @param msg   text at start of the message to suppress
      */
     public static void suppressMessageStartsWith(Level level, String msg) {
         if (list.isEmpty()) {
@@ -492,7 +526,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * If there's a next matching message of Error severity, just ignore it. Not
      * an error if not present; mismatch is an error. White space is ignored.
      *
-     * @param msg the message to suppress
+     * @param msg text at start of the message to suppress
      */
     public static void suppressErrorMessageStartsWith(String msg) {
         suppressMessageStartsWith(Level.ERROR, msg);
@@ -512,7 +546,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * If there's a next matching message of Warn severity, just ignore it. Not
      * an error if not present; mismatch is an error. White space is ignored.
      *
-     * @param msg the message to suppress
+     * @param msg text at start of the message to suppress
      */
     public static void suppressWarnMessageStartsWith(String msg) {
         suppressMessageStartsWith(Level.WARN, msg);

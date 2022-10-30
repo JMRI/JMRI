@@ -26,11 +26,12 @@
     </revision>
   </revhistory>
   
-  <aspecttable>Norway2001</aspecttable>
+  <aspecttable>Norway-2001</aspecttable>
 
   <name>Distant 2-lamp Signal</name>
   
   <description>This uses a single head with flashing yellow and green</description>
+  <description>Used as distant signal for both block and station</description>
   
   <appearances>
 
@@ -79,10 +80,6 @@
   
   <aspectMappings>
    <aspectMapping>
-     <advancedAspect>BlockStop</advancedAspect>
-     <ourAspect>Expect Stop</ourAspect>
-   </aspectMapping>
-   <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
      <ourAspect>Expect Stop</ourAspect>
    </aspectMapping>
@@ -100,29 +97,29 @@
    </aspectMapping>
  
 
-  <aspectMapping>
+   <aspectMapping>
      <advancedAspect>Clear Expect Stop</advancedAspect>
      <ourAspect>Expect Clear</ourAspect>
    </aspectMapping>
-  <aspectMapping>
+   <aspectMapping>
      <advancedAspect>Clear Expect Diverging</advancedAspect>
      <ourAspect>Expect Clear</ourAspect>
    </aspectMapping>
-  <aspectMapping>
+   <aspectMapping>
      <advancedAspect>Clear Expect Clear</advancedAspect>
      <ourAspect>Expect Clear</ourAspect>
    </aspectMapping>
 
 
-  <aspectMapping>
+   <aspectMapping>
      <advancedAspect>Diverging Expect Stop</advancedAspect>
      <ourAspect>Expect Diverging</ourAspect>
    </aspectMapping>
-  <aspectMapping>
+   <aspectMapping>
      <advancedAspect>Diverging Expect Diverging</advancedAspect>
      <ourAspect>Expect Diverging</ourAspect>
    </aspectMapping>
-  <aspectMapping>
+   <aspectMapping>
      <advancedAspect>Diverging Expect Clear</advancedAspect>
      <ourAspect>Expect Diverging</ourAspect>
    </aspectMapping>

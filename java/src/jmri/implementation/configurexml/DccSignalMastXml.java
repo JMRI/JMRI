@@ -85,7 +85,7 @@ public class DccSignalMastXml
             m = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideCustomSignalMast(sys, DccSignalMast.class);
         } catch (JmriException e) {
-            log.error("Failed to load DccSignalMast {}: {}", sys, e);
+            log.error("Failed to load DccSignalMast {}", sys, e);
             return false;
         }
 

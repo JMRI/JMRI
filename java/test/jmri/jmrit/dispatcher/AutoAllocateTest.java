@@ -26,7 +26,6 @@ public class AutoAllocateTest {
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
         AutoAllocate t = new AutoAllocate(d, new ArrayList<>());
         Assert.assertNotNull("exists",t);
-        jmri.util.JUnitAppender.assertErrorMessage("null LayoutEditor when constructing AutoAllocate");
         JUnitUtil.dispose(d);
     }
 
@@ -35,9 +34,9 @@ public class AutoAllocateTest {
         // present so there's some class test coverage when skipping intermittent
         new AutoAllocate(null,null);
         JUnitAppender.assertErrorMessage("null DispatcherFrame when constructing AutoAllocate");
-        
+
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

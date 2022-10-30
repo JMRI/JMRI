@@ -53,14 +53,14 @@ public class ExportCars extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete", e);
         }
     }
 
     /**
      * Any changes to the column order should also be made to the ImportCars.java
      * file.
-     * 
+     *
      * @param name file name
      */
     private void writeFile(String name) {
@@ -122,7 +122,7 @@ public class ExportCars extends XmlFile {
                         car.getLength(),
                         car.getWeight(),
                         car.getColor(),
-                        car.getOwner(),
+                        car.getOwnerName(),
                         car.getBuilt(),
                         car.getLocationName(),
                         LOCATION_TRACK_SEPARATOR,

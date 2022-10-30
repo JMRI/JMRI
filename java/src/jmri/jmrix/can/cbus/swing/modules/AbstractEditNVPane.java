@@ -60,7 +60,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * @param row index of NV
      * @param min minimum value to return
      * 
-     * @return the NV value, or min if NVs not avaliable yet
+     * @return the NV value, or min if NVs not available yet
      */
     protected int getSelectValue(int row, int min) {
         try {
@@ -78,7 +78,7 @@ abstract public class AbstractEditNVPane extends jmri.jmrix.can.swing.CanPanel {
      * @param rowLo index of lo byte NV
      * @param min minimum value to return
      * 
-     * @return the NV value, or min if NVs not avaliable yet
+     * @return the NV value, or min if NVs not available yet
      */
     protected int getSelectValue(int rowHi, int rowLo, int min) {
         int hi, lo;

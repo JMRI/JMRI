@@ -50,9 +50,9 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
 
     public PragotronClockFrame() {
         super(Bundle.getMessage("MenuItemPragotronClock"));
-        
+
         this.getContentPane().setBackground(new Color(0x3D3D3D));    // set background to black
-        
+
         clock = InstanceManager.getDefault(jmri.Timebase.class);
 
         //Load the images (these are now the larger version of the original gifs
@@ -83,7 +83,7 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
         iconAspect24 = 320.0 / 192.0;       // 320 : 192
         iconAspectDot = 40.0 / 192.0;       // 40 : 192
 
-        // determine the aspect ratio of the 1 hour digit, dot and 2 minutes digit 
+        // determine the aspect ratio of the 1 hour digit, dot and 2 minutes digit
         // this DOES NOT allow space for the Run/Stop button, if it is
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         if (!clock.getShowStopButton()) {
@@ -174,7 +174,7 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
         this.getContentPane().revalidate();
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     void update() {
         Date now = clock.getTime();
         int hours = now.getHours();
@@ -193,7 +193,7 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         updateButtonText();
     }
-    
+
     /**
      * Update clock button text.
      */
@@ -210,5 +210,5 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
             updateButtonText();
         }
     }
-    
+
 }

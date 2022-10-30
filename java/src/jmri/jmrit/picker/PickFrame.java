@@ -16,7 +16,7 @@ public class PickFrame extends JmriJFrame {
          */
         makeMenus();
 
-        PickListModel[] models = {PickListModel.turnoutPickModelInstance(),
+        PickListModel<?>[] models = {PickListModel.turnoutPickModelInstance(),
             PickListModel.sensorPickModelInstance(),
             PickListModel.signalHeadPickModelInstance(),
             PickListModel.signalMastPickModelInstance(),

@@ -14,27 +14,32 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SimpleServerPreferencesTest {
 
-    @Test public void testCtor() {
+    @Test
+    public void testCtor() {
         SimpleServerPreferences a = new SimpleServerPreferences();
         assertThat(a).isNotNull();
     }
 
-    @Test public void testStringCtor() {
+    @Test
+    public void testSimpleServerPreferencesStringCtor() {
         SimpleServerPreferences a = new SimpleServerPreferences("Hello World");
         assertThat(a).isNotNull();
     }
 
-    @Test public void defaultPort() {
+    @Test
+    public void testDefaultPort() {
         SimpleServerPreferences a = new SimpleServerPreferences();
         assertThat(a.getDefaultPort()).withFailMessage("Default Port").isEqualTo(2048);
     }
 
-    @BeforeEach public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @AfterEach public void tearDown() {
+    @AfterEach
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

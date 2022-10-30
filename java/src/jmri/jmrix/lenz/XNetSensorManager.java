@@ -78,22 +78,22 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             int numDataBytes = l.getElement(0) & 0x0f;
             for (int i = 1; i < numDataBytes; i += 2) {
                 if (l.getFeedbackMessageType(i) == 2) {
-                    // This is a feedback encoder message. The address of the 
+                    // This is a feedback encoder message. The address of the
                     // Feedback sensor is byte two of the message.
                     int address = l.getFeedbackEncoderMsgAddr(i);
                     log.debug("Message for feedback encoder {}", address);
 
                     int firstaddress = ((address) * 8) + 1;
-                    // Each Feedback encoder includes 8 addresses, so register 
+                    // Each Feedback encoder includes 8 addresses, so register
                     // a sensor for each address.
                     for (int j = 0; j < 8; j++) {
                         String s = getSystemNamePrefix() + (firstaddress + j);
                         if (null == getBySystemName(s)) {
-                            // The sensor doesn't exist.  We need to create a 
+                            // The sensor doesn't exist.  We need to create a
                             // new sensor, and forward this message to it.
                             ((XNetSensor) provideSensor(s)).initmessage(l);
                         } else {
-                            // The sensor exists.  We need to forward this 
+                            // The sensor exists.  We need to forward this
                             // message to it.
                             Sensor xns = getBySystemName(s);
                             if (xns == null) {
@@ -213,31 +213,6 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     private int iName; // must synchronize to avoid race conditions.
-
-    /**
-     * Does not enforce any rules on the encoder or input values.
-     */
-    @Override
-    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
-
-        String tmpSName = createSystemName(curAddress, prefix);
-
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if (s != null || ignoreInitialExisting) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,iName));
-        } else {
-            return Integer.toString(iName);
-        }
-    }
 
     /**
      * {@inheritDoc}

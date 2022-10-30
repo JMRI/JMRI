@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
- 
+
     <!--
         This file provides a local XML catalog for systems
-        who need it to provide access to schema and 
+        who need it to provide access to schema and
         DTD files.
-        
+
         It should be updated when new Schema or DTD files are added.
-        
+
         To check schema (tcsh shell):
             cd xml
             foreach x ( `ls schema` )
@@ -45,6 +45,12 @@
             uri="schema/docbook/xml.xsd"/>
     <system systemId="http://jmri.org/xml/schema/guinode.xsd"
             uri="schema/guinode.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/help-index.xsd"
+            uri="schema/help-index.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/help-map.xsd"
+            uri="schema/help-map.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/help-toc.xsd"
+            uri="schema/help-toc.xsd"/>
     <system systemId="http://jmri.org/xml/schema/idtags.xsd"
             uri="schema/idtags.xsd"/>
     <system systemId="http://jmri.org/xml/schema/layout-2-9-6.xsd"
@@ -81,6 +87,10 @@
             uri="schema/speedometer-3-9-3.xsd"/>
     <system systemId="http://jmri.org/xml/schema/speedometer.xsd"
             uri="schema/speedometer.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/throttle-config.xsd"
+            uri="schema/throttle-config.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/throttle-layout-config.xsd"
+            uri="schema/throttle-layout-config.xsd"/>
     <system systemId="http://jmri.org/xml/schema/timetable.xsd"
             uri="schema/timetable.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"
@@ -183,7 +193,7 @@
             uri="schema/types/warrants.xsd"/>
     <system systemId="http://jmri.org/xml/schema/xmlio.xsd"
             uri="schema/types/xmlio.xsd"/>
- 
+
     <system systemId="http://jmri.org/xml/DTD/layout-config.dtd"
             uri="DTD/layout-config.dtd"/>
 
@@ -214,7 +224,7 @@
             uri="DTD/vsdecoder-config.dtd"/>
     <system systemId="/xml/DTD/vsdecoder-preferences.dtd"
             uri="DTD/vsdecoder-preferences.dtd"/>
-   
+
     <system systemId="http://www.w3.org/2001/XInclude.xsd"
             uri="schema/xinclude.xsd"/>
 </catalog>

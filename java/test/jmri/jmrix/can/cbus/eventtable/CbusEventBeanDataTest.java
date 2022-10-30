@@ -4,14 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashSet;
+
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusLightManager;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 
 /**
@@ -60,7 +60,7 @@ public class CbusEventBeanDataTest {
         
     }
     
-    private CanSystemConnectionMemo memo;
+    private CanSystemConnectionMemo memo = null;
     
     @BeforeEach
     public void setUp() {
@@ -70,6 +70,7 @@ public class CbusEventBeanDataTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

@@ -290,7 +290,6 @@ public class XBeeNode extends IEEE802154Node {
      * @return the 16 bit address if it is not a broadcast address. Otherwise
      *         return the 64 bit GUID.
      */
-    @Deprecated
     public Object getPreferedTransmitAddress() {
         if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
                 && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {

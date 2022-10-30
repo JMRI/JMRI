@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 public class SimDriverAdapterTest {
 
    @Test
-   public void ConstructorTest(){
+   public void testCtor(){
       Assert.assertNotNull("SimDriverAdapter constructor", new SimDriverAdapter());
    }
 

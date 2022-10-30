@@ -54,7 +54,8 @@ abstract public class ProgrammerTestBase {
     
     @Test
     public void testSetModeNull() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(null));
+        Throwable throwable = Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(null));
+        Assertions.assertNotNull(throwable.getMessage());
     }
 
     @Test

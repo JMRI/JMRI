@@ -90,7 +90,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
-    String locationName = null; // only show cars with this location
+    public String locationName = null; // only show cars with this location
     public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
@@ -129,18 +129,20 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
         }
+        if (sort == SORTBY_DIVISION) {
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), true);
+        }
         if (sort == SORTBY_DESTINATION ||
                 sort == SORTBY_FINALDESTINATION ||
                 sort == SORTBY_RWE ||
-                sort == SORTBY_RWL ||
-                sort == SORTBY_DIVISION) {
+                sort == SORTBY_RWL) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_DESTINATION_COLUMN), sort == SORTBY_RWL);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWL_LOAD_COLUMN), sort == SORTBY_RWL);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), sort == SORTBY_DIVISION);
+            
             // show load column if color column isn't visible.
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN),
                     sort != SORTBY_RWE &&
@@ -592,13 +594,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case ROAD_COLUMN:
                 return car.getRoadName();
             case LOAD_COLUMN:
-                if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
-                    return car.getLoadName() + " " + Bundle.getMessage("(P)");
-                } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
-                    return car.getLoadName() + " " + Bundle.getMessage("(M)");
-                } else {
-                    return car.getLoadName();
-                }
+                return getLoadNameString(car);
             case COLOR_COLUMN:
                 return car.getColor();
             case LENGTH_COLUMN:
@@ -666,7 +662,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case BUILT_COLUMN:
                 return car.getBuilt();
             case OWNER_COLUMN:
-                return car.getOwner();
+                return car.getOwnerName();
             case VALUE_COLUMN:
                 return car.getValue();
             case RFID_COLUMN:
@@ -684,6 +680,19 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             default:
                 return "unknown " + col; // NOI18N
         }
+    }
+    
+    private String getLoadNameString(Car car) {
+        StringBuffer sb = new StringBuffer(car.getLoadName());
+        if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
+            sb.append(" " + Bundle.getMessage("(P)"));
+        } else if (car.getLoadPriority().equals(CarLoad.PRIORITY_MEDIUM)) {
+            sb.append(" " + Bundle.getMessage("(M)"));
+        }
+        if (car.isCarLoadHazardous()) {
+            sb.append(" " + Bundle.getMessage("(H)"));
+        }
+        return sb.toString();
     }
 
     CarEditFrame cef = null;
@@ -705,7 +714,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 SwingUtilities.invokeLater(() -> {
                     csf = new CarSetFrame();
                     csf.initComponents();
-                    csf.loadCar(car);
+                    csf.load(car);
                 });
                 break;
             case EDIT_COLUMN:

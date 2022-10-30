@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
+<!-- Version 2 - Petr Sidlo - 2022-08-14 - small fix                        -->
+
+  <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+    <name>Advanced</name>
+    <name xml:lang="cs">Pokročilé</name>
+    <column>
+      <separator/>
+      <label>
+        <text>Electrical coupler</text>
+        <text xml:lang="cs">Elektrické spřáhlo</text>
+      </label>
+
+      <label>
+        <text> </text>
+      </label>
+
+      <display item="Electrical Coupler Output mapping" />
+      <display item="ECoupler Mode" />
+      <display item="Electrical Coupler, kick time" />
+      <display item="Decoupling, Locomotive move Time" />
+      <display item="Decoupling, Locomotive moving speed" />
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+
+      <label>
+        <text>Smart Power Pack</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+       <grid gridx="0" gridy="NEXT" weightx="1" anchor="LINE_END">
+        <griditem>
+          <display item="SPP Timeout" />
+          <display item="SPP Timeout" format="hslider" label="" />
+        </griditem>
+        <griditem>
+          <display item="SPP start delay" />
+          <display item="SPP start delay" format="hslider" label="" />
+        </griditem>
+      </grid>
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+
+      <label>
+        <text>SUSI</text>
+      </label>
+
+      <label>
+        <text> </text>
+      </label>
+      <display item="SUSI interface" format="checkbox" />
+      <display item="SUSI interface active" />
+      <display item="SUSI Indicator" />
+      <display item="SUSI transport"  />
+    </column>
+
+    <column>
+      <separator/>
+      <label>
+        <text>Memory Settings</text>
+        <text xml:lang="cs">Nastavení paměti</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Function State" /> 
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text>RailCom Settings</text>
+        <text xml:lang="cs">Nastavení RailCom</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Enable RailCom" format="checkbox"/>
+      <display item="RailCom Address" format="checkbox"/>
+      <display item="RailCom Data" format="checkbox"/>
+    
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text>Controlled Stops</text>
+        <text xml:lang="cs">Řízené zastavení</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="ASC right" format="checkbox"/>
+      <display item="ASC left" format="checkbox"/>
+      <display item="ASC DC reverse" format="checkbox"/>
+      <display item="ASC DC forward" format="checkbox"/>
+      <display item="ASC STOP" format="checkbox"/>
+      <display item="Push Pull Operation"/>
+      <display item="Penduling / Push-Pull Wait Time" />
+      <display item="ABC Sensitivity" />
+      <display item="ABC Sensitivity off" />
+      <display item="ABC on delay" />
+      <display item="ABC off delay" />
+      <display item="Brake Distance configuration" />
+      <display item="Brake Delay Configuration" />    
+
+    </column>
+  </pane>

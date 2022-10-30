@@ -15,6 +15,7 @@ import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
@@ -38,10 +39,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Constructor
      */
     public FunctionPanel() {
-        if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-            log.debug("Creating new ThrottlesPreference Instance");
-            jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-        }
         initGUI();
         applyPreferences();
     }
@@ -154,10 +151,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     rosterEntry.setFunctionLabel(functionNumber, text);
                 }
                 String fontSizeKey = "function"+functionNumber+"_ThrottleFontSize";
-                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == FunctionButton.DEFAULT_FONT_SIZE) {
+                if (rosterEntry.getAttribute(fontSizeKey) != null && functionButton.getFont().getSize() == InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()) {
                     rosterEntry.deleteAttribute(fontSizeKey);
                 }
-                if (functionButton.getFont().getSize() != FunctionButton.DEFAULT_FONT_SIZE) {
+                if (functionButton.getFont().getSize() != InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize()) {
                     rosterEntry.putAttribute(fontSizeKey, ""+functionButton.getFont().getSize());
                 }
                 String imgButtonSizeKey = "function"+functionNumber+"_ThrottleImageButtonSize";
@@ -209,7 +206,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButtons[0].setIconPath("resources/icons/functionicons/svg/lightsOff.svg");
             functionButtons[0].setSelectedIconPath("resources/icons/functionicons/svg/lightsOn.svg");
         } catch (Exception e) {
-            log.debug("Exception loading svg icon : " + e.getMessage());
+            log.debug("Exception loading svg icon : {}", e.getMessage());
         } finally {
             if ((functionButtons[0].getIcon() == null) || (functionButtons[0].getSelectedIcon() == null)) {
                 log.debug("Issue loading svg icon, reverting to png");

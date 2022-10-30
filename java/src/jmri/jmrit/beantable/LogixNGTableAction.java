@@ -6,16 +6,17 @@ import java.awt.event.ItemEvent;
 import java.beans.PropertyVetoException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.util.JmriJFrame;
-
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
+import jmri.util.JmriJFrame;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -93,6 +94,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         LogixNG logixNG =
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         .createLogixNG(userName);
+        logixNG.activate();
         logixNG.setEnabled(true);
         return logixNG;
     }
@@ -102,6 +104,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         LogixNG logixNG =
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         .createLogixNG(systemName, userName);
+        logixNG.activate();
         logixNG.setEnabled(true);
         return logixNG;
     }
@@ -113,8 +116,50 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
             InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
         } catch (PropertyVetoException e) {
             //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
-            log.error(e.getMessage());
+            log.error("{} : Could not Delete.", e.getMessage());
         }
+    }
+
+    private void copyConditionalNGToLogixNG(
+            @Nonnull ConditionalNG sourceConditionalNG,
+            @Nonnull LogixNG targetBean) {
+
+            // Create ConditionalNG
+            String sysName = InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName();
+            String oldUserName = sourceConditionalNG.getUserName();
+            String userName = oldUserName != null ? Bundle.getMessage("CopyOfConditionalNG", oldUserName) : null;
+            ConditionalNG targetConditionalNG =
+                    InstanceManager.getDefault(ConditionalNG_Manager.class)
+                            .createConditionalNG(targetBean, sysName, userName);
+
+            sourceConditionalNG.getFemaleSocket().unregisterListeners();
+            targetConditionalNG.getFemaleSocket().unregisterListeners();
+            Map<String, String> systemNames = new HashMap<>();
+            Map<String, String> userNames = new HashMap<>();
+            try {
+                FemaleSocket femaleSourceSocket = sourceConditionalNG.getFemaleSocket();
+                if (femaleSourceSocket.isConnected()) {
+                    targetConditionalNG.getFemaleSocket().connect(
+                            (MaleSocket) femaleSourceSocket.getConnectedSocket()
+                                    .getDeepCopy(systemNames, userNames));
+                }
+            } catch (JmriException ex) {
+                log.error("Could not Copy ConditionalNG.", ex);
+            }
+            sourceConditionalNG.getFemaleSocket().registerListeners();
+            targetConditionalNG.getFemaleSocket().registerListeners();
+    }
+
+    @Override
+    protected void copyBean(@Nonnull LogixNG sourceBean, @Nonnull LogixNG targetBean) {
+        for (int i = 0; i < sourceBean.getNumConditionalNGs(); i++) {
+            copyConditionalNGToLogixNG(sourceBean.getConditionalNG(i), targetBean);
+        }
+    }
+
+    @Override
+    protected boolean isCopyBeanSupported() {
+        return true;
     }
 
     @Override
@@ -122,6 +167,11 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         StringWriter writer = new StringWriter();
         _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
+    }
+
+    @Override
+    protected String getBrowserTitle() {
+        return Bundle.getMessage("LogixNG_Browse_Title");
     }
 
     @Override

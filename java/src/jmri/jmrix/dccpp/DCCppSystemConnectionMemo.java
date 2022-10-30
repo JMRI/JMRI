@@ -96,7 +96,7 @@ public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
      */
     public ThrottleManager getThrottleManager() {
         return (ThrottleManager) classObjectMap.computeIfAbsent(ThrottleManager.class,
-                (Class c) -> new DCCppThrottleManager(this));
+                (Class<?> c) -> new DCCppThrottleManager(this));
     }
 
     public void setThrottleManager(ThrottleManager t) {
@@ -108,7 +108,7 @@ public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
      */
     @Nonnull
     public PowerManager getPowerManager() {
-        return (PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> {
+        return (PowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class<?> c) -> {
             PowerManager powerManager = new DCCppPowerManager(this);
             log.debug("power manager created: {}", powerManager);
             return powerManager;

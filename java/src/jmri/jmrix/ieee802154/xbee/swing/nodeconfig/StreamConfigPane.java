@@ -179,7 +179,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                             config = (StreamConnectionConfig) cl.getDeclaredConstructor().newInstance();
                             modeBox.addItem(config.name());
                         } catch (ClassCastException cce) {
-                            // the list may include non-StreamConnectinoConfig 
+                            // the list may include non-StreamConnectinoConfig
                             // objects, so just ignore those.
                             continue;
                         }
@@ -188,7 +188,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                 } catch (NullPointerException e) {
                     log.error("Attempt to load {} failed.", className, e);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                    log.debug("Attempt to load {} failed: {}.", className, e);
+                    log.debug("Attempt to load {} failed", className, e);
                 }
             }
             if ((modeBox.getSelectedIndex() == 0) && (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null)) {
@@ -250,12 +250,12 @@ public class StreamConfigPane extends JmrixConfigPane {
                         modeBox.setSelectedIndex(1);
                     }
                 } catch (ClassCastException cce) {
-                    // the list may include non-StreamConnectinoConfig 
+                    // the list may include non-StreamConnectinoConfig
                     // objects, so just ignore those.
                     continue;
-                } catch (NullPointerException | ClassNotFoundException | InstantiationException | 
+                } catch (NullPointerException | ClassNotFoundException | InstantiationException |
                             IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
-                    log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);
+                    log.warn("Attempt to load {} failed", classConnectionNameList1, e);
                 }
             }
             if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null) {
@@ -289,8 +289,8 @@ public class StreamConfigPane extends JmrixConfigPane {
         if (old != this.ccCurrent) {
               // store the connection config with the node.
               if(ccCurrent instanceof AbstractStreamConnectionConfig) {
-                 confNode.setPortController((AbstractStreamConnectionConfig)ccCurrent); 
-                 //confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent); 
+                 confNode.setPortController((AbstractStreamConnectionConfig)ccCurrent);
+                 //confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent);
               // this.ccCurrent.register();
               }
         }

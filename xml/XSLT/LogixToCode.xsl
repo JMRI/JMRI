@@ -15,7 +15,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
- 
+
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <!-- Define the copyright year for the output page
@@ -23,7 +23,7 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2021')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2022')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -37,14 +37,14 @@
      elements, which is what the apply-templates instruction does.
      We also pick some stuff out explicitly in the head section using
      value-of instructions.
--->     
+-->
 <xsl:template match='layout-config'>
 
 <html>
     <head>
         <title>JMRI panel file</title>
     </head>
-    
+
     <body>
         <h2>JMRI panel file</h2>
 
@@ -145,18 +145,18 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
             <xsl:for-each select="conditionalStateVariable">
                 <xsl:call-template name="conditionalStateVariable"/>
                 i++;
-                
+
             </xsl:for-each>
             <xsl:for-each select="conditionalAction">
                 <xsl:call-template name="conditionalAction"/>
             </xsl:for-each>
-                
+
                 int numVariables = i;<br/>
-                c.setStateVariables(opern, type, name, data, 
-                    num1, num2, triggersCalc, numVariables); 
+                c.setStateVariables(opern, type, name, data,
+                    num1, num2, triggersCalc, numVariables);
             }
             </pre>
-        </xsl:if>   
+        </xsl:if>
     </xsl:for-each>
 </xsl:template>
 

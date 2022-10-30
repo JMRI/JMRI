@@ -3,7 +3,6 @@ package apps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
-import java.awt.List;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -34,6 +33,7 @@ import jmri.util.*;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.prefs.JmriPreferencesActionFactory;
 import jmri.util.swing.JFrameInterface;
+import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.WindowInterface;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
@@ -222,7 +222,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                log.error("", e);
+                log.error("uexpected ", e);
             }
         }
 
@@ -238,7 +238,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.error("",e);
+                log.error("Unexpected:",e);
             }
         }
         // Now load deferred config items
@@ -332,7 +332,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         Toolkit.getDefaultToolkit().addAWTEventListener((AWTEvent e) -> {
             if (e instanceof MouseEvent) {
-                MouseEvent me = (MouseEvent) e;
+                JmriMouseEvent me = new JmriMouseEvent((MouseEvent) e);
                 if (me.isPopupTrigger() && me.getComponent() instanceof JTextComponent) {
                     final JTextComponent component1 = (JTextComponent) me.getComponent();
                     final JPopupMenu menu = new JPopupMenu();
@@ -666,7 +666,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.warn("JMRI property {} already set to {}, skipping reset to {}", key, current, value);
             }
         } catch (RuntimeException e) {
-            log.error("Unable to set JMRI property {} to {} due to execption {}", key, value, e);
+            log.error("Unable to set JMRI property {} to {} due to exception", key, value, e);
         }
     }
 
@@ -827,7 +827,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         return configFilename;
     }
 
-    @SuppressWarnings("deprecation") // JmriPlugin.start(...)
     static protected void createFrame(Apps containedPane, JmriJFrame frame) {
         // create the main frame and menus
         // Create a WindowInterface object based on the passed-in Frame
@@ -839,9 +838,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         containedPane.createMenus(containedPane.menuBar, wi);
         // connect Help target now that globalHelpBroker has been instantiated
         containedPane.attachHelp();
-
-        // invoke plugin, if any
-        JmriPlugin.start(frame, containedPane.menuBar);
 
         frame.setJMenuBar(containedPane.menuBar);
         frame.getContentPane().add(containedPane);

@@ -18,12 +18,11 @@ import jmri.jmrit.logixng.util.parser.ExpressionNodeTrue;
 import jmri.jmrit.logixng.util.parser.Token;
 import jmri.jmrit.logixng.util.parser.TokenType;
 import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ConvertFunctions
@@ -93,9 +92,17 @@ public class ConvertFunctionsTest {
         
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_boolean_true)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_HELLO)));
+        JUnitAppender.assertWarnMessage("the string \"hello\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_RAD)));
+        JUnitAppender.assertWarnMessage("the string \"rad\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_DEG)));
+        JUnitAppender.assertWarnMessage("the string \"deg\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr_str_0_34)));
+        JUnitAppender.assertWarnMessage("the string \"0.34\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr0_34)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr0_95)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr12_34)));
@@ -103,7 +110,10 @@ public class ConvertFunctionsTest {
         Assert.assertTrue((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr12)));
         Assert.assertTrue((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr23)));
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(expr2FA5)));
+        JUnitAppender.assertWarnMessage("the string \"2FA5\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isIntFunction.calculate(symbolTable, getParameterList(exprC352)));
+        JUnitAppender.assertWarnMessage("the string \"c352\" cannot be converted to a number");
         
         // Test wrong number of parameters
         hasThrown.set(false);
@@ -135,8 +145,14 @@ public class ConvertFunctionsTest {
         
         Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_boolean_true)));
         Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_HELLO)));
+        JUnitAppender.assertWarnMessageStartingWith("the string \"hello\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_RAD)));
+        JUnitAppender.assertWarnMessageStartingWith("the string \"rad\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_DEG)));
+        JUnitAppender.assertWarnMessageStartingWith("the string \"deg\" cannot be converted to a number");
+        
         Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr_str_0_34)));
         Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr0_34)));
         Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr0_95)));
@@ -145,7 +161,10 @@ public class ConvertFunctionsTest {
         Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr12)));
         Assert.assertTrue((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr23)));
         Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(expr2FA5)));
+        JUnitAppender.assertWarnMessageStartingWith("the string \"2FA5\" cannot be converted to a number");
+        
         Assert.assertFalse((boolean)isFloatFunction.calculate(symbolTable, getParameterList(exprC352)));
+        JUnitAppender.assertWarnMessageStartingWith("the string \"c352\" cannot be converted to a number");
         
         // Test wrong number of parameters
         hasThrown.set(false);
@@ -220,12 +239,12 @@ public class ConvertFunctionsTest {
     }
     
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.tearDown();

@@ -15,18 +15,18 @@
 # 2. All blue buttons assigned to functions (0-27)
 # 3. Leftmost lever as reverser - front moves forwards, back reverses
 # 4. Second from left lever as throttle - back increases speed
-# 5. Selection of locos using the "zoom" rocker switch. Up selects a loco, Down dispatches 
+# 5. Selection of locos using the "zoom" rocker switch. Up selects a loco, Down dispatches
 #      current loco.
 # 6. Selection of loco addresses / throttle panels using the "pov" four-way switch.
-#    Using up and down on the pov switch will move between locos in the roster 
+#    Using up and down on the pov switch will move between locos in the roster
 #      (as long as the last loco has been "dispatched")
-#    Using left and right on the pov switch will select between throttle panels... Click the 
+#    Using left and right on the pov switch will select between throttle panels... Click the
 #      plus (+) button on the throttle window to add another panel.
 # 7. Emergency stop! Push the corresponding button(s). This will e-stop the current throttle.
 # 8. Gear buttons: High/Low range can be selected via these buttons, mapped to "shuntFn" function
 # 9. Cab buttons: alerter, sander, pantograph and bell buttons can be mapped to a function
 #10. Horn momentary lever: mapped to "hornFn" function
-# 
+#
 # Future development ideas:
 # 1. Think of functionalities for the other levers
 # 2. Other uses for the display ??
@@ -35,7 +35,7 @@
 ##
 # IMPORTANT Warnings:
 # 1. Make sure you calibrate and set a "Dead zone" for each of the analogue levers in the
-# Calibration window! If you don't there will be too many events triggered 
+# Calibration window! If you don't there will be too many events triggered
 # and everything will slow right down....
 
 import jmri
@@ -100,14 +100,14 @@ try:
   # and the number of controllers used
   numControllers = 0
 
-  def isNaN(num): 
-      return num != num 
+  def isNaN(num):
+      return num != num
 
   # add listener for USB events
   class TreeListener(java.beans.PropertyChangeListener):
 
     #hash code is unique instance of controller
-    controllerHashCode = 0 
+    controllerHashCode = 0
     throttleWindow = None
     controlPanel = None
     functionPanel = None
@@ -151,7 +151,7 @@ try:
           # Now remove this propertyChangeListener from the model
           global model
           model.removePropertyChangeListener(self)
-          
+
       if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
           #print "Throttle Frame changed"
           self.addressPanel = event.newValue.getAddressPanel()
@@ -171,16 +171,16 @@ try:
           #
           # Select just the device (controller) we want
           cont = event.oldValue.getController()
-          if (cont.toString() == desiredControllerName 
+          if (cont.toString() == desiredControllerName
           and cont.hashCode() == self.controllerHashCode) :
               # event.newValue is the value, e.g. 1.0
               # Check for desired component and act
               component = event.oldValue.getComponent().getIdentifier().toString()
               value = event.newValue
-              # 
+              #
               # uncomment the following to see the entries
               print "process", component, value
-              
+
               # Function buttons
               try:
                   fNum = int(component) # direct mapping of buttons 0 -> maxFunction
@@ -205,9 +205,9 @@ try:
                   if (button != None) :
                       if button.getIsLockable() :
                           if value > 0.5 :
-                              button.changeState(not button.getState())
+                              button.setSelected(not button.getState())
                       else :
-                          button.changeState(value > 0.5)
+                          button.setSelected(value > 0.5)
                       if (value > 0.5 and button.getState()) : # only display if actually setting the function
                           #!cont.displayStrTemp("F" + str(fNum)) #, tempMillis)
                           print "skip display"
@@ -215,10 +215,10 @@ try:
 
               # Probably is better not to 'waste' 6 switches for this ?
               # Address and Throttle Frame selection
-              #print "addr: " + self.addressPanel.getCurrentAddress().toString() 
+              #print "addr: " + self.addressPanel.getCurrentAddress().toString()
               #self.addressPanel.showRosterSelectorPopup()
               selectedIndex = self.addressPanel.getRosterSelectedIndex()
-              
+
               if (component == componentNextAddr and value > 0.5):
                   self.addressPanel.setRosterSelectedIndex(selectedIndex + 1)
                   return
@@ -258,11 +258,11 @@ try:
               # "Horn" (digital) lever, momentary
               if (component == componentHorn) :
                   if (value > 0.5) :
-                      self.functionPanel.getFunctionButtons()[hornFn].changeState(True)
+                      self.functionPanel.getFunctionButtons()[hornFn].setSelected(True)
                   else :
-                      self.functionPanel.getFunctionButtons()[hornFn].changeState(False)
+                      self.functionPanel.getFunctionButtons()[hornFn].setSelected(False)
                   return
-                          
+
               # Reverser 'lever'
               if (component == componentRevReverse) :
                   if (value > 0.5) :
@@ -304,10 +304,10 @@ try:
           model.addPropertyChangeListener(TreeListener(c))
 except:
   import javax.swing.JOptionPane as JOptionPane
-  import javax.swing.JFrame as JFrame  
-  JOptionPane.showMessageDialog(JFrame(), 
+  import javax.swing.JFrame as JFrame
+  JOptionPane.showMessageDialog(JFrame(),
 """This code is no longer maintained.
 
 Please use Jynstrument jython/Jynstrument/ThrottleWindowToolBar/USBThrottle.jyn instead
 Or jython/USBThrottleAsJynstrument.py script""", "Outdated code", JOptionPane.WARNING_MESSAGE)
-          
+

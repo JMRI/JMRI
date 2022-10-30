@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -13,39 +12,51 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ShutdownComputer;
 import jmri.jmrit.logixng.actions.ShutdownComputer.Operation;
-import jmri.util.swing.JComboBoxUtil;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ShutdownComputerSwing extends AbstractDigitalActionSwing {
 
-    private JComboBox<Operation> _operationComboBox;
-    
+    private LogixNG_SelectEnumSwing<Operation> _selectOperationSwing;
+
+
+    public ShutdownComputerSwing() {
+    }
+
+    public ShutdownComputerSwing(JDialog dialog) {
+        super.setJDialog(dialog);
+    }
+
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ShutdownComputer action = (ShutdownComputer)object;
-        
-        panel = new JPanel();
-        _operationComboBox = new JComboBox<>();
-        for (Operation e : Operation.values()) {
-            _operationComboBox.addItem(e);
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_operationComboBox);
-        panel.add(_operationComboBox);
+
+        _selectOperationSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+
+        JPanel _tabbedPaneOperation;
         if (action != null) {
-            _operationComboBox.setSelectedItem(action.getOperation());
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(action.getSelectEnum(), Operation.values());
+        } else {
+            _tabbedPaneOperation = _selectOperationSwing.createPanel(null, Operation.values());
         }
+
+        panel = new JPanel();
+        panel.add(_tabbedPaneOperation);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        return true;
+        // Create a temporary action to test formula
+        ShutdownComputer action = new ShutdownComputer("IQDA1", null);
+        _selectOperationSwing.validate(action.getSelectEnum(), errorMessages);
+        return errorMessages.isEmpty();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
@@ -53,7 +64,7 @@ public class ShutdownComputerSwing extends AbstractDigitalActionSwing {
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
@@ -61,17 +72,18 @@ public class ShutdownComputerSwing extends AbstractDigitalActionSwing {
             throw new IllegalArgumentException("object must be an ShutdownComputer but is a: "+object.getClass().getName());
         }
         ShutdownComputer action = (ShutdownComputer)object;
-        action.setOperation(_operationComboBox.getItemAt(_operationComboBox.getSelectedIndex()));
+        _selectOperationSwing.updateObject(action.getSelectEnum());
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String toString() {
         return Bundle.getMessage("ShutdownComputer_Short");
     }
-    
+
     @Override
     public void dispose() {
+        _selectOperationSwing.dispose();
     }
-    
+
 }

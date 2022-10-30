@@ -11,7 +11,7 @@
       <enumChoice choice="Soft Start">
         <choice>Soft Start</choice>
         <choice xml:lang="it">Accensione graduale</choice>
-        <choice xml:lang="cs">Měkký starts</choice>
+        <choice xml:lang="cs">Měkký start</choice>
         <choice xml:lang="de">Soft Start</choice>
       </enumChoice>
 </enumChoiceGroup>

@@ -230,6 +230,10 @@ public class OBlockTableActionTest {
         OBlock ob2 = obm.createNewOBlock("OB2", "ob2");  // NOI18N
 
         PortalManager pm = InstanceManager.getDefault(PortalManager.class);
+        Portal p = pm.getPortal("IP1");
+        if (p != null) {    // make sure it is not already there
+            p.dispose();
+        }
         Portal port1 = pm.createNewPortal("IP1");  // NOI18N
         port1.setFromBlock(ob1, false);
         port1.setToBlock(ob2, false);
@@ -274,7 +278,6 @@ public class OBlockTableActionTest {
         a = null;
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask(); // perhaps invoked via super, must be cleaned up
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

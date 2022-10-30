@@ -1,7 +1,6 @@
 package jmri.jmrit.progsupport;
 
 import javax.swing.*;
-import java.awt.*;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -41,11 +40,11 @@ public class ProgModePane extends ProgModeSelector {
         if (log.isDebugEnabled()) {
             log.debug("AddressedProgrammerManager:");
             InstanceManager.getList(AddressedProgrammerManager.class).forEach((p) -> {
-                log.debug("   {}", p.toString());
+                log.debug("  item: {}", p.toString());
             });
             log.debug("GlobalProgrammerManager:");
             InstanceManager.getList(GlobalProgrammerManager.class).forEach((p) -> {
-                log.debug("   {}", p.toString());
+                log.debug("  item: {}", p.toString());
             });
         }
 
@@ -64,7 +63,8 @@ public class ProgModePane extends ProgModeSelector {
         }
 
         // service mode support, if present
-        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null) {
+        if (InstanceManager.getNullableDefault(GlobalProgrammerManager.class) != null
+                && InstanceManager.getDefault(GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
 
             mServicePane = new ProgServiceModePane(direction, group);
             JPanel temp = new JPanel();

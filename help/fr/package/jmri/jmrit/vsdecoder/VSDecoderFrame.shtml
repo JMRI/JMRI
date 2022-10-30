@@ -1,35 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Virtual Sound Decoder</title>
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="JMRI help Virtual Sound Decoder">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>D&eacute;codeur Son Virtuel JMRI</h1>Ceci est la page de
+      <h1>D&eacute;codeur Son Virtuel JMRI</h1>
+      <p>Ceci est la page de
       r&eacute;f&eacute;rence rapide de l'outil D&eacute;codeur Son
-      Virtuel JMRI.<br>
-      <br>
+      Virtuel JMRI.</p>
+      <p>
       Quelle est cette chose? Le D&eacute;codeur Son Virtuel JMRI
       ("D&eacute;codeurSV"pour faire plus court) qui se trouve sur
       votre ordinateur, &eacute;coutant son adresse d&eacute;codeur
@@ -48,19 +35,19 @@
       Devez avoir &eacute;galement le syst&egrave;me audio OpenAL
       ou JavaSound install&eacute; sur votre votre ordinateur. Voir
       <a href="https://jmri.org/help/en/html/tools/Audio.shtml">les
-      pages d'aides Audio JMRI</a>pour plus de d&eacute;tails .<br>
-      <hr>
+      pages d'aides Audio JMRI</a>pour plus de d&eacute;tails .
+      </p>
 
-      <h2>&Eacute;l&eacute;ments de la fen&ecirc;tre
-      D&eacute;codeurSV</h2>
-      <hr>
+      <h2>&Eacute;l&eacute;ments de la fen&ecirc;tre D&eacute;codeurSV</h2>
 
-      <h3>Volet Configuration</h3>Le volet Config vous permet de
+      <h3>Volet Configuration</h3>
+      <p>Le volet Config vous permet de
       choisir le profil sonore &agrave; utiliser (vapeur vs Diesel,
       EMD vs GE, Leslie vs Nathan, etc ), et attribuer une adresse
-      de d&eacute;codeur &agrave; &eacute;couter.
+      de d&eacute;codeur &agrave; &eacute;couter.</p>
 
-      <h4>S&eacute;lectionnez et Enregistrer la Liste</h4>Vous
+      <h4>S&eacute;lectionnez et Enregistrer la Liste</h4>
+      <p>Vous
       pouvez s&eacute;lectionner une entr&eacute;e de liste
       actuelle, si vous en avez. Appuyez sur le bouton
       "Enregistrer" pour enregistrer le fichier VSD actuellement
@@ -73,9 +60,10 @@
       voulez pas . REMARQUE : Voir la note ci-dessous &agrave;
       propos de l'enregistrement des informations d'Entr&eacute;e
       de Liste. Il y a un bug sur lequel les concepteur
-      travaillent.
+      travaillent.</p>
 
-      <h4>S&eacute;lection de Profil</h4>Pour s&eacute;lectionner
+      <h4>S&eacute;lection de Profil</h4>
+      <p>Pour s&eacute;lectionner
       un profil, vous devez d'abord charger un "fichier VSD". Un
       exemple de fichier VSD est inclus dans le paquet, et vous
       pouvez faire (et &agrave; partagevsdecoderr!) le votre.
@@ -86,9 +74,10 @@
       Maintenant, vous pouvez choisir l'un des profils dans la
       liste d&eacute;roulante de profil. Notez que vous ne pouvez
       rien faire d'autre tant que vous n'avez pas
-      s&eacute;lectionn&eacute; un profil.
+      s&eacute;lectionn&eacute; un profil.</p>
 
-      <h4>Adresse d'affectation et la Liste</h4>Une fois que vous
+      <h4>Adresse d'affectation et la Liste</h4>
+      <p>Une fois que vous
       avez charg&eacute; un fichier VSD et d&eacute;fini un profil,
       vous pouvez entrer une adresse de d&eacute;codeur
       directement-et appuyez sur "D&eacute;finir" - ou vous pouvez
@@ -98,16 +87,16 @@
       envoy&eacute;es par les r&eacute;gulateurs pour JMRI . Cela
       comprend les r&eacute;gulateurs logiciels JMRI, "Smarth
       Phone" comme WiThrottle, EngineDriver, et la plupart ( mais
-      pas tous) des r&eacute;gulateurs mat&eacute;riels.<br>
-      <hr>
-      <br>
+      pas tous) des r&eacute;gulateurs mat&eacute;riels.</p>
 
-      <h3>Options Onglet</h3>Dans l'avenir, le volet Options
+      <h3>Options Onglet</h3>
+      <p>Dans l'avenir, le volet Options
       fournira divers param&egrave;tres de r&eacute;glagles
       optionnels Pour l'instant, il est non-fonctionnel. Les
-      gadgets de ce volet sont juste pour le spectacle.
+      gadgets de ce volet sont juste pour le spectacle.</p>
 
-      <h3>Vsdecoder Onglet Sons</h3>L'onglet Sons fournit un
+      <h3>Vsdecoder Onglet Sons</h3>
+      <p>L'onglet Sons fournit un
       ensemble de boutons personnalis&eacute;s pour
       d&eacute;clencher les sons sans avoir &agrave; utiliser un
       R&eacute;gulateur. Cela permet au DecoderVS d'&ecirc;tre
@@ -116,9 +105,10 @@
       que vous avez charg&eacute;.<br>
       <i>Remarque: Dans le fichier "example.vsd", les boutons
       "coupleur" et "Air Brake" ne sont pas fonctionnels, l&agrave;
-      juste pour le spectacle.</i><br>
+      juste pour le spectacle.</i></p>
 
-      <h4>Note sp&eacute;ciale sur les sons de moteur</h4>La
+      <h4>Note sp&eacute;ciale sur les sons de moteur</h4>
+      <p>La
       g&eacute;n&eacute;ration de bruit de moteur r&eacute;elle est
       encore tr&egrave;s "dure". s'attendre plut&ocirc;t &agrave;
       destransitions "saccad&eacute;s" entre les crans de vitesse,
@@ -143,11 +133,9 @@
       A noter &eacute;galement que le curseur au-dessus du bouton
       "D&eacute;marrage Moteur" n'est qu'un indicateur du cran
       auquel est le moteur, d&eacute;pla&ccedil;er le curseur n'a
-      pas d'effet.<br>
-      <hr>
+      pas d'effet.</p>
 
       <h2>&Eacute;l&eacute;ments de Menu</h2>
-      <hr>
 
       <h3>Menu Fichier</h3>
 
@@ -170,10 +158,9 @@
       <hr>
 
       <h2>Pr&eacute;f&eacute;rences VSDecoder</h2>
-      <hr>
-      La fen&ecirc;tre Pr&eacute;f&eacute;rences VSDecoder vous
+      <p>La fen&ecirc;tre Pr&eacute;f&eacute;rences VSDecoder vous
       permet de personnaliser la fa&ccedil;on dont le
-      D&eacute;codeur Son Virtuel fonctionne.
+      D&eacute;codeur Son Virtuel fonctionne.</p>
 
       <dl>
         <dt>D&eacute;marrage Automatique du Moteur</dt>
@@ -209,10 +196,9 @@
       <hr>
 
       <h2>Liste Interaction</h2>
-      <hr>
-      Les connexions du D&eacute;codeur Virtuel Son &agrave; la
+      <p>Les connexions du D&eacute;codeur Virtuel Son &agrave; la
       Liste sont encore un peu "en construction ". Vous pouvez
-      faire ce qui suit:
+      faire ce qui suit:</p>
 
       <div style="margin-left: 2em">
         <ul>
@@ -225,42 +211,43 @@
 
           <li>D&eacute;finir Automatiquement le Profil de VSDecoder
           et adresse dans une entr&eacute;e Liste.</li>
-        </ul>Pour enregistrer le r&eacute;glage actuel du Profil de
+        </ul>
+
+        <p>Pour enregistrer le r&eacute;glage actuel du Profil de
         VSDecoderpour une entr&eacute;e Liste , S&eacute;lectionnez
         l'entr&eacute;e Liste et cliquez sur le bouton
         "Enregistrer". Voir la note de bug ci-dessous, si! Quelques
-        notes sur les limitations ( Bugs, la plupart du temps ) :
+        notes sur les limitations ( Bugs, la plupart du temps ) :</p>
 
         <ul>
           <li>Si vous choisissez une entr&eacute;e Liste avant de
           charger le fichier de VSD , elle ne saura pas
-          d&eacute;finir l'adresse .</li>
+          d&eacute;finir l'adresse.</li>
 
           <li>Si vous stockez infos VSDecoder dans une
           entr&eacute;e Liste, elle ne sera pas enregistr&eacute;
           sur le disque , sauf si vous allez &agrave; "Liste- &gt;
           Modifier l'entr&eacute;e ... " , s&eacute;lectionnez
           votre entr&eacute;e de la liste, ouvrez le programmateur
-          pour elle, et cliquez sur "Sauvegarder dans Liste .</li>
+          pour elle, et cliquez sur "Sauvegarder dans Liste.</li>
 
           <li>Tous les sons sont encore "brut" . Attendez-vous
           &agrave; des transitions entre les crans de vitesse, et
           d'&eacute;tranges effets lorsque vous appuyez sur les
-          boutons rapidement (ou parfois pas ) , et ainsi de suite
-          .</li>
+          boutons rapidement (ou parfois pas ) , et ainsi de suite.
+          </li>
 
-          <li>Beaucoup d'autres choses sont bugs ou cass&eacute;es
-          . S'il vous pla&icirc;t vous envoyez un rapport de bug si
+          <li>Beaucoup d'autres choses sont bugs ou cass&eacute;es.
+          S'il vous pla&icirc;t vous envoyez un rapport de bug si
           quelque chose semble vraiment cass&eacute; .</li>
         </ul>
 
-        <p><br></p>
-        <hr>
-        <br>
-        <a id="prefs" name="prefs">( Ceci est la page d'aide
-        jmri.jmrit.vsdecoder.VSDecoderFrame )</a>
       </div>
+      ( Ceci est la page d'aide jmri.jmrit.vsdecoder.VSDecoderFrame )
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -182,8 +182,7 @@ public class StringUtilTest {
     public void testparenQuote() {
         String sample;
 
-        sample = null;
-        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+        Assert.assertNull("null String", StringUtil.parenQuote(null));
 
         sample = "";
         Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
@@ -217,8 +216,7 @@ public class StringUtilTest {
     public void testparenUnQuote() {
         String sample;
 
-        sample = null;
-        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+        Assert.assertNull( "Null String", StringUtil.parenUnQuote(null));
 
         sample = "";
         Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
@@ -348,17 +346,15 @@ public class StringUtilTest {
         String expResultNoHtml = baseText + extraText;
         String expResultHtml = "<html>" + expResultNoHtml + "</html>";
 
-        String result;
-
         // test null cases
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, null), null);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(baseText, null), baseText);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, extraText), extraText);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(baseTextHtml, null), baseTextHtml);
-        Assert.assertEquals(StringUtil.concatTextHtmlAware(null, extraTextHtml), extraTextHtml);
+        Assert.assertNull( StringUtil.concatTextHtmlAware(null, null));
+        Assert.assertEquals(baseText, StringUtil.concatTextHtmlAware(baseText, null));
+        Assert.assertEquals(extraText, StringUtil.concatTextHtmlAware(null, extraText));
+        Assert.assertEquals(baseTextHtml, StringUtil.concatTextHtmlAware(baseTextHtml, null));
+        Assert.assertEquals(extraTextHtml, StringUtil.concatTextHtmlAware(null, extraTextHtml));
 
         // test with no HTML
-        result = StringUtil.concatTextHtmlAware(baseText, extraText);
+        String result = StringUtil.concatTextHtmlAware(baseText, extraText);
         Assert.assertEquals(expResultNoHtml, result);
 
         // test with baseText HTML
@@ -487,7 +483,32 @@ public class StringUtilTest {
         Assert.assertEquals("123ABC456 1", "123ABC457", StringUtil.incrementLastNumberInString("123ABC456",1) );
         Assert.assertEquals("123ABC0001 1", "123ABC0002", StringUtil.incrementLastNumberInString("123ABC0001",1) );
     }
-    
+
+    @Test
+    public void testto8Bits(){
+        Assertions.assertEquals("00000000",StringUtil.to8Bits(0b00000000, true));
+        Assertions.assertEquals("10000000",StringUtil.to8Bits(0b10000000, true));
+        Assertions.assertEquals("01000000",StringUtil.to8Bits(0b01000000, true));
+        Assertions.assertEquals("00100000",StringUtil.to8Bits(0b00100000, true));
+        Assertions.assertEquals("00010000",StringUtil.to8Bits(0b00010000, true));
+        Assertions.assertEquals("00001000",StringUtil.to8Bits(0b00001000, true));
+        Assertions.assertEquals("00000100",StringUtil.to8Bits(0b00000100, true));
+        Assertions.assertEquals("00000010",StringUtil.to8Bits(0b00000010, true));
+        Assertions.assertEquals("00000001",StringUtil.to8Bits(0b00000001, true));
+        Assertions.assertEquals("11111111",StringUtil.to8Bits(0b11111111, true));
+        
+        Assertions.assertEquals("00000000",StringUtil.to8Bits(0b00000000, false));
+        Assertions.assertEquals("00000001",StringUtil.to8Bits(0b10000000, false));
+        Assertions.assertEquals("00000010",StringUtil.to8Bits(0b01000000, false));
+        Assertions.assertEquals("00000100",StringUtil.to8Bits(0b00100000, false));
+        Assertions.assertEquals("00001000",StringUtil.to8Bits(0b00010000, false));
+        Assertions.assertEquals("00010000",StringUtil.to8Bits(0b00001000, false));
+        Assertions.assertEquals("00100000",StringUtil.to8Bits(0b00000100, false));
+        Assertions.assertEquals("01000000",StringUtil.to8Bits(0b00000010, false));
+        Assertions.assertEquals("10000000",StringUtil.to8Bits(0b00000001, false));
+        Assertions.assertEquals("11111111",StringUtil.to8Bits(0b11111111, false));
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();

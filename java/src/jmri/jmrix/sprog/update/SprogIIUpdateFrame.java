@@ -41,19 +41,6 @@ public class SprogIIUpdateFrame
         // Get the SPROG version
         _memo.getSprogVersionQuery().requestVersion(this);
     }
-    
-    
-    /** 
-     * {@inheritDoc}
-     * Also ensures timers are no longer running
-     */
-    @Override
-    public void dispose() {
-        // kill any timers still running 
-        stopTimer();
-            
-        super.dispose();
-    }
 
     int bootVer = 0;
 
@@ -313,7 +300,7 @@ public class SprogIIUpdateFrame
             }
             msg = SprogMessage.getWriteFlash(hexFile.getAddress(), hexFile.getData(), blockLen);
             if (log.isDebugEnabled()) {
-                log.debug(msg.toString(true));
+                log.debug("msg: {}", msg.toString(true));
             }
         } else {
             // Do nothing
@@ -395,6 +382,19 @@ public class SprogIIUpdateFrame
         tc.resetTimeout();
         tc.sendSprogMessage(msg, this);
         startLongTimer();
+    }
+
+    /**
+     * Removes SprogVersionListener.
+     * Calls Super to stop Timer.
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose(){
+        if (_memo !=null) {
+            _memo.getSprogVersionQuery().removeSprogVersionListener(this);
+        }
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory

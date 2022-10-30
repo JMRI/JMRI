@@ -1,32 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
-
   <title>JMRI: RPS Icon</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Ic&ocirc;ne RPS</h1>RPS est un syst&egrave;me
+      <h1>JMRI: Ic&ocirc;ne RPS</h1>
+
+      <p>RPS est un syst&egrave;me
       permettant de mesurer les positions du mat&eacute;riel
       roulant sur votre r&eacute;seau. Plus d'informations sur RPS
       est disponible sur la <a href=
@@ -34,7 +22,7 @@
       d'aide sur RPS</a>. Les ic&ocirc;nes Reporter RPS se
       d&eacute;place sur le TCO pour montrer o&ugrave;
       l'&eacute;quipement correspondant se trouve sur le
-      r&eacute;seau.
+      r&eacute;seau.</p>
 
       <p><img align="right" height="45" width="45" src=
       "../../../../images/bangdesk.gif" alt="Cute image de work">
@@ -279,30 +267,32 @@
         contiendra la cha&icirc;ne "RpsPositionIconXml&raquo;,
         ainsi une approche est de rechercher cela. Il va ressembler
         &agrave; (il sera probablement sur une seule ligne):
-          <pre style="font-family: monospace;">
-    &lt;Sensoricon x = "95" y = "150" level = "10"
-            actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
-            error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
-            rotate = "0" forcecontroloff = "false" momentary = "false"
-            sxscale = "11.849106591612951" syscale = "-11,889381744148094"
-            sxorigin = "41" syorigin = "768"
-            class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</pre>
+<div class="wide">
+<pre>
+&lt;Sensoricon x = "95" y = "150" level = "10"
+  actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
+  error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
+  rotate = "0" forcecontroloff = "false" momentary = "false"
+  sxscale = "11.849106591612951" syscale = "-11,889381744148094"
+  sxorigin = "41" syorigin = "768"
+  class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</pre></div>
         </li>
 
         <li>Pour que l'ic&ocirc;ne suive d'un &eacute;metteur
         sp&eacute;cifique, entrez l'ID de l'&eacute;metteur en tant
         qu'attribut "filtre". Par exemple, pour suivre
         l'&eacute;metteur 5510, modifiez la ligne:
-          <pre style="font-family: monospace;">
-    &lt;Sensoricon filter = "5510" x = "95" y = "150" level = "10"
-            actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
-            error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
-            rotate = "0" forcecontroloff = "false" momentary = "false" s
-            xscale = "11.849106591612951" syscale = "-11,889381744148094"
-            sxorigin = "41" syorigin = "768"
-            class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
-</pre>
+<div class="wide">
+<pre>
+&lt;Sensoricon filter = "5510" x = "95" y = "150" level = "10"
+  actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
+  error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
+  rotate = "0" forcecontroloff = "false" momentary = "false" s
+  xscale = "11.849106591612951" syscale = "-11,889381744148094"
+  sxorigin = "41" syorigin = "768"
+  class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</pre></div>
         </li>
 
         <li>Les attributs "actif" et "erreur" sont les ic&ocirc;nes
@@ -313,10 +303,13 @@
         d'ic&ocirc;ne que vous souhaitez. Par exemple, vous pouvez
         les changer pour une photo (petite) de la locomotive, ou
         pour une image avec le num&eacute;ro du train.</li>
-      </ul>Une belle interface graphique pour faire cela est
-      &agrave; venir, mais elle n'est pas encore l&agrave;. 
-      <!--#include virtual="/Footer.shtml" -->
+      </ul>
+      <p>Une belle interface graphique pour faire cela est
+      &agrave; venir, mais elle n'est pas encore l&agrave;.</p>
+
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

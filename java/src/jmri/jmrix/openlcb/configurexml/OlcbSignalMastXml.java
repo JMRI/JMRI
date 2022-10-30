@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * Handle XML configuration for OlcbSignalMast objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2017, 2018
- * 
+ *
  */
 public class OlcbSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -38,17 +38,17 @@ public class OlcbSignalMastXml
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, e);
-        
+
         Element lit = new Element("lit");
         lit.addContent(new Element("lit").addContent(p.getLitEventId()));
         lit.addContent(new Element("notlit").addContent(p.getNotLitEventId()));
         e.addContent(lit);
-        
+
         Element held = new Element("held");
         held.addContent(new Element("held").addContent(p.getHeldEventId()));
         held.addContent(new Element("notheld").addContent(p.getNotHeldEventId()));
         e.addContent(held);
-        
+
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             java.util.Enumeration<String> aspects = appMap.getAspects();
@@ -83,7 +83,7 @@ public class OlcbSignalMastXml
             m = (OlcbSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
                     .provideCustomSignalMast(sys, OlcbSignalMast.class);
         } catch (JmriException e) {
-            log.error("Failed to load OlcbSignalMast {}: {}", sys, e);
+            log.error("Failed to load OlcbSignalMast {}", sys, e);
             return false;
         }
 
@@ -96,19 +96,19 @@ public class OlcbSignalMastXml
 
     protected boolean loadCommonOlcbMast(OlcbSignalMast m, Element element) {
         loadCommon(m, element);
-        
+
         if (element.getChild("lit") != null) {
             Element lit = element.getChild("lit");
             m.setLitEventId(lit.getChild("lit").getValue());
             m.setNotLitEventId(lit.getChild("notlit").getValue());
         }
-        
+
         if (element.getChild("held") != null) {
             Element held = element.getChild("held");
             m.setHeldEventId(held.getChild("held").getValue());
             m.setNotHeldEventId(held.getChild("notheld").getValue());
         }
-        
+
         List<Element> list = element.getChildren("aspect");
         for (Element e : list) {
             String aspect = e.getAttribute("defines").getValue();

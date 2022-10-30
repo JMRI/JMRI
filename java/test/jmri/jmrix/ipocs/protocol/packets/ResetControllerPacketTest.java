@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import org.junit.Test;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
 
 public class ResetControllerPacketTest {
   private final byte[] testPacket = { };
@@ -26,4 +28,15 @@ public class ResetControllerPacketTest {
     ResetControllerPacket pkt = new ResetControllerPacket();
     assertArrayEquals(testPacket, pkt.serializeSpecific());
   }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

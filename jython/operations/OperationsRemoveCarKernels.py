@@ -22,7 +22,9 @@ class RemoveCarKernels(jmri.jmrit.automat.AbstractAutomaton):
 
     # get the car manager
     carManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
-
+    # get the kernel manager
+    kernelManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.KernelManager)
+    
     # get a list of cars
     carList = carManager.getByIdList()
 
@@ -37,7 +39,7 @@ class RemoveCarKernels(jmri.jmrit.automat.AbstractAutomaton):
             continue
         print "Car (" + car.toString() + ") type (" + car.getTypeName() + ") is part of kernel (" + car.getKernel().getName() + ")"
         # delete the kernel
-        carManager.deleteKernel(car.getKernel().getName())
+        kernelManager.deleteKernel(car.getKernel().getName())
 
     print "Done"
     return False              # all done, don't repeat again

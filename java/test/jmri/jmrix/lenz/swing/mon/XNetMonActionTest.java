@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.swing.mon;
 
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.*;
  */
 public class XNetMonActionTest {
 
-    private jmri.jmrix.lenz.XNetSystemConnectionMemo memo = null;
+    private XNetSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
@@ -23,13 +24,13 @@ public class XNetMonActionTest {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
-        jmri.jmrix.lenz.XNetSystemConnectionMemo memo = new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
-        jmri.InstanceManager.store(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
+        memo = new XNetSystemConnectionMemo(t);
+        jmri.InstanceManager.store(memo, XNetSystemConnectionMemo.class);
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.InstanceManager.deregister(memo, jmri.jmrix.lenz.XNetSystemConnectionMemo.class);
+        memo.dispose(); // deregisters from instance manager
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

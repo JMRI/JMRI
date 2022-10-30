@@ -236,7 +236,7 @@ public class BlockBossLogicProviderXml extends jmri.configurexml.AbstractXmlAdap
             }
 
         } catch (org.jdom2.DataConversionException e) {
-            log.warn("error reading blocks from file{}", e);
+            log.warn("error reading blocks from file", e);
             result = false;
         } catch (IllegalArgumentException e) {
             log.error("An error occurred in the signal element attribute list");

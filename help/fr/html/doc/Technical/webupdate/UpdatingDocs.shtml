@@ -1,28 +1,21 @@
-<!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
   <meta name="Revised_By" content="Bob Blakcwell - afticarr@sympatico.ca">
   <meta name="Revised_By" content="Egbert Broerse">
   <meta name="Revision_Date" content="October 10, 2015">
   <meta name="Revision"
-
-  content="Updated instructions for GitHub instead of single file edit and ZIP">
+        content="Updated instructions for GitHub instead of single file edit and ZIP">
   <title>How to Update the JMRI Documentation</title>
-<!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
 
 <h1>Actualisation Manuelle des Documents JMRI</h1>
@@ -35,12 +28,12 @@
 </ul>
 </div>
 
-Les pages web JMRI et les &#233;crans d'aide sont &#233;crits dans un sous-ensemble simple
+<p>Les pages web JMRI et les &#233;crans d'aide sont &#233;crits dans un sous-ensemble simple
 de HTML. La langue qui alimente le web.
 La partie la plus importante du contenu est le texte brut
 que les gens lisent, et les informations de formatage suppl&#233;mentaires 
 sont gard&#233;es au minimum. Pour mettre &#224; jour une page Web JMRI, vous modifiez
-celle-ci directement sur GitHub sur le web ou sur votre ordinateur avec un &#233;diteur de texte brut.
+celle-ci directement sur GitHub sur le web ou sur votre ordinateur avec un &#233;diteur de texte brut.</p>
 
 <p> Utilisation de MS Word ou Front Page pour &#233;diter ces documents .shtml n'est pas une bonne id&#233;e
 car ils ajouteront probablement leurs propres codes de formatage ce qui
@@ -127,7 +120,7 @@ sont soumises &#224; une v&#233;rification rapide et ensuite fusionn&#233;es ave
 La v&#233;rification est effectu&#233;e en utilisant les outils GitHub pour trouver les pi&#232;ces des 
 fichier qui ont &#233;t&#233; modifi&#233;es.
 
-<h3>Pr&#233;parer les Fichiers </h3>
+<h3>Pr&#233;parer les Fichiers</h3>
 
 <p>Le type de fichier correct &#224; utiliser pour JMRI a l'extension. shtml. Si vous avez
 fait un .html ou .htm, vous pouvez changer l'extension de vous-m&#234;me en .shtml.
@@ -137,13 +130,14 @@ son nom d'origine, exemple: <span style="font-family: monospace">&lt;index.shtml
 dans un emplacement o&#249; vous pouvez le trouver facilement quand vous &#234;tes pr&#234;t &#224; le copier sur
 GitHub.</p>
 
-<h3>Envoyer &#224; GitHub </h3>
+<h3>Envoyer &#224; GitHub</h3>
 
 <p>Vous pouvez voir  <a href="https://github.com/JMRI/JMRI">le r&#233;pertoire JMRI actuel sur GitHub</a>. Pour apprendre comment faire des 
 changements et se connecter &#224; GitHub, SVP Lire <a href="../getgitcode.shtml">Utilisation de Git</a>.</p>
 
-<!--#include virtual="/Footer.shtml" -->
+    <!--#include virtual="/Footer_fr.shtml" -->
     </div>
-</div>
+  </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

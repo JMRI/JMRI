@@ -1,17 +1,15 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
@@ -21,20 +19,16 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionTurnoutLock extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionTurnoutLock extends AbstractDigitalAction
+        implements PropertyChangeListener {
 
-    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
-    private NamedBeanHandle<Turnout> _turnoutHandle;
-    private String _reference = "";
-    private String _localVariable = "";
-    private String _formula = "";
-    private ExpressionNode _expressionNode;
-    private NamedBeanAddressing _lockAddressing = NamedBeanAddressing.Direct;
-    private TurnoutLock _turnoutLock = TurnoutLock.Unlock;
-    private String _stateReference = "";
-    private String _stateLocalVariable = "";
-    private String _stateFormula = "";
-    private ExpressionNode _stateExpressionNode;
+    private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
+            new LogixNG_SelectNamedBean<>(
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
+
+    private final LogixNG_SelectEnum<TurnoutLock> _selectEnum =
+            new LogixNG_SelectEnum<>(this, TurnoutLock.values(), TurnoutLock.Unlock, this);
+
 
     public ActionTurnoutLock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -49,174 +43,17 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionTurnoutLock copy = new ActionTurnoutLock(sysName, userName);
         copy.setComment(getComment());
-        if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
-        copy.setTurnoutLock(_turnoutLock);
-        copy.setAddressing(_addressing);
-        copy.setFormula(_formula);
-        copy.setLocalVariable(_localVariable);
-        copy.setReference(_reference);
-        copy.setLockAddressing(_lockAddressing);
-        copy.setLockFormula(_stateFormula);
-        copy.setLockLocalVariable(_stateLocalVariable);
-        copy.setLockReference(_stateReference);
+        _selectNamedBean.copy(copy._selectNamedBean);
+        _selectEnum.copy(copy._selectEnum);
         return manager.registerAction(copy);
     }
 
-    public void setTurnout(@Nonnull String turnoutName) {
-        assertListenersAreNotRegistered(log, "setTurnout");
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
-        if (turnout != null) {
-            setTurnout(turnout);
-        } else {
-            removeTurnout();
-            log.error("turnout \"{}\" is not found", turnoutName);
-        }
+    public LogixNG_SelectNamedBean<Turnout> getSelectNamedBean() {
+        return _selectNamedBean;
     }
 
-    public void setTurnout(@Nonnull NamedBeanHandle<Turnout> handle) {
-        assertListenersAreNotRegistered(log, "setTurnout");
-        _turnoutHandle = handle;
-        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-    }
-
-    public void setTurnout(@Nonnull Turnout turnout) {
-        assertListenersAreNotRegistered(log, "setTurnout");
-        setTurnout(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
-    }
-
-    public void removeTurnout() {
-        assertListenersAreNotRegistered(log, "setTurnout");
-        if (_turnoutHandle != null) {
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
-            _turnoutHandle = null;
-        }
-    }
-
-    public NamedBeanHandle<Turnout> getTurnout() {
-        return _turnoutHandle;
-    }
-
-    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _addressing = addressing;
-        parseFormula();
-    }
-
-    public NamedBeanAddressing getAddressing() {
-        return _addressing;
-    }
-
-    public void setReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _reference = reference;
-    }
-
-    public String getReference() {
-        return _reference;
-    }
-
-    public void setLocalVariable(@Nonnull String localVariable) {
-        _localVariable = localVariable;
-    }
-
-    public String getLocalVariable() {
-        return _localVariable;
-    }
-
-    public void setFormula(@Nonnull String formula) throws ParserException {
-        _formula = formula;
-        parseFormula();
-    }
-
-    public String getFormula() {
-        return _formula;
-    }
-
-    private void parseFormula() throws ParserException {
-        if (_addressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _expressionNode = parser.parseExpression(_formula);
-        } else {
-            _expressionNode = null;
-        }
-    }
-
-    public void setLockAddressing(NamedBeanAddressing addressing) throws ParserException {
-        _lockAddressing = addressing;
-        parseLockFormula();
-    }
-
-    public NamedBeanAddressing getLockAddressing() {
-        return _lockAddressing;
-    }
-
-    public void setTurnoutLock(TurnoutLock state) {
-        _turnoutLock = state;
-    }
-
-    public TurnoutLock getTurnoutLock() {
-        return _turnoutLock;
-    }
-
-    public void setLockReference(@Nonnull String reference) {
-        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
-            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
-        }
-        _stateReference = reference;
-    }
-
-    public String getLockReference() {
-        return _stateReference;
-    }
-
-    public void setLockLocalVariable(@Nonnull String localVariable) {
-        _stateLocalVariable = localVariable;
-    }
-
-    public String getLockLocalVariable() {
-        return _stateLocalVariable;
-    }
-
-    public void setLockFormula(@Nonnull String formula) throws ParserException {
-        _stateFormula = formula;
-        parseLockFormula();
-    }
-
-    public String getLockFormula() {
-        return _stateFormula;
-    }
-
-    private void parseLockFormula() throws ParserException {
-        if (_lockAddressing == NamedBeanAddressing.Formula) {
-            Map<String, Variable> variables = new HashMap<>();
-
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            _stateExpressionNode = parser.parseExpression(_stateFormula);
-        } else {
-            _stateExpressionNode = null;
-        }
-    }
-
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Turnout) {
-                if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("TurnoutLock_TurnoutInUseTurnoutActionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-            if (evt.getOldValue() instanceof Turnout) {
-                if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    removeTurnout();
-                }
-            }
-        }
+    public LogixNG_SelectEnum<TurnoutLock> getSelectEnum() {
+        return _selectEnum;
     }
 
     /** {@inheritDoc} */
@@ -225,85 +62,14 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
         return Category.ITEM;
     }
 
-    private String getNewLock() throws JmriException {
-
-        switch (_lockAddressing) {
-            case Reference:
-                return ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _stateReference);
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
-
-            case Formula:
-                return _stateExpressionNode != null
-                        ? TypeConversionUtil.convertToString(
-                                _stateExpressionNode.calculate(
-                                        getConditionalNG().getSymbolTable()), false)
-                        : null;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _lockAddressing.name());
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        Turnout turnout;
+        Turnout turnout = _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-//        System.out.format("ActionTurnoutLock.execute: %s%n", getLongDescription());
+        if (turnout == null) return;
 
-        switch (_addressing) {
-            case Direct:
-                turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
-                break;
-
-            case Reference:
-                String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
-                turnout = InstanceManager.getDefault(TurnoutManager.class)
-                        .getNamedBean(ref);
-                break;
-
-            case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-                turnout = InstanceManager.getDefault(TurnoutManager.class)
-                        .getNamedBean(TypeConversionUtil
-                                .convertToString(symbolTable.getValue(_localVariable), false));
-                break;
-
-            case Formula:
-                turnout = _expressionNode != null ?
-                        InstanceManager.getDefault(TurnoutManager.class)
-                                .getNamedBean(TypeConversionUtil
-                                        .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
-                        : null;
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-//        System.out.format("ActionTurnoutLock.execute: turnout: %s%n", turnout);
-
-        if (turnout == null) {
-//            log.error("turnout is null");
-            return;
-        }
-
-        String name = (_lockAddressing != NamedBeanAddressing.Direct)
-                ? getNewLock() : null;
-
-        TurnoutLock lock;
-        if ((_lockAddressing == NamedBeanAddressing.Direct)) {
-            lock = _turnoutLock;
-        } else {
-            lock = TurnoutLock.valueOf(name);
-        }
+        TurnoutLock lock = _selectEnum.evaluateEnum(getConditionalNG());
 
         if (lock == TurnoutLock.Toggle) {
             if (turnout.getLocked(Turnout.CABLOCKOUT)) {
@@ -342,56 +108,8 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
 
     @Override
     public String getLongDescription(Locale locale) {
-        String namedBean;
-        String state;
-
-        switch (_addressing) {
-            case Direct:
-                String turnoutName;
-                if (_turnoutHandle != null) {
-                    turnoutName = _turnoutHandle.getBean().getDisplayName();
-                } else {
-                    turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
-                }
-                namedBean = Bundle.getMessage(locale, "AddressByDirect", turnoutName);
-                break;
-
-            case Reference:
-                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
-                break;
-
-            case LocalVariable:
-                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
-                break;
-
-            case Formula:
-                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
-        }
-
-        switch (_lockAddressing) {
-            case Direct:
-                state = Bundle.getMessage(locale, "AddressByDirect", _turnoutLock._text);
-                break;
-
-            case Reference:
-                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
-                break;
-
-            case LocalVariable:
-                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
-                break;
-
-            case Formula:
-                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
-                break;
-
-            default:
-                throw new IllegalArgumentException("invalid _stateAddressing state: " + _lockAddressing.name());
-        }
+        String namedBean = _selectNamedBean.getDescription(locale);
+        String state = _selectEnum.getDescription(locale);
 
         return Bundle.getMessage(locale, "TurnoutLock_Long", namedBean, state);
     }
@@ -405,11 +123,15 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+        _selectNamedBean.registerListeners();
+        _selectEnum.registerListeners();
     }
 
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        _selectNamedBean.unregisterListeners();
+        _selectEnum.unregisterListeners();
     }
 
     /** {@inheritDoc} */
@@ -439,12 +161,15 @@ public class ActionTurnoutLock extends AbstractDigitalAction implements Vetoable
     /** {@inheritDoc} */
     @Override
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
-        log.debug("getUsageReport :: ActionTurnoutLock: bean = {}, report = {}", cdl, report);
-        if (getTurnout() != null && bean.equals(getTurnout().getBean())) {
-            report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
-        }
+        _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutLock.class);
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
+    }
+
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutLock.class);
 
 }

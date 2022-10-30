@@ -2,18 +2,17 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.XmlFile;
@@ -22,13 +21,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.setup.*;
 
 /**
  * Logs rolling stock movements by writing their locations to a file.
@@ -68,9 +61,9 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             return;
         }
 
-        String carLoad = " ";
-        String carFinalDest = " ";
-        String carFinalDestTrack = " ";
+        String carLoad = "";
+        String carFinalDest = "";
+        String carFinalDestTrack = "";
         if (rs.getClass().equals(Car.class)) {
             Car car = (Car) rs;
             carLoad = car.getLoadName();

@@ -245,7 +245,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                                     b.getChild(i).getConnectedSocket().getLongDescription());
                         }
                     }
-                    log.error("                                                                 ");
+                    log.error("                                             End Item");
                     List<String> cliperrors = new ArrayList<String>();
                     _clipboard.add((MaleSocket) b, cliperrors);
                 }
@@ -269,6 +269,20 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         // This may take a long time so it must not be done on the GUI thread.
         // Therefore we create a new thread for this task.
         Runnable runnable = () -> {
+
+            // Initialize the values of the global variables
+            Set<GlobalVariable> globalVariables =
+                    InstanceManager.getDefault(GlobalVariableManager.class)
+                            .getNamedBeanSet();
+
+            for (GlobalVariable gv : globalVariables) {
+                try {
+                    gv.initialize();
+                } catch (JmriException e) {
+                    log.warn("Variable {} could not be initialized", gv.getUserName(), e);
+                }
+            }
+
             Set<LogixNG> activeLogixNGs = new HashSet<>();
 
             // Activate and execute the initialization LogixNGs first.
@@ -277,6 +291,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                             .getList();
 
             for (LogixNG logixNG : initLogixNGs) {
+                logixNG.activate();
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
                     logixNG.execute(false);
@@ -291,6 +306,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     .sorted()
                     .filter((logixNG) -> !(activeLogixNGs.contains(logixNG)))
                     .forEachOrdered((logixNG) -> {
+
+                logixNG.activate();
 
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
@@ -360,6 +377,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         }
         InstanceManager.getDefault(ModuleManager.class).printTree(settings, locale, writer, indent, lineNumber);
         InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
+        InstanceManager.getDefault(GlobalVariableManager.class).printTree(locale, writer, indent);
         InstanceManager.getDefault(LogixNG_InitializationManager.class).printTree(locale, writer, indent);
     }
 
@@ -425,16 +443,16 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             vc.vetoableChange(evt);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
 //    @OverridingMethodsMustInvokeSuper
     public final void deleteBean(@Nonnull LogixNG logixNG, @Nonnull String property) throws PropertyVetoException {
-        for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
+        for (int i=logixNG.getNumConditionalNGs()-1; i >= 0; i--) {
             ConditionalNG child = logixNG.getConditionalNG(i);
             InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(child, property);
         }
-        
+
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, logixNG);
         if (property.equals("DoDelete")) { // NOI18N
@@ -442,7 +460,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             logixNG.dispose();
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerSetupTask(Runnable task) {
@@ -467,8 +485,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             firePropertyChange("length", null, _beans.size());
         }
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }

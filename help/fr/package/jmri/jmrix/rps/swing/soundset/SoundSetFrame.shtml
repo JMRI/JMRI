@@ -1,104 +1,94 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated  by Blorec Herv&eacute; le 2011-10-27-->
 
   <title>JMRI: RPS Sound Speed Control</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
-      <h1>JMRI: Contr&Atilde;&acute;le de la Vitesse du Son
+      <h1>JMRI: Contrôle de la Vitesse du Son
       RPS</h1><a href=
       "../../../../../../html/hardware/rps/images/SoundControl.gif"><img src="../../../../../../html/hardware/rps/images/SoundControl.gif"
       height="100" width="278" alt="RPS Receiver Control window"
-      align="right"></a><br>
-      Cette fen&Atilde;&ordf;tre vous permet de surveiller et de
-      contr&Atilde;&acute;ler la vitesse du son
-      utilis&Atilde;&copy; par le <a href=
-      "../../../../../../html/hardware/rps/index.shtml">syst&Atilde;&uml;me
-      RPS</a>.
+      align="right"></a>
+      <p>
+      Cette fenêtre vous permet de surveiller et de
+      contrôler la vitesse du son
+      utilisé par le <a href=
+      "../../../../../../html/hardware/rps/index.shtml">système
+      RPS</a>.</p>
 
       <p>RPS mesures les temps, et utilise une valeur pour la
       vitesse du son pour calculer les distances correspondantes
       qu'il utilise pour calculer les positions. Il est important
-      que la vitesse du son soit tr&Atilde;&uml;s
-      pr&Atilde;&copy;cise. Si vous voulez mesurer une distance de
+      que la vitesse du son soit très
+      précise. Si vous voulez mesurer une distance de
       huit pieds au 1/4 de pouce, vous devez mesurer la vitesse du
-      son &Atilde;  environ 1/1000, obtenant trois chiffres
-      significatifs apr&Atilde;&uml;s la virgule. Comme la vitesse
-      du son change l&Atilde;&copy;g&Atilde;&uml;rement avec les
-      conditions de temp&Atilde;&copy;rature, de pression et
-      d'humidit&Atilde;&copy;, la mesurer automatiquement est
-      tr&Atilde;&uml;s utile.</p>
+      son à environ 1/1000, obtenant trois chiffres
+      significatifs après la virgule. Comme la vitesse
+      du son change légèrement avec les
+      conditions de température, de pression et
+      d'humidité, la mesurer automatiquement est
+      très utile.</p>
 
-      <p>Cette fen&Atilde;&ordf;tre affiche la valeur la vitesse
-      actuelle sur la ligne du haut. Selon la fa&Atilde;&sect;on
-      dont le syst&Atilde;&uml;me fonctionne, cela pourrait changer
-      &Atilde;  l'occasion.</p>
+      <p>Cette fenêtre affiche la valeur la vitesse
+      actuelle sur la ligne du haut. Selon la façon
+      dont le système fonctionne, cela pourrait changer
+      à l'occasion.</p>
 
       <p>Ci-dessous qui sont deux sections pour
-      contr&Atilde;&acute;ler la vitesse.</p>
+      contrôler la vitesse.</p>
 
       <p>Dans la section du milieu, vous pouvez directement entrer
       une nouvelle valeur. Cliquez sur "Valider" pour avoir
-      prennent effet imm&Atilde;&copy;diatement.</p>
+      prennent effet immédiatement.</p>
 
-      <p>Le RPS peut &Atilde;&copy;galement calculer la vitesse du
-      son &Atilde;  partir d'une mesure. Pour ce faire, vous devez
-      avoir un &Atilde;&copy;metteur RPS fixe dont la distance au
-      r&Atilde;&copy;cepteur est connue. Entrez la distance connue,
-      la Num&Atilde;&copy;ro d'identification de
-      l'&Atilde;&copy;metteur, et le num&Atilde;&copy;ro du
-      r&Atilde;&copy;cepteur pour lequel vous avez
-      mesur&Atilde;&copy; la distance.</p>
+      <p>Le RPS peut également calculer la vitesse du
+      son à partir d'une mesure. Pour ce faire, vous devez
+      avoir un émetteur RPS fixe dont la distance au
+      récepteur est connue. Entrez la distance connue,
+      la Numéro d'identification de
+      l'émetteur, et le numéro du
+      récepteur pour lequel vous avez
+      mesuré la distance.</p>
 
-      <p>Lorsque le syst&Atilde;&uml;me RPS prend une lecture de
-      cet &Atilde;&copy;metteur, il utilisera la distance connue et
+      <p>Lorsque le système RPS prend une lecture de
+      cet émetteur, il utilisera la distance connue et
       la mesure de temps pour calculer une mesure de vitesse du
-      son. Cette valeur est affich&Atilde;&copy;e dans la ligne de
+      son. Cette valeur est affichée dans la ligne de
       fond.</p>
 
-      <p>Si vous cochez la case "R&Atilde;&copy;glage Auto", RPS va
-      lentement mettre &Atilde;  jour la valeur de la vitesse
-      utilis&Atilde;&copy;e &Atilde;  chaque fois qu'une lecture
-      est obtenue. La case "Amortissement" d&Atilde;&copy;termine
-      combien de moyenne ont &Atilde;&copy;t&Atilde;&copy; faites:
-      Agrandir les valeurs d'usage &Atilde;  un plus grand nombre
-      de moyenne des &Atilde;&copy;chantillons lors de la mise
-      &Atilde;  jour. La valeur par d&Atilde;&copy;faut de 10 est
+      <p>Si vous cochez la case "Réglage Auto", RPS va
+      lentement mettre à jour la valeur de la vitesse
+      utilisée à chaque fois qu'une lecture
+      est obtenue. La case "Amortissement" détermine
+      combien de moyenne ont été faites:
+      Agrandir les valeurs d'usage à un plus grand nombre
+      de moyenne des échantillons lors de la mise
+      à jour. La valeur par défaut de 10 est
       un bon compromis entre le maintien de la
-      stabilit&Atilde;&copy; de la valeur, et r&Atilde;&copy;pondre
+      stabilité de la valeur, et répondre
       aux changements.</p>
 
-      <p>Actuellement, la mise &Atilde;  jour automatique ne
-      fonctionne que lorsque cette fen&Atilde;&ordf;tre est
-      ouverte. D&Atilde;&uml;s que nous aurons plus
-      d'exp&Atilde;&copy;rience avec cet outil, nous allons
+      <p>Actuellement, la mise à jour automatique ne
+      fonctionne que lorsque cette fenêtre est
+      ouverte. Dès que nous aurons plus
+      d'expérience avec cet outil, nous allons
       probablement faire que cette fonction fonctionne
       automatiquement, sans avoir besoin de la
-      fen&Atilde;&ordf;tre.</p>
+      fenêtre.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

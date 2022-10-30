@@ -1,16 +1,15 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.cbus.CbusConfigurationManager;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of NodeConfigToolPane
@@ -21,26 +20,26 @@ import org.junit.Assume;
 public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInitComp() {
-        
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
-        jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
-        jmri.InstanceManager.setDefault(jmri.jmrix.can.cbus.CbusPreferences.class,new CbusPreferences() );
-        
+
+        Assertions.assertNotNull(memo);
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
+        CbusNodeTableDataModel nodeModel = memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
+
         NodeConfigToolPane nodeConfigpanel = new NodeConfigToolPane();
         nodeConfigpanel.initComponents(memo);
-        
+
         Assert.assertNotNull("exists", nodeConfigpanel);
         Assert.assertNotNull("core node model exists", nodeModel);
-        
+
         nodeModel.dispose();
 
     }
-    
-    private CanSystemConnectionMemo memo;
-    private TrafficControllerScaffold tcis;
+
+    private CanSystemConnectionMemo memo = null;
+    private TrafficControllerScaffold tcis = null;
 
     @BeforeEach
     @Override
@@ -50,7 +49,7 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
+        memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.MERGCBUS);
         panel = new NodeConfigToolPane();
         title = Bundle.getMessage("MenuItemNodeConfig");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane";
@@ -59,8 +58,9 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     @AfterEach
     @Override
     public void tearDown() {
-        
+        Assertions.assertNotNull(tcis);
         tcis.terminateThreads();
+        Assertions.assertNotNull(memo);
         memo.dispose();
         tcis = null;
         memo = null;

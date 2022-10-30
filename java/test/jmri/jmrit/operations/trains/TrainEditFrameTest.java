@@ -53,11 +53,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
         // test defaults
         Assert.assertEquals("train name", "Test Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
-        Assert.assertEquals("train comment", "Test Train Comment", train.getComment());
+        Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
         Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
-        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getRoadOption());
+        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
         // test departure time fields
@@ -219,11 +219,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
         // test defaults
         Assert.assertEquals("train name", "Test Add Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
-        Assert.assertEquals("train comment", "Test Train Comment", train.getComment());
+        Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
         Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
-        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getRoadOption());
+        Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
         JUnitUtil.dispose(trainEditFrame);

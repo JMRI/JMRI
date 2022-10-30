@@ -38,6 +38,10 @@
         </li>
 
         <li>
+          <a href="#Shutdown">Shutdown</a>
+        </li>
+
+        <li>
           <a href="#Display">Display</a>
         </li>
 
@@ -184,7 +188,7 @@
         <ul>
           <li>Tables and panels</li>
 
-          <li>Rosters — also see <a href="#rostertab">Roster Preferences, Roster tab</a>
+          <li>Rosters &mdash; also see <a href="#rostertab">Roster Preferences, Roster tab</a>
           </li>
 
           <li>Operations</li>
@@ -210,7 +214,7 @@
         <a href="../jmri/jmrit/display/PanelMenuHelp.shtml">layout configuration file</a> at
         startup, so all your turnouts, sensors, panels etc. are available again.</p>
 
-        <p>Click the <strong>Add ▾</strong> button and select the type of start up action to add.
+        <p>Click the <strong>Add &#9662;</strong> button and select the type of start up action to add.
         The new action will be added last.</p>
 
         <p>Start up action order is important. In most cases, scripts should be the last items in
@@ -262,6 +266,42 @@
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+
+      <h2 id="Shutdown">Shutdown<span class="since">since 5.1.1</span></h2>
+
+      <div>
+        <p>When JMRI is stopped using Quit, a process is run that determines if any tables or panels
+        have been changed since the last PanelPro store occurred.  This provides an opportunity to
+        do a final store before shutdown.</p>
+
+        <p>The check process uses two shutdown preferences.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/PrefsShutdown.png"><img src="images/PrefsShutdown.png" alt="shutdown preferences"></a>
+        </div>
+
+        <p><strong><em>Check for changes that have not been stored</em></strong> is the master
+        switch for the process.  If this is unchecked, no checking will occur.  Checked is the
+        default setting.  Starting PanelPro creates some default <strong>Fast Clock</strong>
+        table entries. If these are the only table entries, a store request will not occur.</p>
+
+        <p>If the check process has been enabled and there are changes that should be stored, a
+        dialog will be displayed.  The changes normally occur due to table and panel changes.
+        They can also occur when a connection, such as Digitrax, automatically adds sensors and
+        turnouts.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/StoreRequest.png"><img src="images/StoreRequest.png" alt="store reqquest"></a>
+        </div>
+
+        <p>The default is to show the store request dialog and if <strong>Yes</strong> is selected,
+        the actual store dialog will be displayed.  The <strong>Skip</strong> option can be selected
+        to go directly to the store dialog.</p>
+
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="Display">Display</h2>
 
       <div>
@@ -277,42 +317,42 @@
             depend on what kind of computer you have, and not all of the following may be
             available:
             <ul>
-              <li>Nimbus — An alternate style</li>
+              <li>Nimbus &mdash; An alternate style</li>
 
-              <li>Metal — the default Java style, usable on all computers</li>
+              <li>Metal &mdash; the default Java style, usable on all computers</li>
 
-              <li>CDE/Motif — A Linux/Unix form that works well with X Windows screen managers.
+              <li>CDE/Motif &mdash; A Linux/Unix form that works well with X Windows screen managers.
               It's also available on (almost) all computer types.</li>
 
-              <li>Windows — only available on Microsoft Windows systems, this makes the program
+              <li>Windows &mdash; only available on Microsoft Windows systems, this makes the program
               look as much as possible like a regular Windows application.</li>
 
-              <li>Mac OS X — only available on MacOS, this makes the program look like a Macintosh
+              <li>Mac OS X &mdash; only available on MacOS, this makes the program look like a Macintosh
               application.</li>
             </ul>
             In addition, this tab lets you set:
             <ul>
-              <li>Font size — The font size of the GUI.</li>
+              <li>Font size &mdash; The font size of the GUI.</li>
 
-              <li>Use non-standard release event for mouse click? — Provide alternate mouse
+              <li>Use non-standard release event for mouse click? &mdash; Provide alternate mouse
               behavior for specific hardware.</li>
 
-              <li>Use icons to show state in tables — Whether you want to use graphics to show the
+              <li>Use icons to show state in tables &mdash; Whether you want to use graphics to show the
               state of turnouts, lights, sensors and blocks in the state column of their
               tables.</li>
 
-              <li>Use tabbed OBlock editing — See <a href=
+              <li>Use tabbed OBlock editing &mdash; See <a href=
               "../jmri/jmrit/logix/OBlockTable.shtml#oblock_gui_options">OBlock GUI Options</a>.
               </li>
 
-              <li>Use old location and size logic for editor panels — Whether you want to use the
+              <li>Use old location and size logic for editor panels &mdash; Whether you want to use the
               values saved in a panel xml file instead of the standard location and size process
               for JMRI windows.<span class="since">since 4.15.6</span></li>
 
-              <li>Maximum Combo Box List Rows —Limit the size of combo box lists. This can be
+              <li>Maximum Combo Box List Rows &mdash;Limit the size of combo box lists. This can be
               useful for large screens.<span class="since">since 4.23.1</span></li>
 
-              <li>Tool tip display time — How long tooltips (where available) should be shown.</li>
+              <li>Tool tip display time &mdash; How long tooltips (where available) should be shown.</li>
             </ul>
           </dd>
 
@@ -549,7 +589,7 @@
       <h2 id="help">Help</h2>
 
       <div>
-        <p>When <strong>Help ⇒ Window Help</strong> or <strong>Help ⇒ General Help</strong> is
+        <p>When <strong>Help &rArr; Window Help</strong> or <strong>Help &rArr; General Help</strong> is
         selected, <strong>JmriHelp</strong> will display the help page in the default browser.</p>
 
         <p>There are three options that can be selected.</p>
@@ -742,7 +782,7 @@
 
         <h3>Merging Speed Profiles</h3>
 
-        <p><span class="since">since 4.19.2</span>Warrants can compute a track speed when 
+        <p><span class="since">since 4.19.2</span>Warrants can compute a track speed when
         traversing a path with known length and known throttle setting.
         These measurements are made for each Roster Id that is run under
         a warrant and are kept for the entire layout session. When JMRI is quit, at shutdown, these
@@ -772,14 +812,14 @@
         <h3>Slow Speed Assistance</h3>
 
         <p><span class="since">since 4.24.5</span>The ramping parameters and speed interpretation
-        apply to all locomotives when speed changes are required by signal aspects, obstacles 
-        ahead or a user "Halt" control command. You may have a balky engine in your fleet that 
+        apply to all locomotives when speed changes are required by signal aspects, obstacles
+        ahead or a user "Halt" control command. You may have a balky engine in your fleet that
         may not perform well at low throttle settings. Should such a speed be specified before entering
-        a block, the engine might stall and never get there. "Slow Speed Assistance" can be 
-        given when a train is inordinately late in getting to the next block of the script. 
-        This done only when the train approaching the block has a speed less than a specified 
-        throttle setting. If the train has not reached the block within 10 seconds of its scheduled 
-        script time, its speed is increased by one "Ramp Step Throttle Increment". This is 
+        a block, the engine might stall and never get there. "Slow Speed Assistance" can be
+        given when a train is inordinately late in getting to the next block of the script.
+        This done only when the train approaching the block has a speed less than a specified
+        throttle setting. If the train has not reached the block within 10 seconds of its scheduled
+        script time, its speed is increased by one "Ramp Step Throttle Increment". This is
         done at 10 second intervals until either the train reaches the block or has
         attained the specified throttle speed. Upon entering the block the original script
         speed is restored.</p>

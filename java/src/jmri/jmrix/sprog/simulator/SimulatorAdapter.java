@@ -116,6 +116,8 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     /**
      * Set up all of the other objects to operate with a Sprog Simulator.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification = "passing exception text")
     @Override
     public void configure() {
         // connect to the traffic controller

@@ -61,7 +61,8 @@ public class TransitSectionAction {
     public static final int SETSENSORINACTIVE = 13; // set specified sensor inactive
     public static final int HOLDSIGNAL = 14;    // set specified signalhead or signalmast to HELD
     public static final int RELEASESIGNAL = 15; // set specified signalhead or signalmast to NOT HELD
-    public static final int NUM_WHATS = 15; // Must correspond to the number of entries above 
+    public static final int ESTOP = 16;   // set ESTOP
+    public static final int NUM_WHATS = 16; // Must correspond to the number of entries above
     // other action 'whats" may be defined here, increment NUM_WHATS to match
 
     /**

@@ -19,6 +19,7 @@
   <version author="Dave Heap" version="5" lastUpdated="20140401"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20180103"/>
+  <version author="Michael Mosher" version="8" lastUpdated="20220105"/>
   <!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 -->
@@ -33,6 +34,7 @@
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
                 FX5 or FX6 are either physical or logical outputs (for TSU-750) used for "Rule 17 mode"         -->
+  <!-- version 8	Update N Challenger defualt values from user-->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Steam Genesis OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Athearn Genesis Tsunami steam decoders">
@@ -235,11 +237,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="BB,chal,FEF" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="BB,chal,FEF,N_Chal" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
-      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" include="MT4,N_Chal" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" include="MT4" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
@@ -1166,11 +1168,11 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17HL.xml"/>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" include="MT4,N_Chal" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" include="MT4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" include="BB,chal,FEF" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" include="BB,chal,FEF,N_Chal" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
@@ -1238,25 +1240,29 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6 Light Type</label>
       </variable>
-      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="FEF" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5 function output in Forward direction">
+      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="FEF,N_Chal" tooltip="Check to enable FX5 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Forward Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="FEF" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5 function output in Reverse direction">
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="FEF,N_Chal" tooltip="Check to enable FX5 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Reverse Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="FEF" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX6 function output in Forward direction">
+      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="FEF,N_Chal" tooltip="Check to enable FX6 function output in Forward direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Forward Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="FEF" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX6 function output in Reverse direction">
+      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="FEF,N_Chal" tooltip="Check to enable FX6 function output in Reverse direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Reverse Directional Control</label>
-        <comment>This CV for Gas Turbine only. Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="N_Chal" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX5.xml"/>
+        <label>FX5 Lighting Overide</label>
+      </variable>
+      <variable item="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="N_Chal" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX6.xml"/>
+        <label>FX6 Lighting Overide</label>
       </variable>
       <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
@@ -1288,6 +1294,10 @@
       <variable CV="64" item="Zero-1 Power Conversion" default="180" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
         <decVal/>
         <label>Analog Mode Max Motor Voltage (0-255)</label>
+      </variable>
+      <variable item="Kick Start" CV="65" include="N_Chal">
+        <decVal/>
+        <label>Kick Start</label>
       </variable>
       <variable CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
@@ -1506,6 +1516,10 @@
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
+      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
+        <decVal/>
+        <label>Motor Recovery Speed (0-255)</label>
+      </variable>
       <!-- Volume Controls follow -->
       <variable CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192" include="BB,N_Chal" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
@@ -1539,11 +1553,7 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="95" include="MT4,BB" tooltip="Sets the volume of the bell">
-        <decVal/>
-        <label>Bell Volume</label>
-      </variable>
-      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="128" include="N_Chal" tooltip="Sets the volume of the bell">
+      <variable CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="95" include="MT4,BB,N_Chal" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -1559,7 +1569,7 @@
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
-      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="180" include="N_Chal" tooltip="Sets the volume of the engine exhaust">
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="75" include="N_Chal" tooltip="Sets the volume of the engine exhaust">
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
@@ -1571,11 +1581,7 @@
         <decVal/>
         <label>Air Pump Volume</label>
       </variable>
-      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="48" include="MT4,BB" tooltip="Sets the volume of the air pump">
-        <decVal/>
-        <label>Air Pump Volume</label>
-      </variable>
-      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="125" include="N_Chal" tooltip="Sets the volume of the air pump">
+      <variable CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="48" include="MT4,BB,N_Chal" tooltip="Sets the volume of the air pump">
         <decVal/>
         <label>Air Pump Volume</label>
       </variable>
@@ -1591,7 +1597,7 @@
         <decVal/>
         <label>Dynamo Volume</label>
       </variable>
-      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 10" default="100" include="N_Chal" tooltip="Sets the volume of the dynamo (electric power generator)">
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 10" default="32" include="N_Chal" tooltip="Sets the volume of the dynamo (electric power generator)">
         <decVal/>
         <label>Dynamo Volume</label>
       </variable>
@@ -1599,11 +1605,7 @@
         <decVal/>
         <label>Blower Volume</label>
       </variable>
-      <variable CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="16" include="MT4,BB" tooltip="Sets the volume of the blower">
-        <decVal/>
-        <label>Blower Volume</label>
-      </variable>
-      <variable CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="140" include="N_Chal" tooltip="Sets the volume of the blower">
+      <variable CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="16" include="MT4,BB,N_Chal" tooltip="Sets the volume of the blower">
         <decVal/>
         <label>Blower Volume</label>
       </variable>
@@ -1635,11 +1637,15 @@
         <decVal/>
         <label>Brake Squeal Volume</label>
       </variable>
+      <variable CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="64" include="N_Chal" tooltip="Sets the volume of the brakes squealing">
+        <decVal/>
+        <label>Brake Squeal Volume</label>
+      </variable>
       <variable CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="96" include="FEF" tooltip="Sets the volume of the brakes squealing">
         <decVal/>
         <label>Brake Squeal Volume</label>
       </variable>
-      <variable CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="128" exclude="FEF" tooltip="Sets the volume of the brakes squealing">
+      <variable CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="128" include="MT4,BB" tooltip="Sets the volume of the brakes squealing">
         <decVal/>
         <label>Brake Squeal Volume</label>
       </variable>
@@ -1687,7 +1693,15 @@
         <decVal/>
         <label>Water Stop Volume</label>
       </variable>
+      <variable CV="146" mask="VVVVVVVV" item="Sound Setting 25" default="96" include="N_Chal" tooltip="Sets the volume of the water stop activity">
+        <decVal/>
+        <label>Water Stop Volume</label>
+      </variable>
       <variable CV="147" mask="VVVVVVVV" item="Sound Setting 13" default="48" include="chal,FEF" tooltip="Sets the volume of the injector operating">
+        <decVal/>
+        <label>Injector Volume</label>
+      </variable>
+      <variable CV="147" mask="VVVVVVVV" item="Sound Setting 13" default="100" include="N_Chal" tooltip="Sets the volume of the injector operating">
         <decVal/>
         <label>Injector Volume</label>
       </variable>
@@ -1695,7 +1709,15 @@
         <decVal/>
         <label>Fireman Shovel Volume</label>
       </variable>
+      <variable CV="148" mask="VVVVVVVV" item="Sound Setting 26" default="64" include="N_Chal" tooltip="Sets the volume of the fireman shoveling">
+        <decVal/>
+        <label>Fireman Shovel Volume</label>
+      </variable>
       <variable CV="149" mask="VVVVVVVV" item="Sound Setting 27" default="48" include="chal,FEF" tooltip="Sets the volume of the fireman using his wrench">
+        <decVal/>
+        <label>Fireman Wrench Volume</label>
+      </variable>
+      <variable CV="149" mask="VVVVVVVV" item="Sound Setting 27" default="64" include="N_Chal" tooltip="Sets the volume of the fireman using his wrench">
         <decVal/>
         <label>Fireman Wrench Volume</label>
       </variable>
@@ -1703,7 +1725,15 @@
         <decVal/>
         <label>Fireman Oil Can Volume</label>
       </variable>
+      <variable CV="150" mask="VVVVVVVV" item="Sound Setting 28" default="64" include="N_Chal" tooltip="Sets the volume of the fireman using his oil can">
+        <decVal/>
+        <label>Fireman Oil Can Volume</label>
+      </variable>
       <variable CV="151" mask="VVVVVVVV" item="Sound Setting 29" default="24" include="chal,FEF" tooltip="Sets the volume of the fireman using his grease gun">
+        <decVal/>
+        <label>Fireman Grease Gun Volume</label>
+      </variable>
+      <variable CV="151" mask="VVVVVVVV" item="Sound Setting 29" default="32" include="N_Chal" tooltip="Sets the volume of the fireman using his grease gun">
         <decVal/>
         <label>Fireman Grease Gun Volume</label>
       </variable>
@@ -1859,6 +1889,10 @@
         <decVal/>
         <label>DDE Tracking Coefficient</label>
       </variable>
+      <variable item="DDE Tracking Offset" CV="189" mask="VVVVVVVV" default="0" include="MT4,BB,N_Chal">
+        <decVal/>
+        <label>DDE Tracking Offset</label>
+      </variable>
       <!-- Automatic Sound Controls (ASC) follow -->
       <variable item="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="10" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
@@ -1880,27 +1914,27 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Grade Crossing Whistle Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" exclude="chal,FEF" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
+      <variable item="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" exclude="chal,FEF,N_Chal" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Whistle Signal Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="1" include="chal,FEF" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
+      <variable item="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="1" include="chal,FEF,N_Chal" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Whistle Signal Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" exclude="chal,FEF" tooltip="Enables the Automatic Bell in Analog Mode">
+      <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" exclude="chal,FEF,N_Chal" tooltip="Enables the Automatic Bell in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="1" include="chal,FEF" tooltip="Enables the Automatic Bell in Analog Mode">
+      <variable item="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="1" include="chal,FEF,N_Chal" tooltip="Enables the Automatic Bell in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" exclude="chal,FEF" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
+      <variable item="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" exclude="chal,FEF,N_Chal" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
       </variable>
-      <variable item="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="1" include="chal,FEF" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
+      <variable item="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="1" include="chal,FEF,N_Chal" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
       </variable>
@@ -1920,11 +1954,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Bell Enable</label>
       </variable>
-      <variable item="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="0" exclude="chal" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
+      <variable item="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="0" exclude="chal,N_Chal" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable</label>
       </variable>
-      <variable item="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="1" include="chal" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
+      <variable item="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="1" include="chal,N_Chal" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Automatic Brake Squeal Enable</label>
       </variable>
@@ -1991,7 +2025,19 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
+      <variable CV="215" mask="VVVVVVVV" item="EMF Option 4" default="0" include="N_Chal" tooltip="Sets the back-EMF reference voltage by 0.1 volt increments, A value of 0 indicates that track voltage is used">
+        <decVal/>
+        <label>BEMF Gain Coefficient</label>
+      </variable>
+      <variable CV="217" mask="XXXXXXVX" item="EMF option 2" default="1" include="N_Chal" tooltip="Enable back-EMF motor control">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Back-EMF Enable</label>
+      </variable>
       <variable CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="15" include="chal,FEF">
+        <decVal/>
+        <label>Analog Mode Engine Sound Start</label>
+      </variable>
+      <variable CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="19" include="N_Chal">
         <decVal/>
         <label>Analog Mode Engine Sound Start</label>
       </variable>

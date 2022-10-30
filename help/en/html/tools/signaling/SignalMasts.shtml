@@ -31,7 +31,7 @@
 
         <p>Signal Masts are configured through the <a href=
         "../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. You
-        access this tool from the <strong>Tools ⇒ Tables ⇒ Signal Masts</strong> menu.</p>
+        access this tool from the <strong>Tools &rArr; Tables &rArr; Signal Masts</strong> menu.</p>
 
         <p>From the table, you can manually set individual Signal Masts to any Aspect that they're
         able to display by selecting it from one of the combo boxes in the "Aspect" column.<br>

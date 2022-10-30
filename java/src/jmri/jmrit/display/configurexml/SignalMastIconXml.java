@@ -132,7 +132,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 l.setClickMode(attr.getIntValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Failed on clickmode attribute: {}", e);
+            log.error("Failed on clickmode attribute", e);
         }
 
         try {
@@ -141,7 +141,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 l.setLitMode(attr.getBooleanValue());
             }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Failed on litmode attribute: {}", e);
+            log.error("Failed on litmode attribute", e);
         }
 
         try {

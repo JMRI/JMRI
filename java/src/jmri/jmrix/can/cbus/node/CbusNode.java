@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus.node;
 
 // import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.slf4j.Logger;
@@ -19,12 +21,9 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
     private boolean _nvWriteInLearnOnly;
     private boolean _liveUpdate;
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
-    public static int BOOT_PAUSE_TIMEOUT_TIME = 1000;
-    public static int BOOT_ENTRY_TIMEOOUT_TIME = 500;
-    public static int BOOT_SINGLE_MESSAGE_TIMEOUT_TIME = 500;
     public static int BOOT_PROG_TIMEOUT_FAST = 10;
     public static int BOOT_PROG_TIMEOUT_SLOW = 50;
-    public static int BOOT_CONFIG_TIMEOUT_TIME = 50;
+    public static int BOOT_LONG_TIMEOUT_TIME = 1500;
     private String _nodeNameFromName;
     private String resyncName = null;
     
@@ -34,7 +33,7 @@ public class CbusNode extends CbusBasicNodeWithMgrsCommandStation {
      * @param connmemo The CAN Connection to use
      * @param nodenumber The Node Number
      */
-    public CbusNode ( CanSystemConnectionMemo connmemo, int nodenumber ){
+    public CbusNode ( @CheckForNull CanSystemConnectionMemo connmemo, int nodenumber ){
         super(connmemo,nodenumber);
         
         _sendsWRACKonNVSET = true;

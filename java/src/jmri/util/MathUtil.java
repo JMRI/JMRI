@@ -5,11 +5,10 @@ import java.awt.geom.*;
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 /**
  * Useful math methods.
@@ -1146,7 +1145,7 @@ public final class MathUtil {
     /**
      * Draw a cubic Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
+     * @param g2 the Graphics2D context to draw to (null if just want length)
      * @param p0 origin control point
      * @param p1 first control point
      * @param p2 second control point
@@ -1155,14 +1154,16 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     public static double drawBezier(
-            Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p0,
             @Nonnull Point2D p1,
             @Nonnull Point2D p2,
             @Nonnull Point2D p3) {
         GeneralPath path = new GeneralPath();
         double result = plotBezier(path, p0, p1, p2, p3, 0, 0.0);
-        g2.draw(path);
+        if (g2 != null) {
+            g2.draw(path);
+        }
         return result;
     }
 
@@ -1235,17 +1236,17 @@ public final class MathUtil {
         return result;
     }
 
-    /*
+    /**
      * Plot a Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
+     * @param g2 the Graphics2D context to draw to (null if just want length)
      * @param p  the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @param fillFlag     false to draw / true to fill
      * @return the length of the Bezier curve
      */
     private static double plotBezier(
-            Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement,
             boolean fillFlag) {
@@ -1256,10 +1257,12 @@ public final class MathUtil {
         } else {    // (nope)
             result = plotBezier(path, p, 0, displacement);
         }
-        if (fillFlag) {
-            g2.fill(path);
-        } else {
-            g2.draw(path);
+        if (g2 != null) {
+            if (fillFlag) {
+                g2.fill(path);
+            } else {
+                g2.draw(path);
+            }
         }
         return result;
     }
@@ -1296,13 +1299,14 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2           the Graphics2D context to draw to
+     * @param g2           the Graphics2D context to draw to (null to just
+     *                     return length)
      * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
     public static double drawBezier(
-            Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement) {
         return plotBezier(g2, p, displacement, false);
@@ -1317,7 +1321,7 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     public static double fillBezier(
-            Graphics2D g2,
+            @CheckForNull Graphics2D g2,
             @Nonnull Point2D p[],
             double displacement) {
         return plotBezier(g2, p, displacement, true);
@@ -1326,22 +1330,22 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
+     * @param g2 the Graphics2D context to draw to (null to just return length)
      * @param p  the control points
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double drawBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D p[]) {
         return drawBezier(g2, p, 0.0);
     }
 
     /**
      * Fill a Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
+     * @param g2 the Graphics2D context to draw to (null if just want length)
      * @param p  the control points
      * @return the length of the Bezier curve
      */
-    public static double fillBezier(Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double fillBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D p[]) {
         return plotBezier(g2, p, 0.0, true);
     }
 

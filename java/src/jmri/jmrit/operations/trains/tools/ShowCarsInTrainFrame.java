@@ -4,15 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,18 +148,19 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                 addItemLeft(pCars, textInTrain, 1, 0);
                 addItemLeft(pCars, textSetOut, 2, i++);
                 // block cars by destination
-                // except for passenger cars, use car blocking
-                boolean isOnlyPassenger = _train.isOnlyPassengerCars();
+                // caboose or FRED is placed at end of the train
+                // passenger cars are already blocked in the car list
+                // passenger cars with negative block numbers are placed at
+                // the front of the train, positive numbers at the end of
+                // the train.
                 for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
                     for (Car car : carManager.getByTrainDestinationList(_train)) {
-                        if ((car.getTrack() == null || car.getRouteLocation() == rl) &&
-                                (car.getRouteDestination() == rld || (car.isPassenger() && isOnlyPassenger))) {
-
+                        if (car.getTrack() == null || TrainCommon.isNextCar(car, rl, rld)) {
                             log.debug("car ({}) routelocation ({}) track ({}) route destination ({})",
                                     car.toString(), car
                                             .getRouteLocation().getName(),
                                     car.getTrackName(), car.getRouteDestination().getName());
-                            JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.getRoadName()) +
+                            JCheckBox checkBox = new JCheckBox(car.getRoadName().split(TrainCommon.HYPHEN)[0] +
                                     " " +
                                     TrainCommon.splitString(car.getNumber()));
                             if (car.getRouteDestination() == rl) {
@@ -175,12 +168,10 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                             } else if (car.getRouteLocation() == rl && car.getTrack() != null) {
                                 addItemLeft(pCars, checkBox, 0, i++); // pick up
                             } else {
-                                addItemLeft(pCars, checkBox, 1, i++); // in train
+                                addItemLeft(pCars, checkBox, 1, i++); // in
+                                                                      // train
                             }
                         }
-                    }
-                    if (isOnlyPassenger) {
-                        break;
                     }
                 }
 

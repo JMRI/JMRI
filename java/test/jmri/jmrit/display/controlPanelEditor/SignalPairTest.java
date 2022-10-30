@@ -81,7 +81,6 @@ public class SignalPairTest {
             cpe.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.deregisterEditorManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<Runnable> rlist = sm.getRunnables();

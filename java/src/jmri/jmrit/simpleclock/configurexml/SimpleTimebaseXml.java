@@ -145,7 +145,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setStartRate(r);
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
-                log.error("Cannot convert start rate: {}", e2);
+                log.error("Cannot convert start rate", e2);
                 result = false;
             }
         }
@@ -155,7 +155,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setStartRate(r);
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
-                log.error("Cannot convert rate: {}", e2);
+                log.error("Cannot convert rate", e2);
                 result = false;
             }
         }
@@ -163,7 +163,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             try {
                 clock.userSetRate(clock.getStartRate());
             } catch (jmri.TimebaseRateException e1) {
-                log.error("Cannot restore rate: {} {}", clock.getStartRate(), e1);
+                log.error("Cannot restore rate: {}", clock.getStartRate(), e1);
                 result = false;
             }
         }

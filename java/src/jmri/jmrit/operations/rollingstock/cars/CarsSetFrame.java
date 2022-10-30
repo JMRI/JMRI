@@ -79,7 +79,7 @@ public class CarsSetFrame extends CarSetFrame {
         int rows[] = _carsTable.getSelectedRows();
         if (rows.length > 0) {
             Car car = _carsTableModel.getCarAtIndex(_carsTable.convertRowIndexToModel(rows[0]));
-            super.loadCar(car);
+            super.load(car);
         }
     }
 
@@ -140,7 +140,7 @@ public class CarsSetFrame extends CarSetFrame {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("doYouWantToChange"), new Object[]{cars.get(0).toString()}), Bundle
                     .getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                super.loadCar(cars.get(0)); // new default car
+                super.load(cars.get(0)); // new default car
                 return false; // done, don't modify any of the cars selected
             }
         }

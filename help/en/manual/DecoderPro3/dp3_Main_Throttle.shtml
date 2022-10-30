@@ -23,9 +23,9 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1 id="Top">DecoderPro® Main Menu Bar</h1>
+      <h1 id="Top">DecoderPro&reg; Main Menu Bar</h1>
 
-      <h2>JMRI® Throttle Window</h2>
+      <h2>JMRI&reg; Throttle Window</h2>
 
       <div class="dp-right">
         <p><a href="dp3_Main_Main.shtml">Back</a>
@@ -34,7 +34,7 @@
 
       <hr>
 
-      <p>The JMRI® Throttle may be used on your computer screen to replace the vendor throttle that
+      <p>The JMRI&reg; Throttle may be used on your computer screen to replace the vendor throttle that
       is furnished with your DCC system. One or several throttles may be in use at one time. The
       Throttle opens as a floating window that may be positioned anywhere on your desktop. Note the
       Title Bar contains the locomotive Roster ID information or the Locomotive address.</p>

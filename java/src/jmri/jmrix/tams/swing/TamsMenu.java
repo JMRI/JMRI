@@ -1,6 +1,7 @@
 package jmri.jmrix.tams.swing;
 
 import javax.swing.JMenu;
+import jmri.Turnout;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class TamsMenu extends JMenu {
 
         if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
             try {
-                new jmri.jmrit.beantable.ListedTableFrame();
+                new jmri.jmrit.beantable.ListedTableFrame<Turnout>();
             } catch (java.lang.NullPointerException ex) {
                 log.error("Unable to register Tams table");
             }

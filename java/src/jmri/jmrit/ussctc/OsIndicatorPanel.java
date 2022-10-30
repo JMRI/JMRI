@@ -114,7 +114,7 @@ public class OsIndicatorPanel extends BasePanel {
             sensorName.setText(o.getOsSensorName());
             lockName.setText(o.getLockName());
         } catch (jmri.JmriException e) {
-            log.error("Exception trying to find existing OS Indicator: {}", e);  // NOI18N
+            log.error("Exception trying to find existing OS Indicator", e);  // NOI18N
         }
     }
 

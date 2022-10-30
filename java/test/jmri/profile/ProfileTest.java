@@ -27,7 +27,7 @@ public class ProfileTest {
 
     /**
      * Test of constructor with extension for Profile path.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -54,7 +54,7 @@ public class ProfileTest {
 
     /**
      * Test of getName method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -66,7 +66,7 @@ public class ProfileTest {
 
     /**
      * Test of setName method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -79,7 +79,7 @@ public class ProfileTest {
 
     /**
      * Test of getId method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -92,7 +92,7 @@ public class ProfileTest {
 
     /**
      * Test of getPath method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -106,7 +106,7 @@ public class ProfileTest {
 
     /**
      * Test of toString method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -118,7 +118,7 @@ public class ProfileTest {
 
     /**
      * Test of hashCode method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -131,7 +131,7 @@ public class ProfileTest {
 
     /**
      * Test of equals method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -148,16 +148,15 @@ public class ProfileTest {
         instance2.save();
         FileUtil.copy(instance.getPath(), profileFolder3);
         Profile instance3 = new Profile(profileFolder3);
-        Assert.assertFalse(instance.equals(null));
-        Assert.assertFalse(instance.equals(new String()));
+        Assert.assertNotNull(instance);
+        Assert.assertFalse(instance.equals(""));
         Assert.assertFalse(instance.equals(instance2));
-        System.out.println("Should be the same:");
         Assert.assertTrue(instance.equals(instance3));
     }
 
     /**
      * Test of isComplete method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -169,7 +168,7 @@ public class ProfileTest {
 
     /**
      * Test of getUniqueId method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -177,30 +176,30 @@ public class ProfileTest {
         File profileFolder = new File(folder, "test" + Profile.EXTENSION);
         Profile instance = new Profile("test", "test", profileFolder);
         String id = (new ProfileProperties(profileFolder)).get(Profile.ID, true);
-        id = id.substring(id.lastIndexOf(".") + 1);
+        id = id.substring(id.lastIndexOf('.') + 1);
         Assert.assertEquals(id, instance.getUniqueId());
     }
 
     /**
      * Test of containsProfile method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testContainsProfile(@TempDir File folder) throws IOException {
         File rootFolder = new File(folder, Profile.PROFILE);
         File profileFolder = new File(rootFolder, "test");
-        profileFolder.mkdirs();
+        Assertions.assertTrue(profileFolder.mkdirs());
         File rootFolder2 = new File(folder, Profile.PATH);
-        (new File(rootFolder2, "test2")).mkdirs();
-        new Profile("test", "test", profileFolder);
+        Assertions.assertTrue( new File(rootFolder2, "test2").mkdirs());
+        Assertions.assertNotNull(new Profile("test", "test", profileFolder));
         Assert.assertTrue(Profile.containsProfile(rootFolder));
         Assert.assertFalse(Profile.containsProfile(rootFolder2));
     }
 
     /**
      * Test of inProfile method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
@@ -208,26 +207,26 @@ public class ProfileTest {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
         File innerFolder = new File(profileFolder, "test");
-        innerFolder.mkdirs();
+        Assertions.assertTrue(innerFolder.mkdirs());
         File rootFolder2 = new File(folder, Profile.PATH);
-        rootFolder2.mkdirs();
-        new Profile("test", "test", profileFolder);
+        Assertions.assertTrue(rootFolder2.mkdirs());
+        Assertions.assertNotNull(new Profile("test", "test", profileFolder));
         Assert.assertTrue(Profile.inProfile(innerFolder));
         Assert.assertFalse(Profile.inProfile(rootFolder2));
     }
 
     /**
      * Test of isProfile method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test
     public void testIsProfile(@TempDir File folder) throws IOException {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test" + Profile.EXTENSION);
-        new Profile("test", "test", profileFolder);
+        Assertions.assertNotNull(new Profile("test", "test", profileFolder));
         File innerFolder = new File(profileFolder, "test");
-        innerFolder.mkdirs();
+        Assertions.assertTrue(innerFolder.mkdirs());
         Assert.assertTrue(Profile.isProfile(profileFolder));
         Assert.assertFalse(Profile.isProfile(rootFolder));
         Assert.assertFalse(Profile.isProfile(innerFolder));
@@ -235,7 +234,7 @@ public class ProfileTest {
 
     /**
      * Test of compareTo method, of class Profile.
-     * 
+     *
      * @throws IOException if unexpected in context of test error occurs
      */
     @Test

@@ -1,29 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated by Blorec Herv&#233; le 2012-01-25-->
+<!DOCTYPE html>
 <html lang="fr">
+<!-- Translated by Blorec Herv&#233; le 2012-01-25-->
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <title>JMRI: RPS Polling Control</title>
-  <!-- Style -->
-  <meta http-equiv=
-  "Content-Typ V&Atilde;&copy;rifiez la syntaxe du nom de fichier (dont le respect des minuscules/majuscules) ; V&Atilde;&copy;rifiez si le fichier n'a pas &Atilde;&copy;t&Atilde;&copy; d&Atilde;&copy;plac&Atilde;&copy;, renomm&Atilde;&copy; ou supprim&Atilde;&copy;.e"
-  content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+  <!--#include virtual="/Header_fr.shtml" -->
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
 
       <h1>JMRI: Contr&ocirc;le de Scrutation RPS</h1>
       <a href=
@@ -127,8 +115,9 @@
       est commenc&eacute;, cliquez sur "Stocker maintenant
       les valeurs par d&eacute;fauts".</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/Footer_fr.shtml" -->
     </div>
   </div>
+  <script src="/js/main.js"></script>
 </body>
 </html>

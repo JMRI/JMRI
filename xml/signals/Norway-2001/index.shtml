@@ -31,6 +31,8 @@ See the
 Signal Mast definitions:
 </p>
 <ul>
+    <li><a href="appearance-Block3-2.xml">Block, Triple over double lamp green-flashred-green over flashing orange-green high signal</a>
+    <li><a href="appearance-Block3.xml">Block, Triple lamp green-flashred-green high signal</a>
     <li><a href="appearance-Main3-2.xml">Main, Triple over double lamp green-red-green over flashing orange-green high signal</a>
     <li><a href="appearance-Main2-2.xml">Main, Double over double lamp red-green over flashing orange-green high signal</a>
     <li><a href="appearance-Main3.xml">Main, Triple lamp green-red-green high signal</a>

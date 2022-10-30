@@ -74,7 +74,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
 */
     public static final int numMonPkts     = monPktRFE;
     public static final int lastStdPkt     = monPktTransmit+1;
-    public static final int[] monPktTypeID = {
+    static final int[] monPktTypeID = {
                                                 0x49, 0x50, 0x52, 0x54, 0x45,
                                                 0x51, 0x44, 0x57, 0x41, 0x43,
                                                 0x4D, 0x3F
@@ -106,7 +106,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
         _memo = memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -406,7 +406,7 @@ public class SerialFilterFrame extends jmri.util.JmriJFrame {
                     return Boolean.class;
             }
         }
-    
+
         @Override
         public boolean isCellEditable(int r, int c) {
             if (c != NODEADDR_COLUMN) {
