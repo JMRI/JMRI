@@ -413,6 +413,7 @@
           as needed.</li>
           <li>The action <i>Request update of all sensors</i> has been added. It requests
           that all sensors gets updated from the layout.</li>
+          <li>The action <i>Create beans from table</i> has been added.</li>
           <li>The action <i>Find table row or column</i> has been added.</li>
           <li>Adds support of multiple types of CSV files to LogixNG Tables.
           Tab separated files are the default, but you may choose Comma
