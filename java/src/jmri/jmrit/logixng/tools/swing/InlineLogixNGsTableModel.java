@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -10,7 +11,6 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import jmri.*;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logixng.*;
 import jmri.util.swing.JComboBoxUtil;
 
@@ -143,21 +143,21 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (rowIndex >= _logixNGs.size()) throw new IllegalArgumentException("Invalid row");
 
-        Positionable p;
+        LogixNG logixNG = _logixNGs.get(rowIndex);
 
         switch (columnIndex) {
             case COLUMN_SYSTEM_NAME:
-                return _logixNGs.get(rowIndex).getSystemName();
+                return logixNG.getSystemName();
 //            case COLUMN_USER_NAME:
-//                return _logixNGs.get(rowIndex).getUserName();
+//                return logixNG.getUserName();
             case COLUMN_PANEL_NAME:
-                return _logixNGs.get(rowIndex).getPositionable().getEditor().getName();
+                return logixNG.getPositionable().getEditor().getName();
             case COLUMN_POSITIONABLE_NAME:
-                return _logixNGs.get(rowIndex).getPositionable().getNameString();
+                return logixNG.getPositionable().getNameString();
             case COLUMN_POS_X:
-                return _logixNGs.get(rowIndex).getPositionable().getX();
+                return logixNG.getPositionable().getX();
             case COLUMN_POS_Y:
-                return _logixNGs.get(rowIndex).getPositionable().getY();
+                return logixNG.getPositionable().getY();
             case COLUMN_MENU:
                 return Menu.Edit;
             default:
@@ -304,10 +304,35 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
         }
 
         private void delete(int row) {
-//            _tableModel._variables.remove(row);
-//            _tableModel.fireTableRowsDeleted(row, row);
+            LogixNG logixNG = _tableModel._logixNGs.get(row);
+
+//            if (!checkFlags(sName)) {
+//                return;
+//            }
+
+            DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
+                    InstanceManager.getDefault(LogixNG_Manager.class));
+
+            boolean hasChildren = logixNG.getNumConditionalNGs() > 0;
+
+            deleteBean.delete(logixNG, hasChildren, (t)->{deleteBean(t);},
+                    (t,list)->{logixNG.getListenerRefsIncludingChildren(list);},
+                    jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName());
         }
 
+        private void deleteBean(LogixNG logixNG) {
+            logixNG.setEnabled(false);
+            try {
+                InstanceManager.getDefault(LogixNG_Manager.class).deleteBean(logixNG, "DoDelete");
+                logixNG.getPositionable().setLogixNG(null);
+                _tableModel.fireTableDataChanged();
+            } catch (PropertyVetoException e) {
+                //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+                log.error("{} : Could not Delete.", e.getMessage());
+            }
+        }
     }
 
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InlineLogixNGsTableModel.class);
 }
