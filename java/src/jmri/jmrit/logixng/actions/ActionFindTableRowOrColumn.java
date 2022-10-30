@@ -166,7 +166,7 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
                         Map<String, Object> rowData = new HashMap<>();
 
                         for (int rowIndex=1; rowIndex <= table.numRows(); rowIndex++) {
-                            Object subHeader = table.getCell(0, column);
+                            Object subHeader = table.getCell(rowIndex, 0);
                             if ((subHeader != null) && (!subHeader.toString().isEmpty())) {
                                 rowData.put(subHeader.toString(), table.getCell(rowIndex, column));
                             }
@@ -189,7 +189,7 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
                         Map<String, Object> columnData = new HashMap<>();
 
                         for (int colIndex=1; colIndex <= table.numRows(); colIndex++) {
-                            Object subHeader = table.getCell(row, 0);
+                            Object subHeader = table.getCell(0, colIndex);
                             if ((subHeader != null) && (!subHeader.toString().isEmpty())) {
                                 columnData.put(subHeader.toString(), table.getCell(row, colIndex));
                             }
@@ -232,10 +232,11 @@ public class ActionFindTableRowOrColumn extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         String tableName = _selectNamedBean.getDescription(locale);
         return Bundle.getMessage(locale, "ActionFindTableRowOrColumn_Long",
-                _tableRowOrColumn.toStringLowerCase(),
-                tableName,
                 _tableRowOrColumn.getOpposite().toStringLowerCase(),
+                tableName,
+                _tableRowOrColumn.toStringLowerCase(),
                 _rowOrColumnName,
+                _tableRowOrColumn.getOpposite().toStringLowerCase(),
                 _localVariableNamedBean);
     }
 

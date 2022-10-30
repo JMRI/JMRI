@@ -74,16 +74,16 @@ public class ActionFindTableRowOrColumnSwing extends AbstractDigitalActionSwing 
         panel.add(includeCellsWithoutHeaderPanel);
 
         JPanel localVariableNamedBeanPanel = new JPanel();
-        localVariableNamedBeanPanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNamedBean")));
+        localVariableNamedBeanPanel.add(new JLabel(Bundle.getMessage("ActionFindTableRowOrColumnSwing_LocalVariableNamedBean")));
         _localVariableNamedBean = new JTextField(20);
         localVariableNamedBeanPanel.add(_localVariableNamedBean);
         panel.add(localVariableNamedBeanPanel);
 
-        JPanel localVariableNewValuePanel = new JPanel();
-        localVariableNewValuePanel.add(new JLabel(Bundle.getMessage("ActionListenOnBeansSwing_LocalVariableNewValue")));
+        JPanel localVariableRowPanel = new JPanel();
+        localVariableRowPanel.add(new JLabel(Bundle.getMessage("ActionFindTableRowOrColumnSwing_LocalVariableRow")));
         _localVariableRow = new JTextField(20);
-        localVariableNewValuePanel.add(_localVariableRow);
-        panel.add(localVariableNewValuePanel);
+        localVariableRowPanel.add(_localVariableRow);
+        panel.add(localVariableRowPanel);
 
         if (action != null) {
             if (action.getSelectNamedBean().getNamedBean() != null) {
