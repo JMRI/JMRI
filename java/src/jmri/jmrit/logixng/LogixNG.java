@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import jmri.NamedBean;
+import jmri.jmrit.display.Positionable;
 
 /**
  * LogixNG.
@@ -25,6 +26,20 @@ public interface LogixNG extends Base, NamedBean {
      * @return true if the LogixNG is inline, false otherwise
      */
     public boolean isInline();
+
+    /**
+     * Set the positionable that owns this LogixNG, if the LogixNG is inline.
+     *
+     * @param pos the positionable that owns this LogixNG, if the LogixNG is inline.
+     */
+    public void setPositionable(Positionable pos);
+
+    /**
+     * Get the positionable that owns this LogixNG, if the LogixNG is inline.
+     *
+     * @return the Positionable
+     */
+    public Positionable getPositionable();
 
     /**
      * Set whenether this LogixNG is enabled or disabled.

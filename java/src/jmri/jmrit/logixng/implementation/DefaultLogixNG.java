@@ -12,6 +12,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
 // import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -33,6 +34,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _inline = false;
+    private Positionable _positionable = null;
     private boolean _enabled = false;
     private boolean _isActive = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
@@ -150,6 +152,18 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public boolean isInline() {
         return _inline;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setPositionable(Positionable pos) {
+        _positionable = pos;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Positionable getPositionable() {
+        return _positionable;
     }
 
     /** {@inheritDoc} */
