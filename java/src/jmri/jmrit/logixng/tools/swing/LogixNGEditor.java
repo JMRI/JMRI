@@ -1144,7 +1144,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         return;
                     }
                     x.setUserName(value);
-                    beanTableDataModel.fireTableDataChanged();
+
+                    if (beanTableDataModel != null) {
+                        beanTableDataModel.fireTableDataChanged();
+                    }
                 }
             });
         }
@@ -1177,7 +1180,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         return;
                     }
                     x.setUserName(value);
-                    beanTableDataModel.fireTableDataChanged();
+
+                    if (beanTableDataModel != null) {
+                        beanTableDataModel.fireTableDataChanged();
+                    }
                 }
             });
         }
