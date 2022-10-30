@@ -1261,6 +1261,11 @@ public class PositionableLabel extends JLabel implements Positionable {
     public void setupLogixNG() {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
+        if (_logixNG == null) {
+            throw new RuntimeException(String.format(
+                    "LogixNG %s is not found for positional %s in panel %s",
+                    _logixNG_SystemName, getNameString(), getEditor().getName()));
+        }
         _logixNG.setPositionable(this);
     }
 
