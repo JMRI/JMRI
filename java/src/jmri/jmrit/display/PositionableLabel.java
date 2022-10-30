@@ -1258,13 +1258,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         this._logixNG_SystemName = systemName;
     }
 
-    public void setupLogixNG() {
-        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
-                .getBySystemName(_logixNG_SystemName);
-//        jmri.util.ThreadingUtil.runOnGUI(() -> {_logixNG.setInline(true);});
-//        _logixNG.setEnabled(true);
-    }
-
     private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);
 
 }
