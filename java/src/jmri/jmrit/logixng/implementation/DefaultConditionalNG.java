@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
@@ -150,6 +151,22 @@ public class DefaultConditionalNG extends AbstractBase
                 conditionalNG.setCurrentConditionalNG(conditionalNG);
 
                 conditionalNG.setSymbolTable(newSymbolTable);
+
+                Positionable positionable = conditionalNG.getLogixNG().getPositionable();
+                if (positionable != null) {
+                    List<SymbolTable.VariableData> localVariables = new ArrayList<>();
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__Positionable__", SymbolTable.InitialValueType.String,
+                            positionable.getNameString()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__PositionableId__", SymbolTable.InitialValueType.String,
+                            positionable.getId()));
+                    localVariables.add(new SymbolTable.VariableData(
+                            "__Editor__", SymbolTable.InitialValueType.String,
+                            positionable.getEditor().getName()));
+                    newSymbolTable.createSymbols(localVariables);
+                }
+
                 if (femaleSocket != null) {
                     femaleSocket.execute();
                 } else {
