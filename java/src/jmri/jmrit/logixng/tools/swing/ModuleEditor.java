@@ -43,7 +43,6 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
     /**
      * Create a new ConditionalNG List View editor.
      *
-     * @param f the bean table frame
      * @param m the bean table model
      * @param sName name of the LogixNG being edited
      */
