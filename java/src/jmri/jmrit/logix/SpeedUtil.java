@@ -63,10 +63,10 @@ public class SpeedUtil {
     private float _md;  // milliseconds needed to decrease speed by throttle step amount
     private ArrayList<BlockSpeedInfo> _speedInfo; // map max speeds and occupation times of each block in route
 
-    // A SCALE_FACTOR of 45 divided by _scale, computes a scale speed of 100mph at full throttle.
+    // A SCALE_FACTOR of 44.704 divided by _scale, computes a scale speed of 100mph at full throttle.
     // This is set arbitrarily and can be modified by the Preferences "throttle Factor".
     // Only used when there is no SpeedProfile.
-    public static final float SCALE_FACTOR = 45; // divided by _scale, gives a rough approximation for track speed
+    public static final float SCALE_FACTOR = 44.704f; // divided by _scale, gives a rough approximation for track speed
     public static final float MAX_TGV_SPEED = 88889;   // maximum speed of a Bullet train (320 km/hr) in millimeters/sec
 
     protected SpeedUtil() {

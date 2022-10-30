@@ -22,7 +22,7 @@ public class RampData {
     private float _fromSpeed;
     private float _toSpeed;
 
-    static float INCRE_RATE = 1.10f;  // multiplier to increase throttle increments
+    static float INCRE_RATE = 1.085f;  // multiplier to increase throttle increments
 
     RampData(SpeedUtil util, float throttleIncre, int timeIncre, float fromSet, float toSet) {
         _throttleInterval = throttleIncre; 
@@ -42,6 +42,7 @@ public class RampData {
         _settings = new ArrayList<>();
         float lowSetting;
         float highSetting;
+        float momentumTime;
         if (_upRamp) {
             lowSetting = _fromSpeed;
             highSetting = _toSpeed;
@@ -58,7 +59,10 @@ public class RampData {
         while (lowSetting < highSetting) {
             _settings.add(Float.valueOf(lowSetting));
             lowSetting += throttleIncre;
-            throttleIncre *= INCRE_RATE;
+            momentumTime = _speedUtil.getMomentumTime(throttleIncre, _upRamp);
+            if (momentumTime <= _throttleInterval) {
+                throttleIncre *= INCRE_RATE;
+            }	// if time of momentum change exceeds _throttleInterval, don't increase throttleIncre
         }
         _settings.add(Float.valueOf(highSetting));
     }

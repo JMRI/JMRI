@@ -1377,6 +1377,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         if (_engineer != null) {
+            info.append("\""); info.append("\n\tEngineer Stack trace:");
+            for (StackTraceElement elem : _engineer.getStackTrace()) {
+                info.append("\n\t\t");
+                info.append(elem.getClassName()); info.append("."); info.append(elem.getMethodName());
+                info.append(", line "); info.append(elem.getLineNumber());
+            }
             info.append(_engineer.debugInfo());
          } else {
             info.append("No engineer.");
@@ -3096,7 +3102,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         } else if (_waitForBlock) {
             reason = Bundle.getMessage("Occupancy");                
         } else {
-            reason ="Unspecified";
+            reason = Bundle.getMessage("Signal");
         }
 
         if (_trace || log.isDebugEnabled()) {

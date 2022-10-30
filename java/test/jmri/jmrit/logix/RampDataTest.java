@@ -31,6 +31,7 @@ public class RampDataTest {
         RampData ramp = new RampData(new SpeedUtil(), .011f, 1500, 0.91f, 0.15f);
         assertThat(ramp).withFailMessage("exists").isNotNull();
         assertThat(ramp.isUpRamp()).withFailMessage("downRamp").isFalse();
+        System.out.println("ramp.getNumSteps() = " + ramp.getNumSteps());
         assertThat(ramp.getNumSteps()).withFailMessage("NumRampSteps").isEqualTo(15);
         assertThat(ramp.getRamptime()).withFailMessage("Ramptime").isEqualTo(22500);
         assertThat(ramp.getMaxSpeed()).withFailMessage("MaxSpeed").isEqualTo(0.91f);

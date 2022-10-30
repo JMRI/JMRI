@@ -15,12 +15,14 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.InstanceManager;
+import jmri.Path;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.XTableColumnModel;
@@ -309,9 +311,27 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements JmriMouse
             showWarning("EmptyRoutes");
             return;
         }
-        if (!last.getPathName().equals(next.getPathName()) || !last.getBlock().equals(next.getBlock())) {
-            showWarning("RoutesDontMatch");
+        if (!last.getBlock().equals(next.getBlock())) {
+            showWarning("BlocksDontMatch");
             return;
+        }
+        if (!last.getPathName().equals(next.getPathName())) {
+            boolean foundPath = false;
+            String entryName = last.getEntryName();
+            String exitName = next.getExitName();
+            Iterator<Path> iter = last.getBlock().getPaths().iterator();
+            while (iter.hasNext()) {
+                String pathName = ((OPath)iter.next()).getName();
+                if (pathName.equals(entryName) && pathName.equals(exitName)) {
+                    last.setPathName(pathName);
+                    foundPath = true;
+                    break;
+                }
+            }
+            if (!foundPath) {
+                showWarning("RoutesDontMatch");
+                return;
+            }
         }
         WarrantTableAction.getDefault().makeWarrantFrame(startW, endW);
         _concatDialog.dispose();
