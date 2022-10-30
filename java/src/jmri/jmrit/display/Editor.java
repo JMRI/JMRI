@@ -1393,13 +1393,6 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 _inlineLogixNGEdit = logixNGEditor;
             }
         });
-/*
-        logixNG_Menu.add(new AbstractAction(Bundle.getMessage("LogixNG_Program")) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-*/
     }
 
     /**
