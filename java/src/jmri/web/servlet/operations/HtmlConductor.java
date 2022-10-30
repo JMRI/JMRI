@@ -1,9 +1,7 @@
 package jmri.web.servlet.operations;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -274,6 +272,9 @@ public class HtmlConductor extends HtmlTrainCommon {
                     if (pickedUp.contains(car.getId())
                             || (Setup.isSortByTrackNameEnabled() && !splitString(track.getName()).equals(
                                     splitString(car.getTrackName())))) {
+                        continue;
+                    }
+                    if (car.isLocalMove() && rlocation == rld) {
                         continue;
                     }
                     // block pick up cars

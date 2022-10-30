@@ -144,7 +144,7 @@ public class CbusEventTablePrintAction extends AbstractAction {
     // [AC] modified to take an array of column widths
     private void printColumns(HardcopyWriter w, String columnStrings[], int columnWidth[]) {
         String columnString = "";
-        String lineString = "";
+        StringBuilder lineString = new StringBuilder();
         String spaces;
         // loop through each column
         boolean complete = false;
@@ -187,22 +187,20 @@ public class CbusEventTablePrintAction extends AbstractAction {
                     columnString = columnStrings[i] + spaces.substring(columnStrings[i].length()); // pad with spaces
                     columnStrings[i] = "";
                 }
-                lineString = lineString + columnString + " ";
+                lineString.append(columnString).append(" ");
             }
             try {
-                w.write(lineString);
+                w.write(lineString.toString());
                 //write vertical dividing lines
                 int column = 0;
-           for (int i = 0; i < whichPrintColumns.length; i++) {
+                for (int i = 0; i < whichPrintColumns.length; i++) {
                     w.write(w.getCurrentLineNumber(), column, w.getCurrentLineNumber() + 1, column);
                     column = column + columnWidth[i] + 1;
                     // log.debug("1167 i is {} column is {} columnWidth[i] is {} ", i, column, columnWidth[i]);
                 }
                 w.write(w.getCurrentLineNumber(), w.getCharactersPerLine(),
                     w.getCurrentLineNumber() + 1, w.getCharactersPerLine());
-                lineString = "\n";
-                w.write(lineString);
-                lineString = "";
+                w.write("\n");
             } catch (IOException e) {
                 log.warn("error during printing", e);
             }

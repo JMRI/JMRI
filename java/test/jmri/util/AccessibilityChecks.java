@@ -1,5 +1,7 @@
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.annotation.Nonnull;
 import java.awt.Container;
 import java.util.*;
@@ -103,6 +105,7 @@ public class AccessibilityChecks {
         return set;
     }
 
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",justification = "getMessageString(components) contains context information")
     private static String feedBack(Set<JComponent> components, boolean forceFailOnIssue) {
         if (components.isEmpty()){
             return "";

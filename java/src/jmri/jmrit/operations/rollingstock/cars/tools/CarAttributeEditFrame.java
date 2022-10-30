@@ -2,9 +2,7 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.text.MessageFormat;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,8 +53,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         setTitle(MessageFormat.format(Bundle.getMessage("TitleCarEditAtrribute"), new Object[] { attribute }));
         carManager.addPropertyChangeListener(this);
 
-        addComboBoxAction(comboBox);
-
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
@@ -66,12 +62,6 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         setJMenuBar(menuBar);
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true); // NOI18N
-    }
-
-    @Override
-    protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-        log.debug("Combo box action");
-        updateCarQuanity();
     }
 
     @Override
@@ -180,13 +170,8 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
         }
     }
 
-    public void toggleShowQuanity() {
-        showQuanity = !showQuanity;
-        quanity.setVisible(showQuanity);
-        updateCarQuanity();
-    }
-
-    private void updateCarQuanity() {
+    @Override
+    protected void updateAttributeQuanity() {
         if (!showQuanity) {
             return;
         }
@@ -247,40 +232,10 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
                 }
             }
             // confirm that attribute is to be deleted
-            if (!cancel) {
-                int results = JOptionPane.showOptionDialog(this,
-                        MessageFormat
-                                .format(Bundle.getMessage("ConfirmDeleteAttribute"), new Object[] { _attribute, item }),
-                        Bundle.getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, new Object[] { Bundle.getMessage("ButtonYes"),
-                                Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel") },
-                        Bundle.getMessage("ButtonYes"));
-                if (results == JOptionPane.YES_OPTION) {
-                    deleteAttributeName((String) comboBox.getSelectedItem());
-                }
-                if (results == JOptionPane.CANCEL_OPTION || results == JOptionPane.CLOSED_OPTION) {
-                    cancel = true;
-                }
-            }
+            confirmDelete(item);
         }
     }
 
-    boolean deleteUnused = false;
-    boolean cancel = false;
-
-    public void deleteUnusedAttributes() {
-        if (!showQuanity) {
-            toggleShowQuanity();
-        }
-        deleteUnused = true;
-        cancel = false;
-        int items = comboBox.getItemCount() - 1;
-        for (int i = items; i >= 0; i--) {
-            comboBox.setSelectedIndex(i);
-        }
-        deleteUnused = false; // done
-        comboBox.setSelectedIndex(0);
-    }
 
     @Override
     public void dispose() {
@@ -311,7 +266,7 @@ public class CarAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(KernelManager.class).updateComboBox(comboBox);
         }
         if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
-            updateCarQuanity();
+            updateAttributeQuanity();
         }
         super.propertyChange(e);
     }

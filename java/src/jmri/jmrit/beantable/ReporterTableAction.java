@@ -181,7 +181,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
-        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
+        StringBuilder statusMessage = new StringBuilder(
+            Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter")));
         String uName = userNameTextField.getText();
 
 
@@ -213,10 +214,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // add first and last names to statusMessage user feedback string
             // only mention first and last of rangeCheckBox added
             if (x == 0 || x == numberOfReporters - 1) {
-                statusMessage = statusMessage + " " + rName + " (" + uName + ")";
+                statusMessage.append(" ").append(rName).append(" (").append(uName).append(")");
             }
             if (x == numberOfReporters - 2) {
-                statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
+                statusMessage.append(" ").append(Bundle.getMessage("ItemCreateUpTo")).append(" ");
             }
 
             // except on last pass
@@ -240,7 +241,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // end of for loop creating rangeCheckBox of Reporters
         }
         // provide success feedback to uName
-        statusBarLabel.setText(statusMessage);
+        statusBarLabel.setText(statusMessage.toString());
         statusBarLabel.setForeground(Color.gray);
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
