@@ -16,7 +16,7 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
             ">
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/positionable-logixng-data-4.99.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/positionable-logixng-data-5.1.6.xsd"/>
 
   <xs:annotation>
     <xs:documentation>
