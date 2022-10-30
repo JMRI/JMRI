@@ -34,7 +34,7 @@ jobs:
         # run all tests using maven
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"
     - name: Upload generated screenshots artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       if: ${{ always() }}
       with:
         name: screenshots
