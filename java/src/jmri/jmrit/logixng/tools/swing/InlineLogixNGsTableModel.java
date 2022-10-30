@@ -306,9 +306,18 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
         private void delete(int row) {
             LogixNG logixNG = _tableModel._logixNGs.get(row);
 
-//            if (!checkFlags(sName)) {
-//                return;
-//            }
+            if (_tableModel._inEditLogixNGMode) {
+                // Already editing a bean, ask for completion of that edit
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("Error_InlineLogixNGInEditMode",
+                                logixNG.getSystemName()),
+                        Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                if (_tableModel._logixNGEditor != null) {
+                    _tableModel._logixNGEditor.bringToFront();
+                }
+                return;
+            }
 
             DeleteBean<LogixNG> deleteBean = new DeleteBean<>(
                     InstanceManager.getDefault(LogixNG_Manager.class));
