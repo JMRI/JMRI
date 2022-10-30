@@ -32,6 +32,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private boolean _isActive = false;
+    private final List<Runnable> _setupTasks = new ArrayList<>();
 
 
     public DefaultLogixNGManager() {
@@ -168,6 +169,9 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             result = result && module.setParentForAllChildren(errors);
         }
         _clipboard.setup();
+        for (Runnable r : _setupTasks) {
+            r.run();
+        }
         if (errors.size() > 0) {
             messageDialog("SetupErrorsTitle", errors, null);
         }
@@ -455,6 +459,12 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             deregister(logixNG);
             logixNG.dispose();
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void registerSetupTask(Runnable task) {
+        _setupTasks.add(task);
     }
 
     /**

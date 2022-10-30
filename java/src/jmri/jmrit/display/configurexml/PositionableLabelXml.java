@@ -630,6 +630,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (inlineLogixNG != null) {
             String systemName = inlineLogixNG.getTextTrim();
             pl.setLogixNG_SystemName(systemName);
+            InstanceManager.getDefault(LogixNG_Manager.class).registerSetupTask(() -> {
+                pl.setupLogixNG();
+            });
         }
     }
 

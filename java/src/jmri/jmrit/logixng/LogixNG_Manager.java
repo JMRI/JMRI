@@ -256,4 +256,10 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      */
     public Manager<? extends MaleSocket> getManager(String className);
 
+    /**
+     * Register a task to be run when setup LogixNGs
+     * @param task the task
+     */
+    public void registerSetupTask(Runnable task);
+
 }
