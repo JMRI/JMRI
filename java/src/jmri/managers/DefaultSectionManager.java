@@ -284,9 +284,27 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
         for (LayoutBlock layoutBlock : layoutBlockManager.getNamedBeanSet()){
             if (layoutBlock.getNumberOfThroughPaths() == 0){
-                createBlockSection(layoutBlock);
+                if (!blockSectionExists(layoutBlock)){
+                    createBlockSection(layoutBlock);
+                }
             }
         }
+    }
+
+    /**
+     * Check if a block based section has a first block that matches.
+     * @param layoutBlock
+     * @return true or false
+     */
+    private boolean blockSectionExists(LayoutBlock layoutBlock){
+        for (Section section : getNamedBeanSet()){
+            if (section.getNumBlocks() > 0 && section.getSectionType() != Section.SIGNALMASTLOGIC) {
+                if (layoutBlock.getBlock().equals(section.getBlockList().get(0))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
