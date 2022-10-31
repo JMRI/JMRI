@@ -434,6 +434,7 @@
               <li>For macOS, use Cmd instead of Ctrl.</li>
             </ul>
           </li>
+          <li>The Formula function <i>writeMemory</i> is added. It's in the <i>NamedBean</i> category.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
